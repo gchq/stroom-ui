@@ -1,9 +1,9 @@
 import * as React from "react";
-import { useState, useEffect, useCallback } from "react";
-import { useMappedState } from "redux-react-hook";
+import { useState, useEffect } from "react";
 
 import { Formik, Field, Form } from "formik";
 
+import useReduxState from "../../lib/useReduxState/useReduxState";
 import { useFindUsers, useDeleteUser } from "./client";
 import { GlobalStoreState } from "../../startup/reducers";
 import { User } from "../../types";
@@ -32,15 +32,12 @@ const UserPermissions = () => {
   const deleteUser = useDeleteUser();
   const [selectedUser, setSelectedUser] = useState<User | undefined>(undefined);
 
-  const mapState = useCallback(
+  // Get data from and subscribe to the store
+  const { users } = useReduxState(
     ({ userPermissions: { users } }: GlobalStoreState) => ({
       users: users[LISTING_ID]
-    }),
-    []
+    })
   );
-
-  // Get data from and subscribe to the store
-  const { users } = useMappedState(mapState);
 
   const onSelection = (selectedUuid: string) => {
     setSelectedUser(users.find((u: User) => u.uuid === selectedUuid));

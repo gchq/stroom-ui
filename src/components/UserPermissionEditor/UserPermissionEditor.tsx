@@ -1,7 +1,7 @@
 import * as React from "react";
-import { useCallback, useEffect } from "react";
-import { useMappedState } from "redux-react-hook";
+import { useEffect } from "react";
 
+import useReduxState from "../../lib/useReduxState/useReduxState";
 import IconHeader from "../IconHeader";
 import Button from "../Button";
 import UsersInGroup from "./UsersInGroup";
@@ -23,16 +23,12 @@ const UserPermissionEditor = ({ listingId, userUuid }: Props) => {
     findUsers(listingId, undefined, undefined, userUuid);
   }, []);
 
-  // Declare your memoized mapState function
-  const mapState = useCallback(
+  const { user } = useReduxState(
     ({ userPermissions: { users } }: GlobalStoreState) => ({
       user: users[listingId] && users[listingId].find(u => u.uuid === userUuid)
     }),
     [listingId, userUuid]
   );
-
-  // Get data from and subscribe to the store
-  const { user } = useMappedState(mapState);
 
   return (
     <div>

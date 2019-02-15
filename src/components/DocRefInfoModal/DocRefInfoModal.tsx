@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 import * as React from "react";
-import { useState, useEffect, useCallback } from "react";
-import { useMappedState } from "redux-react-hook";
+import { useState, useEffect } from "react";
 
+import useReduxState from "../../lib/useReduxState/useReduxState";
 import Loader from "../Loader";
 import ThemedModal from "../ThemedModal";
 import IconHeader from "../IconHeader";
@@ -33,14 +33,11 @@ export interface Props {
 const doNothing = () => {};
 
 const DocRefInfoModal = ({ isOpen, onCloseDialog, docRef }: Props) => {
-  const mapState = useCallback(
+  const { docRefInfoByUuid } = useReduxState(
     ({ folderExplorer: { docRefInfoByUuid } }) => ({
       docRefInfoByUuid
-    }),
-    []
+    })
   );
-
-  const { docRefInfoByUuid } = useMappedState(mapState);
 
   useEffect(() => {
     if (!!docRef) {

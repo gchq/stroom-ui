@@ -1,7 +1,8 @@
 import * as React from "react";
-import { useEffect, useCallback } from "react";
-import { useMappedState, useDispatch } from "redux-react-hook";
+import { useEffect } from "react";
+import { useDispatch } from "redux-react-hook";
 
+import useReduxState from "../../lib/useReduxState/useReduxState";
 import Loader from "../Loader";
 import { Props as ButtonProps } from "../Button";
 import DocRefEditor from "../DocRefEditor";
@@ -15,17 +16,14 @@ export interface Props {
 }
 
 const DictionaryEditor = ({ dictionaryUuid }: Props) => {
-  // Declare your memoized mapState function
-  const mapState = useCallback(
+  // Get data from and subscribe to the store
+  const dispatch = useDispatch();
+  const { dictionaryState } = useReduxState(
     ({ dictionaryEditor }) => ({
       dictionaryState: dictionaryEditor[dictionaryUuid]
     }),
     [dictionaryUuid]
   );
-
-  // Get data from and subscribe to the store
-  const dispatch = useDispatch();
-  const { dictionaryState } = useMappedState(mapState);
   const fetchDictionary = useFetchDictionary();
   const saveDictionary = useSaveDictionary();
 

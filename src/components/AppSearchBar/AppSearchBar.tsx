@@ -1,7 +1,5 @@
 import * as React from "react";
-import { useState, useCallback } from "react";
-
-import { useMappedState } from "redux-react-hook";
+import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { findItem, filterTree } from "../../lib/treeUtils";
@@ -16,6 +14,7 @@ import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import useSelectableItemListing from "../../lib/useSelectableItemListing";
 import useRecentItems from "../../lib/useRecentItems";
 import { useDocumentTree } from "../FolderExplorer/useDocumentTree";
+import useReduxState from "../../lib/useReduxState/useReduxState";
 
 interface Props {
   pickerId: string;
@@ -32,16 +31,8 @@ const AppSearchBar = ({
   onChange,
   value
 }: Props) => {
-  // Declare your memoized mapState function
-  const mapState = useCallback(
-    ({ appSearch }) => ({
-      appSearch
-    }),
-    []
-  );
-
   // Get data from and subscribe to the store
-  const { appSearch } = useMappedState(mapState);
+  const { appSearch } = useReduxState(({ appSearch }) => ({ appSearch }));
   const documentTree = useDocumentTree();
   const { recentItems } = useRecentItems();
 

@@ -14,8 +14,7 @@
  * limitations under the License.
  */
 import * as React from "react";
-import { useMappedState } from "redux-react-hook";
-import { useEffect, useCallback } from "react";
+import { useEffect } from "react";
 
 import "simplebar";
 import "simplebar/dist/simplebar.css";
@@ -26,6 +25,7 @@ import MenuItem, {
   MenuItemOpened
 } from "./MenuItem";
 
+import useReduxState from "../../lib/useReduxState/useReduxState";
 import {
   copyDocuments,
   moveDocuments
@@ -154,16 +154,11 @@ const AppChrome = ({ content }: Props) => {
   const history = useHistory();
   const documentTree = useDocumentTree();
 
-  // Declare your memoized mapState function
-  const mapState = useCallback(
+  const { location } = useReduxState(
     ({ routing: { location } }: GlobalStoreState) => ({
       location
-    }),
-    []
+    })
   );
-
-  // Get data from and subscribe to the store
-  const { location } = useMappedState(mapState);
 
   useEffect(() => {
     fetchDocTree();

@@ -1,21 +1,16 @@
-import { useCallback, useEffect } from "react";
-import { useMappedState } from "redux-react-hook";
+import { useEffect } from "react";
 
+import useReduxState from "../../lib/useReduxState/useReduxState";
 import { GlobalStoreState } from "../../startup/reducers";
 import { useFetchDocTree } from "./explorerClient";
 import { DocRefTree } from "../../types";
 
 export const useDocumentTree = (): DocRefTree => {
-  // Declare the memoized mapState function
-  const mapState = useCallback(
+  const { documentTree } = useReduxState(
     ({ folderExplorer: { documentTree } }: GlobalStoreState) => ({
       documentTree
-    }),
-    []
+    })
   );
-
-  // Get data from and subscribe to the store
-  const { documentTree } = useMappedState(mapState);
   const fetchDocTree = useFetchDocTree();
 
   useEffect(() => {

@@ -1,8 +1,7 @@
 import * as React from "react";
-import { useState, useEffect, useCallback } from "react";
-import { useMappedState } from "redux-react-hook";
+import { useState, useEffect } from "react";
 
-import { GlobalStoreState } from "../../startup/reducers";
+import useReduxState from "../../lib/useReduxState/useReduxState";
 import { useGetIndexVolumeGroups, useDeleteIndexVolumeGroup } from "./client";
 import IndexVolumeGroupsTable from "./IndexVolumeGroupsTable";
 import { IndexVolumeGroup } from "../../types";
@@ -21,14 +20,9 @@ export interface Props {}
 const IndexVolumeGroups = () => {
   const history = useHistory();
 
-  // Redux
-  const mapState = useCallback(
-    ({ indexVolumeGroups: { groups } }: GlobalStoreState) => ({
-      groups
-    }),
-    []
-  );
-  const { groups } = useMappedState(mapState);
+  const { groups } = useReduxState(({ indexVolumeGroups: { groups } }) => ({
+    groups
+  }));
   const getIndexVolumeGroups = useGetIndexVolumeGroups();
   const deleteIndexVolumeGroup = useDeleteIndexVolumeGroup();
 

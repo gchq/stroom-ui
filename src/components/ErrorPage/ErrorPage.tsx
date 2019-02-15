@@ -15,9 +15,8 @@
  */
 
 import * as React from "react";
-import { useCallback } from "react";
-import { useMappedState } from "redux-react-hook";
 
+import useReduxState from "../../lib/useReduxState/useReduxState";
 import IconHeader from "../IconHeader";
 import ErrorSection from "./ErrorSection";
 
@@ -25,15 +24,13 @@ export interface Props {}
 
 const ErrorPage = () => {
   // Redux
-  const mapState = useCallback(
+  const { errorMessage, stackTrace, httpErrorCode } = useReduxState(
     ({ errorPage: { errorMessage, stackTrace, httpErrorCode } }) => ({
       errorMessage,
       stackTrace,
       httpErrorCode
-    }),
-    []
+    })
   );
-  const { errorMessage, stackTrace, httpErrorCode } = useMappedState(mapState);
 
   return (
     <div>

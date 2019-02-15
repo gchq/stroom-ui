@@ -1,10 +1,9 @@
 import * as React from "react";
-import { useCallback, useState, useEffect } from "react";
-import { useMappedState } from "redux-react-hook";
+import { useState, useEffect } from "react";
 
 import { IndexVolume } from "../../types";
-import { GlobalStoreState } from "../../startup/reducers";
 
+import useReduxState from "../../lib/useReduxState/useReduxState";
 import { useGetIndexVolumes, useDeleteIndexVolume } from "./client";
 import IconHeader from "../../components/IconHeader";
 import Button from "../../components/Button";
@@ -22,14 +21,11 @@ export interface Props {}
 const IndexVolumes = () => {
   const history = useHistory();
 
-  // Redux
-  const mapState = useCallback(
-    ({ indexVolumes: { indexVolumes } }: GlobalStoreState) => ({
+  const { indexVolumes } = useReduxState(
+    ({ indexVolumes: { indexVolumes } }) => ({
       indexVolumes
-    }),
-    []
+    })
   );
-  const { indexVolumes } = useMappedState(mapState);
   const getIndexVolumes = useGetIndexVolumes();
   const deleteIndexVolume = useDeleteIndexVolume();
 
