@@ -1,14 +1,12 @@
 import * as React from "react";
-import { useEffect } from "react";
-import { compose } from "recompose";
-import { connect } from "react-redux";
+import { useEffect, useCallback } from "react";
+import { useMappedState, useDispatch } from "redux-react-hook";
 
 import Loader from "../Loader";
 import { Props as ButtonProps } from "../Button";
 import DocRefEditor from "../DocRefEditor";
-import { fetchDictionary, saveDictionary } from "./client";
-import { actionCreators, StoreStatePerId } from "./redux";
-import { GlobalStoreState } from "../../startup/reducers";
+import { useFetchDictionary, useSaveDictionary } from "./client";
+import { actionCreators } from "./redux";
 
 const { dictionaryUpdated } = actionCreators;
 
@@ -16,37 +14,21 @@ export interface Props {
   dictionaryUuid: string;
 }
 
-interface ConnectState {
-  dictionaryState: StoreStatePerId;
-}
-interface ConnectDispatch {
-  fetchDictionary: typeof fetchDictionary;
-  dictionaryUpdated: typeof dictionaryUpdated;
-  saveDictionary: typeof saveDictionary;
-}
-
-export interface EnhancedProps extends Props, ConnectState, ConnectDispatch {}
-
-const enhance = compose<EnhancedProps, Props>(
-  connect<ConnectState, ConnectDispatch, Props, GlobalStoreState>(
-    ({ dictionaryEditor }, { dictionaryUuid }) => ({
+const DictionaryEditor = ({ dictionaryUuid }: Props) => {
+  // Declare your memoized mapState function
+  const mapState = useCallback(
+    ({ dictionaryEditor }) => ({
       dictionaryState: dictionaryEditor[dictionaryUuid]
     }),
-    {
-      fetchDictionary,
-      dictionaryUpdated,
-      saveDictionary
-    }
-  )
-);
+    [dictionaryUuid]
+  );
 
-const DictionaryEditor = ({
-  dictionaryUuid,
-  dictionaryState,
-  dictionaryUpdated,
-  fetchDictionary,
-  saveDictionary
-}: EnhancedProps) => {
+  // Get data from and subscribe to the store
+  const dispatch = useDispatch();
+  const { dictionaryState } = useMappedState(mapState);
+  const fetchDictionary = useFetchDictionary();
+  const saveDictionary = useSaveDictionary();
+
   useEffect(() => {
     fetchDictionary(dictionaryUuid);
   });
@@ -71,11 +53,11 @@ const DictionaryEditor = ({
       <textarea
         value={dictionary && dictionary.data}
         onChange={({ target: { value } }) =>
-          dictionaryUpdated(dictionaryUuid, { data: value })
+          dispatch(dictionaryUpdated(dictionaryUuid, { data: value }))
         }
       />
     </DocRefEditor>
   );
 };
 
-export default enhance(DictionaryEditor);
+export default DictionaryEditor;

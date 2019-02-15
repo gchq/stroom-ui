@@ -17,6 +17,7 @@ import { Dispatch } from "redux";
 import { actionCreators } from "./redux";
 import { wrappedGet, wrappedPost } from "../../lib/fetchTracker.redux";
 import { GlobalStoreState } from "../../startup/reducers";
+import useThunk from "../../lib/useThunk";
 
 const { xsltReceived, xsltSaved } = actionCreators;
 
@@ -42,6 +43,7 @@ export const fetchXslt = (xsltUuid: string) => (
     }
   );
 };
+export const useFetchXslt = () => useThunk(fetchXslt);
 
 export const saveXslt = (xsltUuid: string) => (
   dispatch: Dispatch,
@@ -66,3 +68,4 @@ export const saveXslt = (xsltUuid: string) => (
     }
   );
 };
+export const useSaveXslt = () => useThunk(saveXslt);

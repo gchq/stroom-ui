@@ -1,8 +1,7 @@
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import { useMappedState } from "redux-react-hook";
 
-import useThunk from "../../lib/useThunk";
-import { fetchDocRefTypes } from "../FolderExplorer/explorerClient";
+import { useFetchDocRefTypes } from "../FolderExplorer/explorerClient";
 import { GlobalStoreState } from "../../startup/reducers";
 import { DocRefTypeList } from "../../types";
 
@@ -22,7 +21,9 @@ const useDocRefTypes = (): OutProps => {
   // Get data from and subscribe to the store
   const { docRefTypes } = useMappedState(mapState);
 
-  useThunk(fetchDocRefTypes());
+  const fetchDocRefTypes = useFetchDocRefTypes();
+
+  useEffect(() => fetchDocRefTypes(), []);
 
   return {
     docRefTypes

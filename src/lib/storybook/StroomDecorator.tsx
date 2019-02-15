@@ -14,13 +14,16 @@ import { setupTestServer } from "../../lib/storybook/PollyDecorator";
 import FontAwesomeProvider from "../../startup/FontAwesomeProvider";
 import testData from "./fullTestData";
 import { ThemeContextProvider, useTheme } from "../theme";
+import { withRouter, RouteComponentProps } from "react-router";
+import { HistoryContext } from "../useHistory";
 
-interface Props {}
+interface Props extends RouteComponentProps {}
 
 const enhanceLocal = compose(
   setupTestServer(testData),
   DragDropContext(HTML5Backend),
-  FontAwesomeProvider
+  FontAwesomeProvider,
+  withRouter
 );
 
 const store = createStore();
@@ -28,17 +31,23 @@ const store = createStore();
 const WrappedComponent: React.StatelessComponent<Props> = props => {
   const { theme } = useTheme();
 
-  return <div className={`app-container ${theme}`}>{props.children}</div>;
+  return (
+    <HistoryContext.Provider value={props.history}>
+      {" "}
+      <div className={`app-container ${theme}`}>{props.children}</div>
+    </HistoryContext.Provider>
+  );
 };
 
 const ThemedComponent = enhanceLocal(WrappedComponent);
 
-export default (storyFn: RenderFunction) => (
-  <StoreContext.Provider value={store}>
-    <Provider store={store}>
-      <ThemeContextProvider>
-        <ThemedComponent>{StoryRouter()(storyFn)}</ThemedComponent>
-      </ThemeContextProvider>
-    </Provider>
-  </StoreContext.Provider>
-);
+export default (storyFn: RenderFunction) =>
+  StoryRouter()(() => (
+    <StoreContext.Provider value={store}>
+      <Provider store={store}>
+        <ThemeContextProvider>
+          <ThemedComponent>{storyFn()}</ThemedComponent>
+        </ThemeContextProvider>
+      </Provider>
+    </StoreContext.Provider>
+  ));

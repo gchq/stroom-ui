@@ -8,6 +8,7 @@ import {
   wrappedDelete
 } from "../../lib/fetchTracker.redux";
 import { IndexVolume } from "../../types";
+import useThunk from "../../lib/useThunk";
 
 const {
   indexVolumesReceived,
@@ -43,6 +44,7 @@ export const getIndexVolumes = () => (
     true
   );
 };
+export const useGetIndexVolumes = () => useThunk(getIndexVolumes);
 
 export const getIndexVolumeById = (id: number) => (
   dispatch: Dispatch,
@@ -68,6 +70,7 @@ export const getIndexVolumeById = (id: number) => (
     true
   );
 };
+export const useGetIndexVolumeById = () => useThunk(getIndexVolumeById);
 
 export const deleteIndexVolume = (id: number) => (
   dispatch: Dispatch,
@@ -90,6 +93,7 @@ export const deleteIndexVolume = (id: number) => (
     {}
   );
 };
+export const useDeleteIndexVolume = () => useThunk(deleteIndexVolume);
 
 export const getIndexVolumesInGroup = (groupName: string) => (
   dispatch: Dispatch,
@@ -117,6 +121,7 @@ export const getIndexVolumesInGroup = (groupName: string) => (
     true
   );
 };
+export const useGetIndexVolumesInGroup = () => useThunk(getIndexVolumesInGroup);
 
 export const createIndexVolume = (nodeName: string, path: string) => (
   dispatch: Dispatch,
@@ -143,6 +148,7 @@ export const createIndexVolume = (nodeName: string, path: string) => (
     { body }
   );
 };
+export const useCreateIndexVolume = () => useThunk(createIndexVolume);
 
 export const addVolumeToGroup = (indexVolumeId: number, groupName: string) => (
   dispatch: Dispatch,
@@ -162,6 +168,7 @@ export const addVolumeToGroup = (indexVolumeId: number, groupName: string) => (
       .then(() => dispatch(indexVolumeAddedToGroup(indexVolumeId, groupName)))
   );
 };
+export const useAddVolumeToGroup = () => useThunk(addVolumeToGroup);
 
 export const removeVolumeFromGroup = (
   indexVolumeId: number,
@@ -183,3 +190,4 @@ export const removeVolumeFromGroup = (
       )
   );
 };
+export const useRemoveVolumeFromGroup = () => useThunk(removeVolumeFromGroup);

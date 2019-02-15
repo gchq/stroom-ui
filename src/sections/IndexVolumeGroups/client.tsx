@@ -8,6 +8,7 @@ import {
   wrappedDelete
 } from "../../lib/fetchTracker.redux";
 import { IndexVolumeGroup } from "../../types";
+import useThunk from "../../lib/useThunk";
 
 const {
   indexVolumeGroupNamesReceived,
@@ -43,6 +44,7 @@ export const getIndexVolumeGroupNames = () => (
     true
   );
 };
+export const useGetIndexVolumeGroupNames = () => useThunk(getIndexVolumeGroupNames);
 
 export const getIndexVolumeGroups = () => (
   dispatch: Dispatch,
@@ -68,6 +70,7 @@ export const getIndexVolumeGroups = () => (
     true
   );
 };
+export const useGetIndexVolumeGroups = () => useThunk(getIndexVolumeGroups);
 
 export const getIndexVolumeGroup = (name: string) => (
   dispatch: Dispatch,
@@ -95,6 +98,7 @@ export const getIndexVolumeGroup = (name: string) => (
     true
   );
 };
+export const useGetIndexVolumeGroup = () => useThunk(getIndexVolumeGroup);
 
 export const createIndexVolumeGroup = (name: string) => (
   dispatch: Dispatch,
@@ -116,6 +120,7 @@ export const createIndexVolumeGroup = (name: string) => (
       )
   );
 };
+export const useCreateIndexVolumeGroup = () => useThunk(createIndexVolumeGroup);
 
 export const deleteIndexVolumeGroup = (name: string) => (
   dispatch: Dispatch,
@@ -133,3 +138,4 @@ export const deleteIndexVolumeGroup = (name: string) => (
     response.text().then(() => dispatch(indexVolumeGroupDeleted(name)))
   );
 };
+export const useDeleteIndexVolumeGroup = () => useThunk(deleteIndexVolumeGroup);

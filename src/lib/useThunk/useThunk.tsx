@@ -1,5 +1,5 @@
-import { useCallback, useEffect } from "react";
-import { useDispatch, useMappedState } from "redux-react-hook";
+import { useContext } from "react";
+import { StoreContext } from "redux-react-hook";
 import { GlobalStoreState } from "src/startup/reducers";
 import { Dispatch } from "redux";
 
@@ -9,23 +9,20 @@ import { Dispatch } from "redux";
  * @param thunk The thunk that would normally be dispatched, it will be a function that
  * has been called with the domain specific arguments, to return a functio that accepts dispatch & getState.
  */
-export const useThunk = (
-  thunk: (dispatch: Dispatch, getState: () => GlobalStoreState) => any
-): void => {
-  const mapState = useCallback(
-    (state: GlobalStoreState) => ({
-      state
-    }),
-    []
-  );
+export const useThunk = function(
+  thunk: (
+    ...a: any[]
+  ) => (dispatch: Dispatch, getState: () => GlobalStoreState) => any
+): (...a: any[]) => void {
+  const store = useContext(StoreContext);
 
-  // Get data from and subscribe to the store
-  const { state } = useMappedState(mapState);
-  const dispatch = useDispatch();
+  if (!store) {
+    throw new Error("Could not get Redux Store for processing Thunks");
+  }
 
-  useEffect(() => {
-    thunk(dispatch, () => state);
-  }, []);
+  return (...a: any[]) => {
+    thunk(...a)(store.dispatch, store.getState);
+  };
 };
 
 export default useThunk;

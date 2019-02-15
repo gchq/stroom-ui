@@ -6,6 +6,7 @@ import {
   ElementPropertiesByElementIdType,
   ElementDefinition
 } from "../../types";
+import useThunk from "../../lib/useThunk";
 
 const { elementsReceived, elementPropertiesReceived } = actionCreators;
 
@@ -25,6 +26,7 @@ export const fetchElements = () => (
       )
   );
 };
+export const useFetchElements = () => useThunk(fetchElements);
 
 export const fetchElementProperties = () => (
   dispatch: Dispatch,
@@ -42,3 +44,4 @@ export const fetchElementProperties = () => (
       )
   );
 };
+export const useFetchElementProperties = () => useThunk(fetchElementProperties);

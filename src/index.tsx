@@ -12,6 +12,7 @@ import Routes from "./startup/Routes";
 import createStore from "./startup/store";
 import FontAwesomeProvider from "./startup/FontAwesomeProvider";
 import { history } from "./startup/middleware";
+import { HistoryContext } from "./lib/useHistory";
 
 import "./styles/main.css";
 import { ThemeContextProvider } from "./lib/theme";
@@ -29,7 +30,9 @@ ReactDOM.render(
     <Provider store={store}>
       <ThemeContextProvider>
         <ConnectedRouter history={history}>
-          <DndRoutes />
+          <HistoryContext.Provider value={history}>
+            <DndRoutes />
+          </HistoryContext.Provider>
         </ConnectedRouter>
       </ThemeContextProvider>
     </Provider>

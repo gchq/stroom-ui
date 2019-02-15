@@ -17,6 +17,7 @@ import { Dispatch } from "redux";
 import { actionCreators } from "./redux";
 import { wrappedGet, wrappedPost } from "../../lib/fetchTracker.redux";
 import { GlobalStoreState } from "../../startup/reducers";
+import useThunk from "../../lib/useThunk";
 
 const { indexReceived, indexSaved } = actionCreators;
 
@@ -44,6 +45,7 @@ export const fetchIndex = (indexUuid: string) => (
     }
   );
 };
+export const useFetchIndex = () => useThunk(fetchIndex);
 
 export const saveIndex = (indexUuid: string) => (
   dispatch: Dispatch,
@@ -70,3 +72,4 @@ export const saveIndex = (indexUuid: string) => (
     }
   );
 };
+export const useSaveIndex = () => useThunk(saveIndex);

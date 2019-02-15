@@ -1,18 +1,14 @@
 import * as React from "react";
-import { useEffect } from "react";
-import { connect } from "react-redux";
-import { compose } from "recompose";
-import { withRouter, RouteComponentProps } from "react-router-dom";
 
-import { fetchDocTree } from "../FolderExplorer/explorerClient";
 import AppSearchBar from "../AppSearchBar";
 import { DocRefIconHeader } from "../IconHeader";
 import DocRefBreadcrumb from "../DocRefBreadcrumb";
 import Button, { Props as ButtonProps } from "../Button";
 import { DocRefWithLineage, DocRefConsumer } from "../../types";
-import { GlobalStoreState } from "../../startup/reducers";
 import { findItem } from "../../lib/treeUtils";
 import Loader from "../Loader";
+import { useDocumentTree } from "../FolderExplorer/useDocumentTree";
+import useHistory from "../../lib/useHistory";
 
 export interface Props {
   actionBarItems: Array<ButtonProps>;
@@ -20,40 +16,14 @@ export interface Props {
   children?: React.ReactNode;
 }
 
-interface ConnectState {
-  docRefWithLineage: DocRefWithLineage;
-}
+const DocRefEditor = ({ actionBarItems, children, docRefUuid }: Props) => {
+  const history = useHistory();
+  const documentTree = useDocumentTree();
 
-interface ConnectDispatch {
-  fetchDocTree: typeof fetchDocTree;
-}
-
-export interface EnhancedProps
-  extends Props,
-    ConnectState,
-    ConnectDispatch,
-    RouteComponentProps<any> {}
-
-const enhance = compose<EnhancedProps, Props>(
-  connect<ConnectState, ConnectDispatch, Props, GlobalStoreState>(
-    ({ folderExplorer: { documentTree } }, { docRefUuid }) => ({
-      docRefWithLineage: findItem(documentTree, docRefUuid) as DocRefWithLineage
-    }),
-    { fetchDocTree }
-  ),
-  withRouter
-);
-
-const DocRefEditor = ({
-  docRefWithLineage,
-  actionBarItems,
-  children,
-  fetchDocTree,
-  history
-}: EnhancedProps) => {
-  useEffect(() => {
-    fetchDocTree();
-  });
+  const docRefWithLineage = findItem(
+    documentTree,
+    docRefUuid
+  ) as DocRefWithLineage;
 
   const openDocRef: DocRefConsumer = d =>
     history.push(`/s/doc/${d.type}/${d.uuid}`);
@@ -94,4 +64,4 @@ const DocRefEditor = ({
   );
 };
 
-export default enhance(DocRefEditor);
+export default DocRefEditor;

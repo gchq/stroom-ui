@@ -18,6 +18,7 @@ import { wrappedGet, wrappedPost } from "../../lib/fetchTracker.redux";
 import { PipelineModelType, PipelineSearchResultType } from "../../types";
 import { Dispatch } from "redux";
 import { GlobalStoreState } from "../../startup/reducers";
+import useThunk from "../../lib/useThunk";
 
 const {
   pipelineReceived,
@@ -42,6 +43,7 @@ export const fetchPipeline = (pipelineId: string) => (
       )
   );
 };
+export const useFetchPipeline = () => useThunk(fetchPipeline);
 
 export const savePipeline = (pipelineId: string) => (
   dispatch: Dispatch,
@@ -67,6 +69,7 @@ export const savePipeline = (pipelineId: string) => (
     }
   );
 };
+export const useSavePipeline = () => useThunk(savePipeline);
 
 export const searchPipelines = () => (
   dispatch: Dispatch,
@@ -99,3 +102,4 @@ export const searchPipelines = () => (
     forceGet
   );
 };
+export const useSearchPipelines = () => useThunk(searchPipelines);

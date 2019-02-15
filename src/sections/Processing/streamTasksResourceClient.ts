@@ -3,6 +3,7 @@ import { wrappedGet, wrappedPatch } from "../../lib/fetchTracker.redux";
 import { StreamTasksResponseType } from "../../types";
 import { Dispatch } from "redux";
 import { GlobalStoreState } from "../../startup/reducers";
+import useThunk from "../../lib/useThunk";
 
 export enum TrackerSelection {
   first = "first",
@@ -65,6 +66,7 @@ export const fetchTrackers = (trackerSelection?: TrackerSelection) => (
     true
   );
 };
+export const useFetchTrackers = () => useThunk(fetchTrackers);
 
 export const fetchMore = (trackerSelection: TrackerSelection) => (
   dispatch: Dispatch,
@@ -124,6 +126,7 @@ export const fetchMore = (trackerSelection: TrackerSelection) => (
     true
   );
 };
+export const useFetchMore = () => useThunk(fetchMore);
 
 export const enableToggle = (filterId: number, isCurrentlyEnabled: boolean) => (
   dispatch: Dispatch,
@@ -147,6 +150,7 @@ export const enableToggle = (filterId: number, isCurrentlyEnabled: boolean) => (
     { body }
   );
 };
+export const useEnableToggle = () => useThunk(enableToggle);
 
 // TODO: This isn't currently used.
 // const getRowsPerPage = (isDetailsVisible) => {

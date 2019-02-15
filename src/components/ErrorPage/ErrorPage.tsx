@@ -15,47 +15,43 @@
  */
 
 import * as React from "react";
-import { connect } from "react-redux";
+import { useCallback } from "react";
+import { useMappedState } from "redux-react-hook";
+
 import IconHeader from "../IconHeader";
-import { StoreState as ErrorStoreState } from "./redux";
-import { GlobalStoreState } from "../../startup/reducers";
 import ErrorSection from "./ErrorSection";
 
 export interface Props {}
-interface ConnectState extends ErrorStoreState {}
-interface ConnectDispatch {}
-export interface EnhancedProps extends Props, ConnectState, ConnectDispatch {}
 
-const enhance = connect<ConnectState, ConnectDispatch, Props, GlobalStoreState>(
-  ({ errorPage: { errorMessage, stackTrace, httpErrorCode } }) => ({
-    errorMessage,
-    stackTrace,
-    httpErrorCode
-  }),
-  {}
-);
+const ErrorPage = () => {
+  // Redux
+  const mapState = useCallback(
+    ({ errorPage: { errorMessage, stackTrace, httpErrorCode } }) => ({
+      errorMessage,
+      stackTrace,
+      httpErrorCode
+    }),
+    []
+  );
+  const { errorMessage, stackTrace, httpErrorCode } = useMappedState(mapState);
 
-const ErrorPage = ({
-  errorMessage,
-  stackTrace,
-  httpErrorCode
-}: EnhancedProps) => (
-  <div>
-    <IconHeader icon="exclamation-circle" text="There has been an error!" />
+  return (
+    <div>
+      <IconHeader icon="exclamation-circle" text="There has been an error!" />
 
-    <div className="ErrorPage__details">
-      {errorMessage && (
-        <ErrorSection errorData={errorMessage} title="Error Message" />
-      )}
-      {httpErrorCode !== 0 &&
-        httpErrorCode && (
+      <div className="ErrorPage__details">
+        {errorMessage && (
+          <ErrorSection errorData={errorMessage} title="Error Message" />
+        )}
+        {httpErrorCode !== 0 && httpErrorCode && (
           <ErrorSection errorData={httpErrorCode} title="HTTP error code" />
         )}
-      {stackTrace && (
-        <ErrorSection errorData={stackTrace} title="Stack trace" />
-      )}
+        {stackTrace && (
+          <ErrorSection errorData={stackTrace} title="Stack trace" />
+        )}
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
-export default enhance(ErrorPage);
+export default ErrorPage;

@@ -1,77 +1,83 @@
 import * as React from "react";
+import { useState } from "react";
 
-import { connect } from "react-redux";
-import { compose } from "recompose";
 import { Formik, Field } from "formik";
 
-import { createIndexVolume } from "./client";
+import { useCreateIndexVolume } from "./client";
 import ThemedModal from "../../components/ThemedModal";
 import DialogActionButtons from "../../components/FolderExplorer/DialogActionButtons";
 
 export interface Props {
   isOpen: boolean;
-  onCancel: () => void;
+  onCloseDialog: () => void;
 }
-
-interface ConnectState {}
-
-interface ConnectDispatch {
-  createIndexVolume: typeof createIndexVolume;
-}
-
-interface EnhancedProps extends Props, ConnectState, ConnectDispatch {}
 
 interface FormValues {
   nodeName: string;
   path: string;
 }
 
-const enhance = compose<EnhancedProps, Props>(
-  connect(
-    () => ({}),
-    {
-      createIndexVolume
-    }
-  )
-);
+const NewIndexVolumeDialog = ({ isOpen, onCloseDialog }: Props) => {
+  const createIndexVolume = useCreateIndexVolume();
 
-const NewIndexVolumeDialog = ({
-  isOpen,
-  onCancel,
-  createIndexVolume
-}: EnhancedProps) => (
-  <Formik<FormValues>
-    initialValues={{
-      nodeName: "",
-      path: ""
-    }}
-    onSubmit={values => {
-      if (values.nodeName && values.path) {
-        createIndexVolume(values.nodeName, values.path);
-        onCancel();
+  return (
+    <Formik<FormValues>
+      initialValues={{
+        nodeName: "",
+        path: ""
+      }}
+      onSubmit={values => {
+        if (values.nodeName && values.path) {
+          createIndexVolume(values.nodeName, values.path);
+          onCloseDialog();
+        }
+      }}
+    >
+      {({ submitForm }: Formik) => (
+        <ThemedModal
+          isOpen={isOpen}
+          header={<h2>Create New Index Volume</h2>}
+          content={
+            <form>
+              <div>
+                <label>Node Name</label>
+                <Field name="nodeName" />
+                <label>Path</label>
+                <Field name="path" />
+              </div>
+            </form>
+          }
+          actions={
+            <DialogActionButtons
+              onCancel={onCloseDialog}
+              onConfirm={submitForm}
+            />
+          }
+        />
+      )}
+    </Formik>
+  );
+};
+
+export interface UseDialog {
+  componentProps: Props;
+  showDialog: () => void;
+}
+
+export const useDialog = () => {
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+
+  return {
+    componentProps: {
+      isOpen,
+      onCloseDialog: () => {
+        setIsOpen(false);
       }
-    }}
-  >
-    {({ submitForm }: Formik) => (
-      <ThemedModal
-        isOpen={isOpen}
-        header={<h2>Create New Index Volume</h2>}
-        content={
-          <form>
-            <div>
-              <label>Node Name</label>
-              <Field name="nodeName" />
-              <label>Path</label>
-              <Field name="path" />
-            </div>
-          </form>
-        }
-        actions={
-          <DialogActionButtons onCancel={onCancel} onConfirm={submitForm} />
-        }
-      />
-    )}
-  </Formik>
-);
+    },
+    showDialog: () => {
+      setIsOpen(true);
+    }
+  };
+};
 
-export default enhance(NewIndexVolumeDialog);
+export default NewIndexVolumeDialog;

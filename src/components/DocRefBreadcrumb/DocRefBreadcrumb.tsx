@@ -1,13 +1,9 @@
 import * as React from "react";
-import { useEffect } from "react";
-import { connect } from "react-redux";
-import { compose } from "recompose";
 
 import { findItem } from "../../lib/treeUtils";
 import { DocRefConsumer, DocRefWithLineage } from "../../types";
-import { GlobalStoreState } from "../../startup/reducers";
 import Loader from "../Loader";
-import { fetchDocTree } from "../FolderExplorer/explorerClient";
+import { useDocumentTree } from "../FolderExplorer/useDocumentTree";
 
 export interface Props {
   docRefUuid: string;
@@ -15,37 +11,19 @@ export interface Props {
   className?: string;
 }
 
-interface ConnectState {
-  docRefWithLineage: DocRefWithLineage;
-}
-
-interface ConnectDispatch {
-  fetchDocTree: typeof fetchDocTree;
-}
-
-export interface EnhancedProps extends Props, ConnectState, ConnectDispatch {}
-
-const enhance = compose<EnhancedProps, Props>(
-  connect<ConnectState, ConnectDispatch, Props, GlobalStoreState>(
-    ({ folderExplorer: { documentTree } }, { docRefUuid }) => ({
-      docRefWithLineage: findItem(documentTree, docRefUuid) as DocRefWithLineage
-    }),
-    { fetchDocTree }
-  )
-);
-
 const Divider = () => <div className="DocRefBreadcrumb__divider">/</div>;
 
 const DocRefBreadcrumb = ({
   docRefUuid,
-  docRefWithLineage,
   openDocRef,
-  fetchDocTree,
   className = ""
-}: EnhancedProps) => {
-  useEffect(() => {
-    fetchDocTree();
-  });
+}: Props) => {
+  const documentTree = useDocumentTree();
+
+  const docRefWithLineage = findItem(
+    documentTree,
+    docRefUuid
+  ) as DocRefWithLineage;
 
   if (!docRefWithLineage || !docRefWithLineage.node) {
     return <Loader message={`Loading Doc Ref ${docRefUuid}...`} />;
@@ -76,4 +54,4 @@ const DocRefBreadcrumb = ({
   );
 };
 
-export default enhance(DocRefBreadcrumb);
+export default DocRefBreadcrumb;

@@ -1,23 +1,21 @@
 import * as React from "react";
-import { useState, useEffect } from "react";
+import { useState, useCallback } from "react";
 
-import { compose } from "recompose";
-import { connect } from "react-redux";
+import { useMappedState } from "redux-react-hook";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { findItem, filterTree } from "../../lib/treeUtils";
-import { StoreState as AppSearchStoreState, SearchMode } from "./redux";
+import { SearchMode } from "./redux";
 import { DocRefType, DocRefTree, DocRefWithLineage } from "../../types";
-import { searchApp } from "../FolderExplorer/explorerClient";
+import { useSearchApp } from "../FolderExplorer/explorerClient";
 import { DocRefBreadcrumb } from "../DocRefBreadcrumb";
 import DocRefListingEntry from "../DocRefListingEntry";
-import { fetchDocTree } from "../FolderExplorer/explorerClient";
 
 import ModeOptionButtons from "./ModeOptionButtons";
-import { GlobalStoreState } from "../../startup/reducers";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import useSelectableItemListing from "../../lib/useSelectableItemListing";
 import useRecentItems from "../../lib/useRecentItems";
+import { useDocumentTree } from "../FolderExplorer/useDocumentTree";
 
 interface Props {
   pickerId: string;
@@ -27,47 +25,27 @@ interface Props {
   className?: string;
 }
 
-interface ConnectState {
-  appSearch: AppSearchStoreState;
-  documentTree: DocRefTree;
-}
-
-interface ConnectDispatch {
-  searchApp: typeof searchApp;
-  fetchDocTree: typeof fetchDocTree;
-}
-
-export interface EnhancedProps extends Props, ConnectState, ConnectDispatch {}
-
-const enhance = compose<EnhancedProps, Props>(
-  connect<ConnectState, ConnectDispatch, Props, GlobalStoreState>(
-    ({ appSearch, folderExplorer: { documentTree } }) => ({
-      appSearch,
-      documentTree
-    }),
-    {
-      searchApp,
-      fetchDocTree
-    }
-  )
-);
-
 const AppSearchBar = ({
-  fetchDocTree,
   className,
   pickerId,
   typeFilters = [],
   onChange,
-  appSearch,
-  value,
-  documentTree,
-  searchApp
-}: EnhancedProps) => {
+  value
+}: Props) => {
+  // Declare your memoized mapState function
+  const mapState = useCallback(
+    ({ appSearch }) => ({
+      appSearch
+    }),
+    []
+  );
+
+  // Get data from and subscribe to the store
+  const { appSearch } = useMappedState(mapState);
+  const documentTree = useDocumentTree();
   const { recentItems } = useRecentItems();
 
-  useEffect(() => {
-    fetchDocTree();
-  }, []);
+  const searchApp = useSearchApp();
 
   let [textFocus, setTextFocus] = useState<boolean>(false);
   let [searchTerm, setSearchTerm] = useState<string>("");
@@ -267,7 +245,7 @@ const AppSearchBar = ({
   );
 };
 
-export default enhance(AppSearchBar);
+export default AppSearchBar;
 
 // This component is used to throw focus away from the dropdown when a value is picked
 // class AppSearchWithFocus extends React.Component<Props> {

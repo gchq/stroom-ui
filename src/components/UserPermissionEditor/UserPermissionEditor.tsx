@@ -1,70 +1,54 @@
 import * as React from "react";
+import { useCallback, useEffect } from "react";
+import { useMappedState } from "redux-react-hook";
 
-import { compose, lifecycle } from "recompose";
-import { connect } from "react-redux";
-import { withRouter, RouteComponentProps } from "react-router";
 import IconHeader from "../IconHeader";
 import Button from "../Button";
-import { User } from "../../types";
 import UsersInGroup from "./UsersInGroup";
 import GroupsForUser from "./GroupsForUser";
-import { GlobalStoreState } from "src/startup/reducers";
-import { findUsers } from "../../sections/UserPermissions/client";
+import { GlobalStoreState } from "../../startup/reducers";
+import { useFindUsers } from "../../sections/UserPermissions/client";
 import Loader from "../Loader";
+import useHistory from "../../lib/useHistory";
 
 export interface Props {
   userUuid: string;
   listingId: string;
 }
 
-interface ConnectState {
-  user?: User;
-}
+const UserPermissionEditor = ({ listingId, userUuid }: Props) => {
+  const history = useHistory();
+  const findUsers = useFindUsers();
+  useEffect(() => {
+    findUsers(listingId, undefined, undefined, userUuid);
+  }, []);
 
-interface ConnectDispatch {
-  findUsers: typeof findUsers;
-}
-
-interface LifecycleProps {}
-
-interface EnhancedProps
-  extends Props,
-    ConnectState,
-    ConnectDispatch,
-    LifecycleProps,
-    RouteComponentProps<any> {}
-
-const enhance = compose<EnhancedProps, Props>(
-  withRouter,
-  connect<ConnectState, ConnectDispatch, Props, GlobalStoreState>(
-    ({ userPermissions: { users } }, { listingId, userUuid }) => ({
+  // Declare your memoized mapState function
+  const mapState = useCallback(
+    ({ userPermissions: { users } }: GlobalStoreState) => ({
       user: users[listingId] && users[listingId].find(u => u.uuid === userUuid)
     }),
-    { findUsers }
-  ),
-  lifecycle<Props & ConnectDispatch, {}>({
-    componentDidMount() {
-      const { findUsers, userUuid, listingId } = this.props;
+    [listingId, userUuid]
+  );
 
-      findUsers(listingId, undefined, undefined, userUuid);
-    }
-  })
-);
+  // Get data from and subscribe to the store
+  const { user } = useMappedState(mapState);
 
-const UserPermissionEditor = ({ userUuid, user, history }: EnhancedProps) => (
-  <div>
-    <IconHeader text={`User Permissions for ${userUuid}`} icon="user" />
-    <Button text="Back" onClick={() => history.push("/s/userPermissions")} />
-    {user ? (
-      user.isGroup ? (
-        <UsersInGroup group={user} />
+  return (
+    <div>
+      <IconHeader text={`User Permissions for ${userUuid}`} icon="user" />
+      <Button text="Back" onClick={() => history.push("/s/userPermissions")} />
+      {user ? (
+        user.isGroup ? (
+          <UsersInGroup group={user} />
+        ) : (
+          <GroupsForUser user={user} />
+        )
       ) : (
-        <GroupsForUser user={user} />
-      )
-    ) : (
-      <Loader message="Loading user..." />
-    )}
-  </div>
-);
+        <Loader message="Loading user..." />
+      )}
+    </div>
+  );
+};
 
-export default enhance(UserPermissionEditor);
+export default UserPermissionEditor;

@@ -18,6 +18,7 @@ import { actionCreators } from "./redux";
 import { wrappedGet, wrappedPost } from "../../lib/fetchTracker.redux";
 import { GlobalStoreState } from "../../startup/reducers";
 import { Dictionary } from "../../types";
+import useThunk from "../../lib/useThunk";
 
 const { dictionaryReceived, dictionarySaved } = actionCreators;
 
@@ -37,6 +38,7 @@ export const fetchDictionary = (dictionaryUuid: string) => (
       )
   );
 };
+export const useFetchDictionary = () => useThunk(fetchDictionary);
 
 export const saveDictionary = (dictionaryUuid: string) => (
   dispatch: Dispatch,
@@ -62,3 +64,5 @@ export const saveDictionary = (dictionaryUuid: string) => (
     }
   );
 };
+
+export const useSaveDictionary = () => useThunk(saveDictionary);

@@ -14,11 +14,8 @@
  * limitations under the License.
  */
 import * as React from "react";
-import { useEffect } from "react";
-
-import { connect } from "react-redux";
-import { compose } from "recompose";
-import { withRouter, RouteComponentProps } from "react-router-dom";
+import { useMappedState } from "redux-react-hook";
+import { useEffect, useCallback } from "react";
 
 import "simplebar";
 import "simplebar/dist/simplebar.css";
@@ -48,6 +45,8 @@ import useLocalStorage, {
 } from "../../lib/useLocalStorage";
 import { useTheme } from "../../lib/theme";
 import { fetchDocTree } from "../../components/FolderExplorer/explorerClient";
+import useHistory from "../../lib/useHistory";
+import { useDocumentTree } from "../../components/FolderExplorer/useDocumentTree";
 
 const pathPrefix = "/s";
 
@@ -97,56 +96,6 @@ interface Props {
   content: React.ReactNode;
   activeMenuItem: string;
 }
-interface WithHandlers {
-  openDocRef: DocRefConsumer;
-}
-interface ConnectState {
-  documentTree: DocRefTree;
-}
-interface ConnectDispatch {
-  copyDocuments: typeof copyDocuments;
-  moveDocuments: typeof moveDocuments;
-  fetchDocTree: typeof fetchDocTree;
-}
-interface WithIsExpanded {
-  isExpanded: boolean;
-  setIsExpanded: (value: boolean) => any;
-}
-
-interface EnhancedProps
-  extends Props,
-    RouteComponentProps<any>,
-    WithHandlers,
-    ConnectState,
-    ConnectDispatch,
-    WithIsExpanded {}
-
-const enhance = compose<EnhancedProps, Props>(
-  withRouter,
-  connect<
-    ConnectState,
-    ConnectDispatch,
-    Props & RouteComponentProps<any> & WithHandlers,
-    GlobalStoreState
-  >(
-    ({ folderExplorer: { documentTree }, routing: { location } }) => ({
-      location,
-      documentTree
-    }),
-    {
-      copyDocuments,
-      moveDocuments,
-      fetchDocTree
-    }
-  )
-  // We need to work out how to do these global shortcuts from scratch, now that we don't have dedicated pages
-  // lifecycle({
-  //   componentDidMount() {
-  //     Mousetrap.bind('ctrl+shift+e', () => this.props.history.push('/s/recentItems'));
-  //     Mousetrap.bind('ctrl+shift+f', () => this.props.history.push('/s/search'));
-  //   },
-  // }),
-);
 
 const getMenuItems = (
   isCollapsed: boolean = false,
@@ -200,15 +149,21 @@ const getMenuItems = (
     </React.Fragment>
   ));
 
-const AppChrome = ({
-  content,
-  copyDocuments,
-  moveDocuments,
-  fetchDocTree,
-  history,
-  documentTree
-}: EnhancedProps) => {
+const AppChrome = ({ content }: Props) => {
   const { theme } = useTheme();
+  const history = useHistory();
+  const documentTree = useDocumentTree();
+
+  // Declare your memoized mapState function
+  const mapState = useCallback(
+    ({ routing: { location } }: GlobalStoreState) => ({
+      location
+    }),
+    []
+  );
+
+  // Get data from and subscribe to the store
+  const { location } = useMappedState(mapState);
 
   useEffect(() => {
     fetchDocTree();
@@ -245,7 +200,8 @@ const AppChrome = ({
       onClick: () => history.push(`${pathPrefix}/welcome/`),
       icon: "home",
       style: "nav",
-      isActive: location && location.pathname.includes(`${pathPrefix}/welcome/`)
+      isActive:
+        !!location && location.pathname.includes(`${pathPrefix}/welcome/`)
     },
     getDocumentTreeMenuItems(openDocRef, undefined, documentTree),
     {
@@ -254,7 +210,7 @@ const AppChrome = ({
       onClick: () => history.push(`${pathPrefix}/data`),
       icon: "database",
       style: "nav",
-      isActive: location && location.pathname.includes(`${pathPrefix}/data`)
+      isActive: !!location && location.pathname.includes(`${pathPrefix}/data`)
     },
     {
       key: "processing",
@@ -263,7 +219,7 @@ const AppChrome = ({
       icon: "play",
       style: "nav",
       isActive:
-        location && location.pathname.includes(`${pathPrefix}/processing`)
+        !!location && location.pathname.includes(`${pathPrefix}/processing`)
     },
     {
       key: "indexing",
@@ -273,7 +229,7 @@ const AppChrome = ({
       style: "nav",
       skipInContractedMenu: true,
       isActive:
-        location &&
+        !!location &&
         (location.pathname.includes(`${pathPrefix}/indexing/volumes`) ||
           location.pathname.includes(`${pathPrefix}/indexing/groups`)),
       children: [
@@ -284,7 +240,7 @@ const AppChrome = ({
           icon: "database",
           style: "nav",
           isActive:
-            location &&
+            !!location &&
             location.pathname.includes(`${pathPrefix}/indexing/volumes`)
         },
         {
@@ -294,7 +250,7 @@ const AppChrome = ({
           icon: "database",
           style: "nav",
           isActive:
-            location &&
+            !!location &&
             location.pathname.includes(`${pathPrefix}/indexing/groups`)
         }
       ]
@@ -307,7 +263,7 @@ const AppChrome = ({
       style: "nav",
       skipInContractedMenu: true,
       isActive:
-        location &&
+        !!location &&
         (location.pathname.includes("/s/me") ||
           location.pathname.includes("/s/users") ||
           location.pathname.includes("/s/apikeys")),
@@ -318,7 +274,7 @@ const AppChrome = ({
           onClick: () => history.push(`${pathPrefix}/me`),
           icon: "user",
           style: "nav",
-          isActive: location && location.pathname.includes("/s/me")
+          isActive: !!location && location.pathname.includes("/s/me")
         },
         {
           key: "admin-user-permissions",
@@ -326,7 +282,8 @@ const AppChrome = ({
           onClick: () => history.push(`${pathPrefix}/userPermissions`),
           icon: "users",
           style: "nav",
-          isActive: location && location.pathname.includes("/s/userPermissions")
+          isActive:
+            !!location && location.pathname.includes("/s/userPermissions")
         },
         {
           key: "admin-users",
@@ -334,7 +291,7 @@ const AppChrome = ({
           onClick: () => history.push(`${pathPrefix}/users`),
           icon: "users",
           style: "nav",
-          isActive: location && location.pathname.includes("/s/users")
+          isActive: !!location && location.pathname.includes("/s/users")
         },
         {
           key: "admin-apikeys",
@@ -342,7 +299,7 @@ const AppChrome = ({
           onClick: () => history.push(`${pathPrefix}/apikeys`),
           icon: "key",
           style: "nav",
-          isActive: location && location.pathname.includes("/s/apikeys")
+          isActive: !!location && location.pathname.includes("/s/apikeys")
         }
       ]
     }
@@ -449,4 +406,4 @@ const AppChrome = ({
   );
 };
 
-export default enhance(AppChrome);
+export default AppChrome;

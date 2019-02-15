@@ -15,16 +15,15 @@
  */
 
 import * as React from "react";
-import { compose, lifecycle } from "recompose";
-import { connect } from "react-redux";
+import { useEffect } from "react";
 import { storiesOf } from "@storybook/react";
 
 import ErrorPage from "./ErrorPage";
 import StroomDecorator from "../../lib/storybook/StroomDecorator";
 import { actionCreators } from "./redux";
-import { GlobalStoreState } from "../../startup/reducers";
 
 import "../../styles/main.css";
+import { useDispatch } from "redux-react-hook";
 
 const { setErrorMessage, setStackTrace, setHttpErrorCode } = actionCreators;
 
@@ -54,55 +53,39 @@ at renderRoot (http://localhost:9001/static/preview.bundle.js:40027:9)`;
 const httpErrorStatus = 501;
 
 interface Props {
-  errorMessage?: string;
-  stackTrace?: string;
-  httpErrorStatus?: number;
-}
-interface ConnectState {}
-interface ConnectDispatch {
-  setErrorMessage: typeof setErrorMessage;
-  setStackTrace: typeof setStackTrace;
-  setHttpErrorCode: typeof setHttpErrorCode;
+  _errorMessage?: string;
+  _stackTrace?: string;
+  _httpErrorStatus?: number;
 }
 
-const enhance = compose<{}, Props>(
-  connect<ConnectState, ConnectDispatch, Props, GlobalStoreState>(
-    undefined,
-    { setErrorMessage, setStackTrace, setHttpErrorCode }
-  ),
-  lifecycle<Props & ConnectState & ConnectDispatch, {}>({
-    componentDidMount() {
-      const {
-        setErrorMessage,
-        setStackTrace,
-        setHttpErrorCode,
-        errorMessage,
-        stackTrace,
-        httpErrorStatus
-      } = this.props;
+const TestErrorPage = ({
+  _errorMessage,
+  _stackTrace,
+  _httpErrorStatus
+}: Props) => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (!!_errorMessage) dispatch(setErrorMessage(_errorMessage));
+    if (!!_stackTrace) dispatch(setStackTrace(stackTrace));
+    if (!!_httpErrorStatus) dispatch(setHttpErrorCode(httpErrorStatus));
+  }, []);
 
-      if (errorMessage) setErrorMessage(errorMessage);
-      if (stackTrace) setStackTrace(stackTrace);
-      if (httpErrorStatus) setHttpErrorCode(httpErrorStatus);
-    }
-  })
-);
-
-const TestErrorPage = enhance(ErrorPage);
+  return <ErrorPage />;
+};
 
 storiesOf("Sections/ErrorPage", module)
   .addDecorator(StroomDecorator)
   .add("No details", () => <TestErrorPage />)
   .add("Just error message", () => (
-    <TestErrorPage errorMessage={errorMessage} />
+    <TestErrorPage _errorMessage={errorMessage} />
   ))
   .add("Error message and stack trace", () => (
-    <TestErrorPage errorMessage={errorMessage} stackTrace={stackTrace} />
+    <TestErrorPage _errorMessage={errorMessage} _stackTrace={stackTrace} />
   ))
   .add("Everything", () => (
     <TestErrorPage
-      errorMessage={errorMessage}
-      stackTrace={stackTrace}
-      httpErrorStatus={httpErrorStatus}
+      _errorMessage={errorMessage}
+      _stackTrace={stackTrace}
+      _httpErrorStatus={httpErrorStatus}
     />
   ));

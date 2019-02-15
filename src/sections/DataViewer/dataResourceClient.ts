@@ -3,6 +3,7 @@ import { wrappedGet } from "../../lib/fetchTracker.redux";
 import { Dispatch } from "redux";
 import { GlobalStoreState } from "../../startup/reducers";
 import { AbstractFetchDataResult } from "../../types";
+import useThunk from "../../lib/useThunk";
 
 export const getDataForSelectedRow = (dataViewerId: string) => (
   dispatch: Dispatch,
@@ -40,3 +41,4 @@ export const getDataForSelectedRow = (dataViewerId: string) => (
     true
   );
 };
+export const useGetDataForSelectedRow = () => useThunk(getDataForSelectedRow);

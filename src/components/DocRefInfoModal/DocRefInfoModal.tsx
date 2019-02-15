@@ -14,57 +14,40 @@
  * limitations under the License.
  */
 import * as React from "react";
-import { useState, useEffect } from "react";
-import { connect } from "react-redux";
-import { compose } from "recompose";
+import { useState, useEffect, useCallback } from "react";
+import { useMappedState } from "redux-react-hook";
 
 import Loader from "../Loader";
 import ThemedModal from "../ThemedModal";
 import IconHeader from "../IconHeader";
 import Button from "../Button";
-import { GlobalStoreState } from "../../startup/reducers";
-import { fetchDocInfo } from "../FolderExplorer/explorerClient";
-import { DocRefType, DocRefInfoType } from "../../types";
+import { useFetchDocInfo } from "../FolderExplorer/explorerClient";
+import { DocRefType } from "../../types";
 
 export interface Props {
   docRef?: DocRefType;
   isOpen: boolean;
   onCloseDialog: () => void;
 }
-interface ConnectState {
-  docRefInfoByUuid: { [s: string]: DocRefInfoType };
-}
-interface ConnectDispatch {
-  fetchDocInfo: typeof fetchDocInfo;
-}
-
-export interface EnhancedProps extends Props, ConnectState, ConnectDispatch {}
-
-const enhance = compose<EnhancedProps, Props>(
-  connect<ConnectState, ConnectDispatch, Props, GlobalStoreState>(
-    ({ folderExplorer: { docRefInfoByUuid } }) => ({
-      docRefInfoByUuid
-    }),
-    {
-      fetchDocInfo
-    }
-  )
-);
 
 const doNothing = () => {};
 
-const DocRefInfoModal = ({
-  isOpen,
-  onCloseDialog,
-  docRef,
-  docRefInfoByUuid,
-  fetchDocInfo
-}: EnhancedProps) => {
+const DocRefInfoModal = ({ isOpen, onCloseDialog, docRef }: Props) => {
+  const mapState = useCallback(
+    ({ folderExplorer: { docRefInfoByUuid } }) => ({
+      docRefInfoByUuid
+    }),
+    []
+  );
+
+  const { docRefInfoByUuid } = useMappedState(mapState);
+
   useEffect(() => {
     if (!!docRef) {
       fetchDocInfo(docRef);
     }
   });
+  const fetchDocInfo = useFetchDocInfo();
 
   if (!isOpen || !docRef) {
     return null;
@@ -204,4 +187,4 @@ export const useDocRefInfoDialog = (): UseDocRefInfoDialog => {
   };
 };
 
-export default enhance(DocRefInfoModal);
+export default DocRefInfoModal;

@@ -9,6 +9,7 @@ import {
 import { Dispatch } from "redux";
 import { DataRow, StreamAttributeMapResult } from "./types";
 import { GlobalStoreState } from "../../startup/reducers";
+import useThunk from "../../lib/useThunk";
 
 export const search = (
   dataViewerId: string,
@@ -58,6 +59,7 @@ export const search = (
     true
   );
 };
+export const useSearch = () => useThunk(search);
 
 export const searchWithExpression = (
   dataViewerId: string,
@@ -111,6 +113,7 @@ export const searchWithExpression = (
     }
   );
 };
+export const useSearchWithExpression = () => useThunk(searchWithExpression);
 
 /**
  * TODO: shouldn't actually have to use this -- ideally the ExpressionBuilder would
@@ -154,6 +157,7 @@ export const fetchDataSource = (dataViewerId: string) => (
     true
   );
 };
+export const useFetchDataSource = () => useThunk(fetchDataSource);
 
 export const getDetailsForSelectedRow = (dataViewerId: string) => (
   dispatch: Dispatch,
@@ -186,3 +190,4 @@ export const getDetailsForSelectedRow = (dataViewerId: string) => (
     true
   );
 };
+export const useGetDetailsForSelectedRow = () => useThunk(getDetailsForSelectedRow);

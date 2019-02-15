@@ -15,15 +15,11 @@
  */
 
 import * as React from "react";
-import { useEffect } from "react";
-import { connect } from "react-redux";
-import { compose } from "recompose";
-import { withRouter, RouteComponentProps } from "react-router-dom";
 
 import DocRefEditor from "../DocRefEditor";
 import Loader from "../Loader";
 import { findItem } from "../../lib/treeUtils";
-import { copyDocuments, moveDocuments } from "./explorerClient";
+import { useCopyDocuments, useMoveDocuments } from "./explorerClient";
 import DndDocRefListingEntry from "./DndDocRefListingEntry";
 import CreateDocRefDialog, {
   useDialog as useCreateDialog
@@ -38,57 +34,27 @@ import DeleteDocRefDialog, {
   useDialog as useDeleteDialog
 } from "./DeleteDocRefDialog";
 import DocRefInfoModal from "../DocRefInfoModal";
-import { fetchDocTree } from "../FolderExplorer/explorerClient";
 import { Props as ButtonProps } from "../Button";
-import { DocRefType, DocRefWithLineage, DocRefConsumer } from "../../types";
-import { GlobalStoreState } from "../../startup/reducers";
+import { DocRefType, DocRefConsumer } from "../../types";
 import useSelectableItemListing, {
   SelectionBehaviour
 } from "../../lib/useSelectableItemListing";
 import { useDocRefInfoDialog } from "../DocRefInfoModal/DocRefInfoModal";
+import { useDocumentTree } from "./useDocumentTree";
+import useHistory from "../../lib/useHistory";
 
 export interface Props {
   folderUuid: string;
 }
 
-interface ConnectState {
-  folder: DocRefWithLineage;
-}
+const FolderExplorer = ({ folderUuid }: Props) => {
+  const documentTree = useDocumentTree();
 
-interface ConnectDispatch {
-  copyDocuments: typeof copyDocuments;
-  moveDocuments: typeof moveDocuments;
-  fetchDocTree: typeof fetchDocTree;
-}
+  const history = useHistory();
+  const folder = findItem(documentTree, folderUuid)!;
+  const copyDocuments = useCopyDocuments();
+  const moveDocuments = useMoveDocuments();
 
-export interface EnhancedProps
-  extends Props,
-    RouteComponentProps,
-    ConnectState,
-    ConnectDispatch {}
-
-const enhance = compose<EnhancedProps, Props>(
-  withRouter,
-  connect<ConnectState, ConnectDispatch, Props, GlobalStoreState>(
-    ({ folderExplorer: { documentTree } }, { folderUuid }) => ({
-      folder: findItem(documentTree, folderUuid)!
-    }),
-    {
-      copyDocuments,
-      moveDocuments,
-      fetchDocTree
-    }
-  )
-);
-
-const FolderExplorer = ({
-  folder,
-  folderUuid,
-  copyDocuments,
-  moveDocuments,
-  history,
-  fetchDocTree
-}: EnhancedProps) => {
   const openDocRef: DocRefConsumer = (d: DocRefType) =>
     history.push(`/s/doc/${d.type}/${d.uuid}`);
 
@@ -131,9 +97,6 @@ const FolderExplorer = ({
         openDocRef(lineage[lineage.length - 1]);
       }
     }
-  });
-  useEffect(() => {
-    fetchDocTree();
   });
 
   if (!folder) {
@@ -218,4 +181,4 @@ const FolderExplorer = ({
   );
 };
 
-export default enhance(FolderExplorer);
+export default FolderExplorer;

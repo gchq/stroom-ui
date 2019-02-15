@@ -8,7 +8,8 @@ import {
   wrappedPut,
   wrappedDelete
 } from "../../lib/fetchTracker.redux";
-import { User } from "src/types";
+import { User } from "../../types";
+import useThunk from "../../lib/useThunk";
 
 const {
   usersReceived,
@@ -48,6 +49,7 @@ export const findUsers = (
     true
   );
 };
+export const useFindUsers = () => useThunk(findUsers);
 
 export const findUsersInGroup = (groupUuid: string) => (
   dispatch: Dispatch,
@@ -73,6 +75,7 @@ export const findUsersInGroup = (groupUuid: string) => (
     true
   );
 };
+export const useFindUsersInGroup = () => useThunk(findUsersInGroup);
 
 export const findGroupsForUser = (userUuid: string) => (
   dispatch: Dispatch,
@@ -98,6 +101,7 @@ export const findGroupsForUser = (userUuid: string) => (
     true
   );
 };
+export const useFindGroupsForUser = () => useThunk(findGroupsForUser);
 
 export const createUser = (name: string, isGroup: boolean) => (
   dispatch: Dispatch,
@@ -124,6 +128,7 @@ export const createUser = (name: string, isGroup: boolean) => (
     }
   );
 };
+export const useCreateUser = () => useThunk(createUser);
 
 export const deleteUser = (uuid: string) => (
   dispatch: Dispatch,
@@ -137,6 +142,7 @@ export const deleteUser = (uuid: string) => (
     response.text().then(() => dispatch(userDeleted(uuid)))
   );
 };
+export const useDeleteUser = () => useThunk(deleteUser);
 
 export const addUserToGroup = (userUuid: string, groupUuid: string) => (
   dispatch: Dispatch,
@@ -152,6 +158,7 @@ export const addUserToGroup = (userUuid: string, groupUuid: string) => (
     response.text().then(() => dispatch(userAddedToGroup(userUuid, groupUuid)))
   );
 };
+export const useAddUserToGroup = () => useThunk(addUserToGroup);
 
 export const removeUserFromGroup = (userUuid: string, groupUuid: string) => (
   dispatch: Dispatch,
@@ -169,3 +176,4 @@ export const removeUserFromGroup = (userUuid: string, groupUuid: string) => (
       .then(() => dispatch(userRemovedFromGroup(userUuid, groupUuid)))
   );
 };
+export const useRemoveUserFromGroup = () => useThunk(removeUserFromGroup);

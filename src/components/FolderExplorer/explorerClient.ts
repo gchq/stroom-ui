@@ -12,6 +12,7 @@ import {
 import { findByUuids, findItem } from "../../lib/treeUtils";
 import { DocRefType, DocRefTree, DocRefInfoType } from "../../types";
 import { GlobalStoreState } from "../../startup/reducers";
+import useThunk from "../../lib/useThunk";
 
 const {
   docTreeReceived,
@@ -56,6 +57,7 @@ export const searchApp = (
     true
   );
 };
+export const useSearchApp = () => useThunk(searchApp);
 
 export const fetchDocTree = () => (
   dispatch: Dispatch,
@@ -71,6 +73,7 @@ export const fetchDocTree = () => (
       )
   );
 };
+export const useFetchDocTree = () => useThunk(fetchDocTree);
 
 export const fetchDocRefTypes = () => (
   dispatch: Dispatch,
@@ -80,6 +83,7 @@ export const fetchDocRefTypes = () => (
   const url = `${
     state.config.values.stroomBaseServiceUrl
   }/explorer/v1/docRefTypes`;
+
   wrappedGet(dispatch, state, url, response =>
     response
       .json()
@@ -88,6 +92,7 @@ export const fetchDocRefTypes = () => (
       )
   );
 };
+export const useFetchDocRefTypes = () => useThunk(fetchDocRefTypes);
 
 export const fetchDocInfo = (docRef: DocRefType) => (
   dispatch: Dispatch,
@@ -105,6 +110,7 @@ export const fetchDocInfo = (docRef: DocRefType) => (
       )
   );
 };
+export const useFetchDocInfo = () => useThunk(fetchDocInfo);
 
 export const createDocument = (
   docRefType: string,
@@ -134,6 +140,7 @@ export const createDocument = (
     }
   );
 };
+export const useCreateDocument = () => useThunk(createDocument);
 
 export const renameDocument = (docRef: DocRefType, name: string) => (
   dispatch: Dispatch,
@@ -160,6 +167,7 @@ export const renameDocument = (docRef: DocRefType, name: string) => (
     }
   );
 };
+export const useRenameDocument = () => useThunk(renameDocument);
 
 export const copyDocuments = (
   uuids: Array<string>,
@@ -196,6 +204,7 @@ export const copyDocuments = (
     }
   );
 };
+export const useCopyDocuments = () => useThunk(copyDocuments);
 
 export const moveDocuments = (
   uuids: Array<string>,
@@ -232,6 +241,7 @@ export const moveDocuments = (
     }
   );
 };
+export const useMoveDocuments = () => useThunk(moveDocuments);
 
 export const deleteDocuments = (uuids: Array<string>) => (
   dispatch: Dispatch,
@@ -255,16 +265,4 @@ export const deleteDocuments = (uuids: Array<string>) => (
     }
   );
 };
-
-const explorerClient = {
-  createDocument,
-  copyDocuments,
-  renameDocument,
-  moveDocuments,
-  deleteDocuments,
-  fetchDocTree,
-  fetchDocInfo,
-  fetchDocRefTypes
-};
-
-export default explorerClient;
+export const useDeleteDocuments = () => useThunk(deleteDocuments);

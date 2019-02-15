@@ -1,12 +1,9 @@
 import * as React from "react";
-import { useState, useEffect } from "react";
-
-import { compose } from "recompose";
-import { connect } from "react-redux";
-import { withRouter, RouteComponentProps } from "react-router";
+import { useState, useEffect, useCallback } from "react";
+import { useMappedState } from "redux-react-hook";
 
 import { GlobalStoreState } from "../../startup/reducers";
-import { getIndexVolumeGroups, deleteIndexVolumeGroup } from "./client";
+import { useGetIndexVolumeGroups, useDeleteIndexVolumeGroup } from "./client";
 import IndexVolumeGroupsTable from "./IndexVolumeGroupsTable";
 import { IndexVolumeGroup } from "../../types";
 import Button from "../../components/Button";
@@ -17,54 +14,24 @@ import ThemedConfirm, {
   useDialog as useConfirmDialog
 } from "../../components/ThemedConfirm";
 import IconHeader from "../../components/IconHeader";
+import useHistory from "../../lib/useHistory";
 
 export interface Props {}
 
-export interface ConnectState {
-  groups: Array<IndexVolumeGroup>;
-}
+const IndexVolumeGroups = () => {
+  const history = useHistory();
 
-export interface ConnectDispatch {
-  getIndexVolumeGroups: typeof getIndexVolumeGroups;
-  deleteIndexVolumeGroup: typeof deleteIndexVolumeGroup;
-}
-
-interface GroupSelectionStateValues {
-  selectedGroup?: IndexVolumeGroup;
-}
-interface GroupSelectionStateHandlers {
-  onSelection: (name?: string) => void;
-}
-interface GroupSelectionState
-  extends GroupSelectionStateValues,
-    GroupSelectionStateHandlers {}
-
-interface EnhancedProps
-  extends Props,
-    ConnectState,
-    ConnectDispatch,
-    GroupSelectionState,
-    RouteComponentProps<any> {}
-
-const enhance = compose<EnhancedProps, Props>(
-  withRouter,
-  connect<ConnectState, ConnectDispatch, Props, GlobalStoreState>(
-    ({ indexVolumeGroups: { groups } }) => ({
+  // Redux
+  const mapState = useCallback(
+    ({ indexVolumeGroups: { groups } }: GlobalStoreState) => ({
       groups
     }),
-    {
-      getIndexVolumeGroups,
-      deleteIndexVolumeGroup
-    }
-  )
-);
+    []
+  );
+  const { groups } = useMappedState(mapState);
+  const getIndexVolumeGroups = useGetIndexVolumeGroups();
+  const deleteIndexVolumeGroup = useDeleteIndexVolumeGroup();
 
-const IndexVolumeGroups = ({
-  groups,
-  deleteIndexVolumeGroup,
-  getIndexVolumeGroups,
-  history
-}: EnhancedProps) => {
   useEffect(() => {
     getIndexVolumeGroups();
   }, []);
@@ -122,4 +89,4 @@ const IndexVolumeGroups = ({
   );
 };
 
-export default enhance(IndexVolumeGroups);
+export default IndexVolumeGroups;

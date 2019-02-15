@@ -1,5 +1,4 @@
 import FolderExplorer from "./FolderExplorer";
-import explorerClient from "./explorerClient";
 
 import CreateDocRefDialog from "./CreateDocRefDialog";
 import RenameDocRefDialog from "./RenameDocRefDialog";
@@ -11,8 +10,7 @@ export {
   FolderExplorer,
   RenameDocRefDialog,
   CopyDocRefDialog,
-  DeleteDocRefDialog,
-  explorerClient
+  DeleteDocRefDialog
 };
 
 export default FolderExplorer;
