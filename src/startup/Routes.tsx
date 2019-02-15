@@ -15,98 +15,70 @@
  */
 
 import * as React from "react";
-import {
-  Route,
-  Router,
-  Switch,
-  withRouter,
-  RouteComponentProps
-} from "react-router-dom";
-import { compose, withProps } from "recompose";
-import { connect } from "react-redux";
+
+import { Route, Router, Switch } from "react-router-dom";
 
 // TODO
 import ErrorPage from "../components/ErrorPage";
 import { appChromeRoutes } from "../sections/AppChrome";
 // import { Processing } from "../sections/Processing";
 import { HandleAuthenticationResponse } from "./Authentication";
-import { GlobalStoreState } from "./reducers";
 
-import withConfig from "./withConfig";
+import useConfig from "./useConfig";
 
 import { PrivateRoute } from "./Authentication";
 import PathNotFound from "../components/PathNotFound";
+import useHistory from "src/lib/useHistory";
+import Loader from "src/components/Loader";
 
-export interface Props {}
+const Routes = () => {
+  const history = useHistory();
+  const config = useConfig();
 
-export interface EnhancedProps extends Props, RouteComponentProps {
-  authenticationServiceUrl: string;
-  authorisationServiceUrl: string;
-  authUsersUiUrl: string;
-  authTokensUiUrl: string;
-}
+  if (!config.isReady) {
+    return <Loader message="Configuration Loading" />;
+  }
 
-const enhance = compose<EnhancedProps, Props>(
-  withConfig,
-  withRouter,
-  connect<{}, {}, {}, GlobalStoreState>(
-    ({ authentication: { idToken } }) => ({
-      idToken
-      // showUnauthorizedDialog: state.login.showUnauthorizedDialog,
-    }),
-    {}
-  ),
-  withProps(
-    ({
-      config: {
-        values: { authenticationServiceUrl, authorisationServiceUrl }
-      }
-    }) => ({
-      authenticationServiceUrl,
-      authorisationServiceUrl
-    })
-  )
-);
+  const {
+    values: { authenticationServiceUrl, authorisationServiceUrl }
+  } = config;
 
-const Routes = ({
-  history,
-  authenticationServiceUrl,
-  authorisationServiceUrl
-}: EnhancedProps) => (
-  <Router history={history}>
-    {/* basename="/"> TODO */}
-    <Switch>
-      <Route
-        exact
-        path="/handleAuthenticationResponse"
-        render={() => (
-          <HandleAuthenticationResponse
-            authenticationServiceUrl={authenticationServiceUrl}
-            authorisationServiceUrl={authorisationServiceUrl}
-          />
-        )}
-      />
+  return (
+    <Router history={history}>
+      {/* basename="/"> TODO */}
+      <Switch>
+        <Route
+          exact
+          path="/handleAuthenticationResponse"
+          render={() => (
+            <HandleAuthenticationResponse
+              authenticationServiceUrl={authenticationServiceUrl!}
+              authorisationServiceUrl={authorisationServiceUrl!}
+            />
+          )}
+        />
 
-      <Route exact path="/error" component={ErrorPage} />
+        <Route exact path="/error" component={ErrorPage} />
 
-      {appChromeRoutes.map((p, i) => (
-        <PrivateRoute key={i} {...p} />
-      ))}
+        {appChromeRoutes.map((p, i) => (
+          <PrivateRoute key={i} {...p} />
+        ))}
 
-      {/* TODO Direct paths -- these paths make sections accessible outside the AppChrome
+        {/* TODO Direct paths -- these paths make sections accessible outside the AppChrome
         i.e. for when we want to embed them in Stroom. */}
-      {/* <PrivateRoute
+        {/* <PrivateRoute
         exact
         path="/trackers"
         referrer="/trackers"
         render={() => <Processing />}
       /> */}
 
-      {/* Default route */}
-      <Route render={() => <PathNotFound message="Invalid path" />} />
-    </Switch>
-  </Router>
-);
+        {/* Default route */}
+        <Route render={() => <PathNotFound message="Invalid path" />} />
+      </Switch>
+    </Router>
+  );
+};
 
 // Routes.contextTypes = {
 //   store: PropTypes.object,
@@ -115,4 +87,4 @@ const Routes = ({
 //   }),
 // };
 
-export default enhance(Routes);
+export default Routes;

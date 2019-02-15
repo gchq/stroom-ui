@@ -9,18 +9,19 @@ import StoryRouter from "storybook-react-router";
 
 import createStore from "../../startup/store";
 
-import { setupTestServer } from "../../lib/storybook/PollyDecorator";
+import { useTestServer } from "../../lib/storybook/PollyDecorator";
 
 import FontAwesomeProvider from "../../startup/FontAwesomeProvider";
 import testData from "./fullTestData";
 import { ThemeContextProvider, useTheme } from "../theme";
 import { withRouter, RouteComponentProps } from "react-router";
 import { HistoryContext } from "../useHistory";
+import useConfig from "../../startup/useConfig";
+import Loader from "../../components/Loader";
 
 interface Props extends RouteComponentProps {}
 
 const enhanceLocal = compose(
-  setupTestServer(testData),
   DragDropContext(HTML5Backend),
   FontAwesomeProvider,
   withRouter
@@ -30,6 +31,12 @@ const store = createStore();
 
 const WrappedComponent: React.StatelessComponent<Props> = props => {
   const { theme } = useTheme();
+  const { isReady } = useConfig();
+  useTestServer(testData);
+
+  if (!isReady) {
+    return <Loader message="Waiting for config" />;
+  }
 
   return (
     <HistoryContext.Provider value={props.history}>

@@ -17,6 +17,7 @@ import { Dispatch, Action } from "redux";
 import { GlobalStoreState } from "./reducers";
 import { prepareReducer } from "../lib/redux-actions-ts";
 import { wrappedGet } from "../lib/fetchTracker.redux";
+import useThunk from "../lib/useThunk";
 
 const initialState = { values: {}, isReady: false };
 
@@ -66,5 +67,6 @@ const fetchConfig = () => (
     });
   });
 };
+const useFetchConfig = () => useThunk(fetchConfig);
 
-export { actionCreators, reducer, fetchConfig };
+export { actionCreators, reducer, fetchConfig, useFetchConfig };
