@@ -16,16 +16,15 @@
 
 import * as React from "react";
 import { useEffect } from "react";
-import { compose } from "recompose";
-import { connect } from "react-redux";
 
 import DocRefEditor from "../DocRefEditor";
 import { Props as ButtonProps } from "../Button";
 import Loader from "../Loader";
-import { fetchIndex, saveIndex } from "./client";
+import { useFetchIndex, useSaveIndex } from "./client";
 import ThemedAceEditor from "../ThemedAceEditor";
-import { actionCreators, StoreStateById } from "./redux";
-import { GlobalStoreState } from "../../startup/reducers";
+import { actionCreators } from "./redux";
+import { useDispatch } from "redux-react-hook";
+import useReduxState from "../../lib/useReduxState";
 
 const { indexUpdated } = actionCreators;
 
@@ -33,32 +32,14 @@ export interface Props {
   indexUuid: string;
 }
 
-interface ConnectState {
-  indexState: StoreStateById;
-}
+const IndexEditor = ({ indexUuid }: Props) => {
+  const { indexEditor } = useReduxState(({ indexEditor }) => ({ indexEditor }));
+  const indexState = indexEditor[indexUuid];
 
-interface ConnectDispatch {
-  fetchIndex: typeof fetchIndex;
-  indexUpdated: typeof indexUpdated;
-  saveIndex: typeof saveIndex;
-}
+  const fetchIndex = useFetchIndex();
+  const saveIndex = useSaveIndex();
+  const dispatch = useDispatch();
 
-export interface EnhancedProps extends Props, ConnectState, ConnectDispatch {}
-
-const enhance = compose<EnhancedProps, Props>(
-  connect<ConnectState, ConnectDispatch, Props, GlobalStoreState>(
-    ({ indexEditor }, { indexUuid }) => ({
-      indexState: indexEditor[indexUuid]
-    }),
-    {
-      fetchIndex,
-      indexUpdated,
-      saveIndex
-    }
-  )
-);
-
-const IndexEditor = ({ indexUuid, indexState }: EnhancedProps) => {
   useEffect(() => {
     fetchIndex(indexUuid);
   }, []);
@@ -86,11 +67,11 @@ const IndexEditor = ({ indexUuid, indexState }: EnhancedProps) => {
         mode="xml"
         value={indexData}
         onChange={v => {
-          if (v !== indexData) indexUpdated(indexUuid, v);
+          if (v !== indexData) dispatch(indexUpdated(indexUuid, v));
         }}
       />
     </DocRefEditor>
   );
 };
 
-export default enhance(IndexEditor);
+export default IndexEditor;

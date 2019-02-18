@@ -23,7 +23,7 @@ import { testPipelines } from "./test";
 import StroomDecorator from "../../lib/storybook/StroomDecorator";
 
 import "../../styles/main.css";
-import { PipelineElementType } from "src/types";
+import { PipelineElementType } from "../../types";
 import { ShowDialog as ShowAddElementDialog } from "./AddElementModal";
 
 const pipelineStories = storiesOf("Pipeline/Element", module).addDecorator(

@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 
 import { useMappedState } from "redux-react-hook";
-import { GlobalStoreState } from "src/startup/reducers";
+import { GlobalStoreState } from "../../startup/reducers";
 
 export const useReduxState = function<T, State = GlobalStoreState>(
   mapper: (gss: State) => T,

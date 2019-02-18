@@ -16,17 +16,14 @@
 import * as React from "react";
 import { useState } from "react";
 
-import { connect } from "react-redux";
-import { compose } from "recompose";
 import { Formik, Field } from "formik";
 
 import DialogActionButtons from "./DialogActionButtons";
 import IconHeader from "../IconHeader";
-import { renameDocument } from "./explorerClient";
+import { useRenameDocument } from "./explorerClient";
 import ThemedModal from "../ThemedModal";
 import { required, minLength2 } from "../../lib/reduxFormUtils";
-import { GlobalStoreState } from "../../startup/reducers";
-import { DocRefType } from "src/types";
+import { DocRefType } from "../../types";
 
 export interface Props {
   isOpen: boolean;
@@ -34,65 +31,51 @@ export interface Props {
   onCloseDialog: () => void;
 }
 
-interface ConnectState {}
-
-interface ConnectDispatch {
-  renameDocument: typeof renameDocument;
-}
-
-export interface EnhancedProps extends Props, ConnectState, ConnectDispatch {}
-
 interface FormValues {
   docRefName: string;
 }
 
-const enhance = compose<EnhancedProps, Props>(
-  connect<ConnectState, ConnectDispatch, Props, GlobalStoreState>(
-    () => ({}),
-    { renameDocument }
-  )
-);
+let RenameDocRefDialog = ({ isOpen, docRef, onCloseDialog }: Props) => {
+  const renameDocument = useRenameDocument();
 
-let RenameDocRefDialog = ({
-  isOpen,
-  docRef,
-  renameDocument,
-  onCloseDialog
-}: EnhancedProps) => (
-  <Formik<FormValues>
-    initialValues={{ docRefName: !!docRef && !!docRef.name ? docRef.name : "" }}
-    onSubmit={values => {
-      if (!!docRef) {
-        renameDocument(docRef, values.docRefName);
-      }
-      onCloseDialog();
-    }}
-  >
-    {({ submitForm }) => (
-      <ThemedModal
-        isOpen={isOpen}
-        header={<IconHeader icon="edit" text="Enter New Name for Doc Ref" />}
-        content={
-          <form>
-            <label>Type</label>
-            <Field
-              name="docRefName"
-              type="text"
-              placeholder="Name"
-              validate={[required, minLength2]}
+  return (
+    <Formik<FormValues>
+      initialValues={{
+        docRefName: !!docRef && !!docRef.name ? docRef.name : ""
+      }}
+      onSubmit={values => {
+        if (!!docRef) {
+          renameDocument(docRef, values.docRefName);
+        }
+        onCloseDialog();
+      }}
+    >
+      {({ submitForm }) => (
+        <ThemedModal
+          isOpen={isOpen}
+          header={<IconHeader icon="edit" text="Enter New Name for Doc Ref" />}
+          content={
+            <form>
+              <label>Type</label>
+              <Field
+                name="docRefName"
+                type="text"
+                placeholder="Name"
+                validate={[required, minLength2]}
+              />
+            </form>
+          }
+          actions={
+            <DialogActionButtons
+              onCancel={onCloseDialog}
+              onConfirm={submitForm}
             />
-          </form>
-        }
-        actions={
-          <DialogActionButtons
-            onCancel={onCloseDialog}
-            onConfirm={submitForm}
-          />
-        }
-      />
-    )}
-  </Formik>
-);
+          }
+        />
+      )}
+    </Formik>
+  );
+};
 
 /**
  * These are the things returned by the custom hook that allow the owning component to interact
@@ -134,4 +117,4 @@ export const useDialog = (): UseDialog => {
   };
 };
 
-export default enhance(RenameDocRefDialog);
+export default RenameDocRefDialog;

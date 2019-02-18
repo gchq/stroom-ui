@@ -15,7 +15,7 @@ export default {
         "Should output JSON be indented and include new lines (pretty printed)?",
       defaultValue: "false",
       pipelineReference: false,
-      docRefTypes: null,
+      docRefTypes: undefined,
       displayPriority: 1
     },
     encoding: {
@@ -30,7 +30,7 @@ export default {
       description: "The output character encoding to use.",
       defaultValue: "UTF-8",
       pipelineReference: false,
-      docRefTypes: null,
+      docRefTypes: undefined,
       displayPriority: 2
     }
   },
@@ -48,7 +48,7 @@ export default {
         "A comma separated list of XML elements between which non-escaped characters will be escaped.",
       defaultValue: "",
       pipelineReference: false,
-      docRefTypes: null,
+      docRefTypes: undefined,
       displayPriority: 1
     }
   },
@@ -105,7 +105,7 @@ export default {
       description: "The field name to use as the unique ID for records.",
       defaultValue: "",
       pipelineReference: false,
-      docRefTypes: null,
+      docRefTypes: undefined,
       displayPriority: 2
     }
   },
@@ -122,7 +122,7 @@ export default {
       description: "Is this filter counting records read or records written?",
       defaultValue: "true",
       pipelineReference: false,
-      docRefTypes: null,
+      docRefTypes: undefined,
       displayPriority: 1
     }
   },
@@ -139,7 +139,7 @@ export default {
       description: "Footer text that can be added to the output at the end.",
       defaultValue: "",
       pipelineReference: false,
-      docRefTypes: null,
+      docRefTypes: undefined,
       displayPriority: 2
     },
     header: {
@@ -154,7 +154,7 @@ export default {
       description: "Header text that can be added to the output at the start.",
       defaultValue: "",
       pipelineReference: false,
-      docRefTypes: null,
+      docRefTypes: undefined,
       displayPriority: 1
     },
     encoding: {
@@ -169,7 +169,7 @@ export default {
       description: "The output character encoding to use.",
       defaultValue: "UTF-8",
       pipelineReference: false,
-      docRefTypes: null,
+      docRefTypes: undefined,
       displayPriority: 3
     }
   },
@@ -186,7 +186,7 @@ export default {
       description: "Choose the name of the file to write.",
       defaultValue: "",
       pipelineReference: false,
-      docRefTypes: null,
+      docRefTypes: undefined,
       displayPriority: 2
     },
     rolledFileName: {
@@ -202,7 +202,7 @@ export default {
         "Choose the name that files will be renamed to when they are rolled.",
       defaultValue: "",
       pipelineReference: false,
-      docRefTypes: null,
+      docRefTypes: undefined,
       displayPriority: 3
     },
     maxSize: {
@@ -218,7 +218,7 @@ export default {
         "Choose the maximum size that a file can be before it is rolled, e.g. 10M, 1G.",
       defaultValue: "100M",
       pipelineReference: false,
-      docRefTypes: null,
+      docRefTypes: undefined,
       displayPriority: 5
     },
     outputPaths: {
@@ -234,7 +234,7 @@ export default {
         "One or more destination paths for output files separated with commas. Replacement variables can be used in path strings such as ${feed}.",
       defaultValue: "",
       pipelineReference: false,
-      docRefTypes: null,
+      docRefTypes: undefined,
       displayPriority: 1
     },
     frequency: {
@@ -249,7 +249,7 @@ export default {
       description: "Choose how frequently files are rolled.",
       defaultValue: "1h",
       pipelineReference: false,
-      docRefTypes: null,
+      docRefTypes: undefined,
       displayPriority: 4
     }
   },
@@ -297,7 +297,7 @@ export default {
         "Wait for acknowledgement from the Kafka borker for each message sent. This is slower but catches errors sooner",
       defaultValue: "false",
       pipelineReference: false,
-      docRefTypes: null,
+      docRefTypes: undefined,
       displayPriority: 3
     }
   },
@@ -371,7 +371,7 @@ export default {
       description: "The parser type, e.g. 'JSON', 'XML', 'Data Splitter'.",
       defaultValue: "",
       pipelineReference: false,
-      docRefTypes: null,
+      docRefTypes: undefined,
       displayPriority: 1
     },
     fixInvalidChars: {
@@ -393,7 +393,7 @@ export default {
       description: "Fix invalid XML characters from the input stream.",
       defaultValue: "false",
       pipelineReference: false,
-      docRefTypes: null,
+      docRefTypes: undefined,
       displayPriority: 3
     }
   },
@@ -411,7 +411,7 @@ export default {
         "Should output XML be indented and include new lines (pretty printed)?",
       defaultValue: "false",
       pipelineReference: false,
-      docRefTypes: null,
+      docRefTypes: undefined,
       displayPriority: 1
     },
     encoding: {
@@ -426,7 +426,7 @@ export default {
       description: "The output character encoding to use.",
       defaultValue: "UTF-8",
       pipelineReference: false,
-      docRefTypes: null,
+      docRefTypes: undefined,
       displayPriority: 2
     }
   },
@@ -445,7 +445,7 @@ export default {
       description: "The depth of XML elements to split at.",
       defaultValue: "1",
       pipelineReference: false,
-      docRefTypes: null,
+      docRefTypes: undefined,
       displayPriority: 1
     },
     splitCount: {
@@ -461,7 +461,7 @@ export default {
         "The number of elements at the split depth to count before the XML is split.",
       defaultValue: "10000",
       pipelineReference: false,
-      docRefTypes: null,
+      docRefTypes: undefined,
       displayPriority: 2
     }
   },
@@ -478,7 +478,7 @@ export default {
       description: "The URL of the receiving API.",
       defaultValue: "",
       pipelineReference: false,
-      docRefTypes: null,
+      docRefTypes: undefined,
       displayPriority: 1
     }
   },
@@ -511,7 +511,7 @@ export default {
         "The record key to apply to records, used to select partition. Replacement variables can be used in path strings such as ${feed}.",
       defaultValue: "",
       pipelineReference: false,
-      docRefTypes: null,
+      docRefTypes: undefined,
       displayPriority: 3
     },
     topic: {
@@ -527,7 +527,7 @@ export default {
         "The topic to send the record to. Replacement variables can be used in path strings such as ${feed}.",
       defaultValue: "",
       pipelineReference: false,
-      docRefTypes: null,
+      docRefTypes: undefined,
       displayPriority: 2
     },
     maxSize: {
@@ -543,7 +543,7 @@ export default {
         "Choose the maximum size that a file can be before it is rolled, e.g. 10M, 1G.",
       defaultValue: "100M",
       pipelineReference: false,
-      docRefTypes: null,
+      docRefTypes: undefined,
       displayPriority: 5
     },
     flushOnSend: {
@@ -559,7 +559,7 @@ export default {
         "Wait for acknowledgement from the Kafka broker when the appender is rolledThis is slower but catches errors in the pipeline process",
       defaultValue: "false",
       pipelineReference: false,
-      docRefTypes: null,
+      docRefTypes: undefined,
       displayPriority: 6
     },
     frequency: {
@@ -574,7 +574,7 @@ export default {
       description: "Choose how frequently files are rolled.",
       defaultValue: "1h",
       pipelineReference: false,
-      docRefTypes: null,
+      docRefTypes: undefined,
       displayPriority: 4
     }
   },
@@ -608,7 +608,7 @@ export default {
         "This key to apply to the records, used to select partition.",
       defaultValue: "",
       pipelineReference: false,
-      docRefTypes: null,
+      docRefTypes: undefined,
       displayPriority: 2
     },
     maxRecordCount: {
@@ -624,7 +624,7 @@ export default {
         "Choose the maximum number of records or events that a message will contain",
       defaultValue: "1",
       pipelineReference: false,
-      docRefTypes: null,
+      docRefTypes: undefined,
       displayPriority: 3
     },
     topic: {
@@ -639,7 +639,7 @@ export default {
       description: "The topic to send the record to.",
       defaultValue: "",
       pipelineReference: false,
-      docRefTypes: null,
+      docRefTypes: undefined,
       displayPriority: 1
     },
     flushOnSend: {
@@ -655,7 +655,7 @@ export default {
         "Wait for acknowledgement from the Kafka broker for all of the messages sent.This is slower but catches errors in the pipeline process",
       defaultValue: "false",
       pipelineReference: false,
-      docRefTypes: null,
+      docRefTypes: undefined,
       displayPriority: 4
     }
   },
@@ -680,7 +680,7 @@ export default {
         "If XSLT cannot be found to match the name pattern suppress warnings.",
       defaultValue: "false",
       pipelineReference: false,
-      docRefTypes: null,
+      docRefTypes: undefined,
       displayPriority: 3
     },
     usePool: {
@@ -703,7 +703,7 @@ export default {
         "Advanced: Choose whether or not you want to use cached XSLT templates to improve performance.",
       defaultValue: "true",
       pipelineReference: false,
-      docRefTypes: null,
+      docRefTypes: undefined,
       displayPriority: 4
     },
     pipelineReference: {
@@ -725,7 +725,7 @@ export default {
       description: "A list of places to load reference data from if required.",
       defaultValue: "",
       pipelineReference: true,
-      docRefTypes: null,
+      docRefTypes: undefined,
       displayPriority: 5
     },
     xslt: {
@@ -769,7 +769,7 @@ export default {
       description: "A name pattern to load XSLT dynamically.",
       defaultValue: "",
       pipelineReference: false,
-      docRefTypes: null,
+      docRefTypes: undefined,
       displayPriority: 2
     }
   },
@@ -803,7 +803,7 @@ export default {
         "Should the output stream be marked with indexed segments to allow fast access to individual records?",
       defaultValue: "true",
       pipelineReference: false,
-      docRefTypes: null,
+      docRefTypes: undefined,
       displayPriority: 3
     },
     streamType: {
@@ -819,7 +819,7 @@ export default {
         "The stream type that the output stream should be written as. This must be specified.",
       defaultValue: "",
       pipelineReference: false,
-      docRefTypes: null,
+      docRefTypes: undefined,
       displayPriority: 1
     }
   },
@@ -838,7 +838,7 @@ export default {
       description: "The user to connect to HDFS as",
       defaultValue: "",
       pipelineReference: false,
-      docRefTypes: null,
+      docRefTypes: undefined,
       displayPriority: 3
     },
     fileSystemUri: {
@@ -854,7 +854,7 @@ export default {
         "URI for the Hadoop Distributed File System (HDFS) to connect to, e.g. hdfs://mynamenode.mydomain.com:8020",
       defaultValue: "",
       pipelineReference: false,
-      docRefTypes: null,
+      docRefTypes: undefined,
       displayPriority: 2
     },
     outputPaths: {
@@ -870,7 +870,7 @@ export default {
         "One or more destination paths for output files separated with commas. Replacement variables can be used in path strings such as ${feed}.",
       defaultValue: "",
       pipelineReference: false,
-      docRefTypes: null,
+      docRefTypes: undefined,
       displayPriority: 1
     }
   },
@@ -889,7 +889,7 @@ export default {
         "One or more destination paths for output files separated with commas. Replacement variables can be used in path strings such as ${feed}.",
       defaultValue: "",
       pipelineReference: false,
-      docRefTypes: null,
+      docRefTypes: undefined,
       displayPriority: 1
     }
   },
@@ -907,7 +907,7 @@ export default {
         "Warn if there are duplicate keys found in the reference data?",
       defaultValue: "false",
       pipelineReference: false,
-      docRefTypes: null,
+      docRefTypes: undefined,
       displayPriority: 1
     },
     overrideExistingValues: {
@@ -922,7 +922,7 @@ export default {
       description: "Allow duplicate keys to override existing values?",
       defaultValue: "true",
       pipelineReference: false,
-      docRefTypes: null,
+      docRefTypes: undefined,
       displayPriority: 2
     }
   },
@@ -939,7 +939,7 @@ export default {
       description: "XML version, e.g. 1.0 or 1.1",
       defaultValue: "1.1",
       pipelineReference: false,
-      docRefTypes: null,
+      docRefTypes: undefined,
       displayPriority: 1
     }
   },
@@ -957,7 +957,7 @@ export default {
       description: "Which meta data values will be logged in the send log",
       defaultValue: "guid,feed,system,environment,remotehost,remoteaddress",
       pipelineReference: false,
-      docRefTypes: null,
+      docRefTypes: undefined,
       displayPriority: 5
     },
     forwardChunkSize: {
@@ -973,7 +973,7 @@ export default {
         "Should data be sent in chunks and if so how big should the chunks be",
       defaultValue: "",
       pipelineReference: false,
-      docRefTypes: null,
+      docRefTypes: undefined,
       displayPriority: 4
     },
     forwardUrl: {
@@ -988,7 +988,7 @@ export default {
       description: "The URL to send data to",
       defaultValue: "",
       pipelineReference: false,
-      docRefTypes: null,
+      docRefTypes: undefined,
       displayPriority: 1
     },
     useCompression: {
@@ -1003,7 +1003,7 @@ export default {
       description: "Should data be compressed when sending",
       defaultValue: "true",
       pipelineReference: false,
-      docRefTypes: null,
+      docRefTypes: undefined,
       displayPriority: 2
     },
     connectionTimeout: {
@@ -1019,7 +1019,7 @@ export default {
         "How long to wait before we abort sending data due to connection timeout",
       defaultValue: "",
       pipelineReference: false,
-      docRefTypes: null,
+      docRefTypes: undefined,
       displayPriority: 3
     }
   },
@@ -1037,7 +1037,7 @@ export default {
         "Limits the schemas that can be used to validate data to those with a matching system id.",
       defaultValue: "",
       pipelineReference: false,
-      docRefTypes: null,
+      docRefTypes: undefined,
       displayPriority: 2
     },
     schemaValidation: {
@@ -1052,7 +1052,7 @@ export default {
       description: "Should schema validation be performed?",
       defaultValue: "true",
       pipelineReference: false,
-      docRefTypes: null,
+      docRefTypes: undefined,
       displayPriority: 5
     },
     namespaceURI: {
@@ -1068,7 +1068,7 @@ export default {
         "Limits the schemas that can be used to validate data to those with a matching namespace URI.",
       defaultValue: "",
       pipelineReference: false,
-      docRefTypes: null,
+      docRefTypes: undefined,
       displayPriority: 3
     },
     schemaLanguage: {
@@ -1083,7 +1083,7 @@ export default {
       description: "The schema language that the schema is written in.",
       defaultValue: "http://www.w3.org/2001/XMLSchema",
       pipelineReference: false,
-      docRefTypes: null,
+      docRefTypes: undefined,
       displayPriority: 4
     },
     schemaGroup: {
@@ -1099,7 +1099,7 @@ export default {
         "Limits the schemas that can be used to validate data to those with a matching schema group name.",
       defaultValue: "",
       pipelineReference: false,
-      docRefTypes: null,
+      docRefTypes: undefined,
       displayPriority: 1
     }
   },
@@ -1150,7 +1150,7 @@ export default {
         "Choose the maximum number of records or events that a message will contain",
       defaultValue: "1",
       pipelineReference: false,
-      docRefTypes: null,
+      docRefTypes: undefined,
       displayPriority: 3
     },
     statisticsDataSource: {
@@ -1181,7 +1181,7 @@ export default {
         "Wait for acknowledgement from the Kafka broker for all of the messages sent.This is slower but catches errors in the pipeline process",
       defaultValue: "false",
       pipelineReference: false,
-      docRefTypes: null,
+      docRefTypes: undefined,
       displayPriority: 4
     }
   },
@@ -1215,7 +1215,7 @@ export default {
         "Should the output stream be marked with indexed segments to allow fast access to individual records?",
       defaultValue: "true",
       pipelineReference: false,
-      docRefTypes: null,
+      docRefTypes: undefined,
       displayPriority: 6
     },
     streamType: {
@@ -1231,7 +1231,7 @@ export default {
         "The stream type that the output stream should be written as. This must be specified.",
       defaultValue: "",
       pipelineReference: false,
-      docRefTypes: null,
+      docRefTypes: undefined,
       displayPriority: 1
     },
     maxSize: {
@@ -1247,7 +1247,7 @@ export default {
         "Choose the maximum size that a file can be before it is rolled, e.g. 10M, 1G.",
       defaultValue: "100M",
       pipelineReference: false,
-      docRefTypes: null,
+      docRefTypes: undefined,
       displayPriority: 5
     },
     frequency: {
@@ -1262,7 +1262,7 @@ export default {
       description: "Choose how frequently files are rolled.",
       defaultValue: "1h",
       pipelineReference: false,
-      docRefTypes: null,
+      docRefTypes: undefined,
       displayPriority: 4
     }
   },
@@ -1296,7 +1296,7 @@ export default {
         "This key to apply to the records, used to select partition.",
       defaultValue: "",
       pipelineReference: false,
-      docRefTypes: null,
+      docRefTypes: undefined,
       displayPriority: 2
     },
     topic: {
@@ -1311,7 +1311,7 @@ export default {
       description: "The topic to send the record to.",
       defaultValue: "",
       pipelineReference: false,
-      docRefTypes: null,
+      docRefTypes: undefined,
       displayPriority: 1
     },
     flushOnSend: {
@@ -1327,7 +1327,7 @@ export default {
         "Wait for acknowledgement from the Kafka borker for each message sent. This is slower but catches errors sooner",
       defaultValue: "false",
       pipelineReference: false,
-      docRefTypes: null,
+      docRefTypes: undefined,
       displayPriority: 3
     }
   }

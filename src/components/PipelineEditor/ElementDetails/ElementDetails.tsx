@@ -15,68 +15,37 @@
  */
 
 import * as React from "react";
-import { compose } from "recompose";
-import { connect } from "react-redux";
 
 import ElementImage from "../../ElementImage";
 import HorizontalPanel from "../../HorizontalPanel";
 import ElementProperty from "./ElementProperty";
-import { StoreStateById as PipelineStateStoreById } from "../redux/pipelineStatesReducer";
-import { StoreState as ElementStoreState } from "../redux/elementReducer";
-import { GlobalStoreState } from "../../../startup/reducers";
 import {
   PipelineElementType,
   ElementPropertiesType,
   ElementDefinition,
   ElementPropertyType
 } from "../../../types";
+import Loader from "../../../components/Loader";
+import usePipelineState from "../redux/usePipelineState";
+import useElements from "../redux/useElements";
 
 export interface Props {
   pipelineId: string;
   onClose: () => void;
 }
 
-interface ConnectState {
-  elements: ElementStoreState;
-  selectedElementId?: string;
-  pipelineState?: PipelineStateStoreById;
-  form: string;
-  initialValues?: object;
-}
-interface ConnectDispatch {}
+const ElementDetails = ({ pipelineId, onClose }: Props) => {
+  const pipelineState = usePipelineState(pipelineId);
+  const elements = useElements();
 
-export interface EnhancedProps extends Props, ConnectState, ConnectDispatch {}
+  let initialValues: object | undefined;
+  let selectedElementId: string | undefined;
+  if (pipelineState) {
+    initialValues = pipelineState.selectedElementInitialValues;
+    selectedElementId = pipelineState.selectedElementId;
+  }
+  console.log("TODO Initial Values", initialValues);
 
-const enhance = compose<EnhancedProps, Props>(
-  connect<ConnectState, ConnectDispatch, Props, GlobalStoreState>(
-    ({ pipelineEditor: { pipelineStates, elements } }, { pipelineId }) => {
-      const pipelineState = pipelineStates[pipelineId];
-      let initialValues;
-      let selectedElementId;
-      if (pipelineState) {
-        initialValues = pipelineState.selectedElementInitialValues;
-        selectedElementId = pipelineState.selectedElementId;
-      }
-      const form = `${pipelineId}-elementDetails`;
-
-      return {
-        elements,
-        selectedElementId,
-        pipelineState,
-        form,
-        initialValues
-      };
-    }
-  )
-);
-
-const ElementDetails = ({
-  pipelineId,
-  onClose,
-  pipelineState,
-  selectedElementId,
-  elements
-}: EnhancedProps) => {
   if (!selectedElementId) {
     return (
       <div className="element-details__nothing-selected">
@@ -95,15 +64,29 @@ const ElementDetails = ({
     "";
   const allElementTypeProperties: ElementPropertiesType =
     elements.elementProperties[elementType];
+  if (!allElementTypeProperties) {
+    return <Loader message={`Element Properties Unknown for ${elementType}`} />;
+  }
+
   const sortedElementTypeProperties: Array<ElementPropertyType> = Object.values(
     allElementTypeProperties
   ).sort((a: ElementPropertyType, b: ElementPropertyType) =>
     a.displayPriority > b.displayPriority ? 1 : -1
   );
 
-  let icon: string = elements.elements.find(
+  let elementDefinition = elements.elements.find(
     (e: ElementDefinition) => e.type === elementType
-  )!.icon;
+  );
+
+  if (!elementDefinition) {
+    return (
+      <Loader
+        message={`Could not find element definition for ${elementType}`}
+      />
+    );
+  }
+
+  let icon: string = elementDefinition.icon;
   let typeName: string = elementType;
   let elementTypeProperties: Array<
     ElementPropertyType
@@ -127,13 +110,13 @@ const ElementDetails = ({
         {Object.keys(elementTypeProperties).length === 0 ? (
           <p>There is nothing to configure for this element </p>
         ) : (
-          selectedElementId &&
+          !!selectedElementId &&
           elementTypeProperties.map(
             (elementTypeProperty: ElementPropertyType) => (
               <ElementProperty
                 key={elementTypeProperty.name}
                 pipelineId={pipelineId}
-                elementId={selectedElementId}
+                elementId={selectedElementId!}
                 elementPropertyType={elementTypeProperty}
               />
             )
@@ -153,4 +136,4 @@ const ElementDetails = ({
   );
 };
 
-export default enhance(ElementDetails);
+export default ElementDetails;

@@ -16,8 +16,6 @@
 
 import * as React from "react";
 import { useEffect } from "react";
-import { compose } from "recompose";
-import { connect } from "react-redux";
 import PanelGroup from "react-panelgroup";
 
 import Loader from "../Loader";
@@ -33,12 +31,12 @@ import DeletePipelineElement, {
   useDialog as useDeleteElementDialog
 } from "./DeletePipelineElement";
 import { ElementDetails } from "./ElementDetails";
-import { fetchPipeline, savePipeline } from "./pipelineResourceClient";
+import { fetchPipeline, savePipeline } from "./client";
 import { actionCreators } from "./redux";
 import Pipeline from "./Pipeline";
-import { GlobalStoreState } from "../../startup/reducers";
-import { StoreStateById as PipelineStatesStoreStateById } from "./redux/pipelineStatesReducer";
 import DocRefEditor from "../DocRefEditor";
+import usePipelineState from "./redux/usePipelineState";
+import { useDispatch } from "redux-react-hook";
 
 const {
   pipelineElementSelectionCleared,
@@ -50,45 +48,10 @@ const {
 export interface Props {
   pipelineId: string;
 }
-interface ConnectState {
-  pipelineState: PipelineStatesStoreStateById;
-}
-interface ConnectDispatch {
-  fetchPipeline: typeof fetchPipeline;
-  savePipeline: typeof savePipeline;
-  pipelineElementSelectionCleared: typeof pipelineElementSelectionCleared;
-  pipelineSettingsUpdated: typeof pipelineSettingsUpdated;
-  pipelineElementAdded: typeof pipelineElementAdded;
-  pipelineElementDeleted: typeof pipelineElementDeleted;
-}
-export interface EnhancedProps extends Props, ConnectState, ConnectDispatch {}
 
-const enhance = compose<EnhancedProps, Props>(
-  connect<ConnectState, ConnectDispatch, Props, GlobalStoreState>(
-    ({ pipelineEditor: { pipelineStates } }, { pipelineId }) => ({
-      pipelineState: pipelineStates[pipelineId]
-    }),
-    {
-      fetchPipeline,
-      savePipeline,
-      pipelineElementSelectionCleared,
-      pipelineSettingsUpdated,
-      pipelineElementAdded,
-      pipelineElementDeleted
-    }
-  )
-);
+const PipelineEditor = ({ pipelineId }: Props) => {
+  const dispatch = useDispatch();
 
-const PipelineEditor = ({
-  pipelineId,
-  pipelineState,
-  pipelineElementSelectionCleared,
-  pipelineSettingsUpdated,
-  pipelineElementAdded,
-  pipelineElementDeleted,
-  savePipeline,
-  fetchPipeline
-}: EnhancedProps) => {
   useEffect(() => {
     fetchPipeline(pipelineId);
   });
@@ -97,22 +60,26 @@ const PipelineEditor = ({
     showDialog: showSettingsDialog,
     componentProps: settingsComponentProps
   } = usePipelineSettingsDialog(description =>
-    pipelineSettingsUpdated(pipelineId, description)
+    dispatch(pipelineSettingsUpdated(pipelineId, description))
   );
 
   const {
     showDialog: showAddElementDialog,
     componentProps: addElementComponentProps
   } = useAddElementDialog((parentId, elementDefinition, name) => {
-    pipelineElementAdded(pipelineId, parentId, elementDefinition, name);
+    dispatch(
+      pipelineElementAdded(pipelineId, parentId, elementDefinition, name)
+    );
   });
 
   const {
     showDialog: showDeleteElementDialog,
     componentProps: deleteElementComponentProps
   } = useDeleteElementDialog(elementIdToDelete => {
-    pipelineElementDeleted(pipelineId, elementIdToDelete);
+    dispatch(pipelineElementDeleted(pipelineId, elementIdToDelete));
   });
+
+  const pipelineState = usePipelineState(pipelineId);
 
   if (!(pipelineState && pipelineState.pipeline)) {
     return <Loader message="Loading pipeline..." />;
@@ -174,7 +141,9 @@ const PipelineEditor = ({
           {selectedElementId !== undefined ? (
             <ElementDetails
               pipelineId={pipelineId}
-              onClose={() => pipelineElementSelectionCleared(pipelineId)}
+              onClose={() =>
+                dispatch(pipelineElementSelectionCleared(pipelineId))
+              }
             />
           ) : (
             <div />
@@ -185,4 +154,4 @@ const PipelineEditor = ({
   );
 };
 
-export default enhance(PipelineEditor);
+export default PipelineEditor;

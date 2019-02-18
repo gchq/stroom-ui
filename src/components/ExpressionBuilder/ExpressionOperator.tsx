@@ -15,7 +15,6 @@
  */
 import * as React from "react";
 import { compose } from "recompose";
-import { connect } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   DragSource,
@@ -44,7 +43,6 @@ import {
   ExpressionHasUuid,
   ExpressionTermWithUuid
 } from "../../types";
-import { GlobalStoreState } from "../../startup/reducers";
 import ElbowLine from "../PipelineEditor/ElbowLine/ElbowLine";
 
 const {
@@ -61,26 +59,18 @@ export interface Props {
   isRoot?: boolean;
   isEnabled: boolean;
   showDeleteItemDialog: (itemId: string) => void;
-}
-
-interface ConnectState {}
-interface ConnectDispatch {
   expressionTermAdded: typeof expressionTermAdded;
   expressionOperatorAdded: typeof expressionOperatorAdded;
   expressionItemUpdated: typeof expressionItemUpdated;
   expressionItemMoved: typeof expressionItemMoved;
 }
 
-export interface DndProps extends Props, ConnectState, ConnectDispatch {}
-
 export interface EnhancedProps
   extends Props,
-    ConnectState,
-    ConnectDispatch,
     DragCollectedProps,
     DropCollectedProps {}
 
-const dragSource: DragSourceSpec<DndProps, DragObject> = {
+const dragSource: DragSourceSpec<Props, DragObject> = {
   canDrag(props) {
     return true;
   },
@@ -91,7 +81,7 @@ const dragSource: DragSourceSpec<DndProps, DragObject> = {
   }
 };
 
-const dropTarget: DropTargetSpec<Props & ConnectState & ConnectDispatch> = {
+const dropTarget: DropTargetSpec<Props> = {
   canDrop(props, monitor) {
     return canMove(monitor.getItem(), props.operator);
   },
@@ -116,17 +106,6 @@ let dropCollect: DropTargetCollector<DropCollectedProps> = function dropCollect(
 };
 
 const enhance = compose<EnhancedProps, Props>(
-  connect<ConnectState, ConnectDispatch, Props, GlobalStoreState>(
-    state => ({
-      // operators are nested, so take all their props from parent
-    }),
-    {
-      expressionTermAdded,
-      expressionOperatorAdded,
-      expressionItemUpdated,
-      expressionItemMoved
-    }
-  ),
   DragSource(DragDropTypes.OPERATOR, dragSource, dragCollect),
   DropTarget(
     [DragDropTypes.OPERATOR, DragDropTypes.TERM],
@@ -268,11 +247,17 @@ const ExpressionOperator = ({
                 itemElement = (
                   <div key={c.uuid}>
                     <ExpressionTerm
-                      showDeleteItemDialog={showDeleteItemDialog}
-                      dataSource={dataSource}
-                      expressionId={expressionId}
                       isEnabled={isEnabled && c.enabled}
                       term={c as ExpressionTermWithUuid}
+                      {...{
+                        showDeleteItemDialog,
+                        dataSource,
+                        expressionId,
+                        expressionTermAdded,
+                        expressionOperatorAdded,
+                        expressionItemUpdated,
+                        expressionItemMoved
+                      }}
                     />
                   </div>
                 );
@@ -280,11 +265,17 @@ const ExpressionOperator = ({
               case "operator":
                 itemElement = (
                   <EnhancedExpressionOperator
-                    showDeleteItemDialog={showDeleteItemDialog}
-                    dataSource={dataSource}
-                    expressionId={expressionId}
                     isEnabled={isEnabled && c.enabled}
                     operator={c as ExpressionOperatorWithUuid}
+                    {...{
+                      showDeleteItemDialog,
+                      dataSource,
+                      expressionId,
+                      expressionTermAdded,
+                      expressionOperatorAdded,
+                      expressionItemUpdated,
+                      expressionItemMoved
+                    }}
                   />
                 );
                 break;

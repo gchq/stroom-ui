@@ -16,16 +16,15 @@
 
 import * as React from "react";
 import { useEffect } from "react";
-import { compose } from "recompose";
-import { connect } from "react-redux";
+import { useDispatch } from "redux-react-hook";
 
 import DocRefEditor from "../DocRefEditor";
 import { Props as ButtonProps } from "../Button";
 import Loader from "../Loader";
-import { fetchXslt, saveXslt } from "./client";
+import { useFetchXslt, useSaveXslt } from "./client";
 import ThemedAceEditor from "../ThemedAceEditor";
-import { actionCreators, StoreStateById } from "./redux";
-import { GlobalStoreState } from "../../startup/reducers";
+import { actionCreators } from "./redux";
+import useReduxState from "../../lib/useReduxState";
 
 const { xsltUpdated } = actionCreators;
 
@@ -33,35 +32,16 @@ export interface Props {
   xsltUuid: string;
 }
 
-interface ConnectState {
-  xsltState: StoreStateById;
-}
-
-interface ConnectDispatch {
-  fetchXslt: typeof fetchXslt;
-  xsltUpdated: typeof xsltUpdated;
-  saveXslt: typeof saveXslt;
-}
-
-export interface EnhancedProps extends Props, ConnectState, ConnectDispatch {}
-
-const enhance = compose<EnhancedProps, Props>(
-  connect<ConnectState, ConnectDispatch, Props, GlobalStoreState>(
-    ({ xsltEditor }, { xsltUuid }) => ({
-      xsltState: xsltEditor[xsltUuid]
-    }),
-    {
-      fetchXslt,
-      xsltUpdated,
-      saveXslt
-    }
-  )
-);
-
-const XsltEditor = ({ xsltUuid, fetchXslt, xsltState }: EnhancedProps) => {
+const XsltEditor = ({ xsltUuid }: Props) => {
+  const fetchXslt = useFetchXslt();
+  const saveXslt = useSaveXslt();
+  const dispatch = useDispatch();
   useEffect(() => {
     fetchXslt(xsltUuid);
   });
+
+  const { xsltEditor } = useReduxState(({ xsltEditor }) => ({ xsltEditor }));
+  const xsltState = xsltEditor[xsltUuid];
 
   if (!xsltState) {
     return <Loader message="Loading XSLT..." />;
@@ -86,11 +66,11 @@ const XsltEditor = ({ xsltUuid, fetchXslt, xsltState }: EnhancedProps) => {
         mode="xml"
         value={xsltData}
         onChange={newValue => {
-          if (newValue !== xsltData) xsltUpdated(xsltUuid, newValue);
+          if (newValue !== xsltData) dispatch(xsltUpdated(xsltUuid, newValue));
         }}
       />
     </DocRefEditor>
   );
 };
 
-export default enhance(XsltEditor);
+export default XsltEditor;

@@ -15,7 +15,8 @@
  */
 
 import * as React from "react";
-import { compose, withState } from "recompose";
+import { useState } from "react";
+
 import { DragSource, DragSourceSpec, DragSourceCollector } from "react-dnd";
 
 import ElementImage from "../../ElementImage";
@@ -27,18 +28,11 @@ import {
 } from "../dragDropTypes";
 import { RecycleBinItem } from "../pipelineUtils";
 
-const withFocus = withState("hasFocus", "setHasFocus", false);
-
 export interface Props {
   elementWithData: RecycleBinItem;
 }
 
-interface WithFocus {
-  hasFocus: boolean;
-  setHasFocus: (value: boolean) => any;
-}
-
-const dragSource: DragSourceSpec<Props & WithFocus, DragObject> = {
+const dragSource: DragSourceSpec<Props, DragObject> = {
   canDrag(props) {
     return true;
   },
@@ -57,21 +51,22 @@ const dragCollect: DragSourceCollector<DragCollectedProps> = (
   isDragging: monitor.isDragging()
 });
 
-export interface EnhancedProps extends Props, WithFocus, DragCollectedProps {}
+export interface EnhancedProps extends Props, DragCollectedProps {}
 
-const enhance = compose<EnhancedProps, Props>(
-  withFocus,
-  DragSource(DragDropTypes.PALLETE_ELEMENT, dragSource, dragCollect)
+const enhance = DragSource<Props, DragCollectedProps>(
+  DragDropTypes.PALLETE_ELEMENT,
+  dragSource,
+  dragCollect
 );
 
 const NewElement = ({
   connectDragSource,
   isDragging,
-  elementWithData: { element, recycleData },
-  hasFocus,
-  setHasFocus
-}: EnhancedProps) =>
-  connectDragSource(
+  elementWithData: { element, recycleData }
+}: EnhancedProps) => {
+  const [hasFocus, setHasFocus] = useState(false);
+
+  return connectDragSource(
     <div
       className={`Pipeline-element raised-low borderless ${
         hasFocus ? "focus" : "no-focus"
@@ -86,5 +81,6 @@ const NewElement = ({
       />
     </div>
   );
+};
 
 export default enhance(NewElement);

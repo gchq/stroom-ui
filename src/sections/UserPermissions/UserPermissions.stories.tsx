@@ -24,7 +24,7 @@ import fullTestData from "../../lib/storybook/fullTestData";
 import { Switch, Route, RouteComponentProps } from "react-router";
 
 import "../../styles/main.css";
-import { User } from "src/types";
+import { User } from "../../types";
 import UsersInGroup from "../../components/UserPermissionEditor/UsersInGroup";
 import GroupsForUser from "../../components/UserPermissionEditor/GroupsForUser";
 import UserPermissionEditor from "../../components/UserPermissionEditor";

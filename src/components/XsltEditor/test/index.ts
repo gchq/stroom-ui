@@ -1,7 +1,7 @@
 import * as uuidv4 from "uuid/v4";
 import * as loremIpsum from "lorem-ipsum";
 
-import { XsltDoc } from "src/types";
+import { XsltDoc } from "../../../types";
 import bitmapReference from "./bitmap-reference";
 
 export const generateTestXslt = (): XsltDoc => ({

@@ -18,7 +18,7 @@ import PipelineEditor from "./PipelineEditor";
 import Pipeline from "./Pipeline";
 
 import { reducer, actionCreators, StoreState } from "./redux";
-import { fetchPipeline, searchPipelines } from "./pipelineResourceClient";
+import { fetchPipeline, searchPipelines } from "./client";
 import { fetchElements, fetchElementProperties } from "./elementResourceClient";
 
 import { testPipelines } from "./test";

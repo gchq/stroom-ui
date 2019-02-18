@@ -15,75 +15,29 @@
  */
 
 import * as React from "react";
-import { useEffect } from "react";
-import { compose } from "recompose";
-import { connect } from "react-redux";
 
 import Loader from "../Loader";
 import PipelineElement from "./PipelineElement";
 import ElbowLine from "./ElbowLine/ElbowLine";
-import { fetchPipeline } from "./pipelineResourceClient";
-import { fetchElements, fetchElementProperties } from "./elementResourceClient";
 import {
   getPipelineLayoutGrid,
   PipelineLayoutGrid,
   CellType
 } from "./pipelineUtils";
-import { StoreState as ElementStoreState } from "./redux/elementReducer";
-import { StoreStateById as PipelineStatesStoreStateById } from "./redux/pipelineStatesReducer";
-import { GlobalStoreState } from "../../startup/reducers";
 import { PipelineElementType } from "../../types";
 import { getAllElementNames } from "./pipelineUtils";
 import { ShowDialog as ShowAddElementDialog } from "./AddElementModal";
+import usePipelineState from "./redux/usePipelineState";
 
 export interface Props {
   pipelineId: string;
   showAddElementDialog: ShowAddElementDialog;
 }
 
-interface ConnectState {
-  elements: ElementStoreState;
-  pipelineState: PipelineStatesStoreStateById;
-}
+const Pipeline = ({ pipelineId, showAddElementDialog }: Props) => {
+  const pipelineState = usePipelineState(pipelineId);
 
-interface ConnectDispatch {
-  fetchPipeline: typeof fetchPipeline;
-  fetchElements: typeof fetchElements;
-  fetchElementProperties: typeof fetchElementProperties;
-}
-
-export interface EnhancedProps extends Props, ConnectState, ConnectDispatch {}
-
-const enhance = compose<EnhancedProps, Props>(
-  connect<ConnectState, ConnectDispatch, Props, GlobalStoreState>(
-    ({ pipelineEditor: { pipelineStates, elements } }, { pipelineId }) => ({
-      pipelineState: pipelineStates[pipelineId],
-      elements
-    }),
-    {
-      fetchPipeline,
-      fetchElements,
-      fetchElementProperties
-    }
-  )
-);
-
-const Pipeline = ({
-  pipelineId,
-  pipelineState,
-  elements: { elements },
-  fetchElements,
-  fetchElementProperties,
-  fetchPipeline,
-  showAddElementDialog
-}: EnhancedProps) => {
-  useEffect(() => {
-    fetchElements();
-    fetchElementProperties();
-    fetchPipeline(pipelineId);
-  }, []);
-
-  if (!(pipelineState && pipelineState.pipeline && elements)) {
+  if (!(pipelineState && pipelineState.pipeline)) {
     return <Loader message="Loading pipeline..." />;
   }
 
@@ -131,4 +85,4 @@ const Pipeline = ({
   );
 };
 
-export default enhance(Pipeline);
+export default Pipeline;

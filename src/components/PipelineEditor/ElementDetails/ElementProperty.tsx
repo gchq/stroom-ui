@@ -15,8 +15,6 @@
  */
 
 import * as React from "react";
-import { compose, withProps } from "recompose";
-import { connect } from "react-redux";
 
 import {
   getParentProperty,
@@ -27,8 +25,8 @@ import {
 import ElementPropertyFieldDetails from "./ElementPropertyInheritanceInfo";
 import ElementPropertyField from "./ElementPropertyField";
 import { ElementPropertyType } from "../../../types";
-import { GlobalStoreState } from "../../../startup/reducers";
-import { StoreStateById as PipelineStateStoreById } from "../redux/pipelineStatesReducer";
+import Loader from "../../../components/Loader";
+import usePipelineState from "../redux/usePipelineState";
 
 export interface Props {
   pipelineId: string;
@@ -36,117 +34,76 @@ export interface Props {
   elementPropertyType: ElementPropertyType;
 }
 
-interface ConnectState {
-  pipelineState: PipelineStateStoreById;
-}
-interface ConnectDispatch {}
-interface WithProps {
-  type: string;
-  value: any;
-  docRefTypes?: Array<string>;
-  name: string;
-  description: string;
-  childValue: any;
-  parentValue: any;
-  currentValue: any;
-  defaultValue: any;
-}
-
-export interface EnhancedProps
-  extends Props,
-    ConnectState,
-    ConnectDispatch,
-    WithProps {}
-
-const enhance = compose<EnhancedProps, Props>(
-  connect<ConnectState, ConnectDispatch, Props, GlobalStoreState>(
-    ({ pipelineEditor: { pipelineStates } }, { pipelineId }) => {
-      const pipelineState = pipelineStates[pipelineId];
-      return {
-        pipelineState
-      };
-    }
-  ),
-  withProps(
-    ({ pipelineState: { pipeline }, elementId, elementPropertyType }) => {
-      const value = getElementValue(
-        pipeline,
-        elementId,
-        elementPropertyType.name
-      );
-      const childValue = getChildValue(
-        pipeline,
-        elementId,
-        elementPropertyType.name
-      );
-      const parentValue = getParentProperty(
-        pipeline.configStack,
-        elementId,
-        elementPropertyType.name
-      );
-
-      const currentValue = getCurrentValue(
-        value,
-        parentValue,
-        elementPropertyType.defaultValue,
-        elementPropertyType.type
-      );
-
-      return {
-        type: elementPropertyType.type.toLowerCase(),
-        currentValue,
-        defaultValue: elementPropertyType.defaultValue,
-        parentValue,
-        childValue,
-        docRefTypes: elementPropertyType.docRefTypes,
-        name: elementPropertyType.name,
-        description: elementPropertyType.description
-      };
-    }
-  )
-);
-
 const ElementProperty = ({
-  name,
-  description,
-  type,
-  docRefTypes,
   pipelineId,
   elementId,
-  value,
-  currentValue,
-  parentValue,
-  childValue,
-  defaultValue
-}: EnhancedProps) => (
-  <React.Fragment>
-    <label>{description}</label>
-    <ElementPropertyField
-      {...{
-        value: currentValue,
-        name,
-        pipelineId,
-        elementId,
-        type,
-        docRefTypes
-      }}
-    />
-    <div className="element-property__advice">
-      <p>
-        The <em>field name</em> of this property is <strong>{name}</strong>
-      </p>
-      <ElementPropertyFieldDetails
-        pipelineId={pipelineId}
-        elementId={elementId}
-        name={name}
-        value={value}
-        defaultValue={defaultValue}
-        childValue={childValue}
-        parentValue={parentValue}
-        type={type}
-      />
-    </div>
-  </React.Fragment>
-);
+  elementPropertyType
+}: Props) => {
+  const pipelineState = usePipelineState(pipelineId);
+  if (!pipelineState) {
+    return <Loader message="Loading Pipeline State" />;
+  }
+  const { pipeline } = pipelineState;
+  if (!pipeline) {
+    return <Loader message="Loading Pipeline" />;
+  }
 
-export default enhance(ElementProperty);
+  const value = getElementValue(pipeline, elementId, elementPropertyType.name);
+  const childValue = getChildValue(
+    pipeline,
+    elementId,
+    elementPropertyType.name
+  );
+  const parentValue = getParentProperty(
+    pipeline.configStack,
+    elementId,
+    elementPropertyType.name
+  );
+
+  const currentValue = getCurrentValue(
+    value,
+    parentValue,
+    elementPropertyType.defaultValue,
+    elementPropertyType.type
+  );
+
+  let type: string = elementPropertyType.type.toLowerCase();
+
+  let defaultValue: any = elementPropertyType.defaultValue;
+  let docRefTypes: Array<string> | undefined = elementPropertyType.docRefTypes;
+  let name: string = elementPropertyType.name;
+  let description: string = elementPropertyType.description;
+
+  return (
+    <React.Fragment>
+      <label>{description}</label>
+      <ElementPropertyField
+        {...{
+          value: currentValue,
+          name,
+          pipelineId,
+          elementId,
+          type,
+          docRefTypes
+        }}
+      />
+      <div className="element-property__advice">
+        <p>
+          The <em>field name</em> of this property is <strong>{name}</strong>
+        </p>
+        <ElementPropertyFieldDetails
+          pipelineId={pipelineId}
+          elementId={elementId}
+          name={name}
+          value={value}
+          defaultValue={defaultValue}
+          childValue={childValue}
+          parentValue={parentValue}
+          type={type}
+        />
+      </div>
+    </React.Fragment>
+  );
+};
+
+export default ElementProperty;

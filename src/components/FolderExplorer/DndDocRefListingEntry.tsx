@@ -20,7 +20,7 @@ import {
   DragObject
 } from "./dragDropTypes";
 import { DocRefType } from "../../types";
-import { KeyDownState } from "src/lib/useKeyIsDown/useKeyIsDown";
+import { KeyDownState } from "../../lib/useKeyIsDown/useKeyIsDown";
 
 export interface Props extends DocRefListingEntryProps {
   keyIsDown: KeyDownState;

@@ -15,13 +15,11 @@
  */
 
 import * as React from "react";
-import { compose } from "recompose";
-import { connect } from "react-redux";
 
 import Button from "../../Button";
 
 import { actionCreators } from "../redux";
-import { GlobalStoreState } from "../../../startup/reducers";
+import { useDispatch } from "redux-react-hook";
 
 const {
   pipelineElementPropertyRevertToParent,
@@ -38,24 +36,6 @@ export interface Props {
   defaultValue: any;
   type: string;
 }
-
-interface ConnectState {}
-interface ConnectDispatch {
-  pipelineElementPropertyRevertToParent: typeof pipelineElementPropertyRevertToParent;
-  pipelineElementPropertyRevertToDefault: typeof pipelineElementPropertyRevertToDefault;
-}
-
-interface EnhancedProps extends Props, ConnectState, ConnectDispatch {}
-
-const enhance = compose<EnhancedProps, Props>(
-  connect<ConnectState, ConnectDispatch, Props, GlobalStoreState>(
-    undefined,
-    {
-      pipelineElementPropertyRevertToParent,
-      pipelineElementPropertyRevertToDefault
-    }
-  )
-);
 
 /**
  * Gets a value for display from the property.
@@ -93,15 +73,17 @@ const ElementPropertyFieldDetails = ({
   parentValue,
   childValue,
   defaultValue,
-  type,
-  pipelineElementPropertyRevertToParent,
-  pipelineElementPropertyRevertToDefault
-}: EnhancedProps) => {
+  type
+}: Props) => {
+  const dispatch = useDispatch();
+
   const RevertToDefaultButton = (
     <Button
       text="Revert to default"
       onClick={() =>
-        pipelineElementPropertyRevertToDefault(pipelineId, elementId, name)
+        dispatch(
+          pipelineElementPropertyRevertToDefault(pipelineId, elementId, name)
+        )
       }
     />
   );
@@ -109,7 +91,9 @@ const ElementPropertyFieldDetails = ({
     <Button
       text="Revert to parent"
       onClick={() =>
-        pipelineElementPropertyRevertToParent(pipelineId, elementId, name)
+        dispatch(
+          pipelineElementPropertyRevertToParent(pipelineId, elementId, name)
+        )
       }
     />
   );
@@ -291,4 +275,4 @@ const ElementPropertyFieldDetails = ({
   );
 };
 
-export default enhance(ElementPropertyFieldDetails);
+export default ElementPropertyFieldDetails;

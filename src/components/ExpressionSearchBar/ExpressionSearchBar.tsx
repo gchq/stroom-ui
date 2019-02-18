@@ -15,24 +15,17 @@
  */
 
 import * as React from "react";
-import {
-  compose,
-  withStateHandlers,
-  lifecycle,
-  StateHandlerMap,
-  withHandlers
-} from "recompose";
-import { connect } from "react-redux";
+import { useEffect, useState } from "react";
 
 import {
   ExpressionBuilder,
-  actionCreators as expressionBuilderActionCreators,
-  StoreStateById as ExpressionBuilderStoreState
+  actionCreators as expressionBuilderActionCreators
 } from "../ExpressionBuilder";
 import { processSearchString } from "./expressionSearchBarUtils";
 import Button from "../Button";
 import { DataSourceType, StyledComponentProps } from "../../types";
-import { GlobalStoreState } from "../../startup/reducers";
+import { useDispatch } from "redux-react-hook";
+import useReduxState from "../../lib/useReduxState";
 
 const { expressionChanged } = expressionBuilderActionCreators;
 
@@ -43,203 +36,126 @@ export interface Props extends StyledComponentProps {
   initialSearchString?: string;
 }
 
-interface ConnectState {
-  expressionState: ExpressionBuilderStoreState;
-}
-
-interface ConnectDispatch {
-  expressionChanged: typeof expressionChanged;
-}
-
-interface WithState {
-  isExpression: boolean;
-  isExpressionVisible: boolean;
-  searchString: string;
-  isSearchStringValid: boolean;
-  searchIsInvalid: boolean;
-  searchStringValidationMessages: Array<string>;
-}
-
-interface WithHandlers {
-  onChange: React.ChangeEventHandler<HTMLInputElement>;
-}
-
-interface WithStateHandlers {
-  setIsExpression: (isExpression: boolean) => WithState;
-  setIsExpressionVisible: (isExpressionVisible: boolean) => WithState;
-  setSearchString: (searchString: string) => WithState;
-  setIsSearchStringValid: (isSearchStringValid: boolean) => WithState;
-  setSearchStringValidationMessages: (
-    searchStringValidationMessages: Array<string>
-  ) => WithState;
-}
-
-export interface EnhancedProps
-  extends Props,
-    ConnectState,
-    ConnectDispatch,
-    WithState,
-    WithStateHandlers,
-    WithHandlers {}
-
-const enhance = compose<EnhancedProps, Props>(
-  connect<ConnectState, ConnectDispatch, Props, GlobalStoreState>(
-    ({ expressionBuilder }, { expressionId }) => ({
-      expressionState: expressionBuilder[expressionId]
-    }),
-    { expressionChanged }
-  ),
-  withStateHandlers<
-    WithState,
-    WithStateHandlers & StateHandlerMap<WithState>,
-    Props
-  >(
-    ({ initialSearchString }) => ({
-      isExpression: false,
-      isExpressionVisible: false,
-      searchString: initialSearchString || "",
-      searchIsInvalid: false,
-      isSearchStringValid: true,
-      searchStringValidationMessages: []
-    }),
-    {
-      setIsExpression: ({}) => (isExpression: boolean) => ({ isExpression }),
-      setIsExpressionVisible: ({}) => (isExpressionVisible: boolean) => ({
-        isExpressionVisible
-      }),
-      setSearchString: ({}) => (searchString: string) => ({ searchString }),
-      setIsSearchStringValid: ({}) => isSearchStringValid => ({
-        isSearchStringValid
-      }),
-      setSearchStringValidationMessages: ({}) => searchStringValidationMessages => ({
-        searchStringValidationMessages,
-        searchIsInvalid: searchStringValidationMessages.length > 0
-      })
-    }
-  ),
-  lifecycle<
-    Props & ConnectState & ConnectDispatch & WithState & WithStateHandlers,
-    {}
-  >({
-    componentDidMount() {
-      // We need to set up an expression so we've got something to search with,
-      // even though it'll be empty.
-      const { expressionChanged, expressionId, dataSource } = this.props;
-      const parsedExpression = processSearchString(dataSource, "");
-      expressionChanged(expressionId, parsedExpression.expression);
-
-      const { onSearch } = this.props;
-      onSearch(expressionId);
-    }
-  }),
-  withHandlers<
-    Props & ConnectState & ConnectDispatch & WithState & WithStateHandlers,
-    WithHandlers
-  >({
-    onChange: ({
-      expressionId,
-      dataSource,
-      searchString,
-      setSearchString,
-      setIsSearchStringValid,
-      setSearchStringValidationMessages
-    }) => ({ target: { value } }) => {
-      const expression = processSearchString(dataSource, value);
-      const invalidFields = expression.fields.filter(
-        field =>
-          !field.conditionIsValid || !field.fieldIsValid || !field.valueIsValid
-      );
-
-      const searchStringValidationMessages: Array<string> = [];
-      if (invalidFields.length > 0) {
-        invalidFields.forEach(invalidField => {
-          searchStringValidationMessages.push(
-            `'${invalidField.original}' is not a valid search term`
-          );
-        });
-      }
-
-      setIsSearchStringValid(invalidFields.length === 0);
-      setSearchStringValidationMessages(searchStringValidationMessages);
-      setSearchString(value);
-
-      const parsedExpression = processSearchString(dataSource, searchString);
-      expressionChanged(expressionId, parsedExpression.expression);
-    }
-  })
-);
-
 const ExpressionSearchBar = ({
+  initialSearchString,
   dataSource,
   expressionId,
-  expressionChanged,
-  searchString,
-  isExpression,
-  setIsExpression,
-  expressionState,
-  searchStringValidationMessages,
-  onSearch,
-  searchIsInvalid,
-  onChange
-}: EnhancedProps) => (
-  <div className="dropdown search-bar borderless">
-    <div className="search-bar__header">
-      <input
-        placeholder="I.e. field1=value1 field2=value2"
-        value={isExpression ? expressionState.expressionAsString : searchString}
-        className="search-bar__input"
-        onChange={onChange}
-      />
-      <Button
-        disabled={searchIsInvalid}
-        icon="search"
-        onClick={() => {
-          onSearch(expressionId);
-        }}
-      />
-    </div>
-    <div tabIndex={0} className={`dropdown__content search-bar__content`}>
-      <div className="search-bar__content__header">
-        <Button
-          text="Text search"
-          selected={!isExpression}
-          icon="i-cursor"
-          className="search-bar__modeButton raised-low bordered hoverable"
-          onClick={() => {
-            setIsExpression(false);
-          }}
+  onSearch
+}: Props) => {
+  const { expressionBuilder } = useReduxState(({ expressionBuilder }) => ({
+    expressionBuilder
+  }));
+  const expressionState = expressionBuilder[expressionId];
+
+  const [isExpression, setIsExpression] = useState<boolean>(false);
+  const [searchString, setSearchString] = useState<string>(
+    initialSearchString || ""
+  );
+  const [isSearchStringValid, setIsSearchStringValid] = useState<boolean>(true);
+  const [
+    searchStringValidationMessages,
+    setSearchStringValidationMessages
+  ] = useState<Array<string>>([]);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const parsedExpression = processSearchString(dataSource, "");
+    dispatch(expressionChanged(expressionId, parsedExpression.expression));
+
+    onSearch(expressionId);
+  }, []);
+
+  const onChange: React.ChangeEventHandler<HTMLInputElement> = ({
+    target: { value }
+  }) => {
+    const expression = processSearchString(dataSource, value);
+    const invalidFields = expression.fields.filter(
+      field =>
+        !field.conditionIsValid || !field.fieldIsValid || !field.valueIsValid
+    );
+
+    const searchStringValidationMessages: Array<string> = [];
+    if (invalidFields.length > 0) {
+      invalidFields.forEach(invalidField => {
+        searchStringValidationMessages.push(
+          `'${invalidField.original}' is not a valid search term`
+        );
+      });
+    }
+
+    setIsSearchStringValid(invalidFields.length === 0);
+    setSearchStringValidationMessages(searchStringValidationMessages);
+    setSearchString(value);
+
+    const parsedExpression = processSearchString(dataSource, searchString);
+    dispatch(expressionChanged(expressionId, parsedExpression.expression));
+  };
+
+  return (
+    <div className="dropdown search-bar borderless">
+      <div className="search-bar__header">
+        <input
+          placeholder="I.e. field1=value1 field2=value2"
+          value={
+            isExpression ? expressionState.expressionAsString : searchString
+          }
+          className="search-bar__input"
+          onChange={onChange}
         />
         <Button
-          text="Expression search"
-          selected={isExpression}
-          disabled={searchIsInvalid}
-          className="search-bar__modeButton raised-low bordered hoverable"
-          icon="edit"
+          disabled={!isSearchStringValid}
+          icon="search"
           onClick={() => {
-            if (!isExpression) {
-              const parsedExpression = processSearchString(
-                dataSource,
-                searchString
-              );
-              expressionChanged(expressionId, parsedExpression.expression);
-              setIsExpression(true);
-            }
+            onSearch(expressionId);
           }}
         />
       </div>
-      {isExpression ? (
-        <ExpressionBuilder
-          className="search-bar__expressionBuilder"
-          showModeToggle={false}
-          editMode
-          dataSource={dataSource}
-          expressionId={expressionId}
-        />
-      ) : (
-        <div>{searchStringValidationMessages}</div>
-      )}
+      <div tabIndex={0} className={`dropdown__content search-bar__content`}>
+        <div className="search-bar__content__header">
+          <Button
+            text="Text search"
+            selected={!isExpression}
+            icon="i-cursor"
+            className="search-bar__modeButton raised-low bordered hoverable"
+            onClick={() => {
+              setIsExpression(false);
+            }}
+          />
+          <Button
+            text="Expression search"
+            selected={isExpression}
+            disabled={!isSearchStringValid}
+            className="search-bar__modeButton raised-low bordered hoverable"
+            icon="edit"
+            onClick={() => {
+              if (!isExpression) {
+                const parsedExpression = processSearchString(
+                  dataSource,
+                  searchString
+                );
+                dispatch(
+                  expressionChanged(expressionId, parsedExpression.expression)
+                );
+                setIsExpression(true);
+              }
+            }}
+          />
+        </div>
+        {isExpression ? (
+          <ExpressionBuilder
+            className="search-bar__expressionBuilder"
+            showModeToggle={false}
+            editMode
+            dataSource={dataSource}
+            expressionId={expressionId}
+          />
+        ) : (
+          <div>{searchStringValidationMessages}</div>
+        )}
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
-export default enhance(ExpressionSearchBar);
+export default ExpressionSearchBar;

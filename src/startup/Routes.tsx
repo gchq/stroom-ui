@@ -28,8 +28,8 @@ import useConfig from "./useConfig";
 
 import { PrivateRoute } from "./Authentication";
 import PathNotFound from "../components/PathNotFound";
-import useHistory from "src/lib/useHistory";
-import Loader from "src/components/Loader";
+import useHistory from "../lib/useHistory";
+import Loader from "../components/Loader";
 
 const Routes = () => {
   const history = useHistory();

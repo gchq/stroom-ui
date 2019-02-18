@@ -1,5 +1,5 @@
 import { Dispatch } from "redux";
-import { GlobalStoreState } from "src/startup/reducers";
+import { GlobalStoreState } from "../../startup/reducers";
 
 import { actionCreators } from "./redux";
 import {

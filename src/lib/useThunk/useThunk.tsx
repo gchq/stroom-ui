@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { StoreContext } from "redux-react-hook";
-import { GlobalStoreState } from "src/startup/reducers";
+import { GlobalStoreState } from "../../startup/reducers";
 import { Dispatch } from "redux";
 
 /**

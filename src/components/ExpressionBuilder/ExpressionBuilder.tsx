@@ -15,20 +15,25 @@
  */
 import * as React from "react";
 import { useEffect, useState } from "react";
-import { compose } from "recompose";
-import { connect } from "react-redux";
 
 import Loader from "../Loader";
 import ExpressionOperator from "./ExpressionOperator";
 import DeleteExpressionItem, {
   useDialog as useDeleteItemDialog
 } from "./DeleteExpressionItem";
-import { GlobalStoreState } from "../../startup/reducers";
 import { DataSourceType, StyledComponentProps } from "../../types";
-import { StoreStateById, actionCreators } from "./redux";
+import { actionCreators } from "./redux";
 import ROExpressionBuilder from "./ROExpressionBuilder";
+import useReduxState from "../../lib/useReduxState";
+import { useDispatch } from "redux-react-hook";
 
-const { expressionItemDeleted } = actionCreators;
+const {
+  expressionTermAdded,
+  expressionOperatorAdded,
+  expressionItemUpdated,
+  expressionItemMoved,
+  expressionItemDeleted
+} = actionCreators;
 
 export interface Props extends StyledComponentProps {
   dataSource: DataSourceType;
@@ -37,33 +42,19 @@ export interface Props extends StyledComponentProps {
   editMode?: boolean;
 }
 
-interface ConnectState {
-  expressionState: StoreStateById;
-}
-interface ConnectDispatch {
-  expressionItemDeleted: typeof expressionItemDeleted;
-}
-
-export interface EnhancedProps extends Props, ConnectState, ConnectDispatch {}
-
-const enhance = compose<EnhancedProps, Props>(
-  connect<ConnectState, ConnectDispatch, Props, GlobalStoreState>(
-    ({ expressionBuilder }, { expressionId }) => ({
-      expressionState: expressionBuilder[expressionId]
-    }),
-    { expressionItemDeleted }
-  )
-);
-
 const ExpressionBuilder = ({
   expressionId,
   dataSource,
-  expressionState,
   showModeToggle: smtRaw,
-  editMode,
-  expressionItemDeleted
-}: EnhancedProps) => {
+  editMode
+}: Props) => {
+  const dispatch = useDispatch();
+  const { expressionBuilder } = useReduxState(({ expressionBuilder }) => ({
+    expressionBuilder
+  }));
   const [inEditMode, setEditableByUser] = useState<boolean>(false);
+
+  const expressionState = expressionBuilder[expressionId];
 
   useEffect(() => {
     setEditableByUser(editMode || false);
@@ -73,7 +64,7 @@ const ExpressionBuilder = ({
     showDialog: showDeleteItemDialog,
     componentProps: deleteDialogComponentProps
   } = useDeleteItemDialog(itemId =>
-    expressionItemDeleted(expressionId, itemId)
+    dispatch(expressionItemDeleted(expressionId, itemId))
   );
 
   if (!expressionState) {
@@ -106,6 +97,18 @@ const ExpressionBuilder = ({
           isRoot
           isEnabled
           operator={expression}
+          expressionTermAdded={(eId, itemId) =>
+            dispatch(expressionTermAdded(eId, itemId))
+          }
+          expressionOperatorAdded={(eId, itemId) =>
+            dispatch(expressionOperatorAdded(eId, itemId))
+          }
+          expressionItemUpdated={(eId, itemId, updates) =>
+            dispatch(expressionItemUpdated(eId, itemId, updates))
+          }
+          expressionItemMoved={(eId, itemToMove, destination) =>
+            dispatch(expressionItemMoved(eId, itemToMove, destination))
+          }
         />
       ) : (
         <ROExpressionBuilder
@@ -117,4 +120,4 @@ const ExpressionBuilder = ({
   );
 };
 
-export default enhance(ExpressionBuilder);
+export default ExpressionBuilder;

@@ -1,5 +1,5 @@
 import useLocalStorage, { storeObjectFactory } from "../useLocalStorage";
-import { DocRefType, DocRefConsumer } from "src/types";
+import { DocRefType, DocRefConsumer } from "../../types";
 
 export interface OutProps {
   recentItems: Array<DocRefType>;

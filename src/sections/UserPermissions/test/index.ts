@@ -1,7 +1,7 @@
 import * as uuidv4 from "uuid/v4";
 import * as loremIpsum from "lorem-ipsum";
 
-import { User } from "src/types";
+import { User } from "../../../types";
 
 export const adminUser: User = {
   uuid: uuidv4(),

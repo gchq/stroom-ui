@@ -16,12 +16,9 @@
 
 import * as React from "react";
 
-import { compose } from "recompose";
-import { connect } from "react-redux";
-
 import AppSearchBar from "../../AppSearchBar";
 import { actionCreators } from "../redux";
-import { GlobalStoreState } from "../../../startup/reducers";
+import { useDispatch } from "redux-react-hook";
 
 const { pipelineElementPropertyUpdated } = actionCreators;
 
@@ -33,20 +30,6 @@ export interface Props {
   type: string;
   docRefTypes?: Array<string>;
 }
-interface ConnectState {}
-interface ConnectDispatch {
-  pipelineElementPropertyUpdated: typeof pipelineElementPropertyUpdated;
-}
-export interface EnhancedProps extends Props, ConnectState, ConnectDispatch {}
-
-const enhance = compose<EnhancedProps, Props>(
-  connect<ConnectState, ConnectDispatch, Props, GlobalStoreState>(
-    undefined,
-    {
-      pipelineElementPropertyUpdated
-    }
-  )
-);
 
 /**
  *
@@ -58,14 +41,14 @@ const enhance = compose<EnhancedProps, Props>(
  * @param {array} docRefTypes The docref types to filter by
  */
 const ElementPropertyField = ({
-  pipelineElementPropertyUpdated,
   value,
   name,
   pipelineId,
   elementId,
   type,
   docRefTypes
-}: EnhancedProps) => {
+}: Props) => {
+  const dispatch = useDispatch();
   let elementField;
   switch (type) {
     case "boolean":
@@ -76,12 +59,14 @@ const ElementPropertyField = ({
             checked={value}
             name={name}
             onChange={() => {
-              pipelineElementPropertyUpdated(
-                pipelineId,
-                elementId,
-                name,
-                "boolean",
-                !value
+              dispatch(
+                pipelineElementPropertyUpdated(
+                  pipelineId,
+                  elementId,
+                  name,
+                  "boolean",
+                  !value
+                )
               );
             }}
           />
@@ -96,12 +81,14 @@ const ElementPropertyField = ({
             name={name}
             value={parseInt(value, 10)}
             onChange={({ target: { value } }) => {
-              pipelineElementPropertyUpdated(
-                pipelineId,
-                elementId,
-                name,
-                "integer",
-                parseInt(value, 10)
+              dispatch(
+                pipelineElementPropertyUpdated(
+                  pipelineId,
+                  elementId,
+                  name,
+                  "integer",
+                  parseInt(value, 10)
+                )
               );
             }}
           />
@@ -115,12 +102,14 @@ const ElementPropertyField = ({
           typeFilters={docRefTypes}
           value={value}
           onChange={node => {
-            pipelineElementPropertyUpdated(
-              pipelineId,
-              elementId,
-              name,
-              "docref",
-              node
+            dispatch(
+              pipelineElementPropertyUpdated(
+                pipelineId,
+                elementId,
+                name,
+                "docref",
+                node
+              )
             );
           }}
         />
@@ -135,12 +124,14 @@ const ElementPropertyField = ({
             value={value}
             name={name}
             onChange={({ target: { value } }) => {
-              pipelineElementPropertyUpdated(
-                pipelineId,
-                elementId,
-                name,
-                type,
-                value
+              dispatch(
+                pipelineElementPropertyUpdated(
+                  pipelineId,
+                  elementId,
+                  name,
+                  type,
+                  value
+                )
               );
             }}
           />
@@ -157,12 +148,14 @@ const ElementPropertyField = ({
             value={value}
             name={name}
             onChange={({ target: { value } }) => {
-              pipelineElementPropertyUpdated(
-                pipelineId,
-                elementId,
-                name,
-                type,
-                value
+              dispatch(
+                pipelineElementPropertyUpdated(
+                  pipelineId,
+                  elementId,
+                  name,
+                  type,
+                  value
+                )
               );
             }}
           />
@@ -173,4 +166,4 @@ const ElementPropertyField = ({
   return elementField;
 };
 
-export default enhance(ElementPropertyField);
+export default ElementPropertyField;

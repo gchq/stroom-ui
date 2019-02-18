@@ -1,70 +1,44 @@
 import * as React from "react";
+import { useEffect } from "react";
 
-import { connect } from "react-redux";
-import { compose, lifecycle } from "recompose";
 import { User } from "../../../types";
 
-import {
-  findGroupsForUser,
-  addUserToGroup,
-  removeUserFromGroup
-} from "../../../sections/UserPermissions/client";
-import { GlobalStoreState } from "src/startup/reducers";
+import { useFindGroupsForUser } from "../../../sections/UserPermissions/client";
+import useReduxState from "../../../lib/useReduxState";
+import Loader from "../../../components/Loader";
 
 export interface Props {
   user: User;
 }
 
-export interface ConnectState {
-  groups: Array<User>;
-}
-
-export interface ConnectDispatch {
-  findGroupsForUser: typeof findGroupsForUser;
-  addUserToGroup: typeof addUserToGroup;
-  removeUserFromGroup: typeof removeUserFromGroup;
-}
-
-export interface EnhancedProps extends Props, ConnectState, ConnectDispatch {}
-
-const enhance = compose<EnhancedProps, Props>(
-  connect<ConnectState, ConnectDispatch, Props, GlobalStoreState>(
-    ({ userPermissions: { groupsForUser } }, { user: { uuid } }) => ({
-      groups: groupsForUser[uuid] || []
-    }),
-    {
-      findGroupsForUser,
-      addUserToGroup,
-      removeUserFromGroup
+const GroupsForUser = ({ user }: Props) => {
+  const findGroupsForUser = useFindGroupsForUser();
+  useEffect(() => {
+    if (user) {
+      findGroupsForUser(user.uuid);
     }
-  ),
-  lifecycle<Props & ConnectState & ConnectDispatch, {}>({
-    componentDidMount() {
-      const {
-        user: { uuid },
-        findGroupsForUser
-      } = this.props;
+  }, [!!user ? user.uuid : null]);
 
-      findGroupsForUser(uuid);
-    },
-    componentWillUpdate(nextProps) {
-      const { user, findGroupsForUser } = this.props;
+  const { groupsForUser } = useReduxState(
+    ({ userPermissions: { groupsForUser } }) => ({
+      groupsForUser
+    })
+  );
+  const groups = groupsForUser[user.uuid];
 
-      if (!user || user.uuid !== nextProps.user.uuid) {
-        findGroupsForUser(nextProps.user.uuid);
-      }
-    }
-  })
-);
+  if (!groups) {
+    return <Loader message={`Loading Groups for User ${user.uuid}`} />;
+  }
 
-const GroupsForUser = ({ groups }: EnhancedProps) => (
-  <div>
-    <ul>
-      {groups.map(g => (
-        <li key={g.uuid}>{g.name}</li>
-      ))}
-    </ul>
-  </div>
-);
+  return (
+    <div>
+      <ul>
+        {groups.map(g => (
+          <li key={g.uuid}>{g.name}</li>
+        ))}
+      </ul>
+    </div>
+  );
+};
 
-export default enhance(GroupsForUser);
+export default GroupsForUser;

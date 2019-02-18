@@ -16,88 +16,54 @@
 
 import * as React from "react";
 import { Route, RouteProps } from "react-router-dom";
-import { compose, withProps } from "recompose";
-import { connect } from "react-redux";
-import { GlobalStoreState } from "../reducers";
 
 import AuthenticationRequest from "./AuthenticationRequest";
+import useReduxState from "../../lib/useReduxState";
+import Loader from "../../components/Loader";
 
 export interface Props extends RouteProps {}
 
-interface ConnectState {
-  idToken?: string;
-  // showUnauthorizedDialog: state.login.showUnauthorizedDialog,
-  advertisedUrl?: string;
-  appClientId?: string;
-  authenticationServiceUrl?: string;
-  authorisationServiceUrl?: string;
-}
-interface ConnectDispatch {}
+const PrivateRoute = ({ render, ...rest }: Props) => {
+  const { authentication, config } = useReduxState(
+    ({ authentication, config }) => ({
+      authentication,
+      config
+    })
+  );
 
-interface WithProps {
-  isLoggedIn: boolean;
-}
+  const { idToken } = authentication;
+  const {
+    values: { advertisedUrl, appClientId, authenticationServiceUrl }
+  } = config;
 
-export interface EnhancedProps
-  extends Props,
-    ConnectState,
-    ConnectDispatch,
-    WithProps {
-  advertisedUrl: string;
-  appClientId: string;
-  authenticationServiceUrl: string;
-}
+  if (
+    !(
+      config.isReady &&
+      !!advertisedUrl &&
+      !!appClientId &&
+      !!authenticationServiceUrl
+    )
+  ) {
+    return <Loader message="Waiting for config" />;
+  }
 
-const enhance = compose<EnhancedProps, Props>(
-  connect<ConnectState, ConnectDispatch, Props, GlobalStoreState>(
-    ({
-      authentication: { idToken },
-      config: {
-        values: {
-          advertisedUrl,
-          appClientId,
-          authenticationServiceUrl,
-          authorisationServiceUrl
-        }
+  return (
+    <Route
+      {...rest}
+      render={props =>
+        !!idToken ? (
+          render && render({ ...props })
+        ) : (
+          <AuthenticationRequest
+            referrer={props.match.url}
+            uiUrl={advertisedUrl}
+            appClientId={appClientId}
+            authenticationServiceUrl={authenticationServiceUrl}
+          />
+        )
       }
-    }) => ({
-      idToken,
-      // showUnauthorizedDialog: state.login.showUnauthorizedDialog,
-      advertisedUrl,
-      appClientId,
-      authenticationServiceUrl,
-      authorisationServiceUrl
-    }),
-    {}
-  ),
-  withProps(({ idToken }) => ({
-    isLoggedIn: !!idToken
-  }))
-);
+    />
+  );
+};
 
-const PrivateRoute = ({
-  isLoggedIn,
-  advertisedUrl,
-  appClientId,
-  authenticationServiceUrl,
-  render,
-  ...rest
-}: EnhancedProps) => (
-  <Route
-    {...rest}
-    render={props =>
-      isLoggedIn ? (
-        render && render({ ...props })
-      ) : (
-        <AuthenticationRequest
-          referrer={props.match.url}
-          uiUrl={advertisedUrl}
-          appClientId={appClientId}
-          authenticationServiceUrl={authenticationServiceUrl}
-        />
-      )
-    }
-  />
-);
-
-export default enhance(PrivateRoute);
+export default PrivateRoute;

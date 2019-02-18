@@ -14,8 +14,7 @@
  * limitations under the License.
  */
 import * as React from "react";
-import { connect } from "react-redux";
-import { compose, lifecycle } from "recompose";
+import { useEffect } from "react";
 
 import { storiesOf } from "@storybook/react";
 
@@ -29,9 +28,9 @@ import ExpressionSearchBar, {
 } from "./ExpressionSearchBar";
 
 import { ExpressionOperatorType } from "../../types";
-import { GlobalStoreState } from "../../startup/reducers";
 
 import "../../styles/main.css";
+import { useDispatch } from "redux-react-hook";
 
 const { expressionChanged } = expressionBuilderActionCreators;
 
@@ -39,25 +38,17 @@ interface Props extends ExpressionSearchBarProps {
   testExpression: ExpressionOperatorType;
 }
 
-interface ConnectState {}
-interface ConnectDispatch {
-  expressionChanged: typeof expressionChanged;
-}
-
-const enhance = compose<ExpressionSearchBarProps, Props>(
-  connect<ConnectState, ConnectDispatch, Props, GlobalStoreState>(
-    undefined,
-    { expressionChanged }
-  ),
-  lifecycle<Props & ConnectState & ConnectDispatch, {}>({
-    componentDidMount() {
-      const { expressionChanged, expressionId, testExpression } = this.props;
-      expressionChanged(expressionId, testExpression);
-    }
-  })
-);
-
-const TestExpressionSearchBar = enhance(ExpressionSearchBar);
+const TestExpressionSearchBar = ({
+  testExpression,
+  expressionId,
+  ...rest
+}: Props) => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(expressionChanged(expressionId, testExpression));
+  }, [testExpression]);
+  return <ExpressionSearchBar expressionId={expressionId} {...rest} />;
+};
 
 storiesOf("Expression/Search Bar", module)
   .addDecorator(StroomDecorator)

@@ -8,7 +8,7 @@ import CopyDocRefDialog, {
 } from "./CopyMoveDocRefDialog";
 
 import "../../styles/main.css";
-import { PermissionInheritance } from "src/types";
+import { PermissionInheritance } from "../../types";
 
 const testFolder2 = fromSetupSampleData.children![1];
 

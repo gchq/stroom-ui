@@ -1,5 +1,4 @@
 import * as React from "react";
-import { connect } from "react-redux";
 
 import { AppChrome } from ".";
 import { Processing } from "../Processing";
@@ -12,43 +11,54 @@ import PathNotFound from "../../components/PathNotFound";
 import IFrame from "../../components/IFrame";
 import ErrorPage from "../../components/ErrorPage";
 
-import { Config } from "../../startup/config";
-import { GlobalStoreState } from "../../startup/reducers";
 import { RouteComponentProps, RouteProps } from "react-router";
 import UserPermissions from "../UserPermissions";
 import IndexVolumes from "../IndexVolumes";
 import IndexVolumeGroups from "../IndexVolumeGroups";
 import IndexVolumeGroupEditor from "../../components/IndexVolumeGroupEditor";
 import UserPermissionEditor from "../../components/UserPermissionEditor";
+import useConfig from "../../startup/useConfig";
+import Loader from "../../components/Loader";
 
 const renderWelcome = () => (
   <AppChrome activeMenuItem="Welcome" content={<Welcome />} />
 );
 
-interface ConnectState {
-  config: Config;
-}
-interface ConnectDispatch {}
+const UsersIFrame = () => {
+  const config = useConfig();
 
-interface WithConfig extends ConnectState, ConnectDispatch {}
+  if (!config.isReady) {
+    return <Loader message="Awaiting Config" />;
+  }
 
-const withConfig = connect<ConnectState, ConnectDispatch, {}, GlobalStoreState>(
-  ({ config: { values } }) => ({ config: values })
-);
+  const {
+    values: { authUsersUiUrl }
+  } = config;
 
-const UsersIFrame = withConfig(({ config: { authUsersUiUrl } }: WithConfig) => (
-  <React.Fragment>
-    <IconHeader icon="users" text="Users" />
-    {authUsersUiUrl ? (
-      <IFrame key="users" url={authUsersUiUrl} />
-    ) : (
-      <div>No Users URL in Config</div>
-    )}
-  </React.Fragment>
-));
+  return (
+    <React.Fragment>
+      <IconHeader icon="users" text="Users" />
+      {authUsersUiUrl ? (
+        <IFrame key="users" url={authUsersUiUrl} />
+      ) : (
+        <div>No Users URL in Config</div>
+      )}
+    </React.Fragment>
+  );
+};
 
-const ApiTokensIFrame = withConfig(
-  ({ config: { authTokensUiUrl } }: WithConfig) => (
+const ApiTokensIFrame = () => {
+  const config = useConfig();
+
+  if (!config.isReady) {
+    return <Loader message="Awaiting Config" />;
+  }
+
+  const {
+    values: { authTokensUiUrl }
+  } = config;
+
+  return (
     <React.Fragment>
       <IconHeader icon="key" text="API keys" />
       {authTokensUiUrl ? (
@@ -57,8 +67,8 @@ const ApiTokensIFrame = withConfig(
         <div>No Api Keys URL in Config</div>
       )}
     </React.Fragment>
-  )
-);
+  );
+};
 
 export default [
   {

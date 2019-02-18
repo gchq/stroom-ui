@@ -193,7 +193,7 @@ export interface ElementPropertyType {
   description: string;
   defaultValue: string;
   pipelineReference: boolean;
-  docRefTypes: Array<string> | null;
+  docRefTypes: Array<string> | undefined;
   displayPriority: number;
 }
 

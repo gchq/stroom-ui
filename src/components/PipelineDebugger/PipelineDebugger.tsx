@@ -16,25 +16,18 @@
 
 import * as React from "react";
 import { useEffect } from "react";
-import { compose } from "recompose";
-import { connect } from "react-redux";
 
 import Button from "../Button";
 import { Pipeline } from "../PipelineEditor";
-import { StoreStateById as PipelineStatesStatePerId } from "../PipelineEditor/redux/pipelineStatesReducer";
 import Loader from "../Loader";
-import {
-  actionCreators as pipelineActionCreators,
-  fetchPipeline
-} from "../PipelineEditor";
+import { actionCreators as pipelineActionCreators } from "../PipelineEditor";
 
-import {
-  actionCreators,
-  StoreStateById as DebuggerStoreStatePerId
-} from "./redux";
+import { actionCreators } from "./redux";
 import DebuggerStep from "./DebuggerStep";
 import { getNext, getPrevious } from "./pipelineDebugger.utils";
-import { GlobalStoreState } from "../../startup/reducers";
+import { useDispatch } from "redux-react-hook";
+import useReduxState from "../../lib/useReduxState";
+import { useFetchPipeline } from "../PipelineEditor/client";
 
 const { startDebugging } = actionCreators;
 
@@ -45,43 +38,21 @@ export interface Props {
   pipelineId: string;
 }
 
-interface ConnectState {
-  pipelineState: PipelineStatesStatePerId;
-  debuggerState: DebuggerStoreStatePerId;
-}
-interface ConnectDispatch {
-  startDebugging: typeof startDebugging;
-  pipelineElementSelected: typeof pipelineElementSelected;
-  fetchPipeline: typeof fetchPipeline;
-}
+const PipelineDebugger = ({ pipelineId, debuggerId }: Props) => {
+  const dispatch = useDispatch();
+  const fetchPipeline = useFetchPipeline();
+  const { pipelineStates, debuggers } = useReduxState(
+    ({ debuggers, pipelineEditor: { pipelineStates } }) => ({
+      debuggers,
+      pipelineStates
+    })
+  );
+  const debuggerState = debuggers[debuggerId];
+  const pipelineState = pipelineStates[pipelineId];
 
-export interface EnhancedProps extends Props, ConnectState, ConnectDispatch {}
-
-const enhance = compose<EnhancedProps, Props>(
-  connect<ConnectState, ConnectDispatch, Props, GlobalStoreState>(
-    (
-      { debuggers, pipelineEditor: { pipelineStates } },
-      { debuggerId, pipelineId }
-    ) => ({
-      debuggerState: debuggers[debuggerId],
-      pipelineState: pipelineStates[pipelineId]
-    }),
-    { startDebugging, pipelineElementSelected, fetchPipeline }
-  )
-);
-
-const PipelineDebugger = ({
-  pipelineId,
-  debuggerId,
-  debuggerState,
-  pipelineState,
-  pipelineElementSelected,
-  fetchPipeline,
-  startDebugging
-}: EnhancedProps) => {
   useEffect(() => {
     fetchPipeline(pipelineId);
-    startDebugging(debuggerId, pipelineId);
+    dispatch(startDebugging(debuggerId, pipelineId));
   }, []);
 
   if (!debuggerState) {
@@ -91,13 +62,13 @@ const PipelineDebugger = ({
   const onNext = () => {
     const nextElementId = getNext(pipelineState);
     if (nextElementId) {
-      pipelineElementSelected(pipelineId, nextElementId, {});
+      dispatch(pipelineElementSelected(pipelineId, nextElementId, {}));
     }
   };
   const onPrevious = () => {
     const nextElementId = getPrevious(pipelineState);
     if (nextElementId) {
-      pipelineElementSelected(pipelineId, nextElementId, {});
+      dispatch(pipelineElementSelected(pipelineId, nextElementId, {}));
     }
   };
 
@@ -120,4 +91,4 @@ const PipelineDebugger = ({
   );
 };
 
-export default enhance(PipelineDebugger);
+export default PipelineDebugger;

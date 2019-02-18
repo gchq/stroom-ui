@@ -15,11 +15,8 @@
  */
 import * as React from "react";
 import { useState } from "react";
-import { compose } from "recompose";
-import { connect } from "react-redux";
 
-import { GlobalStoreState } from "../../startup/reducers";
-import { deleteDocuments } from "./explorerClient";
+import { useDeleteDocuments } from "./explorerClient";
 import ThemedConfirm from "../ThemedConfirm";
 
 export interface Props {
@@ -28,35 +25,20 @@ export interface Props {
   onCloseDialog: () => void;
 }
 
-interface ConnectDispatch {
-  deleteDocuments: typeof deleteDocuments;
-}
-
-interface EnhancedProps extends Props, ConnectDispatch {}
-
-const enhance = compose<EnhancedProps, Props>(
-  connect<{}, ConnectDispatch, Props, GlobalStoreState>(
-    () => ({}),
-    { deleteDocuments }
-  )
-);
-
-const DeleteDocRefDialog = ({
-  uuids,
-  isOpen,
-  deleteDocuments,
-  onCloseDialog
-}: EnhancedProps) => (
-  <ThemedConfirm
-    onConfirm={() => {
-      deleteDocuments(uuids);
-      onCloseDialog();
-    }}
-    onCloseDialog={onCloseDialog}
-    isOpen={isOpen}
-    question={`Delete these doc refs? ${JSON.stringify(uuids)}?`}
-  />
-);
+const DeleteDocRefDialog = ({ uuids, isOpen, onCloseDialog }: Props) => {
+  const deleteDocuments = useDeleteDocuments();
+  return (
+    <ThemedConfirm
+      onConfirm={() => {
+        deleteDocuments(uuids);
+        onCloseDialog();
+      }}
+      onCloseDialog={onCloseDialog}
+      isOpen={isOpen}
+      question={`Delete these doc refs? ${JSON.stringify(uuids)}?`}
+    />
+  );
+};
 
 /**
  * These are the things returned by the custom hook that allow the owning component to interact
@@ -98,4 +80,4 @@ export const useDialog = (): UseDialog => {
   };
 };
 
-export default enhance(DeleteDocRefDialog);
+export default DeleteDocRefDialog;

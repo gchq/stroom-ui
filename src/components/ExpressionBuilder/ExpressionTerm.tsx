@@ -16,7 +16,6 @@
 
 import * as React from "react";
 import { compose } from "recompose";
-import { connect } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { DragSource, DragSourceSpec } from "react-dnd";
 
@@ -41,7 +40,6 @@ import {
   SelectOptionsType
 } from "../../types";
 import withValueType from "./withValueType";
-import { GlobalStoreState } from "../../startup/reducers";
 
 const { expressionItemUpdated } = actionCreators;
 
@@ -51,21 +49,12 @@ export interface Props {
   term: ExpressionTermWithUuid;
   isEnabled: boolean;
   showDeleteItemDialog: (itemId: string) => void;
-}
-interface ConnectState {}
-interface ConnectDispatch {
   expressionItemUpdated: typeof expressionItemUpdated;
 }
 
-export interface DndProps extends Props, ConnectState, ConnectDispatch {}
+export interface EnhancedProps extends Props, DragCollectedProps {}
 
-export interface EnhancedProps
-  extends Props,
-    ConnectState,
-    ConnectDispatch,
-    DragCollectedProps {}
-
-const dragSource: DragSourceSpec<DndProps, DragObject> = {
+const dragSource: DragSourceSpec<Props, DragObject> = {
   beginDrag(props) {
     return {
       expressionItem: props.term
@@ -74,14 +63,6 @@ const dragSource: DragSourceSpec<DndProps, DragObject> = {
 };
 
 const enhance = compose<EnhancedProps, Props>(
-  connect<ConnectState, ConnectDispatch, Props, GlobalStoreState>(
-    state => ({
-      // state
-    }),
-    {
-      expressionItemUpdated
-    }
-  ),
   DragSource(DragDropTypes.TERM, dragSource, dragCollect)
 );
 

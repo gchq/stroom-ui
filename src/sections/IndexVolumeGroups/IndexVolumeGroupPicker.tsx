@@ -1,71 +1,40 @@
 import * as React from "react";
+import { useEffect } from "react";
 
 import Select from "react-select";
-import { compose, lifecycle, withProps } from "recompose";
-import { connect } from "react-redux";
-import { GlobalStoreState } from "src/startup/reducers";
 
-import { getIndexVolumeGroupNames } from "./client";
-import { SelectOptionType } from "src/types";
+import { useGetIndexVolumeGroupNames } from "./client";
+import { SelectOptionType } from "../../types";
+import useReduxState from "../../lib/useReduxState";
 
 export interface Props {
   value?: string;
   onChange: (v: string) => any;
 }
 
-export interface ConnectState {
-  groupNames: Array<string>;
-}
+const IndexVolumeGroupPicker = ({ value, onChange }: Props) => {
+  const getIndexVolumeGroupNames = useGetIndexVolumeGroupNames();
+  useEffect(() => {
+    getIndexVolumeGroupNames();
+  }, []);
 
-export interface ConnectDispatch {
-  getIndexVolumeGroupNames: typeof getIndexVolumeGroupNames;
-}
+  const { groupNames } = useReduxState(
+    ({ indexVolumeGroups: { groupNames } }) => ({ groupNames })
+  );
 
-export interface WithProps {
-  options: Array<SelectOptionType>;
-}
+  const options: Array<SelectOptionType> = groupNames.map(n => ({
+    value: n,
+    label: n
+  }));
 
-interface EnhancedProps
-  extends Props,
-    ConnectState,
-    ConnectDispatch,
-    WithProps {}
+  return (
+    <Select
+      value={options.find(o => o.value === value)}
+      onChange={(o: SelectOptionType) => onChange(o.value)}
+      placeholder="Index Volume Group"
+      options={options}
+    />
+  );
+};
 
-const enhance = compose<EnhancedProps, Props>(
-  connect<ConnectState, ConnectDispatch, Props, GlobalStoreState>(
-    ({ indexVolumeGroups: { groupNames } }) => ({
-      groupNames
-    }),
-    {
-      getIndexVolumeGroupNames
-    }
-  ),
-  lifecycle<Props & ConnectState & ConnectDispatch, {}>({
-    componentDidMount() {
-      const { getIndexVolumeGroupNames } = this.props;
-
-      getIndexVolumeGroupNames();
-    }
-  }),
-  withProps<WithProps, ConnectState>(({ groupNames }) => ({
-    options: groupNames.map(n => ({
-      value: n,
-      label: n
-    }))
-  }))
-);
-
-const IndexVolumeGroupPicker = ({
-  options,
-  value,
-  onChange
-}: EnhancedProps) => (
-  <Select
-    value={options.find(o => o.value === value)}
-    onChange={(o: SelectOptionType) => onChange(o.value)}
-    placeholder="Index Volume Group"
-    options={options}
-  />
-);
-
-export default enhance(IndexVolumeGroupPicker);
+export default IndexVolumeGroupPicker;

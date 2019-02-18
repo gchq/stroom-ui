@@ -1,15 +1,11 @@
 import * as React from "react";
+import { useEffect } from "react";
 
-import { connect } from "react-redux";
-import { compose, lifecycle } from "recompose";
 import { User } from "../../../types";
 
-import {
-  findUsersInGroup,
-  addUserToGroup,
-  removeUserFromGroup
-} from "../../../sections/UserPermissions/client";
-import { GlobalStoreState } from "src/startup/reducers";
+import { useFindUsersInGroup } from "../../../sections/UserPermissions/client";
+import Loader from "../../../components/Loader";
+import useReduxState from "../../../lib/useReduxState";
 
 export interface Props {
   group: User;
@@ -19,51 +15,34 @@ export interface ConnectState {
   users: Array<User>;
 }
 
-export interface ConnectDispatch {
-  findUsersInGroup: typeof findUsersInGroup;
-  addUserToGroup: typeof addUserToGroup;
-  removeUserFromGroup: typeof removeUserFromGroup;
-}
-
-export interface EnhancedProps extends Props, ConnectState, ConnectDispatch {}
-
-const enhance = compose<EnhancedProps, Props>(
-  connect<ConnectState, ConnectDispatch, Props, GlobalStoreState>(
-    ({ userPermissions: { usersInGroup } }, { group: { uuid } }) => ({
-      users: usersInGroup[uuid] || []
-    }),
-    {
-      findUsersInGroup,
-      addUserToGroup,
-      removeUserFromGroup
+const UsersInGroup = ({ group }: Props) => {
+  const findUsersInGroup = useFindUsersInGroup();
+  useEffect(() => {
+    if (group) {
+      findUsersInGroup(group.uuid);
     }
-  ),
-  lifecycle<Props & ConnectState & ConnectDispatch, {}>({
-    componentDidMount() {
-      const {
-        group: { uuid },
-        findUsersInGroup
-      } = this.props;
-      findUsersInGroup(uuid);
-    },
-    componentWillUpdate(nextProps) {
-      const { group, findUsersInGroup } = this.props;
+  }, [!!group ? group.uuid : null]);
 
-      if (!group || group.uuid !== nextProps.group.uuid) {
-        findUsersInGroup(nextProps.group.uuid);
-      }
-    }
-  })
-);
+  const { usersInGroup } = useReduxState(
+    ({ userPermissions: { usersInGroup } }) => ({
+      usersInGroup
+    })
+  );
+  const users = usersInGroup[group.uuid];
 
-const UsersInGroup = ({ group, users }: EnhancedProps) => (
-  <div>
-    <ul>
-      {users.map(u => (
-        <li key={u.uuid}>{u.name}</li>
-      ))}
-    </ul>
-  </div>
-);
+  if (!users) {
+    return <Loader message={`Loading Users for Group ${group.uuid}`} />;
+  }
 
-export default enhance(UsersInGroup);
+  return (
+    <div>
+      <ul>
+        {users.map(u => (
+          <li key={u.uuid}>{u.name}</li>
+        ))}
+      </ul>
+    </div>
+  );
+};
+
+export default UsersInGroup;

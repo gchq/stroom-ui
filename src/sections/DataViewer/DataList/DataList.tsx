@@ -15,55 +15,34 @@
  */
 
 import * as React from "react";
-import { connect } from "react-redux";
-import {
-  compose,
-  lifecycle,
-  branch,
-  renderComponent,
-  withHandlers,
-  withProps
-} from "recompose";
+import { useEffect } from "react";
+
 import * as moment from "moment";
 import { path } from "ramda";
 import * as Mousetrap from "mousetrap";
 import ReactTable, { RowInfo, Column } from "react-table";
 import "react-table/react-table.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useDispatch } from "redux-react-hook";
 
 import {
-  search,
-  getDetailsForSelectedRow,
-  fetchDataSource,
-  searchWithExpression
+  //useSearch,
+  useGetDetailsForSelectedRow,
+  useFetchDataSource,
+  useSearchWithExpression
 } from "../streamAttributeMapClient";
-import { getDataForSelectedRow } from "../dataResourceClient";
-import {
-  actionCreators,
-  defaultStatePerId,
-  StoreStatePerId as DataListStoreStatePerId
-} from "../redux";
+import { useGetDataForSelectedRow } from "../dataResourceClient";
+import { actionCreators, defaultStatePerId } from "../redux";
 
-import { GlobalStoreState } from "../../../startup/reducers";
 import Loader from "../../../components/Loader";
 import Button from "../../../components/Button";
 import { Direction } from "../../../types";
 
 import { DataRow } from "../types";
+import useReduxState from "../../../lib/useReduxState";
 
 export interface Props {
   dataViewerId: string;
-}
-
-interface ConnectState extends DataListStoreStatePerId {}
-interface ConnectDispatch {
-  fetchDataSource: typeof fetchDataSource;
-  search: typeof search;
-  searchWithExpression: typeof searchWithExpression;
-  selectRow: typeof selectRow;
-  deselectRow: typeof deselectRow;
-  getDataForSelectedRow: typeof getDataForSelectedRow;
-  getDetailsForSelectedRow: typeof getDetailsForSelectedRow;
 }
 
 interface TableData {
@@ -74,257 +53,175 @@ interface TableData {
   pipeline?: string;
 }
 
-interface WithHandlers {
-  onMoveSelection: (direction: Direction) => void;
-  onRowSelected: (dataViewerId: string, selectedRow: number) => void;
-}
+const { selectRow } = actionCreators;
 
-interface WithProps {
-  tableData: TableData[];
-  tableColumns: Column[];
-}
+const DataList = ({ dataViewerId }: Props) => {
+  const dispatch = useDispatch();
+  const { dataViewers } = useReduxState(({ dataViewers }) => ({ dataViewers }));
+  const { selectedRow, pageOffset, pageSize, streamAttributeMaps, dataSource } =
+    dataViewers[dataViewerId] || defaultStatePerId;
 
-export interface EnhancedProps
-  extends Props,
-    WithHandlers,
-    WithProps,
-    ConnectState,
-    ConnectDispatch {}
+  //const search = useSearch();
+  const searchWithExpression = useSearchWithExpression();
+  const fetchDataSource = useFetchDataSource();
+  const getDetailsForSelectedRow = useGetDetailsForSelectedRow();
+  const getDataForSelectedRow = useGetDataForSelectedRow();
 
-const { selectRow, deselectRow } = actionCreators;
+  const onRowSelected = (dataViewerId: string, selectedRow: number) => {
+    dispatch(selectRow(dataViewerId, selectedRow));
 
-const enhance = compose<EnhancedProps, Props>(
-  connect<ConnectState, ConnectDispatch, Props, GlobalStoreState>(
-    (state, props) =>
-      state.dataViewers[props.dataViewerId] || defaultStatePerId,
-    {
-      search,
-      searchWithExpression,
-      fetchDataSource,
-      selectRow,
+    getDataForSelectedRow(dataViewerId);
+    getDetailsForSelectedRow(dataViewerId);
+  };
+  const onHandleLoadMoreRows = () => {
+    searchWithExpression(dataViewerId, pageOffset, pageSize, dataViewerId);
+    // TODO: need to search with expression too
+    // search(dataViewerId, pageOffset + 1, pageSize, true);
+  };
+  const onMoveSelection: (direction: Direction) => void = (
+    direction: Direction
+  ) => {
+    if (!streamAttributeMaps) return;
 
-      deselectRow,
-
-      getDataForSelectedRow,
-      getDetailsForSelectedRow
-    }
-  ),
-  withHandlers({
-    onRowSelected: ({
-      selectRow,
-
-      getDataForSelectedRow,
-      getDetailsForSelectedRow
-    }) => (dataViewerId: string, selectedRow: string) => {
-      selectRow(dataViewerId, selectedRow);
-
-      getDataForSelectedRow(dataViewerId);
-      getDetailsForSelectedRow(dataViewerId);
-    },
-    onHandleLoadMoreRows: ({
-      searchWithExpression,
-      dataViewerId,
-      pageOffset,
-      pageSize
-    }) => () => {
-      searchWithExpression(dataViewerId, pageOffset, pageSize, dataViewerId);
-      // TODO: need to search with expression too
-      // search(dataViewerId, pageOffset + 1, pageSize, true);
-    },
-    onMoveSelection: ({
-      selectRow,
-
-      streamAttributeMaps,
-      selectedRow,
-      getDataForSelectedRow,
-      getDetailsForSelectedRow,
-      search,
-      dataViewerId,
-      pageOffset,
-      pageSize,
-      searchWithExpression
-    }) => (direction: Direction) => {
-      const isAtEndOfList = selectedRow === streamAttributeMaps.length - 1;
-      if (isAtEndOfList) {
-        searchWithExpression(
-          dataViewerId,
-          pageOffset,
-          pageSize,
-          dataViewerId,
-          true
-        );
-        // search(dataViewerId, pageOffset + 1, pageSize, dataViewerId, true);
-      } else {
-        if (direction === "down") {
-          selectedRow = selectedRow + 1;
-        } else if (direction === "up") {
-          selectedRow = selectedRow - 1;
-        }
-
-        // TODO: stop repeating onRowSelected here
-        selectRow(dataViewerId, selectedRow);
-
-        getDataForSelectedRow(dataViewerId);
-        getDetailsForSelectedRow(dataViewerId);
+    const isAtEndOfList = selectedRow === streamAttributeMaps.length - 1;
+    if (isAtEndOfList) {
+      searchWithExpression(
+        dataViewerId,
+        pageOffset,
+        pageSize,
+        dataViewerId,
+        true
+      );
+      // search(dataViewerId, pageOffset + 1, pageSize, dataViewerId, true);
+    } else {
+      if (direction === "down") {
+        onRowSelected(dataViewerId, (selectedRow || 0) + 1);
+      } else if (direction === "up") {
+        onRowSelected(dataViewerId, (selectedRow || 0) - 1);
       }
     }
-  }),
-  lifecycle<Props & WithHandlers & ConnectState & ConnectDispatch, {}>({
-    componentDidMount() {
-      const {
-        // search,
-        dataViewerId,
-        // pageSize,
-        // pageOffset,
-        // selectedRow,
-        fetchDataSource,
-        onMoveSelection
-        // searchWithExpression,
-        // processSearchString,
-      } = this.props;
+  };
 
-      fetchDataSource(dataViewerId);
+  useEffect(() => {
+    fetchDataSource(dataViewerId);
 
-      // // We need to set up an expression so we've got something to search with,
-      // // even though it'll be empty.
-      // const { expressionChanged, expressionId, dataSource } = this.props;
-      // const parsedExpression = processSearchString(dataSource, '');
-      // expressionChanged(expressionId, parsedExpression.expression);
+    // // We need to set up an expression so we've got something to search with,
+    // // even though it'll be empty.
+    // const { expressionChanged, expressionId, dataSource } = this.props;
+    // const parsedExpression = processSearchString(dataSource, '');
+    // expressionChanged(expressionId, parsedExpression.expression);
 
-      // // If we're got a selectedRow that means the user has already been to this page.
-      // // Re-doing the search will wipe out their previous location, and we want to remember it.
-      // if (!selectedRow) {
-      //   searchWithExpression(dataViewerId, pageOffset, pageSize, dataViewerId);
-      //   // search(dataViewerId, pageOffset, pageSize);
-      // }
+    // // If we're got a selectedRow that means the user has already been to this page.
+    // // Re-doing the search will wipe out their previous location, and we want to remember it.
+    // if (!selectedRow) {
+    //   searchWithExpression(dataViewerId, pageOffset, pageSize, dataViewerId);
+    //   // search(dataViewerId, pageOffset, pageSize);
+    // }
 
-      Mousetrap.bind("up", () => onMoveSelection(Direction.UP));
-      Mousetrap.bind("down", () => onMoveSelection(Direction.DOWN));
-    },
-    componentWillUnmount() {
+    Mousetrap.bind("up", () => onMoveSelection(Direction.UP));
+    Mousetrap.bind("down", () => onMoveSelection(Direction.DOWN));
+
+    return () => {
       Mousetrap.unbind("up");
       Mousetrap.unbind("down");
+    };
+  }, []);
+
+  if (!streamAttributeMaps) {
+    return <Loader message="Loading data..." />;
+  }
+
+  if (!dataSource) {
+    return <Loader message="Loading data source..." />;
+  }
+
+  let tableData: TableData[] = streamAttributeMaps.map(
+    (streamAttributeMap: DataRow) => {
+      return {
+        metaId: `${streamAttributeMap.data.id}`,
+        created: moment(streamAttributeMap.data.createMs).format(
+          "MMMM Do YYYY, h:mm:ss a"
+        ),
+        type: streamAttributeMap.data.typeName,
+        feed: streamAttributeMap.data.feedName,
+        pipeline: streamAttributeMap.data.pipelineUuid
+      };
     }
-  }),
-  branch(
-    ({ streamAttributeMaps }) => !streamAttributeMaps,
-    renderComponent(() => <Loader message="Loading data..." />)
-  ),
-  branch(
-    ({ dataSource }) => !dataSource,
-    renderComponent(() => <Loader message="Loading data source..." />)
-  ),
-  withProps(({ streamAttributeMaps, onHandleLoadMoreRows }) => {
-    let tableData: TableData[] = streamAttributeMaps.map(
-      (streamAttributeMap: DataRow) => {
-        return {
-          metaId: streamAttributeMap.data.id,
-          created: moment(streamAttributeMap.data.createMs).format(
-            "MMMM Do YYYY, h:mm:ss a"
-          ),
-          type: streamAttributeMap.data.typeName,
-          feed: streamAttributeMap.data.feedName,
-          pipeline: streamAttributeMap.data.pipelineUuid
-        };
-      }
-    );
+  );
 
-    // Just keep rows with data, more 'load more' rows
-    tableData = tableData.filter((row: TableData) => row.metaId !== undefined);
-    const dummyRowForLoadMore = {
-      metaId: undefined,
-      created: undefined,
-      type: undefined,
-      feed: undefined,
-      pipeline: undefined
-    };
-    tableData.push(dummyRowForLoadMore);
+  // Just keep rows with data, more 'load more' rows
+  tableData = tableData.filter((row: TableData) => row.metaId !== undefined);
+  const dummyRowForLoadMore = {
+    metaId: undefined,
+    created: undefined,
+    type: undefined,
+    feed: undefined,
+    pipeline: undefined
+  };
+  tableData.push(dummyRowForLoadMore);
 
-    return {
-      tableData,
-      tableColumns: [
-        {
-          Header: "",
-          accessor: "type",
-          Cell: (row: RowInfo): React.ReactNode => {
-            // This block of code is mostly about making a sensible looking popup.
-            const stream = streamAttributeMaps.find(
-              (streamAttributeMap: DataRow) =>
-                streamAttributeMap.data.id === row.original.metaId
-            );
+  let tableColumns: Column[] = [
+    {
+      Header: "",
+      accessor: "type",
+      Cell: (row: RowInfo): React.ReactNode => {
+        // This block of code is mostly about making a sensible looking popup.
+        const stream = streamAttributeMaps.find(
+          (streamAttributeMap: DataRow) =>
+            streamAttributeMap.data.id === row.original.metaId
+        );
 
-            const eventIcon = <FontAwesomeIcon color="blue" icon="file" />;
-            const warningIcon = (
-              <FontAwesomeIcon color="orange" icon="exclamation-circle" />
-            );
+        const eventIcon = <FontAwesomeIcon color="blue" icon="file" />;
+        const warningIcon = (
+          <FontAwesomeIcon color="orange" icon="exclamation-circle" />
+        );
 
-            let icon;
-            if (stream !== undefined) {
-              if (stream.data.typeName === "Error") {
-                icon = warningIcon;
-              } else {
-                icon = eventIcon;
-              }
-            } else {
-              icon = <span />;
-            }
-
-            return icon;
-          },
-          width: 35
-        },
-        {
-          Header: "Type",
-          accessor: "type"
-        },
-        {
-          Header: "Created",
-          accessor: "created",
-          Cell: (row: RowInfo): React.ReactNode => {
-            if (row.original.metaId) {
-              return <span>{row.original.created}</span>;
-            } else {
-              return (
-                <Button
-                  className="border hoverable load-more-button"
-                  onClick={() => onHandleLoadMoreRows()}
-                  text="Load more rows"
-                />
-              );
-            }
+        let icon;
+        if (stream !== undefined) {
+          if (stream.data.typeName === "Error") {
+            icon = warningIcon;
+          } else {
+            icon = eventIcon;
           }
-        },
-        {
-          Header: "Feed",
-          accessor: "feed"
-        },
-        {
-          Header: "Pipeline",
-          accessor: "pipeline"
+        } else {
+          icon = <span />;
         }
-      ]
-    };
-  })
-);
 
-const DataList = ({
-  dataViewerId,
-  // pageOffset,
-  // pageSize,
-  // deselectRow,
-  selectedRow,
-  // dataForSelectedRow,
-  // detailsForSelectedRow,
-  // listHeight,
-  // setListHeight,
-  // detailsHeight,
-  // setDetailsHeight,
-  // dataSource,
-  // searchWithExpression,
-  onRowSelected,
-  tableColumns,
-  tableData
-}: EnhancedProps) => {
+        return icon;
+      },
+      width: 35
+    },
+    {
+      Header: "Type",
+      accessor: "type"
+    },
+    {
+      Header: "Created",
+      accessor: "created",
+      Cell: (row: RowInfo): React.ReactNode => {
+        if (row.original.metaId) {
+          return <span>{row.original.created}</span>;
+        } else {
+          return (
+            <Button
+              className="border hoverable load-more-button"
+              onClick={() => onHandleLoadMoreRows()}
+              text="Load more rows"
+            />
+          );
+        }
+      }
+    },
+    {
+      Header: "Feed",
+      accessor: "feed"
+    },
+    {
+      Header: "Pipeline",
+      accessor: "pipeline"
+    }
+  ];
+
   return (
     <ReactTable
       manual
@@ -369,8 +266,4 @@ const DataList = ({
   );
 };
 
-// DataList.propTypes = {
-//   dataViewerId: PropTypes.string.isRequired,
-// };
-
-export default enhance(DataList);
+export default DataList;
