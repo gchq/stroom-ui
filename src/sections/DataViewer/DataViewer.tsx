@@ -15,227 +15,124 @@
  */
 
 import * as React from "react";
-import { connect } from "react-redux";
-import {
-  compose,
-  lifecycle,
-  branch,
-  renderComponent,
-  withHandlers
-} from "recompose";
+import { useEffect } from "react";
 import PanelGroup from "react-panelgroup";
 import HorizontalPanel from "../../components/HorizontalPanel";
 import * as Mousetrap from "mousetrap";
+import { useDispatch } from "redux-react-hook";
 import "react-table/react-table.css";
 
 import Loader from "../../components/Loader";
 import IconHeader from "../../components/IconHeader";
 import ExpressionSearchBar from "../../components/ExpressionSearchBar";
 import {
-  search,
-  getDetailsForSelectedRow,
-  fetchDataSource,
-  searchWithExpression
+  useSearch,
+  useGetDetailsForSelectedRow,
+  useFetchDataSource,
+  useSearchWithExpression
 } from "./streamAttributeMapClient";
 import { getDataForSelectedRow } from "./dataResourceClient";
 import DetailsTabs from "./DetailsTabs";
 import DataList from "./DataList/DataList";
-import { actionCreators } from "./redux";
-import { GlobalStoreState } from "../../startup/reducers";
+import { actionCreators, defaultStatePerId } from "./redux";
 import { Direction } from "../../types";
 import useLocalStorage, { storeNumber } from "../../lib/useLocalStorage";
+import useReduxState from "../../lib/useReduxState";
 
 export interface Props {
   dataViewerId: string;
 }
-interface EnhancedProps
-  extends Props,
-    WithHandlers,
-    ConnectState,
-    ConnectDispatch {}
-
-interface ConnectState {
-  selectedRow?: number;
-  pageOffset?: number;
-  pageSize?: number;
-  dataForSelectedRow?: any; //TODO
-  detailsForSelectedRow?: any; //TODO
-  dataSource: any;
-}
-interface ConnectDispatch {
-  search: typeof search;
-  searchWithExpression: typeof searchWithExpression;
-  fetchDataSource: typeof fetchDataSource;
-  selectRow: typeof selectRow;
-  deselectRow: typeof deselectRow;
-  getDataForSelectedRow: typeof getDataForSelectedRow;
-  getDetailsForSelectedRow: typeof getDetailsForSelectedRow;
-}
-
-interface WithHandlers {
-  onMoveSelection: (direction: Direction) => void;
-  onRowSelected: (dataViewerId: string, selectedRow: number) => void;
-}
-
 const { selectRow, deselectRow } = actionCreators;
 
-const enhance = compose<EnhancedProps, Props>(
-  connect<ConnectState, ConnectDispatch, Props, GlobalStoreState>(
-    (state, props) => {
-      let dataSource,
-        streamAttributeMaps,
-        pageSize,
-        pageOffset,
-        selectedRow,
-        dataForSelectedRow,
-        detailsForSelectedRow;
-
-      if (state.dataViewers[props.dataViewerId] !== undefined) {
-        // Parentheses required when destructuring separatly from declaration.
-        ({
-          dataSource,
-          streamAttributeMaps,
-          pageSize,
-          pageOffset,
-          selectedRow,
-          dataForSelectedRow,
-          detailsForSelectedRow
-        } = state.dataViewers[props.dataViewerId]);
-      }
-
-      return {
-        streamAttributeMaps: streamAttributeMaps || [],
-        pageSize: pageSize || 0,
-        pageOffset: pageOffset || 20,
-        selectedRow,
-        dataForSelectedRow,
-        detailsForSelectedRow,
-        dataSource
-      };
-    },
-    {
-      search,
-      searchWithExpression,
-      fetchDataSource,
-      selectRow,
-      deselectRow,
-      getDataForSelectedRow,
-      getDetailsForSelectedRow
-    }
-  ),
-  withHandlers({
-    onRowSelected: ({
-      selectRow,
-      getDataForSelectedRow,
-      getDetailsForSelectedRow
-    }) => (dataViewerId: string, selectedRow: string) => {
-      selectRow(dataViewerId, selectedRow);
-      getDataForSelectedRow(dataViewerId);
-      getDetailsForSelectedRow(dataViewerId);
-    },
-    onHandleLoadMoreRows: ({
-      searchWithExpression,
-      dataViewerId,
-      pageOffset,
-      pageSize
-    }) => () => {
-      searchWithExpression(dataViewerId, pageOffset, pageSize, dataViewerId);
-      // TODO: need to search with expression too
-      // search(dataViewerId, pageOffset + 1, pageSize, true);
-    },
-    onMoveSelection: ({
-      selectRow,
-      streamAttributeMaps,
-      selectedRow,
-      getDataForSelectedRow,
-      getDetailsForSelectedRow,
-      search,
-      dataViewerId,
-      pageOffset,
-      pageSize,
-      searchWithExpression
-    }) => (direction: Direction) => {
-      const isAtEndOfList = selectedRow === streamAttributeMaps.length - 1;
-      if (isAtEndOfList) {
-        searchWithExpression(
-          dataViewerId,
-          pageOffset,
-          pageSize,
-          dataViewerId,
-          true
-        );
-        // search(dataViewerId, pageOffset + 1, pageSize, dataViewerId, true);
-      } else {
-        if (direction === "down") {
-          selectedRow += 1;
-        } else if (direction === "up") {
-          selectedRow -= 1;
-        }
-
-        // TODO: stop repeating onRowSelected here
-        selectRow(dataViewerId, selectedRow);
-        getDataForSelectedRow(dataViewerId);
-        getDetailsForSelectedRow(dataViewerId);
-      }
-    }
-  }),
-  lifecycle<Props & WithHandlers & ConnectState & ConnectDispatch, {}>({
-    componentDidMount() {
-      const {
-        search,
-        dataViewerId,
-        // pageSize,
-        // pageOffset,
-        selectedRow,
-        fetchDataSource,
-        onMoveSelection
-        // searchWithExpression,
-        // processSearchString,
-      } = this.props;
-
-      fetchDataSource(dataViewerId);
-
-      // // We need to set up an expression so we've got something to search with,
-      // // even though it'll be empty.
-      // const { expressionChanged, expressionId, dataSource } = this.props;
-      // const parsedExpression = processSearchString(dataSource, '');
-      // expressionChanged(expressionId, parsedExpression.expression);
-
-      // // If we're got a selectedRow that means the user has already been to this page.
-      // // Re-doing the search will wipe out their previous location, and we want to remember it.
-      if (!selectedRow) {
-        // searchWithExpression(dataViewerId, pageOffset, pageSize, dataViewerId);
-        search(dataViewerId, 0, 400);
-      }
-
-      Mousetrap.bind("up", () => onMoveSelection(Direction.UP));
-      Mousetrap.bind("down", () => onMoveSelection(Direction.DOWN));
-    },
-    componentWillUnmount() {
-      Mousetrap.unbind("up");
-      Mousetrap.unbind("down");
-    }
-  }),
-  branch(
-    ({ dataSource }) => !dataSource,
-    renderComponent(() => <Loader message="Loading data source" />)
-  )
-);
-
 const DataViewer = ({
-  dataViewerId,
-  pageOffset,
-  pageSize,
-  deselectRow,
-  selectedRow,
-  dataForSelectedRow,
-  detailsForSelectedRow,
-  dataSource,
-  searchWithExpression
+  dataViewerId
 }: // onRowSelected,
 // tableColumns,
 // tableData
-EnhancedProps) => {
+
+Props) => {
+  const dispatch = useDispatch();
+  const { dataViewers } = useReduxState(({ dataViewers }) => ({ dataViewers }));
+  const {
+    dataSource,
+    streamAttributeMaps,
+    pageSize,
+    pageOffset,
+    selectedRow = 0,
+    dataForSelectedRow,
+    detailsForSelectedRow
+  } = dataViewers[dataViewerId] || defaultStatePerId;
+
+  const search = useSearch();
+  const getDetailsForSelectedRow = useGetDetailsForSelectedRow();
+  const fetchDataSource = useFetchDataSource();
+  const searchWithExpression = useSearchWithExpression();
+
+  const onRowSelected = (selectedRow: number) => {
+    dispatch(selectRow(dataViewerId, selectedRow));
+    getDataForSelectedRow(dataViewerId);
+    getDetailsForSelectedRow(dataViewerId);
+  };
+  // Not using this yet?
+  // const onHandleLoadMoreRows = () => {
+  //   searchWithExpression(dataViewerId, pageOffset, pageSize, dataViewerId);
+  //   // TODO: need to search with expression too
+  //   // search(dataViewerId, pageOffset + 1, pageSize, true);
+  // };
+  const onMoveSelection = (direction: Direction) => {
+    if (!streamAttributeMaps) {
+      console.error("Could not move selection, stream attribute maps is null");
+      return;
+    }
+
+    const isAtEndOfList = selectedRow === streamAttributeMaps.length - 1;
+    if (isAtEndOfList) {
+      searchWithExpression(
+        dataViewerId,
+        pageOffset,
+        pageSize,
+        dataViewerId,
+        true
+      );
+      // search(dataViewerId, pageOffset + 1, pageSize, dataViewerId, true);
+    } else {
+      if (direction === "down") {
+        onRowSelected(selectedRow + 1);
+      } else if (direction === "up") {
+        onRowSelected(selectedRow - 1);
+      }
+    }
+  };
+
+  useEffect(() => {
+    fetchDataSource(dataViewerId);
+
+    // // We need to set up an expression so we've got something to search with,
+    // // even though it'll be empty.
+    // const { expressionChanged, expressionId, dataSource } = this.props;
+    // const parsedExpression = processSearchString(dataSource, '');
+    // expressionChanged(expressionId, parsedExpression.expression);
+
+    // // If we're got a selectedRow that means the user has already been to this page.
+    // // Re-doing the search will wipe out their previous location, and we want to remember it.
+    if (!selectedRow) {
+      // searchWithExpression(dataViewerId, pageOffset, pageSize, dataViewerId);
+      search(dataViewerId, 0, 400);
+    }
+
+    Mousetrap.bind("up", () => onMoveSelection(Direction.UP));
+    Mousetrap.bind("down", () => onMoveSelection(Direction.DOWN));
+
+    return () => {
+      Mousetrap.unbind("up");
+      Mousetrap.unbind("down");
+    };
+  });
+
+  if (!dataSource) {
+    return <Loader message="Loading data source" />;
+  }
+
   const table = <DataList dataViewerId={dataViewerId} />;
   const { value: listHeight, setValue: setListHeight } = useLocalStorage(
     "listHeight",
@@ -317,4 +214,4 @@ EnhancedProps) => {
   );
 };
 
-export default enhance(DataViewer);
+export default DataViewer;

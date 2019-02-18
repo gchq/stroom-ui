@@ -81,7 +81,10 @@ const DataList = ({ dataViewerId }: Props) => {
   const onMoveSelection: (direction: Direction) => void = (
     direction: Direction
   ) => {
-    if (!streamAttributeMaps) return;
+    if (!streamAttributeMaps) {
+      console.error("Could not move selection, stream attribute maps is null");
+      return;
+    }
 
     const isAtEndOfList = selectedRow === streamAttributeMaps.length - 1;
     if (isAtEndOfList) {

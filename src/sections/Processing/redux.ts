@@ -24,9 +24,14 @@ export enum Directions {
 }
 export enum SortByOptions {
   pipelineUuid = "pipelineUuid",
+  pipelineName = "pipelineName",
   priority = "Priority",
   progress = "progress"
 }
+
+export const sortByFromString = (asStr: string): SortByOptions => {
+  return SortByOptions.pipelineName;
+};
 
 export const ADD_TRACKERS = "ADD_TRACKERS";
 export const UPDATE_SORT = "UPDATE_SORT";
@@ -203,11 +208,10 @@ export const reducer = prepareReducer(defaultState)
     (state = defaultState, { filterId, enabled }) => ({
       ...state,
       // TODO: use a filter then a map
-      trackers: state.trackers.map(
-        (tracker, i) =>
-          tracker.filterId === filterId
-            ? { ...tracker, enabled: enabled }
-            : tracker
+      trackers: state.trackers.map((tracker, i) =>
+        tracker.filterId === filterId
+          ? { ...tracker, enabled: enabled }
+          : tracker
       )
     })
   )
