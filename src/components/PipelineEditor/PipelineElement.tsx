@@ -14,8 +14,7 @@
  * limitations under the License.
  */
 import * as React from "react";
-import { compose, withProps, withHandlers } from "recompose";
-import { connect } from "react-redux";
+import { compose } from "recompose";
 import {
   DragSource,
   DropTarget,
@@ -25,8 +24,6 @@ import {
   DropTargetCollector
 } from "react-dnd";
 
-import { StoreStateById as PipelineStateStoreById } from "./redux/pipelineStatesReducer";
-import { StoreState as ElementsStoreState } from "./redux/elementReducer";
 import ElementImage from "../ElementImage";
 import { actionCreators } from "./redux";
 import { canMovePipelineElement, getInitialValues } from "./pipelineUtils";
@@ -39,10 +36,11 @@ import { isValidChildType } from "./elementUtils";
 import Button from "../Button";
 import {
   ElementDefinition,
-  PipelineElementType,
-  PipelinePropertyType
+  PipelinePropertyType,
+  PipelineModelType,
+  PipelineAsTreeType,
+  ElementPropertiesType
 } from "../../types";
-import { GlobalStoreState } from "../../startup/reducers";
 import { ShowDialog } from "./AddElementModal";
 
 const {
@@ -57,23 +55,15 @@ export interface Props {
   className?: string;
   showAddElementDialog: ShowDialog;
   existingNames: Array<string>;
-}
-
-interface ConnectState {
-  pipelineState: PipelineStateStoreById;
-  selectedElementId?: string;
-  element?: PipelineElementType;
-  elementDefinition?: ElementDefinition;
-  elements?: ElementsStoreState;
-}
-
-interface ConnectDispatch {
   pipelineElementSelected: typeof pipelineElementSelected;
   pipelineElementMoved: typeof pipelineElementMoved;
   pipelineElementReinstated: typeof pipelineElementReinstated;
+  pipeline: PipelineModelType;
+  asTree: PipelineAsTreeType;
+  elementDefinition: ElementDefinition;
+  elementProperties: ElementPropertiesType;
+  selectedElementId?: string;
 }
-
-interface DndProps extends Props, ConnectState, ConnectDispatch {}
 
 interface DragObject {
   pipelineId: string;
@@ -81,19 +71,12 @@ interface DragObject {
   elementDefinition: ElementDefinition;
 }
 
-interface WithHandlers {
-  onElementClick: React.MouseEventHandler<HTMLDivElement>;
-}
-
 export interface EnhancedProps
   extends Props,
-    ConnectState,
-    ConnectDispatch,
     DropCollectedProps,
-    DragCollectedProps,
-    WithHandlers {}
+    DragCollectedProps {}
 
-const dragSource: DragSourceSpec<DndProps, DragObject> = {
+const dragSource: DragSourceSpec<Props, DragObject> = {
   canDrag(props) {
     return true;
   },
@@ -101,7 +84,7 @@ const dragSource: DragSourceSpec<DndProps, DragObject> = {
     return {
       pipelineId: props.pipelineId,
       elementId: props.elementId,
-      elementDefinition: props.elementDefinition!
+      elementDefinition: props.elementDefinition
     };
   }
 };
@@ -114,23 +97,23 @@ const dragCollect: DragSourceCollector<DragCollectedProps> = (
   isDragging: monitor.isDragging()
 });
 
-const dropTarget: DropTargetSpec<DndProps> = {
+const dropTarget: DropTargetSpec<Props> = {
   canDrop(props, monitor) {
-    const { pipelineState, elementId, elementDefinition } = props;
+    const { pipeline, elementId, asTree, elementDefinition } = props;
 
     switch (monitor.getItemType()) {
       case DragDropTypes.ELEMENT:
         const dropeeId = monitor.getItem().elementId;
         const dropeeDefinition = monitor.getItem().elementDefinition;
         const isValidChild = isValidChildType(
-          elementDefinition!,
+          elementDefinition,
           dropeeDefinition,
           0
         );
 
         const isValid = canMovePipelineElement(
-          pipelineState.pipeline!,
-          pipelineState.asTree!,
+          pipeline,
+          asTree,
           dropeeId,
           elementId
         );
@@ -140,7 +123,7 @@ const dropTarget: DropTargetSpec<DndProps> = {
         const dropeeType = monitor.getItem().element;
         if (dropeeType) {
           const isValidChild = isValidChildType(
-            elementDefinition!,
+            elementDefinition,
             dropeeType,
             0
           );
@@ -195,132 +178,70 @@ const dropCollect: DropTargetCollector<DropCollectedProps> = (
 });
 
 const enhance = compose<EnhancedProps, Props>(
-  connect<ConnectState, ConnectDispatch, Props, GlobalStoreState>(
-    (
-      { pipelineEditor: { pipelineStates, elements } },
-      { pipelineId, elementId }
-    ) => {
-      const pipelineState = pipelineStates[pipelineId];
-
-      let selectedElementId;
-      let element: PipelineElementType | undefined;
-      let elementDefinition: ElementDefinition | undefined;
-
-      if (pipelineState && pipelineState.pipeline) {
-        selectedElementId = pipelineState.selectedElementId;
-        element =
-          pipelineState.pipeline.merged.elements.add &&
-          pipelineState.pipeline.merged.elements.add.find(
-            (e: PipelineElementType) => e.id === elementId
-          );
-        if (element) {
-          elementDefinition = Object.values(elements.elements).find(
-            e => e.type === element!.type
-          )!;
-        }
-      }
-
-      return {
-        // state
-        pipelineState,
-        selectedElementId,
-        element,
-        elementDefinition,
-        elements
-      };
-    },
-    {
-      // actions
-      pipelineElementSelected,
-      pipelineElementMoved,
-      pipelineElementReinstated
-    }
-  ),
   DragSource(DragDropTypes.ELEMENT, dragSource, dragCollect),
   DropTarget(
     [DragDropTypes.ELEMENT, DragDropTypes.PALLETE_ELEMENT],
     dropTarget,
     dropCollect
-  ),
-  withProps(
-    ({
-      isOver,
-      canDrop,
-      isDragging,
-      selectedElementId,
-      elementId,
-      draggingItemType
-    }) => {
-      const classNames = ["Pipeline-element"];
-      classNames.push("raised-low");
-      let isIconDisabled = false;
-
-      if (!!draggingItemType) {
-        if (isOver) {
-          classNames.push("over");
-        }
-        if (isDragging) {
-          classNames.push("dragging");
-        }
-
-        if (canDrop) {
-          classNames.push("can_drop");
-        } else {
-          isIconDisabled = true;
-          classNames.push("cannot_drop");
-        }
-
-        if (selectedElementId === elementId) {
-          classNames.push("selected");
-        }
-      } else {
-        classNames.push("borderless");
-      }
-
-      return {
-        className: classNames.join(" "),
-        isIconDisabled
-      };
-    }
-  ),
-  withHandlers({
-    onElementClick: ({
-      element,
-      elements: { elementProperties },
-      pipelineState: { pipeline },
-      pipelineElementSelected,
-      pipelineId,
-      elementId
-    }) => () => {
-      // We need to get the initial values for this element and make sure they go into the state,
-      // ready for redux-form to populate the new form.
-      // TODO THIS MUST SURELY BE CHANGED NOW WE ARE USING FORMIK
-      const thisElementTypeProperties = elementProperties[element.type];
-      const thisElementProperties = pipeline.merged.properties.add.filter(
-        (property: PipelinePropertyType) => property.element === element.id
-      );
-      const initialValues = getInitialValues(
-        thisElementTypeProperties,
-        thisElementProperties
-      );
-      return pipelineElementSelected(pipelineId, elementId, initialValues);
-    }
-  })
+  )
 );
 
 const PipelineElement = ({
+  pipelineId,
   elementId,
   connectDragSource,
   connectDropTarget,
-  elementDefinition,
-  className,
-  onElementClick,
   isOver,
   canDrop,
   isDragging,
-  draggingItemType
-}: EnhancedProps) =>
-  connectDragSource(
+  draggingItemType,
+  pipelineElementSelected,
+  selectedElementId,
+  elementDefinition,
+  elementProperties,
+  pipeline
+}: EnhancedProps) => {
+  const onElementClick = () => {
+    // We need to get the initial values for this element and make sure they go into the state,
+    // ready for redux-form to populate the new form.
+    // TODO THIS MUST SURELY BE CHANGED NOW WE ARE USING FORMIK
+    const thisElementProperties = pipeline.merged.properties.add!.filter(
+      (property: PipelinePropertyType) => property.element === elementId
+    );
+    const initialValues = getInitialValues(
+      elementProperties,
+      thisElementProperties
+    );
+    return pipelineElementSelected(pipelineId, elementId, initialValues);
+  };
+
+  const classNames = ["Pipeline-element"];
+  classNames.push("raised-low");
+
+  if (!!draggingItemType) {
+    if (isOver) {
+      classNames.push("over");
+    }
+    if (isDragging) {
+      classNames.push("dragging");
+    }
+
+    if (canDrop) {
+      classNames.push("can_drop");
+    } else {
+      classNames.push("cannot_drop");
+    }
+
+    if (selectedElementId === elementId) {
+      classNames.push("selected");
+    }
+  } else {
+    classNames.push("borderless");
+  }
+
+  const className = classNames.join(" ");
+
+  return connectDragSource(
     connectDropTarget(
       <div className={className} onClick={onElementClick}>
         {elementDefinition && (
@@ -333,5 +254,6 @@ const PipelineElement = ({
       </div>
     )
   );
+};
 
 export default enhance(PipelineElement);

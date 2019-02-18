@@ -28,14 +28,25 @@ import { PipelineElementType } from "../../types";
 import { getAllElementNames } from "./pipelineUtils";
 import { ShowDialog as ShowAddElementDialog } from "./AddElementModal";
 import usePipelineState from "./redux/usePipelineState";
+import { actionCreators } from "./redux";
+import { useDispatch } from "redux-react-hook";
+import useElements from "./redux/useElements";
+
+const {
+  pipelineElementSelected,
+  pipelineElementMoved,
+  pipelineElementReinstated
+} = actionCreators;
 
 export interface Props {
   pipelineId: string;
   showAddElementDialog: ShowAddElementDialog;
 }
 
-const Pipeline = ({ pipelineId, showAddElementDialog }: Props) => {
+export const Pipeline = ({ pipelineId, showAddElementDialog }: Props) => {
+  const dispatch = useDispatch();
   const pipelineState = usePipelineState(pipelineId);
+  const { elementDefinitions, elementProperties } = useElements();
 
   if (!(pipelineState && pipelineState.pipeline)) {
     return <Loader message="Loading pipeline..." />;
@@ -67,15 +78,36 @@ const Pipeline = ({ pipelineId, showAddElementDialog }: Props) => {
                 pipeline.merged.elements.add &&
                 pipeline.merged.elements.add
                   .filter((e: PipelineElementType) => e.id === column.uuid)
-                  .map(e => (
-                    <PipelineElement
-                      key={e.id}
-                      pipelineId={pipelineId}
-                      elementId={e.id}
-                      showAddElementDialog={showAddElementDialog}
-                      existingNames={existingNames}
-                    />
-                  ))}
+                  .map(element => {
+                    let elementDefinition = Object.values(
+                      elementDefinitions
+                    ).find(e => e.type === element.type)!;
+                    let elementPropertiesThis = elementProperties[element.type];
+
+                    return (
+                      <PipelineElement
+                        key={element.id}
+                        pipelineId={pipelineId}
+                        elementId={element.id}
+                        selectedElementId={pipelineState.selectedElementId}
+                        showAddElementDialog={showAddElementDialog}
+                        existingNames={existingNames}
+                        pipeline={pipeline}
+                        asTree={asTree}
+                        elementDefinition={elementDefinition}
+                        elementProperties={elementPropertiesThis}
+                        pipelineElementSelected={(a, b, c) =>
+                          dispatch(pipelineElementSelected(a, b, c))
+                        }
+                        pipelineElementMoved={(a, b, c) =>
+                          dispatch(pipelineElementMoved(a, b, c))
+                        }
+                        pipelineElementReinstated={(a, b, c) =>
+                          dispatch(pipelineElementReinstated(a, b, c))
+                        }
+                      />
+                    );
+                  })}
               {column.cellType == CellType.ELBOW && <ElbowLine north east />}
             </div>
           ))}

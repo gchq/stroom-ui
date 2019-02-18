@@ -36,7 +36,7 @@ export interface Props {
 
 const ElementDetails = ({ pipelineId, onClose }: Props) => {
   const pipelineState = usePipelineState(pipelineId);
-  const elements = useElements();
+  const { elementDefinitions, elementProperties } = useElements();
 
   let initialValues: object | undefined;
   let selectedElementId: string | undefined;
@@ -63,7 +63,7 @@ const ElementDetails = ({ pipelineId, onClose }: Props) => {
       )!.type) ||
     "";
   const allElementTypeProperties: ElementPropertiesType =
-    elements.elementProperties[elementType];
+    elementProperties[elementType];
   if (!allElementTypeProperties) {
     return <Loader message={`Element Properties Unknown for ${elementType}`} />;
   }
@@ -74,7 +74,7 @@ const ElementDetails = ({ pipelineId, onClose }: Props) => {
     a.displayPriority > b.displayPriority ? 1 : -1
   );
 
-  let elementDefinition = elements.elements.find(
+  let elementDefinition = elementDefinitions.find(
     (e: ElementDefinition) => e.type === elementType
   );
 

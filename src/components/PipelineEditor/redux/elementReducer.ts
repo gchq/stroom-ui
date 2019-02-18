@@ -13,7 +13,7 @@ export const ELEMENTS_RECEIVED = "ELEMENTS_RECEIVED";
 export const ELEMENT_PROPERTIES_RECEIVED = "ELEMENT_PROPERTIES_RECEIVED";
 
 export interface ElementsReceivedAction extends Action<"ELEMENTS_RECEIVED"> {
-  elements: ElementDefinitions;
+  elementDefinitions: ElementDefinitions;
 }
 
 export interface ElementPropertiesReceivedAction
@@ -22,23 +22,25 @@ export interface ElementPropertiesReceivedAction
 }
 
 export interface StoreState {
-  elements: ElementDefinitions;
+  elementDefinitions: ElementDefinitions;
   elementProperties: ElementPropertiesByElementIdType;
   byCategory: ElementDefinitionsByCategory;
   byType: ElementDefinitionsByType;
 }
 
 export const defaultState: StoreState = {
-  elements: [],
+  elementDefinitions: [],
   elementProperties: {},
   byCategory: {},
   byType: {}
 };
 
 export const actionCreators = {
-  elementsReceived: (elements: ElementDefinitions): ElementsReceivedAction => ({
+  elementsReceived: (
+    elementDefinitions: ElementDefinitions
+  ): ElementsReceivedAction => ({
     type: ELEMENTS_RECEIVED,
-    elements
+    elementDefinitions
   }),
   elementPropertiesReceived: (
     elementProperties: ElementPropertiesByElementIdType
@@ -51,11 +53,11 @@ export const actionCreators = {
 export const reducer = prepareReducer(defaultState)
   .handleAction<ElementsReceivedAction>(
     ELEMENTS_RECEIVED,
-    (state = defaultState, { elements }) => ({
+    (state = defaultState, { elementDefinitions }) => ({
       ...state,
-      elements,
-      byCategory: groupByCategory(elements),
-      byType: keyByType(elements)
+      elementDefinitions,
+      byCategory: groupByCategory(elementDefinitions),
+      byType: keyByType(elementDefinitions)
     })
   )
   .handleAction<ElementPropertiesReceivedAction>(
