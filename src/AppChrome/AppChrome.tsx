@@ -25,28 +25,28 @@ import MenuItem, {
   MenuItemOpened
 } from "./MenuItem";
 
-import useReduxState from "../../lib/useReduxState/useReduxState";
+import useReduxState from "../lib/useReduxState/useReduxState";
 import {
   copyDocuments,
   moveDocuments
-} from "../../components/FolderExplorer/explorerClient";
-import useSelectableItemListing from "../../lib/useSelectableItemListing";
-import { DocRefType, DocRefConsumer, DocRefTree } from "../../types";
-import { GlobalStoreState } from "../../startup/reducers";
+} from "../components/FolderExplorer/explorerClient";
+import useSelectableItemListing from "../lib/useSelectableItemListing";
+import { DocRefType, DocRefConsumer, DocRefTree } from "../types";
+import { GlobalStoreState } from "../startup/reducers";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { KeyDownState } from "../../lib/useKeyIsDown/useKeyIsDown";
+import { KeyDownState } from "../lib/useKeyIsDown/useKeyIsDown";
 import CopyMoveDocRefDialog, {
   useDialog as useCopyMoveDocRefDialog,
   ShowDialog as ShowCopyDocRefDialog
-} from "../../components/FolderExplorer/CopyMoveDocRefDialog";
+} from "../components/FolderExplorer/CopyMoveDocRefDialog";
 import useLocalStorage, {
   storeBoolean,
   storeObjectFactory
-} from "../../lib/useLocalStorage";
-import { useTheme } from "../../lib/theme";
-import { fetchDocTree } from "../../components/FolderExplorer/explorerClient";
-import useHistory from "../../lib/useHistory";
-import { useDocumentTree } from "../../components/FolderExplorer/useDocumentTree";
+} from "../lib/useLocalStorage";
+import { useTheme } from "../lib/theme";
+import { fetchDocTree } from "../components/FolderExplorer/explorerClient";
+import useHistory from "../lib/useHistory";
+import { useDocumentTree } from "../components/FolderExplorer/useDocumentTree";
 
 const pathPrefix = "/s";
 
@@ -363,7 +363,7 @@ const AppChrome = ({ content }: Props) => {
                 <img
                   className="sidebar__logo"
                   alt="Stroom logo"
-                  src={require("../../images/logo.svg")}
+                  src={require("../images/logo.svg")}
                 />
               ) : (
                 undefined

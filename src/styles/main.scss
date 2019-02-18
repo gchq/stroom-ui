@@ -4,6 +4,8 @@
 @import "./table";
 @import "./dropdown";
 
+@import "../AppChrome/AppChrome";
+
 @import "../components/AppSearchBar/AppSearchBar";
 @import "../components/Button/Button";
 @import "../components/ErrorPage/ErrorPage";
@@ -27,7 +29,6 @@
 @import "../components/PipelineDebugger/PipelineDebugger";
 
 @import "../sections/DataViewer/DataViewer";
-@import "../sections/AppChrome/AppChrome";
 @import "../sections/Welcome/Welcome";
 @import "../sections/Processing/ProcessingContainer";
 @import "../sections/UserSettings/UserSettings";

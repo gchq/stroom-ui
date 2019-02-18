@@ -23,6 +23,8 @@ import StroomDecorator from "../../lib/storybook/StroomDecorator";
 
 import "../../styles/main.css";
 
-const stories = storiesOf("Data/Viewer", module).addDecorator(StroomDecorator);
+const stories = storiesOf("Sections/Data/Viewer", module).addDecorator(
+  StroomDecorator
+);
 
 addThemedStories(stories, <DataViewer dataViewerId="test" />);

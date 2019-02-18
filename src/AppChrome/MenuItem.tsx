@@ -10,16 +10,16 @@ import {
 import { DragSource } from "react-dnd";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import { canMove } from "../../lib/treeUtils";
+import { canMove } from "../lib/treeUtils";
 import {
   DragDropTypes,
   DragObject,
   DragCollectedProps,
   DropCollectedProps
-} from "../../components/FolderExplorer/dragDropTypes";
+} from "../components/FolderExplorer/dragDropTypes";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
-import { DocRefType, StyledComponentProps } from "../../types";
-import { KeyDownState } from "../../lib/useKeyIsDown/useKeyIsDown";
+import { DocRefType, StyledComponentProps } from "../types";
+import { KeyDownState } from "../lib/useKeyIsDown/useKeyIsDown";
 
 export type MenuItemOpened = (name: string, isOpen: boolean) => void;
 

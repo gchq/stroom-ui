@@ -1,24 +1,24 @@
 import * as React from "react";
 
 import { AppChrome } from ".";
-import { Processing } from "../Processing";
-import SwitchedDocRefEditor from "../../components/SwitchedDocRefEditor";
-import IconHeader from "../../components/IconHeader";
-import Welcome from "../Welcome";
-import DataViewer from "../DataViewer";
-import UserSettings from "../UserSettings";
-import PathNotFound from "../../components/PathNotFound";
-import IFrame from "../../components/IFrame";
-import ErrorPage from "../../components/ErrorPage";
+import { Processing } from "../sections/Processing";
+import SwitchedDocRefEditor from "../components/SwitchedDocRefEditor";
+import IconHeader from "../components/IconHeader";
+import Welcome from "../sections/Welcome";
+import DataViewer from "../sections/DataViewer";
+import UserSettings from "../sections/UserSettings";
+import PathNotFound from "../components/PathNotFound";
+import IFrame from "../components/IFrame";
+import ErrorPage from "../components/ErrorPage";
 
 import { RouteComponentProps, RouteProps } from "react-router";
-import UserPermissions from "../UserPermissions";
-import IndexVolumes from "../IndexVolumes";
-import IndexVolumeGroups from "../IndexVolumeGroups";
-import IndexVolumeGroupEditor from "../../components/IndexVolumeGroupEditor";
-import UserPermissionEditor from "../../components/UserPermissionEditor";
-import useConfig from "../../startup/useConfig";
-import Loader from "../../components/Loader";
+import UserPermissions from "../sections/UserPermissions";
+import IndexVolumes from "../sections/IndexVolumes";
+import IndexVolumeGroups from "../sections/IndexVolumeGroups";
+import IndexVolumeGroupEditor from "../components/IndexVolumeGroupEditor";
+import UserPermissionEditor from "../components/UserPermissionEditor";
+import useConfig from "../startup/useConfig";
+import Loader from "../components/Loader";
 
 const renderWelcome = () => (
   <AppChrome activeMenuItem="Welcome" content={<Welcome />} />

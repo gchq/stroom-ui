@@ -20,9 +20,9 @@ import { storiesOf } from "@storybook/react";
 import { Switch, Route } from "react-router-dom";
 
 import AppChrome, { appChromeRoutes } from ".";
-import StroomDecorator from "../../lib/storybook/StroomDecorator";
+import StroomDecorator from "../lib/storybook/StroomDecorator";
 
-import "../../styles/main.css";
+import "../styles/main.css";
 
 // This basically replicates the 'Routes' implementation, but for test
 const AppChromeWithRouter = () => (
@@ -33,7 +33,7 @@ const AppChromeWithRouter = () => (
   </Switch>
 );
 
-storiesOf("Sections/App Chrome", module)
+storiesOf("App Chrome", module)
   .addDecorator(StroomDecorator)
   .add("Just the chrome", () => (
     <AppChrome activeMenuItem="welcome" content={<div>Stuff goes here</div>} />

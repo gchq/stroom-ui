@@ -129,10 +129,6 @@ Props) => {
     };
   });
 
-  if (!dataSource) {
-    return <Loader message="Loading data source" />;
-  }
-
   const table = <DataList dataViewerId={dataViewerId} />;
   const { value: listHeight, setValue: setListHeight } = useLocalStorage(
     "listHeight",
@@ -144,6 +140,10 @@ Props) => {
     500,
     storeNumber
   );
+
+  if (!dataSource) {
+    return <Loader message="Loading data source" />;
+  }
 
   const details = (
     <HorizontalPanel

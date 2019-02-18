@@ -20,7 +20,7 @@ import { Route, Router, Switch } from "react-router-dom";
 
 // TODO
 import ErrorPage from "../components/ErrorPage";
-import { appChromeRoutes } from "../sections/AppChrome";
+import { appChromeRoutes } from "../AppChrome";
 // import { Processing } from "../sections/Processing";
 import { HandleAuthenticationResponse } from "./Authentication";
 
