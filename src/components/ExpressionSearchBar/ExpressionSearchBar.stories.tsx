@@ -14,50 +14,30 @@
  * limitations under the License.
  */
 import * as React from "react";
-import { useEffect } from "react";
+import { useState } from "react";
 
 import { storiesOf } from "@storybook/react";
 
 import StroomDecorator from "../../lib/storybook/StroomDecorator";
-import { actionCreators as expressionBuilderActionCreators } from "../ExpressionBuilder";
 
 import { simplestExpression, testDataSource } from "../ExpressionBuilder/test";
 
-import ExpressionSearchBar, {
-  Props as ExpressionSearchBarProps
-} from "./ExpressionSearchBar";
-
-import { ExpressionOperatorType } from "../../types";
+import ExpressionSearchBar from "./ExpressionSearchBar";
 
 import "../../styles/main.css";
-import { useDispatch } from "redux-react-hook";
-
-const { expressionChanged } = expressionBuilderActionCreators;
-
-interface Props extends ExpressionSearchBarProps {
-  testExpression: ExpressionOperatorType;
-}
-
-const TestExpressionSearchBar = ({
-  testExpression,
-  expressionId,
-  ...rest
-}: Props) => {
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(expressionChanged(expressionId, testExpression));
-  }, [testExpression]);
-  return <ExpressionSearchBar expressionId={expressionId} {...rest} />;
-};
 
 storiesOf("Expression/Search Bar", module)
   .addDecorator(StroomDecorator)
-  .add("Basic", () => (
-    <TestExpressionSearchBar
-      testExpression={simplestExpression}
-      onSearch={() => console.log("Search called")}
-      expressionId="simplestEx"
-      initialSearchString="foo1=bar1 foo2=bar2 foo3=bar3 someOtherKey=sometOtherValue"
-      dataSource={testDataSource}
-    />
-  ));
+  .add("Basic", () => {
+    const [expression, onExpressionChange] = useState(simplestExpression);
+
+    return (
+      <ExpressionSearchBar
+        onSearch={e => console.log("Search called", e)}
+        expression={expression}
+        onExpressionChange={onExpressionChange}
+        initialSearchString="foo1=bar1 foo2=bar2 foo3=bar3 someOtherKey=sometOtherValue"
+        dataSource={testDataSource}
+      />
+    );
+  });

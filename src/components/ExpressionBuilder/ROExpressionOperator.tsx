@@ -11,7 +11,6 @@ import {
 } from "../../types";
 
 export interface Props {
-  expressionId: string;
   operator: ExpressionOperatorWithUuid;
   isRoot?: boolean;
   isEnabled: boolean;
@@ -20,12 +19,7 @@ export interface Props {
 /**
  * Read only expression operator
  */
-const ROExpressionOperator = ({
-  expressionId,
-  operator,
-  isRoot,
-  isEnabled
-}: Props) => {
+const ROExpressionOperator = ({ operator, isRoot, isEnabled }: Props) => {
   let className = "expression-item expression-item--readonly";
   if (isRoot) {
     className += " expression-item__root";
@@ -53,7 +47,6 @@ const ROExpressionOperator = ({
                   itemElement = (
                     <div key={c.uuid}>
                       <ROExpressionTerm
-                        expressionId={expressionId}
                         isEnabled={cIsEnabled}
                         term={c as ExpressionTermWithUuid}
                       />
@@ -63,7 +56,6 @@ const ROExpressionOperator = ({
                 case "operator":
                   itemElement = (
                     <ROExpressionOperator
-                      expressionId={expressionId}
                       isEnabled={cIsEnabled}
                       operator={c as ExpressionOperatorWithUuid}
                     />

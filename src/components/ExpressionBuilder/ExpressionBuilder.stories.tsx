@@ -14,92 +14,66 @@
  * limitations under the License.
  */
 import * as React from "react";
-import { useEffect } from "react";
-
-import { actionCreators } from "./redux";
-import { ExpressionOperatorType } from "../../types";
+import { useState } from "react";
 
 import { storiesOf } from "@storybook/react";
 
 import StroomDecorator from "../../lib/storybook/StroomDecorator";
-import ExpressionBuilder, {
-  Props as ExpressionBuilderProps
-} from "./ExpressionBuilder";
+import ExpressionBuilder from "./ExpressionBuilder";
 
-import { testExpression, simplestExpression, testDataSource } from "./test";
+import { testExpression, testDataSource } from "./test";
 
 import "../../styles/main.css";
-import { useDispatch } from "redux-react-hook";
-
-const { expressionChanged } = actionCreators;
-
-interface Props extends ExpressionBuilderProps {
-  testExpression: ExpressionOperatorType;
-}
-
-const TestExpressionBuilder = ({
-  testExpression,
-  expressionId,
-  ...rest
-}: Props) => {
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(expressionChanged(expressionId, testExpression));
-  }, [testExpression]);
-
-  return <ExpressionBuilder expressionId={expressionId} {...rest} />;
-};
+import { ExpressionOperatorWithUuid } from "src/types";
 
 storiesOf("Expression/Builder", module)
   .addDecorator(StroomDecorator)
-  .add("Populated Editable", () => (
-    <TestExpressionBuilder
-      testExpression={testExpression}
-      showModeToggle
-      editMode
-      expressionId="populatedExEdit"
-      dataSource={testDataSource}
-    />
-  ))
-  .add("Populated ReadOnly", () => (
-    <TestExpressionBuilder
-      testExpression={testExpression}
-      expressionId="populatedExRO"
-      dataSource={testDataSource}
-    />
-  ))
-  .add("Simplest Editable", () => (
-    <TestExpressionBuilder
-      testExpression={simplestExpression}
-      showModeToggle
-      expressionId="simplestEx"
-      dataSource={testDataSource}
-    />
-  ))
-  .add("Missing Data Source (read only)", () => (
-    <TestExpressionBuilder
-      testExpression={testExpression}
-      expressionId="populatedExNoDs"
-      dataSource={testDataSource}
-    />
-  ))
-  .add("Missing Expression", () => (
-    <ExpressionBuilder expressionId="missingEx" dataSource={testDataSource} />
-  ))
-  .add("Hide mode toggle", () => (
-    <TestExpressionBuilder
-      testExpression={testExpression}
-      showModeToggle={false}
-      expressionId="simplestEx"
-      dataSource={testDataSource}
-    />
-  ))
-  .add("Hide mode toggle but be in edit mode", () => (
-    <TestExpressionBuilder
-      testExpression={testExpression}
-      showModeToggle={false}
-      editMode
-      expressionId="simplestEx"
-      dataSource={testDataSource}
-    />
-  ));
+  .add("Populated Editable", () => {
+    const [expression, onChange] = useState<ExpressionOperatorWithUuid>(
+      testExpression
+    );
+
+    return (
+      <ExpressionBuilder
+        expression={expression}
+        onChange={onChange}
+        showModeToggle
+        editMode
+        dataSource={testDataSource}
+      />
+    );
+  });
+// .add("Populated ReadOnly", () => (
+//   <ExpressionBuilder
+//     expression={testExpression}
+//     dataSource={testDataSource}
+//   />
+// ))
+// .add("Simplest Editable", () => (
+//   <TestExpressionBuilder
+//     testExpression={simplestExpression}
+//     showModeToggle
+//     dataSource={testDataSource}
+//   />
+// ))
+// .add("Missing Data Source (read only)", () => (
+//   <TestExpressionBuilder
+//     expression={testExpression}
+//     dataSource={testDataSource}
+//   />
+// ))
+// .add("Hide mode toggle", () => (
+//   <TestExpressionBuilder
+//     expression={testExpression}
+//     showModeToggle={false}
+//     dataSource={testDataSource}
+//   />
+// ))
+// .add("Hide mode toggle but be in edit mode", () => (
+//   <TestExpressionBuilder
+//     expression={testExpression}
+//     showModeToggle={false}
+//     editMode
+//     dataSource={testDataSource}
+//   />
+// ));

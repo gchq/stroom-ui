@@ -65,13 +65,12 @@ export const searchWithExpression = (
   dataViewerId: string,
   pageOffset: number = 0,
   pageSize: number = 10,
-  expressionId: string,
+  expressionWithUuids: ExpressionOperatorWithUuid,
   addResults?: boolean
 ) => (dispatch: Dispatch, getState: () => GlobalStoreState) => {
   const state = getState();
-  const expressionState = state.expressionBuilder[expressionId];
 
-  const expression = cleanExpression(expressionState.expression);
+  const expression = cleanExpression(expressionWithUuids);
 
   let url = `${
     state.config.values.stroomBaseServiceUrl
@@ -190,4 +189,5 @@ export const getDetailsForSelectedRow = (dataViewerId: string) => (
     true
   );
 };
-export const useGetDetailsForSelectedRow = () => useThunk(getDetailsForSelectedRow);
+export const useGetDetailsForSelectedRow = () =>
+  useThunk(getDetailsForSelectedRow);

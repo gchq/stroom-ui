@@ -60,10 +60,6 @@ import {
   StoreState as FolderExplorerStoreState
 } from "../components/FolderExplorer/redux";
 import {
-  reducer as expressionBuilder,
-  StoreState as ExpressionBuilderStoreState
-} from "../components/ExpressionBuilder";
-import {
   reducer as pipelineEditor,
   StoreState as PipelineEditorStoreState
 } from "../components/PipelineEditor";
@@ -104,7 +100,6 @@ export interface GlobalStoreState {
   dictionaryEditor: DictionaryEditorStoreState;
   indexEditor: IndexEditorStoreState;
   xsltEditor: XsltEditorStoreState;
-  expressionBuilder: ExpressionBuilderStoreState;
   pipelineEditor: PipelineEditorStoreState;
   debuggers: DebuggersStoreState;
   processing: ProcessingStoreState;
@@ -128,7 +123,6 @@ export default combineReducers({
   appSearch,
   dictionaryEditor,
   indexEditor,
-  expressionBuilder,
   pipelineEditor,
   debuggers,
   processing,

@@ -15,8 +15,8 @@
  */
 
 import * as React from "react";
+import { useState } from "react";
 import { storiesOf } from "@storybook/react";
-import { compose, withState } from "recompose";
 
 import Button from "../Button";
 import ThemedModal from "./ThemedModal";
@@ -25,33 +25,30 @@ import { addThemedStories } from "../../lib/themedStoryGenerator";
 
 import "../../styles/main.css";
 
-interface WithModalOpen {
-  modalIsOpen: boolean;
-  setModalIsOpen: (v: boolean) => any;
-}
+const TestModal = () => {
+  const [isOpen, setIsOpen] = useState<boolean>(false);
 
-const enhance = compose<WithModalOpen, {}>(
-  withState("modalIsOpen", "setModalIsOpen", false)
+  return (
+    <React.Fragment>
+      <ThemedModal
+        isOpen={isOpen}
+        header={<h3>This is the header</h3>}
+        content={<div>Maybe put something helpful in here</div>}
+        actions={
+          <React.Fragment>
+            <Button text="Nothing" onClick={() => setIsOpen(false)} />
+            <Button text="Something" onClick={() => setIsOpen(false)} />
+          </React.Fragment>
+        }
+        onRequestClose={() => setIsOpen(false)}
+      />
+      <Button onClick={() => setIsOpen(!isOpen)} text="Open" />
+    </React.Fragment>
+  );
+};
+
+const stories = storiesOf("General Purpose/Themed Modal", module).addDecorator(
+  StroomDecorator
 );
-
-const TestModal = enhance(({ modalIsOpen, setModalIsOpen }: WithModalOpen) => (
-  <React.Fragment>
-    <ThemedModal
-      isOpen={modalIsOpen}
-      header={<h3>This is the header</h3>}
-      content={<div>Maybe put something helpful in here</div>}
-      actions={
-        <React.Fragment>
-          <Button text="Nothing" onClick={() => setModalIsOpen(false)} />
-          <Button text="Something" onClick={() => setModalIsOpen(false)} />
-        </React.Fragment>
-      }
-      onRequestClose={() => setModalIsOpen(false)}
-    />
-    <Button onClick={() => setModalIsOpen(!modalIsOpen)} text="Open" />
-  </React.Fragment>
-));
-
-const stories = storiesOf("General Purpose/Themed Modal", module).addDecorator(StroomDecorator);
 
 addThemedStories(stories, <TestModal />);

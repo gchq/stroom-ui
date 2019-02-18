@@ -24,14 +24,12 @@ import { useDispatch } from "redux-react-hook";
 import Tooltip from "../../../components/Tooltip";
 import IconHeader from "../../../components/IconHeader";
 import { actionCreators } from "../redux";
-import { actionCreators as expressionActionCreators } from "../../../components/ExpressionBuilder";
 import { useFetchTrackers } from "../streamTasksResourceClient";
 import ProcessingDetails from "../ProcessingDetails/ProcessingDetails";
 import ProcessingList from "../ProcessingList/ProcessingList";
 import { StreamTaskType } from "../../../types";
 import useReduxState from "../../../lib/useReduxState";
 
-const { expressionChanged } = expressionActionCreators;
 const {
   updateTrackerSelection,
   resetPaging,
@@ -67,7 +65,7 @@ const ProcessingContainer = () => {
     }
 
     if (expression) {
-      expressionChanged("trackerDetailsExpression", expression);
+      console.log("trackerDetailsExpression", expression);
     }
   };
   const onHandleSearchChange: React.ChangeEventHandler<HTMLInputElement> = ({

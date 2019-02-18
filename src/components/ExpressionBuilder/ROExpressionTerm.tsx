@@ -4,13 +4,12 @@ import { ExpressionTermType } from "../../types";
 export interface Props {
   term: ExpressionTermType;
   isEnabled: boolean;
-  expressionId: string;
 }
 
 /**
  * Read only expression operator
  */
-const ROExpressionTerm = ({ term, isEnabled, expressionId }: Props) => {
+const ROExpressionTerm = ({ term, isEnabled }: Props) => {
   let className = "expression-item expression-item--readonly";
   if (!isEnabled) {
     className += " expression-item--disabled";

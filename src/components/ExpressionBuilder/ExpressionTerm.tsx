@@ -29,7 +29,6 @@ import {
   DragCollectedProps
 } from "./dragDropTypes";
 import ValueWidget from "./ValueWidget";
-import { actionCreators } from "./redux";
 import {
   DataSourceType,
   ConditionType,
@@ -41,15 +40,12 @@ import {
 } from "../../types";
 import withValueType from "./withValueType";
 
-const { expressionItemUpdated } = actionCreators;
-
 export interface Props {
   dataSource: DataSourceType;
-  expressionId: string;
   term: ExpressionTermWithUuid;
   isEnabled: boolean;
   showDeleteItemDialog: (itemId: string) => void;
-  expressionItemUpdated: typeof expressionItemUpdated;
+  expressionItemUpdated: (itemId: string, updates: object) => void;
 }
 
 export interface EnhancedProps extends Props, DragCollectedProps {}
@@ -70,7 +66,6 @@ const ExpressionTerm = ({
   showDeleteItemDialog,
   connectDragSource,
   term,
-  expressionId,
   isEnabled,
   expressionItemUpdated,
   dataSource
@@ -80,25 +75,25 @@ const ExpressionTerm = ({
   };
 
   const onEnabledToggled = () => {
-    expressionItemUpdated(expressionId, term.uuid, {
+    expressionItemUpdated(term.uuid, {
       enabled: !term.enabled
     });
   };
 
   const onFieldChange = (value: string) => {
-    expressionItemUpdated(expressionId, term.uuid, {
+    expressionItemUpdated(term.uuid, {
       field: value
     });
   };
 
   const onConditionChange = (value: ConditionType) => {
-    expressionItemUpdated(expressionId, term.uuid, {
+    expressionItemUpdated(term.uuid, {
       condition: value
     });
   };
 
   const onValueChange = (value: string) =>
-    expressionItemUpdated(expressionId, term.uuid, { value });
+    expressionItemUpdated(term.uuid, { value });
 
   const classNames = ["expression-item", "expression-term"];
 

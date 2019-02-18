@@ -16,45 +16,79 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
 
-import Loader from "../Loader";
 import ExpressionOperator from "./ExpressionOperator";
 import DeleteExpressionItem, {
   useDialog as useDeleteItemDialog
 } from "./DeleteExpressionItem";
-import { DataSourceType, StyledComponentProps } from "../../types";
-import { actionCreators } from "./redux";
+import {
+  DataSourceType,
+  StyledComponentProps,
+  ExpressionOperatorWithUuid,
+  ExpressionHasUuid
+} from "../../types";
 import ROExpressionBuilder from "./ROExpressionBuilder";
-import useReduxState from "../../lib/useReduxState";
-import { useDispatch } from "redux-react-hook";
+import {
+  updateItemInTree,
+  addItemsToTree,
+  deleteItemFromTree,
+  moveItemsInTree
+} from "../../lib/treeUtils";
 
-const {
-  expressionTermAdded,
-  expressionOperatorAdded,
-  expressionItemUpdated,
-  expressionItemMoved,
-  expressionItemDeleted
-} = actionCreators;
+import { getNewTerm, getNewOperator } from "./expressionBuilderUtils";
 
 export interface Props extends StyledComponentProps {
   dataSource: DataSourceType;
-  expressionId: string;
   showModeToggle?: boolean;
   editMode?: boolean;
+  expression: ExpressionOperatorWithUuid;
+  onChange: (e: ExpressionOperatorWithUuid) => void;
 }
 
 const ExpressionBuilder = ({
-  expressionId,
   dataSource,
   showModeToggle: smtRaw,
-  editMode
+  editMode,
+  expression,
+  onChange
 }: Props) => {
-  const dispatch = useDispatch();
-  const { expressionBuilder } = useReduxState(({ expressionBuilder }) => ({
-    expressionBuilder
-  }));
   const [inEditMode, setEditableByUser] = useState<boolean>(false);
 
-  const expressionState = expressionBuilder[expressionId];
+  const expressionTermAdded = (itemId: string) => {
+    const e = addItemsToTree(expression, itemId, [
+      getNewTerm()
+    ]) as ExpressionOperatorWithUuid;
+    onChange(e);
+  };
+  const expressionOperatorAdded = (itemId: string) => {
+    const e = addItemsToTree(expression, itemId, [
+      getNewOperator()
+    ]) as ExpressionOperatorWithUuid;
+    onChange(e);
+  };
+  const expressionItemUpdated = (itemId: string, updates: object) => {
+    const e = updateItemInTree(
+      expression,
+      itemId,
+      updates
+    ) as ExpressionOperatorWithUuid;
+    onChange(e);
+  };
+  const expressionItemDeleted = (itemId: string) => {
+    const e = deleteItemFromTree(
+      expression,
+      itemId
+    ) as ExpressionOperatorWithUuid;
+    onChange(e);
+  };
+  const expressionItemMoved = (
+    destination: ExpressionHasUuid,
+    itemToMove: ExpressionHasUuid
+  ) => {
+    const e = moveItemsInTree(expression, destination, [
+      itemToMove
+    ]) as ExpressionOperatorWithUuid;
+    onChange(e);
+  };
 
   useEffect(() => {
     setEditableByUser(editMode || false);
@@ -63,16 +97,9 @@ const ExpressionBuilder = ({
   const {
     showDialog: showDeleteItemDialog,
     componentProps: deleteDialogComponentProps
-  } = useDeleteItemDialog(itemId =>
-    dispatch(expressionItemDeleted(expressionId, itemId))
-  );
+  } = useDeleteItemDialog(itemId => expressionItemDeleted(itemId));
 
-  if (!expressionState) {
-    return <Loader message="Loading expression state..." />;
-  }
   const showModeToggle = smtRaw && !!dataSource;
-
-  const { expression } = expressionState;
 
   return (
     <div>
@@ -93,28 +120,16 @@ const ExpressionBuilder = ({
         <ExpressionOperator
           showDeleteItemDialog={showDeleteItemDialog}
           dataSource={dataSource}
-          expressionId={expressionId}
           isRoot
           isEnabled
           operator={expression}
-          expressionTermAdded={(eId, itemId) =>
-            dispatch(expressionTermAdded(eId, itemId))
-          }
-          expressionOperatorAdded={(eId, itemId) =>
-            dispatch(expressionOperatorAdded(eId, itemId))
-          }
-          expressionItemUpdated={(eId, itemId, updates) =>
-            dispatch(expressionItemUpdated(eId, itemId, updates))
-          }
-          expressionItemMoved={(eId, itemToMove, destination) =>
-            dispatch(expressionItemMoved(eId, itemToMove, destination))
-          }
+          expressionTermAdded={expressionTermAdded}
+          expressionOperatorAdded={expressionOperatorAdded}
+          expressionItemUpdated={expressionItemUpdated}
+          expressionItemMoved={expressionItemMoved}
         />
       ) : (
-        <ROExpressionBuilder
-          expressionId={expressionId}
-          expression={expression}
-        />
+        <ROExpressionBuilder expression={expression} />
       )}
     </div>
   );

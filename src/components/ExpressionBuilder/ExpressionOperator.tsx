@@ -33,7 +33,6 @@ import {
   DropCollectedProps
 } from "./dragDropTypes";
 import ExpressionTerm from "./ExpressionTerm";
-import { actionCreators } from "./redux";
 import Button from "../Button";
 import {
   DataSourceType,
@@ -45,24 +44,19 @@ import {
 } from "../../types";
 import ElbowLine from "../PipelineEditor/ElbowLine/ElbowLine";
 
-const {
-  expressionTermAdded,
-  expressionOperatorAdded,
-  expressionItemUpdated,
-  expressionItemMoved
-} = actionCreators;
-
 export interface Props {
   dataSource: DataSourceType;
-  expressionId: string;
   operator: ExpressionOperatorWithUuid;
   isRoot?: boolean;
   isEnabled: boolean;
   showDeleteItemDialog: (itemId: string) => void;
-  expressionTermAdded: typeof expressionTermAdded;
-  expressionOperatorAdded: typeof expressionOperatorAdded;
-  expressionItemUpdated: typeof expressionItemUpdated;
-  expressionItemMoved: typeof expressionItemMoved;
+  expressionTermAdded: (itemId: string) => void;
+  expressionOperatorAdded: (itemId: string) => void;
+  expressionItemUpdated: (itemId: string, updates: object) => void;
+  expressionItemMoved: (
+    destination: ExpressionHasUuid,
+    itemToMove: ExpressionHasUuid
+  ) => void;
 }
 
 export interface EnhancedProps
@@ -86,11 +80,7 @@ const dropTarget: DropTargetSpec<Props> = {
     return canMove(monitor.getItem(), props.operator);
   },
   drop(props, monitor) {
-    props.expressionItemMoved(
-      props.expressionId,
-      monitor.getItem().expressionItem,
-      props.operator
-    );
+    props.expressionItemMoved(monitor.getItem().expressionItem, props.operator);
   }
 };
 
@@ -115,7 +105,6 @@ const enhance = compose<EnhancedProps, Props>(
 );
 
 const ExpressionOperator = ({
-  expressionId,
   operator,
   isRoot,
   isEnabled,
@@ -129,18 +118,19 @@ const ExpressionOperator = ({
 
   expressionOperatorAdded,
   expressionTermAdded,
-  expressionItemUpdated
+  expressionItemUpdated,
+  expressionItemMoved
 }: EnhancedProps) => {
   const onAddOperator = () => {
-    expressionOperatorAdded(expressionId, operator.uuid);
+    expressionOperatorAdded(operator.uuid);
   };
 
   const onAddTerm = () => {
-    expressionTermAdded(expressionId, operator.uuid);
+    expressionTermAdded(operator.uuid);
   };
 
   const onOpChange = (op: OperatorType) => {
-    expressionItemUpdated(expressionId, operator.uuid, {
+    expressionItemUpdated(operator.uuid, {
       op
     });
   };
@@ -151,7 +141,7 @@ const ExpressionOperator = ({
 
   const onEnabledToggled = () => {
     if (!isRoot) {
-      expressionItemUpdated(expressionId, operator.uuid, {
+      expressionItemUpdated(operator.uuid, {
         enabled: !operator.enabled
       });
     }
@@ -252,7 +242,6 @@ const ExpressionOperator = ({
                       {...{
                         showDeleteItemDialog,
                         dataSource,
-                        expressionId,
                         expressionTermAdded,
                         expressionOperatorAdded,
                         expressionItemUpdated,
@@ -270,7 +259,6 @@ const ExpressionOperator = ({
                     {...{
                       showDeleteItemDialog,
                       dataSource,
-                      expressionId,
                       expressionTermAdded,
                       expressionOperatorAdded,
                       expressionItemUpdated,

@@ -17,36 +17,32 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
 
-import {
-  ExpressionBuilder,
-  actionCreators as expressionBuilderActionCreators
-} from "../ExpressionBuilder";
 import { processSearchString } from "./expressionSearchBarUtils";
 import Button from "../Button";
-import { DataSourceType, StyledComponentProps } from "../../types";
-import { useDispatch } from "redux-react-hook";
-import useReduxState from "../../lib/useReduxState";
-
-const { expressionChanged } = expressionBuilderActionCreators;
+import {
+  DataSourceType,
+  StyledComponentProps,
+  ExpressionOperatorWithUuid
+} from "../../types";
+import { assignRandomUuids } from "../../lib/treeUtils";
+import { toString } from "../ExpressionBuilder/expressionBuilderUtils";
+import { ExpressionBuilder } from "../ExpressionBuilder";
 
 export interface Props extends StyledComponentProps {
-  expressionId: string;
+  expression?: ExpressionOperatorWithUuid;
+  onExpressionChange: (e: ExpressionOperatorWithUuid) => void;
   dataSource: DataSourceType;
-  onSearch: (expressionId: string) => void;
+  onSearch: (e: ExpressionOperatorWithUuid | string) => void;
   initialSearchString?: string;
 }
 
 const ExpressionSearchBar = ({
   initialSearchString,
   dataSource,
-  expressionId,
+  expression,
+  onExpressionChange,
   onSearch
 }: Props) => {
-  const { expressionBuilder } = useReduxState(({ expressionBuilder }) => ({
-    expressionBuilder
-  }));
-  const expressionState = expressionBuilder[expressionId];
-
   const [isExpression, setIsExpression] = useState<boolean>(false);
   const [searchString, setSearchString] = useState<string>(
     initialSearchString || ""
@@ -57,13 +53,15 @@ const ExpressionSearchBar = ({
     setSearchStringValidationMessages
   ] = useState<Array<string>>([]);
 
-  const dispatch = useDispatch();
-
   useEffect(() => {
-    const parsedExpression = processSearchString(dataSource, "");
-    dispatch(expressionChanged(expressionId, parsedExpression.expression));
-
-    onSearch(expressionId);
+    if (!expression) {
+      const parsedExpression = processSearchString(dataSource, "");
+      const e = assignRandomUuids(
+        parsedExpression.expression
+      ) as ExpressionOperatorWithUuid;
+      onExpressionChange(e);
+    }
+    onSearch(isExpression && !!expression ? expression : searchString);
   }, []);
 
   const onChange: React.ChangeEventHandler<HTMLInputElement> = ({
@@ -89,7 +87,10 @@ const ExpressionSearchBar = ({
     setSearchString(value);
 
     const parsedExpression = processSearchString(dataSource, searchString);
-    dispatch(expressionChanged(expressionId, parsedExpression.expression));
+    const e = assignRandomUuids(
+      parsedExpression.expression
+    ) as ExpressionOperatorWithUuid;
+    onExpressionChange(e);
   };
 
   return (
@@ -98,7 +99,7 @@ const ExpressionSearchBar = ({
         <input
           placeholder="I.e. field1=value1 field2=value2"
           value={
-            isExpression ? expressionState.expressionAsString : searchString
+            isExpression && !!expression ? toString(expression) : searchString
           }
           className="search-bar__input"
           onChange={onChange}
@@ -107,7 +108,7 @@ const ExpressionSearchBar = ({
           disabled={!isSearchStringValid}
           icon="search"
           onClick={() => {
-            onSearch(expressionId);
+            onSearch(isExpression && !!expression ? expression : searchString);
           }}
         />
       </div>
@@ -134,21 +135,23 @@ const ExpressionSearchBar = ({
                   dataSource,
                   searchString
                 );
-                dispatch(
-                  expressionChanged(expressionId, parsedExpression.expression)
-                );
+                const e = assignRandomUuids(
+                  parsedExpression.expression
+                ) as ExpressionOperatorWithUuid;
+                onExpressionChange(e);
                 setIsExpression(true);
               }
             }}
           />
         </div>
-        {isExpression ? (
+        {isExpression && !!expression ? (
           <ExpressionBuilder
             className="search-bar__expressionBuilder"
             showModeToggle={false}
             editMode
             dataSource={dataSource}
-            expressionId={expressionId}
+            expression={expression}
+            onChange={onExpressionChange}
           />
         ) : (
           <div>{searchStringValidationMessages}</div>

@@ -19,16 +19,11 @@ import ROExpressionOperator from "./ROExpressionOperator";
 import { ExpressionOperatorWithUuid } from "../../types";
 
 export interface Props {
-  expressionId: string;
   expression: ExpressionOperatorWithUuid;
 }
 
-const ROExpressionBuilder = ({ expressionId, expression }: Props) => (
-  <ROExpressionOperator
-    expressionId={expressionId}
-    isEnabled
-    operator={expression}
-  />
+const ROExpressionBuilder = ({ expression }: Props) => (
+  <ROExpressionOperator isEnabled operator={expression} />
 );
 
 export default ROExpressionBuilder;

@@ -13,7 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { ExpressionOperatorType, Dictionary } from "../../../types";
+import * as uuidv4 from "uuid/v4";
+
+import { Dictionary, ExpressionOperatorWithUuid } from "../../../types";
 
 const colourDictionary: Dictionary = {
   type: "Dictionary",
@@ -31,11 +33,13 @@ const colourDictionary: Dictionary = {
   imports: []
 };
 
-const testExpression: ExpressionOperatorType = {
+const testExpression: ExpressionOperatorWithUuid = {
+  uuid: uuidv4(),
   type: "operator",
   op: "OR",
   children: [
     {
+      uuid: uuidv4(),
       type: "term",
       field: "colour",
       condition: "CONTAINS",
@@ -44,6 +48,7 @@ const testExpression: ExpressionOperatorType = {
       enabled: true
     },
     {
+      uuid: uuidv4(),
       type: "term",
       field: "colour",
       condition: "IN",
@@ -52,6 +57,7 @@ const testExpression: ExpressionOperatorType = {
       enabled: true
     },
     {
+      uuid: uuidv4(),
       type: "term",
       field: "colour",
       condition: "IN_DICTIONARY",
@@ -60,11 +66,13 @@ const testExpression: ExpressionOperatorType = {
       enabled: true
     },
     {
+      uuid: uuidv4(),
       type: "operator",
       op: "AND",
       enabled: true,
       children: [
         {
+          uuid: uuidv4(),
           type: "term",
           field: "numberOfDoors",
           condition: "BETWEEN",
@@ -73,6 +81,7 @@ const testExpression: ExpressionOperatorType = {
           enabled: true
         },
         {
+          uuid: uuidv4(),
           type: "term",
           field: "createUser",
           condition: "EQUALS",
@@ -83,11 +92,13 @@ const testExpression: ExpressionOperatorType = {
       ]
     },
     {
+      uuid: uuidv4(),
       type: "operator",
       op: "OR",
       enabled: false,
       children: [
         {
+          uuid: uuidv4(),
           type: "term",
           field: "id",
           condition: "CONTAINS",
@@ -96,6 +107,7 @@ const testExpression: ExpressionOperatorType = {
           enabled: false
         },
         {
+          uuid: uuidv4(),
           type: "term",
           field: "updateTime",
           condition: "BETWEEN",
@@ -109,26 +121,30 @@ const testExpression: ExpressionOperatorType = {
   enabled: true
 };
 
-const simplestExpression: ExpressionOperatorType = {
+const simplestExpression: ExpressionOperatorWithUuid = {
+  uuid: uuidv4(),
   type: "operator",
   op: "AND",
   children: [],
   enabled: true
 };
 
-const testAndOperator: ExpressionOperatorType = {
+const testAndOperator: ExpressionOperatorWithUuid = {
+  uuid: uuidv4(),
   type: "operator",
   op: "AND",
   enabled: true,
   children: []
 };
-const testOrOperator: ExpressionOperatorType = {
+const testOrOperator: ExpressionOperatorWithUuid = {
+  uuid: uuidv4(),
   type: "operator",
   op: "AND",
   enabled: true,
   children: []
 };
-const testNotOperator: ExpressionOperatorType = {
+const testNotOperator: ExpressionOperatorWithUuid = {
+  uuid: uuidv4(),
   type: "operator",
   op: "AND",
   enabled: true,

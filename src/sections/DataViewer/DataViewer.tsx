@@ -15,7 +15,7 @@
  */
 
 import * as React from "react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import PanelGroup from "react-panelgroup";
 import HorizontalPanel from "../../components/HorizontalPanel";
 import * as Mousetrap from "mousetrap";
@@ -35,7 +35,7 @@ import { getDataForSelectedRow } from "./dataResourceClient";
 import DetailsTabs from "./DetailsTabs";
 import DataList from "./DataList/DataList";
 import { actionCreators, defaultStatePerId } from "./redux";
-import { Direction } from "../../types";
+import { Direction, ExpressionOperatorWithUuid } from "../../types";
 import useLocalStorage, { storeNumber } from "../../lib/useLocalStorage";
 import useReduxState from "../../lib/useReduxState";
 
@@ -140,6 +140,9 @@ Props) => {
     500,
     storeNumber
   );
+  const [expression, onExpressionChange] = useState<
+    ExpressionOperatorWithUuid | undefined
+  >(undefined);
 
   if (!dataSource) {
     return <Loader message="Loading data source" />;
@@ -168,14 +171,10 @@ Props) => {
           <ExpressionSearchBar
             className="data-viewer__search-bar"
             dataSource={dataSource}
-            expressionId={dataViewerId}
-            onSearch={() => {
-              searchWithExpression(
-                dataViewerId,
-                pageOffset,
-                pageSize,
-                dataViewerId
-              );
+            expression={expression}
+            onExpressionChange={onExpressionChange}
+            onSearch={e => {
+              searchWithExpression(dataViewerId, pageOffset, pageSize, e);
             }}
           />
         </div>
