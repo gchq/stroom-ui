@@ -39,7 +39,7 @@ export interface IndexVolumesReceivedAction
 export interface IndexVolumesInGroupReceivedAction
   extends Action<"INDEX_VOLUMES_IN_GROUP_RECEIVED"> {
   groupName: string;
-  indexVolumes: Array<IndexVolume>;
+  indexVolumeIds: Array<number>;
 }
 export interface IndexGroupsForVolumeReceivedAction
   extends Action<"INDEX_GROUPS_FOR_VOLUME_RECEIVED"> {
@@ -82,11 +82,11 @@ export const actionCreators = {
   }),
   indexVolumesInGroupReceived: (
     groupName: string,
-    indexVolumes: Array<IndexVolume>
+    indexVolumeIds: Array<number>
   ): IndexVolumesInGroupReceivedAction => ({
     type: INDEX_VOLUMES_IN_GROUP_RECEIVED,
     groupName,
-    indexVolumes
+    indexVolumeIds
   }),
   indexGroupsForVolumeReceived: (
     indexVolumeId: number,
@@ -152,15 +152,13 @@ export const reducer = prepareReducer(defaultState)
   )
   .handleAction<IndexVolumesInGroupReceivedAction>(
     INDEX_VOLUMES_IN_GROUP_RECEIVED,
-    (state: StoreState, { groupName, indexVolumes }) => ({
-      indexVolumes: [...state.indexVolumes]
-        .concat(indexVolumes)
-        .filter(onlyUnique),
+    (state: StoreState, { groupName, indexVolumeIds }) => ({
+      ...state,
       indexVolumeGroupMemberships: [
         ...state.indexVolumeGroupMemberships
       ].concat(
-        indexVolumes.map(i => ({
-          volumeId: i.id,
+        indexVolumeIds.map(volumeId => ({
+          volumeId,
           groupName
         }))
       )

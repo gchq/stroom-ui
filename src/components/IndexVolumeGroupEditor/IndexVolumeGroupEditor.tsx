@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 
 import IconHeader from "../IconHeader";
 import Button from "../Button";
@@ -41,11 +41,15 @@ const IndexVolumeGroupEditor = ({ name }: Props) => {
   const indexVolumeGroup: IndexVolumeGroup | undefined = groups.find(
     g => g.name === name
   );
-  const indexVolumesInGroup: Array<IndexVolume> = indexVolumeGroupMemberships
-    .filter(m => m.groupName === name)
-    .map(m => indexVolumes.find(i => i.id === m.volumeId))
-    .filter(v => v !== undefined)
-    .map(v => v!);
+  const indexVolumesInGroup: Array<IndexVolume> = useMemo(
+    () =>
+      indexVolumeGroupMemberships
+        .filter(m => m.groupName === name)
+        .map(m => indexVolumes.find(i => i.id === m.volumeId))
+        .filter(v => v !== undefined)
+        .map(v => v!),
+    [indexVolumes, indexVolumeGroupMemberships]
+  );
 
   const { componentProps: tableProps } = useIndexVolumesTable(
     indexVolumesInGroup

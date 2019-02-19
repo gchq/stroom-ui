@@ -83,10 +83,87 @@ const resourceBuilder: ResourceBuilder = (
     });
 
   // Get Volumes in Group
+  server
+    .get(
+      `${
+        testConfig.stroomBaseServiceUrl
+      }/stroom-index/volume/v1/inGroup/:groupName`
+    )
+    .intercept((req: HttpRequest, res: HttpResponse) => {
+      let groupName = req.params.groupName;
+
+      let indexVolumeIds: Array<
+        number
+      > = testCache
+        .data!.indexVolumesAndGroups.groupMemberships.filter(
+          m => m.groupName === groupName
+        )
+        .map(m => m.volumeId);
+
+      res.send(indexVolumeIds);
+    });
+
+  // Get Groups for Volume
+  server
+    .get(
+      `${
+        testConfig.stroomBaseServiceUrl
+      }/stroom-index/volume/v1/groupsFor/:indexVolumeId`
+    )
+    .intercept((req: HttpRequest, res: HttpResponse) => {
+      let indexVolumeId = req.params.indexVolumeId;
+
+      let groupNames: Array<
+        string
+      > = testCache
+        .data!.indexVolumesAndGroups.groupMemberships.filter(
+          m => m.volumeId === indexVolumeId
+        )
+        .map(m => m.groupName);
+
+      res.send(groupNames);
+    });
 
   // Add Volume to Group
+  server
+    .post(
+      `${
+        testConfig.stroomBaseServiceUrl
+      }/stroom-index/volume/v1/inGroup/:volumeId/:groupName`
+    )
+    .intercept((req: HttpRequest, res: HttpResponse) => {
+      testCache.data!.indexVolumesAndGroups.groupMemberships = testCache.data!.indexVolumesAndGroups.groupMemberships.concat(
+        [
+          {
+            groupName: req.params.groupName,
+            volumeId: req.params.volumeId
+          }
+        ]
+      );
+
+      res.send(undefined);
+      // res.sendStatus(204);
+    });
 
   // Remove Volume from Group
+  server
+    .delete(
+      `${
+        testConfig.stroomBaseServiceUrl
+      }/stroom-index/volume/v1/inGroup/:volumeId/:groupName`
+    )
+    .intercept((req: HttpRequest, res: HttpResponse) => {
+      testCache.data!.indexVolumesAndGroups.groupMemberships = testCache.data!.indexVolumesAndGroups.groupMemberships.filter(
+        m =>
+          !(
+            m.groupName === req.params.groupName &&
+            m.volumeId === req.params.volumeId
+          )
+      );
+
+      res.send(undefined);
+      // res.sendStatus(204);
+    });
 };
 
 export default resourceBuilder;

@@ -104,8 +104,10 @@ export const useApi = (): Api => {
       r =>
         r
           .json()
-          .then((indexVolumes: Array<IndexVolume>) =>
-            store.dispatch(indexVolumesInGroupReceived(groupName, indexVolumes))
+          .then((indexVolumeIds: Array<number>) =>
+            store.dispatch(
+              indexVolumesInGroupReceived(groupName, indexVolumeIds)
+            )
           ),
       {},
       true
