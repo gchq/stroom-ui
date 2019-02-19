@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useMemo } from "react";
 
 import { findItem } from "../../lib/treeUtils";
 import { DocRefConsumer, DocRefWithLineage } from "../../types";
@@ -20,10 +21,10 @@ const DocRefBreadcrumb = ({
 }: Props) => {
   const documentTree = useDocumentTree();
 
-  const docRefWithLineage = findItem(
-    documentTree,
-    docRefUuid
-  ) as DocRefWithLineage;
+  const docRefWithLineage = useMemo(
+    () => findItem(documentTree, docRefUuid) as DocRefWithLineage,
+    [documentTree, docRefUuid]
+  );
 
   if (!docRefWithLineage || !docRefWithLineage.node) {
     return <Loader message={`Loading Doc Ref ${docRefUuid}...`} />;

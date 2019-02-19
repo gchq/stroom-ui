@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useMemo } from "react";
 
 import { DropTarget, DropTargetSpec, DropTargetCollector } from "react-dnd";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -6,10 +7,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ElementCategory from "./ElementCategory";
 import { getBinItems } from "../pipelineUtils";
 import { DragDropTypes, DropCollectedProps } from "../dragDropTypes";
-import { ElementDefinition } from "../../../types";
+import {
+  ElementDefinition,
+  ElementDefinitionsByCategory,
+  ElementDefinitionsByType
+} from "../../../types";
 import usePipelineState from "../redux/usePipelineState";
 import useElements from "../redux/useElements";
-import Loader from "../../../components/Loader";
+import { groupByCategory, keyByType } from "../elementUtils";
 
 export interface Props {
   pipelineId: string;
@@ -51,24 +56,35 @@ const ElementPalette = ({
   isOver
 }: EnhancedProps) => {
   const pipelineState = usePipelineState(pipelineId);
-  const elements = useElements();
+  const { elementDefinitions } = useElements();
 
-  if (!(pipelineState && elements)) {
-    return <Loader message="Loading Pipeline and Elements" />;
-  }
+  const byCategory: ElementDefinitionsByCategory = useMemo(
+    () => groupByCategory(elementDefinitions),
+    [elementDefinitions]
+  );
 
-  const binColour = isOver ? "red" : "black";
-  const { byCategory, byType } = elements;
-  const recycleBinItems =
-    pipelineState && pipelineState.pipeline
-      ? getBinItems(pipelineState.pipeline, byType)
-      : [];
+  const byType: ElementDefinitionsByType = useMemo(
+    () => keyByType(elementDefinitions),
+    [elementDefinitions]
+  );
+
+  const recycleBinItems = useMemo(
+    () =>
+      pipelineState && pipelineState.pipeline
+        ? getBinItems(pipelineState.pipeline, byType)
+        : [],
+    [pipelineState, byType]
+  );
 
   return connectDropTarget(
     <div className="element-palette">
       {draggingItemType === DragDropTypes.ELEMENT ? (
         <div className="Pipeline-editor__bin">
-          <FontAwesomeIcon icon="trash" size="lg" color={binColour} />
+          <FontAwesomeIcon
+            icon="trash"
+            size="lg"
+            color={isOver ? "red" : "black"}
+          />
         </div>
       ) : (
         <React.Fragment>

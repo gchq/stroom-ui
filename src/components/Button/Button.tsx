@@ -15,6 +15,7 @@
  */
 
 import * as React from "react";
+import { useMemo } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconProp, SizeProp } from "@fortawesome/fontawesome-svg-core";
 
@@ -50,32 +51,33 @@ export const Button = ({
   size,
   ...rest
 }: Props) => {
-  let classNames = ["button"];
+  const className = useMemo(() => {
+    let classNames = ["button"];
 
-  if (rawClassName) classNames.push(rawClassName);
-  if (groupPosition) classNames.push(groupPosition);
-  if (circular) classNames.push("circular");
-  if (text) classNames.push("has-text");
-  if (selected) classNames.push("selected");
+    if (rawClassName) classNames.push(rawClassName);
+    if (groupPosition) classNames.push(groupPosition);
+    if (circular) classNames.push("circular");
+    if (text) classNames.push("has-text");
+    if (selected) classNames.push("selected");
 
-  let fontAwesomeSize: SizeProp;
-  switch (size) {
-    case "small":
-      fontAwesomeSize = "sm";
-      break;
-    case "medium":
-      fontAwesomeSize = "1x";
-      break;
-    case "large":
-      fontAwesomeSize = "lg";
-      break;
-    case "xlarge":
-      fontAwesomeSize = "2x";
-      break;
-    default:
-      fontAwesomeSize = "1x";
-  }
-  const className = classNames.join(" ");
+    return classNames.join(" ");
+  }, [rawClassName, groupPosition, circular, text, selected]);
+
+  let fontAwesomeSize: SizeProp = useMemo(() => {
+    switch (size) {
+      case "small":
+        return "sm";
+      case "medium":
+        return "1x";
+      case "large":
+        return "lg";
+      case "xlarge":
+        return "2x";
+      default:
+        fontAwesomeSize = "1x";
+    }
+    return "sm";
+  }, [size]);
 
   return (
     <button className={className} {...rest}>

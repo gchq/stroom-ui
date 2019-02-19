@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useCallback, useMemo } from "react";
 
 import AppSearchBar from "../AppSearchBar";
 import { DocRefIconHeader } from "../IconHeader";
@@ -20,13 +21,15 @@ const DocRefEditor = ({ actionBarItems, children, docRefUuid }: Props) => {
   const history = useHistory();
   const documentTree = useDocumentTree();
 
-  const docRefWithLineage = findItem(
-    documentTree,
-    docRefUuid
-  ) as DocRefWithLineage;
+  const docRefWithLineage = useMemo(
+    () => findItem(documentTree, docRefUuid) as DocRefWithLineage,
+    [documentTree, docRefUuid]
+  );
 
-  const openDocRef: DocRefConsumer = d =>
-    history.push(`/s/doc/${d.type}/${d.uuid}`);
+  const openDocRef: DocRefConsumer = useCallback(
+    d => history.push(`/s/doc/${d.type}/${d.uuid}`),
+    []
+  );
 
   if (!docRefWithLineage) {
     return <Loader message="Loading Doc Ref" />;

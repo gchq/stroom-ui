@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { storiesOf } from "@storybook/react";
 
 import DialogActionButtons from "./DialogActionButtons";
@@ -11,16 +11,16 @@ let TestHarness = () => {
   const [hasConfirmed, setHasConfirmed] = useState<boolean>(false);
   const [hasCancelled, setHasCancelled] = useState<boolean>(false);
 
-  const onCancel = () => {
+  const onCancel = useCallback(() => {
     setHasCancelled(true);
-  };
-  const onConfirm = () => {
+  }, []);
+  const onConfirm = useCallback(() => {
     setHasConfirmed(true);
-  };
-  const onReset = () => {
+  }, []);
+  const onReset = useCallback(() => {
     setHasConfirmed(false);
     setHasCancelled(false);
-  };
+  }, []);
 
   return (
     <div>

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { useDispatch } from "redux-react-hook";
 
 import useReduxState from "../../lib/useReduxState/useReduxState";
@@ -30,22 +30,30 @@ const DictionaryEditor: React.FunctionComponent<Props> = ({
 
   useEffect(() => {
     api.fetchDocument(dictionaryUuid);
-  });
+  }, [dictionaryUuid]);
+
+  const actionBarItems: Array<ButtonProps> = useMemo(() => {
+    if (!dictionaryState) return [];
+
+    const { isDirty, isSaving } = dictionaryState;
+
+    const b: Array<ButtonProps> = [
+      {
+        icon: "save",
+        disabled: !(isDirty || isSaving),
+        title: isSaving ? "Saving..." : isDirty ? "Save" : "Saved",
+        onClick: () => api.saveDocument(dictionaryUuid)
+      }
+    ];
+
+    return b;
+  }, [dictionaryState, dictionaryUuid]);
 
   if (!dictionaryState) {
     return <Loader message={`Loading Dictionary ${dictionaryUuid}`} />;
   }
 
-  const { dictionary, isDirty, isSaving } = dictionaryState;
-
-  const actionBarItems: Array<ButtonProps> = [
-    {
-      icon: "save",
-      disabled: !(isDirty || isSaving),
-      title: isSaving ? "Saving..." : isDirty ? "Save" : "Saved",
-      onClick: () => api.saveDocument(dictionaryUuid)
-    }
-  ];
+  const { dictionary } = dictionaryState;
 
   return (
     <DocRefEditor docRefUuid={dictionaryUuid} actionBarItems={actionBarItems}>

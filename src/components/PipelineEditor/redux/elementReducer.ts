@@ -1,12 +1,9 @@
 import { Action } from "redux";
 
 import { prepareReducer } from "../../../lib/redux-actions-ts";
-import { groupByCategory, keyByType } from "../elementUtils";
 import {
   ElementDefinitions,
-  ElementPropertiesByElementIdType,
-  ElementDefinitionsByCategory,
-  ElementDefinitionsByType
+  ElementPropertiesByElementIdType
 } from "../../../types";
 
 export const ELEMENTS_RECEIVED = "ELEMENTS_RECEIVED";
@@ -24,15 +21,11 @@ export interface ElementPropertiesReceivedAction
 export interface StoreState {
   elementDefinitions: ElementDefinitions;
   elementProperties: ElementPropertiesByElementIdType;
-  byCategory: ElementDefinitionsByCategory;
-  byType: ElementDefinitionsByType;
 }
 
 export const defaultState: StoreState = {
   elementDefinitions: [],
-  elementProperties: {},
-  byCategory: {},
-  byType: {}
+  elementProperties: {}
 };
 
 export const actionCreators = {
@@ -55,9 +48,7 @@ export const reducer = prepareReducer(defaultState)
     ELEMENTS_RECEIVED,
     (state = defaultState, { elementDefinitions }) => ({
       ...state,
-      elementDefinitions,
-      byCategory: groupByCategory(elementDefinitions),
-      byType: keyByType(elementDefinitions)
+      elementDefinitions
     })
   )
   .handleAction<ElementPropertiesReceivedAction>(

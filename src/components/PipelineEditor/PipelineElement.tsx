@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 import * as React from "react";
+import { useMemo, useCallback } from "react";
 import { compose } from "recompose";
 import {
   DragSource,
@@ -201,7 +202,7 @@ const PipelineElement = ({
   elementProperties,
   pipeline
 }: EnhancedProps) => {
-  const onElementClick = () => {
+  const onElementClick = useCallback(() => {
     // We need to get the initial values for this element and make sure they go into the state,
     // ready for redux-form to populate the new form.
     // TODO THIS MUST SURELY BE CHANGED NOW WE ARE USING FORMIK
@@ -213,33 +214,35 @@ const PipelineElement = ({
       thisElementProperties
     );
     return pipelineElementSelected(pipelineId, elementId, initialValues);
-  };
+  }, [pipelineId, elementId, elementProperties, pipeline]);
 
-  const classNames = ["Pipeline-element"];
-  classNames.push("raised-low");
+  const className = useMemo(() => {
+    const classNames = ["Pipeline-element"];
+    classNames.push("raised-low");
 
-  if (!!draggingItemType) {
-    if (isOver) {
-      classNames.push("over");
-    }
-    if (isDragging) {
-      classNames.push("dragging");
-    }
+    if (!!draggingItemType) {
+      if (isOver) {
+        classNames.push("over");
+      }
+      if (isDragging) {
+        classNames.push("dragging");
+      }
 
-    if (canDrop) {
-      classNames.push("can_drop");
+      if (canDrop) {
+        classNames.push("can_drop");
+      } else {
+        classNames.push("cannot_drop");
+      }
+
+      if (selectedElementId === elementId) {
+        classNames.push("selected");
+      }
     } else {
-      classNames.push("cannot_drop");
+      classNames.push("borderless");
     }
 
-    if (selectedElementId === elementId) {
-      classNames.push("selected");
-    }
-  } else {
-    classNames.push("borderless");
-  }
-
-  const className = classNames.join(" ");
+    return classNames.join(" ");
+  }, [draggingItemType, isDragging, canDrop, selectedElementId, elementId]);
 
   return connectDragSource(
     connectDropTarget(

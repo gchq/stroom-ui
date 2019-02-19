@@ -15,7 +15,7 @@
  */
 
 import * as React from "react";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import PanelGroup from "react-panelgroup";
 
 import Loader from "../Loader";
@@ -82,32 +82,40 @@ const PipelineEditor = ({ pipelineId }: Props) => {
 
   const pipelineState = usePipelineState(pipelineId);
 
+  const actionBarItems: Array<ButtonProps> = useMemo(() => {
+    if (!pipelineState) return [];
+
+    const { isDirty, isSaving } = pipelineState;
+
+    const b: Array<ButtonProps> = [
+      {
+        icon: "cogs",
+        title: "Open Settings",
+        onClick: () =>
+          showSettingsDialog(
+            pipelineState!.pipeline!.description || "something"
+          )
+      },
+      {
+        icon: "save",
+        disabled: !(isDirty || isSaving),
+        title: isSaving ? "Saving..." : isDirty ? "Save" : "Saved",
+        onClick: () => pipelineApi.savePipeline(pipelineId)
+      },
+      {
+        icon: "recycle",
+        title: "Create Child Pipeline",
+        onClick: () =>
+          console.log("TODO - Implement Selection of Parent Pipeline")
+      }
+    ];
+    return b;
+  }, []);
+
   if (!(pipelineState && pipelineState.pipeline)) {
     return <Loader message="Loading pipeline..." />;
   }
-
-  const { selectedElementId, isDirty, isSaving } = pipelineState;
-
-  const actionBarItems: Array<ButtonProps> = [
-    {
-      icon: "cogs",
-      title: "Open Settings",
-      onClick: () =>
-        showSettingsDialog(pipelineState!.pipeline!.description || "something")
-    },
-    {
-      icon: "save",
-      disabled: !(isDirty || isSaving),
-      title: isSaving ? "Saving..." : isDirty ? "Save" : "Saved",
-      onClick: () => pipelineApi.savePipeline(pipelineId)
-    },
-    {
-      icon: "recycle",
-      title: "Create Child Pipeline",
-      onClick: () =>
-        console.log("TODO - Implement Selection of Parent Pipeline")
-    }
-  ];
+  const { selectedElementId } = pipelineState;
 
   return (
     <DocRefEditor docRefUuid={pipelineId} actionBarItems={actionBarItems}>

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { findItem, filterTree } from "../../lib/treeUtils";
@@ -45,8 +45,27 @@ const AppSearchBar = ({
 
   let searchResults = appSearch[pickerId] || [];
 
-  const onSearchFocus = () => setTextFocus(true);
-  const onSearchBlur = () => setTextFocus(false);
+  const onSearchFocus = useCallback(() => setTextFocus(true), []);
+  const onSearchBlur = useCallback(() => setTextFocus(false), []);
+
+  const onThisChange = useCallback(
+    (docRef: DocRefType) => {
+      if (docRef.type === "Folder") {
+        if (
+          !typeFilters ||
+          typeFilters.length === 0 ||
+          typeFilters.includes("Folder")
+        ) {
+          onChange(docRef);
+        } else {
+          setNavFolder(docRef);
+        }
+      } else {
+        onChange(docRef);
+      }
+    },
+    [typeFilters]
+  );
 
   const documentTreeToUse: DocRefTree =
     typeFilters.length > 0
@@ -107,22 +126,6 @@ const AppSearchBar = ({
     searchMode === SearchMode.NAVIGATION ? "empty" : "no results";
   let provideBreadcrumbs = searchMode !== SearchMode.NAVIGATION;
 
-  const onThisChange = (docRef: DocRefType) => {
-    if (docRef.type === "Folder") {
-      if (
-        !typeFilters ||
-        typeFilters.length === 0 ||
-        typeFilters.includes("Folder")
-      ) {
-        onChange(docRef);
-      } else {
-        setNavFolder(docRef);
-      }
-    } else {
-      onChange(docRef);
-    }
-  };
-
   const {
     onKeyDownWithShortcuts,
     selectionToggled,
@@ -175,15 +178,18 @@ const AppSearchBar = ({
       break;
   }
 
-  const onSearchTermChange: React.ChangeEventHandler<HTMLInputElement> = ({
-    target: { value }
-  }) => {
-    setSearchTerm(value);
-    setSearchMode(
-      value.length > 0 ? SearchMode.GLOBAL_SEARCH : SearchMode.NAVIGATION
-    );
-    explorerApi.searchApp(pickerId, { term: value });
-  };
+  const onSearchTermChange: React.ChangeEventHandler<
+    HTMLInputElement
+  > = useCallback(
+    ({ target: { value } }) => {
+      setSearchTerm(value);
+      setSearchMode(
+        value.length > 0 ? SearchMode.GLOBAL_SEARCH : SearchMode.NAVIGATION
+      );
+      explorerApi.searchApp(pickerId, { term: value });
+    },
+    [pickerId]
+  );
 
   return (
     <div className={`dropdown app-search-bar ${className || ""}`}>

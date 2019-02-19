@@ -61,10 +61,9 @@ const enhance = DragSource<Props, DragCollectedProps>(
 
 const NewElement = ({
   connectDragSource,
-  isDragging,
   elementWithData: { element, recycleData }
 }: EnhancedProps) => {
-  const [hasFocus, setHasFocus] = useState(false);
+  const [hasFocus, setHasFocus] = useState<boolean>(false);
 
   return connectDragSource(
     <div
