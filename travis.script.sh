@@ -85,11 +85,8 @@ echo_build_vars() {
 
 prep_ui_build() {
     pushd ${CONTEXT_ROOT}
-    echo -e "Building UI from $(pwd)" 
-    mkdir -p work
-    cp ../package.json work/
-    cp -r ../src work/
-    cp -r ../public work/
+    echo -e "Copying UI files" 
+    ./prep.sh 
     popd
 }    
 
