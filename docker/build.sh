@@ -39,3 +39,4 @@ docker build \
     --build-arg GIT_TAG=${ver} \
     .
 
+rm -rf work
