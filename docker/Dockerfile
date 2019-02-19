@@ -55,8 +55,8 @@ WORKDIR /root/app
 # Set tini as entrypoint
 ENTRYPOINT ["/sbin/tini", "--"]
 
-EXPOSE 5000
-EXPOSE 9443
+EXPOSE 5001
+EXPOSE 9446
 
 VOLUME [ "/etc/nginx/certs" ]
 
