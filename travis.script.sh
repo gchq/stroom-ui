@@ -11,17 +11,12 @@ YELLOW='\033[1;33m'
 BLUE='\033[1;34m'
 NC='\033[0m' # No Colour 
 
-source docker_lib.sh
-
 readonly REPO="gchq/stroom-ui"
 readonly CONTEXT_ROOT="stroom-ui/docker/."
-
 # This is a whitelist of branches to produce docker builds for
 readonly BRANCH_WHITELIST_REGEX='(^dev$|^master$|^[0-9]+\.[0-9]+$)'
-
 # Tags matching this regex will trigger a bintray release
 readonly RELEASE_VERSION_REGEX='^v[0-9]+\.[0-9]+.*$'
-
 readonly LATEST_SUFFIX="-LATEST"
 
 version_fixed_tag=""
