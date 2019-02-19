@@ -1,8 +1,8 @@
-import { useContext } from "react";
+import { useContext, useCallback } from "react";
 import { StoreContext } from "redux-react-hook";
 
 import { actionCreators } from "./redux";
-import { wrappedGet } from "../../lib/fetchTracker.redux";
+import useHttpClient from "../../lib/useHttpClient/useHttpClient";
 import {
   ElementPropertiesByElementIdType,
   ElementDefinition
@@ -17,38 +17,42 @@ export interface Api {
 
 export const useApi = (): Api => {
   const store = useContext(StoreContext);
+  const httpClient = useHttpClient();
 
   if (!store) {
     throw new Error("Could not get Redux Store for processing Thunks");
   }
 
+  const fetchElements = useCallback(() => {
+    const state = store.getState();
+    const url = `${
+      state.config.values.stroomBaseServiceUrl
+    }/elements/v1/elements`;
+    httpClient.httpGet(url, response =>
+      response
+        .json()
+        .then((elements: Array<ElementDefinition>) =>
+          store.dispatch(elementsReceived(elements))
+        )
+    );
+  }, []);
+  const fetchElementProperties = useCallback(() => {
+    const state = store.getState();
+    const url = `${
+      state.config.values.stroomBaseServiceUrl
+    }/elements/v1/elementProperties`;
+    httpClient.httpGet(url, response =>
+      response
+        .json()
+        .then((elementProperties: ElementPropertiesByElementIdType) =>
+          store.dispatch(elementPropertiesReceived(elementProperties))
+        )
+    );
+  }, []);
+
   return {
-    fetchElements: () => {
-      const state = store.getState();
-      const url = `${
-        state.config.values.stroomBaseServiceUrl
-      }/elements/v1/elements`;
-      wrappedGet(store.dispatch, state, url, response =>
-        response
-          .json()
-          .then((elements: Array<ElementDefinition>) =>
-            store.dispatch(elementsReceived(elements))
-          )
-      );
-    },
-    fetchElementProperties: () => {
-      const state = store.getState();
-      const url = `${
-        state.config.values.stroomBaseServiceUrl
-      }/elements/v1/elementProperties`;
-      wrappedGet(store.dispatch, state, url, response =>
-        response
-          .json()
-          .then((elementProperties: ElementPropertiesByElementIdType) =>
-            store.dispatch(elementPropertiesReceived(elementProperties))
-          )
-      );
-    }
+    fetchElementProperties,
+    fetchElements
   };
 };
 

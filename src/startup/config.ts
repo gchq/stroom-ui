@@ -15,8 +15,8 @@
  */
 import { Action } from "redux";
 import { prepareReducer } from "../lib/redux-actions-ts";
-import { wrappedGet } from "../lib/fetchTracker.redux";
-import { useContext } from "react";
+import useHttpClient from "../lib/useHttpClient/useHttpClient";
+import { useContext, useCallback } from "react";
 import { StoreContext } from "redux-react-hook";
 
 const initialState = { values: {}, isReady: false };
@@ -62,21 +62,22 @@ interface Api {
 
 const useApi = (): Api => {
   const store = useContext(StoreContext);
+  const httpClient = useHttpClient();
 
   if (!store) {
     throw new Error("Could not get Redux Store for processing Thunks");
   }
 
-  return {
-    fetchConfig: () => {
-      const url = "/config.json";
-      wrappedGet(store.dispatch, store.getState(), url, response => {
-        response.json().then((config: Config) => {
-          store.dispatch(actionCreators.updateConfig(config));
-        });
+  const fetchConfig = useCallback(() => {
+    const url = "/config.json";
+    httpClient.httpGet(url, response => {
+      response.json().then((config: Config) => {
+        store.dispatch(actionCreators.updateConfig(config));
       });
-    }
-  };
+    });
+  }, []);
+
+  return { fetchConfig };
 };
 
 export { actionCreators, reducer, Api, useApi };

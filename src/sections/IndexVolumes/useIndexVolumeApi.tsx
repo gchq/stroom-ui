@@ -1,12 +1,8 @@
-import { useContext } from "react";
+import { useContext, useCallback } from "react";
 import { StoreContext } from "redux-react-hook";
 
 import { actionCreators } from "./redux";
-import {
-  wrappedGet,
-  wrappedPost,
-  wrappedDelete
-} from "../../lib/fetchTracker.redux";
+import useHttpClient from "../../lib/useHttpClient/useHttpClient";
 import { IndexVolume } from "../../types";
 
 const {
@@ -31,142 +27,121 @@ export interface Api {
 
 export const useApi = (): Api => {
   const store = useContext(StoreContext);
+  const httpClient = useHttpClient();
 
   if (!store) {
     throw new Error("Could not get Redux Store for processing Thunks");
   }
 
-  return {
-    getIndexVolumes: () => {
+  const getIndexVolumes = useCallback(() => {
+    const state = store.getState();
+    var url = new URL(
+      `${state.config.values.stroomBaseServiceUrl}/stroom-index/volume/v1`
+    );
+
+    httpClient.httpGet(
+      url.href,
+      r =>
+        r
+          .json()
+          .then((indexVolumes: Array<IndexVolume>) =>
+            store.dispatch(indexVolumesReceived(indexVolumes))
+          ),
+      {},
+      true
+    );
+  }, []);
+
+  const getIndexVolumeById = useCallback((id: number) => {
+    const state = store.getState();
+    var url = new URL(
+      `${state.config.values.stroomBaseServiceUrl}/stroom-index/volume/v1/${id}`
+    );
+
+    httpClient.httpGet(
+      url.href,
+      r =>
+        r
+          .json()
+          .then((indexVolume: IndexVolume) =>
+            store.dispatch(indexVolumeReceived(indexVolume))
+          ),
+      {},
+      true
+    );
+  }, []);
+
+  const deleteIndexVolume = useCallback((id: number) => {
+    const state = store.getState();
+    var url = new URL(
+      `${state.config.values.stroomBaseServiceUrl}/stroom-index/volume/v1/${id}`
+    );
+
+    httpClient.httpDelete(
+      url.href,
+      r =>
+        r
+          .json()
+          .then((indexVolume: IndexVolume) =>
+            store.dispatch(indexVolumeDeleted(id))
+          ),
+      {}
+    );
+  }, []);
+
+  const getIndexVolumesInGroup = useCallback((groupName: string) => {
+    const state = store.getState();
+    var url = new URL(
+      `${
+        state.config.values.stroomBaseServiceUrl
+      }/stroom-index/volume/v1/inGroup/${groupName}`
+    );
+
+    httpClient.httpGet(
+      url.href,
+      r =>
+        r
+          .json()
+          .then((indexVolumes: Array<IndexVolume>) =>
+            store.dispatch(indexVolumesInGroupReceived(groupName, indexVolumes))
+          ),
+      {},
+      true
+    );
+  }, []);
+
+  const createIndexVolume = useCallback((nodeName: string, path: string) => {
+    const state = store.getState();
+    var url = new URL(
+      `${
+        state.config.values.stroomBaseServiceUrl
+      }/stroom-index/volume/v1/${name}`
+    );
+
+    const body = JSON.stringify({ nodeName, path });
+
+    httpClient.httpPost(
+      url.href,
+      response =>
+        response
+          .json()
+          .then((indexVolume: IndexVolume) =>
+            store.dispatch(indexVolumeCreated(indexVolume))
+          ),
+      { body }
+    );
+  }, []);
+
+  const addVolumeToGroup = useCallback(
+    (indexVolumeId: number, groupName: string) => {
       const state = store.getState();
-
-      var url = new URL(
-        `${state.config.values.stroomBaseServiceUrl}/stroom-index/volume/v1`
-      );
-
-      wrappedGet(
-        store.dispatch,
-        state,
-        url.href,
-        r =>
-          r
-            .json()
-            .then((indexVolumes: Array<IndexVolume>) =>
-              store.dispatch(indexVolumesReceived(indexVolumes))
-            ),
-        {},
-        true
-      );
-    },
-
-    getIndexVolumeById: (id: number) => {
-      const state = store.getState();
-
-      var url = new URL(
-        `${
-          state.config.values.stroomBaseServiceUrl
-        }/stroom-index/volume/v1/${id}`
-      );
-
-      wrappedGet(
-        store.dispatch,
-        state,
-        url.href,
-        r =>
-          r
-            .json()
-            .then((indexVolume: IndexVolume) =>
-              store.dispatch(indexVolumeReceived(indexVolume))
-            ),
-        {},
-        true
-      );
-    },
-
-    deleteIndexVolume: (id: number) => {
-      const state = store.getState();
-
-      var url = new URL(
-        `${
-          state.config.values.stroomBaseServiceUrl
-        }/stroom-index/volume/v1/${id}`
-      );
-
-      wrappedDelete(
-        store.dispatch,
-        state,
-        url.href,
-        r =>
-          r
-            .json()
-            .then((indexVolume: IndexVolume) =>
-              store.dispatch(indexVolumeDeleted(id))
-            ),
-        {}
-      );
-    },
-
-    getIndexVolumesInGroup: (groupName: string) => {
-      const state = store.getState();
-
-      var url = new URL(
-        `${
-          state.config.values.stroomBaseServiceUrl
-        }/stroom-index/volume/v1/inGroup/${groupName}`
-      );
-
-      wrappedGet(
-        store.dispatch,
-        state,
-        url.href,
-        r =>
-          r
-            .json()
-            .then((indexVolumes: Array<IndexVolume>) =>
-              store.dispatch(
-                indexVolumesInGroupReceived(groupName, indexVolumes)
-              )
-            ),
-        {},
-        true
-      );
-    },
-
-    createIndexVolume: (nodeName: string, path: string) => {
-      const state = store.getState();
-
-      var url = new URL(
-        `${
-          state.config.values.stroomBaseServiceUrl
-        }/stroom-index/volume/v1/${name}`
-      );
-
-      const body = JSON.stringify({ nodeName, path });
-
-      wrappedPost(
-        store.dispatch,
-        state,
-        url.href,
-        response =>
-          response
-            .json()
-            .then((indexVolume: IndexVolume) =>
-              store.dispatch(indexVolumeCreated(indexVolume))
-            ),
-        { body }
-      );
-    },
-
-    addVolumeToGroup: (indexVolumeId: number, groupName: string) => {
-      const state = store.getState();
-
-      var url = new URL(
+      const url = new URL(
         `${
           state.config.values.stroomBaseServiceUrl
         }/stroom-index/volume/v1/inGroup/{volumeId}/{groupName}`
       );
 
-      wrappedPost(store.dispatch, state, url.href, response =>
+      httpClient.httpPost(url.href, response =>
         response
           .text()
           .then(() =>
@@ -174,17 +149,19 @@ export const useApi = (): Api => {
           )
       );
     },
+    []
+  );
 
-    removeVolumeFromGroup: (indexVolumeId: number, groupName: string) => {
+  const removeVolumeFromGroup = useCallback(
+    (indexVolumeId: number, groupName: string) => {
       const state = store.getState();
-
-      var url = new URL(
+      const url = new URL(
         `${
           state.config.values.stroomBaseServiceUrl
         }/stroom-index/volume/v1/inGroup/{volumeId}/{groupName}`
       );
 
-      wrappedDelete(store.dispatch, state, url.href, response =>
+      httpClient.httpDelete(url.href, response =>
         response
           .text()
           .then(() =>
@@ -193,7 +170,18 @@ export const useApi = (): Api => {
             )
           )
       );
-    }
+    },
+    []
+  );
+
+  return {
+    addVolumeToGroup,
+    createIndexVolume,
+    deleteIndexVolume,
+    getIndexVolumeById,
+    getIndexVolumes,
+    getIndexVolumesInGroup,
+    removeVolumeFromGroup
   };
 };
 

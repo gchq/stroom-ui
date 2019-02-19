@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { useContext } from "react";
+import { useContext, useCallback } from "react";
 import { StoreContext } from "redux-react-hook";
 import { actionCreators } from "./redux";
-import { wrappedGet, wrappedPost } from "../../lib/fetchTracker.redux";
+import useHttpClient from "../../lib/useHttpClient/useHttpClient";
 
 const { xsltReceived, xsltSaved } = actionCreators;
 
@@ -27,58 +27,57 @@ export interface Api {
 
 export const useApi = (): Api => {
   const store = useContext(StoreContext);
+  const httpClient = useHttpClient();
 
   if (!store) {
     throw new Error("Could not get Redux Store for processing Thunks");
   }
 
+  const fetchDocument = useCallback((xsltUuid: string) => {
+    const state = store.getState();
+    const url = `${
+      state.config.values.stroomBaseServiceUrl
+    }/xslt/v1/${xsltUuid}`;
+    httpClient.httpGet(
+      url,
+      response =>
+        response
+          .text()
+          .then((xslt: string) => store.dispatch(xsltReceived(xsltUuid, xslt))),
+      {
+        headers: {
+          Accept: "application/xml",
+          "Content-Type": "application/xml"
+        }
+      }
+    );
+  }, []);
+
+  const saveDocument = useCallback((xsltUuid: string) => {
+    const state = store.getState();
+    const url = `${
+      state.config.values.stroomBaseServiceUrl
+    }/xslt/v1/${xsltUuid}`;
+
+    const body = state.xsltEditor[xsltUuid].xsltData;
+
+    httpClient.httpPost(
+      url,
+      response =>
+        response.text().then(() => store.dispatch(xsltSaved(xsltUuid))),
+      {
+        body,
+        headers: {
+          Accept: "application/xml",
+          "Content-Type": "application/xml"
+        }
+      }
+    );
+  }, []);
+
   return {
-    fetchDocument: (xsltUuid: string) => {
-      const state = store.getState();
-      const url = `${
-        state.config.values.stroomBaseServiceUrl
-      }/xslt/v1/${xsltUuid}`;
-      wrappedGet(
-        store.dispatch,
-        state,
-        url,
-        response =>
-          response
-            .text()
-            .then((xslt: string) =>
-              store.dispatch(xsltReceived(xsltUuid, xslt))
-            ),
-        {
-          headers: {
-            Accept: "application/xml",
-            "Content-Type": "application/xml"
-          }
-        }
-      );
-    },
-    saveDocument: (xsltUuid: string) => {
-      const state = store.getState();
-      const url = `${
-        state.config.values.stroomBaseServiceUrl
-      }/xslt/v1/${xsltUuid}`;
-
-      const body = state.xsltEditor[xsltUuid].xsltData;
-
-      wrappedPost(
-        store.dispatch,
-        state,
-        url,
-        response =>
-          response.text().then(() => store.dispatch(xsltSaved(xsltUuid))),
-        {
-          body,
-          headers: {
-            Accept: "application/xml",
-            "Content-Type": "application/xml"
-          }
-        }
-      );
-    }
+    fetchDocument,
+    saveDocument
   };
 };
 
