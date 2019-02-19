@@ -16,7 +16,7 @@
 import * as React from "react";
 import { useState } from "react";
 
-import { useDeleteDocuments } from "./explorerClient";
+import useExplorerApi from "./useExplorerApi";
 import ThemedConfirm from "../ThemedConfirm";
 
 export interface Props {
@@ -26,11 +26,11 @@ export interface Props {
 }
 
 const DeleteDocRefDialog = ({ uuids, isOpen, onCloseDialog }: Props) => {
-  const deleteDocuments = useDeleteDocuments();
+  const explorerApi = useExplorerApi();
   return (
     <ThemedConfirm
       onConfirm={() => {
-        deleteDocuments(uuids);
+        explorerApi.deleteDocuments(uuids);
         onCloseDialog();
       }}
       onCloseDialog={onCloseDialog}

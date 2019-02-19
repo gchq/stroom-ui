@@ -3,7 +3,7 @@ import { useState } from "react";
 
 import { Formik, Field } from "formik";
 
-import { useCreateIndexVolumeGroup } from "./client";
+import useApi from "./useIndexVolumeGroupApi";
 import ThemedModal from "../../components/ThemedModal";
 import DialogActionButtons from "../../components/FolderExplorer/DialogActionButtons";
 
@@ -17,7 +17,7 @@ interface FormValues {
 }
 
 const NewIndexVolumeGroupDialog = ({ isOpen, onCloseDialog }: Props) => {
-  const createIndexVolumeGroup = useCreateIndexVolumeGroup();
+  const api = useApi();
 
   return (
     <Formik<FormValues>
@@ -26,7 +26,7 @@ const NewIndexVolumeGroupDialog = ({ isOpen, onCloseDialog }: Props) => {
       }}
       onSubmit={values => {
         if (values.name) {
-          createIndexVolumeGroup(values.name);
+          api.createIndexVolumeGroup(values.name);
           onCloseDialog();
         }
       }}

@@ -2,7 +2,7 @@ import * as React from "react";
 import { useState, useEffect } from "react";
 
 import useReduxState from "../../lib/useReduxState/useReduxState";
-import { useGetIndexVolumeGroups, useDeleteIndexVolumeGroup } from "./client";
+import useApi from "./useIndexVolumeGroupApi";
 import IndexVolumeGroupsTable from "./IndexVolumeGroupsTable";
 import { IndexVolumeGroup } from "../../types";
 import Button from "../../components/Button";
@@ -23,11 +23,10 @@ const IndexVolumeGroups = () => {
   const { groups } = useReduxState(({ indexVolumeGroups: { groups } }) => ({
     groups
   }));
-  const getIndexVolumeGroups = useGetIndexVolumeGroups();
-  const deleteIndexVolumeGroup = useDeleteIndexVolumeGroup();
+  const api = useApi();
 
   useEffect(() => {
-    getIndexVolumeGroups();
+    api.getIndexVolumeGroups();
   }, []);
   const [selectedGroup, setSelectedGroup] = useState<
     IndexVolumeGroup | undefined
@@ -52,7 +51,7 @@ const IndexVolumeGroups = () => {
       ? `Are you sure you want to delete ${selectedGroup.name}`
       : "no group?",
     onConfirm: () => {
-      deleteIndexVolumeGroup(selectedGroup!.name);
+      api.deleteIndexVolumeGroup(selectedGroup!.name);
     }
   });
 

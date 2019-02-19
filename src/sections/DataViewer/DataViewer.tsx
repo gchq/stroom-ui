@@ -25,15 +25,10 @@ import "react-table/react-table.css";
 import Loader from "../../components/Loader";
 import IconHeader from "../../components/IconHeader";
 import ExpressionSearchBar from "../../components/ExpressionSearchBar";
-import {
-  useSearch,
-  useGetDetailsForSelectedRow,
-  useFetchDataSource,
-  useSearchWithExpression
-} from "./streamAttributeMapClient";
-import { getDataForSelectedRow } from "./dataResourceClient";
+import useStreamAttributeMapApi from "./useStreamAttributeMapApi";
+import useDataApi from "./useDataApi";
 import DetailsTabs from "./DetailsTabs";
-import DataList from "./DataList/DataList";
+import DataList from "./DataList";
 import { actionCreators, defaultStatePerId } from "./redux";
 import { Direction, ExpressionOperatorWithUuid } from "../../types";
 import useLocalStorage, { storeNumber } from "../../lib/useLocalStorage";
@@ -63,15 +58,16 @@ Props) => {
     detailsForSelectedRow
   } = dataViewers[dataViewerId] || defaultStatePerId;
 
-  const search = useSearch();
-  const getDetailsForSelectedRow = useGetDetailsForSelectedRow();
-  const fetchDataSource = useFetchDataSource();
-  const searchWithExpression = useSearchWithExpression();
+  const streamAttributeMapApi = useStreamAttributeMapApi();
+  const dataApi = useDataApi();
+  const [expression, onExpressionChange] = useState<
+    ExpressionOperatorWithUuid | undefined
+  >(undefined);
 
   const onRowSelected = (selectedRow: number) => {
     dispatch(selectRow(dataViewerId, selectedRow));
-    getDataForSelectedRow(dataViewerId);
-    getDetailsForSelectedRow(dataViewerId);
+    dataApi.getDataForSelectedRow(dataViewerId);
+    streamAttributeMapApi.getDetailsForSelectedRow(dataViewerId);
   };
   // Not using this yet?
   // const onHandleLoadMoreRows = () => {
@@ -87,13 +83,17 @@ Props) => {
 
     const isAtEndOfList = selectedRow === streamAttributeMaps.length - 1;
     if (isAtEndOfList) {
-      searchWithExpression(
-        dataViewerId,
-        pageOffset,
-        pageSize,
-        dataViewerId,
-        true
-      );
+      if (!!expression) {
+        streamAttributeMapApi.searchWithExpression(
+          dataViewerId,
+          expression,
+          pageOffset,
+          pageSize,
+          true
+        );
+      } else {
+        console.error("No expression present to search with");
+      }
       // search(dataViewerId, pageOffset + 1, pageSize, dataViewerId, true);
     } else {
       if (direction === "down") {
@@ -105,7 +105,7 @@ Props) => {
   };
 
   useEffect(() => {
-    fetchDataSource(dataViewerId);
+    streamAttributeMapApi.fetchDataSource(dataViewerId);
 
     // // We need to set up an expression so we've got something to search with,
     // // even though it'll be empty.
@@ -117,7 +117,7 @@ Props) => {
     // // Re-doing the search will wipe out their previous location, and we want to remember it.
     if (!selectedRow) {
       // searchWithExpression(dataViewerId, pageOffset, pageSize, dataViewerId);
-      search(dataViewerId, 0, 400);
+      streamAttributeMapApi.search(dataViewerId, 0, 400);
     }
 
     Mousetrap.bind("up", () => onMoveSelection(Direction.UP));
@@ -140,9 +140,6 @@ Props) => {
     500,
     storeNumber
   );
-  const [expression, onExpressionChange] = useState<
-    ExpressionOperatorWithUuid | undefined
-  >(undefined);
 
   if (!dataSource) {
     return <Loader message="Loading data source" />;
@@ -174,7 +171,16 @@ Props) => {
             expression={expression}
             onExpressionChange={onExpressionChange}
             onSearch={e => {
-              searchWithExpression(dataViewerId, pageOffset, pageSize, e);
+              if (!!expression) {
+                streamAttributeMapApi.searchWithExpression(
+                  dataViewerId,
+                  expression,
+                  pageOffset,
+                  pageSize
+                );
+              } else {
+                console.error("No expression present to search with");
+              }
             }}
           />
         </div>

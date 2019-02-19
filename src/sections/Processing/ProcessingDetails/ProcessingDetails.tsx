@@ -18,7 +18,7 @@ import * as React from "react";
 import * as moment from "moment";
 
 import { actionCreators } from "../redux";
-import { useEnableToggle } from "../streamTasksResourceClient";
+import useApi from "../useStreamTasksApi";
 import HorizontalPanel from "../../../components/HorizontalPanel";
 import { useDispatch } from "redux-react-hook";
 import useReduxState from "../../../lib/useReduxState";
@@ -29,7 +29,7 @@ const { selectNone } = actionCreators;
 
 const ProcessingDetails = () => {
   const dispatch = useDispatch();
-  const enableToggle = useEnableToggle();
+  const api = useApi();
 
   const { trackers, selectedTrackerId } = useReduxState(
     ({ processing: { trackers, selectedTrackerId } }) => ({
@@ -42,7 +42,7 @@ const ProcessingDetails = () => {
     filterId: number,
     isCurrentlyEnabled: boolean
   ) => {
-    enableToggle(filterId, isCurrentlyEnabled);
+    api.enableToggle(filterId, isCurrentlyEnabled);
   };
   const onDeselectTracker = () => {
     dispatch(selectNone());

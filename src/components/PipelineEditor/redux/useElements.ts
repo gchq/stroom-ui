@@ -1,18 +1,15 @@
 import { useEffect } from "react";
 
 import { StoreState as ElementsStoreState } from "./elementReducer";
-import {
-  useFetchElements,
-  useFetchElementProperties
-} from "../elementResourceClient";
+import useElementsApi from "../useElementsApi";
 import useReduxState from "../../../lib/useReduxState";
 
 export const useElements = (): ElementsStoreState => {
-  const fetchElements = useFetchElements();
-  const fetchElementProperties = useFetchElementProperties();
+  const elementsApi = useElementsApi();
+
   useEffect(() => {
-    fetchElements();
-    fetchElementProperties();
+    elementsApi.fetchElements();
+    elementsApi.fetchElementProperties();
   }, []);
 
   const { elements } = useReduxState(({ pipelineEditor: { elements } }) => ({

@@ -18,8 +18,8 @@ import PipelineEditor from "./PipelineEditor";
 import Pipeline from "./Pipeline";
 
 import { reducer, actionCreators, StoreState } from "./redux";
-import { fetchPipeline, searchPipelines } from "./client";
-import { fetchElements, fetchElementProperties } from "./elementResourceClient";
+import usePipelineApi from "./usePipelineApi";
+import useElementsApi from "./useElementsApi";
 
 import { testPipelines } from "./test";
 
@@ -27,13 +27,11 @@ export {
   PipelineEditor,
   Pipeline,
   reducer,
-  fetchPipeline,
-  fetchElements,
-  fetchElementProperties,
-  searchPipelines,
+  useElementsApi,
   actionCreators,
   StoreState,
-  testPipelines
+  testPipelines,
+  usePipelineApi
 };
 
 export default PipelineEditor;

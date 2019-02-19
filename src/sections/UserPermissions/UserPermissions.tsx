@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { Formik, Field, Form } from "formik";
 
 import useReduxState from "../../lib/useReduxState/useReduxState";
-import { useFindUsers, useDeleteUser } from "./client";
+import useApi from "./useUserPermissionsApi";
 import { GlobalStoreState } from "../../startup/reducers";
 import { User } from "../../types";
 import IconHeader from "../../components/IconHeader";
@@ -28,8 +28,7 @@ interface Values {
 
 const UserPermissions = () => {
   const history = useHistory();
-  const findUsers = useFindUsers();
-  const deleteUser = useDeleteUser();
+  const api = useApi();
   const [selectedUser, setSelectedUser] = useState<User | undefined>(undefined);
 
   // Get data from and subscribe to the store
@@ -44,7 +43,7 @@ const UserPermissions = () => {
   };
 
   useEffect(() => {
-    findUsers(LISTING_ID);
+    api.findUsers(LISTING_ID);
   }, []);
 
   const {
@@ -59,7 +58,7 @@ const UserPermissions = () => {
       ? `Are you sure you want to delete user ${selectedUser.name}`
       : "no user?",
     onConfirm: () => {
-      deleteUser(selectedUser!.uuid);
+      api.deleteUser(selectedUser!.uuid);
     }
   });
 
@@ -73,7 +72,7 @@ const UserPermissions = () => {
         }}
         onSubmit={() => {}}
         validate={({ name, isGroup, uuid }: Values) =>
-          findUsers(LISTING_ID, name, isGroup, uuid)
+          api.findUsers(LISTING_ID, name, isGroup, uuid)
         }
       >
         <Form>

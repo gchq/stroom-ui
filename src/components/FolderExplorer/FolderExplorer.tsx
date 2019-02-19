@@ -19,7 +19,7 @@ import * as React from "react";
 import DocRefEditor from "../DocRefEditor";
 import Loader from "../Loader";
 import { findItem } from "../../lib/treeUtils";
-import { useCopyDocuments, useMoveDocuments } from "./explorerClient";
+import useExplorerApi from "./useExplorerApi";
 import DndDocRefListingEntry from "./DndDocRefListingEntry";
 import CreateDocRefDialog, {
   useDialog as useCreateDialog
@@ -52,8 +52,7 @@ const FolderExplorer = ({ folderUuid }: Props) => {
 
   const history = useHistory();
   const folder = findItem(documentTree, folderUuid)!;
-  const copyDocuments = useCopyDocuments();
-  const moveDocuments = useMoveDocuments();
+  const explorerApi = useExplorerApi();
 
   const openDocRef: DocRefConsumer = (d: DocRefType) =>
     history.push(`/s/doc/${d.type}/${d.uuid}`);
@@ -65,11 +64,11 @@ const FolderExplorer = ({ folderUuid }: Props) => {
   const {
     showDialog: showCopyDialog,
     componentProps: copyDialogComponentProps
-  } = useCopyMoveDialog(copyDocuments);
+  } = useCopyMoveDialog(explorerApi.copyDocuments);
   const {
     showDialog: showMoveDialog,
     componentProps: moveDialogComponentProps
-  } = useCopyMoveDialog(moveDocuments);
+  } = useCopyMoveDialog(explorerApi.moveDocuments);
   const {
     showDialog: showRenameDialog,
     componentProps: renameDialogComponentProps

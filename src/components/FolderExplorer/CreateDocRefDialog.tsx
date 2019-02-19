@@ -24,7 +24,7 @@ import ThemedModal from "../ThemedModal";
 import DialogActionButtons from "./DialogActionButtons";
 import { required, minLength2 } from "../../lib/reduxFormUtils";
 import { DocRefTypePicker } from "../DocRefTypes";
-import { useCreateDocument } from "./explorerClient";
+import useExplorerApi from "./useExplorerApi";
 import PermissionInheritancePicker from "../PermissionInheritancePicker";
 import { PermissionInheritance, DocRefType } from "../../types";
 
@@ -41,7 +41,7 @@ interface FormValues {
 }
 
 let CreateDocRefDialog = ({ isOpen, destination, onCloseDialog }: Props) => {
-  const createDocument = useCreateDocument();
+  const explorerApi = useExplorerApi();
 
   return (
     <Formik<FormValues>
@@ -50,7 +50,7 @@ let CreateDocRefDialog = ({ isOpen, destination, onCloseDialog }: Props) => {
         permissionInheritance: PermissionInheritance.NONE
       }}
       onSubmit={values => {
-        createDocument(
+        explorerApi.createDocument(
           values.docRefType!,
           values.docRefName!,
           destination!,

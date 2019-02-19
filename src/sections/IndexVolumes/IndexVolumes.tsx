@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { IndexVolume } from "../../types";
 
 import useReduxState from "../../lib/useReduxState/useReduxState";
-import { useGetIndexVolumes, useDeleteIndexVolume } from "./client";
+import useApi from "./useIndexVolumeApi";
 import IconHeader from "../../components/IconHeader";
 import Button from "../../components/Button";
 import NewIndexVolumeDialog, {
@@ -26,10 +26,9 @@ const IndexVolumes = () => {
       indexVolumes
     })
   );
-  const getIndexVolumes = useGetIndexVolumes();
-  const deleteIndexVolume = useDeleteIndexVolume();
+  const api = useApi();
 
-  useEffect(getIndexVolumes, []);
+  useEffect(api.getIndexVolumes, []);
 
   const [selectedIndexVolume, setSelectedIndexVolume] = useState<
     IndexVolume | undefined
@@ -54,7 +53,7 @@ const IndexVolumes = () => {
       ? `Are you sure you want to delete ${selectedIndexVolume.id}`
       : "no group?",
     onConfirm: () => {
-      deleteIndexVolume(selectedIndexVolume!.id);
+      api.deleteIndexVolume(selectedIndexVolume!.id);
     }
   });
 

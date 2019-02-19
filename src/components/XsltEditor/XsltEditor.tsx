@@ -21,7 +21,7 @@ import { useDispatch } from "redux-react-hook";
 import DocRefEditor from "../DocRefEditor";
 import { Props as ButtonProps } from "../Button";
 import Loader from "../Loader";
-import { useFetchXslt, useSaveXslt } from "./client";
+import useApi from "./useXsltApi";
 import ThemedAceEditor from "../ThemedAceEditor";
 import { actionCreators } from "./redux";
 import useReduxState from "../../lib/useReduxState";
@@ -33,11 +33,10 @@ export interface Props {
 }
 
 const XsltEditor = ({ xsltUuid }: Props) => {
-  const fetchXslt = useFetchXslt();
-  const saveXslt = useSaveXslt();
+  const api = useApi();
   const dispatch = useDispatch();
   useEffect(() => {
-    fetchXslt(xsltUuid);
+    api.fetchDocument(xsltUuid);
   });
 
   const { xsltEditor } = useReduxState(({ xsltEditor }) => ({ xsltEditor }));
@@ -54,7 +53,7 @@ const XsltEditor = ({ xsltUuid }: Props) => {
       icon: "save",
       disabled: !(isDirty || isSaving),
       title: isSaving ? "Saving..." : isDirty ? "Save" : "Saved",
-      onClick: () => saveXslt(xsltUuid)
+      onClick: () => api.saveDocument(xsltUuid)
     }
   ];
 

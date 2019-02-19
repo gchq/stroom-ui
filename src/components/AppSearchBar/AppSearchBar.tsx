@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { findItem, filterTree } from "../../lib/treeUtils";
 import { SearchMode } from "./redux";
 import { DocRefType, DocRefTree, DocRefWithLineage } from "../../types";
-import { useSearchApp } from "../FolderExplorer/explorerClient";
+import useExplorerApi from "../FolderExplorer/useExplorerApi";
 import { DocRefBreadcrumb } from "../DocRefBreadcrumb";
 import DocRefListingEntry from "../DocRefListingEntry";
 
@@ -36,7 +36,7 @@ const AppSearchBar = ({
   const documentTree = useDocumentTree();
   const { recentItems } = useRecentItems();
 
-  const searchApp = useSearchApp();
+  const explorerApi = useExplorerApi();
 
   let [textFocus, setTextFocus] = useState<boolean>(false);
   let [searchTerm, setSearchTerm] = useState<string>("");
@@ -182,7 +182,7 @@ const AppSearchBar = ({
     setSearchMode(
       value.length > 0 ? SearchMode.GLOBAL_SEARCH : SearchMode.NAVIGATION
     );
-    searchApp(pickerId, { term: value });
+    explorerApi.searchApp(pickerId, { term: value });
   };
 
   return (

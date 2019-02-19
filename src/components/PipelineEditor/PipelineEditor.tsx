@@ -31,7 +31,7 @@ import DeletePipelineElement, {
   useDialog as useDeleteElementDialog
 } from "./DeletePipelineElement";
 import { ElementDetails } from "./ElementDetails";
-import { fetchPipeline, savePipeline } from "./client";
+import usePipelineApi from "./usePipelineApi";
 import { actionCreators } from "./redux";
 import Pipeline from "./Pipeline";
 import DocRefEditor from "../DocRefEditor";
@@ -51,9 +51,10 @@ export interface Props {
 
 const PipelineEditor = ({ pipelineId }: Props) => {
   const dispatch = useDispatch();
+  const pipelineApi = usePipelineApi();
 
   useEffect(() => {
-    fetchPipeline(pipelineId);
+    pipelineApi.fetchPipeline(pipelineId);
   });
 
   const {
@@ -98,7 +99,7 @@ const PipelineEditor = ({ pipelineId }: Props) => {
       icon: "save",
       disabled: !(isDirty || isSaving),
       title: isSaving ? "Saving..." : isDirty ? "Save" : "Saved",
-      onClick: () => savePipeline(pipelineId)
+      onClick: () => pipelineApi.savePipeline(pipelineId)
     },
     {
       icon: "recycle",

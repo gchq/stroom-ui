@@ -6,7 +6,7 @@ import useReduxState from "../../lib/useReduxState/useReduxState";
 import Loader from "../Loader";
 import { Props as ButtonProps } from "../Button";
 import DocRefEditor from "../DocRefEditor";
-import { useFetchDictionary, useSaveDictionary } from "./client";
+import useApi from "./useDictionaryApi";
 import { actionCreators } from "./redux";
 
 const { dictionaryUpdated } = actionCreators;
@@ -24,11 +24,10 @@ const DictionaryEditor = ({ dictionaryUuid }: Props) => {
     }),
     [dictionaryUuid]
   );
-  const fetchDictionary = useFetchDictionary();
-  const saveDictionary = useSaveDictionary();
+  const api = useApi();
 
   useEffect(() => {
-    fetchDictionary(dictionaryUuid);
+    api.fetchDocument(dictionaryUuid);
   });
 
   if (!dictionaryState) {
@@ -42,7 +41,7 @@ const DictionaryEditor = ({ dictionaryUuid }: Props) => {
       icon: "save",
       disabled: !(isDirty || isSaving),
       title: isSaving ? "Saving..." : isDirty ? "Save" : "Saved",
-      onClick: () => saveDictionary(dictionaryUuid)
+      onClick: () => api.saveDocument(dictionaryUuid)
     }
   ];
 

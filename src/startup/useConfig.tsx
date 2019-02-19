@@ -3,13 +3,13 @@ import { useEffect } from "react";
 import useReduxState from "../lib/useReduxState/useReduxState";
 import { GlobalStoreState } from "./reducers";
 
-import { useFetchConfig } from "./config";
+import { useApi } from "./config";
 
 export const useConfig = () => {
-  const fetchConfig = useFetchConfig();
+  const api = useApi();
 
   useEffect(() => {
-    fetchConfig();
+    api.fetchConfig();
   }, []);
 
   // Get data from and subscribe to the store

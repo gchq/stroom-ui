@@ -24,7 +24,7 @@ import { useDispatch } from "redux-react-hook";
 import Tooltip from "../../../components/Tooltip";
 import IconHeader from "../../../components/IconHeader";
 import { actionCreators } from "../redux";
-import { useFetchTrackers } from "../streamTasksResourceClient";
+import useApi from "../useStreamTasksApi";
 import ProcessingDetails from "../ProcessingDetails/ProcessingDetails";
 import ProcessingList from "../ProcessingList/ProcessingList";
 import { StreamTaskType } from "../../../types";
@@ -39,7 +39,7 @@ const {
 export interface Props {}
 
 const ProcessingContainer = () => {
-  const fetchTrackers = useFetchTrackers();
+  const api = useApi();
   const dispatch = useDispatch();
 
   const { searchCriteria, selectedTrackerId } = useReduxState(
@@ -75,13 +75,13 @@ const ProcessingContainer = () => {
     dispatch(resetPaging());
     dispatch(updateSearchCriteria(value));
     // This line enables search as you type. Whether we want it or not depends on performance
-    fetchTrackers();
+    api.fetchTrackers();
   };
 
   const showDetails = selectedTrackerId !== undefined;
 
   useEffect(() => {
-    fetchTrackers();
+    api.fetchTrackers();
 
     Mousetrap.bind("esc", () => onHandleTrackerSelection(-1, undefined));
 
@@ -91,7 +91,7 @@ const ProcessingContainer = () => {
     window.addEventListener("resize", event => {
       // Resizing the window is another time when paging gets reset.
       resetPaging();
-      fetchTrackers();
+      api.fetchTrackers();
     });
 
     return () => {};

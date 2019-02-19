@@ -21,7 +21,7 @@ import Loader from "../Loader";
 import ThemedModal from "../ThemedModal";
 import IconHeader from "../IconHeader";
 import Button from "../Button";
-import { useFetchDocInfo } from "../FolderExplorer/explorerClient";
+import useExplorerApi from "../FolderExplorer/useExplorerApi";
 import { DocRefType } from "../../types";
 
 export interface Props {
@@ -39,12 +39,12 @@ const DocRefInfoModal = ({ isOpen, onCloseDialog, docRef }: Props) => {
     })
   );
 
+  const explorerApi = useExplorerApi();
   useEffect(() => {
     if (!!docRef) {
-      fetchDocInfo(docRef);
+      explorerApi.fetchDocInfo(docRef);
     }
   });
-  const fetchDocInfo = useFetchDocInfo();
 
   if (!isOpen || !docRef) {
     return null;

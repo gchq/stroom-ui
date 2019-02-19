@@ -7,7 +7,7 @@ import Button from "../Button";
 import UsersInGroup from "./UsersInGroup";
 import GroupsForUser from "./GroupsForUser";
 import { GlobalStoreState } from "../../startup/reducers";
-import { useFindUsers } from "../../sections/UserPermissions/client";
+import useApi from "../../sections/UserPermissions/useUserPermissionsApi";
 import Loader from "../Loader";
 import useHistory from "../../lib/useHistory";
 
@@ -18,9 +18,9 @@ export interface Props {
 
 const UserPermissionEditor = ({ listingId, userUuid }: Props) => {
   const history = useHistory();
-  const findUsers = useFindUsers();
+  const api = useApi();
   useEffect(() => {
-    findUsers(listingId, undefined, undefined, userUuid);
+    api.findUsers(listingId, undefined, undefined, userUuid);
   }, []);
 
   const { user } = useReduxState(

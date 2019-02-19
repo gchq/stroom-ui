@@ -3,7 +3,7 @@ import { useEffect } from "react";
 
 import { User } from "../../../types";
 
-import { useFindGroupsForUser } from "../../../sections/UserPermissions/client";
+import useApi from "../../../sections/UserPermissions/useUserPermissionsApi";
 import useReduxState from "../../../lib/useReduxState";
 import Loader from "../../../components/Loader";
 
@@ -12,10 +12,10 @@ export interface Props {
 }
 
 const GroupsForUser = ({ user }: Props) => {
-  const findGroupsForUser = useFindGroupsForUser();
+  const api = useApi();
   useEffect(() => {
     if (user) {
-      findGroupsForUser(user.uuid);
+      api.findGroupsForUser(user.uuid);
     }
   }, [!!user ? user.uuid : null]);
 

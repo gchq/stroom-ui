@@ -3,7 +3,7 @@ import { useState } from "react";
 
 import { Formik, Field } from "formik";
 
-import { useCreateUser } from "./client";
+import useApi from "./useUserPermissionsApi";
 import ThemedModal from "../../components/ThemedModal";
 import DialogActionButtons from "../../components/FolderExplorer/DialogActionButtons";
 
@@ -18,7 +18,7 @@ interface FormValues {
 }
 
 const NewUserDialog = ({ isOpen, onCloseDialog }: Props) => {
-  const createUser = useCreateUser();
+  const api = useApi();
 
   return (
     <Formik<FormValues>
@@ -28,7 +28,7 @@ const NewUserDialog = ({ isOpen, onCloseDialog }: Props) => {
       }}
       onSubmit={values => {
         if (values.name) {
-          createUser(values.name, values.isGroup);
+          api.createUser(values.name, values.isGroup);
           onCloseDialog();
         }
       }}

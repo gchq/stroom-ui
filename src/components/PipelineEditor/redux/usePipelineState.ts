@@ -1,12 +1,12 @@
 import { useEffect } from "react";
 
-import { useFetchPipeline } from "../client";
+import usePipelineApi from "../usePipelineApi";
 import useReduxState from "../../../lib/useReduxState";
 
 export const usePipelineState = (pipelineId: string) => {
-  const fetchPipeline = useFetchPipeline();
+  const pipelineApi = usePipelineApi();
   useEffect(() => {
-    fetchPipeline(pipelineId);
+    pipelineApi.fetchPipeline(pipelineId);
   }, [pipelineId]);
 
   const { pipelineStates } = useReduxState(

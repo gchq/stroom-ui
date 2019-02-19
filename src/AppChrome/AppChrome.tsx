@@ -26,10 +26,7 @@ import MenuItem, {
 } from "./MenuItem";
 
 import useReduxState from "../lib/useReduxState/useReduxState";
-import {
-  copyDocuments,
-  moveDocuments
-} from "../components/FolderExplorer/explorerClient";
+import useExplorerApi from "../components/FolderExplorer/useExplorerApi";
 import useSelectableItemListing from "../lib/useSelectableItemListing";
 import { DocRefType, DocRefConsumer, DocRefTree } from "../types";
 import { GlobalStoreState } from "../startup/reducers";
@@ -44,7 +41,6 @@ import useLocalStorage, {
   storeObjectFactory
 } from "../lib/useLocalStorage";
 import { useTheme } from "../lib/theme";
-import { fetchDocTree } from "../components/FolderExplorer/explorerClient";
 import useHistory from "../lib/useHistory";
 import { useDocumentTree } from "../components/FolderExplorer/useDocumentTree";
 
@@ -153,6 +149,7 @@ const AppChrome = ({ content }: Props) => {
   const { theme } = useTheme();
   const history = useHistory();
   const documentTree = useDocumentTree();
+  const explorerApi = useExplorerApi();
 
   const { location } = useReduxState(
     ({ routing: { location } }: GlobalStoreState) => ({
@@ -161,7 +158,7 @@ const AppChrome = ({ content }: Props) => {
   );
 
   useEffect(() => {
-    fetchDocTree();
+    explorerApi.fetchDocTree();
   });
 
   const {
@@ -333,11 +330,11 @@ const AppChrome = ({ content }: Props) => {
   const {
     showDialog: showCopyDialog,
     componentProps: copyDialogComponentProps
-  } = useCopyMoveDocRefDialog(copyDocuments);
+  } = useCopyMoveDocRefDialog(explorerApi.copyDocuments);
   const {
     showDialog: showMoveDialog,
     componentProps: moveDialogComponentProps
-  } = useCopyMoveDocRefDialog(moveDocuments);
+  } = useCopyMoveDocRefDialog(explorerApi.moveDocuments);
 
   const sidebarClassName = isExpanded
     ? "app-chrome__sidebar--expanded"

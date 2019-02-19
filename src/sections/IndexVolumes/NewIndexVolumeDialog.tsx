@@ -3,7 +3,7 @@ import { useState } from "react";
 
 import { Formik, Field } from "formik";
 
-import { useCreateIndexVolume } from "./client";
+import useApi from "./useIndexVolumeApi";
 import ThemedModal from "../../components/ThemedModal";
 import DialogActionButtons from "../../components/FolderExplorer/DialogActionButtons";
 
@@ -18,7 +18,7 @@ interface FormValues {
 }
 
 const NewIndexVolumeDialog = ({ isOpen, onCloseDialog }: Props) => {
-  const createIndexVolume = useCreateIndexVolume();
+  const api = useApi();
 
   return (
     <Formik<FormValues>
@@ -28,7 +28,7 @@ const NewIndexVolumeDialog = ({ isOpen, onCloseDialog }: Props) => {
       }}
       onSubmit={values => {
         if (values.nodeName && values.path) {
-          createIndexVolume(values.nodeName, values.path);
+          api.createIndexVolume(values.nodeName, values.path);
           onCloseDialog();
         }
       }}

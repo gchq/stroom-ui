@@ -20,7 +20,7 @@ import { useEffect } from "react";
 import DocRefEditor from "../DocRefEditor";
 import { Props as ButtonProps } from "../Button";
 import Loader from "../Loader";
-import { useFetchIndex, useSaveIndex } from "./client";
+import useIndexApi from "./useIndexApi";
 import ThemedAceEditor from "../ThemedAceEditor";
 import { actionCreators } from "./redux";
 import { useDispatch } from "redux-react-hook";
@@ -36,12 +36,11 @@ const IndexEditor = ({ indexUuid }: Props) => {
   const { indexEditor } = useReduxState(({ indexEditor }) => ({ indexEditor }));
   const indexState = indexEditor[indexUuid];
 
-  const fetchIndex = useFetchIndex();
-  const saveIndex = useSaveIndex();
+  const indexApi = useIndexApi();
   const dispatch = useDispatch();
 
   useEffect(() => {
-    fetchIndex(indexUuid);
+    indexApi.fetchDocument(indexUuid);
   }, []);
 
   if (!indexState) {
@@ -55,7 +54,7 @@ const IndexEditor = ({ indexUuid }: Props) => {
       icon: "save",
       disabled: !(isDirty || isSaving),
       title: isSaving ? "Saving..." : isDirty ? "Save" : "Saved",
-      onClick: () => saveIndex(indexUuid)
+      onClick: () => indexApi.saveDocument(indexUuid)
     }
   ];
 

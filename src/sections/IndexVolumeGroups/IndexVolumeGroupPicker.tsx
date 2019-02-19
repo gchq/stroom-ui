@@ -3,7 +3,7 @@ import { useEffect } from "react";
 
 import Select from "react-select";
 
-import { useGetIndexVolumeGroupNames } from "./client";
+import useApi from "./useIndexVolumeGroupApi";
 import { SelectOptionType } from "../../types";
 import useReduxState from "../../lib/useReduxState";
 
@@ -13,9 +13,9 @@ export interface Props {
 }
 
 const IndexVolumeGroupPicker = ({ value, onChange }: Props) => {
-  const getIndexVolumeGroupNames = useGetIndexVolumeGroupNames();
+  const api = useApi();
   useEffect(() => {
-    getIndexVolumeGroupNames();
+    api.getIndexVolumeGroupNames();
   }, []);
 
   const { groupNames } = useReduxState(

@@ -27,7 +27,7 @@ import DebuggerStep from "./DebuggerStep";
 import { getNext, getPrevious } from "./pipelineDebugger.utils";
 import { useDispatch } from "redux-react-hook";
 import useReduxState from "../../lib/useReduxState";
-import { useFetchPipeline } from "../PipelineEditor/client";
+import usePipelineApi from "../PipelineEditor/usePipelineApi";
 
 const { startDebugging } = actionCreators;
 
@@ -40,7 +40,7 @@ export interface Props {
 
 const PipelineDebugger = ({ pipelineId, debuggerId }: Props) => {
   const dispatch = useDispatch();
-  const fetchPipeline = useFetchPipeline();
+  const pipelineApi = usePipelineApi();
   const { pipelineStates, debuggers } = useReduxState(
     ({ debuggers, pipelineEditor: { pipelineStates } }) => ({
       debuggers,
@@ -51,7 +51,7 @@ const PipelineDebugger = ({ pipelineId, debuggerId }: Props) => {
   const pipelineState = pipelineStates[pipelineId];
 
   useEffect(() => {
-    fetchPipeline(pipelineId);
+    pipelineApi.fetchPipeline(pipelineId);
     dispatch(startDebugging(debuggerId, pipelineId));
   }, []);
 

@@ -13,11 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { Dispatch, Action } from "redux";
-import { GlobalStoreState } from "./reducers";
+import { Action } from "redux";
 import { prepareReducer } from "../lib/redux-actions-ts";
 import { wrappedGet } from "../lib/fetchTracker.redux";
-import useThunk from "../lib/useThunk";
+import { useContext } from "react";
+import { StoreContext } from "redux-react-hook";
 
 const initialState = { values: {}, isReady: false };
 
@@ -56,17 +56,27 @@ const reducer = prepareReducer(initialState)
   }))
   .getReducer();
 
-const fetchConfig = () => (
-  dispatch: Dispatch,
-  getState: () => GlobalStoreState
-) => {
-  const url = "/config.json";
-  wrappedGet(dispatch, getState(), url, response => {
-    response.json().then((config: Config) => {
-      dispatch(actionCreators.updateConfig(config));
-    });
-  });
-};
-const useFetchConfig = () => useThunk(fetchConfig);
+interface Api {
+  fetchConfig: () => void;
+}
 
-export { actionCreators, reducer, fetchConfig, useFetchConfig };
+const useApi = (): Api => {
+  const store = useContext(StoreContext);
+
+  if (!store) {
+    throw new Error("Could not get Redux Store for processing Thunks");
+  }
+
+  return {
+    fetchConfig: () => {
+      const url = "/config.json";
+      wrappedGet(store.dispatch, store.getState(), url, response => {
+        response.json().then((config: Config) => {
+          store.dispatch(actionCreators.updateConfig(config));
+        });
+      });
+    }
+  };
+};
+
+export { actionCreators, reducer, Api, useApi };

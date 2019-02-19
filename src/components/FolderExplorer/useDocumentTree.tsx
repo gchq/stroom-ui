@@ -2,7 +2,7 @@ import { useEffect } from "react";
 
 import useReduxState from "../../lib/useReduxState/useReduxState";
 import { GlobalStoreState } from "../../startup/reducers";
-import { useFetchDocTree } from "./explorerClient";
+import useExplorerApi from "./useExplorerApi";
 import { DocRefTree } from "../../types";
 
 export const useDocumentTree = (): DocRefTree => {
@@ -11,10 +11,10 @@ export const useDocumentTree = (): DocRefTree => {
       documentTree
     })
   );
-  const fetchDocTree = useFetchDocTree();
+  const explorerApi = useExplorerApi();
 
   useEffect(() => {
-    fetchDocTree();
+    explorerApi.fetchDocTree();
   });
 
   return documentTree;

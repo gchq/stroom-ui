@@ -31,7 +31,7 @@ import {
   SortByOptions,
   sortByFromString
 } from "../redux";
-import { useFetchTrackers, useFetchMore } from "../streamTasksResourceClient";
+import useApi from "../useStreamTasksApi";
 import { StreamTaskType } from "../../../types";
 import useReduxState from "../../../lib/useReduxState";
 
@@ -43,8 +43,7 @@ interface Props {
 
 const ProcessingList = ({ onSelection }: Props) => {
   const dispatch = useDispatch();
-  const fetchTrackers = useFetchTrackers();
-  const fetchMore = useFetchMore();
+  const api = useApi();
 
   const {
     trackers,
@@ -78,7 +77,7 @@ const ProcessingList = ({ onSelection }: Props) => {
     const isAtEndOfList = currentIndex === trackers.length - 1;
     const isAtEndOfEverything = currentIndex === totalTrackers - 1;
     if (isAtEndOfList && !isAtEndOfEverything) {
-      fetchMore();
+      api.fetchMore();
     } else {
       dispatch(moveSelection(direction));
     }
@@ -90,11 +89,11 @@ const ProcessingList = ({ onSelection }: Props) => {
         : Directions.ascending;
       const sortBy: SortByOptions = sortByFromString(sort.id);
       dispatch(updateSort(sortBy, direction));
-      fetchTrackers();
+      api.fetchTrackers();
     }
   };
   const onHandleLoadMoreRows = () => {
-    fetchMore();
+    api.fetchMore();
   };
 
   // We add an empty 'load more' row, but we need to make sure it's not there when we re-render.

@@ -20,7 +20,7 @@ import { Formik, Field } from "formik";
 
 import DialogActionButtons from "./DialogActionButtons";
 import IconHeader from "../IconHeader";
-import { useRenameDocument } from "./explorerClient";
+import useExplorerApi from "./useExplorerApi";
 import ThemedModal from "../ThemedModal";
 import { required, minLength2 } from "../../lib/reduxFormUtils";
 import { DocRefType } from "../../types";
@@ -36,7 +36,7 @@ interface FormValues {
 }
 
 let RenameDocRefDialog = ({ isOpen, docRef, onCloseDialog }: Props) => {
-  const renameDocument = useRenameDocument();
+  const explorerApi = useExplorerApi();
 
   return (
     <Formik<FormValues>
@@ -45,7 +45,7 @@ let RenameDocRefDialog = ({ isOpen, docRef, onCloseDialog }: Props) => {
       }}
       onSubmit={values => {
         if (!!docRef) {
-          renameDocument(docRef, values.docRefName);
+          explorerApi.renameDocument(docRef, values.docRefName);
         }
         onCloseDialog();
       }}
