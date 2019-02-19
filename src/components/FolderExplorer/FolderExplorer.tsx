@@ -34,7 +34,7 @@ import DeleteDocRefDialog, {
   useDialog as useDeleteDialog
 } from "./DeleteDocRefDialog";
 import DocRefInfoModal from "../DocRefInfoModal";
-import { Props as ButtonProps } from "../Button";
+import { ButtonProps } from "../Button";
 import { DocRefType, DocRefConsumer } from "../../types";
 import useSelectableItemListing, {
   SelectionBehaviour

@@ -19,7 +19,7 @@ import { useEffect } from "react";
 import { useDispatch } from "redux-react-hook";
 
 import DocRefEditor from "../DocRefEditor";
-import { Props as ButtonProps } from "../Button";
+import { ButtonProps } from "../Button";
 import Loader from "../Loader";
 import useApi from "./useXsltApi";
 import ThemedAceEditor from "../ThemedAceEditor";

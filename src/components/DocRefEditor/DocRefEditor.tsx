@@ -3,7 +3,7 @@ import * as React from "react";
 import AppSearchBar from "../AppSearchBar";
 import { DocRefIconHeader } from "../IconHeader";
 import DocRefBreadcrumb from "../DocRefBreadcrumb";
-import Button, { Props as ButtonProps } from "../Button";
+import Button, { ButtonProps } from "../Button";
 import { DocRefWithLineage, DocRefConsumer } from "../../types";
 import { findItem } from "../../lib/treeUtils";
 import Loader from "../Loader";

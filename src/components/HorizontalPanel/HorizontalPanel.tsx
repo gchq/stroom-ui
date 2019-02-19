@@ -1,5 +1,5 @@
 import * as React from "react";
-import { compose, lifecycle } from "recompose";
+import { useEffect } from "react";
 import * as Mousetrap from "mousetrap";
 
 import Button from "../Button";
@@ -12,35 +12,31 @@ export interface Props {
   className?: string;
 }
 
-export interface EnhancedProps extends Props {}
-
-const enhance = compose<EnhancedProps, Props>(
-  lifecycle<Props, {}, {}>({
-    componentDidMount() {
-      const { onClose } = this.props;
-      Mousetrap.bind("esc", () => onClose());
-    },
-    componentWillUnmount() {
-      Mousetrap.unbind("esc");
-    }
-  })
-);
-
 const HorizontalPanel = ({
   title,
   headerMenuItems,
   content,
   onClose,
   className
-}: EnhancedProps) => (
-  <div className={`horizontal-panel ${className || ""}`}>
-    <div className="horizontal-panel__header flat">
-      <div className="horizontal-panel__header__title">{title}</div>
-      {headerMenuItems}
-      <Button icon="times" onClick={() => onClose()} />
-    </div>
-    <div className="horizontal-panel__content">{content}</div>
-  </div>
-);
+}: Props) => {
+  useEffect(() => {
+    Mousetrap.bind("esc", () => onClose());
 
-export default enhance(HorizontalPanel);
+    return () => {
+      Mousetrap.unbind("esc");
+    };
+  }, []);
+
+  return (
+    <div className={`horizontal-panel ${className || ""}`}>
+      <div className="horizontal-panel__header flat">
+        <div className="horizontal-panel__header__title">{title}</div>
+        {headerMenuItems}
+        <Button icon="times" onClick={() => onClose()} />
+      </div>
+      <div className="horizontal-panel__content">{content}</div>
+    </div>
+  );
+};
+
+export default HorizontalPanel;

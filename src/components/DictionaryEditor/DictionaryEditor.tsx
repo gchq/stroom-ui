@@ -4,7 +4,7 @@ import { useDispatch } from "redux-react-hook";
 
 import useReduxState from "../../lib/useReduxState/useReduxState";
 import Loader from "../Loader";
-import { Props as ButtonProps } from "../Button";
+import { ButtonProps } from "../Button";
 import DocRefEditor from "../DocRefEditor";
 import useApi from "./useDictionaryApi";
 import { actionCreators } from "./redux";

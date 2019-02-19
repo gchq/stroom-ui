@@ -22,7 +22,7 @@ import Loader from "../Loader";
 import AddElementModal, {
   useDialog as useAddElementDialog
 } from "./AddElementModal";
-import { Props as ButtonProps } from "../Button";
+import { ButtonProps } from "../Button";
 import PipelineSettings, {
   useDialog as usePipelineSettingsDialog
 } from "./PipelineSettings";

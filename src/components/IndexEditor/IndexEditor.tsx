@@ -18,7 +18,7 @@ import * as React from "react";
 import { useEffect } from "react";
 
 import DocRefEditor from "../DocRefEditor";
-import { Props as ButtonProps } from "../Button";
+import { ButtonProps } from "../Button";
 import Loader from "../Loader";
 import useIndexApi from "./useIndexApi";
 import ThemedAceEditor from "../ThemedAceEditor";
