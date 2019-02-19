@@ -26,14 +26,8 @@ fi
 ver="$1"
 
 cd "$(dirname "$0")"
-mkdir -p work
-cp ../package.json work/
-cp ../tsconfig.json work/
-cp ../tsconfig.prod.json work/
-cp ../tslint.json work/
-cp ../images.d.ts work/
-cp -r ../src work/
-cp -r ../public work/
+
+source prep.sh
 
 readonly CURRENT_GIT_COMMIT="$(git rev-parse HEAD)"
 echo "--${ver}--"
@@ -43,5 +37,5 @@ docker build \
     --tag gchq/stroom-ui:${ver} \
     --build-arg GIT_COMMIT=${CURRENT_GIT_COMMIT} \
     --build-arg GIT_TAG=${ver} \
-    #.
+    .
 
