@@ -33,7 +33,7 @@ import {
 import {
   reducer as fetch,
   StoreState as FetchStoreStore
-} from "../lib/fetchTracker.redux";
+} from "../lib/useHttpClient/useHttpClient";
 
 import {
   reducer as appSearch,

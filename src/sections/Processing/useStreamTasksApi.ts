@@ -1,8 +1,8 @@
-import { useContext } from "react";
+import { useContext, useCallback } from "react";
 import { StoreContext } from "redux-react-hook";
 
 import { actionCreators } from "./redux";
-import { wrappedGet, wrappedPatch } from "../../lib/fetchTracker.redux";
+import useHttpClient from "../../lib/useHttpClient/useHttpClient";
 import { StreamTasksResponseType } from "../../types";
 
 export enum TrackerSelection {
@@ -19,120 +19,119 @@ export interface Api {
 
 export const useApi = (): Api => {
   const store = useContext(StoreContext);
+  const httpClient = useHttpClient();
 
   if (!store) {
     throw new Error("Could not get Redux Store for processing Thunks");
   }
 
-  return {
-    fetchTrackers: (trackerSelection?: TrackerSelection) => {
-      const state = store.getState();
+  const fetchTrackers = useCallback((trackerSelection?: TrackerSelection) => {
+    const state = store.getState();
 
-      const rowsToFetch = state.processing.pageSize;
-      store.dispatch(actionCreators.updatePageSize(rowsToFetch));
+    const rowsToFetch = state.processing.pageSize;
+    store.dispatch(actionCreators.updatePageSize(rowsToFetch));
 
-      let url = `${state.config.values.stroomBaseServiceUrl}/streamtasks/v1/?`;
-      url += `pageSize=${rowsToFetch}`;
-      url += `&offset=${state.processing.pageOffset}`;
-      if (state.processing.sortBy !== undefined) {
-        url += `&sortBy=${state.processing.sortBy}`;
-        url += `&sortDirection=${state.processing.sortDirection}`;
-      }
+    let url = `${state.config.values.stroomBaseServiceUrl}/streamtasks/v1/?`;
+    url += `pageSize=${rowsToFetch}`;
+    url += `&offset=${state.processing.pageOffset}`;
+    if (state.processing.sortBy !== undefined) {
+      url += `&sortBy=${state.processing.sortBy}`;
+      url += `&sortDirection=${state.processing.sortDirection}`;
+    }
 
-      if (
-        state.processing.searchCriteria !== "" &&
-        state.processing.searchCriteria !== undefined
-      ) {
-        url += `&filter=${state.processing.searchCriteria}`;
-      }
+    if (
+      state.processing.searchCriteria !== "" &&
+      state.processing.searchCriteria !== undefined
+    ) {
+      url += `&filter=${state.processing.searchCriteria}`;
+    }
 
-      wrappedGet(
-        store.dispatch,
-        state,
-        url,
-        response => {
-          response.json().then((trackers: StreamTasksResponseType) => {
-            store.dispatch(
-              actionCreators.updateTrackers(
-                trackers.streamTasks,
-                trackers.totalStreamTasks
-              )
-            );
-            switch (trackerSelection) {
-              case TrackerSelection.first:
-                store.dispatch(actionCreators.selectFirst());
-                break;
-              case TrackerSelection.last:
-                store.dispatch(actionCreators.selectLast());
-                break;
-              case TrackerSelection.none:
-                store.dispatch(actionCreators.selectNone());
-                break;
-              default:
-                break;
-            }
-          });
-        },
-        {},
-        true
-      );
-    },
-    fetchMore: (trackerSelection?: TrackerSelection) => {
-      const state = store.getState();
+    httpClient.httpGet(
+      url,
+      response => {
+        response.json().then((trackers: StreamTasksResponseType) => {
+          store.dispatch(
+            actionCreators.updateTrackers(
+              trackers.streamTasks,
+              trackers.totalStreamTasks
+            )
+          );
+          switch (trackerSelection) {
+            case TrackerSelection.first:
+              store.dispatch(actionCreators.selectFirst());
+              break;
+            case TrackerSelection.last:
+              store.dispatch(actionCreators.selectLast());
+              break;
+            case TrackerSelection.none:
+              store.dispatch(actionCreators.selectNone());
+              break;
+            default:
+              break;
+          }
+        });
+      },
+      {},
+      true
+    );
+  }, []);
 
-      const rowsToFetch = state.processing.pageSize;
-      store.dispatch(actionCreators.updatePageSize(rowsToFetch));
+  const fetchMore = useCallback((trackerSelection?: TrackerSelection) => {
+    const state = store.getState();
 
-      const nextPageOffset = state.processing.pageOffset + 1;
-      store.dispatch(actionCreators.changePage(nextPageOffset));
+    const rowsToFetch = state.processing.pageSize;
+    store.dispatch(actionCreators.updatePageSize(rowsToFetch));
 
-      let url = `${state.config.values.stroomBaseServiceUrl}/streamtasks/v1/?`;
-      url += `pageSize=${rowsToFetch}`;
-      url += `&offset=${nextPageOffset}`;
-      if (state.processing.sortBy !== undefined) {
-        url += `&sortBy=${state.processing.sortBy}`;
-        url += `&sortDirection=${state.processing.sortDirection}`;
-      }
+    const nextPageOffset = state.processing.pageOffset + 1;
+    store.dispatch(actionCreators.changePage(nextPageOffset));
 
-      if (
-        state.processing.searchCriteria !== "" &&
-        state.processing.searchCriteria !== undefined
-      ) {
-        url += `&filter=${state.processing.searchCriteria}`;
-      }
+    let url = `${state.config.values.stroomBaseServiceUrl}/streamtasks/v1/?`;
+    url += `pageSize=${rowsToFetch}`;
+    url += `&offset=${nextPageOffset}`;
+    if (state.processing.sortBy !== undefined) {
+      url += `&sortBy=${state.processing.sortBy}`;
+      url += `&sortDirection=${state.processing.sortDirection}`;
+    }
 
-      wrappedGet(
-        store.dispatch,
-        state,
-        url,
-        response => {
-          response.json().then((trackers: StreamTasksResponseType) => {
-            store.dispatch(
-              actionCreators.addTrackers(
-                trackers.streamTasks,
-                trackers.totalStreamTasks
-              )
-            );
-            switch (trackerSelection) {
-              case TrackerSelection.first:
-                store.dispatch(actionCreators.selectFirst());
-                break;
-              case TrackerSelection.last:
-                store.dispatch(actionCreators.selectLast());
-                break;
-              case TrackerSelection.none:
-                store.dispatch(actionCreators.selectNone());
-                break;
-              default:
-                break;
-            }
-          });
-        },
-        {},
-        true
-      );
-    },
-    enableToggle: (filterId: number, isCurrentlyEnabled: boolean) => {
+    if (
+      state.processing.searchCriteria !== "" &&
+      state.processing.searchCriteria !== undefined
+    ) {
+      url += `&filter=${state.processing.searchCriteria}`;
+    }
+
+    httpClient.httpGet(
+      url,
+      response => {
+        response.json().then((trackers: StreamTasksResponseType) => {
+          store.dispatch(
+            actionCreators.addTrackers(
+              trackers.streamTasks,
+              trackers.totalStreamTasks
+            )
+          );
+          switch (trackerSelection) {
+            case TrackerSelection.first:
+              store.dispatch(actionCreators.selectFirst());
+              break;
+            case TrackerSelection.last:
+              store.dispatch(actionCreators.selectLast());
+              break;
+            case TrackerSelection.none:
+              store.dispatch(actionCreators.selectNone());
+              break;
+            default:
+              break;
+          }
+        });
+      },
+      {},
+      true
+    );
+  }, []);
+
+  const enableToggle = useCallback(
+    (filterId: number, isCurrentlyEnabled: boolean) => {
       const state = store.getState();
       const url = `${
         state.config.values.stroomBaseServiceUrl
@@ -143,7 +142,7 @@ export const useApi = (): Api => {
         value: !isCurrentlyEnabled
       });
 
-      wrappedPatch(
+      httpClient.httpPatch(
         store.dispatch,
         state,
         url,
@@ -153,7 +152,14 @@ export const useApi = (): Api => {
           ),
         { body }
       );
-    }
+    },
+    []
+  );
+
+  return {
+    enableToggle,
+    fetchMore,
+    fetchTrackers
   };
 };
 

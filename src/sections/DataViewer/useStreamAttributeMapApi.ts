@@ -1,7 +1,7 @@
-import { useContext } from "react";
+import { useContext, useCallback } from "react";
 import { StoreContext } from "redux-react-hook";
 import { actionCreators } from "./redux";
-import { wrappedGet, wrappedPost } from "../../lib/fetchTracker.redux";
+import useHttpClient from "../../lib/useHttpClient/useHttpClient";
 import {
   ExpressionOperatorType,
   DataSourceType,
@@ -30,20 +30,20 @@ export interface Api {
 
 export const useApi = (): Api => {
   const store = useContext(StoreContext);
+  const httpClient = useHttpClient();
 
   if (!store) {
     throw new Error("Could not get Redux Store for processing Thunks");
   }
 
-  return {
-    search: (
+  const search = useCallback(
+    (
       dataViewerId: string,
       pageOffset: number,
       pageSize: number,
       addResults?: boolean
     ) => {
       const state = store.getState();
-
       var url = new URL(
         `${state.config.values.stroomBaseServiceUrl}/streamattributemap/v1`
       );
@@ -51,9 +51,7 @@ export const useApi = (): Api => {
       if (!!pageOffset)
         url.searchParams.append("pageOffset", pageOffset.toString());
 
-      wrappedGet(
-        store.dispatch,
-        state,
+      httpClient.httpGet(
         url.href,
         response => {
           response.json().then((data: StreamAttributeMapResult) => {
@@ -84,7 +82,10 @@ export const useApi = (): Api => {
         true
       );
     },
-    searchWithExpression: (
+    []
+  );
+  const searchWithExpression = useCallback(
+    (
       dataViewerId: string,
       expressionWithUuids: ExpressionOperatorWithUuid,
       pageOffset: number = 0,
@@ -92,7 +93,6 @@ export const useApi = (): Api => {
       addResults?: boolean
     ) => {
       const state = store.getState();
-
       const expression = cleanExpression(expressionWithUuids);
 
       let url = `${
@@ -101,9 +101,7 @@ export const useApi = (): Api => {
       url += `pageSize=${pageSize}`;
       url += `&pageOffset=${pageOffset}`;
 
-      wrappedPost(
-        store.dispatch,
-        state,
+      httpClient.httpPost(
         url,
         response => {
           response.json().then((data: StreamAttributeMapResult) => {
@@ -135,53 +133,58 @@ export const useApi = (): Api => {
         }
       );
     },
-    fetchDataSource: (dataViewerId: string) => {
-      const state = store.getState();
-      const url = `${
-        state.config.values.stroomBaseServiceUrl
-      }/streamattributemap/v1/dataSource`;
+    []
+  );
 
-      wrappedGet(
-        store.dispatch,
-        state,
-        url,
-        response => {
-          response.json().then((data: DataSourceType) => {
-            store.dispatch(actionCreators.updateDataSource(dataViewerId, data));
-          });
-        },
-        {},
-        true
-      );
-    },
-    getDetailsForSelectedRow: (dataViewerId: string) => {
-      const state = store.getState();
-      const dataView = state.dataViewers[dataViewerId];
-      const metaId =
-        dataView.streamAttributeMaps &&
-        dataView.selectedRow &&
-        dataView.streamAttributeMaps[dataView.selectedRow]
-          ? dataView.streamAttributeMaps[dataView.selectedRow]!.data.id
-          : undefined;
-      const url = `${
-        state.config.values.stroomBaseServiceUrl
-      }/streamattributemap/v1/${metaId}`;
+  const fetchDataSource = useCallback((dataViewerId: string) => {
+    const state = store.getState();
+    const url = `${
+      state.config.values.stroomBaseServiceUrl
+    }/streamattributemap/v1/dataSource`;
 
-      wrappedGet(
-        store.dispatch,
-        state,
-        url,
-        response => {
-          response.json().then((data: DataRow) => {
-            store.dispatch(
-              actionCreators.updateDetailsForSelectedRow(dataViewerId, data)
-            );
-          });
-        },
-        {},
-        true
-      );
-    }
+    httpClient.httpGet(
+      url,
+      response => {
+        response.json().then((data: DataSourceType) => {
+          store.dispatch(actionCreators.updateDataSource(dataViewerId, data));
+        });
+      },
+      {},
+      true
+    );
+  }, []);
+  const getDetailsForSelectedRow = useCallback((dataViewerId: string) => {
+    const state = store.getState();
+    const dataView = state.dataViewers[dataViewerId];
+    const metaId =
+      dataView.streamAttributeMaps &&
+      dataView.selectedRow &&
+      dataView.streamAttributeMaps[dataView.selectedRow]
+        ? dataView.streamAttributeMaps[dataView.selectedRow]!.data.id
+        : undefined;
+    const url = `${
+      state.config.values.stroomBaseServiceUrl
+    }/streamattributemap/v1/${metaId}`;
+
+    httpClient.httpGet(
+      url,
+      response => {
+        response.json().then((data: DataRow) => {
+          store.dispatch(
+            actionCreators.updateDetailsForSelectedRow(dataViewerId, data)
+          );
+        });
+      },
+      {},
+      true
+    );
+  }, []);
+
+  return {
+    fetchDataSource,
+    getDetailsForSelectedRow,
+    search,
+    searchWithExpression
   };
 };
 

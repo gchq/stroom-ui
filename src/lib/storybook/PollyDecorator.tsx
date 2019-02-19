@@ -19,7 +19,7 @@ import FetchAdapter, {
   HttpResponse
 } from "@pollyjs/adapter-fetch";
 
-import { actionCreators as fetchActionCreators } from "../../lib/fetchTracker.redux";
+import { actionCreators as fetchActionCreators } from "../useHttpClient/useHttpClient";
 import { Config } from "../../startup/config";
 import { TestData } from "../test/testTypes";
 

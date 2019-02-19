@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { useContext } from "react";
+import { useContext, useCallback } from "react";
 import { StoreContext } from "redux-react-hook";
 import { actionCreators } from "./redux";
-import { wrappedGet, wrappedPost } from "../../lib/fetchTracker.redux";
+import useHttpClient from "../../lib/useHttpClient/useHttpClient";
 import { Dictionary } from "../../types";
 
 const { dictionaryReceived, dictionarySaved } = actionCreators;
@@ -28,48 +28,50 @@ export interface Api {
 
 export const useApi = (): Api => {
   const store = useContext(StoreContext);
+  const httpClient = useHttpClient();
 
   if (!store) {
     throw new Error("Could not get Redux Store for processing Thunks");
   }
 
-  return {
-    fetchDocument: (dictionaryUuid: string) => {
-      const state = store.getState();
-      const url = `${
-        state.config.values.stroomBaseServiceUrl
-      }/dictionary/v1/${dictionaryUuid}`;
-      wrappedGet(store.dispatch, state, url, response =>
+  const fetchDocument = useCallback((dictionaryUuid: string) => {
+    const state = store.getState();
+    const url = `${
+      state.config.values.stroomBaseServiceUrl
+    }/dictionary/v1/${dictionaryUuid}`;
+    httpClient.httpGet(url, response =>
+      response
+        .json()
+        .then((dictionary: Dictionary) =>
+          store.dispatch(dictionaryReceived(dictionaryUuid, dictionary))
+        )
+    );
+  }, []);
+  const saveDocument = useCallback((dictionaryUuid: string) => {
+    const state = store.getState();
+    const url = `${
+      state.config.values.stroomBaseServiceUrl
+    }/dictionary/v1/${dictionaryUuid}`;
+
+    const body = JSON.stringify(
+      state.dictionaryEditor[dictionaryUuid].dictionary
+    );
+
+    httpClient.httpPost(
+      url,
+      response =>
         response
-          .json()
-          .then((dictionary: Dictionary) =>
-            store.dispatch(dictionaryReceived(dictionaryUuid, dictionary))
-          )
-      );
-    },
-    saveDocument: (dictionaryUuid: string) => {
-      const state = store.getState();
-      const url = `${
-        state.config.values.stroomBaseServiceUrl
-      }/dictionary/v1/${dictionaryUuid}`;
+          .text()
+          .then(() => store.dispatch(dictionarySaved(dictionaryUuid))),
+      {
+        body
+      }
+    );
+  }, []);
 
-      const body = JSON.stringify(
-        state.dictionaryEditor[dictionaryUuid].dictionary
-      );
-
-      wrappedPost(
-        store.dispatch,
-        state,
-        url,
-        response =>
-          response
-            .text()
-            .then(() => store.dispatch(dictionarySaved(dictionaryUuid))),
-        {
-          body
-        }
-      );
-    }
+  return {
+    fetchDocument,
+    saveDocument
   };
 };
 
