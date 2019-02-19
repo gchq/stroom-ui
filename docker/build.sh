@@ -43,5 +43,5 @@ docker build \
     --tag gchq/stroom-ui:${ver} \
     --build-arg GIT_COMMIT=${CURRENT_GIT_COMMIT} \
     --build-arg GIT_TAG=${ver} \
-    .
+    #.
 
