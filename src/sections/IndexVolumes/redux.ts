@@ -16,11 +16,15 @@
 import { Action } from "redux";
 
 import { prepareReducer } from "../../lib/redux-actions-ts";
-import { IndexVolume } from "../../types";
-import { mapObject } from "../../lib/treeUtils";
+import {
+  IndexVolume,
+  IndexVolumeGroupMembership,
+  IndexVolumeGroup
+} from "../../types";
 
 const INDEX_VOLUMES_RECEIVED = "INDEX_VOLUMES_RECEIVED";
 const INDEX_VOLUMES_IN_GROUP_RECEIVED = "INDEX_VOLUMES_IN_GROUP_RECEIVED";
+const INDEX_GROUPS_FOR_VOLUME_RECEIVED = "INDEX_GROUPS_FOR_VOLUME_RECEIVED";
 const INDEX_VOLUME_RECEIVED = "INDEX_VOLUME_RECEIVED";
 const INDEX_VOLUME_CREATED = "INDEX_VOLUME_CREATED";
 const INDEX_VOLUME_DELETED = "INDEX_VOLUME_DELETED";
@@ -36,6 +40,11 @@ export interface IndexVolumesInGroupReceivedAction
   extends Action<"INDEX_VOLUMES_IN_GROUP_RECEIVED"> {
   groupName: string;
   indexVolumes: Array<IndexVolume>;
+}
+export interface IndexGroupsForVolumeReceivedAction
+  extends Action<"INDEX_GROUPS_FOR_VOLUME_RECEIVED"> {
+  indexVolumeId: number;
+  groups: Array<IndexVolumeGroup>;
 }
 
 export interface IndexVolumeReceivedAction
@@ -79,6 +88,14 @@ export const actionCreators = {
     groupName,
     indexVolumes
   }),
+  indexGroupsForVolumeReceived: (
+    indexVolumeId: number,
+    groups: Array<IndexVolumeGroup>
+  ): IndexGroupsForVolumeReceivedAction => ({
+    type: INDEX_GROUPS_FOR_VOLUME_RECEIVED,
+    indexVolumeId,
+    groups
+  }),
   indexVolumeReceived: (
     indexVolume: IndexVolume
   ): IndexVolumeReceivedAction => ({
@@ -113,15 +130,17 @@ export const actionCreators = {
 
 export interface StoreState {
   indexVolumes: Array<IndexVolume>;
-  indexVolumesInGroup: {
-    [groupName: string]: Array<IndexVolume>;
-  };
+  indexVolumeGroupMemberships: Array<IndexVolumeGroupMembership>;
 }
 
 export const defaultState: StoreState = {
   indexVolumes: [],
-  indexVolumesInGroup: {}
+  indexVolumeGroupMemberships: []
 };
+
+function onlyUnique<VALUE>(value: VALUE, index: number, self: Array<VALUE>) {
+  return self.indexOf(value) === index;
+}
 
 export const reducer = prepareReducer(defaultState)
   .handleAction<IndexVolumesReceivedAction>(
@@ -134,20 +153,35 @@ export const reducer = prepareReducer(defaultState)
   .handleAction<IndexVolumesInGroupReceivedAction>(
     INDEX_VOLUMES_IN_GROUP_RECEIVED,
     (state: StoreState, { groupName, indexVolumes }) => ({
+      indexVolumes: [...state.indexVolumes]
+        .concat(indexVolumes)
+        .filter(onlyUnique),
+      indexVolumeGroupMemberships: [
+        ...state.indexVolumeGroupMemberships
+      ].concat(
+        indexVolumes.map(i => ({
+          volumeId: i.id,
+          groupName
+        }))
+      )
+    })
+  )
+  .handleAction<IndexGroupsForVolumeReceivedAction>(
+    INDEX_GROUPS_FOR_VOLUME_RECEIVED,
+    (state: StoreState, { indexVolumeId, groups }) => ({
       ...state,
-      indexVolumesInGroup: {
-        ...state.indexVolumesInGroup,
-        [groupName]: indexVolumes
-      }
+      indexVolumeGroupMemberships: state.indexVolumeGroupMemberships
+        .concat(
+          groups.map(g => ({ groupName: g.name, volumeId: indexVolumeId }))
+        )
+        .filter(onlyUnique)
     })
   )
   .handleAction<IndexVolumeReceivedAction>(
     INDEX_VOLUME_RECEIVED,
     (state: StoreState, { indexVolume }) => ({
       ...state,
-      indexVolumes: state.indexVolumes
-        .filter(v => v.id !== indexVolume.id)
-        .concat([indexVolume])
+      indexVolumes: state.indexVolumes.concat([indexVolume]).filter(onlyUnique)
     })
   )
   .handleAction<IndexVolumeCreatedAction>(
@@ -161,8 +195,8 @@ export const reducer = prepareReducer(defaultState)
     INDEX_VOLUME_DELETED,
     (state: StoreState, { indexVolumeId }) => ({
       indexVolumes: state.indexVolumes.filter(v => v.id !== indexVolumeId),
-      indexVolumesInGroup: mapObject(state.indexVolumesInGroup, (gName, vols) =>
-        vols.filter(v => v.id !== indexVolumeId)
+      indexVolumeGroupMemberships: state.indexVolumeGroupMemberships.filter(
+        m => m.volumeId === indexVolumeId
       )
     })
   )
@@ -170,34 +204,20 @@ export const reducer = prepareReducer(defaultState)
     INDEX_VOLUME_ADDED_TO_GROUP,
     (state: StoreState, { indexVolumeId, groupName }) => ({
       ...state,
-      indexVolumesInGroup: mapObject(
-        state.indexVolumesInGroup,
-        (gName, vols) => {
-          if (gName === groupName) {
-            let indexToAdd: IndexVolume | undefined = state.indexVolumes.find(
-              v => v.id === indexVolumeId
-            );
-            if (indexToAdd) {
-              return vols.concat([indexToAdd]);
-            }
-          }
-          return vols;
+      indexVolumeGroupMemberships: state.indexVolumeGroupMemberships.concat([
+        {
+          volumeId: indexVolumeId,
+          groupName
         }
-      )
+      ])
     })
   )
   .handleAction<IndexVolumeRemovedFromGroupAction>(
     INDEX_VOLUME_REMOVED_FROM_GROUP,
     (state: StoreState, { indexVolumeId, groupName }) => ({
       ...state,
-      indexVolumesInGroup: mapObject(
-        state.indexVolumesInGroup,
-        (gName, vols) => {
-          if (gName === groupName) {
-            return vols.filter(v => v.id !== indexVolumeId);
-          }
-          return vols;
-        }
+      indexVolumeGroupMemberships: state.indexVolumeGroupMemberships.filter(
+        m => m.groupName === groupName && m.volumeId === indexVolumeId
       )
     })
   )

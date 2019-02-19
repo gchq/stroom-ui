@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useState, useCallback } from "react";
 
 import { path } from "ramda";
 import ReactTable, { RowInfo } from "react-table";
@@ -64,5 +65,32 @@ const IndexVolumeGroupsTable = ({
     }}
   />
 );
+
+export interface UseTable {
+  componentProps: Props;
+}
+
+export const useTable = (groups: Array<IndexVolumeGroup>): UseTable => {
+  const [selectedGroup, setSelectedGroup] = useState<
+    IndexVolumeGroup | undefined
+  >(undefined);
+
+  const onSelection = useCallback(
+    (selectedName?: string) => {
+      setSelectedGroup(
+        groups.find((u: IndexVolumeGroup) => u.name === selectedName)
+      );
+    },
+    [groups]
+  );
+
+  return {
+    componentProps: {
+      selectedGroup,
+      onSelection,
+      groups
+    }
+  };
+};
 
 export default IndexVolumeGroupsTable;

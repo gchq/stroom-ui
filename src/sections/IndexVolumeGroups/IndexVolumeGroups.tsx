@@ -1,10 +1,9 @@
 import * as React from "react";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 
 import useReduxState from "../../lib/useReduxState/useReduxState";
 import useApi from "./useIndexVolumeGroupApi";
-import IndexVolumeGroupsTable from "./IndexVolumeGroupsTable";
-import { IndexVolumeGroup } from "../../types";
+import IndexVolumeGroupsTable, { useTable } from "./IndexVolumeGroupsTable";
 import Button from "../../components/Button";
 import NewIndexVolumeGroupDialog, {
   useDialog as useNewDialog
@@ -24,19 +23,11 @@ const IndexVolumeGroups = () => {
     groups
   }));
   const api = useApi();
+  const { componentProps: tableProps } = useTable(groups);
 
   useEffect(() => {
     api.getIndexVolumeGroups();
   }, []);
-  const [selectedGroup, setSelectedGroup] = useState<
-    IndexVolumeGroup | undefined
-  >(undefined);
-
-  const onSelection = (selectedName?: string) => {
-    setSelectedGroup(
-      groups.find((u: IndexVolumeGroup) => u.name === selectedName)
-    );
-  };
 
   const {
     showDialog: showNewDialog,
@@ -47,11 +38,11 @@ const IndexVolumeGroups = () => {
     showDialog: showDeleteDialog,
     componentProps: deleteDialogComponentProps
   } = useConfirmDialog({
-    question: selectedGroup
-      ? `Are you sure you want to delete ${selectedGroup.name}`
+    question: tableProps.selectedGroup
+      ? `Are you sure you want to delete ${tableProps.selectedGroup.name}`
       : "no group?",
     onConfirm: () => {
-      api.deleteIndexVolumeGroup(selectedGroup!.name);
+      api.deleteIndexVolumeGroup(tableProps.selectedGroup!.name);
     }
   });
 
@@ -62,14 +53,14 @@ const IndexVolumeGroups = () => {
       <Button text="Create" onClick={showNewDialog} />
       <Button
         text="View/Edit"
-        disabled={!selectedGroup}
+        disabled={!tableProps.selectedGroup}
         onClick={() =>
-          history.push(`/s/indexing/groups/${selectedGroup!.name}`)
+          history.push(`/s/indexing/groups/${tableProps.selectedGroup!.name}`)
         }
       />
       <Button
         text="Delete"
-        disabled={!selectedGroup}
+        disabled={!tableProps.selectedGroup}
         onClick={() => showDeleteDialog()}
       />
 
@@ -77,7 +68,7 @@ const IndexVolumeGroups = () => {
 
       <ThemedConfirm {...deleteDialogComponentProps} />
 
-      <IndexVolumeGroupsTable {...{ groups, selectedGroup, onSelection }} />
+      <IndexVolumeGroupsTable {...tableProps} />
     </div>
   );
 };

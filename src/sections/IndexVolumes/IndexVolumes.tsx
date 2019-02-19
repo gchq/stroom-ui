@@ -1,7 +1,5 @@
 import * as React from "react";
-import { useState, useEffect } from "react";
-
-import { IndexVolume } from "../../types";
+import { useEffect } from "react";
 
 import useReduxState from "../../lib/useReduxState/useReduxState";
 import useApi from "./useIndexVolumeApi";
@@ -13,7 +11,7 @@ import NewIndexVolumeDialog, {
 import ThemedConfirm, {
   useDialog as useThemedConfirmDialog
 } from "../../components/ThemedConfirm";
-import IndexVolumesTable from "./IndexVolumesTable";
+import IndexVolumesTable, { useTable } from "./IndexVolumesTable";
 import useHistory from "../../lib/useHistory";
 
 export interface Props {}
@@ -27,18 +25,9 @@ const IndexVolumes = () => {
     })
   );
   const api = useApi();
+  const { componentProps: tableProps } = useTable(indexVolumes);
 
   useEffect(api.getIndexVolumes, []);
-
-  const [selectedIndexVolume, setSelectedIndexVolume] = useState<
-    IndexVolume | undefined
-  >(undefined);
-
-  const onSelection = (selectedId: number) => {
-    setSelectedIndexVolume(
-      indexVolumes.find((u: IndexVolume) => u.id === selectedId)
-    );
-  };
 
   const {
     showDialog: showCreateNewDialog,
@@ -49,11 +38,11 @@ const IndexVolumes = () => {
     showDialog: showDeleteDialog,
     componentProps: deleteDialogProps
   } = useThemedConfirmDialog({
-    question: selectedIndexVolume
-      ? `Are you sure you want to delete ${selectedIndexVolume.id}`
+    question: tableProps.selectedIndexVolume
+      ? `Are you sure you want to delete ${tableProps.selectedIndexVolume.id}`
       : "no group?",
     onConfirm: () => {
-      api.deleteIndexVolume(selectedIndexVolume!.id);
+      api.deleteIndexVolume(tableProps.selectedIndexVolume!.id);
     }
   });
 
@@ -64,14 +53,16 @@ const IndexVolumes = () => {
       <Button text="Create" onClick={showCreateNewDialog} />
       <Button
         text="View/Edit"
-        disabled={!selectedIndexVolume}
+        disabled={!tableProps.selectedIndexVolume}
         onClick={() =>
-          history.push(`/s/indexing/volumes/${selectedIndexVolume!.id}`)
+          history.push(
+            `/s/indexing/volumes/${tableProps.selectedIndexVolume!.id}`
+          )
         }
       />
       <Button
         text="Delete"
-        disabled={!selectedIndexVolume}
+        disabled={!tableProps.selectedIndexVolume}
         onClick={showDeleteDialog}
       />
 
@@ -79,9 +70,7 @@ const IndexVolumes = () => {
 
       <ThemedConfirm {...deleteDialogProps} />
 
-      <IndexVolumesTable
-        {...{ indexVolumes, selectedIndexVolume, onSelection }}
-      />
+      <IndexVolumesTable {...tableProps} />
     </div>
   );
 };

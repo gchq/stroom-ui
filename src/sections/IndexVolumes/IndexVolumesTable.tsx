@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useState, useCallback } from "react";
 
 import { path } from "ramda";
 import ReactTable, { RowInfo } from "react-table";
@@ -74,5 +75,32 @@ const IndexVolumesTable = ({
     }}
   />
 );
+
+export interface UseTable {
+  componentProps: Props;
+}
+
+export const useTable = (indexVolumes: Array<IndexVolume>): UseTable => {
+  const [selectedIndexVolume, setSelectedIndexVolume] = useState<
+    IndexVolume | undefined
+  >(undefined);
+
+  const onSelection = useCallback(
+    (selectedId: number) => {
+      setSelectedIndexVolume(
+        indexVolumes.find((u: IndexVolume) => u.id === selectedId)
+      );
+    },
+    [indexVolumes]
+  );
+
+  return {
+    componentProps: {
+      selectedIndexVolume,
+      onSelection,
+      indexVolumes
+    }
+  };
+};
 
 export default IndexVolumesTable;

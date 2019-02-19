@@ -3,12 +3,13 @@ import { StoreContext } from "redux-react-hook";
 
 import { actionCreators } from "./redux";
 import useHttpClient from "../../lib/useHttpClient/useHttpClient";
-import { IndexVolume } from "../../types";
+import { IndexVolume, IndexVolumeGroup } from "../../types";
 
 const {
   indexVolumesReceived,
   indexVolumeReceived,
   indexVolumesInGroupReceived,
+  indexGroupsForVolumeReceived,
   indexVolumeCreated,
   indexVolumeDeleted,
   indexVolumeAddedToGroup,
@@ -19,6 +20,7 @@ export interface Api {
   getIndexVolumes: () => void;
   getIndexVolumeById: (id: number) => void;
   deleteIndexVolume: (id: number) => void;
+  getGroupsForIndexVolume: (id: number) => void;
   getIndexVolumesInGroup: (groupName: string) => void;
   createIndexVolume: (nodeName: string, path: string) => void;
   addVolumeToGroup: (indexVolumeId: number, groupName: string) => void;
@@ -110,6 +112,27 @@ export const useApi = (): Api => {
     );
   }, []);
 
+  const getGroupsForIndexVolume = useCallback((id: number) => {
+    const state = store.getState();
+    var url = new URL(
+      `${
+        state.config.values.stroomBaseServiceUrl
+      }/stroom-index/volume/v1/groupsFor/${id}`
+    );
+
+    httpClient.httpGet(
+      url.href,
+      r =>
+        r
+          .json()
+          .then((groups: Array<IndexVolumeGroup>) =>
+            store.dispatch(indexGroupsForVolumeReceived(id, groups))
+          ),
+      {},
+      true
+    );
+  }, []);
+
   const createIndexVolume = useCallback((nodeName: string, path: string) => {
     const state = store.getState();
     var url = new URL(
@@ -181,7 +204,8 @@ export const useApi = (): Api => {
     getIndexVolumeById,
     getIndexVolumes,
     getIndexVolumesInGroup,
-    removeVolumeFromGroup
+    removeVolumeFromGroup,
+    getGroupsForIndexVolume
   };
 };
 
