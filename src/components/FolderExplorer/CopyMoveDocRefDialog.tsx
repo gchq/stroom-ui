@@ -19,7 +19,7 @@ import { useState } from "react";
 import { Formik, Field, FieldProps } from "formik";
 
 import IconHeader from "../IconHeader";
-import DialogActionButtons from "./DialogActionButtons";
+import DialogActionButtons from "../Button/DialogActionButtons";
 import ThemedModal from "../ThemedModal";
 import AppSearchBar from "../AppSearchBar";
 import PermissionInheritancePicker from "../PermissionInheritancePicker";

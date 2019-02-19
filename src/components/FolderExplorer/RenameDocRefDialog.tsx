@@ -18,7 +18,7 @@ import { useState } from "react";
 
 import { Formik, Field } from "formik";
 
-import DialogActionButtons from "./DialogActionButtons";
+import DialogActionButtons from "../Button/DialogActionButtons";
 import IconHeader from "../IconHeader";
 import useExplorerApi from "./useExplorerApi";
 import ThemedModal from "../ThemedModal";

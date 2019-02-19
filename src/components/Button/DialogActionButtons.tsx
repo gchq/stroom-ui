@@ -16,7 +16,7 @@
 
 import * as React from "react";
 
-import Button from "../Button";
+import Button from ".";
 
 export interface Props {
   onCancel: React.MouseEventHandler;

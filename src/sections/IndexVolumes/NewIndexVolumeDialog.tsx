@@ -5,7 +5,7 @@ import { Formik, Field } from "formik";
 
 import useApi from "./useIndexVolumeApi";
 import ThemedModal from "../../components/ThemedModal";
-import DialogActionButtons from "../../components/FolderExplorer/DialogActionButtons";
+import DialogActionButtons from "../../components/Button/DialogActionButtons";
 
 export interface Props {
   isOpen: boolean;

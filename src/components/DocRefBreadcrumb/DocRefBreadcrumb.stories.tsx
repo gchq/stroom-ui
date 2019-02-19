@@ -14,15 +14,14 @@
  * limitations under the License.
  */
 import * as React from "react";
-import { compose } from "recompose";
-import { withState } from "recompose";
+import { useState } from "react";
 
 import { storiesOf } from "@storybook/react";
 
 import StroomDecorator from "../../lib/storybook/StroomDecorator";
 import DocRefBreadcrumb from "./DocRefBreadcrumb";
 
-import { DocRefType, DocRefConsumer } from "../../types";
+import { DocRefType } from "../../types";
 import { testPipelines } from "../PipelineEditor/test";
 
 import "../../styles/main.css";
@@ -30,25 +29,21 @@ import "../../styles/main.css";
 interface Props {
   docRefUuid: string;
 }
-interface WithOpenDocRef {
-  openDocRef: DocRefType;
-  setOpenDocRef: DocRefConsumer;
-}
-interface EnhancedProps extends Props, WithOpenDocRef {}
 
-const enhance = compose<EnhancedProps, Props>(
-  withState("openDocRef", "setOpenDocRef", undefined)
-);
+const BreadcrumbOpen = ({ docRefUuid }: Props) => {
+  const [openDocRef, setOpenDocRef] = useState<DocRefType | undefined>(
+    undefined
+  );
 
-const BreadcrumbOpen = enhance(
-  ({ docRefUuid, openDocRef, setOpenDocRef }: EnhancedProps) => (
+  return (
     <div>
       <div>Doc Ref Breadcrumb</div>
       <DocRefBreadcrumb docRefUuid={docRefUuid} openDocRef={setOpenDocRef} />
+      <h2>Open Doc Ref</h2>
       <div>{JSON.stringify(openDocRef)}</div>
     </div>
-  )
-);
+  );
+};
 
 const testPipelineUuid = Object.keys(testPipelines)[0];
 

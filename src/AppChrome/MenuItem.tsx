@@ -53,11 +53,9 @@ interface Props extends StyledComponentProps {
   showMoveDialog: (docRefUuids: Array<string>, destinationUuid: string) => void;
 }
 
-export interface DndProps extends Props {}
-
 interface EnhancedProps extends Props, DragCollectedProps, DropCollectedProps {}
 
-const dropTarget: DropTargetSpec<DndProps> = {
+const dropTarget: DropTargetSpec<Props> = {
   canDrop({ menuItem: { docRef } }, monitor) {
     const { docRefs } = monitor.getItem();
 
@@ -93,7 +91,7 @@ const dropCollect: DropTargetCollector<
   };
 };
 
-const dragSource: DragSourceSpec<DndProps, DragObject> = {
+const dragSource: DragSourceSpec<Props, DragObject> = {
   canDrag({ menuItem: { docRef } }) {
     return !!docRef;
   },

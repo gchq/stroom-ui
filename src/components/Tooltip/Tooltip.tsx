@@ -15,7 +15,7 @@
  */
 
 import * as React from "react";
-import { compose, withProps } from "recompose";
+import { useMemo } from "react";
 import * as ReactTooltip from "react-tooltip";
 import * as uuidv4 from "uuid/v4";
 
@@ -24,36 +24,24 @@ export interface Props {
   content: React.ReactNode;
 }
 
-interface WithProps {
-  uuid: string;
-}
+const Tooltip = ({ trigger, content }: Props) => {
+  const uuid = useMemo(() => uuidv4(), []);
 
-export interface EnhancedProps extends Props, WithProps {}
+  return (
+    <React.Fragment>
+      <a data-tip data-for={uuid}>
+        {trigger}
+      </a>
+      <ReactTooltip
+        id={uuid}
+        delayShow={1000}
+        className="tooltip-popup raised-low"
+        effect="solid"
+      >
+        {content}
+      </ReactTooltip>
+    </React.Fragment>
+  );
+};
 
-const enhance = compose<EnhancedProps, Props>(
-  // It'd be nice to use the simpler form of tooltip, the one where
-  // the content is in the anchor tag. But this only works for simple
-  // content and we want to support richer content, e.g. for
-  // multi-line tooltips. If we're going to do it this way then we need
-  // an ID to tie the anchor tag to the component. We don't have one
-  // so to prevent conflicts we'll pass in a UUID.
-  withProps(() => ({ uuid: uuidv4() }))
-);
-
-const Tooltip = ({ trigger, content, uuid }: EnhancedProps) => (
-  <React.Fragment>
-    <a data-tip data-for={uuid}>
-      {trigger}
-    </a>
-    <ReactTooltip
-      id={uuid}
-      delayShow={1000}
-      className="tooltip-popup raised-low"
-      effect="solid"
-    >
-      {content}
-    </ReactTooltip>
-  </React.Fragment>
-);
-
-export default enhance(Tooltip);
+export default Tooltip;

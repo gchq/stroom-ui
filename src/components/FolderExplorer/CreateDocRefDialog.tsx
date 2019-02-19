@@ -21,7 +21,7 @@ import { Formik, Field, FieldProps } from "formik";
 
 import IconHeader from "../IconHeader";
 import ThemedModal from "../ThemedModal";
-import DialogActionButtons from "./DialogActionButtons";
+import DialogActionButtons from "../Button/DialogActionButtons";
 import { required, minLength2 } from "../../lib/reduxFormUtils";
 import { DocRefTypePicker } from "../DocRefTypes";
 import useExplorerApi from "./useExplorerApi";
