@@ -15,7 +15,9 @@ export interface Props {
   dictionaryUuid: string;
 }
 
-const DictionaryEditor = ({ dictionaryUuid }: Props) => {
+const DictionaryEditor: React.FunctionComponent<Props> = ({
+  dictionaryUuid
+}: Props) => {
   // Get data from and subscribe to the store
   const dispatch = useDispatch();
   const { dictionaryState } = useReduxState(
