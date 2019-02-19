@@ -12,7 +12,7 @@ BLUE='\033[1;34m'
 NC='\033[0m' # No Colour 
 
 readonly REPO="gchq/stroom-ui"
-readonly CONTEXT_ROOT="stroom-ui/docker/."
+readonly CONTEXT_ROOT="docker/."
 # This is a whitelist of branches to produce docker builds for
 readonly BRANCH_WHITELIST_REGEX='(^dev$|^master$|^[0-9]+\.[0-9]+$)'
 # Tags matching this regex will trigger a bintray release
