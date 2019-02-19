@@ -35,11 +35,7 @@ let SwitchedDocRefEditor = ({ docRef }: Props) => {
     case "Dashboard":
       return <div>Dashboard Editor</div>;
     case "Dictionary":
-      return (
-        <DictionaryEditor dictionaryUuid={docRef.uuid}>
-          Dictionary Editor
-        </DictionaryEditor>
-      );
+      return <DictionaryEditor dictionaryUuid={docRef.uuid} />;
     case "Feed":
       return <div>Feed Editor</div>;
     case "Index":
