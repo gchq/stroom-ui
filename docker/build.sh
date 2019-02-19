@@ -26,14 +26,8 @@ fi
 ver="$1"
 
 cd "$(dirname "$0")"
-mkdir -p work
-cp ../package.json work/
-cp ../tsconfig.json work/
-cp ../tsconfig.prod.json work/
-cp ../tslint.json work/
-cp ../images.d.ts work/
-cp -r ../src work/
-cp -r ../public work/
+
+source prep.sh
 
 readonly CURRENT_GIT_COMMIT="$(git rev-parse HEAD)"
 echo "--${ver}--"
