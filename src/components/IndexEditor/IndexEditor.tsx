@@ -15,7 +15,7 @@
  */
 
 import * as React from "react";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 
 import DocRefEditor from "../DocRefEditor";
 import { ButtonProps } from "../Button";
@@ -34,7 +34,6 @@ export interface Props {
 
 const IndexEditor = ({ indexUuid }: Props) => {
   const { indexEditor } = useReduxState(({ indexEditor }) => ({ indexEditor }));
-  const indexState = indexEditor[indexUuid];
 
   const indexApi = useIndexApi();
   const dispatch = useDispatch();
@@ -43,20 +42,27 @@ const IndexEditor = ({ indexUuid }: Props) => {
     indexApi.fetchDocument(indexUuid);
   }, []);
 
+  const indexState = indexEditor[indexUuid];
+
+  const actionBarItems: Array<ButtonProps> = useMemo(() => {
+    if (!indexState) return [];
+    const { isDirty, isSaving } = indexState;
+    const b: Array<ButtonProps> = [
+      {
+        icon: "save",
+        disabled: !(isDirty || isSaving),
+        title: isSaving ? "Saving..." : isDirty ? "Save" : "Saved",
+        onClick: () => indexApi.saveDocument(indexUuid)
+      }
+    ];
+    return b;
+  }, [indexUuid, indexState]);
+
   if (!indexState) {
-    return <Loader message="Loading XSLT..." />;
+    return <Loader message="Loading Index..." />;
   }
 
-  const { indexData, isDirty, isSaving } = indexState;
-
-  const actionBarItems: Array<ButtonProps> = [
-    {
-      icon: "save",
-      disabled: !(isDirty || isSaving),
-      title: isSaving ? "Saving..." : isDirty ? "Save" : "Saved",
-      onClick: () => indexApi.saveDocument(indexUuid)
-    }
-  ];
+  const { indexData } = indexState;
 
   return (
     <DocRefEditor docRefUuid={indexUuid} actionBarItems={actionBarItems}>

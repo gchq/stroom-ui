@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { lifecycle } from "recompose";
+import { useEffect } from "react";
 import { library } from "@fortawesome/fontawesome-svg-core";
 
 import {
@@ -63,8 +63,8 @@ import {
   faChevronRight
 } from "@fortawesome/free-solid-svg-icons";
 
-export default lifecycle({
-  componentWillMount() {
+export default () => {
+  useEffect(() => {
     library.add(
       faFolder,
       faFolderOpen,
@@ -110,5 +110,5 @@ export default lifecycle({
       faChevronLeft,
       faChevronRight
     );
-  }
-});
+  }, []);
+};

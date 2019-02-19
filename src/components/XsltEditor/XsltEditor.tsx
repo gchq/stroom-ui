@@ -15,7 +15,7 @@
  */
 
 import * as React from "react";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { useDispatch } from "redux-react-hook";
 
 import DocRefEditor from "../DocRefEditor";
@@ -42,20 +42,27 @@ const XsltEditor = ({ xsltUuid }: Props) => {
   const { xsltEditor } = useReduxState(({ xsltEditor }) => ({ xsltEditor }));
   const xsltState = xsltEditor[xsltUuid];
 
+  const actionBarItems: Array<ButtonProps> = useMemo(() => {
+    if (!xsltState) return [];
+
+    const { isDirty, isSaving } = xsltState;
+
+    const b: Array<ButtonProps> = [
+      {
+        icon: "save",
+        disabled: !(isDirty || isSaving),
+        title: isSaving ? "Saving..." : isDirty ? "Save" : "Saved",
+        onClick: () => api.saveDocument(xsltUuid)
+      }
+    ];
+    return b;
+  }, [xsltState, xsltUuid]);
+
   if (!xsltState) {
     return <Loader message="Loading XSLT..." />;
   }
 
-  const { xsltData, isDirty, isSaving } = xsltState;
-
-  const actionBarItems: Array<ButtonProps> = [
-    {
-      icon: "save",
-      disabled: !(isDirty || isSaving),
-      title: isSaving ? "Saving..." : isDirty ? "Save" : "Saved",
-      onClick: () => api.saveDocument(xsltUuid)
-    }
-  ];
+  const { xsltData } = xsltState;
 
   return (
     <DocRefEditor docRefUuid={xsltUuid} actionBarItems={actionBarItems}>

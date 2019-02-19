@@ -15,6 +15,7 @@
  */
 
 import * as React from "react";
+import { useMemo } from "react";
 
 // eslint-disable-next-line
 import * as brace from "brace";
@@ -38,7 +39,10 @@ export interface Props extends AceEditorProps {}
  */
 const ThemedAceEditor = (props: AceEditorProps) => {
   const { theme } = useTheme();
-  const aceTheme = theme === "theme-light" ? "github" : "ambiance";
+  const aceTheme = useMemo(
+    () => (theme === "theme-light" ? "github" : "ambiance"),
+    [theme]
+  );
 
   return <AceEditor keyboardHandler="vim" {...props} theme={aceTheme} />;
 };

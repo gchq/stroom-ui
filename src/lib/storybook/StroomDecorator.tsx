@@ -10,7 +10,7 @@ import createStore from "../../startup/store";
 
 import { useTestServer } from "../../lib/storybook/PollyDecorator";
 
-import FontAwesomeProvider from "../../startup/FontAwesomeProvider";
+import useFontAwesome from "../../startup/useFontAwesome";
 import testData from "./fullTestData";
 import { ThemeContextProvider, useTheme } from "../theme";
 import { withRouter, RouteComponentProps } from "react-router";
@@ -22,15 +22,18 @@ interface Props extends RouteComponentProps {}
 
 const enhanceLocal = compose(
   DragDropContext(HTML5Backend),
-  FontAwesomeProvider,
   withRouter
 );
 
 const store = createStore();
 
-const WrappedComponent: React.StatelessComponent<Props> = props => {
+const WrappedComponent: React.StatelessComponent<Props> = ({
+  history,
+  children
+}) => {
   const { theme } = useTheme();
   const { isReady } = useConfig();
+  useFontAwesome();
   useTestServer(testData);
 
   if (!isReady) {
@@ -38,9 +41,9 @@ const WrappedComponent: React.StatelessComponent<Props> = props => {
   }
 
   return (
-    <HistoryContext.Provider value={props.history}>
+    <HistoryContext.Provider value={history}>
       {" "}
-      <div className={`app-container ${theme}`}>{props.children}</div>
+      <div className={`app-container ${theme}`}>{children}</div>
     </HistoryContext.Provider>
   );
 };

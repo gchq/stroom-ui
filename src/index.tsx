@@ -9,7 +9,7 @@ import HTML5Backend from "react-dnd-html5-backend";
 
 import Routes from "./startup/Routes";
 import createStore from "./startup/store";
-import FontAwesomeProvider from "./startup/FontAwesomeProvider";
+import useFontAwesome from "./startup/useFontAwesome";
 import { history } from "./startup/middleware";
 import { HistoryContext } from "./lib/useHistory";
 
@@ -17,22 +17,25 @@ import "./styles/main.css";
 import { ThemeContextProvider } from "./lib/theme";
 
 const DndRoutes = compose(
-  FontAwesomeProvider,
   DragDropContext(HTML5Backend),
   toClass
 )(Routes);
 
 const store = createStore();
 
-ReactDOM.render(
-  <StoreContext.Provider value={store}>
-    <ThemeContextProvider>
-      <ConnectedRouter history={history}>
-        <HistoryContext.Provider value={history}>
-          <DndRoutes />
-        </HistoryContext.Provider>
-      </ConnectedRouter>
-    </ThemeContextProvider>
-  </StoreContext.Provider>,
-  document.getElementById("root") as HTMLElement
-);
+const App: React.FunctionComponent = () => {
+  useFontAwesome();
+  return (
+    <StoreContext.Provider value={store}>
+      <ThemeContextProvider>
+        <ConnectedRouter history={history}>
+          <HistoryContext.Provider value={history}>
+            <DndRoutes />
+          </HistoryContext.Provider>
+        </ConnectedRouter>
+      </ThemeContextProvider>
+    </StoreContext.Provider>
+  );
+};
+
+ReactDOM.render(<App />, document.getElementById("root") as HTMLElement);
