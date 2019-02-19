@@ -25,3 +25,6 @@ public/config.json
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# Used for building docker images
+/docker/work
