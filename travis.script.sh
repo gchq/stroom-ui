@@ -153,7 +153,6 @@ main() {
     echo_travis_env_vars
     extract_build_vars
     echo_build_vars
-    do_gradle_build
     do_docker_build
     exit 0
 }
