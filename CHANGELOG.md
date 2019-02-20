@@ -19,5 +19,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Experimental first tag
 
-[unreleased]: https://github.com/gchq/stroom-auth/compare/v1.0-alpha.2...master
+[unreleased]: https://github.com/gchq/stroom-auth/compare/v1.0-alpha.3...master
+[v1.0-alpha.3]: https://github.com/gchq/stroom-auth/compare/v1.0-alpha.2...v1.0-alpha.3
 [v1.0-alpha.2]: https://github.com/gchq/stroom-auth/compare/v1.0-alpha.1...v1.0-alpha.2
