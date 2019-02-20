@@ -12,12 +12,12 @@ import ThemedConfirm, {
   useDialog as useThemedConfirmDialog
 } from "../../components/ThemedConfirm";
 import IndexVolumesTable, { useTable } from "./IndexVolumesTable";
-import useHistory from "../../lib/useHistory";
+import useRouter from "../../lib/useRouter";
 
 export interface Props {}
 
 const IndexVolumes = () => {
-  const history = useHistory();
+  const { history } = useRouter();
 
   const { indexVolumes } = useReduxState(
     ({ indexVolumes: { indexVolumes } }) => ({

@@ -16,7 +16,7 @@
 
 import * as React from "react";
 
-import { Route, Router, Switch } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 
 // TODO
 import ErrorPage from "../components/ErrorPage";
@@ -28,11 +28,9 @@ import useConfig from "./useConfig";
 
 import { PrivateRoute } from "./Authentication";
 import PathNotFound from "../components/PathNotFound";
-import useHistory from "../lib/useHistory";
 import Loader from "../components/Loader";
 
-const Routes = () => {
-  const history = useHistory();
+const Routes: React.FunctionComponent = () => {
   const config = useConfig();
 
   if (!config.isReady) {
@@ -44,47 +42,28 @@ const Routes = () => {
   } = config;
 
   return (
-    <Router history={history}>
-      {/* basename="/"> TODO */}
-      <Switch>
-        <Route
-          exact
-          path="/handleAuthenticationResponse"
-          render={() => (
-            <HandleAuthenticationResponse
-              authenticationServiceUrl={authenticationServiceUrl!}
-              authorisationServiceUrl={authorisationServiceUrl!}
-            />
-          )}
-        />
-
-        <Route exact path="/error" component={ErrorPage} />
-
-        {appChromeRoutes.map((p, i) => (
-          <PrivateRoute key={i} {...p} />
-        ))}
-
-        {/* TODO Direct paths -- these paths make sections accessible outside the AppChrome
-        i.e. for when we want to embed them in Stroom. */}
-        {/* <PrivateRoute
+    <Switch>
+      <Route
         exact
-        path="/trackers"
-        referrer="/trackers"
-        render={() => <Processing />}
-      /> */}
+        path="/handleAuthenticationResponse"
+        render={() => (
+          <HandleAuthenticationResponse
+            authenticationServiceUrl={authenticationServiceUrl!}
+            authorisationServiceUrl={authorisationServiceUrl!}
+          />
+        )}
+      />
 
-        {/* Default route */}
-        <Route render={() => <PathNotFound message="Invalid path" />} />
-      </Switch>
-    </Router>
+      <Route exact path="/error" component={ErrorPage} />
+
+      {appChromeRoutes.map((p, i) => (
+        <PrivateRoute key={i} {...p} />
+      ))}
+
+      {/* Default route */}
+      <Route render={() => <PathNotFound message="Invalid path" />} />
+    </Switch>
   );
 };
-
-// Routes.contextTypes = {
-//   store: PropTypes.object,
-//   router: PropTypes.shape({
-//     history: object.isRequired,
-//   }),
-// };
 
 export default Routes;

@@ -12,12 +12,12 @@ import ThemedConfirm, {
   useDialog as useConfirmDialog
 } from "../../components/ThemedConfirm";
 import IconHeader from "../../components/IconHeader";
-import useHistory from "../../lib/useHistory";
+import useRouter from "../../lib/useRouter";
 
 export interface Props {}
 
 const IndexVolumeGroups = () => {
-  const history = useHistory();
+  const { history } = useRouter();
 
   const { groups } = useReduxState(({ indexVolumeGroups: { groups } }) => ({
     groups

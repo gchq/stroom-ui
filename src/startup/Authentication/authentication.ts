@@ -16,11 +16,9 @@
 import * as jwtDecode from "jwt-decode";
 import * as uuidv4 from "uuid";
 import * as sjcl from "sjcl";
-import { push } from "react-router-redux";
 import { Dispatch, Action } from "redux";
+import { History } from "history";
 
-import { GlobalStoreState } from "../reducers";
-import { LocationDescriptor } from "history";
 import { prepareReducer } from "../../lib/redux-actions-ts";
 
 export interface StoreState {
@@ -59,7 +57,7 @@ export const sendAuthenticationRequest = (
   appClientId: string,
   authenticationServiceUrl: string,
   appPermission?: string
-) => (dispatch: Dispatch, getState: () => GlobalStoreState) => {
+) => {
   const redirectUrl = `${uiUrl}/handleAuthenticationResponse`;
   const state = "";
 
@@ -82,10 +80,12 @@ export const sendAuthenticationRequest = (
 };
 
 export const handleAuthenticationResponse = (
+  dispatch: Dispatch,
+  history: History,
   accessCode: string,
   authenticationServiceUrl: string,
   authorisationServiceUrl: string
-) => (dispatch: Dispatch) => {
+) => {
   const idTokenRequestUrl = `${authenticationServiceUrl}/idToken?accessCode=${accessCode}`;
 
   // The cookie including the sessionId will be sent along with this request.
@@ -108,7 +108,7 @@ export const handleAuthenticationResponse = (
       const returnedNonce = decodedToken.nonce;
       const referrer = localStorage.getItem(
         "preAuthenticationRequestReferrer"
-      ) as LocationDescriptor;
+      ) as string;
       // const appPermission = localStorage.getItem('appPermission');
 
       if (nonceHash === returnedNonce) {
@@ -125,6 +125,6 @@ export const handleAuthenticationResponse = (
         // Possibly we could add an error message here, so the user can understand why they
         // are being asked to log in again.
       }
-      dispatch(push(referrer));
+      history.push(referrer);
     });
 };

@@ -20,29 +20,23 @@ import { Route, RouteProps } from "react-router-dom";
 import AuthenticationRequest from "./AuthenticationRequest";
 import useReduxState from "../../lib/useReduxState";
 import Loader from "../../components/Loader";
+import useConfig from "../useConfig";
 
 export interface Props extends RouteProps {}
 
 const PrivateRoute = ({ render, ...rest }: Props) => {
-  const { authentication, config } = useReduxState(
-    ({ authentication, config }) => ({
-      authentication,
-      config
-    })
-  );
+  const config = useConfig();
+  const { idToken } = useReduxState(({ authentication: { idToken } }) => ({
+    idToken
+  }));
 
-  const { idToken } = authentication;
   const {
+    isReady,
     values: { advertisedUrl, appClientId, authenticationServiceUrl }
   } = config;
 
   if (
-    !(
-      config.isReady &&
-      !!advertisedUrl &&
-      !!appClientId &&
-      !!authenticationServiceUrl
-    )
+    !(isReady && !!advertisedUrl && !!appClientId && !!authenticationServiceUrl)
   ) {
     return <Loader message="Waiting for config" />;
   }

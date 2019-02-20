@@ -41,7 +41,7 @@ import useSelectableItemListing, {
 } from "../../lib/useSelectableItemListing";
 import { useDocRefInfoDialog } from "../DocRefInfoModal/DocRefInfoModal";
 import { useDocumentTree } from "./useDocumentTree";
-import useHistory from "../../lib/useHistory";
+import useRouter from "../../lib/useRouter";
 
 export interface Props {
   folderUuid: string;
@@ -50,7 +50,7 @@ export interface Props {
 const FolderExplorer = ({ folderUuid }: Props) => {
   const documentTree = useDocumentTree();
 
-  const history = useHistory();
+  const { history } = useRouter();
   const folder = findItem(documentTree, folderUuid)!;
   const explorerApi = useExplorerApi();
 

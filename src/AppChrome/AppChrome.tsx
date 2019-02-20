@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 import * as React from "react";
-import { useEffect } from "react";
 
 import "simplebar";
 import "simplebar/dist/simplebar.css";
@@ -25,11 +24,9 @@ import MenuItem, {
   MenuItemOpened
 } from "./MenuItem";
 
-import useReduxState from "../lib/useReduxState/useReduxState";
 import useExplorerApi from "../components/FolderExplorer/useExplorerApi";
 import useSelectableItemListing from "../lib/useSelectableItemListing";
 import { DocRefType, DocRefConsumer, DocRefTree } from "../types";
-import { GlobalStoreState } from "../startup/reducers";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { KeyDownState } from "../lib/useKeyIsDown/useKeyIsDown";
 import CopyMoveDocRefDialog, {
@@ -41,7 +38,7 @@ import useLocalStorage, {
   storeObjectFactory
 } from "../lib/useLocalStorage";
 import { useTheme } from "../lib/theme";
-import useHistory from "../lib/useHistory";
+import useRouter from "../lib/useRouter";
 import { useDocumentTree } from "../components/FolderExplorer/useDocumentTree";
 
 const pathPrefix = "/s";
@@ -147,19 +144,12 @@ const getMenuItems = (
 
 const AppChrome = ({ content }: Props) => {
   const { theme } = useTheme();
-  const history = useHistory();
+  const {
+    history,
+    router: { location }
+  } = useRouter();
   const documentTree = useDocumentTree();
   const explorerApi = useExplorerApi();
-
-  const { location } = useReduxState(
-    ({ routing: { location } }: GlobalStoreState) => ({
-      location
-    })
-  );
-
-  useEffect(() => {
-    explorerApi.fetchDocTree();
-  });
 
   const {
     value: areMenuItemsOpen,

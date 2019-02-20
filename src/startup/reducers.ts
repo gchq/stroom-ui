@@ -15,7 +15,6 @@
  */
 
 import { combineReducers } from "redux";
-import { routerReducer, RouterState } from "react-router-redux";
 
 import {
   reducer as errorPage,
@@ -104,14 +103,12 @@ export interface GlobalStoreState {
   debuggers: DebuggersStoreState;
   processing: ProcessingStoreState;
   dataViewers: DataViewersStoreState;
-  routing: RouterState;
   userPermissions: UserStoreState;
   indexVolumeGroups: IndexVolumeGroupStoreState;
   indexVolumes: IndexVolumeStoreState;
 }
 
 export default combineReducers({
-  routing: routerReducer,
   errorPage,
   config,
   authentication,

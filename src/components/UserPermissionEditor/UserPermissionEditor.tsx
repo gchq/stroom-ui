@@ -9,7 +9,7 @@ import GroupsForUser from "./GroupsForUser";
 import { GlobalStoreState } from "../../startup/reducers";
 import useApi from "../../sections/UserPermissions/useUserPermissionsApi";
 import Loader from "../Loader";
-import useHistory from "../../lib/useHistory";
+import useRouter from "../../lib/useRouter";
 
 export interface Props {
   userUuid: string;
@@ -17,7 +17,7 @@ export interface Props {
 }
 
 const UserPermissionEditor = ({ listingId, userUuid }: Props) => {
-  const history = useHistory();
+  const { history } = useRouter();
   const api = useApi();
   useEffect(() => {
     api.findUsers(listingId, undefined, undefined, userUuid);

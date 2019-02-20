@@ -3,7 +3,7 @@ import { useEffect, useMemo } from "react";
 
 import IconHeader from "../IconHeader";
 import Button from "../Button";
-import useHistory from "../../lib/useHistory";
+import useRouter from "../../lib/useRouter";
 import { useIndexVolumeApi } from "../../sections/IndexVolumes";
 import {
   useIndexVolumeGroupsTable,
@@ -17,7 +17,7 @@ export interface Props {
 }
 
 const IndexVolumeEditor = ({ id }: Props) => {
-  const history = useHistory();
+  const { history } = useRouter();
   const volumeApi = useIndexVolumeApi();
   const { indexVolumeGroupMemberships, groups } = useReduxState(
     ({

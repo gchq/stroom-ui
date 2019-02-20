@@ -14,8 +14,7 @@
  * limitations under the License.
  */
 
-import { Component } from "react";
-import { func } from "prop-types";
+import { FunctionComponent, useEffect } from "react";
 
 import { sendAuthenticationRequest } from "./authentication";
 
@@ -27,26 +26,24 @@ export interface Props {
   appPermission?: string;
 }
 
-class AuthenticationRequest extends Component<Props, object> {
-  static contextTypes = {
-    store: func.isRequired
-  };
-
-  componentDidMount() {
-    this.context.store.dispatch(
-      sendAuthenticationRequest(
-        this.props.referrer,
-        this.props.uiUrl,
-        this.props.appClientId,
-        this.props.authenticationServiceUrl,
-        this.props.appPermission
-      )
+const AuthenticationRequest: FunctionComponent<Props> = ({
+  referrer,
+  uiUrl,
+  appClientId,
+  authenticationServiceUrl,
+  appPermission
+}) => {
+  useEffect(() => {
+    sendAuthenticationRequest(
+      referrer,
+      uiUrl,
+      appClientId,
+      authenticationServiceUrl,
+      appPermission
     );
-  }
+  }, []);
 
-  render() {
-    return null;
-  }
-}
+  return null;
+};
 
 export default AuthenticationRequest;

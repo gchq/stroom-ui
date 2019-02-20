@@ -13,43 +13,47 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-import { Component } from "react";
-import { object } from "prop-types";
-
 import * as queryString from "qs";
+import { useEffect, useMemo } from "react";
 
 import { handleAuthenticationResponse } from "./authentication";
+import useRouter from "../../lib/useRouter";
+import { useDispatch } from "redux-react-hook";
 
 export interface Props {
   authenticationServiceUrl: string;
   authorisationServiceUrl: string;
 }
 
-class HandleAuthenticationResponse extends Component<Props, {}> {
-  static contextTypes = {
-    store: object.isRequired,
-    router: object.isRequired
-  };
+export const HandleAuthenticationResponse: React.FunctionComponent<Props> = ({
+  authenticationServiceUrl,
+  authorisationServiceUrl
+}: Props) => {
+  const {
+    router: { location },
+    history
+  } = useRouter();
+  const dispatch = useDispatch();
 
-  componentDidMount() {
-    let query = this.context.router.route.location.search;
+  const accessCode = useMemo(() => {
+    let query = location!.search;
     if (query[0] == "?") {
       query = query.substring(1);
     }
-    const accessCode = queryString.parse(query).accessCode;
-    this.context.store.dispatch(
-      handleAuthenticationResponse(
-        accessCode,
-        this.props.authenticationServiceUrl,
-        this.props.authorisationServiceUrl
-      )
-    );
-  }
+    return queryString.parse(query).accessCode;
+  }, [location]);
 
-  render() {
-    return null;
-  }
-}
+  useEffect(() => {
+    handleAuthenticationResponse(
+      dispatch,
+      history,
+      accessCode,
+      authenticationServiceUrl,
+      authorisationServiceUrl
+    );
+  }, [accessCode]);
+
+  return null;
+};
 
 export default HandleAuthenticationResponse;

@@ -14,7 +14,7 @@ import useFontAwesome from "../../startup/useFontAwesome";
 import testData from "./fullTestData";
 import { ThemeContextProvider, useTheme } from "../theme";
 import { withRouter, RouteComponentProps } from "react-router";
-import { HistoryContext } from "../useHistory";
+import { CustomRouter } from "../useRouter";
 import useConfig from "../../startup/useConfig";
 import Loader from "../../components/Loader";
 
@@ -41,10 +41,10 @@ const WrappedComponent: React.StatelessComponent<Props> = ({
   }
 
   return (
-    <HistoryContext.Provider value={history}>
+    <CustomRouter>
       {" "}
       <div className={`app-container ${theme}`}>{children}</div>
-    </HistoryContext.Provider>
+    </CustomRouter>
   );
 };
 

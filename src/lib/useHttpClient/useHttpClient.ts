@@ -1,4 +1,3 @@
-import { push } from "react-router-redux";
 import { Dispatch, Action } from "redux";
 import { useCallback } from "react";
 
@@ -9,6 +8,7 @@ import { prepareReducer } from "../redux-actions-ts";
 import handleStatus from "../handleStatus";
 import { useContext } from "react";
 import { StoreContext } from "redux-react-hook";
+import useRouter from "../useRouter";
 
 enum FetchState {
   UNREQUESTED,
@@ -131,6 +131,7 @@ export interface HttpClient {
 
 export const useHttpClient = (): HttpClient => {
   const store = useContext(StoreContext);
+  const { history } = useRouter();
 
   if (!store) {
     throw new Error("Could not get Redux Store for making HTTP calls");
@@ -207,7 +208,7 @@ export const useHttpClient = (): HttpClient => {
             store.dispatch(errorActionCreators.setErrorMessage(error.message));
             store.dispatch(errorActionCreators.setStackTrace(error.stack));
             store.dispatch(errorActionCreators.setHttpErrorCode(error.status));
-            store.dispatch(push("/s/error"));
+            history.push("/s/error");
           });
       }
 
@@ -261,7 +262,7 @@ export const useHttpClient = (): HttpClient => {
           store.dispatch(errorActionCreators.setErrorMessage(error.message));
           store.dispatch(errorActionCreators.setStackTrace(error.stack));
           store.dispatch(errorActionCreators.setHttpErrorCode(error.status));
-          store.dispatch(push("/s/error"));
+          history.push("/s/error");
         });
     },
     []

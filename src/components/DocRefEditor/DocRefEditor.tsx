@@ -9,7 +9,7 @@ import { DocRefWithLineage, DocRefConsumer } from "../../types";
 import { findItem } from "../../lib/treeUtils";
 import Loader from "../Loader";
 import { useDocumentTree } from "../FolderExplorer/useDocumentTree";
-import useHistory from "../../lib/useHistory";
+import useRouter from "../../lib/useRouter";
 
 export interface Props {
   actionBarItems: Array<ButtonProps>;
@@ -18,7 +18,7 @@ export interface Props {
 }
 
 const DocRefEditor = ({ actionBarItems, children, docRefUuid }: Props) => {
-  const history = useHistory();
+  const router = useRouter();
   const documentTree = useDocumentTree();
 
   const docRefWithLineage = useMemo(
@@ -27,7 +27,7 @@ const DocRefEditor = ({ actionBarItems, children, docRefUuid }: Props) => {
   );
 
   const openDocRef: DocRefConsumer = useCallback(
-    d => history.push(`/s/doc/${d.type}/${d.uuid}`),
+    d => router.history!.push(`/s/doc/${d.type}/${d.uuid}`),
     []
   );
 

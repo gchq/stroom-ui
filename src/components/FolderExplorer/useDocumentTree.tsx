@@ -15,7 +15,7 @@ export const useDocumentTree = (): DocRefTree => {
 
   useEffect(() => {
     explorerApi.fetchDocTree();
-  });
+  }, []);
 
   return documentTree;
 };

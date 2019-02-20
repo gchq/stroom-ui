@@ -14,7 +14,7 @@ import NewUserDialog, { useDialog as useNewUserDialog } from "./NewUserDialog";
 import ThemedConfirm, {
   useDialog as useThemedConfim
 } from "../../components/ThemedConfirm";
-import useHistory from "../../lib/useHistory";
+import useRouter from "../../lib/useRouter";
 
 const LISTING_ID = "user_permissions";
 
@@ -27,7 +27,7 @@ interface Values {
 }
 
 const UserPermissions = () => {
-  const history = useHistory();
+  const { history } = useRouter();
   const api = useApi();
   const [selectedUser, setSelectedUser] = useState<User | undefined>(undefined);
 
