@@ -38,9 +38,19 @@ const IndexVolumeGroupEditor = ({ name }: Props) => {
     volumeApi.getIndexVolumesInGroup(name);
   }, [name]);
 
+  // Ensure all membership volumes are loaded
+  useEffect(() => {
+    indexVolumeGroupMemberships
+      .filter(m => m.groupName === name)
+      .map(m => m.volumeId)
+      .filter(volumeId => indexVolumes.findIndex(v => v.id === volumeId) === -1)
+      .forEach(volumeApi.getIndexVolumeById);
+  }, [indexVolumeGroupMemberships]);
+
   const indexVolumeGroup: IndexVolumeGroup | undefined = groups.find(
     g => g.name === name
   );
+
   const indexVolumesInGroup: Array<IndexVolume> = useMemo(
     () =>
       indexVolumeGroupMemberships

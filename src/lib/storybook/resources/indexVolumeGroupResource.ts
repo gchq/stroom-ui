@@ -27,11 +27,14 @@ const resourceBuilder: ResourceBuilder = (
   server
     .get(`${testConfig.stroomBaseServiceUrl}/stroom-index/volumeGroup/v1/:name`)
     .intercept((req: HttpRequest, res: HttpResponse) => {
-      res.json(
-        testCache.data!.indexVolumesAndGroups.groups.find(
-          g => g.name === req.params.name
-        )
+      let group = testCache.data!.indexVolumesAndGroups.groups.find(
+        g => g.name === req.params.name
       );
+      if (!!group) {
+        res.json(group);
+      } else {
+        res.sendStatus(404);
+      }
     });
 
   // Create

@@ -25,12 +25,15 @@ const resourceBuilder: ResourceBuilder = (
       `${testConfig.stroomBaseServiceUrl}/stroom-index/volume/v1/:indexVolumeId`
     )
     .intercept((req: HttpRequest, res: HttpResponse) => {
-      let indexVolumeId = req.params.indexVolumeId;
-      res.json(
-        testCache.data!.indexVolumesAndGroups.volumes.find(
-          v => v.id === indexVolumeId
-        )
+      let indexVolumeId: string = req.params.indexVolumeId;
+      let indexVolume = testCache.data!.indexVolumesAndGroups.volumes.find(
+        v => `${v.id}` === indexVolumeId
       );
+      if (!!indexVolume) {
+        res.json(indexVolume);
+      } else {
+        res.sendStatus(404);
+      }
     });
 
   // Create

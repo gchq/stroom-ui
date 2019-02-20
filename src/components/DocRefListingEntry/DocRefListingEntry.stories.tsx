@@ -19,7 +19,9 @@ import { storiesOf } from "@storybook/react";
 
 import StroomDecorator from "../../lib/storybook/StroomDecorator";
 import fullTestData from "../../lib/storybook/fullTestData";
-import useSelectableItemListing from "../../lib/useSelectableItemListing";
+import useSelectableItemListing, {
+  SelectionBehaviour
+} from "../../lib/useSelectableItemListing";
 import DocRefListingEntry from "./DocRefListingEntry";
 import { DocRefType } from "../../types";
 
@@ -61,13 +63,15 @@ let TestDocRefListingEntry = ({
   const {
     onKeyDownWithShortcuts,
     selectionToggled,
-    selectedItems: selectedDocRefs
+    selectedItems: selectedDocRefs,
+    focussedItem: focussedDocRef
   } = useSelectableItemListing<DocRefType>({
     items: docRefs,
     openItem: openDocRef,
     getKey: d => d.uuid,
     enterItem: enterFolder,
-    goBack
+    goBack,
+    selectionBehaviour: SelectionBehaviour.MULTIPLE
   });
 
   return (
@@ -81,13 +85,16 @@ let TestDocRefListingEntry = ({
           docRefs.map(docRef => (
             <DocRefListingEntry
               key={docRef.uuid}
-              docRef={docRef}
-              openDocRef={openDocRef}
-              enterFolder={enterFolder}
-              dndIsOver={dndIsOver}
-              dndCanDrop={dndCanDrop}
-              selectionToggled={selectionToggled}
-              selectedDocRefs={selectedDocRefs}
+              {...{
+                docRef,
+                openDocRef,
+                enterFolder,
+                dndCanDrop,
+                dndIsOver,
+                selectionToggled,
+                selectedDocRefs,
+                focussedDocRef
+              }}
             >
               {provideBreadcrumbs && (
                 <DocRefBreadcrumb

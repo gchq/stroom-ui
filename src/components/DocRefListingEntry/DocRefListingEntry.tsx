@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useCallback, useMemo } from "react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -28,57 +29,70 @@ let DocRefListingEntry = ({
   selectedDocRefs,
   focussedDocRef
 }: Props) => {
-  const isSelected: boolean =
-    selectedDocRefs.map((d: DocRefType) => d.uuid).indexOf(docRef.uuid) !== -1;
-  const inFocus: boolean =
-    !!focussedDocRef && focussedDocRef.uuid === docRef.uuid;
+  const onSelect: React.MouseEventHandler<HTMLDivElement> = useCallback(
+    e => {
+      selectionToggled(docRef.uuid);
+      e.preventDefault();
+      e.stopPropagation();
+    },
+    [selectionToggled, docRef]
+  );
 
-  const onSelect: React.MouseEventHandler<HTMLDivElement> = e => {
-    selectionToggled(docRef.uuid);
-    e.preventDefault();
-    e.stopPropagation();
-  };
-  const onOpenDocRef: React.MouseEventHandler<HTMLDivElement> = e => {
-    openDocRef(docRef);
-    e.preventDefault();
-    e.stopPropagation();
-  };
-  const onEnterFolder: React.MouseEventHandler<HTMLDivElement> = e => {
-    if (enterFolder) {
-      enterFolder(docRef);
-    } else {
-      openDocRef(docRef); // fall back to this
+  const onOpenDocRef: React.MouseEventHandler<HTMLDivElement> = useCallback(
+    e => {
+      openDocRef(docRef);
+      e.preventDefault();
+      e.stopPropagation();
+    },
+    [openDocRef, docRef]
+  );
+  const onEnterFolder: React.MouseEventHandler<HTMLDivElement> = useCallback(
+    e => {
+      if (enterFolder) {
+        enterFolder(docRef);
+      } else {
+        openDocRef(docRef); // fall back to this
+      }
+      e.stopPropagation();
+      e.preventDefault();
+    },
+    [enterFolder, openDocRef, docRef]
+  );
+
+  const className = useMemo(() => {
+    const additionalClasses = [];
+    additionalClasses.push("DocRefListingEntry");
+    additionalClasses.push("hoverable");
+
+    if (dndIsOver) {
+      additionalClasses.push("dndIsOver");
     }
-    e.stopPropagation();
-    e.preventDefault();
-  };
-
-  const additionalClasses = [];
-  additionalClasses.push("DocRefListingEntry");
-  additionalClasses.push("hoverable");
-
-  if (dndIsOver) {
-    additionalClasses.push("dndIsOver");
-  }
-  if (dndIsOver) {
-    if (dndCanDrop) {
-      additionalClasses.push("canDrop");
-    } else {
-      additionalClasses.push("cannotDrop");
+    if (dndIsOver) {
+      if (dndCanDrop) {
+        additionalClasses.push("canDrop");
+      } else {
+        additionalClasses.push("cannotDrop");
+      }
     }
-  }
 
-  if (isSelected) {
-    additionalClasses.push("selected");
-  }
-  if (inFocus) {
-    additionalClasses.push("inFocus");
-  }
+    const inFocus: boolean =
+      !!focussedDocRef && focussedDocRef.uuid === docRef.uuid;
+    const isSelected: boolean =
+      selectedDocRefs.map((d: DocRefType) => d.uuid).indexOf(docRef.uuid) !==
+      -1;
+
+    if (isSelected) {
+      additionalClasses.push("selected");
+    }
+    if (inFocus) {
+      additionalClasses.push("inFocus");
+    }
+
+    return additionalClasses.join(" ");
+  }, [docRef, selectedDocRefs, focussedDocRef, dndCanDrop, dndIsOver]);
 
   let canEnterFolder: boolean =
     docRef.type === "System" || docRef.type === "Folder";
-
-  const className = additionalClasses.join(" ");
 
   return (
     <div className={className} onClick={onSelect}>
