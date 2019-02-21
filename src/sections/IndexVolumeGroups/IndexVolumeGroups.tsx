@@ -41,9 +41,8 @@ const IndexVolumeGroups = () => {
     showDialog: showDeleteDialog,
     componentProps: deleteDialogComponentProps
   } = useConfirmDialog({
-    question: `Are you sure you want to delete ${selectedItems
-      .map(v => v.name)
-      .join(",")}`,
+    getQuestion: () => `Are you sure you want to delete selected groups?`,
+    getDetails: () => selectedItems.map(v => v.name).join(", "),
     onConfirm: () => {
       selectedItems.forEach(g => api.deleteIndexVolumeGroup(g.name));
     }

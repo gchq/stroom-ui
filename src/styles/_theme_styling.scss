@@ -208,13 +208,13 @@ input {
 
 .focussed {
   @include themify($themes) {
-    background-color: themed("focussed-color");
+    border: solid thin themed("focussed-color");
   }
 }
 
 .focussed:hover {
   @include themify($themes) {
-    background-color: themed("focussed-color");
+    border: solid thin themed("focussed-color");
   }
 }
 

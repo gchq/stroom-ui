@@ -10,6 +10,9 @@ import {
   useIndexVolumesTable,
   IndexVolumesTable
 } from "../../sections/IndexVolumes";
+import ThemedConfirm, {
+  useDialog as useConfirmDialog
+} from "../../components/ThemedConfirm";
 import useReduxState from "../../lib/useReduxState";
 import { IndexVolume, IndexVolumeGroup } from "../../types";
 import Loader from "../Loader";
@@ -56,15 +59,40 @@ const IndexVolumeGroupEditor = ({ name }: Props) => {
     indexVolumesInGroup
   );
 
+  const {
+    selectableTableProps: { selectedItems }
+  } = tableProps;
+
+  const {
+    showDialog: showRemoveDialog,
+    componentProps: removeDialogProps
+  } = useConfirmDialog({
+    onConfirm: () =>
+      selectedItems.forEach(v => volumeApi.removeVolumeFromGroup(v.id, name)),
+    getQuestion: () => "Remove selected volumes from group?",
+    getDetails: () => selectedItems.map(s => s.id).join(", ")
+  });
+
   if (!indexVolumeGroup) {
     return <Loader message={`Loading Index Volume Group ${name}`} />;
   }
 
   return (
     <div>
-      <IconHeader icon="database" text={indexVolumeGroup.name} />
+      <IconHeader
+        icon="database"
+        text={`Index Volume Group - ${indexVolumeGroup.name}`}
+      />
       <Button text="Back" onClick={() => history.push(`/s/indexing/groups/`)} />
+      <Button
+        text="Remove From Group"
+        disabled={selectedItems.length === 0}
+        onClick={showRemoveDialog}
+      />
 
+      <ThemedConfirm {...removeDialogProps} />
+
+      <h2>Volumes</h2>
       <IndexVolumesTable {...tableProps} />
     </div>
   );

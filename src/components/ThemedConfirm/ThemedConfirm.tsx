@@ -24,12 +24,15 @@ import reactModalOptions from "../ThemedModal/reactModalOptions";
 import { useTheme } from "../../lib/theme";
 
 export interface NewProps {
-  question: string;
-  details?: string;
+  getQuestion: () => string;
+  getDetails?: () => string;
   onConfirm: () => void;
 }
 
-export interface Props extends ReactModal.Props, NewProps {
+export interface Props extends ReactModal.Props {
+  question: string;
+  details?: string;
+  onConfirm: () => void;
   onCloseDialog: () => void;
 }
 
@@ -85,16 +88,24 @@ export type UseDialog = {
  */
 export const useDialog = (props: NewProps): UseDialog => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [question, setQuestion] = useState<string>("No Question");
+  const [details, setDetails] = useState<string | undefined>(undefined);
+
+  const { getQuestion, getDetails = () => undefined } = props;
 
   return {
     componentProps: {
-      ...props,
+      question,
+      details,
       isOpen,
+      onConfirm: props.onConfirm,
       onCloseDialog: () => {
         setIsOpen(false);
       }
     },
     showDialog: () => {
+      setQuestion(getQuestion());
+      setDetails(getDetails());
       setIsOpen(true);
     }
   };

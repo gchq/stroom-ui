@@ -158,12 +158,10 @@ const resourceBuilder: ResourceBuilder = (
       }/stroom-index/volume/v1/inGroup/:volumeId/:groupName`
     )
     .intercept((req: HttpRequest, res: HttpResponse) => {
+      let groupName: string = req.params.groupName;
+      let volumeId: string = req.params.volumeId;
       testCache.data!.indexVolumesAndGroups.groupMemberships = testCache.data!.indexVolumesAndGroups.groupMemberships.filter(
-        m =>
-          !(
-            m.groupName === req.params.groupName &&
-            m.volumeId === req.params.volumeId
-          )
+        m => !(m.groupName === groupName && m.volumeId === volumeId)
       );
 
       res.send(undefined);

@@ -12,5 +12,7 @@ export function onlyUnique<VALUE>(
   index: number,
   self: Array<VALUE>
 ) {
-  return self.indexOf(value) === index;
+  return (
+    self.map(m => JSON.stringify(m)).indexOf(JSON.stringify(value)) === index
+  );
 }

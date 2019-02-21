@@ -29,8 +29,8 @@ let TestConfirm = () => {
   const [confirmCount, setConfirmCount] = useState<number>(0);
 
   const { showDialog, componentProps } = useDialog({
-    question: "Are you sure about this?",
-    details: "Because...nothing will really happen anyway",
+    getQuestion: () => "Are you sure about this?",
+    getDetails: () => "Because...nothing will really happen anyway",
     onConfirm: () => setConfirmCount(confirmCount + 1)
   });
 

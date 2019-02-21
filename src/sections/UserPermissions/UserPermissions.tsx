@@ -54,9 +54,8 @@ const UserPermissions = () => {
     componentProps: deleteDialogProps,
     showDialog: showDeleteDialog
   } = useThemedConfim({
-    question: selectedUser
-      ? `Are you sure you want to delete user ${selectedUser.name}`
-      : "no user?",
+    getQuestion: () => `Are you sure you want to delete user`,
+    getDetails: () => (selectedUser ? selectedUser.name : "no user"),
     onConfirm: () => {
       api.deleteUser(selectedUser!.uuid);
     }

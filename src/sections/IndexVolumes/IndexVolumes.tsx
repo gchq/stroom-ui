@@ -41,9 +41,8 @@ const IndexVolumes = () => {
     showDialog: showDeleteDialog,
     componentProps: deleteDialogProps
   } = useThemedConfirmDialog({
-    question: `Are you sure you want to delete ${selectedItems
-      .map(v => v.id)
-      .join(",")}`,
+    getQuestion: () => `Are you sure you want to delete selected volumes`,
+    getDetails: () => selectedItems.map(v => v.id).join(", "),
     onConfirm: () => {
       selectedItems.forEach(v => api.deleteIndexVolume(v.id));
     }

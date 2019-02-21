@@ -49,11 +49,13 @@ const IndexVolumeEditor = ({ id }: Props) => {
 
   return (
     <div>
-      <IconHeader icon="database" text={`Index Volume ${id}`} />
+      <IconHeader icon="database" text={`Index Volume - ${id}`} />
       <Button
         text="Back"
         onClick={() => history.push(`/s/indexing/volumes/`)}
       />
+
+      <h2>Group Memberships</h2>
       <IndexVolumeGroupsTable {...tableProps} />
     </div>
   );

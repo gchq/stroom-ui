@@ -151,14 +151,14 @@ export const reducer = prepareReducer(defaultState)
     INDEX_VOLUMES_IN_GROUP_RECEIVED,
     (state: StoreState, { groupName, indexVolumes }) => ({
       indexVolumes: state.indexVolumes.concat(indexVolumes).filter(onlyUnique),
-      indexVolumeGroupMemberships: [
-        ...state.indexVolumeGroupMemberships
-      ].concat(
-        indexVolumes.map(v => ({
-          volumeId: v.id,
-          groupName
-        }))
-      )
+      indexVolumeGroupMemberships: [...state.indexVolumeGroupMemberships]
+        .concat(
+          indexVolumes.map(v => ({
+            volumeId: v.id,
+            groupName
+          }))
+        )
+        .filter(onlyUnique)
     })
   )
   .handleAction<IndexGroupsForVolumeReceivedAction>(
@@ -183,7 +183,7 @@ export const reducer = prepareReducer(defaultState)
     INDEX_VOLUME_CREATED,
     (state: StoreState, { indexVolume }) => ({
       ...state,
-      indexVolumes: state.indexVolumes.concat([indexVolume])
+      indexVolumes: state.indexVolumes.concat([indexVolume]).filter(onlyUnique)
     })
   )
   .handleAction<IndexVolumeDeletedAction>(
@@ -199,12 +199,14 @@ export const reducer = prepareReducer(defaultState)
     INDEX_VOLUME_ADDED_TO_GROUP,
     (state: StoreState, { indexVolumeId, groupName }) => ({
       ...state,
-      indexVolumeGroupMemberships: state.indexVolumeGroupMemberships.concat([
-        {
-          volumeId: indexVolumeId,
-          groupName
-        }
-      ])
+      indexVolumeGroupMemberships: state.indexVolumeGroupMemberships
+        .concat([
+          {
+            volumeId: indexVolumeId,
+            groupName
+          }
+        ])
+        .filter(onlyUnique)
     })
   )
   .handleAction<IndexVolumeRemovedFromGroupAction>(
@@ -212,7 +214,7 @@ export const reducer = prepareReducer(defaultState)
     (state: StoreState, { indexVolumeId, groupName }) => ({
       ...state,
       indexVolumeGroupMemberships: state.indexVolumeGroupMemberships.filter(
-        m => m.groupName === groupName && m.volumeId === indexVolumeId
+        m => !(m.groupName === groupName && m.volumeId === indexVolumeId)
       )
     })
   )

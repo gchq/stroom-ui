@@ -102,11 +102,9 @@ export const useApi = (): Api => {
     httpClient.httpGet(
       url.href,
       r =>
-        r
-          .json()
-          .then((indexVolumes: Array<IndexVolume>) =>
-            store.dispatch(indexVolumesInGroupReceived(groupName, indexVolumes))
-          ),
+        r.json().then((indexVolumes: Array<IndexVolume>) => {
+          store.dispatch(indexVolumesInGroupReceived(groupName, indexVolumes));
+        }),
       {},
       true
     );
@@ -161,7 +159,7 @@ export const useApi = (): Api => {
       const url = new URL(
         `${
           state.config.values.stroomBaseServiceUrl
-        }/stroom-index/volume/v1/inGroup/{volumeId}/{groupName}`
+        }/stroom-index/volume/v1/inGroup/${indexVolumeId}/${groupName}`
       );
 
       httpClient.httpPost(url.href, response =>
@@ -181,7 +179,7 @@ export const useApi = (): Api => {
       const url = new URL(
         `${
           state.config.values.stroomBaseServiceUrl
-        }/stroom-index/volume/v1/inGroup/{volumeId}/{groupName}`
+        }/stroom-index/volume/v1/inGroup/${indexVolumeId}/${groupName}`
       );
 
       httpClient.httpDelete(url.href, response =>
