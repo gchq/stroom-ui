@@ -15,7 +15,7 @@
  */
 import * as React from "react";
 import { useMemo, useCallback } from "react";
-import { compose } from "recompose";
+import { compose } from "redux";
 import {
   DragSource,
   DropTarget,
@@ -178,7 +178,7 @@ const dropCollect: DropTargetCollector<DropCollectedProps> = (
   draggingItemType: monitor.getItemType()
 });
 
-const enhance = compose<EnhancedProps, Props>(
+const enhance = compose(
   DragSource(DragDropTypes.ELEMENT, dragSource, dragCollect),
   DropTarget(
     [DragDropTypes.ELEMENT, DragDropTypes.PALLETE_ELEMENT],

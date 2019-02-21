@@ -1,5 +1,5 @@
 import * as React from "react";
-import { compose } from "recompose";
+import { compose } from "redux";
 import {
   DragSource,
   DropTarget,
@@ -105,7 +105,7 @@ const dragCollect: DragSourceCollector<
   };
 };
 
-const enhance = compose<EnhancedProps, Props>(
+const enhance = compose(
   DropTarget([DragDropTypes.DOC_REF_UUIDS], dropTarget, dropCollect),
   DragSource(DragDropTypes.DOC_REF_UUIDS, dragSource, dragCollect)
 );

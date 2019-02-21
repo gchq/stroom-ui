@@ -15,7 +15,6 @@
  */
 
 import * as React from "react";
-import { compose } from "recompose";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { DragSource, DragSourceSpec } from "react-dnd";
 
@@ -58,9 +57,7 @@ const dragSource: DragSourceSpec<Props, DragObject> = {
   }
 };
 
-const enhance = compose<EnhancedProps, Props>(
-  DragSource(DragDropTypes.TERM, dragSource, dragCollect)
-);
+const enhance = DragSource(DragDropTypes.TERM, dragSource, dragCollect);
 
 const ExpressionTerm = ({
   showDeleteItemDialog,

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { compose } from "recompose";
+import { compose } from "redux";
 import { RenderFunction } from "@storybook/react";
 import { StoreContext } from "redux-react-hook";
 import { DragDropContext } from "react-dnd";
