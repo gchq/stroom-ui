@@ -32,7 +32,7 @@ const IndexVolumeGroupsWithRouter = () => (
       exact
       path="/s/indexing/volumes/:id"
       render={(props: RouteComponentProps<any>) => (
-        <IndexVolumeEditor id={props.match.params.id} />
+        <IndexVolumeEditor volumeId={props.match.params.id} />
       )}
     />
     <Route component={IndexVolumes} />

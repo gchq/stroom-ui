@@ -18,11 +18,11 @@ export interface InProps<TItem> {
   selectionBehaviour?: SelectionBehaviour;
 }
 
-export interface OutProps {
+export interface OutProps<TItem> {
   focusIndex: number;
   focussedItem?: any;
   lastSelectedIndex?: number;
-  selectedItems: Array<any>;
+  selectedItems: Array<TItem>;
   selectedItemIndexes: Set<number>;
   selectionToggled: (itemKey: string) => void;
   onKeyDownWithShortcuts: React.KeyboardEventHandler<HTMLDivElement>;
@@ -36,7 +36,7 @@ export function useSelectableItemListing<TItem>({
   enterItem,
   goBack,
   selectionBehaviour = SelectionBehaviour.NONE
-}: InProps<TItem>): OutProps {
+}: InProps<TItem>): OutProps<TItem> {
   const keyIsDown = useKeyIsDown();
   const [focusIndex, setFocusIndex] = useState<number>(-1);
   const [focussedItem, setFocussedItem] = useState<TItem | undefined>(
@@ -161,14 +161,14 @@ export function useSelectableItemListing<TItem>({
   };
 }
 
-export interface TableOutProps extends OutProps {
+export interface TableOutProps<TItem> extends OutProps<TItem> {
   tableProps: Partial<TableProps>;
 }
 
 export function useSelectableReactTable<TItem>(
   props: InProps<TItem>,
   customTableProps?: Partial<TableProps>
-): TableOutProps {
+): TableOutProps<TItem> {
   const selectableItemProps = useSelectableItemListing<TItem>(props);
   const { getKey, items } = props;
   const { selectionToggled, selectedItems, focussedItem } = selectableItemProps;

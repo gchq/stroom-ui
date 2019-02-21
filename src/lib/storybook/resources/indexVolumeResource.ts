@@ -3,7 +3,7 @@ import { HttpRequest, HttpResponse } from "@pollyjs/adapter-fetch";
 import { TestCache } from "../PollyDecorator";
 import { Config } from "../../../startup/config";
 import { ResourceBuilder } from "./resourceBuilder";
-import { IndexVolume } from "../../../types";
+import { IndexVolume, IndexVolumeGroup } from "../../../types";
 
 let nextIdToCreate = 100000;
 
@@ -118,15 +118,20 @@ const resourceBuilder: ResourceBuilder = (
     .intercept((req: HttpRequest, res: HttpResponse) => {
       let indexVolumeId = req.params.indexVolumeId;
 
-      let groupNames: Array<
-        string
-      > = testCache
+      let groups: Array<IndexVolumeGroup> = testCache
         .data!.indexVolumesAndGroups.groupMemberships.filter(
           m => m.volumeId === indexVolumeId
         )
-        .map(m => m.groupName);
+        .map(m => m.groupName)
+        .map(groupName =>
+          testCache.data!.indexVolumesAndGroups.groups.find(
+            g => g.name === groupName
+          )
+        )
+        .filter(g => g !== undefined)
+        .map(g => g!);
 
-      res.send(groupNames);
+      res.send(groups);
     });
 
   // Add Volume to Group

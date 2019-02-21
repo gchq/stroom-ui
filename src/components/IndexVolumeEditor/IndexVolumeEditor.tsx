@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 
 import IconHeader from "../IconHeader";
 import Button, { DialogActionButtons } from "../Button";
@@ -12,29 +12,30 @@ import {
   useIndexVolumeGroupPicker
 } from "../../sections/IndexVolumeGroups";
 import useReduxState from "../../lib/useReduxState";
-import { IndexVolumeGroup } from "../../types";
 import ThemedModal from "../ThemedModal";
+import ThemedConfirm, {
+  useDialog as useConfirmDialog
+} from "../../components/ThemedConfirm";
+import { IndexVolume } from "../../types";
+import Loader from "../Loader";
 
 export interface Props {
-  id: string;
+  volumeId: string;
 }
 
-const IndexVolumeEditor = ({ id }: Props) => {
+const IndexVolumeEditor = ({ volumeId }: Props) => {
   const { history } = useRouter();
   const volumeApi = useIndexVolumeApi();
-  const { indexVolumeGroupMemberships, groups } = useReduxState(
-    ({
-      indexVolumeGroups: { groups },
-      indexVolumes: { indexVolumeGroupMemberships }
-    }) => ({
-      indexVolumeGroupMemberships,
-      groups
+  const { indexVolumes, groupsByIndexVolume } = useReduxState(
+    ({ indexVolumes: { indexVolumes, groupsByIndexVolume } }) => ({
+      indexVolumes,
+      groupsByIndexVolume
     })
   );
 
   useEffect(() => {
-    volumeApi.getGroupsForIndexVolume(id);
-  }, [id]);
+    volumeApi.getGroupsForIndexVolume(volumeId);
+  }, [volumeId]);
 
   const volumeGroupPickerProps = useIndexVolumeGroupPicker();
   const {
@@ -44,28 +45,51 @@ const IndexVolumeEditor = ({ id }: Props) => {
 
   const [addToGroupOpen, setAddToGroupOpen] = useState<boolean>(false);
 
-  const groupsForIndexVolume: Array<IndexVolumeGroup> = useMemo(
-    () =>
-      indexVolumeGroupMemberships
-        .filter(m => m.groupName === name)
-        .map(m => groups.find(g => g.name === m.groupName))
-        .filter(g => g !== undefined)
-        .map(g => g!),
-    [groups, indexVolumeGroupMemberships]
+  const { componentProps: tableProps } = useIndexVolumeGroupsTable(
+    groupsByIndexVolume[volumeId]
   );
 
-  const { componentProps: tableProps } = useIndexVolumeGroupsTable(
-    groupsForIndexVolume
+  const {
+    selectableTableProps: { selectedItems }
+  } = tableProps;
+
+  const {
+    showDialog: showRemoveDialog,
+    componentProps: removeDialogProps
+  } = useConfirmDialog({
+    onConfirm: () =>
+      selectedItems.forEach(g =>
+        volumeApi.removeVolumeFromGroup(volumeId, g.name)
+      ),
+    getQuestion: useCallback(() => "Remove volume from selected groups?", []),
+    getDetails: useCallback(() => selectedItems.map(s => s.name).join(", "), [
+      selectedItems.map(s => s.name)
+    ])
+  });
+
+  const indexVolume: IndexVolume | undefined = indexVolumes.find(
+    v => v.id === volumeId
   );
+
+  if (!indexVolume) {
+    return <Loader message={`Loading Index Volume ${volumeId}`} />;
+  }
 
   return (
     <div>
-      <IconHeader icon="database" text={`Index Volume - ${id}`} />
+      <IconHeader icon="database" text={`Index Volume - ${indexVolume.id}`} />
       <Button
         text="Back"
         onClick={() => history.push(`/s/indexing/volumes/`)}
       />
       <Button text="Add to Group" onClick={() => setAddToGroupOpen(true)} />
+      <Button
+        text="Remove From Group(s)"
+        disabled={selectedItems.length === 0}
+        onClick={showRemoveDialog}
+      />
+
+      <ThemedConfirm {...removeDialogProps} />
 
       <h2>Group Memberships</h2>
       <ThemedModal
@@ -76,7 +100,7 @@ const IndexVolumeEditor = ({ id }: Props) => {
           <DialogActionButtons
             onConfirm={() => {
               if (!!volumeGroupName) {
-                volumeApi.addVolumeToGroup(id, volumeGroupName);
+                volumeApi.addVolumeToGroup(volumeId, volumeGroupName);
               }
               setAddToGroupOpen(false);
             }}

@@ -11,7 +11,7 @@ import {
 
 export interface Props {
   indexVolumes: Array<IndexVolume>;
-  selectableTableProps: TableOutProps;
+  selectableTableProps: TableOutProps<IndexVolume>;
 }
 
 const COLUMNS = [

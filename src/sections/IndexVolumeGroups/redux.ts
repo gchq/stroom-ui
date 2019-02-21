@@ -17,6 +17,11 @@ import { Action } from "redux";
 
 import { prepareReducer } from "../../lib/redux-actions-ts";
 import { IndexVolumeGroup } from "../../types";
+import { onlyUnique } from "../../lib/reduxFormUtils";
+import {
+  IndexGroupsForVolumeReceivedAction,
+  INDEX_GROUPS_FOR_VOLUME_RECEIVED
+} from "../IndexVolumes/redux";
 
 const INDEX_VOLUME_GROUP_NAMES_RECEIVED = "INDEX_VOLUME_GROUP_NAMES_RECEIVED";
 const INDEX_VOLUME_GROUPS_RECEIVED = "INDEX_VOLUME_GROUPS_RECEIVED";
@@ -126,6 +131,15 @@ export const reducer = prepareReducer(defaultState)
     (state: StoreState, { name }) => ({
       groupNames: state.groupNames.filter(n => n !== name),
       groups: state.groups.filter(g => g.name !== name)
+    })
+  )
+  .handleAction<IndexGroupsForVolumeReceivedAction>(
+    INDEX_GROUPS_FOR_VOLUME_RECEIVED,
+    (state: StoreState, { groups }) => ({
+      groupNames: state.groupNames
+        .concat(groups.map(g => g.name))
+        .filter(onlyUnique),
+      groups: state.groups.concat(groups).filter(onlyUnique)
     })
   )
   .getReducer();

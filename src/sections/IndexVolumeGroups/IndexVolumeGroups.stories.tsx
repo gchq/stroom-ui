@@ -59,9 +59,9 @@ const IndexVolumeGroupsWithRouter = () => (
   <Switch>
     <Route
       exact
-      path="/s/indexing/groups/:name"
+      path="/s/indexing/groups/:groupName"
       render={(props: RouteComponentProps<any>) => (
-        <IndexVolumeGroupEditor name={props.match.params.name} />
+        <IndexVolumeGroupEditor groupName={props.match.params.groupName} />
       )}
     />
     <Route component={IndexVolumeGroups} />

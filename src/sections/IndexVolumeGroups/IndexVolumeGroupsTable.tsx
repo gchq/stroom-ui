@@ -11,7 +11,7 @@ import {
 
 export interface Props {
   groups: Array<IndexVolumeGroup>;
-  selectableTableProps: TableOutProps;
+  selectableTableProps: TableOutProps<IndexVolumeGroup>;
 }
 
 const COLUMNS = [

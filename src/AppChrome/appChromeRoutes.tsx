@@ -147,11 +147,13 @@ export default [
   },
   {
     exact: true,
-    path: "/s/indexing/groups/:name",
+    path: "/s/indexing/groups/:groupName",
     render: (props: RouteComponentProps<any>) => (
       <AppChrome
         activeMenuItem="Index Groups"
-        content={<IndexVolumeGroupEditor name={props.match.params.name} />}
+        content={
+          <IndexVolumeGroupEditor groupName={props.match.params.groupName} />
+        }
       />
     )
   },

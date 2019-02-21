@@ -16,16 +16,14 @@
 import { Action } from "redux";
 
 import { prepareReducer } from "../../lib/redux-actions-ts";
-import {
-  IndexVolume,
-  IndexVolumeGroupMembership,
-  IndexVolumeGroup
-} from "../../types";
+import { IndexVolume, IndexVolumeGroup } from "../../types";
 import { onlyUnique } from "../../lib/reduxFormUtils";
+import { mapObject } from "../../lib/treeUtils";
 
 const INDEX_VOLUMES_RECEIVED = "INDEX_VOLUMES_RECEIVED";
 const INDEX_VOLUMES_IN_GROUP_RECEIVED = "INDEX_VOLUMES_IN_GROUP_RECEIVED";
-const INDEX_GROUPS_FOR_VOLUME_RECEIVED = "INDEX_GROUPS_FOR_VOLUME_RECEIVED";
+export const INDEX_GROUPS_FOR_VOLUME_RECEIVED =
+  "INDEX_GROUPS_FOR_VOLUME_RECEIVED";
 const INDEX_VOLUME_RECEIVED = "INDEX_VOLUME_RECEIVED";
 const INDEX_VOLUME_CREATED = "INDEX_VOLUME_CREATED";
 const INDEX_VOLUME_DELETED = "INDEX_VOLUME_DELETED";
@@ -131,12 +129,14 @@ export const actionCreators = {
 
 export interface StoreState {
   indexVolumes: Array<IndexVolume>;
-  indexVolumeGroupMemberships: Array<IndexVolumeGroupMembership>;
+  indexVolumesByGroup: { [groupName: string]: Array<IndexVolume> };
+  groupsByIndexVolume: { [volumeId: string]: Array<IndexVolumeGroup> };
 }
 
 export const defaultState: StoreState = {
   indexVolumes: [],
-  indexVolumeGroupMemberships: []
+  indexVolumesByGroup: {},
+  groupsByIndexVolume: {}
 };
 
 export const reducer = prepareReducer(defaultState)
@@ -150,26 +150,21 @@ export const reducer = prepareReducer(defaultState)
   .handleAction<IndexVolumesInGroupReceivedAction>(
     INDEX_VOLUMES_IN_GROUP_RECEIVED,
     (state: StoreState, { groupName, indexVolumes }) => ({
-      indexVolumes: state.indexVolumes.concat(indexVolumes).filter(onlyUnique),
-      indexVolumeGroupMemberships: [...state.indexVolumeGroupMemberships]
-        .concat(
-          indexVolumes.map(v => ({
-            volumeId: v.id,
-            groupName
-          }))
-        )
-        .filter(onlyUnique)
+      ...state,
+      indexVolumesByGroup: {
+        ...state.indexVolumesByGroup,
+        [groupName]: indexVolumes
+      }
     })
   )
   .handleAction<IndexGroupsForVolumeReceivedAction>(
     INDEX_GROUPS_FOR_VOLUME_RECEIVED,
     (state: StoreState, { indexVolumeId, groups }) => ({
       ...state,
-      indexVolumeGroupMemberships: state.indexVolumeGroupMemberships
-        .concat(
-          groups.map(g => ({ groupName: g.name, volumeId: indexVolumeId }))
-        )
-        .filter(onlyUnique)
+      groupsByIndexVolume: {
+        ...state.groupsByIndexVolume,
+        [indexVolumeId]: groups
+      }
     })
   )
   .handleAction<IndexVolumeReceivedAction>(
@@ -190,8 +185,18 @@ export const reducer = prepareReducer(defaultState)
     INDEX_VOLUME_DELETED,
     (state: StoreState, { indexVolumeId }) => ({
       indexVolumes: state.indexVolumes.filter(v => v.id !== indexVolumeId),
-      indexVolumeGroupMemberships: state.indexVolumeGroupMemberships.filter(
-        m => m.volumeId === indexVolumeId
+      groupsByIndexVolume: mapObject(
+        state.groupsByIndexVolume,
+        (vId, groups) => {
+          if (vId == indexVolumeId) {
+            return undefined;
+          } else {
+            return groups;
+          }
+        }
+      ),
+      indexVolumesByGroup: mapObject(state.indexVolumesByGroup, (_, volumes) =>
+        volumes.filter(v => v.id !== indexVolumeId)
       )
     })
   )
@@ -199,22 +204,51 @@ export const reducer = prepareReducer(defaultState)
     INDEX_VOLUME_ADDED_TO_GROUP,
     (state: StoreState, { indexVolumeId, groupName }) => ({
       ...state,
-      indexVolumeGroupMemberships: state.indexVolumeGroupMemberships
-        .concat([
-          {
-            volumeId: indexVolumeId,
-            groupName
+      groupsByIndexVolume: mapObject(
+        state.groupsByIndexVolume,
+        (vId, groups) => {
+          if (vId == indexVolumeId) {
+            return groups; // where should we get the full group from?
+          } else {
+            return groups;
           }
-        ])
-        .filter(onlyUnique)
+        }
+      ),
+      indexVolumesByGroup: mapObject(
+        state.indexVolumesByGroup,
+        (gName, volumes) => {
+          if (gName == groupName) {
+            return volumes; // where should we get the full volume from?
+          } else {
+            return volumes;
+          }
+        }
+      )
     })
   )
   .handleAction<IndexVolumeRemovedFromGroupAction>(
     INDEX_VOLUME_REMOVED_FROM_GROUP,
     (state: StoreState, { indexVolumeId, groupName }) => ({
       ...state,
-      indexVolumeGroupMemberships: state.indexVolumeGroupMemberships.filter(
-        m => !(m.groupName === groupName && m.volumeId === indexVolumeId)
+      groupsByIndexVolume: mapObject(
+        state.groupsByIndexVolume,
+        (vId, groups) => {
+          if (vId === indexVolumeId) {
+            return groups.filter(g => g.name !== groupName);
+          } else {
+            return groups;
+          }
+        }
+      ),
+      indexVolumesByGroup: mapObject(
+        state.indexVolumesByGroup,
+        (gName, volumes) => {
+          if (gName === groupName) {
+            return volumes.filter(v => v.id !== indexVolumeId);
+          } else {
+            return volumes;
+          }
+        }
       )
     })
   )
