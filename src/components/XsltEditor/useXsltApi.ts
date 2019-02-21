@@ -15,14 +15,15 @@
  */
 import { useContext, useCallback } from "react";
 import { StoreContext } from "redux-react-hook";
-import { actionCreators } from "./redux";
+import { actionCreators } from "../DocRefEditor";
 import useHttpClient from "../../lib/useHttpClient/useHttpClient";
+import { XsltDoc } from "../../types";
 
-const { xsltReceived, xsltSaved } = actionCreators;
+const { documentReceived, documentSaved } = actionCreators;
 
 export interface Api {
-  fetchDocument: (xsltUuid: string) => void;
-  saveDocument: (xsltUuid: string) => void;
+  fetchDocument: (uuid: string) => void;
+  saveDocument: (document: XsltDoc) => void;
 }
 
 export const useApi = (): Api => {
@@ -33,17 +34,17 @@ export const useApi = (): Api => {
     throw new Error("Could not get Redux Store for processing Thunks");
   }
 
-  const fetchDocument = useCallback((xsltUuid: string) => {
+  const fetchDocument = useCallback((uuid: string) => {
     const state = store.getState();
-    const url = `${
-      state.config.values.stroomBaseServiceUrl
-    }/xslt/v1/${xsltUuid}`;
+    const url = `${state.config.values.stroomBaseServiceUrl}/xslt/v1/${uuid}`;
     httpClient.httpGet(
       url,
       response =>
         response
-          .text()
-          .then((xslt: string) => store.dispatch(xsltReceived(xsltUuid, xslt))),
+          .json()
+          .then((document: XsltDoc) =>
+            store.dispatch(documentReceived(uuid, document))
+          ),
       {
         headers: {
           Accept: "application/xml",
@@ -53,20 +54,18 @@ export const useApi = (): Api => {
     );
   }, []);
 
-  const saveDocument = useCallback((xsltUuid: string) => {
+  const saveDocument = useCallback((xslt: XsltDoc) => {
     const state = store.getState();
-    const url = `${
-      state.config.values.stroomBaseServiceUrl
-    }/xslt/v1/${xsltUuid}`;
-
-    const body = state.xsltEditor[xsltUuid].xsltData;
+    const url = `${state.config.values.stroomBaseServiceUrl}/xslt/v1/${
+      xslt.uuid
+    }`;
 
     httpClient.httpPost(
       url,
       response =>
-        response.text().then(() => store.dispatch(xsltSaved(xsltUuid))),
+        response.text().then(() => store.dispatch(documentSaved(xslt.uuid))),
       {
-        body,
+        body: xslt.data,
         headers: {
           Accept: "application/xml",
           "Content-Type": "application/xml"

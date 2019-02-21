@@ -15,8 +15,7 @@
  */
 
 import XsltEditor from "./XsltEditor";
-import { actionCreators, reducer, StoreState } from "./redux";
 
-export { XsltEditor, actionCreators, reducer, StoreState };
+export { XsltEditor };
 
 export default XsltEditor;

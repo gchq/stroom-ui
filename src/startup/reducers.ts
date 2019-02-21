@@ -63,10 +63,6 @@ import {
   StoreState as PipelineEditorStoreState
 } from "../components/PipelineEditor";
 import {
-  reducer as xsltEditor,
-  StoreState as XsltEditorStoreState
-} from "../components/XsltEditor";
-import {
   reducer as debuggers,
   StoreState as DebuggersStoreState
 } from "../components/PipelineDebugger";
@@ -86,6 +82,10 @@ import {
   reducer as dataViewers,
   StoreState as DataViewersStoreState
 } from "../sections/DataViewer";
+import {
+  reducer as docRefEditors,
+  StoreState as DocRefEditorStoreState
+} from "../components/DocRefEditor";
 
 export interface GlobalStoreState {
   appSearch: AppSearchStoreState;
@@ -98,7 +98,6 @@ export interface GlobalStoreState {
   folderExplorer: FolderExplorerStoreState;
   dictionaryEditor: DictionaryEditorStoreState;
   indexEditor: IndexEditorStoreState;
-  xsltEditor: XsltEditorStoreState;
   pipelineEditor: PipelineEditorStoreState;
   debuggers: DebuggersStoreState;
   processing: ProcessingStoreState;
@@ -106,6 +105,7 @@ export interface GlobalStoreState {
   userPermissions: UserStoreState;
   indexVolumeGroups: IndexVolumeGroupStoreState;
   indexVolumes: IndexVolumeStoreState;
+  docRefEditors: DocRefEditorStoreState;
 }
 
 export default combineReducers({
@@ -116,7 +116,6 @@ export default combineReducers({
   fetch,
   docRefTypes,
   folderExplorer,
-  xsltEditor,
   appSearch,
   dictionaryEditor,
   indexEditor,
@@ -126,5 +125,6 @@ export default combineReducers({
   dataViewers,
   userPermissions,
   indexVolumeGroups,
-  indexVolumes
+  indexVolumes,
+  docRefEditors
 });

@@ -22,7 +22,10 @@ const resourceBuilder: ResourceBuilder = (
     });
   server
     .post(`${testConfig.stroomBaseServiceUrl}/xslt/v1/:xsltUuid`)
-    .intercept((req: HttpRequest, res: HttpResponse) => res.sendStatus(200));
+    .intercept((req: HttpRequest, res: HttpResponse) => {
+      testCache.data!.xslt[req.params.xsltUuid].data = req.body;
+      res.sendStatus(200);
+    });
 };
 
 export default resourceBuilder;

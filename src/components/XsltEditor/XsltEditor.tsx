@@ -15,18 +15,16 @@
  */
 
 import * as React from "react";
-import { useEffect, useMemo } from "react";
+import { useEffect } from "react";
 import { useDispatch } from "redux-react-hook";
 
-import DocRefEditor from "../DocRefEditor";
-import { ButtonProps } from "../Button";
+import DocRefEditor, { useDocRefEditor, actionCreators } from "../DocRefEditor";
 import Loader from "../Loader";
 import useApi from "./useXsltApi";
 import ThemedAceEditor from "../ThemedAceEditor";
-import { actionCreators } from "./redux";
-import useReduxState from "../../lib/useReduxState";
+import { XsltDoc } from "../../types";
 
-const { xsltUpdated } = actionCreators;
+const { documentChangesMade } = actionCreators;
 
 export interface Props {
   xsltUuid: string;
@@ -39,40 +37,26 @@ const XsltEditor = ({ xsltUuid }: Props) => {
     api.fetchDocument(xsltUuid);
   });
 
-  const { xsltEditor } = useReduxState(({ xsltEditor }) => ({ xsltEditor }));
-  const xsltState = xsltEditor[xsltUuid];
+  const { document, editorProps } = useDocRefEditor<XsltDoc>({
+    docRefUuid: xsltUuid,
+    saveDocument: api.saveDocument
+  });
 
-  const actionBarItems: Array<ButtonProps> = useMemo(() => {
-    if (!xsltState) return [];
-
-    const { isDirty, isSaving } = xsltState;
-
-    const b: Array<ButtonProps> = [
-      {
-        icon: "save",
-        disabled: !(isDirty || isSaving),
-        title: isSaving ? "Saving..." : isDirty ? "Save" : "Saved",
-        onClick: () => api.saveDocument(xsltUuid)
-      }
-    ];
-    return b;
-  }, [xsltState, xsltUuid]);
-
-  if (!xsltState) {
+  if (!document) {
     return <Loader message="Loading XSLT..." />;
   }
 
-  const { xsltData } = xsltState;
-
   return (
-    <DocRefEditor docRefUuid={xsltUuid} actionBarItems={actionBarItems}>
+    <DocRefEditor {...editorProps}>
       <ThemedAceEditor
         style={{ width: "100%", height: "100%", minHeight: "25rem" }}
         name={`${xsltUuid}-ace-editor`}
         mode="xml"
-        value={xsltData}
+        value={document.data}
         onChange={newValue => {
-          if (newValue !== xsltData) dispatch(xsltUpdated(xsltUuid, newValue));
+          if (newValue !== document.data) {
+            dispatch(documentChangesMade(xsltUuid, { data: newValue }));
+          }
         }}
       />
     </DocRefEditor>
