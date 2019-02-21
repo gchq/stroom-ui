@@ -19,8 +19,10 @@ import { storiesOf } from "@storybook/react";
 
 import StroomDecorator from "../storybook/StroomDecorator";
 import useSelectableItemListing, {
-  SelectionBehaviour
+  SelectionBehaviour,
+  useSelectableReactTable
 } from "./useSelectableItemListing";
+import ReactTable from "react-table";
 
 type Animal = {
   species: string;
@@ -46,9 +48,42 @@ let animals: Array<Animal> = [
   }
 ];
 
-storiesOf("General Purpose/useSelectableItemListing", module)
+const COLUMNS = [
+  {
+    id: "species",
+    Header: "Species",
+    accessor: (u: Animal) => u.species
+  },
+  {
+    id: "name",
+    Header: "Name",
+    accessor: (u: Animal) => u.name
+  }
+];
+
+storiesOf("Custom Hooks/useSelectableItemListing", module)
   .addDecorator(StroomDecorator)
-  .add("Test Component", () => {
+  .add("React Table", () => {
+    const { onKeyDownWithShortcuts, tableProps } = useSelectableReactTable<
+      Animal
+    >(
+      {
+        getKey: a => a.species,
+        items: animals,
+        selectionBehaviour: SelectionBehaviour.MULTIPLE
+      },
+      {
+        columns: COLUMNS
+      }
+    );
+
+    return (
+      <div tabIndex={0} onKeyDown={onKeyDownWithShortcuts}>
+        <ReactTable {...tableProps} />
+      </div>
+    );
+  })
+  .add("A List", () => {
     const [lastAction, setLastAction] = useState<string>("no action");
 
     const {

@@ -18,13 +18,13 @@ const {
 
 export interface Api {
   getIndexVolumes: () => void;
-  getIndexVolumeById: (id: number) => void;
-  deleteIndexVolume: (id: number) => void;
-  getGroupsForIndexVolume: (id: number) => void;
+  getIndexVolumeById: (id: string) => void;
+  deleteIndexVolume: (id: string) => void;
+  getGroupsForIndexVolume: (id: string) => void;
   getIndexVolumesInGroup: (groupName: string) => void;
   createIndexVolume: (nodeName: string, path: string) => void;
-  addVolumeToGroup: (indexVolumeId: number, groupName: string) => void;
-  removeVolumeFromGroup: (indexVolumeId: number, groupName: string) => void;
+  addVolumeToGroup: (indexVolumeId: string, groupName: string) => void;
+  removeVolumeFromGroup: (indexVolumeId: string, groupName: string) => void;
 }
 
 export const useApi = (): Api => {
@@ -54,7 +54,7 @@ export const useApi = (): Api => {
     );
   }, []);
 
-  const getIndexVolumeById = useCallback((id: number) => {
+  const getIndexVolumeById = useCallback((id: string) => {
     const state = store.getState();
     var url = new URL(
       `${state.config.values.stroomBaseServiceUrl}/stroom-index/volume/v1/${id}`
@@ -73,7 +73,7 @@ export const useApi = (): Api => {
     );
   }, []);
 
-  const deleteIndexVolume = useCallback((id: number) => {
+  const deleteIndexVolume = useCallback((id: string) => {
     const state = store.getState();
     var url = new URL(
       `${state.config.values.stroomBaseServiceUrl}/stroom-index/volume/v1/${id}`
@@ -83,7 +83,7 @@ export const useApi = (): Api => {
       url.href,
       r =>
         r
-          .json()
+          .text()
           .then((indexVolume: IndexVolume) =>
             store.dispatch(indexVolumeDeleted(id))
           ),
@@ -104,17 +104,15 @@ export const useApi = (): Api => {
       r =>
         r
           .json()
-          .then((indexVolumeIds: Array<number>) =>
-            store.dispatch(
-              indexVolumesInGroupReceived(groupName, indexVolumeIds)
-            )
+          .then((indexVolumes: Array<IndexVolume>) =>
+            store.dispatch(indexVolumesInGroupReceived(groupName, indexVolumes))
           ),
       {},
       true
     );
   }, []);
 
-  const getGroupsForIndexVolume = useCallback((id: number) => {
+  const getGroupsForIndexVolume = useCallback((id: string) => {
     const state = store.getState();
     var url = new URL(
       `${
@@ -158,7 +156,7 @@ export const useApi = (): Api => {
   }, []);
 
   const addVolumeToGroup = useCallback(
-    (indexVolumeId: number, groupName: string) => {
+    (indexVolumeId: string, groupName: string) => {
       const state = store.getState();
       const url = new URL(
         `${
@@ -178,7 +176,7 @@ export const useApi = (): Api => {
   );
 
   const removeVolumeFromGroup = useCallback(
-    (indexVolumeId: number, groupName: string) => {
+    (indexVolumeId: string, groupName: string) => {
       const state = store.getState();
       const url = new URL(
         `${

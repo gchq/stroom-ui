@@ -6,3 +6,11 @@ export const minLength2 = minLength(2);
 
 export const truncate = (text: string, limit: number) =>
   text.length > limit ? `${text.substr(0, limit)}...` : text;
+
+export function onlyUnique<VALUE>(
+  value: VALUE,
+  index: number,
+  self: Array<VALUE>
+) {
+  return self.indexOf(value) === index;
+}

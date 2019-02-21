@@ -1,15 +1,17 @@
 import * as React from "react";
-import { useState, useCallback } from "react";
 
-import { path } from "ramda";
-import ReactTable, { RowInfo } from "react-table";
+import ReactTable from "react-table";
 
 import { IndexVolumeGroup } from "../../types";
+import {
+  useSelectableReactTable,
+  SelectionBehaviour,
+  TableOutProps
+} from "../../lib/useSelectableItemListing";
 
 export interface Props {
   groups: Array<IndexVolumeGroup>;
-  selectedGroup?: IndexVolumeGroup;
-  onSelection: (name?: string) => void;
+  selectableTableProps: TableOutProps;
 }
 
 const COLUMNS = [
@@ -21,49 +23,11 @@ const COLUMNS = [
 ];
 
 const IndexVolumeGroupsTable = ({
-  groups,
-  selectedGroup,
-  onSelection
+  selectableTableProps: { onKeyDownWithShortcuts, tableProps }
 }: Props) => (
-  <ReactTable
-    data={groups}
-    columns={COLUMNS}
-    getTdProps={(state: any, rowInfo: RowInfo) => {
-      return {
-        onClick: (_: any, handleOriginal: () => void) => {
-          if (rowInfo !== undefined) {
-            if (
-              !!selectedGroup &&
-              selectedGroup.name === rowInfo.original.name
-            ) {
-              onSelection();
-            } else {
-              onSelection(rowInfo.original.name);
-            }
-          }
-
-          if (handleOriginal) {
-            handleOriginal();
-          }
-        }
-      };
-    }}
-    getTrProps={(_: any, rowInfo: RowInfo) => {
-      // We don't want to see a hover on a row without data.
-      // If a row is selected we want to see the selected color.
-      const isSelected =
-        !!selectedGroup &&
-        path(["original", "name"], rowInfo) === selectedGroup.name;
-      const hasData = path(["original", "name"], rowInfo) !== undefined;
-      let className;
-      if (hasData) {
-        className = isSelected ? "selected hoverable" : "hoverable";
-      }
-      return {
-        className
-      };
-    }}
-  />
+  <div tabIndex={0} onKeyDown={onKeyDownWithShortcuts}>
+    <ReactTable {...tableProps} />
+  </div>
 );
 
 export interface UseTable {
@@ -71,23 +35,20 @@ export interface UseTable {
 }
 
 export const useTable = (groups: Array<IndexVolumeGroup>): UseTable => {
-  const [selectedGroup, setSelectedGroup] = useState<
-    IndexVolumeGroup | undefined
-  >(undefined);
-
-  const onSelection = useCallback(
-    (selectedName?: string) => {
-      setSelectedGroup(
-        groups.find((u: IndexVolumeGroup) => u.name === selectedName)
-      );
+  const selectableTableProps = useSelectableReactTable<IndexVolumeGroup>(
+    {
+      getKey: v => v.name,
+      items: groups,
+      selectionBehaviour: SelectionBehaviour.MULTIPLE
     },
-    [groups]
+    {
+      columns: COLUMNS
+    }
   );
 
   return {
     componentProps: {
-      selectedGroup,
-      onSelection,
+      selectableTableProps,
       groups
     }
   };

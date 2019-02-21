@@ -13,7 +13,7 @@ export const generateTestIndexVolumeGroup = (): IndexVolumeGroup => ({
 let id = 0;
 
 export const generateTestIndexVolume = (): IndexVolume => ({
-  id: id++,
+  id: `${id++}`,
   path: `/data/${loremIpsum({ count: 3, units: "words" })}`,
   nodeName: "node1",
   createTimeMs: Date.now(),

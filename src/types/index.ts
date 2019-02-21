@@ -19,7 +19,7 @@ export interface IndexVolumeGroup extends HasAuditInfo {
 }
 
 export interface IndexVolume extends HasAuditInfo {
-  id: number;
+  id: string; // it's a number on the server side, but so many things will be easier if we just treat as string in JS
   path: string;
   nodeName: string;
   bytesLimit: number;
@@ -32,7 +32,7 @@ export interface IndexVolume extends HasAuditInfo {
 export type DocRefTypeList = Array<string>;
 
 export interface IndexVolumeGroupMembership {
-  volumeId: number;
+  volumeId: string;
   groupName: string;
 }
 

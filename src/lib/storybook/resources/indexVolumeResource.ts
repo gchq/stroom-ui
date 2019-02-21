@@ -45,7 +45,7 @@ const resourceBuilder: ResourceBuilder = (
       let newIndexVolume: IndexVolume = {
         nodeName,
         path,
-        id: nextIdToCreate++,
+        id: `${nextIdToCreate++}`,
         createTimeMs: now,
         updateTimeMs: now,
         createUser: "test",
@@ -95,13 +95,15 @@ const resourceBuilder: ResourceBuilder = (
     .intercept((req: HttpRequest, res: HttpResponse) => {
       let groupName = req.params.groupName;
 
-      let indexVolumeIds: Array<
-        number
-      > = testCache
+      let indexVolumeIds: Array<IndexVolume> = testCache
         .data!.indexVolumesAndGroups.groupMemberships.filter(
           m => m.groupName === groupName
         )
-        .map(m => m.volumeId);
+        .map(m => m.volumeId)
+        .map(vId =>
+          testCache.data!.indexVolumesAndGroups.volumes.find(v => v.id === vId)
+        )
+        .map(v => v!);
 
       res.send(indexVolumeIds);
     });

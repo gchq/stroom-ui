@@ -1,6 +1,7 @@
 import { useState } from "react";
 import useKeyIsDown from "../useKeyIsDown";
 import { KeyDownState } from "../useKeyIsDown/useKeyIsDown";
+import { RowInfo, TableProps } from "react-table";
 
 export enum SelectionBehaviour {
   NONE,
@@ -11,7 +12,7 @@ export enum SelectionBehaviour {
 export interface InProps<TItem> {
   getKey: (x: TItem) => string;
   items: Array<TItem>;
-  openItem: (i: TItem) => void;
+  openItem?: (i: TItem) => void;
   enterItem?: (i: TItem) => void;
   goBack?: (i: TItem) => void;
   selectionBehaviour?: SelectionBehaviour;
@@ -28,7 +29,7 @@ export interface OutProps {
   keyIsDown: KeyDownState;
 }
 
-function useSelectableItemListing<TItem>({
+export function useSelectableItemListing<TItem>({
   getKey,
   items,
   openItem,
@@ -129,15 +130,21 @@ function useSelectableItemListing<TItem>({
         e.preventDefault();
       } else if (e.key === "Enter") {
         if (focussedItem) {
-          openItem(focussedItem);
+          if (!!openItem) {
+            openItem(focussedItem);
+          } else {
+            selectionToggled(getKey(focussedItem));
+          }
         }
         e.preventDefault();
       } else if (e.key === "ArrowRight" || e.key === "l") {
         if (!!focussedItem) {
           if (!!enterItem) {
             enterItem(focussedItem);
-          } else {
+          } else if (!!openItem) {
             openItem(focussedItem);
+          } else {
+            selectionToggled(getKey(focussedItem));
           }
         }
       } else if (e.key === "ArrowLeft" || e.key === "h") {
@@ -150,6 +157,65 @@ function useSelectableItemListing<TItem>({
           e.preventDefault();
         }
       }
+    }
+  };
+}
+
+export interface TableOutProps extends OutProps {
+  tableProps: Partial<TableProps>;
+}
+
+export function useSelectableReactTable<TItem>(
+  props: InProps<TItem>,
+  customTableProps?: Partial<TableProps>
+): TableOutProps {
+  const selectableItemProps = useSelectableItemListing<TItem>(props);
+  const { getKey, items } = props;
+  const { selectionToggled, selectedItems, focussedItem } = selectableItemProps;
+
+  return {
+    ...selectableItemProps,
+    tableProps: {
+      data: items,
+      getTdProps: (state: any, rowInfo: RowInfo) => {
+        return {
+          onClick: (_: any, handleOriginal: () => void) => {
+            if (!!rowInfo && !!rowInfo.original) {
+              selectionToggled(getKey(rowInfo.original));
+            }
+
+            if (handleOriginal) {
+              handleOriginal();
+            }
+          }
+        };
+      },
+      getTrProps: (_: any, rowInfo: RowInfo) => {
+        // We don't want to see a hover on a row without data.
+        // If a row is selected we want to see the selected color.
+        let rowId =
+          !!rowInfo && !!rowInfo.original
+            ? getKey(rowInfo.original)
+            : undefined;
+        const isSelected =
+          selectedItems.findIndex(v => getKey(v) === rowId) !== -1;
+        const hasFocus = !!focussedItem && getKey(focussedItem) === rowId;
+        const hasData = rowId !== undefined;
+        let classNames = ["hoverable"];
+        if (hasData) {
+          classNames.push("hoverable");
+          if (isSelected) {
+            classNames.push("selected");
+          }
+          if (hasFocus) {
+            classNames.push("focussed");
+          }
+        }
+        return {
+          className: classNames.join(" ")
+        };
+      },
+      ...customTableProps
     }
   };
 }

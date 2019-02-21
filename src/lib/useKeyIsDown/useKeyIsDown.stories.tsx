@@ -19,7 +19,7 @@ import { storiesOf } from "@storybook/react";
 import useKeyIsDown, { KeyDownState, DEFAULT_FILTERS } from "./useKeyIsDown";
 import StroomDecorator from "../storybook/StroomDecorator";
 
-storiesOf("General Purpose/useKeyIsDown", module)
+storiesOf("Custom Hooks/useKeyIsDown", module)
   .addDecorator(StroomDecorator)
   .add("Test Component", () => {
     const keyIsDown1: KeyDownState = useKeyIsDown();

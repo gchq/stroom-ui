@@ -1,7 +1,16 @@
 import useSelectableItemListing, {
-  SelectionBehaviour
+  useSelectableReactTable,
+  SelectionBehaviour,
+  OutProps,
+  TableOutProps
 } from "./useSelectableItemListing";
 
-export { useSelectableItemListing, SelectionBehaviour };
+export {
+  useSelectableItemListing,
+  useSelectableReactTable,
+  SelectionBehaviour,
+  OutProps,
+  TableOutProps
+};
 
 export default useSelectableItemListing;

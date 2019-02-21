@@ -1,15 +1,17 @@
 import * as React from "react";
-import { useState, useCallback } from "react";
 
-import { path } from "ramda";
-import ReactTable, { RowInfo } from "react-table";
+import ReactTable from "react-table";
 
 import { IndexVolume } from "../../types";
+import {
+  useSelectableReactTable,
+  SelectionBehaviour,
+  TableOutProps
+} from "../../lib/useSelectableItemListing";
 
 export interface Props {
   indexVolumes: Array<IndexVolume>;
-  selectedIndexVolume?: IndexVolume;
-  onSelection: (id?: number) => void;
+  selectableTableProps: TableOutProps;
 }
 
 const COLUMNS = [
@@ -31,49 +33,11 @@ const COLUMNS = [
 ];
 
 const IndexVolumesTable = ({
-  indexVolumes,
-  selectedIndexVolume,
-  onSelection
+  selectableTableProps: { onKeyDownWithShortcuts, tableProps }
 }: Props) => (
-  <ReactTable
-    data={indexVolumes}
-    columns={COLUMNS}
-    getTdProps={(state: any, rowInfo: RowInfo) => {
-      return {
-        onClick: (_: any, handleOriginal: () => void) => {
-          if (rowInfo !== undefined) {
-            if (
-              !!selectedIndexVolume &&
-              selectedIndexVolume.id === rowInfo.original.id
-            ) {
-              onSelection();
-            } else {
-              onSelection(rowInfo.original.id);
-            }
-          }
-
-          if (handleOriginal) {
-            handleOriginal();
-          }
-        }
-      };
-    }}
-    getTrProps={(_: any, rowInfo: RowInfo) => {
-      // We don't want to see a hover on a row without data.
-      // If a row is selected we want to see the selected color.
-      const isSelected =
-        !!selectedIndexVolume &&
-        path(["original", "id"], rowInfo) === selectedIndexVolume.id;
-      const hasData = path(["original", "id"], rowInfo) !== undefined;
-      let className;
-      if (hasData) {
-        className = isSelected ? "selected hoverable" : "hoverable";
-      }
-      return {
-        className
-      };
-    }}
-  />
+  <div tabIndex={0} onKeyDown={onKeyDownWithShortcuts}>
+    <ReactTable {...tableProps} />
+  </div>
 );
 
 export interface UseTable {
@@ -81,23 +45,20 @@ export interface UseTable {
 }
 
 export const useTable = (indexVolumes: Array<IndexVolume>): UseTable => {
-  const [selectedIndexVolume, setSelectedIndexVolume] = useState<
-    IndexVolume | undefined
-  >(undefined);
-
-  const onSelection = useCallback(
-    (selectedId: number) => {
-      setSelectedIndexVolume(
-        indexVolumes.find((u: IndexVolume) => u.id === selectedId)
-      );
+  const selectableTableProps = useSelectableReactTable<IndexVolume>(
+    {
+      getKey: v => v.id,
+      items: indexVolumes,
+      selectionBehaviour: SelectionBehaviour.MULTIPLE
     },
-    [indexVolumes]
+    {
+      columns: COLUMNS
+    }
   );
 
   return {
     componentProps: {
-      selectedIndexVolume,
-      onSelection,
+      selectableTableProps,
       indexVolumes
     }
   };

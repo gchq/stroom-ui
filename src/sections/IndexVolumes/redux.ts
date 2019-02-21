@@ -21,6 +21,7 @@ import {
   IndexVolumeGroupMembership,
   IndexVolumeGroup
 } from "../../types";
+import { onlyUnique } from "../../lib/reduxFormUtils";
 
 const INDEX_VOLUMES_RECEIVED = "INDEX_VOLUMES_RECEIVED";
 const INDEX_VOLUMES_IN_GROUP_RECEIVED = "INDEX_VOLUMES_IN_GROUP_RECEIVED";
@@ -39,11 +40,11 @@ export interface IndexVolumesReceivedAction
 export interface IndexVolumesInGroupReceivedAction
   extends Action<"INDEX_VOLUMES_IN_GROUP_RECEIVED"> {
   groupName: string;
-  indexVolumeIds: Array<number>;
+  indexVolumes: Array<IndexVolume>;
 }
 export interface IndexGroupsForVolumeReceivedAction
   extends Action<"INDEX_GROUPS_FOR_VOLUME_RECEIVED"> {
-  indexVolumeId: number;
+  indexVolumeId: string;
   groups: Array<IndexVolumeGroup>;
 }
 
@@ -59,18 +60,18 @@ export interface IndexVolumeCreatedAction
 
 export interface IndexVolumeDeletedAction
   extends Action<"INDEX_VOLUME_DELETED"> {
-  indexVolumeId: number;
+  indexVolumeId: string;
 }
 
 export interface IndexVolumeAddedToGroupAction
   extends Action<"INDEX_VOLUME_ADDED_TO_GROUP"> {
-  indexVolumeId: number;
+  indexVolumeId: string;
   groupName: string;
 }
 
 export interface IndexVolumeRemovedFromGroupAction
   extends Action<"INDEX_VOLUME_REMOVED_FROM_GROUP"> {
-  indexVolumeId: number;
+  indexVolumeId: string;
   groupName: string;
 }
 export const actionCreators = {
@@ -82,14 +83,14 @@ export const actionCreators = {
   }),
   indexVolumesInGroupReceived: (
     groupName: string,
-    indexVolumeIds: Array<number>
+    indexVolumes: Array<IndexVolume>
   ): IndexVolumesInGroupReceivedAction => ({
     type: INDEX_VOLUMES_IN_GROUP_RECEIVED,
     groupName,
-    indexVolumeIds
+    indexVolumes
   }),
   indexGroupsForVolumeReceived: (
-    indexVolumeId: number,
+    indexVolumeId: string,
     groups: Array<IndexVolumeGroup>
   ): IndexGroupsForVolumeReceivedAction => ({
     type: INDEX_GROUPS_FOR_VOLUME_RECEIVED,
@@ -106,12 +107,12 @@ export const actionCreators = {
     type: INDEX_VOLUME_CREATED,
     indexVolume
   }),
-  indexVolumeDeleted: (indexVolumeId: number): IndexVolumeDeletedAction => ({
+  indexVolumeDeleted: (indexVolumeId: string): IndexVolumeDeletedAction => ({
     type: INDEX_VOLUME_DELETED,
     indexVolumeId
   }),
   indexVolumeAddedToGroup: (
-    indexVolumeId: number,
+    indexVolumeId: string,
     groupName: string
   ): IndexVolumeAddedToGroupAction => ({
     type: INDEX_VOLUME_ADDED_TO_GROUP,
@@ -119,7 +120,7 @@ export const actionCreators = {
     groupName
   }),
   indexVolumeRemovedFromGroup: (
-    indexVolumeId: number,
+    indexVolumeId: string,
     groupName: string
   ): IndexVolumeRemovedFromGroupAction => ({
     type: INDEX_VOLUME_REMOVED_FROM_GROUP,
@@ -138,10 +139,6 @@ export const defaultState: StoreState = {
   indexVolumeGroupMemberships: []
 };
 
-function onlyUnique<VALUE>(value: VALUE, index: number, self: Array<VALUE>) {
-  return self.indexOf(value) === index;
-}
-
 export const reducer = prepareReducer(defaultState)
   .handleAction<IndexVolumesReceivedAction>(
     INDEX_VOLUMES_RECEIVED,
@@ -152,13 +149,13 @@ export const reducer = prepareReducer(defaultState)
   )
   .handleAction<IndexVolumesInGroupReceivedAction>(
     INDEX_VOLUMES_IN_GROUP_RECEIVED,
-    (state: StoreState, { groupName, indexVolumeIds }) => ({
-      ...state,
+    (state: StoreState, { groupName, indexVolumes }) => ({
+      indexVolumes: state.indexVolumes.concat(indexVolumes).filter(onlyUnique),
       indexVolumeGroupMemberships: [
         ...state.indexVolumeGroupMemberships
       ].concat(
-        indexVolumeIds.map(volumeId => ({
-          volumeId,
+        indexVolumes.map(v => ({
+          volumeId: v.id,
           groupName
         }))
       )

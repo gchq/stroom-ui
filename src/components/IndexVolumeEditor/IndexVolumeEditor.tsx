@@ -10,10 +10,10 @@ import {
   IndexVolumeGroupsTable
 } from "../../sections/IndexVolumeGroups";
 import useReduxState from "../../lib/useReduxState";
-import { IndexVolumeGroup } from "src/types";
+import { IndexVolumeGroup } from "../../types";
 
 export interface Props {
-  id: number;
+  id: string;
 }
 
 const IndexVolumeEditor = ({ id }: Props) => {

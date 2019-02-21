@@ -24,6 +24,9 @@ const IndexVolumeGroups = () => {
   }));
   const api = useApi();
   const { componentProps: tableProps } = useTable(groups);
+  const {
+    selectableTableProps: { selectedItems }
+  } = tableProps;
 
   useEffect(() => {
     api.getIndexVolumeGroups();
@@ -38,11 +41,11 @@ const IndexVolumeGroups = () => {
     showDialog: showDeleteDialog,
     componentProps: deleteDialogComponentProps
   } = useConfirmDialog({
-    question: tableProps.selectedGroup
-      ? `Are you sure you want to delete ${tableProps.selectedGroup.name}`
-      : "no group?",
+    question: `Are you sure you want to delete ${selectedItems
+      .map(v => v.name)
+      .join(",")}`,
     onConfirm: () => {
-      api.deleteIndexVolumeGroup(tableProps.selectedGroup!.name);
+      selectedItems.forEach(g => api.deleteIndexVolumeGroup(g.name));
     }
   });
 
@@ -53,14 +56,14 @@ const IndexVolumeGroups = () => {
       <Button text="Create" onClick={showNewDialog} />
       <Button
         text="View/Edit"
-        disabled={!tableProps.selectedGroup}
+        disabled={selectedItems.length !== 1}
         onClick={() =>
-          history.push(`/s/indexing/groups/${tableProps.selectedGroup!.name}`)
+          history.push(`/s/indexing/groups/${selectedItems[0].name}`)
         }
       />
       <Button
         text="Delete"
-        disabled={!tableProps.selectedGroup}
+        disabled={selectedItems.length === 0}
         onClick={() => showDeleteDialog()}
       />
 
