@@ -1,18 +1,17 @@
 import * as React from "react";
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useCallback } from "react";
 
 import IconHeader from "../IconHeader";
-import Button, { DialogActionButtons } from "../Button";
+import Button from "../Button";
 import useRouter from "../../lib/useRouter";
 import { useIndexVolumeApi } from "../../sections/IndexVolumes";
 import {
   useIndexVolumeGroupsTable,
   IndexVolumeGroupsTable,
-  IndexVolumeGroupPicker,
-  useIndexVolumeGroupPicker
+  useIndexVolumeGroupModalPicker,
+  IndexVolumeGroupModalPicker
 } from "../../sections/IndexVolumeGroups";
 import useReduxState from "../../lib/useReduxState";
-import ThemedModal from "../ThemedModal";
 import ThemedConfirm, {
   useDialog as useConfirmDialog
 } from "../../components/ThemedConfirm";
@@ -37,14 +36,6 @@ const IndexVolumeEditor = ({ volumeId }: Props) => {
     volumeApi.getGroupsForIndexVolume(volumeId);
   }, [volumeId]);
 
-  const volumeGroupPickerProps = useIndexVolumeGroupPicker();
-  const {
-    reset: resetVolumeGroup,
-    value: volumeGroupName
-  } = volumeGroupPickerProps;
-
-  const [addToGroupOpen, setAddToGroupOpen] = useState<boolean>(false);
-
   const { componentProps: tableProps } = useIndexVolumeGroupsTable(
     groupsByIndexVolume[volumeId]
   );
@@ -67,6 +58,16 @@ const IndexVolumeEditor = ({ volumeId }: Props) => {
     ])
   });
 
+  const {
+    componentProps: indexVolumeGroupPickerProps,
+    showDialog: showIndexVolumeGroupPicker
+  } = useIndexVolumeGroupModalPicker({
+    onConfirm: useCallback(
+      (groupName: string) => volumeApi.addVolumeToGroup(volumeId, groupName),
+      [volumeId]
+    )
+  });
+
   const indexVolume: IndexVolume | undefined = indexVolumes.find(
     v => v.id === volumeId
   );
@@ -82,7 +83,7 @@ const IndexVolumeEditor = ({ volumeId }: Props) => {
         text="Back"
         onClick={() => history.push(`/s/indexing/volumes/`)}
       />
-      <Button text="Add to Group" onClick={() => setAddToGroupOpen(true)} />
+      <Button text="Add to Group" onClick={showIndexVolumeGroupPicker} />
       <Button
         text="Remove From Group(s)"
         disabled={selectedItems.length === 0}
@@ -92,25 +93,7 @@ const IndexVolumeEditor = ({ volumeId }: Props) => {
       <ThemedConfirm {...removeDialogProps} />
 
       <h2>Group Memberships</h2>
-      <ThemedModal
-        isOpen={addToGroupOpen}
-        header={<IconHeader icon="plus" text="Add Volume to Group" />}
-        content={<IndexVolumeGroupPicker {...volumeGroupPickerProps} />}
-        actions={
-          <DialogActionButtons
-            onConfirm={() => {
-              if (!!volumeGroupName) {
-                volumeApi.addVolumeToGroup(volumeId, volumeGroupName);
-              }
-              setAddToGroupOpen(false);
-            }}
-            onCancel={() => {
-              resetVolumeGroup();
-              setAddToGroupOpen(false);
-            }}
-          />
-        }
-      />
+      <IndexVolumeGroupModalPicker {...indexVolumeGroupPickerProps} />
       <IndexVolumeGroupsTable {...tableProps} />
     </div>
   );
