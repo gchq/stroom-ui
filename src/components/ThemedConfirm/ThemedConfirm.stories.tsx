@@ -15,7 +15,7 @@
  */
 
 import * as React from "react";
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { storiesOf } from "@storybook/react";
 
 import Button from "../Button";
@@ -29,9 +29,14 @@ let TestConfirm = () => {
   const [confirmCount, setConfirmCount] = useState<number>(0);
 
   const { showDialog, componentProps } = useDialog({
-    getQuestion: () => "Are you sure about this?",
-    getDetails: () => "Because...nothing will really happen anyway",
-    onConfirm: () => setConfirmCount(confirmCount + 1)
+    getQuestion: useCallback(() => "Are you sure about this?", []),
+    getDetails: useCallback(
+      () => "Because...nothing will really happen anyway",
+      []
+    ),
+    onConfirm: useCallback(() => setConfirmCount(confirmCount + 1), [
+      confirmCount
+    ])
   });
 
   return (

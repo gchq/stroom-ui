@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useEffect } from "react";
+import { useEffect, useCallback } from "react";
 
 import useReduxState from "../../lib/useReduxState/useReduxState";
 import useApi from "./useIndexVolumeGroupApi";
@@ -41,11 +41,16 @@ const IndexVolumeGroups = () => {
     showDialog: showDeleteDialog,
     componentProps: deleteDialogComponentProps
   } = useConfirmDialog({
-    getQuestion: () => `Are you sure you want to delete selected groups?`,
-    getDetails: () => selectedItems.map(v => v.name).join(", "),
-    onConfirm: () => {
+    getQuestion: useCallback(
+      () => `Are you sure you want to delete selected groups?`,
+      []
+    ),
+    getDetails: useCallback(() => selectedItems.map(v => v.name).join(", "), [
+      selectedItems.map(v => v.name)
+    ]),
+    onConfirm: useCallback(() => {
       selectedItems.forEach(g => api.deleteIndexVolumeGroup(g.name));
-    }
+    }, [selectedItems.map(v => v.name)])
   });
 
   return (

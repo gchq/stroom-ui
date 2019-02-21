@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useEffect } from "react";
+import { useEffect, useCallback } from "react";
 
 import useReduxState from "../../lib/useReduxState/useReduxState";
 import useApi from "./useIndexVolumeApi";
@@ -41,11 +41,16 @@ const IndexVolumes = () => {
     showDialog: showDeleteDialog,
     componentProps: deleteDialogProps
   } = useThemedConfirmDialog({
-    getQuestion: () => `Are you sure you want to delete selected volumes`,
-    getDetails: () => selectedItems.map(v => v.id).join(", "),
-    onConfirm: () => {
+    getQuestion: useCallback(
+      () => `Are you sure you want to delete selected volumes`,
+      []
+    ),
+    getDetails: useCallback(() => selectedItems.map(v => v.id).join(", "), [
+      selectedItems.map(v => v.id)
+    ]),
+    onConfirm: useCallback(() => {
       selectedItems.forEach(v => api.deleteIndexVolume(v.id));
-    }
+    }, [selectedItems.map(v => v.id)])
   });
 
   return (

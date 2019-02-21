@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 import { Formik, Field, Form } from "formik";
 
@@ -54,11 +54,14 @@ const UserPermissions = () => {
     componentProps: deleteDialogProps,
     showDialog: showDeleteDialog
   } = useThemedConfim({
-    getQuestion: () => `Are you sure you want to delete user`,
-    getDetails: () => (selectedUser ? selectedUser.name : "no user"),
-    onConfirm: () => {
+    getQuestion: useCallback(() => `Are you sure you want to delete user`, []),
+    getDetails: useCallback(
+      () => (selectedUser ? selectedUser.name : "no user"),
+      [selectedUser]
+    ),
+    onConfirm: useCallback(() => {
       api.deleteUser(selectedUser!.uuid);
-    }
+    }, [selectedUser])
   });
 
   return (

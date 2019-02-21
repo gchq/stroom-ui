@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useCallback } from "react";
 
 import IconHeader from "../IconHeader";
 import Button from "../Button";
@@ -69,8 +69,10 @@ const IndexVolumeGroupEditor = ({ name }: Props) => {
   } = useConfirmDialog({
     onConfirm: () =>
       selectedItems.forEach(v => volumeApi.removeVolumeFromGroup(v.id, name)),
-    getQuestion: () => "Remove selected volumes from group?",
-    getDetails: () => selectedItems.map(s => s.id).join(", ")
+    getQuestion: useCallback(() => "Remove selected volumes from group?", []),
+    getDetails: useCallback(() => selectedItems.map(s => s.id).join(", "), [
+      selectedItems.map(s => s.id)
+    ])
   });
 
   if (!indexVolumeGroup) {

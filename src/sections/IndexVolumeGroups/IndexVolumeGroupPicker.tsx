@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import Select from "react-select";
 
@@ -35,6 +35,20 @@ const IndexVolumeGroupPicker = ({ value, onChange }: Props) => {
       options={options}
     />
   );
+};
+
+export interface UseProps extends Props {
+  reset: () => void;
+}
+
+export const usePicker = (): UseProps => {
+  const [value, onChange] = useState<string | undefined>(undefined);
+
+  return {
+    value,
+    onChange,
+    reset: () => onChange(undefined)
+  };
 };
 
 export default IndexVolumeGroupPicker;

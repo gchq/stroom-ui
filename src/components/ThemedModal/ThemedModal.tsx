@@ -20,11 +20,13 @@ import * as ReactModal from "react-modal";
 import reactModalOptions from "./reactModalOptions";
 import { useTheme } from "../../lib/theme";
 
-export interface Props extends ReactModal.Props {
+export interface ContentProps {
   header: JSX.Element;
   content: JSX.Element;
   actions: JSX.Element;
 }
+
+export interface Props extends ContentProps, ReactModal.Props {}
 
 /**
  * A themed modal is required because Semantic UI modals are mounted
