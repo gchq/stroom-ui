@@ -55,7 +55,6 @@ export interface Props {
   asTree: PipelineAsTreeType;
   elementDefinition: ElementDefinition;
   elementProperties: ElementPropertiesType;
-  selectedElementId?: string;
 }
 
 interface DragObject {
@@ -187,7 +186,6 @@ const PipelineElement = ({
   isDragging,
   draggingItemType,
   pipelineEditApi,
-  selectedElementId,
   elementDefinition,
   elementProperties,
   pipeline
@@ -224,7 +222,7 @@ const PipelineElement = ({
         classNames.push("cannot_drop");
       }
 
-      if (selectedElementId === elementId) {
+      if (pipelineEditApi.selectedElementId === elementId) {
         classNames.push("selected");
       }
     } else {
@@ -232,7 +230,13 @@ const PipelineElement = ({
     }
 
     return classNames.join(" ");
-  }, [draggingItemType, isDragging, canDrop, selectedElementId, elementId]);
+  }, [
+    draggingItemType,
+    isDragging,
+    canDrop,
+    pipelineEditApi.selectedElementId,
+    elementId
+  ]);
 
   return connectDragSource(
     connectDropTarget(

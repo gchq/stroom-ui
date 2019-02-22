@@ -27,20 +27,25 @@ import {
 import { PipelineElementType } from "../../types";
 import { getAllElementNames } from "./pipelineUtils";
 import { ShowDialog as ShowAddElementDialog } from "./AddElementModal";
-import usePipelineState from "./usePipelineState";
+import { PipelineProps } from "./usePipelineState";
 import useElements from "./useElements";
 
 export interface Props {
   pipelineId: string;
+  pipelineStateProps: PipelineProps;
   showAddElementDialog: ShowAddElementDialog;
 }
 
-export const Pipeline = ({ pipelineId, showAddElementDialog }: Props) => {
+export const Pipeline = ({
+  pipelineId,
+  pipelineStateProps,
+  showAddElementDialog
+}: Props) => {
   const {
     asTree,
     pipelineEditApi,
     useEditorProps: { document: pipeline }
-  } = usePipelineState(pipelineId);
+  } = pipelineStateProps;
   const { elementDefinitions, elementProperties } = useElements();
 
   if (!pipeline) {
@@ -81,7 +86,6 @@ export const Pipeline = ({ pipelineId, showAddElementDialog }: Props) => {
                         key={element.id}
                         pipelineId={pipelineId}
                         elementId={element.id}
-                        selectedElementId={pipelineEditApi.selectedElementId}
                         showAddElementDialog={showAddElementDialog}
                         existingNames={existingNames}
                         pipeline={pipeline}

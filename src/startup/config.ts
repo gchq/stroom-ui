@@ -72,10 +72,7 @@ const useApi = (): Api => {
   const fetchConfig = useCallback(() => {
     const url = "/config.json";
     httpClient.httpGet(url, response => {
-      response.json().then((config: Config) => {
-        console.log("Config Received", config);
-        actionCreators.updateConfig(config);
-      });
+      response.json().then(actionCreators.updateConfig);
     });
   }, []);
 

@@ -40,11 +40,12 @@ const PipelineDebugger = ({ pipelineId, debuggerId }: Props) => {
     debuggers
   }));
   const debuggerState = debuggers[debuggerId];
+  const pipelineStateProps = usePipelineState(pipelineId);
   const {
     pipelineEditApi: { selectedElementId, elementSelected },
     useEditorProps: { document: pipeline },
     asTree
-  } = usePipelineState(pipelineId);
+  } = pipelineStateProps;
 
   useEffect(() => {
     pipelineApi.fetchPipeline(pipelineId);
@@ -76,6 +77,7 @@ const PipelineDebugger = ({ pipelineId, debuggerId }: Props) => {
       </div>
       <Pipeline
         pipelineId={pipelineId}
+        pipelineStateProps={pipelineStateProps}
         showAddElementDialog={() =>
           console.error(
             "Adding Elements from Palette not supported in debugger"

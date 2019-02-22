@@ -47,24 +47,23 @@ const PipelineEditor = ({ pipelineId }: Props) => {
     pipelineApi.fetchPipeline(pipelineId);
   });
 
+  const piplineStateProps = usePipelineState(pipelineId);
   const {
     pipelineEditApi,
     useEditorProps: { document: pipeline, editorProps }
-  } = usePipelineState(pipelineId);
+  } = piplineStateProps;
 
   const {
     showDialog: showSettingsDialog,
     componentProps: settingsComponentProps
   } = usePipelineSettingsDialog(description =>
-    pipelineEditApi.settingsUpdated(description)
+    pipelineEditApi.settingsUpdated({ description })
   );
 
   const {
     showDialog: showAddElementDialog,
     componentProps: addElementComponentProps
-  } = useAddElementDialog((parentId, elementDefinition, name) => {
-    pipelineEditApi.elementAdded(parentId, elementDefinition, name);
-  });
+  } = useAddElementDialog(pipelineEditApi.elementAdded);
 
   const {
     showDialog: showDeleteElementDialog,
@@ -127,6 +126,7 @@ const PipelineEditor = ({ pipelineId }: Props) => {
           <div className="Pipeline-editor__topPanel">
             <Pipeline
               pipelineId={pipelineId}
+              pipelineStateProps={piplineStateProps}
               showAddElementDialog={showAddElementDialog}
             />
           </div>

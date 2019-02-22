@@ -22,7 +22,7 @@ import {
 export interface PipelineEditApi {
   selectedElementId?: string;
   elementInitialValues: object;
-  settingsUpdated: (description: string) => void;
+  settingsUpdated: (p: { description: string }) => void;
   elementSelected: (elementId: string, initialValues?: object) => void;
   elementSelectionCleared: () => void;
   elementMoved: (itemToMove: string, destination: string) => void;
@@ -76,24 +76,26 @@ export const usePipelineState = (pipelineId: string): PipelineProps => {
     pipelineEditApi: {
       elementInitialValues,
       selectedElementId,
-      settingsUpdated: useCallback(
+      settingsUpdated: useCallback<PipelineEditApi["settingsUpdated"]>(
         ({ description }) => {
           onDocumentChange({ description });
         },
         [onDocumentChange]
       ),
-      elementSelected: useCallback(
+      elementSelected: useCallback<PipelineEditApi["elementReinstated"]>(
         (elementId, initialValues) => {
           setSelectedElementId(elementId);
           setInitialValues(initialValues);
         },
         [setSelectedElementId, setInitialValues]
       ),
-      elementSelectionCleared: useCallback(() => {
+      elementSelectionCleared: useCallback<
+        PipelineEditApi["elementSelectionCleared"]
+      >(() => {
         setSelectedElementId(undefined);
         setInitialValues({});
       }, [setSelectedElementId, setInitialValues]),
-      elementDeleted: useCallback(
+      elementDeleted: useCallback<PipelineEditApi["elementDeleted"]>(
         elementId => {
           if (!!document) {
             onDocumentChange(removeElementFromPipeline(document, elementId));
@@ -101,7 +103,7 @@ export const usePipelineState = (pipelineId: string): PipelineProps => {
         },
         [document]
       ),
-      elementReinstated: useCallback(
+      elementReinstated: useCallback<PipelineEditApi["elementReinstated"]>(
         (parentId, recycleData) => {
           if (!!document) {
             onDocumentChange(
@@ -111,8 +113,8 @@ export const usePipelineState = (pipelineId: string): PipelineProps => {
         },
         [document]
       ),
-      elementAdded: useCallback(
-        (name, parentId, elementDefinition) => {
+      elementAdded: useCallback<PipelineEditApi["elementAdded"]>(
+        (parentId, elementDefinition, name) => {
           if (!!document) {
             onDocumentChange(
               createNewElementInPipeline(
@@ -124,37 +126,43 @@ export const usePipelineState = (pipelineId: string): PipelineProps => {
             );
           }
         },
-        [document]
+        [document, onDocumentChange]
       ),
-      elementMoved: useCallback((itemToMove, destination) => {
-        if (!!document) {
-          onDocumentChange(
-            moveElementInPipeline(document, itemToMove, destination)
-          );
-        }
-      }, []),
-      elementPropertyUpdated: useCallback(
-        (element, name, propertyType, propertyValue) => {
+      elementMoved: useCallback<PipelineEditApi["elementMoved"]>(
+        (itemToMove, destination) => {
           if (!!document) {
             onDocumentChange(
-              setElementPropertyValueInPipeline(
-                document,
-                element,
-                name,
-                propertyType,
-                propertyValue
-              )
+              moveElementInPipeline(document, itemToMove, destination)
             );
           }
         },
         []
       ),
-      elementPropertyRevertToDefault: useCallback((elementId, name) => {
+      elementPropertyUpdated: useCallback<
+        PipelineEditApi["elementPropertyUpdated"]
+      >((element, name, propertyType, propertyValue) => {
+        if (!!document) {
+          onDocumentChange(
+            setElementPropertyValueInPipeline(
+              document,
+              element,
+              name,
+              propertyType,
+              propertyValue
+            )
+          );
+        }
+      }, []),
+      elementPropertyRevertToDefault: useCallback<
+        PipelineEditApi["elementPropertyRevertToDefault"]
+      >((elementId, name) => {
         if (!!document) {
           onDocumentChange(revertPropertyToDefault(document, elementId, name));
         }
       }, []),
-      elementPropertyRevertToParent: useCallback((elementId, name) => {
+      elementPropertyRevertToParent: useCallback<
+        PipelineEditApi["elementPropertyRevertToParent"]
+      >((elementId, name) => {
         if (!!document) {
           onDocumentChange(revertPropertyToParent(document, elementId, name));
         }

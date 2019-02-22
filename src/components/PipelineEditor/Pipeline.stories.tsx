@@ -22,16 +22,29 @@ import { testPipelines } from "./test";
 import StroomDecorator from "../../lib/storybook/StroomDecorator";
 
 import "../../styles/main.css";
+import usePipelineState from "./usePipelineState";
 
 const pipelineStories = storiesOf("Pipeline/Display", module).addDecorator(
   StroomDecorator
 );
 
-Object.keys(testPipelines).forEach(k => {
-  pipelineStories.add(k, () => (
+interface TestProps {
+  pipelineId: string;
+}
+
+const TestPipeline: React.FunctionComponent<TestProps> = ({
+  pipelineId
+}: TestProps) => {
+  const pipelineStateProps = usePipelineState(pipelineId);
+  return (
     <Pipeline
-      pipelineId={k}
+      pipelineId={pipelineId}
+      pipelineStateProps={pipelineStateProps}
       showAddElementDialog={() => console.log("Add Element")}
     />
-  ));
+  );
+};
+
+Object.keys(testPipelines).forEach(k => {
+  pipelineStories.add(k, () => <TestPipeline pipelineId={k} />);
 });
