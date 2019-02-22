@@ -16,15 +16,12 @@
 
 import * as React from "react";
 import { useEffect } from "react";
-import { useDispatch } from "redux-react-hook";
 
-import DocRefEditor, { useDocRefEditor, actionCreators } from "../DocRefEditor";
+import DocRefEditor, { useDocRefEditor } from "../DocRefEditor";
 import Loader from "../Loader";
 import useApi from "./useXsltApi";
 import ThemedAceEditor from "../ThemedAceEditor";
 import { XsltDoc } from "../../types";
-
-const { documentChangesMade } = actionCreators;
 
 export interface Props {
   xsltUuid: string;
@@ -32,12 +29,11 @@ export interface Props {
 
 const XsltEditor = ({ xsltUuid }: Props) => {
   const api = useApi();
-  const dispatch = useDispatch();
   useEffect(() => {
     api.fetchDocument(xsltUuid);
   });
 
-  const { document, editorProps } = useDocRefEditor<XsltDoc>({
+  const { document, onDocumentChange, editorProps } = useDocRefEditor<XsltDoc>({
     docRefUuid: xsltUuid,
     saveDocument: api.saveDocument
   });
@@ -55,7 +51,7 @@ const XsltEditor = ({ xsltUuid }: Props) => {
         value={document.data}
         onChange={newValue => {
           if (newValue !== document.data) {
-            dispatch(documentChangesMade(xsltUuid, { data: newValue }));
+            onDocumentChange({ data: newValue });
           }
         }}
       />

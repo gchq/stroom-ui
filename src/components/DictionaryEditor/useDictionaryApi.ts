@@ -15,15 +15,15 @@
  */
 import { useContext, useCallback } from "react";
 import { StoreContext } from "redux-react-hook";
-import { actionCreators } from "./redux";
+import { actionCreators } from "../DocRefEditor";
 import useHttpClient from "../../lib/useHttpClient/useHttpClient";
 import { Dictionary } from "../../types";
 
-const { dictionaryReceived, dictionarySaved } = actionCreators;
+const { documentReceived, documentSaved } = actionCreators;
 
 export interface Api {
   fetchDocument: (dictionaryUuid: string) => void;
-  saveDocument: (dictionaryUuid: string) => void;
+  saveDocument: (document: Dictionary) => void;
 }
 
 export const useApi = (): Api => {
@@ -43,28 +43,24 @@ export const useApi = (): Api => {
       response
         .json()
         .then((dictionary: Dictionary) =>
-          store.dispatch(dictionaryReceived(dictionaryUuid, dictionary))
+          store.dispatch(documentReceived(dictionaryUuid, dictionary))
         )
     );
   }, []);
-  const saveDocument = useCallback((dictionaryUuid: string) => {
+  const saveDocument = useCallback((document: Dictionary) => {
     const state = store.getState();
-    const url = `${
-      state.config.values.stroomBaseServiceUrl
-    }/dictionary/v1/${dictionaryUuid}`;
-
-    const body = JSON.stringify(
-      state.dictionaryEditor[dictionaryUuid].dictionary
-    );
+    const url = `${state.config.values.stroomBaseServiceUrl}/dictionary/v1/${
+      document.uuid
+    }`;
 
     httpClient.httpPost(
       url,
       response =>
         response
           .text()
-          .then(() => store.dispatch(dictionarySaved(dictionaryUuid))),
+          .then(() => store.dispatch(documentSaved(document.uuid))),
       {
-        body
+        body: document
       }
     );
   }, []);

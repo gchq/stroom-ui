@@ -47,10 +47,6 @@ import {
   StoreState as DocRefTypesStoreState
 } from "../components/DocRefTypes";
 import {
-  reducer as dictionaryEditor,
-  StoreState as DictionaryEditorStoreState
-} from "../components/DictionaryEditor";
-import {
   reducer as indexEditor,
   StoreState as IndexEditorStoreState
 } from "../components/IndexEditor";
@@ -96,7 +92,6 @@ export interface GlobalStoreState {
   fetch: FetchStoreStore;
   docRefTypes: DocRefTypesStoreState;
   folderExplorer: FolderExplorerStoreState;
-  dictionaryEditor: DictionaryEditorStoreState;
   indexEditor: IndexEditorStoreState;
   pipelineEditor: PipelineEditorStoreState;
   debuggers: DebuggersStoreState;
@@ -117,7 +112,6 @@ export default combineReducers({
   docRefTypes,
   folderExplorer,
   appSearch,
-  dictionaryEditor,
   indexEditor,
   pipelineEditor,
   debuggers,
