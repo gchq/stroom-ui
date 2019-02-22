@@ -15,8 +15,7 @@
  */
 
 import IndexEditor from "./IndexEditor";
-import { actionCreators, reducer, StoreState } from "./redux";
 
-export { IndexEditor, actionCreators, reducer, StoreState };
+export { IndexEditor };
 
 export default IndexEditor;

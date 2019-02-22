@@ -15,14 +15,15 @@
  */
 import { useContext, useCallback } from "react";
 import { StoreContext } from "redux-react-hook";
-import { actionCreators } from "./redux";
+import { actionCreators } from "../DocRefEditor";
 import useHttpClient from "../../lib/useHttpClient/useHttpClient";
+import { IndexDoc } from "../../types";
 
-const { indexReceived, indexSaved } = actionCreators;
+const { documentReceived, documentSaved } = actionCreators;
 
 export interface Api {
   fetchDocument: (indexUuid: string) => void;
-  saveDocument: (indexUuid: string) => void;
+  saveDocument: (index: IndexDoc) => void;
 }
 
 export const useApi = (): Api => {
@@ -42,9 +43,9 @@ export const useApi = (): Api => {
       url,
       response =>
         response
-          .text()
-          .then((index: string) =>
-            store.dispatch(indexReceived(indexUuid, index))
+          .json()
+          .then((index: IndexDoc) =>
+            store.dispatch(documentReceived(indexUuid, index))
           ),
       {
         headers: {
@@ -54,20 +55,18 @@ export const useApi = (): Api => {
       }
     );
   }, []);
-  const saveDocument = useCallback((indexUuid: string) => {
+  const saveDocument = useCallback((index: IndexDoc) => {
     const state = store.getState();
-    const url = `${
-      state.config.values.stroomBaseServiceUrl
-    }/index/v1/${indexUuid}`;
-
-    const body = state.indexEditor[indexUuid].indexData;
+    const url = `${state.config.values.stroomBaseServiceUrl}/index/v1/${
+      index.uuid
+    }`;
 
     httpClient.httpPost(
       url,
       response =>
-        response.text().then(() => store.dispatch(indexSaved(indexUuid))),
+        response.text().then(() => store.dispatch(documentSaved(index.uuid))),
       {
-        body,
+        body: index.data,
         headers: {
           Accept: "application/xml",
           "Content-Type": "application/xml"

@@ -47,10 +47,6 @@ import {
   StoreState as DocRefTypesStoreState
 } from "../components/DocRefTypes";
 import {
-  reducer as indexEditor,
-  StoreState as IndexEditorStoreState
-} from "../components/IndexEditor";
-import {
   reducer as folderExplorer,
   StoreState as FolderExplorerStoreState
 } from "../components/FolderExplorer/redux";
@@ -92,7 +88,6 @@ export interface GlobalStoreState {
   fetch: FetchStoreStore;
   docRefTypes: DocRefTypesStoreState;
   folderExplorer: FolderExplorerStoreState;
-  indexEditor: IndexEditorStoreState;
   pipelineEditor: PipelineEditorStoreState;
   debuggers: DebuggersStoreState;
   processing: ProcessingStoreState;
@@ -112,7 +107,6 @@ export default combineReducers({
   docRefTypes,
   folderExplorer,
   appSearch,
-  indexEditor,
   pipelineEditor,
   debuggers,
   processing,

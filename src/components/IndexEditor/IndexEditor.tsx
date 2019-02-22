@@ -15,66 +15,57 @@
  */
 
 import * as React from "react";
-import { useEffect, useMemo } from "react";
+import { useEffect } from "react";
 
-import DocRefEditor from "../DocRefEditor";
-import { ButtonProps } from "../Button";
+import DocRefEditor, { useDocRefEditor } from "../DocRefEditor";
 import Loader from "../Loader";
 import useIndexApi from "./useIndexApi";
-import ThemedAceEditor from "../ThemedAceEditor";
-import { actionCreators } from "./redux";
-import { useDispatch } from "redux-react-hook";
-import useReduxState from "../../lib/useReduxState";
-
-const { indexUpdated } = actionCreators;
+import { useSelectableReactTable } from "../../lib/useSelectableItemListing";
+import { IndexField, IndexDoc } from "../../types";
+import ReactTable from "react-table";
 
 export interface Props {
   indexUuid: string;
 }
 
-const IndexEditor = ({ indexUuid }: Props) => {
-  const { indexEditor } = useReduxState(({ indexEditor }) => ({ indexEditor }));
+const FIELD_COLUMNS = [
+  {
+    id: "name",
+    Header: "Name",
+    accessor: (u: IndexField) => u.name
+  }
+];
 
+const IndexEditor = ({ indexUuid }: Props) => {
   const indexApi = useIndexApi();
-  const dispatch = useDispatch();
 
   useEffect(() => {
     indexApi.fetchDocument(indexUuid);
   }, []);
 
-  const indexState = indexEditor[indexUuid];
+  const { document, editorProps } = useDocRefEditor<IndexDoc>({
+    docRefUuid: indexUuid,
+    saveDocument: indexApi.saveDocument
+  });
 
-  const actionBarItems: Array<ButtonProps> = useMemo(() => {
-    if (!indexState) return [];
-    const { isDirty, isSaving } = indexState;
-    const b: Array<ButtonProps> = [
-      {
-        icon: "save",
-        disabled: !(isDirty || isSaving),
-        title: isSaving ? "Saving..." : isDirty ? "Save" : "Saved",
-        onClick: () => indexApi.saveDocument(indexUuid)
-      }
-    ];
-    return b;
-  }, [indexUuid, indexState]);
+  const { tableProps } = useSelectableReactTable<IndexField>(
+    {
+      items: document && document.data ? document.data.fields : [],
+      getKey: f => f.name
+    },
+    {
+      columns: FIELD_COLUMNS
+    }
+  );
 
-  if (!indexState) {
+  if (!document) {
     return <Loader message="Loading Index..." />;
   }
 
-  const { indexData } = indexState;
-
   return (
-    <DocRefEditor docRefUuid={indexUuid} actionBarItems={actionBarItems}>
-      <ThemedAceEditor
-        style={{ width: "100%", height: "100%", minHeight: "25rem" }}
-        name={`${indexUuid}-ace-editor`}
-        mode="xml"
-        value={indexData}
-        onChange={v => {
-          if (v !== indexData) dispatch(indexUpdated(indexUuid, v));
-        }}
-      />
+    <DocRefEditor {...editorProps}>
+      <h2>Fields</h2>
+      <ReactTable {...tableProps} />
     </DocRefEditor>
   );
 };

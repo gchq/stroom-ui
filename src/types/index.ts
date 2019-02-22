@@ -97,7 +97,15 @@ export interface IndexUpdates {
   description?: string;
 }
 
-export interface IndexDoc extends DocRefType, IndexUpdates {}
+export interface IndexField {
+  name: string;
+}
+
+export interface IndexDoc extends DocRefType, IndexUpdates {
+  data: {
+    fields: Array<IndexField>;
+  };
+}
 
 export interface XsltUpdates {
   description?: string;
