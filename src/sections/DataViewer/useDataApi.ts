@@ -1,6 +1,6 @@
 import { useContext, useCallback } from "react";
 import { StoreContext } from "redux-react-hook";
-import { actionCreators } from "./redux";
+import { useActionCreators } from "./redux";
 import useHttpClient from "../../lib/useHttpClient/useHttpClient";
 import { AbstractFetchDataResult } from "../../types";
 
@@ -11,6 +11,7 @@ export interface Api {
 export const useApi = (): Api => {
   const store = useContext(StoreContext);
   const httpClient = useHttpClient();
+  const actionCreators = useActionCreators();
 
   if (!store) {
     throw new Error("Could not get Redux Store for processing Thunks");
@@ -40,9 +41,7 @@ export const useApi = (): Api => {
       url.href,
       response => {
         response.json().then((data: AbstractFetchDataResult) => {
-          store.dispatch(
-            actionCreators.updateDataForSelectedRow(dataViewerId, data)
-          );
+          actionCreators.updateDataForSelectedRow(dataViewerId, data);
         });
       },
       {},

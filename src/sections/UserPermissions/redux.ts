@@ -15,7 +15,10 @@
  */
 import { Action } from "redux";
 
-import { prepareReducer } from "../../lib/redux-actions-ts";
+import {
+  prepareReducer,
+  genUseActionCreators
+} from "../../lib/redux-actions-ts";
 import { User } from "../../types";
 import { mapObject } from "../../lib/treeUtils";
 
@@ -63,7 +66,7 @@ export interface UserRemovedFromGroupAction
   groupUuid: string;
 }
 
-export const actionCreators = {
+export const useActionCreators = genUseActionCreators({
   usersReceived: (listId: string, users: Array<User>): UsersReceivedAction => ({
     type: USERS_RECEIVED,
     listId,
@@ -109,7 +112,7 @@ export const actionCreators = {
     userUuid,
     groupUuid
   })
-};
+});
 
 export interface StoreState {
   users: {

@@ -16,10 +16,13 @@
 import * as jwtDecode from "jwt-decode";
 import * as uuidv4 from "uuid";
 import * as sjcl from "sjcl";
-import { Dispatch, Action } from "redux";
+import { Action } from "redux";
 import { History } from "history";
 
-import { prepareReducer } from "../../lib/redux-actions-ts";
+import {
+  prepareReducer,
+  genUseActionCreators
+} from "../../lib/redux-actions-ts";
 
 export interface StoreState {
   idToken?: string;
@@ -31,18 +34,16 @@ export interface TokenIdChangeAction extends Action<"TOKEN_ID_CHANGE"> {
   idToken: string;
 }
 
-const actionCreators = {
+export const useActionCreators = genUseActionCreators({
   tokenIdChange: (idToken: string): TokenIdChangeAction => ({
     type: TOKEN_ID_CHANGE,
     idToken
   })
-};
+});
 
 const defaultState = {
   idToken: ""
 };
-
-const { tokenIdChange } = actionCreators;
 
 export const reducer = prepareReducer(defaultState)
   .handleAction<TokenIdChangeAction>(TOKEN_ID_CHANGE, (state, { idToken }) => ({
@@ -80,7 +81,7 @@ export const sendAuthenticationRequest = (
 };
 
 export const handleAuthenticationResponse = (
-  dispatch: Dispatch,
+  tokenIdChange: (idToken: string) => void,
   history: History,
   accessCode: string,
   authenticationServiceUrl: string,
@@ -117,7 +118,7 @@ export const handleAuthenticationResponse = (
         localStorage.removeItem("appPermission");
 
         // TODO: if the user has the requested appPermission then we change the ID token.
-        dispatch(tokenIdChange(idToken));
+        tokenIdChange(idToken);
         // dispatch(hasAppPermission(idToken, authorisationServiceUrl, appPermission));
       } else {
         console.error("Nonce does not match.");

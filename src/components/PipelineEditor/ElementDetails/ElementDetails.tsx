@@ -23,30 +23,24 @@ import {
   PipelineElementType,
   ElementPropertiesType,
   ElementDefinition,
-  ElementPropertyType
+  ElementPropertyType,
+  PipelineModelType
 } from "../../../types";
 import Loader from "../../../components/Loader";
-import usePipelineState from "../redux/usePipelineState";
-import useElements from "../redux/useElements";
+import useElements from "../useElements";
+import { PipelineEditApi } from "../usePipelineState";
 
 export interface Props {
-  pipelineId: string;
-  onClose: () => void;
+  pipeline: PipelineModelType;
+  pipelineEditApi: PipelineEditApi;
 }
 
-const ElementDetails = ({ pipelineId, onClose }: Props) => {
-  const pipelineState = usePipelineState(pipelineId);
+const ElementDetails = ({ pipeline, pipelineEditApi }: Props) => {
   const { elementDefinitions, elementProperties } = useElements();
 
-  let initialValues: object | undefined;
-  let selectedElementId: string | undefined;
-  if (pipelineState) {
-    initialValues = pipelineState.selectedElementInitialValues;
-    selectedElementId = pipelineState.selectedElementId;
-  }
-  console.log("TODO Initial Values", initialValues);
+  console.log("TODO Initial Values", pipelineEditApi.elementInitialValues);
 
-  if (!selectedElementId) {
+  if (!pipelineEditApi.selectedElementId) {
     return (
       <div className="element-details__nothing-selected">
         <h3>Please select an element</h3>
@@ -55,11 +49,11 @@ const ElementDetails = ({ pipelineId, onClose }: Props) => {
   }
 
   const elementType: string =
-    (pipelineState &&
-      pipelineState.pipeline &&
-      pipelineState.pipeline.merged.elements.add &&
-      pipelineState.pipeline.merged.elements.add.find(
-        (element: PipelineElementType) => element.id === selectedElementId
+    (pipeline &&
+      pipeline.merged.elements.add &&
+      pipeline.merged.elements.add.find(
+        (element: PipelineElementType) =>
+          element.id === pipelineEditApi.selectedElementId
       )!.type) ||
     "";
   const allElementTypeProperties: ElementPropertiesType =
@@ -96,7 +90,7 @@ const ElementDetails = ({ pipelineId, onClose }: Props) => {
     <div className="element-details__title">
       <ElementImage icon={icon} />
       <div>
-        <h3>{selectedElementId}</h3>
+        <h3>{pipelineEditApi.selectedElementId}</h3>
       </div>
     </div>
   );
@@ -110,13 +104,14 @@ const ElementDetails = ({ pipelineId, onClose }: Props) => {
         {Object.keys(elementTypeProperties).length === 0 ? (
           <p>There is nothing to configure for this element </p>
         ) : (
-          !!selectedElementId &&
+          !!pipelineEditApi.selectedElementId &&
           elementTypeProperties.map(
             (elementTypeProperty: ElementPropertyType) => (
               <ElementProperty
                 key={elementTypeProperty.name}
-                pipelineId={pipelineId}
-                elementId={selectedElementId!}
+                pipeline={pipeline}
+                pipelineEditApi={pipelineEditApi}
+                elementId={pipelineEditApi.selectedElementId!}
                 elementPropertyType={elementTypeProperty}
               />
             )
@@ -130,7 +125,7 @@ const ElementDetails = ({ pipelineId, onClose }: Props) => {
     <HorizontalPanel
       className="element-details__panel"
       title={title}
-      onClose={() => onClose()}
+      onClose={() => pipelineEditApi.elementSelectionCleared()}
       content={content}
     />
   );

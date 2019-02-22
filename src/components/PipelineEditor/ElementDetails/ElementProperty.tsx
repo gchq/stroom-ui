@@ -24,30 +24,22 @@ import {
 } from "../pipelineUtils";
 import ElementPropertyFieldDetails from "./ElementPropertyInheritanceInfo";
 import ElementPropertyField from "./ElementPropertyField";
-import { ElementPropertyType } from "../../../types";
-import Loader from "../../../components/Loader";
-import usePipelineState from "../redux/usePipelineState";
+import { ElementPropertyType, PipelineModelType } from "../../../types";
+import { PipelineEditApi } from "../usePipelineState";
 
 export interface Props {
-  pipelineId: string;
+  pipeline: PipelineModelType;
+  pipelineEditApi: PipelineEditApi;
   elementId: string;
   elementPropertyType: ElementPropertyType;
 }
 
 const ElementProperty = ({
-  pipelineId,
+  pipeline,
+  pipelineEditApi,
   elementId,
   elementPropertyType
 }: Props) => {
-  const pipelineState = usePipelineState(pipelineId);
-  if (!pipelineState) {
-    return <Loader message="Loading Pipeline State" />;
-  }
-  const { pipeline } = pipelineState;
-  if (!pipeline) {
-    return <Loader message="Loading Pipeline" />;
-  }
-
   const value = getElementValue(pipeline, elementId, elementPropertyType.name);
   const childValue = getChildValue(
     pipeline,
@@ -81,7 +73,7 @@ const ElementProperty = ({
         {...{
           value: currentValue,
           name,
-          pipelineId,
+          pipelineEditApi,
           elementId,
           type,
           docRefTypes
@@ -92,7 +84,8 @@ const ElementProperty = ({
           The <em>field name</em> of this property is <strong>{name}</strong>
         </p>
         <ElementPropertyFieldDetails
-          pipelineId={pipelineId}
+          pipeline={pipeline}
+          pipelineEditApi={pipelineEditApi}
           elementId={elementId}
           name={name}
           value={value}

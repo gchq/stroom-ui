@@ -1,7 +1,7 @@
 import { useContext, useCallback } from "react";
 import { StoreContext } from "redux-react-hook";
 
-import { actionCreators } from "./redux";
+import { useActionCreators } from "./redux";
 import useHttpClient from "../../lib/useHttpClient/useHttpClient";
 import { StreamTasksResponseType } from "../../types";
 
@@ -20,6 +20,7 @@ export interface Api {
 export const useApi = (): Api => {
   const store = useContext(StoreContext);
   const httpClient = useHttpClient();
+  const actionCreators = useActionCreators();
 
   if (!store) {
     throw new Error("Could not get Redux Store for processing Thunks");
@@ -29,7 +30,7 @@ export const useApi = (): Api => {
     const state = store.getState();
 
     const rowsToFetch = state.processing.pageSize;
-    store.dispatch(actionCreators.updatePageSize(rowsToFetch));
+    actionCreators.updatePageSize(rowsToFetch);
 
     let url = `${state.config.values.stroomBaseServiceUrl}/streamtasks/v1/?`;
     url += `pageSize=${rowsToFetch}`;
@@ -50,21 +51,19 @@ export const useApi = (): Api => {
       url,
       response => {
         response.json().then((trackers: StreamTasksResponseType) => {
-          store.dispatch(
-            actionCreators.updateTrackers(
-              trackers.streamTasks,
-              trackers.totalStreamTasks
-            )
+          actionCreators.updateTrackers(
+            trackers.streamTasks,
+            trackers.totalStreamTasks
           );
           switch (trackerSelection) {
             case TrackerSelection.first:
-              store.dispatch(actionCreators.selectFirst());
+              actionCreators.selectFirst();
               break;
             case TrackerSelection.last:
-              store.dispatch(actionCreators.selectLast());
+              actionCreators.selectLast();
               break;
             case TrackerSelection.none:
-              store.dispatch(actionCreators.selectNone());
+              actionCreators.selectNone();
               break;
             default:
               break;
@@ -80,10 +79,10 @@ export const useApi = (): Api => {
     const state = store.getState();
 
     const rowsToFetch = state.processing.pageSize;
-    store.dispatch(actionCreators.updatePageSize(rowsToFetch));
+    actionCreators.updatePageSize(rowsToFetch);
 
     const nextPageOffset = state.processing.pageOffset + 1;
-    store.dispatch(actionCreators.changePage(nextPageOffset));
+    actionCreators.changePage(nextPageOffset);
 
     let url = `${state.config.values.stroomBaseServiceUrl}/streamtasks/v1/?`;
     url += `pageSize=${rowsToFetch}`;
@@ -104,21 +103,19 @@ export const useApi = (): Api => {
       url,
       response => {
         response.json().then((trackers: StreamTasksResponseType) => {
-          store.dispatch(
-            actionCreators.addTrackers(
-              trackers.streamTasks,
-              trackers.totalStreamTasks
-            )
+          actionCreators.addTrackers(
+            trackers.streamTasks,
+            trackers.totalStreamTasks
           );
           switch (trackerSelection) {
             case TrackerSelection.first:
-              store.dispatch(actionCreators.selectFirst());
+              actionCreators.selectFirst();
               break;
             case TrackerSelection.last:
-              store.dispatch(actionCreators.selectLast());
+              actionCreators.selectLast();
               break;
             case TrackerSelection.none:
-              store.dispatch(actionCreators.selectNone());
+              actionCreators.selectNone();
               break;
             default:
               break;
@@ -143,13 +140,8 @@ export const useApi = (): Api => {
       });
 
       httpClient.httpPatch(
-        store.dispatch,
-        state,
         url,
-        () =>
-          store.dispatch(
-            actionCreators.updateEnabled(filterId, !isCurrentlyEnabled)
-          ),
+        () => actionCreators.updateEnabled(filterId, !isCurrentlyEnabled),
         { body }
       );
     },

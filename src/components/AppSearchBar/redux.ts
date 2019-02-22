@@ -3,7 +3,8 @@ import { Action } from "redux";
 import {
   prepareReducerById,
   ActionId,
-  StateById
+  StateById,
+  genUseActionCreators
 } from "../../lib/redux-actions-ts";
 import { DocRefType } from "../../types";
 
@@ -21,7 +22,7 @@ export interface SearchResultsReturnedAction
   searchResults: Array<DocRefType>;
 }
 
-export const actionCreators = {
+export const useActionCreators = genUseActionCreators({
   searchResultsReturned: (
     id: string,
     searchResults: Array<DocRefType>
@@ -30,7 +31,7 @@ export const actionCreators = {
     id,
     searchResults
   })
-};
+});
 
 export type StoreStatePerId = Array<DocRefType>;
 

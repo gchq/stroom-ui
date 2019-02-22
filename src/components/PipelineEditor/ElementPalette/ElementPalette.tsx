@@ -10,14 +10,14 @@ import { DragDropTypes, DropCollectedProps } from "../dragDropTypes";
 import {
   ElementDefinition,
   ElementDefinitionsByCategory,
-  ElementDefinitionsByType
+  ElementDefinitionsByType,
+  PipelineModelType
 } from "../../../types";
-import usePipelineState from "../redux/usePipelineState";
-import useElements from "../redux/useElements";
+import useElements from "../useElements";
 import { groupByCategory, keyByType } from "../elementUtils";
 
 export interface Props {
-  pipelineId: string;
+  pipeline: PipelineModelType;
   showDeleteElementDialog: (elementId: string) => void;
 }
 
@@ -50,12 +50,11 @@ const enhance = DropTarget<Props, DropCollectedProps>(
 );
 
 const ElementPalette = ({
-  pipelineId,
+  pipeline,
   connectDropTarget,
   draggingItemType,
   isOver
 }: EnhancedProps) => {
-  const pipelineState = usePipelineState(pipelineId);
   const { elementDefinitions } = useElements();
 
   const byCategory: ElementDefinitionsByCategory = useMemo(
@@ -69,11 +68,8 @@ const ElementPalette = ({
   );
 
   const recycleBinItems = useMemo(
-    () =>
-      pipelineState && pipelineState.pipeline
-        ? getBinItems(pipelineState.pipeline, byType)
-        : [],
-    [pipelineState, byType]
+    () => (pipeline ? getBinItems(pipeline, byType) : []),
+    [pipeline, byType]
   );
 
   return connectDropTarget(

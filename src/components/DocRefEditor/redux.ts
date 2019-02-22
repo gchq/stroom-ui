@@ -18,11 +18,13 @@ import { Action } from "redux";
 import {
   prepareReducerById,
   StateById,
-  ActionId
+  ActionId,
+  genUseActionCreators
 } from "../../lib/redux-actions-ts";
 
 export const DOCUMENT_RECEIVED = "DOCUMENT_RECEIVED";
 export const DOCUMENT_CHANGES_MADE = "DOCUMENT_CHANGES_MADE";
+export const DOCUMENT_SAVE_REQUESTED = "DOCUMENT_SAVE_REQUESTED";
 export const DOCUMENT_SAVED = "DOCUMENT_SAVED";
 
 export interface DocumentAction extends ActionId {
@@ -38,8 +40,11 @@ export interface DocumentChangesMadeAction
 export interface DocumentSavedAction
   extends Action<"DOCUMENT_SAVED">,
     ActionId {}
+export interface DocumentSaveRequestedAction
+  extends Action<"DOCUMENT_SAVE_REQUESTED">,
+    ActionId {}
 
-export const actionCreators = {
+export const useActionCreators = genUseActionCreators({
   documentReceived: (id: string, document: object): DocumentReceivedAction => ({
     type: DOCUMENT_RECEIVED,
     id,
@@ -53,11 +58,15 @@ export const actionCreators = {
     id,
     document
   }),
+  documentSaveRequested: (id: string): DocumentSaveRequestedAction => ({
+    type: DOCUMENT_SAVE_REQUESTED,
+    id
+  }),
   documentSaved: (id: string): DocumentSavedAction => ({
     type: DOCUMENT_SAVED,
     id
   })
-};
+});
 
 export interface StoreStateById {
   isDirty: boolean;
@@ -98,4 +107,12 @@ export const reducer = prepareReducerById(defaultStatePerId)
     isDirty: false,
     isSaving: false
   }))
+  .handleAction<DocumentSaveRequestedAction>(
+    DOCUMENT_SAVE_REQUESTED,
+    state => ({
+      ...state,
+      isDirty: true,
+      isSaving: true
+    })
+  )
   .getReducer();

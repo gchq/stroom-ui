@@ -1,9 +1,8 @@
-import { Dispatch, Action } from "redux";
+import { Action } from "redux";
 import { useCallback } from "react";
 
-import { actionCreators as errorActionCreators } from "../../components/ErrorPage";
-import { GlobalStoreState } from "../../startup/reducers";
-import { prepareReducer } from "../redux-actions-ts";
+import { useActionCreators as useErrorActionCreators } from "../../components/ErrorPage";
+import { prepareReducer, genUseActionCreators } from "../redux-actions-ts";
 
 import handleStatus from "../handleStatus";
 import { useContext } from "react";
@@ -40,7 +39,7 @@ export type ResetAllUrlsAction = Action<"RESET_ALL_URLS">;
 
 const defaultState: StoreState = {};
 
-export const actionCreators = {
+export const useActionCreators = genUseActionCreators({
   resetAllUrls: (): ResetAllUrlsAction => ({
     type: RESET_ALL_URLS
   }),
@@ -64,7 +63,7 @@ export const actionCreators = {
     url,
     fetchState: FetchState.FAILED
   })
-};
+});
 
 export const reducer = prepareReducer(defaultState)
   .handleAction(RESET_ALL_URLS, () => defaultState)
@@ -119,8 +118,6 @@ export interface HttpClient {
     }
   ) => void;
   httpPatch: (
-    dispatch: Dispatch,
-    state: GlobalStoreState,
     url: string,
     successCallback: (x: any) => void,
     options?: {
@@ -131,6 +128,8 @@ export interface HttpClient {
 
 export const useHttpClient = (): HttpClient => {
   const store = useContext(StoreContext);
+  const errorActionCreators = useErrorActionCreators();
+  const urlActionCreators = useActionCreators();
   const { history } = useRouter();
 
   if (!store) {
@@ -185,7 +184,7 @@ export const useHttpClient = (): HttpClient => {
       }
 
       if (needToFetch) {
-        store.dispatch(actionCreators.urlRequested(url));
+        urlActionCreators.urlRequested(url);
 
         fetch(url, {
           method: "get",
@@ -200,14 +199,14 @@ export const useHttpClient = (): HttpClient => {
         })
           .then(handleStatus)
           .then(responseBody => {
-            store.dispatch(actionCreators.urlResponded(url));
+            urlActionCreators.urlResponded(url);
             successCallback(responseBody);
           })
           .catch(error => {
-            store.dispatch(actionCreators.urlFailed(url));
-            store.dispatch(errorActionCreators.setErrorMessage(error.message));
-            store.dispatch(errorActionCreators.setStackTrace(error.stack));
-            store.dispatch(errorActionCreators.setHttpErrorCode(error.status));
+            urlActionCreators.urlFailed(url);
+            errorActionCreators.setErrorMessage(error.message);
+            errorActionCreators.setStackTrace(error.stack);
+            errorActionCreators.setHttpErrorCode(error.status);
             history.push("/s/error");
           });
       }
@@ -254,14 +253,14 @@ export const useHttpClient = (): HttpClient => {
       })
         .then(handleStatus)
         .then(response => {
-          store.dispatch(actionCreators.urlResponded(url));
+          urlActionCreators.urlResponded(url);
           successCallback(response);
         })
         .catch(error => {
-          store.dispatch(actionCreators.urlFailed(url));
-          store.dispatch(errorActionCreators.setErrorMessage(error.message));
-          store.dispatch(errorActionCreators.setStackTrace(error.stack));
-          store.dispatch(errorActionCreators.setHttpErrorCode(error.status));
+          urlActionCreators.urlFailed(url);
+          errorActionCreators.setErrorMessage(error.message);
+          errorActionCreators.setStackTrace(error.stack);
+          errorActionCreators.setHttpErrorCode(error.status);
           history.push("/s/error");
         });
     },
@@ -316,8 +315,6 @@ export const useHttpClient = (): HttpClient => {
 
   const httpPatch = useCallback(
     (
-      dispatch: Dispatch,
-      state: GlobalStoreState,
       url: string,
       successCallback: (x: any) => void,
       options?: {

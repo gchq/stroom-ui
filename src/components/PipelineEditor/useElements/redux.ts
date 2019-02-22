@@ -1,6 +1,9 @@
 import { Action } from "redux";
 
-import { prepareReducer } from "../../../lib/redux-actions-ts";
+import {
+  prepareReducer,
+  genUseActionCreators
+} from "../../../lib/redux-actions-ts";
 import {
   ElementDefinitions,
   ElementPropertiesByElementIdType
@@ -28,7 +31,7 @@ export const defaultState: StoreState = {
   elementProperties: {}
 };
 
-export const actionCreators = {
+export const useActionCreators = genUseActionCreators({
   elementsReceived: (
     elementDefinitions: ElementDefinitions
   ): ElementsReceivedAction => ({
@@ -41,7 +44,7 @@ export const actionCreators = {
     type: ELEMENT_PROPERTIES_RECEIVED,
     elementProperties
   })
-};
+});
 
 export const reducer = prepareReducer(defaultState)
   .handleAction<ElementsReceivedAction>(

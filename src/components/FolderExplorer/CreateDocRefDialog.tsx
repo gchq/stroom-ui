@@ -22,7 +22,7 @@ import { Formik, Field, FieldProps } from "formik";
 import IconHeader from "../IconHeader";
 import ThemedModal from "../ThemedModal";
 import DialogActionButtons from "../Button/DialogActionButtons";
-import { required, minLength2 } from "../../lib/reduxFormUtils";
+import { required, minLength2 } from "../../lib/reduxUtils";
 import { DocRefTypePicker } from "../DocRefTypes";
 import useExplorerApi from "./useExplorerApi";
 import PermissionInheritancePicker from "../PermissionInheritancePicker";

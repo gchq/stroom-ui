@@ -1,17 +1,9 @@
 import { StoreContext } from "redux-react-hook";
 import { useContext, useCallback } from "react";
 
-import { actionCreators } from "./redux";
+import { useActionCreators } from "./redux";
 import useHttpClient from "../../lib/useHttpClient/useHttpClient";
 import { IndexVolumeGroup } from "../../types";
-
-const {
-  indexVolumeGroupNamesReceived,
-  indexVolumeGroupsReceived,
-  indexVolumeGroupReceived,
-  indexVolumeGroupCreated,
-  indexVolumeGroupDeleted
-} = actionCreators;
 
 export interface Api {
   getIndexVolumeGroupNames: () => void;
@@ -24,6 +16,7 @@ export interface Api {
 export const useApi = (): Api => {
   const store = useContext(StoreContext);
   const httpClient = useHttpClient();
+  const actionCreators = useActionCreators();
 
   if (!store) {
     throw new Error("Could not get Redux Store for processing Thunks");
@@ -43,7 +36,7 @@ export const useApi = (): Api => {
         r
           .json()
           .then((groupNames: Array<string>) =>
-            store.dispatch(indexVolumeGroupNamesReceived(groupNames))
+            actionCreators.indexVolumeGroupNamesReceived(groupNames)
           ),
       {},
       true
@@ -62,7 +55,7 @@ export const useApi = (): Api => {
         r
           .json()
           .then((indexVolumeGroups: Array<IndexVolumeGroup>) =>
-            store.dispatch(indexVolumeGroupsReceived(indexVolumeGroups))
+            actionCreators.indexVolumeGroupsReceived(indexVolumeGroups)
           ),
       {},
       true
@@ -83,7 +76,7 @@ export const useApi = (): Api => {
         r
           .json()
           .then((indexVolumeGroup: IndexVolumeGroup) =>
-            store.dispatch(indexVolumeGroupReceived(indexVolumeGroup))
+            actionCreators.indexVolumeGroupReceived(indexVolumeGroup)
           ),
       {},
       true
@@ -102,7 +95,7 @@ export const useApi = (): Api => {
       response
         .json()
         .then((indexVolumeGroup: IndexVolumeGroup) =>
-          store.dispatch(indexVolumeGroupCreated(indexVolumeGroup))
+          actionCreators.indexVolumeGroupCreated(indexVolumeGroup)
         )
     );
   }, []);
@@ -116,7 +109,7 @@ export const useApi = (): Api => {
     );
 
     httpClient.httpDelete(url.href, response =>
-      response.text().then(() => store.dispatch(indexVolumeGroupDeleted(name)))
+      response.text().then(() => actionCreators.indexVolumeGroupDeleted(name))
     );
   }, []);
 

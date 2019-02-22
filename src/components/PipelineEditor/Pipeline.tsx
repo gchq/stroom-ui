@@ -27,16 +27,8 @@ import {
 import { PipelineElementType } from "../../types";
 import { getAllElementNames } from "./pipelineUtils";
 import { ShowDialog as ShowAddElementDialog } from "./AddElementModal";
-import usePipelineState from "./redux/usePipelineState";
-import { actionCreators } from "./redux";
-import { useDispatch } from "redux-react-hook";
-import useElements from "./redux/useElements";
-
-const {
-  pipelineElementSelected,
-  pipelineElementMoved,
-  pipelineElementReinstated
-} = actionCreators;
+import usePipelineState from "./usePipelineState";
+import useElements from "./useElements";
 
 export interface Props {
   pipelineId: string;
@@ -44,22 +36,22 @@ export interface Props {
 }
 
 export const Pipeline = ({ pipelineId, showAddElementDialog }: Props) => {
-  const dispatch = useDispatch();
-  const pipelineState = usePipelineState(pipelineId);
+  const {
+    asTree,
+    pipelineEditApi,
+    useEditorProps: { document: pipeline }
+  } = usePipelineState(pipelineId);
   const { elementDefinitions, elementProperties } = useElements();
 
-  if (!(pipelineState && pipelineState.pipeline)) {
+  if (!pipeline) {
     return <Loader message="Loading pipeline..." />;
   }
-
-  const { pipeline, asTree } = pipelineState;
 
   if (!asTree) {
     return <Loader message="Awaiting pipeline tree model..." />;
   }
 
   const existingNames = getAllElementNames(pipeline);
-
   const layoutGrid: PipelineLayoutGrid = getPipelineLayoutGrid(asTree);
 
   return (
@@ -89,22 +81,14 @@ export const Pipeline = ({ pipelineId, showAddElementDialog }: Props) => {
                         key={element.id}
                         pipelineId={pipelineId}
                         elementId={element.id}
-                        selectedElementId={pipelineState.selectedElementId}
+                        selectedElementId={pipelineEditApi.selectedElementId}
                         showAddElementDialog={showAddElementDialog}
                         existingNames={existingNames}
                         pipeline={pipeline}
                         asTree={asTree}
                         elementDefinition={elementDefinition}
                         elementProperties={elementPropertiesThis}
-                        pipelineElementSelected={(a, b, c) =>
-                          dispatch(pipelineElementSelected(a, b, c))
-                        }
-                        pipelineElementMoved={(a, b, c) =>
-                          dispatch(pipelineElementMoved(a, b, c))
-                        }
-                        pipelineElementReinstated={(a, b, c) =>
-                          dispatch(pipelineElementReinstated(a, b, c))
-                        }
+                        pipelineEditApi={pipelineEditApi}
                       />
                     );
                   })}

@@ -1,20 +1,9 @@
 import { useContext, useCallback } from "react";
 import { StoreContext } from "redux-react-hook";
 
-import { actionCreators } from "./redux";
+import { useActionCreators } from "./redux";
 import useHttpClient from "../../lib/useHttpClient/useHttpClient";
 import { IndexVolume, IndexVolumeGroup } from "../../types";
-
-const {
-  indexVolumesReceived,
-  indexVolumeReceived,
-  indexVolumesInGroupReceived,
-  indexGroupsForVolumeReceived,
-  indexVolumeCreated,
-  indexVolumeDeleted,
-  indexVolumeAddedToGroup,
-  indexVolumeRemovedFromGroup
-} = actionCreators;
 
 export interface Api {
   getIndexVolumes: () => void;
@@ -30,6 +19,7 @@ export interface Api {
 export const useApi = (): Api => {
   const store = useContext(StoreContext);
   const httpClient = useHttpClient();
+  const actionCreators = useActionCreators();
 
   if (!store) {
     throw new Error("Could not get Redux Store for processing Thunks");
@@ -47,7 +37,7 @@ export const useApi = (): Api => {
         r
           .json()
           .then((indexVolumes: Array<IndexVolume>) =>
-            store.dispatch(indexVolumesReceived(indexVolumes))
+            actionCreators.indexVolumesReceived(indexVolumes)
           ),
       {},
       true
@@ -66,7 +56,7 @@ export const useApi = (): Api => {
         r
           .json()
           .then((indexVolume: IndexVolume) =>
-            store.dispatch(indexVolumeReceived(indexVolume))
+            actionCreators.indexVolumeReceived(indexVolume)
           ),
       {},
       true
@@ -85,7 +75,7 @@ export const useApi = (): Api => {
         r
           .text()
           .then((indexVolume: IndexVolume) =>
-            store.dispatch(indexVolumeDeleted(id))
+            actionCreators.indexVolumeDeleted(id)
           ),
       {}
     );
@@ -103,7 +93,7 @@ export const useApi = (): Api => {
       url.href,
       r =>
         r.json().then((indexVolumes: Array<IndexVolume>) => {
-          store.dispatch(indexVolumesInGroupReceived(groupName, indexVolumes));
+          actionCreators.indexVolumesInGroupReceived(groupName, indexVolumes);
         }),
       {},
       true
@@ -124,7 +114,7 @@ export const useApi = (): Api => {
         r
           .json()
           .then((groups: Array<IndexVolumeGroup>) =>
-            store.dispatch(indexGroupsForVolumeReceived(id, groups))
+            actionCreators.indexGroupsForVolumeReceived(id, groups)
           ),
       {},
       true
@@ -147,7 +137,7 @@ export const useApi = (): Api => {
         response
           .json()
           .then((indexVolume: IndexVolume) =>
-            store.dispatch(indexVolumeCreated(indexVolume))
+            actionCreators.indexVolumeCreated(indexVolume)
           ),
       { body }
     );
@@ -166,7 +156,7 @@ export const useApi = (): Api => {
         response
           .text()
           .then(() =>
-            store.dispatch(indexVolumeAddedToGroup(indexVolumeId, groupName))
+            actionCreators.indexVolumeAddedToGroup(indexVolumeId, groupName)
           )
       );
     },
@@ -186,9 +176,7 @@ export const useApi = (): Api => {
         response
           .text()
           .then(() =>
-            store.dispatch(
-              indexVolumeRemovedFromGroup(indexVolumeId, groupName)
-            )
+            actionCreators.indexVolumeRemovedFromGroup(indexVolumeId, groupName)
           )
       );
     },

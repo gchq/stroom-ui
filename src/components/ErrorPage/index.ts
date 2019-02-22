@@ -16,6 +16,6 @@
 
 import ErrorPage from "./ErrorPage";
 
-export { reducer, actionCreators, StoreState } from "./redux";
+export { reducer, useActionCreators, StoreState } from "./redux";
 
 export default ErrorPage;

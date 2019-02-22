@@ -18,16 +18,12 @@ import * as React from "react";
 
 import Button from "../../Button";
 
-import { actionCreators } from "../redux";
-import { useDispatch } from "redux-react-hook";
-
-const {
-  pipelineElementPropertyRevertToParent,
-  pipelineElementPropertyRevertToDefault
-} = actionCreators;
+import { PipelineModelType } from "../../../types";
+import { PipelineEditApi } from "../usePipelineState";
 
 export interface Props {
-  pipelineId: string;
+  pipeline: PipelineModelType;
+  pipelineEditApi: PipelineEditApi;
   elementId: string;
   name: string;
   value: any;
@@ -66,7 +62,8 @@ const getDisplayValue = (value: any, type: string): string => {
  * @param {string} type The type of the property
  */
 const ElementPropertyFieldDetails = ({
-  pipelineId,
+  pipeline,
+  pipelineEditApi,
   elementId,
   name,
   value,
@@ -75,15 +72,11 @@ const ElementPropertyFieldDetails = ({
   defaultValue,
   type
 }: Props) => {
-  const dispatch = useDispatch();
-
   const RevertToDefaultButton = (
     <Button
       text="Revert to default"
       onClick={() =>
-        dispatch(
-          pipelineElementPropertyRevertToDefault(pipelineId, elementId, name)
-        )
+        pipelineEditApi.elementPropertyRevertToDefault(elementId, name)
       }
     />
   );
@@ -91,9 +84,7 @@ const ElementPropertyFieldDetails = ({
     <Button
       text="Revert to parent"
       onClick={() =>
-        dispatch(
-          pipelineElementPropertyRevertToParent(pipelineId, elementId, name)
-        )
+        pipelineEditApi.elementPropertyRevertToParent(elementId, name)
       }
     />
   );

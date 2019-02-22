@@ -22,7 +22,7 @@ import DialogActionButtons from "../Button/DialogActionButtons";
 import IconHeader from "../IconHeader";
 import useExplorerApi from "./useExplorerApi";
 import ThemedModal from "../ThemedModal";
-import { required, minLength2 } from "../../lib/reduxFormUtils";
+import { required, minLength2 } from "../../lib/reduxUtils";
 import { DocRefType } from "../../types";
 
 export interface Props {

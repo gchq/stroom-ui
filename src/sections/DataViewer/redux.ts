@@ -18,7 +18,8 @@ import { Action } from "redux";
 import {
   prepareReducerById,
   ActionId,
-  StateById
+  StateById,
+  genUseActionCreators
 } from "../../lib/redux-actions-ts";
 import { AbstractFetchDataResult, DataSourceType } from "../../types";
 import { DataRow } from "./types";
@@ -68,7 +69,7 @@ export interface UpdateDataSourceAction
   dataSource: DataSourceType;
 }
 
-export const actionCreators = {
+export const useActionCreators = genUseActionCreators({
   add: (
     id: string,
     streamAttributeMaps: Array<DataRow>,
@@ -131,7 +132,7 @@ export const actionCreators = {
     id,
     dataSource
   })
-};
+});
 
 export interface StoreStatePerId {
   streamAttributeMaps?: Array<DataRow>;

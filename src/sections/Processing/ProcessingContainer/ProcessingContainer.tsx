@@ -19,28 +19,21 @@ import { useEffect } from "react";
 import * as Mousetrap from "mousetrap";
 import PanelGroup from "react-panelgroup";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useDispatch } from "redux-react-hook";
 
 import Tooltip from "../../../components/Tooltip";
 import IconHeader from "../../../components/IconHeader";
-import { actionCreators } from "../redux";
+import { useActionCreators } from "../redux";
 import useApi from "../useStreamTasksApi";
 import ProcessingDetails from "../ProcessingDetails/ProcessingDetails";
 import ProcessingList from "../ProcessingList/ProcessingList";
 import { StreamTaskType } from "../../../types";
 import useReduxState from "../../../lib/useReduxState";
 
-const {
-  updateTrackerSelection,
-  resetPaging,
-  updateSearchCriteria
-} = actionCreators;
-
 export interface Props {}
 
 const ProcessingContainer = () => {
   const api = useApi();
-  const dispatch = useDispatch();
+  const actionCreators = useActionCreators();
 
   const { searchCriteria, selectedTrackerId } = useReduxState(
     ({ processing: { trackers, searchCriteria, selectedTrackerId } }) => ({
@@ -54,7 +47,7 @@ const ProcessingContainer = () => {
     filterId: number,
     trackers?: Array<StreamTaskType>
   ) => {
-    dispatch(updateTrackerSelection(filterId));
+    actionCreators.updateTrackerSelection(filterId);
 
     let expression;
     if (filterId !== undefined && trackers !== undefined) {
@@ -72,8 +65,8 @@ const ProcessingContainer = () => {
     target: { value }
   }) => {
     console.log({ value });
-    dispatch(resetPaging());
-    dispatch(updateSearchCriteria(value));
+    actionCreators.resetPaging();
+    actionCreators.updateSearchCriteria(value);
     // This line enables search as you type. Whether we want it or not depends on performance
     api.fetchTrackers();
   };
@@ -90,7 +83,7 @@ const ProcessingContainer = () => {
     // in the viewport, which means the view will update to fit.
     window.addEventListener("resize", event => {
       // Resizing the window is another time when paging gets reset.
-      resetPaging();
+      actionCreators.resetPaging();
       api.fetchTrackers();
     });
 

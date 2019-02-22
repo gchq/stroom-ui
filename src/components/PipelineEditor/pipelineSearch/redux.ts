@@ -1,6 +1,9 @@
 import { Action } from "redux";
 
-import { prepareReducer } from "../../../lib/redux-actions-ts";
+import {
+  prepareReducer,
+  genUseActionCreators
+} from "../../../lib/redux-actions-ts";
 import {
   PipelineSearchResultType,
   PipelineSearchCriteriaType
@@ -34,7 +37,7 @@ const defaultState: StoreState = {
   }
 };
 
-export const actionCreators = {
+export const useActionCreators = genUseActionCreators({
   pipelinesReceived: (
     results: PipelineSearchResultType
   ): PipelinesReceivedAction => ({
@@ -47,7 +50,7 @@ export const actionCreators = {
     type: UPDATE_CRITERIA,
     criteria
   })
-};
+});
 
 export const reducer = prepareReducer(defaultState)
   .handleAction<PipelinesReceivedAction>(

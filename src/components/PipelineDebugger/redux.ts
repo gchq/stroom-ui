@@ -19,7 +19,8 @@ import { Action } from "redux";
 import {
   prepareReducerById,
   ActionId,
-  StateById
+  StateById,
+  genUseActionCreators
 } from "../../lib/redux-actions-ts";
 
 export const START_DEBUGGING = "START_DEBUGGING";
@@ -36,13 +37,13 @@ export interface StoreStateById {
 
 export interface StoreState extends StateById<StoreStateById> {}
 
-export const actionCreators = {
+export const useActionCreators = genUseActionCreators({
   startDebugging: (id: string, pipelineId: string): StartDebuggingAction => ({
     type: START_DEBUGGING,
     id,
     pipelineId
   })
-};
+});
 
 export const defaultStatePerId: StoreStateById = {
   pipelineId: undefined

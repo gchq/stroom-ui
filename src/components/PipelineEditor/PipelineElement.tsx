@@ -26,7 +26,6 @@ import {
 } from "react-dnd";
 
 import ElementImage from "../ElementImage";
-import { actionCreators } from "./redux";
 import { canMovePipelineElement, getInitialValues } from "./pipelineUtils";
 import {
   DragDropTypes,
@@ -43,12 +42,7 @@ import {
   ElementPropertiesType
 } from "../../types";
 import { ShowDialog } from "./AddElementModal";
-
-const {
-  pipelineElementSelected,
-  pipelineElementMoved,
-  pipelineElementReinstated
-} = actionCreators;
+import { PipelineEditApi } from "./usePipelineState";
 
 export interface Props {
   pipelineId: string;
@@ -56,9 +50,7 @@ export interface Props {
   className?: string;
   showAddElementDialog: ShowDialog;
   existingNames: Array<string>;
-  pipelineElementSelected: typeof pipelineElementSelected;
-  pipelineElementMoved: typeof pipelineElementMoved;
-  pipelineElementReinstated: typeof pipelineElementReinstated;
+  pipelineEditApi: PipelineEditApi;
   pipeline: PipelineModelType;
   asTree: PipelineAsTreeType;
   elementDefinition: ElementDefinition;
@@ -139,24 +131,22 @@ const dropTarget: DropTargetSpec<Props> = {
   drop(props, monitor) {
     const {
       elementId,
-      pipelineId,
-      pipelineElementMoved,
+      pipelineEditApi,
       showAddElementDialog,
-      pipelineElementReinstated,
       existingNames
     } = props;
 
     switch (monitor.getItemType()) {
       case DragDropTypes.ELEMENT: {
         const newElementId = monitor.getItem().elementId;
-        pipelineElementMoved(pipelineId, newElementId, elementId);
+        pipelineEditApi.elementMoved(newElementId, elementId);
         break;
       }
       case DragDropTypes.PALLETE_ELEMENT: {
         const { element, recycleData } = monitor.getItem();
 
         if (recycleData) {
-          pipelineElementReinstated(pipelineId, elementId, recycleData);
+          pipelineEditApi.elementReinstated(elementId, recycleData);
         } else {
           showAddElementDialog(elementId, element, existingNames);
         }
@@ -196,7 +186,7 @@ const PipelineElement = ({
   canDrop,
   isDragging,
   draggingItemType,
-  pipelineElementSelected,
+  pipelineEditApi,
   selectedElementId,
   elementDefinition,
   elementProperties,
@@ -213,7 +203,7 @@ const PipelineElement = ({
       elementProperties,
       thisElementProperties
     );
-    return pipelineElementSelected(pipelineId, elementId, initialValues);
+    return pipelineEditApi.elementSelected(elementId, initialValues);
   }, [pipelineId, elementId, elementProperties, pipeline]);
 
   const className = useMemo(() => {

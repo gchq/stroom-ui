@@ -18,6 +18,7 @@ import { storiesOf } from "@storybook/react";
 
 import ElementPalette from "./ElementPalette";
 import StroomDecorator from "../../../lib/storybook/StroomDecorator";
+import { fullTestData } from "../../../lib/storybook/fullTestData";
 
 import "../../../styles/main.css";
 
@@ -26,9 +27,11 @@ const showDeleteElementDialog = () =>
 
 storiesOf("Pipeline/Element Palette", module)
   .addDecorator(StroomDecorator)
-  .add("Element Palette", () => (
-    <ElementPalette
-      pipelineId="longPipeline"
-      showDeleteElementDialog={showDeleteElementDialog}
-    />
-  ));
+  .add("Element Palette", () => {
+    return (
+      <ElementPalette
+        pipeline={Object.values(fullTestData.pipelines)[0]}
+        showDeleteElementDialog={showDeleteElementDialog}
+      />
+    );
+  });

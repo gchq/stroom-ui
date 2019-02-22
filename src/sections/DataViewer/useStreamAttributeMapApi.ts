@@ -1,6 +1,6 @@
 import { useContext, useCallback } from "react";
 import { StoreContext } from "redux-react-hook";
-import { actionCreators } from "./redux";
+import { useActionCreators } from "./redux";
 import useHttpClient from "../../lib/useHttpClient/useHttpClient";
 import {
   ExpressionOperatorType,
@@ -31,6 +31,7 @@ export interface Api {
 export const useApi = (): Api => {
   const store = useContext(StoreContext);
   const httpClient = useHttpClient();
+  const actionCreators = useActionCreators();
 
   if (!store) {
     throw new Error("Could not get Redux Store for processing Thunks");
@@ -56,24 +57,20 @@ export const useApi = (): Api => {
         response => {
           response.json().then((data: StreamAttributeMapResult) => {
             if (addResults) {
-              store.dispatch(
-                actionCreators.add(
-                  dataViewerId,
-                  data.streamAttributeMaps,
-                  data.pageResponse.total,
-                  pageSize,
-                  pageOffset
-                )
+              actionCreators.add(
+                dataViewerId,
+                data.streamAttributeMaps,
+                data.pageResponse.total,
+                pageSize,
+                pageOffset
               );
             } else {
-              store.dispatch(
-                actionCreators.updateStreamAttributeMaps(
-                  dataViewerId,
-                  data.streamAttributeMaps,
-                  data.pageResponse.total,
-                  pageSize,
-                  pageOffset
-                )
+              actionCreators.updateStreamAttributeMaps(
+                dataViewerId,
+                data.streamAttributeMaps,
+                data.pageResponse.total,
+                pageSize,
+                pageOffset
               );
             }
           });
@@ -106,24 +103,20 @@ export const useApi = (): Api => {
         response => {
           response.json().then((data: StreamAttributeMapResult) => {
             if (addResults) {
-              store.dispatch(
-                actionCreators.add(
-                  dataViewerId,
-                  data.streamAttributeMaps,
-                  data.pageResponse.total,
-                  pageSize,
-                  pageOffset
-                )
+              actionCreators.add(
+                dataViewerId,
+                data.streamAttributeMaps,
+                data.pageResponse.total,
+                pageSize,
+                pageOffset
               );
             } else {
-              store.dispatch(
-                actionCreators.updateStreamAttributeMaps(
-                  dataViewerId,
-                  data.streamAttributeMaps,
-                  data.pageResponse.total,
-                  pageSize,
-                  pageOffset
-                )
+              actionCreators.updateStreamAttributeMaps(
+                dataViewerId,
+                data.streamAttributeMaps,
+                data.pageResponse.total,
+                pageSize,
+                pageOffset
               );
             }
           });
@@ -146,7 +139,7 @@ export const useApi = (): Api => {
       url,
       response => {
         response.json().then((data: DataSourceType) => {
-          store.dispatch(actionCreators.updateDataSource(dataViewerId, data));
+          actionCreators.updateDataSource(dataViewerId, data);
         });
       },
       {},
@@ -170,9 +163,7 @@ export const useApi = (): Api => {
       url,
       response => {
         response.json().then((data: DataRow) => {
-          store.dispatch(
-            actionCreators.updateDetailsForSelectedRow(dataViewerId, data)
-          );
+          actionCreators.updateDetailsForSelectedRow(dataViewerId, data);
         });
       },
       {},

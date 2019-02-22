@@ -87,6 +87,6 @@
     "react-docgen-typescript-loader": "^3.0.0",
     "react-docgen-typescript-webpack-plugin": "^1.1.0",
     "storybook-react-router": "^1.0.1",
-    "typescript": "^3.0.3"
+    "typescript": "^3.3.3333"
   }
 }

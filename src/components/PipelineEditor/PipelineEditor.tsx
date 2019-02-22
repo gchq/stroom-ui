@@ -32,25 +32,15 @@ import DeletePipelineElement, {
 } from "./DeletePipelineElement";
 import { ElementDetails } from "./ElementDetails";
 import usePipelineApi from "./usePipelineApi";
-import { actionCreators } from "./redux";
 import Pipeline from "./Pipeline";
 import DocRefEditor from "../DocRefEditor";
-import usePipelineState from "./redux/usePipelineState";
-import { useDispatch } from "redux-react-hook";
-
-const {
-  pipelineElementSelectionCleared,
-  pipelineSettingsUpdated,
-  pipelineElementAdded,
-  pipelineElementDeleted
-} = actionCreators;
+import usePipelineState from "./usePipelineState";
 
 export interface Props {
   pipelineId: string;
 }
 
 const PipelineEditor = ({ pipelineId }: Props) => {
-  const dispatch = useDispatch();
   const pipelineApi = usePipelineApi();
 
   useEffect(() => {
@@ -58,74 +48,67 @@ const PipelineEditor = ({ pipelineId }: Props) => {
   });
 
   const {
+    pipelineEditApi,
+    useEditorProps: { document: pipeline, editorProps }
+  } = usePipelineState(pipelineId);
+
+  const {
     showDialog: showSettingsDialog,
     componentProps: settingsComponentProps
   } = usePipelineSettingsDialog(description =>
-    dispatch(pipelineSettingsUpdated(pipelineId, description))
+    pipelineEditApi.settingsUpdated(description)
   );
 
   const {
     showDialog: showAddElementDialog,
     componentProps: addElementComponentProps
   } = useAddElementDialog((parentId, elementDefinition, name) => {
-    dispatch(
-      pipelineElementAdded(pipelineId, parentId, elementDefinition, name)
-    );
+    pipelineEditApi.elementAdded(parentId, elementDefinition, name);
   });
 
   const {
     showDialog: showDeleteElementDialog,
     componentProps: deleteElementComponentProps
   } = useDeleteElementDialog(elementIdToDelete => {
-    dispatch(pipelineElementDeleted(pipelineId, elementIdToDelete));
+    pipelineEditApi.elementDeleted(elementIdToDelete);
   });
 
-  const pipelineState = usePipelineState(pipelineId);
-
   const actionBarItems: Array<ButtonProps> = useMemo(() => {
-    if (!pipelineState) return [];
-
-    const { isDirty, isSaving } = pipelineState;
-
-    const b: Array<ButtonProps> = [
+    return [
       {
         icon: "cogs",
         title: "Open Settings",
-        onClick: () =>
-          showSettingsDialog(
-            pipelineState!.pipeline!.description || "something"
-          )
+        onClick: () => {
+          if (!!pipeline) {
+            showSettingsDialog(pipeline.description || "something");
+          } else {
+            console.error("No pipeline set");
+          }
+        }
       },
-      {
-        icon: "save",
-        disabled: !(isDirty || isSaving),
-        title: isSaving ? "Saving..." : isDirty ? "Save" : "Saved",
-        onClick: () => pipelineApi.savePipeline(pipelineId)
-      },
+      ...editorProps.actionBarItems,
       {
         icon: "recycle",
         title: "Create Child Pipeline",
         onClick: () =>
           console.log("TODO - Implement Selection of Parent Pipeline")
       }
-    ];
-    return b;
-  }, []);
+    ] as Array<ButtonProps>;
+  }, [pipeline, showSettingsDialog]);
 
-  if (!(pipelineState && pipelineState.pipeline)) {
+  if (!pipeline) {
     return <Loader message="Loading pipeline..." />;
   }
-  const { selectedElementId } = pipelineState;
 
   return (
-    <DocRefEditor docRefUuid={pipelineId} actionBarItems={actionBarItems}>
+    <DocRefEditor {...editorProps} actionBarItems={actionBarItems}>
       <div className="Pipeline-editor">
         <AddElementModal {...addElementComponentProps} />
         <DeletePipelineElement {...deleteElementComponentProps} />
         <PipelineSettings {...settingsComponentProps} />
         <div className="Pipeline-editor__element-palette">
           <ElementPalette
-            pipelineId={pipelineId}
+            pipeline={pipeline}
             showDeleteElementDialog={showDeleteElementDialog}
           />
         </div>
@@ -137,7 +120,7 @@ const PipelineEditor = ({ pipelineId }: Props) => {
             {},
             {
               resize: "dynamic",
-              size: selectedElementId !== undefined ? "50%" : 0
+              size: pipelineEditApi.selectedElementId !== undefined ? "50%" : 0
             }
           ]}
         >
@@ -147,12 +130,10 @@ const PipelineEditor = ({ pipelineId }: Props) => {
               showAddElementDialog={showAddElementDialog}
             />
           </div>
-          {selectedElementId !== undefined ? (
+          {pipelineEditApi.selectedElementId !== undefined ? (
             <ElementDetails
-              pipelineId={pipelineId}
-              onClose={() =>
-                dispatch(pipelineElementSelectionCleared(pipelineId))
-              }
+              pipeline={pipeline}
+              pipelineEditApi={pipelineEditApi}
             />
           ) : (
             <div />

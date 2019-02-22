@@ -17,21 +17,11 @@
 import PipelineEditor from "./PipelineEditor";
 import Pipeline from "./Pipeline";
 
-import { reducer, actionCreators, StoreState } from "./redux";
 import usePipelineApi from "./usePipelineApi";
-import useElementsApi from "./useElementsApi";
+import useElements from "./useElements";
 
 import { testPipelines } from "./test";
 
-export {
-  PipelineEditor,
-  Pipeline,
-  reducer,
-  useElementsApi,
-  actionCreators,
-  StoreState,
-  testPipelines,
-  usePipelineApi
-};
+export { PipelineEditor, Pipeline, useElements, testPipelines, usePipelineApi };
 
 export default PipelineEditor;

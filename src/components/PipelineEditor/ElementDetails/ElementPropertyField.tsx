@@ -17,15 +17,12 @@
 import * as React from "react";
 
 import AppSearchBar from "../../AppSearchBar";
-import { actionCreators } from "../redux";
-import { useDispatch } from "redux-react-hook";
-
-const { pipelineElementPropertyUpdated } = actionCreators;
+import { PipelineEditApi } from "../usePipelineState";
 
 export interface Props {
   value: any;
   name: string;
-  pipelineId: string;
+  pipelineEditApi: PipelineEditApi;
   elementId: string;
   type: string;
   docRefTypes?: Array<string>;
@@ -43,12 +40,11 @@ export interface Props {
 const ElementPropertyField = ({
   value,
   name,
-  pipelineId,
+  pipelineEditApi,
   elementId,
   type,
   docRefTypes
 }: Props) => {
-  const dispatch = useDispatch();
   let elementField;
   switch (type) {
     case "boolean":
@@ -58,17 +54,14 @@ const ElementPropertyField = ({
             type="checkbox"
             checked={value}
             name={name}
-            onChange={() => {
-              dispatch(
-                pipelineElementPropertyUpdated(
-                  pipelineId,
-                  elementId,
-                  name,
-                  "boolean",
-                  !value
-                )
-              );
-            }}
+            onChange={() =>
+              pipelineEditApi.elementPropertyUpdated(
+                elementId,
+                name,
+                "boolean",
+                !value
+              )
+            }
           />
         </div>
       );
@@ -80,17 +73,14 @@ const ElementPropertyField = ({
             type="number"
             name={name}
             value={parseInt(value, 10)}
-            onChange={({ target: { value } }) => {
-              dispatch(
-                pipelineElementPropertyUpdated(
-                  pipelineId,
-                  elementId,
-                  name,
-                  "integer",
-                  parseInt(value, 10)
-                )
-              );
-            }}
+            onChange={({ target: { value } }) =>
+              pipelineEditApi.elementPropertyUpdated(
+                elementId,
+                name,
+                "integer",
+                parseInt(value, 10)
+              )
+            }
           />
         </div>
       );
@@ -101,17 +91,14 @@ const ElementPropertyField = ({
           pickerId={`${name}_docRefModalPicker`}
           typeFilters={docRefTypes}
           value={value}
-          onChange={node => {
-            dispatch(
-              pipelineElementPropertyUpdated(
-                pipelineId,
-                elementId,
-                name,
-                "docref",
-                node
-              )
-            );
-          }}
+          onChange={node =>
+            pipelineEditApi.elementPropertyUpdated(
+              elementId,
+              name,
+              "docref",
+              node
+            )
+          }
         />
       );
 
@@ -123,17 +110,14 @@ const ElementPropertyField = ({
           <input
             value={value}
             name={name}
-            onChange={({ target: { value } }) => {
-              dispatch(
-                pipelineElementPropertyUpdated(
-                  pipelineId,
-                  elementId,
-                  name,
-                  type,
-                  value
-                )
-              );
-            }}
+            onChange={({ target: { value } }) =>
+              pipelineEditApi.elementPropertyUpdated(
+                elementId,
+                name,
+                type,
+                value
+              )
+            }
           />
         </div>
       );
@@ -147,17 +131,14 @@ const ElementPropertyField = ({
           <input
             value={value}
             name={name}
-            onChange={({ target: { value } }) => {
-              dispatch(
-                pipelineElementPropertyUpdated(
-                  pipelineId,
-                  elementId,
-                  name,
-                  type,
-                  value
-                )
-              );
-            }}
+            onChange={({ target: { value } }) =>
+              pipelineEditApi.elementPropertyUpdated(
+                elementId,
+                name,
+                type,
+                value
+              )
+            }
           />
         </div>
       );

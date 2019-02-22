@@ -15,9 +15,12 @@
  */
 import { Action } from "redux";
 
-import { prepareReducer } from "../../lib/redux-actions-ts";
+import {
+  prepareReducer,
+  genUseActionCreators
+} from "../../lib/redux-actions-ts";
 import { IndexVolume, IndexVolumeGroup } from "../../types";
-import { onlyUnique } from "../../lib/reduxFormUtils";
+import { onlyUnique } from "../../lib/reduxUtils";
 import { mapObject } from "../../lib/treeUtils";
 
 const INDEX_VOLUMES_RECEIVED = "INDEX_VOLUMES_RECEIVED";
@@ -72,7 +75,7 @@ export interface IndexVolumeRemovedFromGroupAction
   indexVolumeId: string;
   groupName: string;
 }
-export const actionCreators = {
+export const useActionCreators = genUseActionCreators({
   indexVolumesReceived: (
     indexVolumes: Array<IndexVolume>
   ): IndexVolumesReceivedAction => ({
@@ -125,7 +128,7 @@ export const actionCreators = {
     indexVolumeId,
     groupName
   })
-};
+});
 
 export interface StoreState {
   indexVolumes: Array<IndexVolume>;

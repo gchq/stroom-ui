@@ -15,7 +15,10 @@
  */
 import { Action } from "redux";
 
-import { prepareReducer } from "../../lib/redux-actions-ts";
+import {
+  prepareReducer,
+  genUseActionCreators
+} from "../../lib/redux-actions-ts";
 import { updateItemInTree } from "../../lib/treeUtils";
 import { DocRefType, DocRefTree, DocRefInfoType } from "../../types";
 
@@ -126,6 +129,7 @@ export const actionCreators = {
     docRefInfo
   })
 };
+export const useActionCreators = genUseActionCreators(actionCreators);
 
 const defaultState: StoreState = {
   docRefInfoByUuid: {},

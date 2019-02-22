@@ -1,5 +1,5 @@
 import IndexVolumes from "./IndexVolumes";
-import { actionCreators, reducer, StoreState } from "./redux";
+import { useActionCreators, reducer, StoreState } from "./redux";
 import useIndexVolumeApi from "./useIndexVolumeApi";
 import IndexVolumesTable, {
   useTable as useIndexVolumesTable
@@ -7,7 +7,7 @@ import IndexVolumesTable, {
 
 export {
   IndexVolumes,
-  actionCreators,
+  useActionCreators,
   reducer,
   StoreState,
   useIndexVolumeApi,

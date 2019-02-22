@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 
-import { StoreState as ElementsStoreState } from "./elementReducer";
-import useElementsApi from "../useElementsApi";
+import { StoreState as ElementsStoreState } from "./redux";
+import useElementsApi from "./useElementsApi";
 import useReduxState from "../../../lib/useReduxState";
 
 export const useElements = (): ElementsStoreState => {
@@ -12,7 +12,7 @@ export const useElements = (): ElementsStoreState => {
     elementsApi.fetchElementProperties();
   }, []);
 
-  const { elements } = useReduxState(({ pipelineEditor: { elements } }) => ({
+  const { elements } = useReduxState(({ elements }) => ({
     elements
   }));
 

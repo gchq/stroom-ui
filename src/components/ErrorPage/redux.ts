@@ -13,8 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-import { Action } from "redux";
+import {
+  genUseActionCreators,
+  prepareReducer
+} from "../../lib/redux-actions-ts";
 
 const initialState = {
   errorMessage: "",
@@ -33,17 +35,11 @@ export interface ISetErrorMessage {
   type: typeof SET_ERROR_MESSAGE;
   errorMessage: string;
 }
-function isSetErrorMessage(action: Action): action is ISetErrorMessage {
-  return action.type == SET_ERROR_MESSAGE;
-}
 
 const SET_STACK_TRACE = "SET_STACK_TRACE";
 export interface ISetStackTrace {
   type: typeof SET_STACK_TRACE;
   stackTrace: string;
-}
-function isSetStackTrace(action: Action): action is ISetStackTrace {
-  return action.type == SET_STACK_TRACE;
 }
 
 const SET_HTTP_ERROR_CODE = "SET_HTTP_ERROR_CODE";
@@ -51,13 +47,10 @@ export interface ISetHttpErrorCode {
   type: typeof SET_HTTP_ERROR_CODE;
   httpErrorCode: number;
 }
-function isSetHttpErrorCode(action: Action): action is ISetHttpErrorCode {
-  return action.type == SET_HTTP_ERROR_CODE;
-}
 
 export type StoreAction = ISetErrorMessage | ISetStackTrace | ISetHttpErrorCode;
 
-export const actionCreators = {
+export const useActionCreators = genUseActionCreators({
   setErrorMessage: (errorMessage: string): ISetErrorMessage => ({
     type: SET_ERROR_MESSAGE,
     errorMessage
@@ -70,25 +63,28 @@ export const actionCreators = {
     type: SET_HTTP_ERROR_CODE,
     httpErrorCode
   })
-};
+});
 
-export const reducer = (
-  state: StoreState = initialState,
-  action: StoreAction
-): StoreState => {
-  if (isSetErrorMessage(action)) {
-    return { ...state, errorMessage: action.errorMessage };
-  } else if (isSetStackTrace(action)) {
-    return {
+export const reducer = prepareReducer<StoreState>(initialState)
+  .handleAction<ISetErrorMessage>(
+    SET_ERROR_MESSAGE,
+    (state: StoreState, { errorMessage }) => ({
       ...state,
-      stackTrace: action.stackTrace
-    };
-  } else if (isSetHttpErrorCode(action)) {
-    return {
+      errorMessage
+    })
+  )
+  .handleAction<ISetStackTrace>(
+    SET_ERROR_MESSAGE,
+    (state: StoreState, { stackTrace }) => ({
       ...state,
-      httpErrorCode: action.httpErrorCode
-    };
-  }
-
-  return state;
-};
+      stackTrace
+    })
+  )
+  .handleAction<ISetHttpErrorCode>(
+    SET_ERROR_MESSAGE,
+    (state: StoreState, { httpErrorCode }) => ({
+      ...state,
+      httpErrorCode
+    })
+  )
+  .getReducer();

@@ -56,8 +56,10 @@ export function getBinItems(
  * @return {object} Tree like structure
  */
 export function getPipelineAsTree(
-  pipeline: PipelineModelType
+  pipeline?: PipelineModelType
 ): PipelineAsTreeType | undefined {
+  if (!pipeline) return undefined;
+
   const elements: {
     [id: string]: PipelineAsTreeType;
   } = {};

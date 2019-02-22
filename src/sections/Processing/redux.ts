@@ -15,7 +15,10 @@
  */
 import { Action } from "redux";
 
-import { prepareReducer } from "../../lib/redux-actions-ts";
+import {
+  prepareReducer,
+  genUseActionCreators
+} from "../../lib/redux-actions-ts";
 import { StreamTaskType } from "../../types";
 
 export enum Directions {
@@ -89,7 +92,7 @@ export interface SelectFirstAction extends Action<"SELECT_FIRST"> {}
 export interface SelectLastAction extends Action<"SELECT_LAST"> {}
 export interface SelectNoneAction extends Action<"SELECT_NONE"> {}
 
-export const actionCreators = {
+export const useActionCreators = genUseActionCreators({
   addTrackers: (
     streamTasks: Array<StreamTaskType>,
     totalStreamTasks: number
@@ -147,7 +150,8 @@ export const actionCreators = {
   selectFirst: (): SelectFirstAction => ({ type: SELECT_FIRST }),
   selectLast: (): SelectLastAction => ({ type: SELECT_LAST }),
   selectNone: (): SelectNoneAction => ({ type: SELECT_NONE })
-};
+});
+
 export interface StoreState {
   trackers: Array<StreamTaskType>;
   isLoading: boolean;

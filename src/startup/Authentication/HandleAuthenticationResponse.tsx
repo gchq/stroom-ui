@@ -16,9 +16,11 @@
 import * as queryString from "qs";
 import { useEffect, useMemo } from "react";
 
-import { handleAuthenticationResponse } from "./authentication";
+import {
+  handleAuthenticationResponse,
+  useActionCreators
+} from "./authentication";
 import useRouter from "../../lib/useRouter";
-import { useDispatch } from "redux-react-hook";
 
 export interface Props {
   authenticationServiceUrl: string;
@@ -33,7 +35,7 @@ export const HandleAuthenticationResponse: React.FunctionComponent<Props> = ({
     router: { location },
     history
   } = useRouter();
-  const dispatch = useDispatch();
+  const actionCreators = useActionCreators();
 
   const accessCode = useMemo(() => {
     let query = location!.search;
@@ -45,7 +47,7 @@ export const HandleAuthenticationResponse: React.FunctionComponent<Props> = ({
 
   useEffect(() => {
     handleAuthenticationResponse(
-      dispatch,
+      actionCreators.tokenIdChange,
       history,
       accessCode,
       authenticationServiceUrl,

@@ -19,7 +19,6 @@ import { useEffect, useState } from "react";
 import PanelGroup from "react-panelgroup";
 import HorizontalPanel from "../../components/HorizontalPanel";
 import * as Mousetrap from "mousetrap";
-import { useDispatch } from "redux-react-hook";
 import "react-table/react-table.css";
 
 import Loader from "../../components/Loader";
@@ -29,7 +28,7 @@ import useStreamAttributeMapApi from "./useStreamAttributeMapApi";
 import useDataApi from "./useDataApi";
 import DetailsTabs from "./DetailsTabs";
 import DataList from "./DataList";
-import { actionCreators, defaultStatePerId } from "./redux";
+import { useActionCreators, defaultStatePerId } from "./redux";
 import { Direction, ExpressionOperatorWithUuid } from "../../types";
 import useLocalStorage, { storeNumber } from "../../lib/useLocalStorage";
 import useReduxState from "../../lib/useReduxState";
@@ -37,7 +36,6 @@ import useReduxState from "../../lib/useReduxState";
 export interface Props {
   dataViewerId: string;
 }
-const { selectRow, deselectRow } = actionCreators;
 
 const DataViewer = ({
   dataViewerId
@@ -46,7 +44,7 @@ const DataViewer = ({
 // tableData
 
 Props) => {
-  const dispatch = useDispatch();
+  const actionCreators = useActionCreators();
   const { dataViewers } = useReduxState(({ dataViewers }) => ({ dataViewers }));
   const {
     dataSource,
@@ -65,7 +63,7 @@ Props) => {
   >(undefined);
 
   const onRowSelected = (selectedRow: number) => {
-    dispatch(selectRow(dataViewerId, selectedRow));
+    actionCreators.selectRow(dataViewerId, selectedRow);
     dataApi.getDataForSelectedRow(dataViewerId);
     streamAttributeMapApi.getDetailsForSelectedRow(dataViewerId);
   };
@@ -149,7 +147,7 @@ Props) => {
     <HorizontalPanel
       className="element-details__panel"
       title=""
-      onClose={() => deselectRow(dataViewerId)}
+      onClose={() => actionCreators.deselectRow(dataViewerId)}
       content={
         <DetailsTabs
           data={dataForSelectedRow}

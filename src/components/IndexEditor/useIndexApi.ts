@@ -15,11 +15,9 @@
  */
 import { useContext, useCallback } from "react";
 import { StoreContext } from "redux-react-hook";
-import { actionCreators } from "../DocRefEditor";
+import { useActionCreators } from "../DocRefEditor";
 import useHttpClient from "../../lib/useHttpClient/useHttpClient";
 import { IndexDoc } from "../../types";
-
-const { documentReceived, documentSaved } = actionCreators;
 
 export interface Api {
   fetchDocument: (indexUuid: string) => void;
@@ -29,6 +27,7 @@ export interface Api {
 export const useApi = (): Api => {
   const store = useContext(StoreContext);
   const httpClient = useHttpClient();
+  const actionCreators = useActionCreators();
 
   if (!store) {
     throw new Error("Could not get Redux Store for processing Thunks");
@@ -45,7 +44,7 @@ export const useApi = (): Api => {
         response
           .json()
           .then((index: IndexDoc) =>
-            store.dispatch(documentReceived(indexUuid, index))
+          actionCreators.documentReceived(indexUuid, index)
           ),
       {
         headers: {
@@ -64,7 +63,7 @@ export const useApi = (): Api => {
     httpClient.httpPost(
       url,
       response =>
-        response.text().then(() => store.dispatch(documentSaved(index.uuid))),
+        response.text().then(() => actionCreators.documentSaved(index.uuid)),
       {
         body: index.data,
         headers: {

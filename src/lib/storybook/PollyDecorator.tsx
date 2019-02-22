@@ -19,15 +19,12 @@ import FetchAdapter, {
   HttpResponse
 } from "@pollyjs/adapter-fetch";
 
-import { actionCreators as fetchActionCreators } from "../useHttpClient/useHttpClient";
+import { useActionCreators as useFetchActionCreators } from "../useHttpClient/useHttpClient";
 import { Config } from "../../startup/config";
 import { TestData } from "../test/testTypes";
 
 import resources from "./resources";
-import { useDispatch } from "redux-react-hook";
 import { useEffect } from "react";
-
-const { resetAllUrls } = fetchActionCreators;
 
 // Register the fetch adapter so its accessible by all future polly instances
 Polly.register(FetchAdapter);
@@ -76,10 +73,10 @@ export interface Props {
 }
 
 export const useTestServer = (testData: TestData) => {
-  const dispatch = useDispatch();
+  const actionCreators = useFetchActionCreators();
 
   useEffect(() => {
-    dispatch(resetAllUrls());
+    actionCreators.resetAllUrls();
 
     testCache.data = {
       documentTree: { ...testData.documentTree },

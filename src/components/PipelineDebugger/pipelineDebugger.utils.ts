@@ -1,35 +1,33 @@
-import { StoreStateById as PipelineStatesStatePerId } from "../PipelineEditor/redux/pipelineStatesReducer";
+import { PipelineAsTreeType, PipelineModelType } from "../../types";
 
 export function getNext(
-  pipelineState: PipelineStatesStatePerId
+  selectedElementId?: string,
+  pipeline?: PipelineModelType,
+  asTree?: PipelineAsTreeType
 ): string | undefined {
-  const currentElementId = pipelineState.selectedElementId;
-  if (currentElementId && pipelineState.pipeline) {
+  if (selectedElementId && pipeline) {
     const nextLink =
-      pipelineState.pipeline.merged.links.add &&
-      pipelineState.pipeline.merged.links.add.find(
-        link => link.from === currentElementId
-      );
-    return nextLink ? nextLink.to : currentElementId;
-  } else if (!!pipelineState.asTree) {
-    return pipelineState.asTree.uuid;
+      pipeline.merged.links.add &&
+      pipeline.merged.links.add.find(link => link.from === selectedElementId);
+    return nextLink ? nextLink.to : selectedElementId;
+  } else if (!!asTree) {
+    return asTree.uuid;
   }
   return undefined;
 }
 
 export function getPrevious(
-  pipelineState: PipelineStatesStatePerId
+  selectedElementId?: string,
+  pipeline?: PipelineModelType,
+  asTree?: PipelineAsTreeType
 ): string | undefined {
-  const currentElementId = pipelineState.selectedElementId;
-  if (currentElementId && pipelineState.pipeline) {
+  if (selectedElementId && pipeline) {
     const previousLink =
-      pipelineState.pipeline.merged.links.add &&
-      pipelineState.pipeline.merged.links.add.find(
-        link => link.to === currentElementId
-      );
-    return previousLink ? previousLink.from : currentElementId;
-  } else if (!!pipelineState.asTree) {
-    return pipelineState.asTree.uuid;
+      pipeline.merged.links.add &&
+      pipeline.merged.links.add.find(link => link.to === selectedElementId);
+    return previousLink ? previousLink.from : selectedElementId;
+  } else if (!!asTree) {
+    return asTree.uuid;
   }
   return undefined;
 }

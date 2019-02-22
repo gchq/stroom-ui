@@ -1,19 +1,9 @@
 import { useContext, useCallback } from "react";
 import { StoreContext } from "redux-react-hook";
 
-import { actionCreators } from "./redux";
+import { useActionCreators } from "./redux";
 import useHttpClient from "../../lib/useHttpClient/useHttpClient";
 import { User } from "../../types";
-
-const {
-  usersReceived,
-  usersInGroupReceived,
-  groupsForUserReceived,
-  userCreated,
-  userDeleted,
-  userAddedToGroup,
-  userRemovedFromGroup
-} = actionCreators;
 
 interface Api {
   findUsers: (
@@ -33,6 +23,7 @@ interface Api {
 const useApi = (): Api => {
   const store = useContext(StoreContext);
   const httpClient = useHttpClient();
+  const actionCreators = useActionCreators();
 
   if (!store) {
     throw new Error("Could not get Redux Store for processing Thunks");
@@ -55,7 +46,7 @@ const useApi = (): Api => {
           r
             .json()
             .then((users: Array<User>) =>
-              store.dispatch(usersReceived(listId, users))
+              actionCreators.usersReceived(listId, users)
             ),
         {},
         true
@@ -76,7 +67,7 @@ const useApi = (): Api => {
         r
           .json()
           .then((users: Array<User>) =>
-            store.dispatch(usersInGroupReceived(groupUuid, users))
+            actionCreators.usersInGroupReceived(groupUuid, users)
           ),
       {},
       true
@@ -95,7 +86,7 @@ const useApi = (): Api => {
         r
           .json()
           .then((users: Array<User>) =>
-            store.dispatch(groupsForUserReceived(userUuid, users))
+            actionCreators.groupsForUserReceived(userUuid, users)
           ),
       {},
       true
@@ -115,7 +106,7 @@ const useApi = (): Api => {
     httpClient.httpPost(
       url,
       response =>
-        response.json().then((user: User) => store.dispatch(userCreated(user))),
+        response.json().then((user: User) => actionCreators.userCreated(user)),
       {
         body
       }
@@ -127,7 +118,7 @@ const useApi = (): Api => {
     var url = `${state.config.values.stroomBaseServiceUrl}/users/v1/${uuid}`;
 
     httpClient.httpDelete(url, response =>
-      response.text().then(() => store.dispatch(userDeleted(uuid)))
+      response.text().then(() => actionCreators.userDeleted(uuid))
     );
   }, []);
 
@@ -140,7 +131,7 @@ const useApi = (): Api => {
     httpClient.httpPut(url, response =>
       response
         .text()
-        .then(() => store.dispatch(userAddedToGroup(userUuid, groupUuid)))
+        .then(() => actionCreators.userAddedToGroup(userUuid, groupUuid))
     );
   }, []);
 
@@ -154,7 +145,7 @@ const useApi = (): Api => {
       httpClient.httpDelete(url, response =>
         response
           .text()
-          .then(() => store.dispatch(userRemovedFromGroup(userUuid, groupUuid)))
+          .then(() => actionCreators.userRemovedFromGroup(userUuid, groupUuid))
       );
     },
     []

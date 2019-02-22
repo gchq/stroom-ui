@@ -1,26 +1,12 @@
 import { useContext, useCallback } from "react";
 import { StoreContext } from "redux-react-hook";
 
-import { actionCreators as folderExplorerActionCreators } from "./redux";
-import { actionCreators as docRefTypesActionCreators } from "../DocRefTypes/redux";
-import { actionCreators as appSearchActionCreators } from "../AppSearchBar/redux";
+import { useActionCreators as useFolderExplorerActionCreators } from "./redux";
+import { useActionCreators as useDocRefTypesActionCreators } from "../DocRefTypes/redux";
+import { useActionCreators as useAppSearchActionCreators } from "../AppSearchBar/redux";
 import useHttpClient from "../../lib/useHttpClient/useHttpClient";
 import { findByUuids, findItem } from "../../lib/treeUtils";
 import { DocRefType, DocRefTree, DocRefInfoType } from "../../types";
-
-const {
-  docTreeReceived,
-  docRefRenamed,
-  docRefsCopied,
-  docRefsMoved,
-  docRefsDeleted,
-  docRefCreated,
-  docRefInfoReceived
-} = folderExplorerActionCreators;
-
-const { searchResultsReturned } = appSearchActionCreators;
-
-const { docRefTypesReceived } = docRefTypesActionCreators;
 
 const stripDocRef = (docRef: DocRefType) => ({
   uuid: docRef.uuid,
@@ -65,6 +51,10 @@ export const useApi = (): Api => {
   const store = useContext(StoreContext);
   const httpClient = useHttpClient();
 
+  const folderExplorerActionCreators = useFolderExplorerActionCreators();
+  const docRefTypesActionCreators = useDocRefTypesActionCreators();
+  const appSearchActionCreators = useAppSearchActionCreators();
+
   if (!store) {
     throw new Error("Could not get Redux Store for processing Thunks");
   }
@@ -76,7 +66,7 @@ export const useApi = (): Api => {
       response
         .json()
         .then((documentTree: DocRefTree) =>
-          store.dispatch(docTreeReceived(documentTree))
+        folderExplorerActionCreators.docTreeReceived(documentTree)
         )
     );
   }, []);
@@ -91,7 +81,7 @@ export const useApi = (): Api => {
       response
         .json()
         .then((docRefTypes: Array<string>) =>
-          store.dispatch(docRefTypesReceived(docRefTypes))
+        docRefTypesActionCreators.docRefTypesReceived(docRefTypes)
         )
     );
   }, []);
@@ -104,7 +94,7 @@ export const useApi = (): Api => {
       response
         .json()
         .then((docRefInfo: DocRefInfoType) =>
-          store.dispatch(docRefInfoReceived(docRefInfo))
+        folderExplorerActionCreators.docRefInfoReceived(docRefInfo)
         )
     );
   }, []);
@@ -125,7 +115,7 @@ export const useApi = (): Api => {
           r
             .json()
             .then((searchResults: Array<DocRefType>) =>
-              store.dispatch(searchResultsReturned(pickerId, searchResults))
+              appSearchActionCreators. searchResultsReturned(pickerId, searchResults)
             ),
         {},
         true
@@ -151,7 +141,7 @@ export const useApi = (): Api => {
           response
             .json()
             .then((updatedTree: DocRefTree) =>
-              store.dispatch(docRefCreated(updatedTree))
+            folderExplorerActionCreators.docRefCreated(updatedTree)
             ),
         {
           body: JSON.stringify({
@@ -178,7 +168,7 @@ export const useApi = (): Api => {
         response
           .json()
           .then((resultDocRef: DocRefType) =>
-            store.dispatch(docRefRenamed(docRef, name, resultDocRef))
+          folderExplorerActionCreators.docRefRenamed(docRef, name, resultDocRef)
           ),
       {
         body: JSON.stringify({
@@ -210,9 +200,7 @@ export const useApi = (): Api => {
           response
             .json()
             .then((updatedTree: DocRefTree) =>
-              store.dispatch(
-                docRefsCopied(docRefs, destination.node, updatedTree)
-              )
+            folderExplorerActionCreators.docRefsCopied(docRefs, destination.node, updatedTree)
             ),
         {
           body: JSON.stringify({
@@ -247,9 +235,8 @@ export const useApi = (): Api => {
           response
             .json()
             .then((updatedTree: DocRefTree) =>
-              store.dispatch(
-                docRefsMoved(docRefs, destination.node, updatedTree)
-              )
+            folderExplorerActionCreators.docRefsMoved(docRefs, destination.node, updatedTree)
+        
             ),
         {
           body: JSON.stringify({
@@ -277,7 +264,7 @@ export const useApi = (): Api => {
         response
           .json()
           .then((updatedTree: DocRefTree) =>
-            store.dispatch(docRefsDeleted(docRefs, updatedTree))
+          folderExplorerActionCreators.docRefsDeleted(docRefs, updatedTree)
           ),
       {
         body: JSON.stringify(docRefs.map(stripDocRef))

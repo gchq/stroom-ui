@@ -13,28 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { actionCreators } from "./redux";
+import { useActionCreators as useDocRefActionCreators } from "../DocRefEditor";
 import useHttpClient from "../../lib/useHttpClient/useHttpClient";
 import { PipelineModelType, PipelineSearchResultType } from "../../types";
 import { useContext, useCallback } from "react";
 import { StoreContext } from "redux-react-hook";
-
-const {
-  pipelineReceived,
-  pipelineSaveRequested,
-  pipelineSaved,
-  pipelinesReceived
-} = actionCreators;
+import { useActionCreators as useSearchActionCreators } from "./pipelineSearch";
 
 export interface Api {
   fetchPipeline: (pipelineId: string) => void;
-  savePipeline: (pipelineId: string) => void;
+  savePipeline: (document: PipelineModelType) => void;
   searchPipelines: () => void;
 }
 
 export const useApi = (): Api => {
   const store = useContext(StoreContext);
   const httpClient = useHttpClient();
+  const docRefActionCreators = useDocRefActionCreators();
+  const searchActionCreators = useSearchActionCreators();
 
   if (!store) {
     throw new Error("Could not get Redux Store for processing Thunks");
@@ -49,25 +45,26 @@ export const useApi = (): Api => {
       response
         .json()
         .then((pipeline: PipelineModelType) =>
-          store.dispatch(pipelineReceived(pipelineId, pipeline))
+          docRefActionCreators.documentReceived(pipelineId, pipeline)
         )
     );
   }, []);
-  const savePipeline = useCallback((pipelineId: string) => {
+  const savePipeline = useCallback((document: PipelineModelType) => {
     const state = store.getState();
-    const url = `${
-      state.config.values.stroomBaseServiceUrl
-    }/pipelines/v1/${pipelineId}`;
+    const url = `${state.config.values.stroomBaseServiceUrl}/pipelines/v1/${
+      document.docRef.uuid
+    }`;
 
-    const { pipeline } = state.pipelineEditor.pipelineStates[pipelineId];
-    const body = JSON.stringify(pipeline);
+    const body = JSON.stringify(document);
 
-    store.dispatch(pipelineSaveRequested(pipelineId));
+    docRefActionCreators.documentSaveRequested(document.docRef.uuid);
 
     httpClient.httpPost(
       url,
       response =>
-        response.text().then(() => store.dispatch(pipelineSaved(pipelineId))),
+        response
+          .text()
+          .then(() => docRefActionCreators.documentSaved(document.docRef.uuid)),
       {
         body
       }
@@ -97,7 +94,7 @@ export const useApi = (): Api => {
         response
           .json()
           .then((response: PipelineSearchResultType) =>
-            store.dispatch(pipelinesReceived(response))
+            searchActionCreators.pipelinesReceived(response)
           ),
       {},
       forceGet

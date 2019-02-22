@@ -5,7 +5,7 @@ import { Formik, Field } from "formik";
 import IconHeader from "../IconHeader";
 import Button from "../Button";
 import ThemedModal from "../ThemedModal";
-import { required, minLength2 } from "../../lib/reduxFormUtils";
+import { required, minLength2 } from "../../lib/reduxUtils";
 import { ElementDefinition } from "../../types";
 
 export type OnAddElement = (

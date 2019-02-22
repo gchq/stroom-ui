@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import { Action } from "redux";
-import { prepareReducer } from "../lib/redux-actions-ts";
+import { prepareReducer, genUseActionCreators } from "../lib/redux-actions-ts";
 import useHttpClient from "../lib/useHttpClient/useHttpClient";
 import { useContext, useCallback } from "react";
 import { StoreContext } from "redux-react-hook";
@@ -42,12 +42,12 @@ export interface UpdateConfigAction extends Action<"UPDATE_CONFIG"> {
   values: Config;
 }
 
-const actionCreators = {
+const useActionCreators = genUseActionCreators({
   updateConfig: (values: Config): UpdateConfigAction => ({
     type: UPDATE_CONFIG,
     values
   })
-};
+});
 
 const reducer = prepareReducer(initialState)
   .handleAction<UpdateConfigAction>(UPDATE_CONFIG, (state, { values }) => ({
@@ -63,6 +63,7 @@ interface Api {
 const useApi = (): Api => {
   const store = useContext(StoreContext);
   const httpClient = useHttpClient();
+  const actionCreators = useActionCreators();
 
   if (!store) {
     throw new Error("Could not get Redux Store for processing Thunks");
@@ -72,7 +73,8 @@ const useApi = (): Api => {
     const url = "/config.json";
     httpClient.httpGet(url, response => {
       response.json().then((config: Config) => {
-        store.dispatch(actionCreators.updateConfig(config));
+        console.log("Config Received", config);
+        actionCreators.updateConfig(config);
       });
     });
   }, []);
@@ -80,4 +82,4 @@ const useApi = (): Api => {
   return { fetchConfig };
 };
 
-export { actionCreators, reducer, Api, useApi };
+export { reducer, Api, useApi };

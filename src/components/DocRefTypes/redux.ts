@@ -14,7 +14,10 @@
  * limitations under the License.
  */
 import { Action } from "redux";
-import { prepareReducer } from "../../lib/redux-actions-ts";
+import {
+  prepareReducer,
+  genUseActionCreators
+} from "../../lib/redux-actions-ts";
 import { DocRefTypeList } from "../../types";
 
 export type StoreState = DocRefTypeList;
@@ -31,6 +34,7 @@ export const actionCreators = {
     docRefTypes
   })
 };
+export const useActionCreators = genUseActionCreators(actionCreators);
 
 const defaultState: StoreState = [];
 

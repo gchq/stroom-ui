@@ -15,20 +15,17 @@
  */
 import * as React from "react";
 import { useEffect } from "react";
-import { useDispatch } from "redux-react-hook";
 
 import { storiesOf } from "@storybook/react";
 import "../../../styles/main.css";
 
-import ElementDetails, { Props as ElementDetailsProps } from "./ElementDetails";
-import { actionCreators as pipelineActionCreators } from "../redux";
+import ElementDetails from "./ElementDetails";
 import StroomDecorator from "../../../lib/storybook/StroomDecorator";
 import { fullTestData } from "../../../lib/storybook/fullTestData";
-import usePipelineState from "../redux/usePipelineState";
+import usePipelineState from "../usePipelineState";
 
-const { pipelineElementSelected } = pipelineActionCreators;
-
-interface Props extends ElementDetailsProps {
+interface Props {
+  pipelineId: string;
   testElementId: string;
   testElementConfig: object;
 }
@@ -36,34 +33,36 @@ interface Props extends ElementDetailsProps {
 const TestElementDetails = ({
   pipelineId,
   testElementId,
-  testElementConfig,
-  ...rest
+  testElementConfig
 }: Props) => {
-  const pipelineState = usePipelineState(pipelineId);
-  const dispatch = useDispatch();
+  const {
+    pipelineEditApi,
+    useEditorProps: { document }
+  } = usePipelineState(pipelineId);
   useEffect(() => {
-    dispatch(
-      pipelineElementSelected(pipelineId, testElementId, testElementConfig)
-    );
-  }, [pipelineState]);
+    pipelineEditApi.elementSelected(testElementId, testElementConfig);
+  }, [pipelineId]);
 
-  return <ElementDetails pipelineId={pipelineId} {...rest} />;
+  if (!document) {
+    return null;
+  }
+
+  return (
+    <ElementDetails pipeline={document} pipelineEditApi={pipelineEditApi} />
+  );
 };
 
 const stories = storiesOf("Pipeline/Element Details", module).addDecorator(
   StroomDecorator
 );
 
-Object.entries(fullTestData.pipelines).map(pipeline => {
-  pipeline[1].merged.elements.add!.map(element => {
-    stories.add(`${pipeline[1].docRef.uuid} - ${element.id}`, () => (
+Object.values(fullTestData.pipelines).map(pipeline => {
+  pipeline.merged.elements.add!.map(element => {
+    stories.add(`${pipeline.docRef.uuid} - ${element.id}`, () => (
       <TestElementDetails
-        pipelineId={pipeline[1].docRef.uuid}
+        pipelineId={pipeline.docRef.uuid}
         testElementId={element.id}
         testElementConfig={{ splitDepth: 10, splitCount: 10 }}
-        onClose={() => {
-          console.log("Closing Prevented in Story");
-        }}
       />
     ));
   });

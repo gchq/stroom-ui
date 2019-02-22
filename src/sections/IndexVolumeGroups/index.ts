@@ -5,7 +5,7 @@ import IndexVolumeGroupPicker, {
 import IndexVolumeGroupModalPicker, {
   useDialog as useIndexVolumeGroupModalPicker
 } from "./IndexVolumeGroupModalPicker";
-import { actionCreators, reducer, StoreState } from "./redux";
+import { useActionCreators, reducer, StoreState } from "./redux";
 import useIndexVolumeGroupApi from "./useIndexVolumeGroupApi";
 import IndexVolumeGroupsTable, {
   useTable as useIndexVolumeGroupsTable
@@ -17,7 +17,7 @@ export {
   useIndexVolumeGroupPicker,
   IndexVolumeGroupModalPicker,
   useIndexVolumeGroupModalPicker,
-  actionCreators,
+  useActionCreators,
   reducer,
   StoreState,
   useIndexVolumeGroupApi,

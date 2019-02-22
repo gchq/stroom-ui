@@ -1,6 +1,9 @@
 import { Dispatch, Action } from "redux";
 
-import { prepareReducer } from "../../lib/redux-actions-ts";
+import {
+  prepareReducer,
+  genUseActionCreators
+} from "../../lib/redux-actions-ts";
 
 export const SET_APP_PERMISSION = "authorisation/SET_APP_PERMISSION";
 
@@ -18,7 +21,7 @@ const defaultState = {
   appPermissions: []
 };
 
-export const actionCreators = {
+export const useActionCreators = genUseActionCreators({
   setAppPermission: (
     appPermission: string,
     hasAppPermission: boolean
@@ -27,7 +30,7 @@ export const actionCreators = {
     appPermission,
     hasAppPermission
   })
-};
+});
 
 export const reducer = prepareReducer(defaultState)
   .handleAction<SetAppPermissionAction>(

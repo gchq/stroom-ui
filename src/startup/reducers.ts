@@ -53,7 +53,11 @@ import {
 import {
   reducer as pipelineEditor,
   StoreState as PipelineEditorStoreState
-} from "../components/PipelineEditor";
+} from "../components/PipelineEditor/pipelineSearch";
+import {
+  reducer as elements,
+  StoreState as ElementStoreState
+} from "../components/PipelineEditor/useElements";
 import {
   reducer as debuggers,
   StoreState as DebuggersStoreState
@@ -96,6 +100,7 @@ export interface GlobalStoreState {
   indexVolumeGroups: IndexVolumeGroupStoreState;
   indexVolumes: IndexVolumeStoreState;
   docRefEditors: DocRefEditorStoreState;
+  elements: ElementStoreState;
 }
 
 export default combineReducers({
@@ -114,5 +119,6 @@ export default combineReducers({
   userPermissions,
   indexVolumeGroups,
   indexVolumes,
-  docRefEditors
+  docRefEditors,
+  elements
 });

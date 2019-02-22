@@ -20,12 +20,9 @@ import { storiesOf } from "@storybook/react";
 
 import ErrorPage from "./ErrorPage";
 import StroomDecorator from "../../lib/storybook/StroomDecorator";
-import { actionCreators } from "./redux";
+import { useActionCreators } from "./redux";
 
 import "../../styles/main.css";
-import { useDispatch } from "redux-react-hook";
-
-const { setErrorMessage, setStackTrace, setHttpErrorCode } = actionCreators;
 
 const errorMessage = "Everything is a disaster";
 const stackTrace = `Invariant Violation: Objects are not valid as a React child (found: object with keys {sdfs}). If you meant to render a collection of children, use an array instead.
@@ -63,11 +60,11 @@ const TestErrorPage = ({
   _stackTrace,
   _httpErrorStatus
 }: Props) => {
-  const dispatch = useDispatch();
+  const actionCreators = useActionCreators();
   useEffect(() => {
-    if (!!_errorMessage) dispatch(setErrorMessage(_errorMessage));
-    if (!!_stackTrace) dispatch(setStackTrace(stackTrace));
-    if (!!_httpErrorStatus) dispatch(setHttpErrorCode(httpErrorStatus));
+    if (!!_errorMessage) actionCreators.setErrorMessage(_errorMessage);
+    if (!!_stackTrace) actionCreators.setStackTrace(stackTrace);
+    if (!!_httpErrorStatus) actionCreators.setHttpErrorCode(httpErrorStatus);
   }, []);
 
   return <ErrorPage />;

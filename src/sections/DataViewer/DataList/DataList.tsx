@@ -23,11 +23,10 @@ import * as Mousetrap from "mousetrap";
 import ReactTable, { RowInfo, Column } from "react-table";
 import "react-table/react-table.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useDispatch } from "redux-react-hook";
 
 import useStreamAttributeMapApi from "../useStreamAttributeMapApi";
 import useDataApi from "../useDataApi";
-import { actionCreators, defaultStatePerId } from "../redux";
+import { useActionCreators, defaultStatePerId } from "../redux";
 
 import Loader from "../../../components/Loader";
 import Button from "../../../components/Button";
@@ -49,10 +48,8 @@ interface TableData {
   pipeline?: string;
 }
 
-const { selectRow } = actionCreators;
-
 const DataList = ({ dataViewerId, expression }: Props) => {
-  const dispatch = useDispatch();
+  const actionCreators = useActionCreators();
   const { dataViewers } = useReduxState(({ dataViewers }) => ({ dataViewers }));
   const { selectedRow, pageOffset, pageSize, streamAttributeMaps, dataSource } =
     dataViewers[dataViewerId] || defaultStatePerId;
@@ -61,7 +58,7 @@ const DataList = ({ dataViewerId, expression }: Props) => {
   const streamAttributeMapApi = useStreamAttributeMapApi();
 
   const onRowSelected = (dataViewerId: string, selectedRow: number) => {
-    dispatch(selectRow(dataViewerId, selectedRow));
+    actionCreators.selectRow(dataViewerId, selectedRow);
 
     dataApi.getDataForSelectedRow(dataViewerId);
     streamAttributeMapApi.getDetailsForSelectedRow(dataViewerId);

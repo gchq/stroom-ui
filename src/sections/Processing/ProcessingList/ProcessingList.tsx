@@ -21,12 +21,11 @@ import * as Mousetrap from "mousetrap";
 import { Progress } from "react-sweet-progress";
 import "react-sweet-progress/lib/style.css";
 import ReactTable, { RowInfo, SortingRule } from "react-table";
-import { useDispatch } from "redux-react-hook";
 import "react-table/react-table.css";
 
 import Button from "../../../components/Button";
 import {
-  actionCreators,
+  useActionCreators,
   Directions,
   SortByOptions,
   sortByFromString
@@ -35,15 +34,13 @@ import useApi from "../useStreamTasksApi";
 import { StreamTaskType } from "../../../types";
 import useReduxState from "../../../lib/useReduxState";
 
-const { updateSort, moveSelection } = actionCreators;
-
 interface Props {
   onSelection: (filterId: number, trackers: Array<StreamTaskType>) => void;
 }
 
 const ProcessingList = ({ onSelection }: Props) => {
-  const dispatch = useDispatch();
   const api = useApi();
+  const actionCreators = useActionCreators();
 
   const {
     trackers,
@@ -79,7 +76,7 @@ const ProcessingList = ({ onSelection }: Props) => {
     if (isAtEndOfList && !isAtEndOfEverything) {
       api.fetchMore();
     } else {
-      dispatch(moveSelection(direction));
+      actionCreators.moveSelection(direction);
     }
   };
   const onHandleSort = (sort: SortingRule) => {
@@ -88,7 +85,7 @@ const ProcessingList = ({ onSelection }: Props) => {
         ? Directions.descending
         : Directions.ascending;
       const sortBy: SortByOptions = sortByFromString(sort.id);
-      dispatch(updateSort(sortBy, direction));
+      actionCreators.updateSort(sortBy, direction);
       api.fetchTrackers();
     }
   };

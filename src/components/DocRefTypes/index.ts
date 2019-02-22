@@ -1,11 +1,11 @@
 import DocTypeFilters from "./DocTypeFilters";
 import DocRefTypePicker from "./DocRefTypePicker";
 
-import { reducer, actionCreators, StoreState } from "./redux";
+import { reducer, useActionCreators, StoreState } from "./redux";
 
 export {
   reducer,
-  actionCreators,
+  useActionCreators,
   StoreState,
   DocTypeFilters,
   DocRefTypePicker

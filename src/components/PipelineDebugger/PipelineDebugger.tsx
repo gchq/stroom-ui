@@ -20,18 +20,13 @@ import { useEffect } from "react";
 import Button from "../Button";
 import { Pipeline } from "../PipelineEditor";
 import Loader from "../Loader";
-import { actionCreators as pipelineActionCreators } from "../PipelineEditor";
 
-import { actionCreators } from "./redux";
+import { useActionCreators } from "./redux";
 import DebuggerStep from "./DebuggerStep";
 import { getNext, getPrevious } from "./pipelineDebugger.utils";
-import { useDispatch } from "redux-react-hook";
 import useReduxState from "../../lib/useReduxState";
 import usePipelineApi from "../PipelineEditor/usePipelineApi";
-
-const { startDebugging } = actionCreators;
-
-const { pipelineElementSelected } = pipelineActionCreators;
+import usePipelineState from "../PipelineEditor/usePipelineState";
 
 export interface Props {
   debuggerId: string;
@@ -39,20 +34,21 @@ export interface Props {
 }
 
 const PipelineDebugger = ({ pipelineId, debuggerId }: Props) => {
-  const dispatch = useDispatch();
+  const actionCreators = useActionCreators();
   const pipelineApi = usePipelineApi();
-  const { pipelineStates, debuggers } = useReduxState(
-    ({ debuggers, pipelineEditor: { pipelineStates } }) => ({
-      debuggers,
-      pipelineStates
-    })
-  );
+  const { debuggers } = useReduxState(({ debuggers }) => ({
+    debuggers
+  }));
   const debuggerState = debuggers[debuggerId];
-  const pipelineState = pipelineStates[pipelineId];
+  const {
+    pipelineEditApi: { selectedElementId, elementSelected },
+    useEditorProps: { document: pipeline },
+    asTree
+  } = usePipelineState(pipelineId);
 
   useEffect(() => {
     pipelineApi.fetchPipeline(pipelineId);
-    dispatch(startDebugging(debuggerId, pipelineId));
+    actionCreators.startDebugging(debuggerId, pipelineId);
   }, []);
 
   if (!debuggerState) {
@@ -60,15 +56,15 @@ const PipelineDebugger = ({ pipelineId, debuggerId }: Props) => {
   }
 
   const onNext = () => {
-    const nextElementId = getNext(pipelineState);
+    const nextElementId = getNext(selectedElementId, pipeline, asTree);
     if (nextElementId) {
-      dispatch(pipelineElementSelected(pipelineId, nextElementId, {}));
+      elementSelected(nextElementId, {});
     }
   };
   const onPrevious = () => {
-    const nextElementId = getPrevious(pipelineState);
+    const nextElementId = getPrevious(selectedElementId, pipeline, asTree);
     if (nextElementId) {
-      dispatch(pipelineElementSelected(pipelineId, nextElementId, {}));
+      elementSelected(nextElementId, {});
     }
   };
 

@@ -4,10 +4,7 @@ import useReduxState from "../../lib/useReduxState";
 import { StoreStateById, defaultStatePerId } from "./redux";
 import { ButtonProps } from "../Button";
 import { Props as DocRefEditorProps } from ".";
-import { useDispatch } from "redux-react-hook";
-import { actionCreators } from "./redux";
-
-const { documentChangesMade } = actionCreators;
+import { useActionCreators } from "./redux";
 
 export interface Props<T extends object> {
   docRefUuid: string;
@@ -26,7 +23,7 @@ export function useDocRefEditor<T extends object>({
   docRefUuid,
   saveDocument
 }: Props<T>): OutProps<T> {
-  const dispatch = useDispatch();
+  const actionCreators = useActionCreators();
   const { isDirty, isSaving, document }: StoreStateById = useReduxState(
     ({ docRefEditors }) => docRefEditors[docRefUuid] || defaultStatePerId,
     [docRefUuid]
@@ -53,7 +50,7 @@ export function useDocRefEditor<T extends object>({
     document: !!document ? ((document as unknown) as T) : undefined,
     onDocumentChange: useCallback(
       (updates: Partial<T>) =>
-        dispatch(documentChangesMade(docRefUuid, updates)),
+        actionCreators.documentChangesMade(docRefUuid, updates),
       [docRefUuid]
     ),
     editorProps: {
