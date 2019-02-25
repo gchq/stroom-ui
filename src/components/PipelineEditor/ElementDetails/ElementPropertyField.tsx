@@ -88,7 +88,6 @@ const ElementPropertyField = ({
     case "docref":
       elementField = (
         <AppSearchBar
-          pickerId={`${name}_docRefModalPicker`}
           typeFilters={docRefTypes}
           value={value}
           onChange={node =>

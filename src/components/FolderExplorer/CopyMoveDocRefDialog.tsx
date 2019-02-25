@@ -81,7 +81,6 @@ let CopyMoveDocRefDialog = ({
               <Field name="destination">
                 {({ field: { value } }: FieldProps) => (
                   <AppSearchBar
-                    pickerId="copy-dialog"
                     onChange={d => setFieldValue("destination", d)}
                     value={value}
                     typeFilters={[]}

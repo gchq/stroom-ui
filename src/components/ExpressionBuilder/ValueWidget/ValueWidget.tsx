@@ -47,7 +47,6 @@ const ValueWidget = ({
     case "IN_DICTIONARY": {
       return (
         <AppSearchBar
-          pickerId={uuid!}
           typeFilters={["Dictionary"]}
           onChange={onChange}
           value={value}

@@ -28,11 +28,10 @@ import { DocRefType } from "../../types";
 import FormikDebug from "../../lib/FormikDebug";
 
 interface Props {
-  pickerId: string;
   typeFilters?: Array<string>;
 }
 
-let AppSearchAsForm = ({ pickerId, typeFilters }: Props) => (
+let AppSearchAsForm = ({ typeFilters }: Props) => (
   <Formik
     initialValues={{
       someName: "",
@@ -52,7 +51,6 @@ let AppSearchAsForm = ({ pickerId, typeFilters }: Props) => (
             <Field name="chosenDocRef">
               {({ field: { value } }: FieldProps) => (
                 <AppSearchBar
-                  pickerId={pickerId}
                   typeFilters={typeFilters}
                   onChange={e => setFieldValue("chosenDocRef", e)}
                   value={value}
@@ -67,7 +65,7 @@ let AppSearchAsForm = ({ pickerId, typeFilters }: Props) => (
   </Formik>
 );
 
-const AppSearchAsPicker = ({ pickerId, typeFilters }: Props) => {
+const AppSearchAsPicker = ({ typeFilters }: Props) => {
   const [pickedDocRef, setPickedDocRef] = useState<DocRefType | undefined>(
     undefined
   );
@@ -75,7 +73,6 @@ const AppSearchAsPicker = ({ pickerId, typeFilters }: Props) => {
   return (
     <div>
       <AppSearchBar
-        pickerId={pickerId}
         typeFilters={typeFilters}
         onChange={setPickedDocRef}
         value={pickedDocRef}
@@ -99,12 +96,9 @@ class AppSearchAsNavigator extends React.Component<
     };
   }
   render() {
-    const { pickerId } = this.props;
-
     return (
       <div style={{ height: "100%", width: "100%" }}>
         <AppSearchBar
-          pickerId={pickerId}
           onChange={d => {
             console.log("App Search Bar Chose a Value", d);
             this.setState({ chosenDocRef: d });
@@ -126,22 +120,17 @@ const stories = storiesOf("Doc Ref/App Search Bar", module);
 
 stories
   .addDecorator(StroomDecorator)
-  .add("Search Bar (global)", () => (
-    <AppSearchAsNavigator pickerId="global-search" />
-  ))
-  .add("Doc Ref Form", () => <AppSearchAsForm pickerId="docRefForm1" />)
-  .add("Doc Ref Picker", () => <AppSearchAsPicker pickerId="docRefPicker2" />)
+  .add("Search Bar (global)", () => <AppSearchAsNavigator />)
+  .add("Doc Ref Form", () => <AppSearchAsForm />)
+  .add("Doc Ref Picker", () => <AppSearchAsPicker />)
   .add("Doc Ref Form (Pipeline)", () => (
-    <AppSearchAsForm pickerId="docRefForm3" typeFilters={["Pipeline"]} />
+    <AppSearchAsForm typeFilters={["Pipeline"]} />
   ))
   .add("Doc Ref Picker (Feed AND Dictionary)", () => (
-    <AppSearchAsPicker
-      pickerId="docRefPicker4"
-      typeFilters={["Feed", "Dictionary"]}
-    />
+    <AppSearchAsPicker typeFilters={["Feed", "Dictionary"]} />
   ))
   .add("Doc Ref Form (Folders)", () => (
-    <AppSearchAsForm pickerId="docRefForm5" typeFilters={["Folder"]} />
+    <AppSearchAsForm typeFilters={["Folder"]} />
   ));
 
-addThemedStories(stories, <AppSearchAsNavigator pickerId="global-search" />);
+addThemedStories(stories, <AppSearchAsNavigator />);

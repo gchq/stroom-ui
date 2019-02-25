@@ -30,9 +30,34 @@ export interface Props {
 
 const FIELD_COLUMNS = [
   {
-    id: "name",
+    id: "fieldName",
     Header: "Name",
-    accessor: (u: IndexField) => u.name
+    accessor: (u: IndexField) => u.fieldName
+  },
+  {
+    id: "fieldType",
+    Header: "Type",
+    accessor: (u: IndexField) => u.fieldType
+  },
+  {
+    id: "stored",
+    Header: "Stored",
+    accessor: (u: IndexField) => u.stored.toString()
+  },
+  {
+    id: "termPositions",
+    Header: "Positions",
+    accessor: (u: IndexField) => u.termPositions.toString()
+  },
+  {
+    id: "analyzerType",
+    Header: "Analyzer",
+    accessor: (u: IndexField) => u.analyzerType
+  },
+  {
+    id: "caseSensitive",
+    Header: "Case Sensitive",
+    accessor: (u: IndexField) => u.caseSensitive.toString()
   }
 ];
 
@@ -51,7 +76,7 @@ const IndexEditor = ({ indexUuid }: Props) => {
   const { tableProps } = useSelectableReactTable<IndexField>(
     {
       items: document && document.data ? document.data.fields : [],
-      getKey: f => f.name
+      getKey: f => f.fieldName
     },
     {
       columns: FIELD_COLUMNS

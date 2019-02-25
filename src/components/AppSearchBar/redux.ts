@@ -1,4 +1,8 @@
 import { Action } from "redux";
+import { useMemo, useCallback } from "react";
+import * as uuidv4 from "uuid";
+
+import useExplorerApi, { SearchProps } from "../FolderExplorer/useExplorerApi";
 
 import {
   prepareReducerById,
@@ -7,6 +11,7 @@ import {
   genUseActionCreators
 } from "../../lib/redux-actions-ts";
 import { DocRefType } from "../../types";
+import useReduxState from "../../lib/useReduxState";
 
 export enum SearchMode {
   GLOBAL_SEARCH,
@@ -45,3 +50,23 @@ export const reducer = prepareReducerById(defaultStatePerId)
     (state: StoreStatePerId, { searchResults }) => searchResults
   )
   .getReducer();
+
+export interface UseAppSearchState {
+  searchResults: StoreStatePerId;
+  onSearch: (p: SearchProps) => void;
+}
+
+export const useAppSearchState = (): UseAppSearchState => {
+  const componentId = useMemo(() => uuidv4(), []);
+  const { appSearch } = useReduxState(({ appSearch }) => ({ appSearch }));
+
+  const explorerApi = useExplorerApi();
+
+  return {
+    searchResults: appSearch[componentId] || defaultStatePerId,
+    onSearch: useCallback(p => explorerApi.searchApp(componentId, p), [
+      explorerApi,
+      componentId
+    ])
+  };
+};

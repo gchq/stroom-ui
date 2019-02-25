@@ -97,8 +97,43 @@ export interface IndexUpdates {
   description?: string;
 }
 
+export type IndexFieldType = "FIELD" | "NUMERIC_FIELD" | "DATE_FIELD" | "ID";
+
+export const IndexFieldTypeDisplayValues = {
+  FIELD: "Text",
+  NUMERIC_FIELD: "Number",
+  DATE_FIELD: "Data",
+  ID: "Id"
+};
+
+export type AnalyzerType =
+  | "KEYWORD"
+  | "ALPHA"
+  | "NUMERIC"
+  | "ALPHA_NUMERIC"
+  | "WHITESPACE"
+  | "STOP"
+  | "STANDARD";
+
+export const AnalyzerDisplayValues = {
+  KEYWORD: "Keyword",
+  ALPHA: "Alpha",
+  NUMERIC: "Numeric",
+  ALPHA_NUMERIC: "Alpha numeric",
+  WHITESPACE: "Whitespace",
+  STOP: "Stop words",
+  STANDARD: "Standard"
+};
+
 export interface IndexField {
-  name: string;
+  fieldType: IndexFieldType;
+  fieldName: string;
+  stored: boolean;
+  indexed: boolean;
+  termPositions: boolean;
+  analyzerType: AnalyzerType;
+  caseSensitive: boolean;
+  conditions: Array<ConditionType>;
 }
 
 export interface IndexDoc extends DocRefType, IndexUpdates {
@@ -118,6 +153,7 @@ export type ConditionType =
   | "EQUALS"
   | "IN"
   | "IN_DICTIONARY"
+  | "IS_DOC_REF"
   | "CONTAINS"
   | "BETWEEN"
   | "GREATER_THAN"

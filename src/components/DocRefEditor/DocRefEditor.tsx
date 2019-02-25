@@ -39,11 +39,7 @@ const DocRefEditor = ({ actionBarItems, children, docRefUuid }: Props) => {
 
   return (
     <div className="DocRefEditor">
-      <AppSearchBar
-        pickerId="doc-ref-editor-app-search"
-        className="DocRefEditor__searchBar"
-        onChange={openDocRef}
-      />
+      <AppSearchBar className="DocRefEditor__searchBar" onChange={openDocRef} />
 
       <DocRefIconHeader
         docRefType={node.type}

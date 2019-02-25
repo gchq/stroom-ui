@@ -31,7 +31,7 @@ export const useApi = (): Api => {
       response
         .json()
         .then((elements: Array<ElementDefinition>) =>
-        actionCreators.elementsReceived(elements)
+          actionCreators.elementsReceived(elements)
         )
     );
   }, []);
@@ -44,7 +44,7 @@ export const useApi = (): Api => {
       response
         .json()
         .then((elementProperties: ElementPropertiesByElementIdType) =>
-        actionCreators.elementPropertiesReceived(elementProperties)
+          actionCreators.elementPropertiesReceived(elementProperties)
         )
     );
   }, []);

@@ -42,7 +42,7 @@ export const useApi = (): Api => {
         response
           .json()
           .then((document: XsltDoc) =>
-          actionCreators.documentReceived(uuid, document)
+            actionCreators.documentReceived(uuid, document)
           ),
       {
         headers: {

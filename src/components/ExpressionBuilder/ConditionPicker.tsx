@@ -1,17 +1,29 @@
 import * as React from "react";
 import Select from "react-select";
-import { SelectOptionType, ConditionType, SelectOptionsType } from "../../types";
+import {
+  SelectOptionType,
+  ConditionType,
+  ConditionDisplayValues,
+  SelectOptionsType
+} from "../../types";
 
 interface Props {
   className?: string;
-  conditionOptions: SelectOptionsType;
+  conditionOptions?: SelectOptionsType;
   value?: ConditionType;
   onChange: (c: ConditionType) => any;
 }
 
+const DEFAULT_OPTIONS: SelectOptionsType = Object.entries(
+  ConditionDisplayValues
+).map(d => ({
+  value: d[0],
+  label: d[1]
+}));
+
 const ConditionPicker = ({
   className,
-  conditionOptions,
+  conditionOptions = DEFAULT_OPTIONS,
   value,
   onChange
 }: Props) => (

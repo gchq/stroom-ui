@@ -1,5 +1,5 @@
 import { Action } from "redux";
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 
 import { useActionCreators as useErrorActionCreators } from "../../components/ErrorPage";
 import { prepareReducer, genUseActionCreators } from "../redux-actions-ts";
@@ -329,13 +329,16 @@ export const useHttpClient = (): HttpClient => {
     []
   );
 
-  return {
-    httpGet,
-    httpDelete,
-    httpPatch,
-    httpPost,
-    httpPut
-  };
+  return useMemo(
+    () => ({
+      httpGet,
+      httpDelete,
+      httpPatch,
+      httpPost,
+      httpPut
+    }),
+    [httpGet, httpDelete, httpPatch, httpPost, httpPut]
+  );
 };
 
 export default useHttpClient;

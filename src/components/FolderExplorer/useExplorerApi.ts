@@ -14,19 +14,18 @@ const stripDocRef = (docRef: DocRefType) => ({
   name: docRef.name
 });
 
+export interface SearchProps {
+  term?: string;
+  docRefType?: string;
+  pageOffset?: number;
+  pageSize?: number;
+}
+
 export interface Api {
   fetchDocTree: () => void;
   fetchDocRefTypes: () => void;
   fetchDocInfo: (docRef: DocRefType) => void;
-  searchApp: (
-    pickerId: string,
-    args: {
-      term?: string;
-      docRefType?: string;
-      pageOffset?: number;
-      pageSize?: number;
-    }
-  ) => void;
+  searchApp: (componentId: string, args: SearchProps) => void;
   createDocument: (
     docRefType: string,
     docRefName: string,
@@ -66,7 +65,7 @@ export const useApi = (): Api => {
       response
         .json()
         .then((documentTree: DocRefTree) =>
-        folderExplorerActionCreators.docTreeReceived(documentTree)
+          folderExplorerActionCreators.docTreeReceived(documentTree)
         )
     );
   }, []);
@@ -81,7 +80,7 @@ export const useApi = (): Api => {
       response
         .json()
         .then((docRefTypes: Array<string>) =>
-        docRefTypesActionCreators.docRefTypesReceived(docRefTypes)
+          docRefTypesActionCreators.docRefTypesReceived(docRefTypes)
         )
     );
   }, []);
@@ -94,14 +93,14 @@ export const useApi = (): Api => {
       response
         .json()
         .then((docRefInfo: DocRefInfoType) =>
-        folderExplorerActionCreators.docRefInfoReceived(docRefInfo)
+          folderExplorerActionCreators.docRefInfoReceived(docRefInfo)
         )
     );
   }, []);
 
   const searchApp = useCallback(
     (
-      pickerId: string,
+      componentId: string,
       { term = "", docRefType = "", pageOffset = 0, pageSize = 10 }
     ) => {
       const state = store.getState();
@@ -115,7 +114,10 @@ export const useApi = (): Api => {
           r
             .json()
             .then((searchResults: Array<DocRefType>) =>
-              appSearchActionCreators. searchResultsReturned(pickerId, searchResults)
+              appSearchActionCreators.searchResultsReturned(
+                componentId,
+                searchResults
+              )
             ),
         {},
         true
@@ -141,7 +143,7 @@ export const useApi = (): Api => {
           response
             .json()
             .then((updatedTree: DocRefTree) =>
-            folderExplorerActionCreators.docRefCreated(updatedTree)
+              folderExplorerActionCreators.docRefCreated(updatedTree)
             ),
         {
           body: JSON.stringify({
@@ -168,7 +170,11 @@ export const useApi = (): Api => {
         response
           .json()
           .then((resultDocRef: DocRefType) =>
-          folderExplorerActionCreators.docRefRenamed(docRef, name, resultDocRef)
+            folderExplorerActionCreators.docRefRenamed(
+              docRef,
+              name,
+              resultDocRef
+            )
           ),
       {
         body: JSON.stringify({
@@ -200,7 +206,11 @@ export const useApi = (): Api => {
           response
             .json()
             .then((updatedTree: DocRefTree) =>
-            folderExplorerActionCreators.docRefsCopied(docRefs, destination.node, updatedTree)
+              folderExplorerActionCreators.docRefsCopied(
+                docRefs,
+                destination.node,
+                updatedTree
+              )
             ),
         {
           body: JSON.stringify({
@@ -235,8 +245,11 @@ export const useApi = (): Api => {
           response
             .json()
             .then((updatedTree: DocRefTree) =>
-            folderExplorerActionCreators.docRefsMoved(docRefs, destination.node, updatedTree)
-        
+              folderExplorerActionCreators.docRefsMoved(
+                docRefs,
+                destination.node,
+                updatedTree
+              )
             ),
         {
           body: JSON.stringify({
@@ -264,7 +277,7 @@ export const useApi = (): Api => {
         response
           .json()
           .then((updatedTree: DocRefTree) =>
-          folderExplorerActionCreators.docRefsDeleted(docRefs, updatedTree)
+            folderExplorerActionCreators.docRefsDeleted(docRefs, updatedTree)
           ),
       {
         body: JSON.stringify(docRefs.map(stripDocRef))

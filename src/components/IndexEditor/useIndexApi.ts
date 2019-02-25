@@ -44,7 +44,7 @@ export const useApi = (): Api => {
         response
           .json()
           .then((index: IndexDoc) =>
-          actionCreators.documentReceived(indexUuid, index)
+            actionCreators.documentReceived(indexUuid, index)
           ),
       {
         headers: {

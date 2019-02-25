@@ -3,9 +3,8 @@ import { useState, useCallback } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { findItem, filterTree } from "../../lib/treeUtils";
-import { SearchMode } from "./redux";
+import { SearchMode, useAppSearchState } from "./redux";
 import { DocRefType, DocRefTree, DocRefWithLineage } from "../../types";
-import useExplorerApi from "../FolderExplorer/useExplorerApi";
 import { DocRefBreadcrumb } from "../DocRefBreadcrumb";
 import DocRefListingEntry from "../DocRefListingEntry";
 
@@ -14,10 +13,8 @@ import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import useSelectableItemListing from "../../lib/useSelectableItemListing";
 import useRecentItems from "../../lib/useRecentItems";
 import { useDocumentTree } from "../FolderExplorer/useDocumentTree";
-import useReduxState from "../../lib/useReduxState/useReduxState";
 
 interface Props {
-  pickerId: string;
   typeFilters?: Array<string>;
   onChange: (d: DocRefType) => any;
   value?: DocRefType;
@@ -26,24 +23,19 @@ interface Props {
 
 const AppSearchBar = ({
   className,
-  pickerId,
   typeFilters = [],
   onChange,
   value
 }: Props) => {
   // Get data from and subscribe to the store
-  const { appSearch } = useReduxState(({ appSearch }) => ({ appSearch }));
+  const { searchResults, onSearch } = useAppSearchState();
   const documentTree = useDocumentTree();
   const { recentItems } = useRecentItems();
-
-  const explorerApi = useExplorerApi();
 
   let [textFocus, setTextFocus] = useState<boolean>(false);
   let [searchTerm, setSearchTerm] = useState<string>("");
   let [searchMode, setSearchMode] = useState<SearchMode>(SearchMode.NAVIGATION);
   let [navFolder, setNavFolder] = useState<DocRefType | undefined>(undefined);
-
-  let searchResults = appSearch[pickerId] || [];
 
   const onSearchFocus = useCallback(() => setTextFocus(true), []);
   const onSearchBlur = useCallback(() => setTextFocus(false), []);
@@ -186,9 +178,9 @@ const AppSearchBar = ({
       setSearchMode(
         value.length > 0 ? SearchMode.GLOBAL_SEARCH : SearchMode.NAVIGATION
       );
-      explorerApi.searchApp(pickerId, { term: value });
+      onSearch({ term: value });
     },
-    [pickerId]
+    [onSearch, setSearchTerm, setSearchMode]
   );
 
   return (
