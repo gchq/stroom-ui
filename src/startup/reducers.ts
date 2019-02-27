@@ -33,19 +33,10 @@ import {
   reducer as fetch,
   StoreState as FetchStoreStore
 } from "../lib/useHttpClient/useHttpClient";
-
-import {
-  reducer as appSearch,
-  StoreState as AppSearchStoreState
-} from "../components/AppSearchBar/redux";
 import {
   reducer as userPermissions,
   StoreState as UserStoreState
 } from "../sections/UserPermissions/redux";
-import {
-  reducer as docRefTypes,
-  StoreState as DocRefTypesStoreState
-} from "../components/DocRefTypes";
 import {
   reducer as folderExplorer,
   StoreState as FolderExplorerStoreState
@@ -84,13 +75,11 @@ import {
 } from "../components/DocRefEditor";
 
 export interface GlobalStoreState {
-  appSearch: AppSearchStoreState;
   errorPage: ErrorPageState;
   config: ConfigStoreState;
   authentication: AuthenticationStoreState;
   authorisation: AuthorisationStoreState;
   fetch: FetchStoreStore;
-  docRefTypes: DocRefTypesStoreState;
   folderExplorer: FolderExplorerStoreState;
   pipelineEditor: PipelineEditorStoreState;
   debuggers: DebuggersStoreState;
@@ -109,9 +98,7 @@ export default combineReducers({
   authentication,
   authorisation,
   fetch,
-  docRefTypes,
   folderExplorer,
-  appSearch,
   pipelineEditor,
   debuggers,
   processing,

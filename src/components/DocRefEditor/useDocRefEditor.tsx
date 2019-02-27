@@ -35,14 +35,14 @@ export function useDocRefEditor<T extends object>({
         icon: "save",
         disabled: !(isDirty || isSaving),
         title: isSaving ? "Saving..." : isDirty ? "Save" : "Saved",
-        onClick: useCallback(() => {
+        onClick: () => {
           if (!!document) {
             saveDocument((document as unknown) as T);
           }
-        }, [document, saveDocument])
+        }
       }
     ] as Array<ButtonProps>;
-  }, [isSaving, isDirty, docRefUuid, document]);
+  }, [isSaving, isDirty, docRefUuid, document, saveDocument]);
 
   return {
     isDirty,

@@ -2,8 +2,6 @@ import { useContext, useCallback } from "react";
 import { StoreContext } from "redux-react-hook";
 
 import { useActionCreators as useFolderExplorerActionCreators } from "./redux";
-import { useActionCreators as useDocRefTypesActionCreators } from "../DocRefTypes/redux";
-import { useActionCreators as useAppSearchActionCreators } from "../AppSearchBar/redux";
 import useHttpClient from "../../lib/useHttpClient/useHttpClient";
 import { findByUuids, findItem } from "../../lib/treeUtils";
 import { DocRefType, DocRefTree, DocRefInfoType } from "../../types";
@@ -23,9 +21,12 @@ export interface SearchProps {
 
 export interface Api {
   fetchDocTree: () => void;
-  fetchDocRefTypes: () => void;
+  fetchDocRefTypes: (callback: (s: Array<string>) => void) => void;
   fetchDocInfo: (docRef: DocRefType) => void;
-  searchApp: (componentId: string, args: SearchProps) => void;
+  searchApp: (
+    callback: (s: Array<DocRefType>) => void,
+    args: SearchProps
+  ) => void;
   createDocument: (
     docRefType: string,
     docRefName: string,
@@ -48,11 +49,17 @@ export interface Api {
 
 export const useApi = (): Api => {
   const store = useContext(StoreContext);
-  const httpClient = useHttpClient();
+  const { httpGet, httpPost, httpPut, httpDelete } = useHttpClient();
 
-  const folderExplorerActionCreators = useFolderExplorerActionCreators();
-  const docRefTypesActionCreators = useDocRefTypesActionCreators();
-  const appSearchActionCreators = useAppSearchActionCreators();
+  const {
+    docTreeReceived,
+    docRefInfoReceived,
+    docRefCreated,
+    docRefRenamed,
+    docRefsCopied,
+    docRefsMoved,
+    docRefsDeleted
+  } = useFolderExplorerActionCreators();
 
   if (!store) {
     throw new Error("Could not get Redux Store for processing Thunks");
@@ -61,46 +68,48 @@ export const useApi = (): Api => {
   const fetchDocTree = useCallback(() => {
     const state = store.getState();
     const url = `${state.config.values.stroomBaseServiceUrl}/explorer/v1/all`;
-    httpClient.httpGet(url, response =>
+    httpGet(url, response =>
       response
         .json()
-        .then((documentTree: DocRefTree) =>
-          folderExplorerActionCreators.docTreeReceived(documentTree)
-        )
+        .then((documentTree: DocRefTree) => docTreeReceived(documentTree))
     );
-  }, []);
+  }, [httpGet, docTreeReceived]);
 
-  const fetchDocRefTypes = useCallback(() => {
-    const state = store.getState();
-    const url = `${
-      state.config.values.stroomBaseServiceUrl
-    }/explorer/v1/docRefTypes`;
+  const fetchDocRefTypes = useCallback(
+    (docRefTypesReceived: (d: Array<string>) => void) => {
+      const state = store.getState();
+      const url = `${
+        state.config.values.stroomBaseServiceUrl
+      }/explorer/v1/docRefTypes`;
 
-    httpClient.httpGet(url, response =>
-      response
-        .json()
-        .then((docRefTypes: Array<string>) =>
-          docRefTypesActionCreators.docRefTypesReceived(docRefTypes)
-        )
-    );
-  }, []);
-  const fetchDocInfo = useCallback((docRef: DocRefType) => {
-    const state = store.getState();
-    const url = `${state.config.values.stroomBaseServiceUrl}/explorer/v1/info/${
-      docRef.type
-    }/${docRef.uuid}`;
-    httpClient.httpGet(url, response =>
-      response
-        .json()
-        .then((docRefInfo: DocRefInfoType) =>
-          folderExplorerActionCreators.docRefInfoReceived(docRefInfo)
-        )
-    );
-  }, []);
+      httpGet(url, response =>
+        response
+          .json()
+          .then((docRefTypes: Array<string>) =>
+            docRefTypesReceived(docRefTypes)
+          )
+      );
+    },
+    [httpGet]
+  );
+  const fetchDocInfo = useCallback(
+    (docRef: DocRefType) => {
+      const state = store.getState();
+      const url = `${
+        state.config.values.stroomBaseServiceUrl
+      }/explorer/v1/info/${docRef.type}/${docRef.uuid}`;
+      httpGet(url, response =>
+        response
+          .json()
+          .then((docRefInfo: DocRefInfoType) => docRefInfoReceived(docRefInfo))
+      );
+    },
+    [httpGet, docRefInfoReceived]
+  );
 
   const searchApp = useCallback(
     (
-      componentId: string,
+      callback: (s: Array<DocRefType>) => void,
       { term = "", docRefType = "", pageOffset = 0, pageSize = 10 }
     ) => {
       const state = store.getState();
@@ -108,22 +117,19 @@ export const useApi = (): Api => {
       const url = `${
         state.config.values.stroomBaseServiceUrl
       }/explorer/v1/search?${params}`;
-      httpClient.httpGet(
+      httpGet(
         url,
         r =>
           r
             .json()
             .then((searchResults: Array<DocRefType>) =>
-              appSearchActionCreators.searchResultsReturned(
-                componentId,
-                searchResults
-              )
+              callback(searchResults)
             ),
         {},
         true
       );
     },
-    []
+    [httpGet]
   );
 
   const createDocument = useCallback(
@@ -137,14 +143,12 @@ export const useApi = (): Api => {
       const url = `${
         state.config.values.stroomBaseServiceUrl
       }/explorer/v1/create`;
-      httpClient.httpPost(
+      httpPost(
         url,
         response =>
           response
             .json()
-            .then((updatedTree: DocRefTree) =>
-              folderExplorerActionCreators.docRefCreated(updatedTree)
-            ),
+            .then((updatedTree: DocRefTree) => docRefCreated(updatedTree)),
         {
           body: JSON.stringify({
             docRefType,
@@ -155,35 +159,34 @@ export const useApi = (): Api => {
         }
       );
     },
-    []
+    [httpPost, docRefCreated]
   );
 
-  const renameDocument = useCallback((docRef: DocRefType, name: string) => {
-    const state = store.getState();
-    const url = `${
-      state.config.values.stroomBaseServiceUrl
-    }/explorer/v1/rename`;
+  const renameDocument = useCallback(
+    (docRef: DocRefType, name: string) => {
+      const state = store.getState();
+      const url = `${
+        state.config.values.stroomBaseServiceUrl
+      }/explorer/v1/rename`;
 
-    httpClient.httpPut(
-      url,
-      response =>
-        response
-          .json()
-          .then((resultDocRef: DocRefType) =>
-            folderExplorerActionCreators.docRefRenamed(
-              docRef,
-              name,
-              resultDocRef
-            )
-          ),
-      {
-        body: JSON.stringify({
-          docRef: stripDocRef(docRef),
-          name
-        })
-      }
-    );
-  }, []);
+      httpPut(
+        url,
+        response =>
+          response
+            .json()
+            .then((resultDocRef: DocRefType) =>
+              docRefRenamed(docRef, name, resultDocRef)
+            ),
+        {
+          body: JSON.stringify({
+            docRef: stripDocRef(docRef),
+            name
+          })
+        }
+      );
+    },
+    [httpPut, docRefRenamed]
+  );
   const copyDocuments = useCallback(
     (
       uuids: Array<string>,
@@ -200,17 +203,13 @@ export const useApi = (): Api => {
       const docRefs = findByUuids(documentTree, uuids);
       const destination = findItem(documentTree, destinationUuid)!;
 
-      httpClient.httpPost(
+      httpPost(
         url,
         response =>
           response
             .json()
             .then((updatedTree: DocRefTree) =>
-              folderExplorerActionCreators.docRefsCopied(
-                docRefs,
-                destination.node,
-                updatedTree
-              )
+              docRefsCopied(docRefs, destination.node, updatedTree)
             ),
         {
           body: JSON.stringify({
@@ -221,7 +220,7 @@ export const useApi = (): Api => {
         }
       );
     },
-    []
+    [httpPost, docRefsCopied]
   );
 
   const moveDocuments = useCallback(
@@ -239,17 +238,13 @@ export const useApi = (): Api => {
       }/explorer/v1/move`;
       const docRefs = findByUuids(documentTree, uuids);
       const destination = findItem(documentTree, destinationUuid)!;
-      httpClient.httpPut(
+      httpPut(
         url,
         response =>
           response
             .json()
             .then((updatedTree: DocRefTree) =>
-              folderExplorerActionCreators.docRefsMoved(
-                docRefs,
-                destination.node,
-                updatedTree
-              )
+              docRefsMoved(docRefs, destination.node, updatedTree)
             ),
         {
           body: JSON.stringify({
@@ -260,30 +255,33 @@ export const useApi = (): Api => {
         }
       );
     },
-    []
+    [httpPut, docRefsMoved]
   );
-  const deleteDocuments = useCallback((uuids: Array<string>) => {
-    const state = store.getState();
-    const {
-      folderExplorer: { documentTree }
-    } = state;
-    const url = `${
-      state.config.values.stroomBaseServiceUrl
-    }/explorer/v1/delete`;
-    const docRefs = findByUuids(documentTree, uuids);
-    httpClient.httpDelete(
-      url,
-      response =>
-        response
-          .json()
-          .then((updatedTree: DocRefTree) =>
-            folderExplorerActionCreators.docRefsDeleted(docRefs, updatedTree)
-          ),
-      {
-        body: JSON.stringify(docRefs.map(stripDocRef))
-      }
-    );
-  }, []);
+  const deleteDocuments = useCallback(
+    (uuids: Array<string>) => {
+      const state = store.getState();
+      const {
+        folderExplorer: { documentTree }
+      } = state;
+      const url = `${
+        state.config.values.stroomBaseServiceUrl
+      }/explorer/v1/delete`;
+      const docRefs = findByUuids(documentTree, uuids);
+      httpDelete(
+        url,
+        response =>
+          response
+            .json()
+            .then((updatedTree: DocRefTree) =>
+              docRefsDeleted(docRefs, updatedTree)
+            ),
+        {
+          body: JSON.stringify(docRefs.map(stripDocRef))
+        }
+      );
+    },
+    [httpDelete, docRefsDeleted]
+  );
 
   return {
     fetchDocTree,

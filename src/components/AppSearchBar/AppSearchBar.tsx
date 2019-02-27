@@ -3,12 +3,12 @@ import { useState, useCallback } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { findItem, filterTree } from "../../lib/treeUtils";
-import { SearchMode, useAppSearchState } from "./redux";
 import { DocRefType, DocRefTree, DocRefWithLineage } from "../../types";
 import { DocRefBreadcrumb } from "../DocRefBreadcrumb";
 import DocRefListingEntry from "../DocRefListingEntry";
+import useExplorerApi from "../FolderExplorer/useExplorerApi";
 
-import ModeOptionButtons from "./ModeOptionButtons";
+import ModeOptionButtons, { SearchMode } from "./ModeOptionButtons";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import useSelectableItemListing from "../../lib/useSelectableItemListing";
 import useRecentItems from "../../lib/useRecentItems";
@@ -28,7 +28,15 @@ const AppSearchBar = ({
   value
 }: Props) => {
   // Get data from and subscribe to the store
-  const { searchResults, onSearch } = useAppSearchState();
+  const [searchResults, setSearchResults] = useState<Array<DocRefType>>([]);
+
+  const { searchApp } = useExplorerApi();
+
+  const onSearch = useCallback(p => searchApp(setSearchResults, p), [
+    searchApp,
+    setSearchResults
+  ]);
+
   const documentTree = useDocumentTree();
   const { recentItems } = useRecentItems();
 

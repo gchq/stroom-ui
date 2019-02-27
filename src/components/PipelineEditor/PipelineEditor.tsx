@@ -15,7 +15,7 @@
  */
 
 import * as React from "react";
-import { useEffect, useMemo } from "react";
+import { useEffect, useCallback } from "react";
 import PanelGroup from "react-panelgroup";
 
 import Loader from "../Loader";
@@ -41,11 +41,11 @@ export interface Props {
 }
 
 const PipelineEditor = ({ pipelineId }: Props) => {
-  const pipelineApi = usePipelineApi();
+  const { fetchPipeline } = usePipelineApi();
 
   useEffect(() => {
-    pipelineApi.fetchPipeline(pipelineId);
-  });
+    fetchPipeline(pipelineId);
+  }, [fetchPipeline]);
 
   const piplineStateProps = usePipelineState(pipelineId);
   const {
@@ -54,46 +54,53 @@ const PipelineEditor = ({ pipelineId }: Props) => {
   } = piplineStateProps;
 
   const {
+    settingsUpdated,
+    elementAdded,
+    elementDeleted,
+    selectedElementId
+  } = pipelineEditApi;
+
+  const {
     showDialog: showSettingsDialog,
     componentProps: settingsComponentProps
   } = usePipelineSettingsDialog(description =>
-    pipelineEditApi.settingsUpdated({ description })
+    settingsUpdated({ description })
   );
 
   const {
     showDialog: showAddElementDialog,
     componentProps: addElementComponentProps
-  } = useAddElementDialog(pipelineEditApi.elementAdded);
+  } = useAddElementDialog(elementAdded);
 
   const {
     showDialog: showDeleteElementDialog,
     componentProps: deleteElementComponentProps
   } = useDeleteElementDialog(elementIdToDelete => {
-    pipelineEditApi.elementDeleted(elementIdToDelete);
+    elementDeleted(elementIdToDelete);
   });
 
-  const actionBarItems: Array<ButtonProps> = useMemo(() => {
-    return [
-      {
-        icon: "cogs",
-        title: "Open Settings",
-        onClick: () => {
-          if (!!pipeline) {
-            showSettingsDialog(pipeline.description || "something");
-          } else {
-            console.error("No pipeline set");
-          }
-        }
-      },
-      ...editorProps.actionBarItems,
-      {
-        icon: "recycle",
-        title: "Create Child Pipeline",
-        onClick: () =>
-          console.log("TODO - Implement Selection of Parent Pipeline")
-      }
-    ] as Array<ButtonProps>;
-  }, [pipeline, showSettingsDialog]);
+  const onClickOpenSettings = useCallback(() => {
+    if (!!pipeline) {
+      showSettingsDialog(pipeline.description || "something");
+    } else {
+      console.error("No pipeline set");
+    }
+  }, [showSettingsDialog, pipeline]);
+
+  const actionBarItems: Array<ButtonProps> = [
+    {
+      icon: "cogs",
+      title: "Open Settings",
+      onClick: onClickOpenSettings
+    },
+    ...editorProps.actionBarItems,
+    {
+      icon: "recycle",
+      title: "Create Child Pipeline",
+      onClick: () =>
+        console.log("TODO - Implement Selection of Parent Pipeline")
+    }
+  ];
 
   if (!pipeline) {
     return <Loader message="Loading pipeline..." />;
@@ -119,7 +126,7 @@ const PipelineEditor = ({ pipelineId }: Props) => {
             {},
             {
               resize: "dynamic",
-              size: pipelineEditApi.selectedElementId !== undefined ? "50%" : 0
+              size: selectedElementId !== undefined ? "50%" : 0
             }
           ]}
         >
@@ -130,7 +137,7 @@ const PipelineEditor = ({ pipelineId }: Props) => {
               showAddElementDialog={showAddElementDialog}
             />
           </div>
-          {pipelineEditApi.selectedElementId !== undefined ? (
+          {selectedElementId !== undefined ? (
             <ElementDetails
               pipeline={pipeline}
               pipelineEditApi={pipelineEditApi}

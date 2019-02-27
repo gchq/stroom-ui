@@ -14,17 +14,17 @@ const DictionaryEditor: React.FunctionComponent<Props> = ({
   dictionaryUuid
 }: Props) => {
   // Get data from and subscribe to the store
-  const api = useApi();
+  const { fetchDocument, saveDocument } = useApi();
 
   useEffect(() => {
-    api.fetchDocument(dictionaryUuid);
-  }, [dictionaryUuid]);
+    fetchDocument(dictionaryUuid);
+  }, [fetchDocument, dictionaryUuid]);
 
   const { document, onDocumentChange, editorProps } = useDocRefEditor<
     Dictionary
   >({
     docRefUuid: dictionaryUuid,
-    saveDocument: api.saveDocument
+    saveDocument
   });
 
   if (!document) {

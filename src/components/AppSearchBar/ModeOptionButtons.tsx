@@ -1,8 +1,13 @@
 import * as React from "react";
 
 import Button from "../Button";
-import { SearchMode } from "./redux";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
+
+export enum SearchMode {
+  GLOBAL_SEARCH,
+  NAVIGATION,
+  RECENT_ITEMS
+}
 
 export interface Props {
   switchMode: (m: SearchMode) => void;
