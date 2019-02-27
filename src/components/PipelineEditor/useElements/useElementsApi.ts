@@ -15,8 +15,8 @@ export interface Api {
 
 export const useApi = (): Api => {
   const store = useContext(StoreContext);
-  const httpClient = useHttpClient();
-  const actionCreators = useActionCreators();
+  const { httpGet } = useHttpClient();
+  const { elementsReceived, elementPropertiesReceived } = useActionCreators();
 
   if (!store) {
     throw new Error("Could not get Redux Store for processing Thunks");
@@ -27,27 +27,27 @@ export const useApi = (): Api => {
     const url = `${
       state.config.values.stroomBaseServiceUrl
     }/elements/v1/elements`;
-    httpClient.httpGet(url, response =>
+    httpGet(url, response =>
       response
         .json()
         .then((elements: Array<ElementDefinition>) =>
-          actionCreators.elementsReceived(elements)
+          elementsReceived(elements)
         )
     );
-  }, []);
+  }, [httpGet, elementsReceived]);
   const fetchElementProperties = useCallback(() => {
     const state = store.getState();
     const url = `${
       state.config.values.stroomBaseServiceUrl
     }/elements/v1/elementProperties`;
-    httpClient.httpGet(url, response =>
+    httpGet(url, response =>
       response
         .json()
         .then((elementProperties: ElementPropertiesByElementIdType) =>
-          actionCreators.elementPropertiesReceived(elementProperties)
+          elementPropertiesReceived(elementProperties)
         )
     );
-  }, []);
+  }, [httpGet, elementPropertiesReceived]);
 
   return {
     fetchElementProperties,

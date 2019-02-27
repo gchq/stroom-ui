@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 
 import Select from "react-select";
 
-import useApi from "./useIndexVolumeGroupApi";
+import useApi from "../../sections/IndexVolumeGroups/useIndexVolumeGroupApi";
 import { SelectOptionType } from "../../types";
 import useReduxState from "../../lib/useReduxState";
 

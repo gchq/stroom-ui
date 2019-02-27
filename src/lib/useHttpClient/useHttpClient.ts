@@ -1,5 +1,5 @@
 import { Action } from "redux";
-import { useCallback, useMemo } from "react";
+import { useCallback } from "react";
 
 import { useActionCreators as useErrorActionCreators } from "../../components/ErrorPage";
 import { prepareReducer, genUseActionCreators } from "../redux-actions-ts";
@@ -128,8 +128,12 @@ export interface HttpClient {
 
 export const useHttpClient = (): HttpClient => {
   const store = useContext(StoreContext);
-  const errorActionCreators = useErrorActionCreators();
-  const urlActionCreators = useActionCreators();
+  const {
+    setErrorMessage,
+    setHttpErrorCode,
+    setStackTrace
+  } = useErrorActionCreators();
+  const { urlRequested, urlResponded, urlFailed } = useActionCreators();
   const { history } = useRouter();
 
   if (!store) {
@@ -184,7 +188,7 @@ export const useHttpClient = (): HttpClient => {
       }
 
       if (needToFetch) {
-        urlActionCreators.urlRequested(url);
+        urlRequested(url);
 
         fetch(url, {
           method: "get",
@@ -199,21 +203,21 @@ export const useHttpClient = (): HttpClient => {
         })
           .then(handleStatus)
           .then(responseBody => {
-            urlActionCreators.urlResponded(url);
+            urlResponded(url);
             successCallback(responseBody);
           })
           .catch(error => {
-            urlActionCreators.urlFailed(url);
-            errorActionCreators.setErrorMessage(error.message);
-            errorActionCreators.setStackTrace(error.stack);
-            errorActionCreators.setHttpErrorCode(error.status);
+            urlFailed(url);
+            setErrorMessage(error.message);
+            setStackTrace(error.stack);
+            setHttpErrorCode(error.status);
             history.push("/s/error");
           });
       }
 
       // console.groupEnd();
     },
-    []
+    [urlRequested, urlFailed, setErrorMessage, setHttpErrorCode, setStackTrace]
   );
 
   /**
@@ -253,18 +257,18 @@ export const useHttpClient = (): HttpClient => {
       })
         .then(handleStatus)
         .then(response => {
-          urlActionCreators.urlResponded(url);
+          urlResponded(url);
           successCallback(response);
         })
         .catch(error => {
-          urlActionCreators.urlFailed(url);
-          errorActionCreators.setErrorMessage(error.message);
-          errorActionCreators.setStackTrace(error.stack);
-          errorActionCreators.setHttpErrorCode(error.status);
+          urlFailed(url);
+          setErrorMessage(error.message);
+          setStackTrace(error.stack);
+          setHttpErrorCode(error.status);
           history.push("/s/error");
         });
     },
-    []
+    [urlResponded, urlFailed, setErrorMessage, setStackTrace, setHttpErrorCode]
   );
 
   const httpPost = useCallback(
@@ -329,16 +333,13 @@ export const useHttpClient = (): HttpClient => {
     []
   );
 
-  return useMemo(
-    () => ({
-      httpGet,
-      httpDelete,
-      httpPatch,
-      httpPost,
-      httpPut
-    }),
-    [httpGet, httpDelete, httpPatch, httpPost, httpPut]
-  );
+  return {
+    httpGet,
+    httpDelete,
+    httpPatch,
+    httpPost,
+    httpPut
+  };
 };
 
 export default useHttpClient;

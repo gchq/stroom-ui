@@ -7,10 +7,12 @@ import useRouter from "../../lib/useRouter";
 import { useIndexVolumeApi } from "../../sections/IndexVolumes";
 import {
   useIndexVolumeGroupsTable,
-  IndexVolumeGroupsTable,
+  IndexVolumeGroupsTable
+} from "../../sections/IndexVolumeGroups";
+import {
   useIndexVolumeGroupModalPicker,
   IndexVolumeGroupModalPicker
-} from "../../sections/IndexVolumeGroups";
+} from "../IndexVolumeGroupPicker";
 import useReduxState from "../../lib/useReduxState";
 import ThemedConfirm, {
   useDialog as useConfirmDialog

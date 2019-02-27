@@ -62,8 +62,8 @@ interface Api {
 
 const useApi = (): Api => {
   const store = useContext(StoreContext);
-  const httpClient = useHttpClient();
-  const actionCreators = useActionCreators();
+  const { httpGet } = useHttpClient();
+  const { updateConfig } = useActionCreators();
 
   if (!store) {
     throw new Error("Could not get Redux Store for processing Thunks");
@@ -71,10 +71,10 @@ const useApi = (): Api => {
 
   const fetchConfig = useCallback(() => {
     const url = "/config.json";
-    httpClient.httpGet(url, response => {
-      response.json().then(actionCreators.updateConfig);
+    httpGet(url, response => {
+      response.json().then(updateConfig);
     });
-  }, []);
+  }, [httpGet, updateConfig]);
 
   return { fetchConfig };
 };

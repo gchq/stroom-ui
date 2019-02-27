@@ -15,7 +15,7 @@
  */
 
 import * as React from "react";
-import { useEffect } from "react";
+import { useEffect, useCallback } from "react";
 import * as Mousetrap from "mousetrap";
 import PanelGroup from "react-panelgroup";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -32,8 +32,12 @@ import useReduxState from "../../../lib/useReduxState";
 export interface Props {}
 
 const ProcessingContainer = () => {
-  const api = useApi();
-  const actionCreators = useActionCreators();
+  const { fetchTrackers } = useApi();
+  const {
+    updateTrackerSelection,
+    resetPaging,
+    updateSearchCriteria
+  } = useActionCreators();
 
   const { searchCriteria, selectedTrackerId } = useReduxState(
     ({ processing: { trackers, searchCriteria, selectedTrackerId } }) => ({
@@ -43,38 +47,42 @@ const ProcessingContainer = () => {
     })
   );
 
-  const onHandleTrackerSelection = (
-    filterId: number,
-    trackers?: Array<StreamTaskType>
-  ) => {
-    actionCreators.updateTrackerSelection(filterId);
+  const onHandleTrackerSelection = useCallback(
+    (filterId: number, trackers?: Array<StreamTaskType>) => {
+      updateTrackerSelection(filterId);
 
-    let expression;
-    if (filterId !== undefined && trackers !== undefined) {
-      const tracker = trackers.find(t => t.filterId === filterId);
-      if (tracker && tracker.filter) {
-        expression = tracker.filter.expression;
+      let expression;
+      if (filterId !== undefined && trackers !== undefined) {
+        const tracker = trackers.find(t => t.filterId === filterId);
+        if (tracker && tracker.filter) {
+          expression = tracker.filter.expression;
+        }
       }
-    }
 
-    if (expression) {
-      console.log("trackerDetailsExpression", expression);
-    }
-  };
-  const onHandleSearchChange: React.ChangeEventHandler<HTMLInputElement> = ({
-    target: { value }
-  }) => {
-    console.log({ value });
-    actionCreators.resetPaging();
-    actionCreators.updateSearchCriteria(value);
-    // This line enables search as you type. Whether we want it or not depends on performance
-    api.fetchTrackers();
-  };
+      if (expression) {
+        console.log("trackerDetailsExpression", expression);
+      }
+    },
+    [updateTrackerSelection]
+  );
+
+  const onHandleSearchChange: React.ChangeEventHandler<
+    HTMLInputElement
+  > = useCallback(
+    ({ target: { value } }) => {
+      console.log({ value });
+      resetPaging();
+      updateSearchCriteria(value);
+      // This line enables search as you type. Whether we want it or not depends on performance
+      fetchTrackers();
+    },
+    [fetchTrackers, updateSearchCriteria, resetPaging]
+  );
 
   const showDetails = selectedTrackerId !== undefined;
 
   useEffect(() => {
-    api.fetchTrackers();
+    fetchTrackers();
 
     Mousetrap.bind("esc", () => onHandleTrackerSelection(-1, undefined));
 
@@ -83,12 +91,12 @@ const ProcessingContainer = () => {
     // in the viewport, which means the view will update to fit.
     window.addEventListener("resize", event => {
       // Resizing the window is another time when paging gets reset.
-      actionCreators.resetPaging();
-      api.fetchTrackers();
+      resetPaging();
+      fetchTrackers();
     });
 
     return () => {};
-  }, []);
+  }, [fetchTrackers, resetPaging]);
 
   return (
     <React.Fragment>

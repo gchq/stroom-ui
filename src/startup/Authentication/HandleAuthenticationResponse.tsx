@@ -35,7 +35,7 @@ export const HandleAuthenticationResponse: React.FunctionComponent<Props> = ({
     router: { location },
     history
   } = useRouter();
-  const actionCreators = useActionCreators();
+  const { tokenIdChange } = useActionCreators();
 
   const accessCode = useMemo(() => {
     let query = location!.search;
@@ -47,13 +47,19 @@ export const HandleAuthenticationResponse: React.FunctionComponent<Props> = ({
 
   useEffect(() => {
     handleAuthenticationResponse(
-      actionCreators.tokenIdChange,
+      tokenIdChange,
       history,
       accessCode,
       authenticationServiceUrl,
       authorisationServiceUrl
     );
-  }, [accessCode]);
+  }, [
+    accessCode,
+    tokenIdChange,
+    history,
+    authenticationServiceUrl,
+    authorisationServiceUrl
+  ]);
 
   return null;
 };

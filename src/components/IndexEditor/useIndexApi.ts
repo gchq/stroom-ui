@@ -26,53 +26,56 @@ export interface Api {
 
 export const useApi = (): Api => {
   const store = useContext(StoreContext);
-  const httpClient = useHttpClient();
-  const actionCreators = useActionCreators();
+  const { httpGet, httpPost } = useHttpClient();
+  const { documentReceived, documentSaved } = useActionCreators();
 
   if (!store) {
     throw new Error("Could not get Redux Store for processing Thunks");
   }
 
-  const fetchDocument = useCallback((indexUuid: string) => {
-    const state = store.getState();
-    const url = `${
-      state.config.values.stroomBaseServiceUrl
-    }/index/v1/${indexUuid}`;
-    httpClient.httpGet(
-      url,
-      response =>
-        response
-          .json()
-          .then((index: IndexDoc) =>
-            actionCreators.documentReceived(indexUuid, index)
-          ),
-      {
-        headers: {
-          Accept: "application/xml",
-          "Content-Type": "application/xml"
+  const fetchDocument = useCallback(
+    (indexUuid: string) => {
+      const state = store.getState();
+      const url = `${
+        state.config.values.stroomBaseServiceUrl
+      }/index/v1/${indexUuid}`;
+      httpGet(
+        url,
+        response =>
+          response
+            .json()
+            .then((index: IndexDoc) => documentReceived(indexUuid, index)),
+        {
+          headers: {
+            Accept: "application/xml",
+            "Content-Type": "application/xml"
+          }
         }
-      }
-    );
-  }, []);
-  const saveDocument = useCallback((index: IndexDoc) => {
-    const state = store.getState();
-    const url = `${state.config.values.stroomBaseServiceUrl}/index/v1/${
-      index.uuid
-    }`;
+      );
+    },
+    [httpGet, documentReceived]
+  );
+  const saveDocument = useCallback(
+    (index: IndexDoc) => {
+      const state = store.getState();
+      const url = `${state.config.values.stroomBaseServiceUrl}/index/v1/${
+        index.uuid
+      }`;
 
-    httpClient.httpPost(
-      url,
-      response =>
-        response.text().then(() => actionCreators.documentSaved(index.uuid)),
-      {
-        body: index.data,
-        headers: {
-          Accept: "application/xml",
-          "Content-Type": "application/xml"
+      httpPost(
+        url,
+        response => response.text().then(() => documentSaved(index.uuid)),
+        {
+          body: index.data,
+          headers: {
+            Accept: "application/xml",
+            "Content-Type": "application/xml"
+          }
         }
-      }
-    );
-  }, []);
+      );
+    },
+    [httpPost, documentSaved]
+  );
 
   return {
     fetchDocument,

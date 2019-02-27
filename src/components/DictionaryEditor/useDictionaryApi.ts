@@ -26,41 +26,46 @@ export interface Api {
 
 export const useApi = (): Api => {
   const store = useContext(StoreContext);
-  const httpClient = useHttpClient();
-  const actionCreators = useActionCreators();
+  const { httpGet, httpPost } = useHttpClient();
+  const { documentReceived, documentSaved } = useActionCreators();
 
   if (!store) {
     throw new Error("Could not get Redux Store for processing Thunks");
   }
 
-  const fetchDocument = useCallback((dictionaryUuid: string) => {
-    const state = store.getState();
-    const url = `${
-      state.config.values.stroomBaseServiceUrl
-    }/dictionary/v1/${dictionaryUuid}`;
-    httpClient.httpGet(url, response =>
-      response
-        .json()
-        .then((dictionary: Dictionary) =>
-          actionCreators.documentReceived(dictionaryUuid, dictionary)
-        )
-    );
-  }, []);
-  const saveDocument = useCallback((document: Dictionary) => {
-    const state = store.getState();
-    const url = `${state.config.values.stroomBaseServiceUrl}/dictionary/v1/${
-      document.uuid
-    }`;
+  const fetchDocument = useCallback(
+    (dictionaryUuid: string) => {
+      const state = store.getState();
+      const url = `${
+        state.config.values.stroomBaseServiceUrl
+      }/dictionary/v1/${dictionaryUuid}`;
+      httpGet(url, response =>
+        response
+          .json()
+          .then((dictionary: Dictionary) =>
+            documentReceived(dictionaryUuid, dictionary)
+          )
+      );
+    },
+    [httpGet, documentReceived]
+  );
+  const saveDocument = useCallback(
+    (document: Dictionary) => {
+      const state = store.getState();
+      const url = `${state.config.values.stroomBaseServiceUrl}/dictionary/v1/${
+        document.uuid
+      }`;
 
-    httpClient.httpPost(
-      url,
-      response =>
-        response.text().then(() => actionCreators.documentSaved(document.uuid)),
-      {
-        body: document
-      }
-    );
-  }, []);
+      httpPost(
+        url,
+        response => response.text().then(() => documentSaved(document.uuid)),
+        {
+          body: document
+        }
+      );
+    },
+    [httpPost, documentSaved]
+  );
 
   return {
     fetchDocument,

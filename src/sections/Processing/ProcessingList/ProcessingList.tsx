@@ -15,7 +15,7 @@
  */
 
 import * as React from "react";
-import { useEffect } from "react";
+import { useEffect, useCallback } from "react";
 import { path } from "ramda";
 import * as Mousetrap from "mousetrap";
 import { Progress } from "react-sweet-progress";
@@ -39,8 +39,8 @@ interface Props {
 }
 
 const ProcessingList = ({ onSelection }: Props) => {
-  const api = useApi();
-  const actionCreators = useActionCreators();
+  const { fetchMore, fetchTrackers } = useApi();
+  const { moveSelection, updateSort } = useActionCreators();
 
   const {
     trackers,
@@ -67,31 +67,36 @@ const ProcessingList = ({ onSelection }: Props) => {
     })
   );
 
-  const onMoveSelection = (direction: Directions) => {
-    const currentIndex = trackers.findIndex(
-      (tracker: StreamTaskType) => tracker.filterId === selectedTrackerId
-    );
-    const isAtEndOfList = currentIndex === trackers.length - 1;
-    const isAtEndOfEverything = currentIndex === totalTrackers - 1;
-    if (isAtEndOfList && !isAtEndOfEverything) {
-      api.fetchMore();
-    } else {
-      actionCreators.moveSelection(direction);
-    }
-  };
-  const onHandleSort = (sort: SortingRule) => {
-    if (sort !== undefined) {
-      const direction = sort.desc
-        ? Directions.descending
-        : Directions.ascending;
-      const sortBy: SortByOptions = sortByFromString(sort.id);
-      actionCreators.updateSort(sortBy, direction);
-      api.fetchTrackers();
-    }
-  };
-  const onHandleLoadMoreRows = () => {
-    api.fetchMore();
-  };
+  const onMoveSelection = useCallback(
+    (direction: Directions) => {
+      const currentIndex = trackers.findIndex(
+        (tracker: StreamTaskType) => tracker.filterId === selectedTrackerId
+      );
+      const isAtEndOfList = currentIndex === trackers.length - 1;
+      const isAtEndOfEverything = currentIndex === totalTrackers - 1;
+      if (isAtEndOfList && !isAtEndOfEverything) {
+        fetchMore();
+      } else {
+        moveSelection(direction);
+      }
+    },
+    [fetchMore, moveSelection, selectedTrackerId]
+  );
+
+  const onHandleSort = useCallback(
+    (sort: SortingRule) => {
+      if (sort !== undefined) {
+        const direction = sort.desc
+          ? Directions.descending
+          : Directions.ascending;
+        const sortBy: SortByOptions = sortByFromString(sort.id);
+        updateSort(sortBy, direction);
+        fetchTrackers();
+      }
+    },
+    [fetchTrackers, updateSort]
+  );
+  const onHandleLoadMoreRows = fetchMore;
 
   // We add an empty 'load more' row, but we need to make sure it's not there when we re-render.
   const trackersFiltered = trackers.filter(

@@ -26,52 +26,55 @@ export interface Api {
 
 export const useApi = (): Api => {
   const store = useContext(StoreContext);
-  const httpClient = useHttpClient();
-  const actionCreators = useActionCreators();
+  const { httpGet, httpPost } = useHttpClient();
+  const { documentReceived, documentSaved } = useActionCreators();
 
   if (!store) {
     throw new Error("Could not get Redux Store for processing Thunks");
   }
 
-  const fetchDocument = useCallback((uuid: string) => {
-    const state = store.getState();
-    const url = `${state.config.values.stroomBaseServiceUrl}/xslt/v1/${uuid}`;
-    httpClient.httpGet(
-      url,
-      response =>
-        response
-          .json()
-          .then((document: XsltDoc) =>
-            actionCreators.documentReceived(uuid, document)
-          ),
-      {
-        headers: {
-          Accept: "application/xml",
-          "Content-Type": "application/xml"
+  const fetchDocument = useCallback(
+    (uuid: string) => {
+      const state = store.getState();
+      const url = `${state.config.values.stroomBaseServiceUrl}/xslt/v1/${uuid}`;
+      httpGet(
+        url,
+        response =>
+          response
+            .json()
+            .then((document: XsltDoc) => documentReceived(uuid, document)),
+        {
+          headers: {
+            Accept: "application/xml",
+            "Content-Type": "application/xml"
+          }
         }
-      }
-    );
-  }, []);
+      );
+    },
+    [httpGet]
+  );
 
-  const saveDocument = useCallback((xslt: XsltDoc) => {
-    const state = store.getState();
-    const url = `${state.config.values.stroomBaseServiceUrl}/xslt/v1/${
-      xslt.uuid
-    }`;
+  const saveDocument = useCallback(
+    (xslt: XsltDoc) => {
+      const state = store.getState();
+      const url = `${state.config.values.stroomBaseServiceUrl}/xslt/v1/${
+        xslt.uuid
+      }`;
 
-    httpClient.httpPost(
-      url,
-      response =>
-        response.text().then(() => actionCreators.documentSaved(xslt.uuid)),
-      {
-        body: xslt.data,
-        headers: {
-          Accept: "application/xml",
-          "Content-Type": "application/xml"
+      httpPost(
+        url,
+        response => response.text().then(() => documentSaved(xslt.uuid)),
+        {
+          body: xslt.data,
+          headers: {
+            Accept: "application/xml",
+            "Content-Type": "application/xml"
+          }
         }
-      }
-    );
-  }, []);
+      );
+    },
+    [httpPost, documentSaved]
+  );
 
   return {
     fetchDocument,

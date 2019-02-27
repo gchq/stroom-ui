@@ -15,68 +15,16 @@
  */
 
 import * as React from "react";
-import { useState } from "react";
 
 import { storiesOf } from "@storybook/react";
-import { Formik, FormikProps } from "formik";
 
 import StroomDecorator from "../../lib/storybook/StroomDecorator";
 
 import IndexVolumeGroups from "./IndexVolumeGroups";
-import IndexVolumeGroupPicker from "./IndexVolumeGroupPicker";
-import IndexVolumeGroupModalPicker from "./IndexVolumeGroupModalPicker";
-import { addThemedStories } from "../../lib/themedStoryGenerator";
 
 import "../../styles/main.css";
 import { Switch, Route, RouteComponentProps } from "react-router";
 import IndexVolumeGroupEditor from "../../components/IndexVolumeGroupEditor";
-import { useIndexVolumeGroupModalPicker } from ".";
-import Button from "../../components/Button";
-
-interface IndexVolumeGroupForm {
-  groupName?: string;
-}
-
-const TestForm: React.FunctionComponent = () => (
-  <Formik
-    initialValues={{ groupName: undefined }}
-    onSubmit={() => console.log("Do nothing on submit")}
-  >
-    {({ values, setFieldValue }: FormikProps<IndexVolumeGroupForm>) => (
-      <form>
-        <div>
-          <label>Chosen Index Volume Group</label>
-          <IndexVolumeGroupPicker
-            onChange={e => setFieldValue("groupName", e)}
-            value={values.groupName}
-          />
-        </div>
-        <div>
-          <div>Group Name: {values.groupName}</div>
-        </div>
-      </form>
-    )}
-  </Formik>
-);
-
-const TestModal: React.FunctionComponent = () => {
-  const [picked, setPicked] = useState<string>("");
-
-  const { componentProps, showDialog } = useIndexVolumeGroupModalPicker({
-    onConfirm: setPicked
-  });
-
-  return (
-    <div>
-      <fieldset>
-        <label>Picked Group Name</label>
-        <p>{picked}</p>
-      </fieldset>
-      <Button text="Pick" onClick={showDialog} />
-      <IndexVolumeGroupModalPicker {...componentProps} />
-    </div>
-  );
-};
 
 const IndexVolumeGroupsWithRouter = () => (
   <Switch>
@@ -94,14 +42,3 @@ const IndexVolumeGroupsWithRouter = () => (
 storiesOf("Sections/Index Volume Groups", module)
   .addDecorator(StroomDecorator)
   .add("Index Volume Groups", () => <IndexVolumeGroupsWithRouter />);
-
-const stories = storiesOf("Pickers/Index Volume Group", module).addDecorator(
-  StroomDecorator
-);
-addThemedStories(stories, <TestForm />);
-
-const storiesModal = storiesOf(
-  "Pickers/Index Volume Group (modal)",
-  module
-).addDecorator(StroomDecorator);
-addThemedStories(storiesModal, <TestModal />);

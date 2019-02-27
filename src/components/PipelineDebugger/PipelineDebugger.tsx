@@ -34,8 +34,8 @@ export interface Props {
 }
 
 const PipelineDebugger = ({ pipelineId, debuggerId }: Props) => {
-  const actionCreators = useActionCreators();
-  const pipelineApi = usePipelineApi();
+  const { startDebugging } = useActionCreators();
+  const { fetchPipeline } = usePipelineApi();
   const { debuggers } = useReduxState(({ debuggers }) => ({
     debuggers
   }));
@@ -48,9 +48,9 @@ const PipelineDebugger = ({ pipelineId, debuggerId }: Props) => {
   } = pipelineStateProps;
 
   useEffect(() => {
-    pipelineApi.fetchPipeline(pipelineId);
-    actionCreators.startDebugging(debuggerId, pipelineId);
-  }, []);
+    fetchPipeline(pipelineId);
+    startDebugging(debuggerId, pipelineId);
+  }, [fetchPipeline, startDebugging, pipelineId, debuggerId]);
 
   if (!debuggerState) {
     return <Loader message="Loading pipeline..." />;

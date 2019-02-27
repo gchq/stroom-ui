@@ -16,7 +16,13 @@ export interface Api {
 export const useApi = (): Api => {
   const store = useContext(StoreContext);
   const httpClient = useHttpClient();
-  const actionCreators = useActionCreators();
+  const {
+    indexVolumeGroupNamesReceived,
+    indexVolumeGroupsReceived,
+    indexVolumeGroupReceived,
+    indexVolumeGroupCreated,
+    indexVolumeGroupDeleted
+  } = useActionCreators();
 
   if (!store) {
     throw new Error("Could not get Redux Store for processing Thunks");
@@ -36,12 +42,12 @@ export const useApi = (): Api => {
         r
           .json()
           .then((groupNames: Array<string>) =>
-            actionCreators.indexVolumeGroupNamesReceived(groupNames)
+            indexVolumeGroupNamesReceived(groupNames)
           ),
       {},
       true
     );
-  }, []);
+  }, [indexVolumeGroupNamesReceived]);
 
   const getIndexVolumeGroups = useCallback(() => {
     const state = store.getState();
@@ -55,63 +61,72 @@ export const useApi = (): Api => {
         r
           .json()
           .then((indexVolumeGroups: Array<IndexVolumeGroup>) =>
-            actionCreators.indexVolumeGroupsReceived(indexVolumeGroups)
+            indexVolumeGroupsReceived(indexVolumeGroups)
           ),
       {},
       true
     );
-  }, []);
+  }, [indexVolumeGroupsReceived]);
 
-  const getIndexVolumeGroup = useCallback((name: string) => {
-    const state = store.getState();
-    var url = new URL(
-      `${
-        state.config.values.stroomBaseServiceUrl
-      }/stroom-index/volumeGroup/v1/${name}`
-    );
+  const getIndexVolumeGroup = useCallback(
+    (name: string) => {
+      const state = store.getState();
+      var url = new URL(
+        `${
+          state.config.values.stroomBaseServiceUrl
+        }/stroom-index/volumeGroup/v1/${name}`
+      );
 
-    httpClient.httpGet(
-      url.href,
-      r =>
-        r
+      httpClient.httpGet(
+        url.href,
+        r =>
+          r
+            .json()
+            .then((indexVolumeGroup: IndexVolumeGroup) =>
+              indexVolumeGroupReceived(indexVolumeGroup)
+            ),
+        {},
+        true
+      );
+    },
+    [indexVolumeGroupReceived]
+  );
+
+  const createIndexVolumeGroup = useCallback(
+    (name: string) => {
+      const state = store.getState();
+      var url = new URL(
+        `${
+          state.config.values.stroomBaseServiceUrl
+        }/stroom-index/volumeGroup/v1/${name}`
+      );
+
+      httpClient.httpPost(url.href, response =>
+        response
           .json()
           .then((indexVolumeGroup: IndexVolumeGroup) =>
-            actionCreators.indexVolumeGroupReceived(indexVolumeGroup)
-          ),
-      {},
-      true
-    );
-  }, []);
+            indexVolumeGroupCreated(indexVolumeGroup)
+          )
+      );
+    },
+    [indexVolumeGroupCreated]
+  );
 
-  const createIndexVolumeGroup = useCallback((name: string) => {
-    const state = store.getState();
-    var url = new URL(
-      `${
-        state.config.values.stroomBaseServiceUrl
-      }/stroom-index/volumeGroup/v1/${name}`
-    );
+  const deleteIndexVolumeGroup = useCallback(
+    (name: string) => {
+      const state = store.getState();
+      var url = new URL(
+        `${
+          state.config.values.stroomBaseServiceUrl
+        }/stroom-index/volumeGroup/v1/${name}`
+      );
 
-    httpClient.httpPost(url.href, response =>
-      response
-        .json()
-        .then((indexVolumeGroup: IndexVolumeGroup) =>
-          actionCreators.indexVolumeGroupCreated(indexVolumeGroup)
-        )
-    );
-  }, []);
-
-  const deleteIndexVolumeGroup = useCallback((name: string) => {
-    const state = store.getState();
-    var url = new URL(
-      `${
-        state.config.values.stroomBaseServiceUrl
-      }/stroom-index/volumeGroup/v1/${name}`
-    );
-
-    httpClient.httpDelete(url.href, response =>
-      response.text().then(() => actionCreators.indexVolumeGroupDeleted(name))
-    );
-  }, []);
+      httpClient.httpDelete(url.href, response =>
+        response.text().then(() => indexVolumeGroupDeleted(name))
+      );
+    },
+    [indexVolumeGroupDeleted]
+  );
 
   return {
     createIndexVolumeGroup,

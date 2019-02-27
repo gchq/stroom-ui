@@ -15,7 +15,7 @@
  */
 
 import * as React from "react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import PanelGroup from "react-panelgroup";
 import HorizontalPanel from "../../components/HorizontalPanel";
 import * as Mousetrap from "mousetrap";
@@ -44,7 +44,7 @@ const DataViewer = ({
 // tableData
 
 Props) => {
-  const actionCreators = useActionCreators();
+  const { selectRow, deselectRow } = useActionCreators();
   const { dataViewers } = useReduxState(({ dataViewers }) => ({ dataViewers }));
   const {
     dataSource,
@@ -56,17 +56,25 @@ Props) => {
     detailsForSelectedRow
   } = dataViewers[dataViewerId] || defaultStatePerId;
 
-  const streamAttributeMapApi = useStreamAttributeMapApi();
-  const dataApi = useDataApi();
+  const {
+    getDetailsForSelectedRow,
+    searchWithExpression,
+    fetchDataSource,
+    search
+  } = useStreamAttributeMapApi();
+  const { getDataForSelectedRow } = useDataApi();
   const [expression, onExpressionChange] = useState<
     ExpressionOperatorWithUuid | undefined
   >(undefined);
 
-  const onRowSelected = (selectedRow: number) => {
-    actionCreators.selectRow(dataViewerId, selectedRow);
-    dataApi.getDataForSelectedRow(dataViewerId);
-    streamAttributeMapApi.getDetailsForSelectedRow(dataViewerId);
-  };
+  const onRowSelected = useCallback(
+    (selectedRow: number) => {
+      selectRow(dataViewerId, selectedRow);
+      getDataForSelectedRow(dataViewerId);
+      getDetailsForSelectedRow(dataViewerId);
+    },
+    [dataViewerId, selectRow, getDataForSelectedRow, getDetailsForSelectedRow]
+  );
   // Not using this yet?
   // const onHandleLoadMoreRows = () => {
   //   searchWithExpression(dataViewerId, pageOffset, pageSize, dataViewerId);
@@ -82,7 +90,7 @@ Props) => {
     const isAtEndOfList = selectedRow === streamAttributeMaps.length - 1;
     if (isAtEndOfList) {
       if (!!expression) {
-        streamAttributeMapApi.searchWithExpression(
+        searchWithExpression(
           dataViewerId,
           expression,
           pageOffset,
@@ -103,7 +111,7 @@ Props) => {
   };
 
   useEffect(() => {
-    streamAttributeMapApi.fetchDataSource(dataViewerId);
+    fetchDataSource(dataViewerId);
 
     // // We need to set up an expression so we've got something to search with,
     // // even though it'll be empty.
@@ -115,7 +123,7 @@ Props) => {
     // // Re-doing the search will wipe out their previous location, and we want to remember it.
     if (!selectedRow) {
       // searchWithExpression(dataViewerId, pageOffset, pageSize, dataViewerId);
-      streamAttributeMapApi.search(dataViewerId, 0, 400);
+      search(dataViewerId, 0, 400);
     }
 
     Mousetrap.bind("up", () => onMoveSelection(Direction.UP));
@@ -147,7 +155,7 @@ Props) => {
     <HorizontalPanel
       className="element-details__panel"
       title=""
-      onClose={() => actionCreators.deselectRow(dataViewerId)}
+      onClose={() => deselectRow(dataViewerId)}
       content={
         <DetailsTabs
           data={dataForSelectedRow}
@@ -170,7 +178,7 @@ Props) => {
             onExpressionChange={onExpressionChange}
             onSearch={e => {
               if (!!expression) {
-                streamAttributeMapApi.searchWithExpression(
+                searchWithExpression(
                   dataViewerId,
                   expression,
                   pageOffset,

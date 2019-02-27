@@ -16,6 +16,7 @@
 
 import * as React from "react";
 import * as moment from "moment";
+import { useCallback } from "react";
 
 import { useActionCreators } from "../redux";
 import useApi from "../useStreamTasksApi";
@@ -25,8 +26,8 @@ import useReduxState from "../../../lib/useReduxState";
 export interface Props {}
 
 const ProcessingDetails = () => {
-  const actionCreators = useActionCreators();
-  const api = useApi();
+  const { selectNone } = useActionCreators();
+  const { enableToggle } = useApi();
 
   const { trackers, selectedTrackerId } = useReduxState(
     ({ processing: { trackers, selectedTrackerId } }) => ({
@@ -35,13 +36,13 @@ const ProcessingDetails = () => {
     })
   );
 
-  const onHandleEnableToggle = (
-    filterId: number,
-    isCurrentlyEnabled: boolean
-  ) => {
-    api.enableToggle(filterId, isCurrentlyEnabled);
-  };
-  const onDeselectTracker = actionCreators.selectNone;
+  const onHandleEnableToggle = useCallback(
+    (filterId: number, isCurrentlyEnabled: boolean) => {
+      enableToggle(filterId, isCurrentlyEnabled);
+    },
+    [enableToggle]
+  );
+  const onDeselectTracker = selectNone;
 
   const selectedTracker = trackers.find(
     (tracker: any) => tracker.filterId === selectedTrackerId

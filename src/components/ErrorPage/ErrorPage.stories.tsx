@@ -60,12 +60,23 @@ const TestErrorPage = ({
   _stackTrace,
   _httpErrorStatus
 }: Props) => {
-  const actionCreators = useActionCreators();
+  const {
+    setErrorMessage,
+    setStackTrace,
+    setHttpErrorCode
+  } = useActionCreators();
   useEffect(() => {
-    if (!!_errorMessage) actionCreators.setErrorMessage(_errorMessage);
-    if (!!_stackTrace) actionCreators.setStackTrace(stackTrace);
-    if (!!_httpErrorStatus) actionCreators.setHttpErrorCode(httpErrorStatus);
-  }, []);
+    if (!!_errorMessage) setErrorMessage(_errorMessage);
+    if (!!_stackTrace) setStackTrace(stackTrace);
+    if (!!_httpErrorStatus) setHttpErrorCode(httpErrorStatus);
+  }, [
+    setErrorMessage,
+    setStackTrace,
+    setHttpErrorCode,
+    _errorMessage,
+    _stackTrace,
+    _httpErrorStatus
+  ]);
 
   return <ErrorPage />;
 };

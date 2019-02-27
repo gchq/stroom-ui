@@ -49,7 +49,7 @@ interface TableData {
 }
 
 const DataList = ({ dataViewerId, expression }: Props) => {
-  const actionCreators = useActionCreators();
+  const { selectRow } = useActionCreators();
   const { dataViewers } = useReduxState(({ dataViewers }) => ({ dataViewers }));
   const { selectedRow, pageOffset, pageSize, streamAttributeMaps, dataSource } =
     dataViewers[dataViewerId] || defaultStatePerId;
@@ -58,7 +58,7 @@ const DataList = ({ dataViewerId, expression }: Props) => {
   const streamAttributeMapApi = useStreamAttributeMapApi();
 
   const onRowSelected = (dataViewerId: string, selectedRow: number) => {
-    actionCreators.selectRow(dataViewerId, selectedRow);
+    selectRow(dataViewerId, selectedRow);
 
     dataApi.getDataForSelectedRow(dataViewerId);
     streamAttributeMapApi.getDetailsForSelectedRow(dataViewerId);

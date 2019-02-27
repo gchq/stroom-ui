@@ -23,7 +23,7 @@ export function useDocRefEditor<T extends object>({
   docRefUuid,
   saveDocument
 }: Props<T>): OutProps<T> {
-  const actionCreators = useActionCreators();
+  const { documentChangesMade } = useActionCreators();
   const { isDirty, isSaving, document }: StoreStateById = useReduxState(
     ({ docRefEditors }) => docRefEditors[docRefUuid] || defaultStatePerId,
     [docRefUuid]
@@ -35,11 +35,11 @@ export function useDocRefEditor<T extends object>({
         icon: "save",
         disabled: !(isDirty || isSaving),
         title: isSaving ? "Saving..." : isDirty ? "Save" : "Saved",
-        onClick: () => {
+        onClick: useCallback(() => {
           if (!!document) {
             saveDocument((document as unknown) as T);
           }
-        }
+        }, [document, saveDocument])
       }
     ] as Array<ButtonProps>;
   }, [isSaving, isDirty, docRefUuid, document]);
@@ -49,9 +49,8 @@ export function useDocRefEditor<T extends object>({
     isSaving,
     document: !!document ? ((document as unknown) as T) : undefined,
     onDocumentChange: useCallback(
-      (updates: Partial<T>) =>
-        actionCreators.documentChangesMade(docRefUuid, updates),
-      [docRefUuid]
+      (updates: Partial<T>) => documentChangesMade(docRefUuid, updates),
+      [documentChangesMade, docRefUuid]
     ),
     editorProps: {
       actionBarItems,
