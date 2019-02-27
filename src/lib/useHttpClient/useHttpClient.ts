@@ -16,8 +16,13 @@ enum FetchState {
   FAILED
 }
 
+export interface StatePerUrl {
+  fetchState: FetchState;
+  body?: any;
+}
+
 export interface StoreState {
-  [s: string]: FetchState;
+  [s: string]: StatePerUrl;
 }
 
 const RESET_ALL_URLS = "RESET_ALL_URLS";
@@ -25,6 +30,7 @@ const URL_RESET = "URL_RESET";
 const URL_REQUESTED = "URL_REQUESTED";
 const URL_RESPONDED = "URL_RESPONDED";
 const URL_FAILED = "URL_FAILED";
+const URL_RESPONSE_BODY_RECEIVED = "URL_RESPONSE_BODY_RECEIVED";
 
 export interface UrlAction {
   url: string;
@@ -36,6 +42,10 @@ export type UrlRequestedAction = UrlAction & Action<"URL_REQUESTED">;
 export type UrlRespondedAction = UrlAction & Action<"URL_RESPONDED">;
 export type UrlFailedAction = UrlAction & Action<"URL_FAILED">;
 export type ResetAllUrlsAction = Action<"RESET_ALL_URLS">;
+export type UrlResponseBodyReceived = Action<"URL_RESPONSE_BODY_RECEIVED"> & {
+  url: string;
+  body: any;
+};
 
 const defaultState: StoreState = {};
 
@@ -62,6 +72,14 @@ export const useActionCreators = genUseActionCreators({
     type: URL_FAILED,
     url,
     fetchState: FetchState.FAILED
+  }),
+  urlResponseBodyReceived: (
+    url: string,
+    body: any
+  ): UrlResponseBodyReceived => ({
+    type: URL_RESPONSE_BODY_RECEIVED,
+    url,
+    body
   })
 });
 
@@ -71,7 +89,17 @@ export const reducer = prepareReducer(defaultState)
     [URL_RESET, URL_REQUESTED, URL_RESPONDED, URL_FAILED],
     (state, { url, fetchState }) => ({
       ...state,
-      [url]: fetchState
+      [url]: { fetchState, body: undefined }
+    })
+  )
+  .handleAction<UrlResponseBodyReceived>(
+    URL_RESPONSE_BODY_RECEIVED,
+    (state: StoreState, { url, body }) => ({
+      ...state,
+      [url]: {
+        fetchState: !!state[url] ? state[url].fetchState : FetchState.RESPONDED,
+        body
+      }
     })
   )
   .getReducer();
@@ -124,6 +152,7 @@ export interface HttpClient {
       [s: string]: any;
     }
   ) => void;
+  urlResponseBodyReceived: (url: string, body: any) => void;
 }
 
 export const useHttpClient = (): HttpClient => {
@@ -133,7 +162,12 @@ export const useHttpClient = (): HttpClient => {
     setHttpErrorCode,
     setStackTrace
   } = useErrorActionCreators();
-  const { urlRequested, urlResponded, urlFailed } = useActionCreators();
+  const {
+    urlRequested,
+    urlResponded,
+    urlFailed,
+    urlResponseBodyReceived
+  } = useActionCreators();
   const { history } = useRouter();
 
   if (!store) {
@@ -151,14 +185,17 @@ export const useHttpClient = (): HttpClient => {
     ) => {
       const state = store.getState();
       const jwsToken = state.authentication.idToken;
-      const currentState = state.fetch[url];
+      const currentStateForUrl: StatePerUrl = state.fetch[url];
+      const currentFetchState = !!currentStateForUrl
+        ? currentStateForUrl.fetchState
+        : FetchState.UNREQUESTED;
       let needToFetch = false;
 
       // console.group("Requesting ", url);
       // console.log("Current State of URL", { url, currentState });
 
       if (!forceGet) {
-        switch (currentState) {
+        switch (currentFetchState) {
           case undefined:
             // console.log('Never even heard of it', url);
             needToFetch = true;
@@ -338,7 +375,8 @@ export const useHttpClient = (): HttpClient => {
     httpDelete,
     httpPatch,
     httpPost,
-    httpPut
+    httpPut,
+    urlResponseBodyReceived
   };
 };
 

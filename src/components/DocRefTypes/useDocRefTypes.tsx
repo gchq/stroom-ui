@@ -12,10 +12,9 @@ const useDocRefTypes = (): OutProps => {
 
   const { fetchDocRefTypes } = useExplorerApi();
 
-  useEffect(() => fetchDocRefTypes(setDocRefTypes), [
-    fetchDocRefTypes,
-    setDocRefTypes
-  ]);
+  useEffect(() => {
+    fetchDocRefTypes().then(setDocRefTypes);
+  }, [fetchDocRefTypes, setDocRefTypes]);
 
   return {
     docRefTypes

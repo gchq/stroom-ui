@@ -4,7 +4,12 @@ import { StoreContext } from "redux-react-hook";
 import { useActionCreators as useFolderExplorerActionCreators } from "./redux";
 import useHttpClient from "../../lib/useHttpClient/useHttpClient";
 import { findByUuids, findItem } from "../../lib/treeUtils";
-import { DocRefType, DocRefTree, DocRefInfoType } from "../../types";
+import {
+  DocRefType,
+  DocRefTree,
+  DocRefInfoType,
+  DocRefTypeList
+} from "../../types";
 
 const stripDocRef = (docRef: DocRefType) => ({
   uuid: docRef.uuid,
@@ -21,12 +26,9 @@ export interface SearchProps {
 
 export interface Api {
   fetchDocTree: () => void;
-  fetchDocRefTypes: (callback: (s: Array<string>) => void) => void;
+  fetchDocRefTypes: () => Promise<DocRefTypeList>;
   fetchDocInfo: (docRef: DocRefType) => void;
-  searchApp: (
-    callback: (s: Array<DocRefType>) => void,
-    args: SearchProps
-  ) => void;
+  searchApp: (args: SearchProps) => Promise<Array<DocRefType>>;
   createDocument: (
     docRefType: string,
     docRefName: string,
@@ -75,23 +77,24 @@ export const useApi = (): Api => {
     );
   }, [httpGet, docTreeReceived]);
 
-  const fetchDocRefTypes = useCallback(
-    (docRefTypesReceived: (d: Array<string>) => void) => {
-      const state = store.getState();
-      const url = `${
-        state.config.values.stroomBaseServiceUrl
-      }/explorer/v1/docRefTypes`;
+  const fetchDocRefTypes = useCallback(() => {
+    const state = store.getState();
+    const url = `${
+      state.config.values.stroomBaseServiceUrl
+    }/explorer/v1/docRefTypes`;
 
-      httpGet(url, response =>
-        response
-          .json()
-          .then((docRefTypes: Array<string>) =>
-            docRefTypesReceived(docRefTypes)
-          )
+    return new Promise<DocRefTypeList>((resolve, reject) => {
+      httpGet(
+        url,
+        response =>
+          response
+            .json()
+            .then((docRefTypes: DocRefTypeList) => resolve(docRefTypes)),
+        {},
+        true
       );
-    },
-    [httpGet]
-  );
+    });
+  }, [httpGet]);
   const fetchDocInfo = useCallback(
     (docRef: DocRefType) => {
       const state = store.getState();
@@ -108,26 +111,26 @@ export const useApi = (): Api => {
   );
 
   const searchApp = useCallback(
-    (
-      callback: (s: Array<DocRefType>) => void,
-      { term = "", docRefType = "", pageOffset = 0, pageSize = 10 }
-    ) => {
+    ({ term = "", docRefType = "", pageOffset = 0, pageSize = 10 }) => {
       const state = store.getState();
       const params = `searchTerm=${term}&docRefType=${docRefType}&pageOffset=${pageOffset}&pageSize=${pageSize}`;
       const url = `${
         state.config.values.stroomBaseServiceUrl
       }/explorer/v1/search?${params}`;
-      httpGet(
-        url,
-        r =>
-          r
-            .json()
-            .then((searchResults: Array<DocRefType>) =>
-              callback(searchResults)
-            ),
-        {},
-        true
-      );
+
+      return new Promise<Array<DocRefType>>((resolve, reject) => {
+        httpGet(
+          url,
+          r =>
+            r
+              .json()
+              .then((searchResults: Array<DocRefType>) =>
+                resolve(searchResults)
+              ),
+          {},
+          true
+        );
+      });
     },
     [httpGet]
   );

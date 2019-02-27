@@ -32,7 +32,7 @@ const AppSearchBar = ({
 
   const { searchApp } = useExplorerApi();
 
-  const onSearch = useCallback(p => searchApp(setSearchResults, p), [
+  const onSearch = useCallback(p => searchApp(p).then(setSearchResults), [
     searchApp,
     setSearchResults
   ]);
