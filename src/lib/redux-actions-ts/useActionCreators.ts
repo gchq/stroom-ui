@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { Dispatch, Action } from "redux";
 import { useDispatch } from "redux-react-hook";
 
@@ -27,13 +28,19 @@ export const genUseActionCreators = function<
   return () => {
     const dispatch = useDispatch();
 
-    return Object.keys(actionCreators).reduce(
-      (acc, curr) => ({
-        ...acc,
-        [curr]: wrapDispatch(dispatch, actionCreators[curr])
-      }),
-      {}
-    ) as T;
+    // Memoizing this is crucial!
+    // A lot of follow on memoization will depend on the action creators not changing (to be strict)
+    return useMemo(
+      () =>
+        Object.keys(actionCreators).reduce(
+          (acc, curr) => ({
+            ...acc,
+            [curr]: wrapDispatch(dispatch, actionCreators[curr])
+          }),
+          {}
+        ) as T,
+      [dispatch, actionCreators]
+    );
   };
 };
 

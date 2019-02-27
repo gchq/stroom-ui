@@ -20,46 +20,14 @@ import { useEffect } from "react";
 import DocRefEditor, { useDocRefEditor } from "../DocRefEditor";
 import Loader from "../Loader";
 import useIndexApi from "./useIndexApi";
-import { useSelectableReactTable } from "../../lib/useSelectableItemListing";
-import { IndexField, IndexDoc } from "../../types";
-import ReactTable from "react-table";
+import { IndexDoc } from "../../types";
+import IndexFieldsTable, {
+  useTable as useFieldsTable
+} from "./IndexFieldsTable";
 
 export interface Props {
   indexUuid: string;
 }
-
-const FIELD_COLUMNS = [
-  {
-    id: "fieldName",
-    Header: "Name",
-    accessor: (u: IndexField) => u.fieldName
-  },
-  {
-    id: "fieldType",
-    Header: "Type",
-    accessor: (u: IndexField) => u.fieldType
-  },
-  {
-    id: "stored",
-    Header: "Stored",
-    accessor: (u: IndexField) => u.stored.toString()
-  },
-  {
-    id: "termPositions",
-    Header: "Positions",
-    accessor: (u: IndexField) => u.termPositions.toString()
-  },
-  {
-    id: "analyzerType",
-    Header: "Analyzer",
-    accessor: (u: IndexField) => u.analyzerType
-  },
-  {
-    id: "caseSensitive",
-    Header: "Case Sensitive",
-    accessor: (u: IndexField) => u.caseSensitive.toString()
-  }
-];
 
 const IndexEditor = ({ indexUuid }: Props) => {
   const indexApi = useIndexApi();
@@ -73,14 +41,8 @@ const IndexEditor = ({ indexUuid }: Props) => {
     saveDocument: indexApi.saveDocument
   });
 
-  const { tableProps } = useSelectableReactTable<IndexField>(
-    {
-      items: document && document.data ? document.data.fields : [],
-      getKey: f => f.fieldName
-    },
-    {
-      columns: FIELD_COLUMNS
-    }
+  const { componentProps } = useFieldsTable(
+    document && document.data ? document.data.fields : []
   );
 
   if (!document) {
@@ -90,7 +52,7 @@ const IndexEditor = ({ indexUuid }: Props) => {
   return (
     <DocRefEditor {...editorProps}>
       <h2>Fields</h2>
-      <ReactTable {...tableProps} />
+      <IndexFieldsTable {...componentProps} />
     </DocRefEditor>
   );
 };

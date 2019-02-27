@@ -12,6 +12,10 @@ import ThemedConfirm, {
   useDialog as useThemedConfirmDialog
 } from "../../components/ThemedConfirm";
 import IndexVolumesTable, { useTable } from "./IndexVolumesTable";
+import {
+  IndexVolumeGroupModalPicker,
+  useIndexVolumeGroupModalPicker
+} from "../../components/IndexVolumeGroupPicker";
 import useRouter from "../../lib/useRouter";
 
 export interface Props {}
@@ -24,13 +28,13 @@ const IndexVolumes = () => {
       indexVolumes
     })
   );
-  const api = useApi();
+  const { getIndexVolumes, deleteIndexVolume, addVolumeToGroup } = useApi();
   const { componentProps: tableProps } = useTable(indexVolumes);
   const {
     selectableTableProps: { selectedItems }
   } = tableProps;
 
-  useEffect(api.getIndexVolumes, []);
+  useEffect(getIndexVolumes, []);
 
   const {
     showDialog: showCreateNewDialog,
@@ -49,9 +53,24 @@ const IndexVolumes = () => {
       selectedItems.map(v => v.id)
     ]),
     onConfirm: useCallback(() => {
-      selectedItems.forEach(v => api.deleteIndexVolume(v.id));
+      selectedItems.forEach(v => deleteIndexVolume(v.id));
     }, [selectedItems.map(v => v.id)])
   });
+
+  const {
+    showDialog: showAddToGroupDialog,
+    componentProps: addToGroupProps
+  } = useIndexVolumeGroupModalPicker({
+    onConfirm: groupName =>
+      selectedItems
+        .map(v => v.id)
+        .forEach(vId => addVolumeToGroup(vId, groupName))
+  });
+
+  const onViewClick: React.MouseEventHandler<HTMLButtonElement> = useCallback(
+    () => history.push(`/s/indexing/volumes/${selectedItems[0].id}`),
+    [history, selectedItems]
+  );
 
   return (
     <div>
@@ -61,9 +80,12 @@ const IndexVolumes = () => {
       <Button
         text="View/Edit"
         disabled={selectedItems.length !== 1}
-        onClick={() =>
-          history.push(`/s/indexing/volumes/${selectedItems[0].id}`)
-        }
+        onClick={onViewClick}
+      />
+      <Button
+        text="Add to Group"
+        disabled={selectedItems.length == 0}
+        onClick={showAddToGroupDialog}
       />
       <Button
         text="Delete"
@@ -71,10 +93,9 @@ const IndexVolumes = () => {
         onClick={showDeleteDialog}
       />
 
+      <IndexVolumeGroupModalPicker {...addToGroupProps} />
       <NewIndexVolumeDialog {...createNewDialogProps} />
-
       <ThemedConfirm {...deleteDialogProps} />
-
       <IndexVolumesTable {...tableProps} />
     </div>
   );
