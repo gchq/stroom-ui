@@ -50,7 +50,7 @@ interface TableData {
 
 const DataList = ({ dataViewerId, expression }: Props) => {
   const { selectRow } = useActionCreators();
-  const { dataViewers } = useReduxState(({ dataViewers }) => ({ dataViewers }));
+  const dataViewers = useReduxState(({ dataViewers }) => dataViewers);
   const { selectedRow, pageOffset, pageSize, streamAttributeMaps, dataSource } =
     dataViewers[dataViewerId] || defaultStatePerId;
 

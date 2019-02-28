@@ -3,7 +3,7 @@ import * as React from "react";
 import DocRefImage from "../DocRefImage";
 import { OptionType } from "../../types";
 import DropdownSelect, { DropdownOptionProps } from "../DropdownSelect";
-import useDocRefTypes from "./useDocRefTypes";
+import useDocRefTypes from "../FolderExplorer/useDocRefTypes";
 
 const DocRefTypeOption = ({
   inFocus,

@@ -12,9 +12,7 @@ export const useElements = (): ElementsStoreState => {
     elementsApi.fetchElementProperties();
   }, []);
 
-  const { elements } = useReduxState(({ elements }) => ({
-    elements
-  }));
+  const elements = useReduxState(({ elements }) => elements);
 
   return elements;
 };

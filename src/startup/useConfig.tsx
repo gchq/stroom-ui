@@ -13,9 +13,7 @@ export const useConfig = () => {
   }, []);
 
   // Get data from and subscribe to the store
-  const { config } = useReduxState(({ config }: GlobalStoreState) => ({
-    config
-  }));
+  const config = useReduxState(({ config }: GlobalStoreState) => config);
 
   return config;
 };

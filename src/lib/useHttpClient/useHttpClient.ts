@@ -16,13 +16,8 @@ enum FetchState {
   FAILED
 }
 
-export interface StatePerUrl {
-  fetchState: FetchState;
-  body?: any;
-}
-
 export interface StoreState {
-  [s: string]: StatePerUrl;
+  [s: string]: FetchState;
 }
 
 const RESET_ALL_URLS = "RESET_ALL_URLS";
@@ -30,7 +25,6 @@ const URL_RESET = "URL_RESET";
 const URL_REQUESTED = "URL_REQUESTED";
 const URL_RESPONDED = "URL_RESPONDED";
 const URL_FAILED = "URL_FAILED";
-const URL_RESPONSE_BODY_RECEIVED = "URL_RESPONSE_BODY_RECEIVED";
 
 export interface UrlAction {
   url: string;
@@ -42,10 +36,6 @@ export type UrlRequestedAction = UrlAction & Action<"URL_REQUESTED">;
 export type UrlRespondedAction = UrlAction & Action<"URL_RESPONDED">;
 export type UrlFailedAction = UrlAction & Action<"URL_FAILED">;
 export type ResetAllUrlsAction = Action<"RESET_ALL_URLS">;
-export type UrlResponseBodyReceived = Action<"URL_RESPONSE_BODY_RECEIVED"> & {
-  url: string;
-  body: any;
-};
 
 const defaultState: StoreState = {};
 
@@ -72,14 +62,6 @@ export const useActionCreators = genUseActionCreators({
     type: URL_FAILED,
     url,
     fetchState: FetchState.FAILED
-  }),
-  urlResponseBodyReceived: (
-    url: string,
-    body: any
-  ): UrlResponseBodyReceived => ({
-    type: URL_RESPONSE_BODY_RECEIVED,
-    url,
-    body
   })
 });
 
@@ -90,16 +72,6 @@ export const reducer = prepareReducer(defaultState)
     (state, { url, fetchState }) => ({
       ...state,
       [url]: { fetchState, body: undefined }
-    })
-  )
-  .handleAction<UrlResponseBodyReceived>(
-    URL_RESPONSE_BODY_RECEIVED,
-    (state: StoreState, { url, body }) => ({
-      ...state,
-      [url]: {
-        fetchState: !!state[url] ? state[url].fetchState : FetchState.RESPONDED,
-        body
-      }
     })
   )
   .getReducer();
@@ -124,6 +96,14 @@ export interface HttpClient {
     },
     forceGet?: boolean
   ) => void;
+  httpGetPromise: (
+    url: string,
+    bodyProcessor: <T>(r: Response) => Promise<T>,
+    options?: {
+      [s: string]: any;
+    },
+    forceGet?: boolean
+  ) => Promise<any>;
   httpPost: (
     url: string,
     successCallback: (x: any) => void,
@@ -152,8 +132,9 @@ export interface HttpClient {
       [s: string]: any;
     }
   ) => void;
-  urlResponseBodyReceived: (url: string, body: any) => void;
 }
+
+const cache = {};
 
 export const useHttpClient = (): HttpClient => {
   const store = useContext(StoreContext);
@@ -162,12 +143,7 @@ export const useHttpClient = (): HttpClient => {
     setHttpErrorCode,
     setStackTrace
   } = useErrorActionCreators();
-  const {
-    urlRequested,
-    urlResponded,
-    urlFailed,
-    urlResponseBodyReceived
-  } = useActionCreators();
+  const { urlRequested, urlResponded, urlFailed } = useActionCreators();
   const { history } = useRouter();
 
   if (!store) {
@@ -185,10 +161,7 @@ export const useHttpClient = (): HttpClient => {
     ) => {
       const state = store.getState();
       const jwsToken = state.authentication.idToken;
-      const currentStateForUrl: StatePerUrl = state.fetch[url];
-      const currentFetchState = !!currentStateForUrl
-        ? currentStateForUrl.fetchState
-        : FetchState.UNREQUESTED;
+      const currentFetchState = state.fetch[url] || FetchState.UNREQUESTED;
       let needToFetch = false;
 
       // console.group("Requesting ", url);
@@ -250,6 +223,94 @@ export const useHttpClient = (): HttpClient => {
             setHttpErrorCode(error.status);
             history.push("/s/error");
           });
+      }
+
+      // console.groupEnd();
+    },
+    [urlRequested, urlFailed, setErrorMessage, setHttpErrorCode, setStackTrace]
+  );
+
+  const httpGetPromise = useCallback(
+    <T>(
+      url: string,
+      bodyProcessor: (r: Response) => Promise<T | void>,
+      options?: {
+        [s: string]: any;
+      },
+      forceGet?: boolean
+    ): Promise<T | void> => {
+      const state = store.getState();
+      const jwsToken = state.authentication.idToken;
+      const currentFetchState = state.fetch[url] || FetchState.UNREQUESTED;
+      let needToFetch = false;
+
+      // console.group("Requesting ", url);
+      // console.log("Current State of URL", { url, currentState });
+
+      if (!!cache[url]) {
+        needToFetch = true;
+      } else if (!forceGet) {
+        switch (currentFetchState) {
+          case undefined:
+            // console.log('Never even heard of it', url);
+            needToFetch = true;
+            break;
+          case FetchState.UNREQUESTED:
+            // console.log('Has been reset, go again!', url);
+            needToFetch = true;
+            break;
+          case FetchState.FAILED:
+            // console.log('It failed last time, second times a charm?', url);
+            needToFetch = true;
+            break;
+          case FetchState.REQUESTED:
+            // console.log('Already asked, dont ask again', url);
+            needToFetch = false;
+            break;
+          case FetchState.RESPONDED:
+            // console.log('Already got it, dont ask again', url);
+            needToFetch = false;
+            break;
+          default:
+            // console.log('Default state? Nonsense');
+            break;
+        }
+      } else {
+        needToFetch = true;
+      }
+
+      if (needToFetch) {
+        urlRequested(url);
+
+        const p = fetch(url, {
+          method: "get",
+          mode: "cors",
+          ...options,
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${jwsToken}`,
+            ...(options ? options.headers : {})
+          }
+        })
+          .then(handleStatus)
+          .then(responseBody => {
+            urlResponded(url);
+            return Promise.resolve(responseBody);
+          })
+          .then(bodyProcessor)
+          .catch(error => {
+            urlFailed(url);
+            setErrorMessage(error.message);
+            setStackTrace(error.stack);
+            setHttpErrorCode(error.status);
+            history.push("/s/error");
+          });
+
+        cache[url] = p;
+        return p;
+      } else {
+        return cache[url];
       }
 
       // console.groupEnd();
@@ -372,11 +433,11 @@ export const useHttpClient = (): HttpClient => {
 
   return {
     httpGet,
+    httpGetPromise,
     httpDelete,
     httpPatch,
     httpPost,
-    httpPut,
-    urlResponseBodyReceived
+    httpPut
   };
 };
 

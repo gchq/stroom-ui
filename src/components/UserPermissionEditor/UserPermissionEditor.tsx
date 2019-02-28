@@ -23,10 +23,9 @@ const UserPermissionEditor = ({ listingId, userUuid }: Props) => {
     api.findUsers(listingId, undefined, undefined, userUuid);
   }, []);
 
-  const { user } = useReduxState(
-    ({ userPermissions: { users } }: GlobalStoreState) => ({
-      user: users[listingId] && users[listingId].find(u => u.uuid === userUuid)
-    }),
+  const user = useReduxState(
+    ({ userPermissions: { users } }: GlobalStoreState) =>
+      users[listingId] && users[listingId].find(u => u.uuid === userUuid),
     [listingId, userUuid]
   );
 

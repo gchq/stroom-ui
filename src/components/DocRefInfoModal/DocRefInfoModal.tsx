@@ -33,10 +33,8 @@ export interface Props {
 const doNothing = () => {};
 
 const DocRefInfoModal = ({ isOpen, onCloseDialog, docRef }: Props) => {
-  const { docRefInfoByUuid } = useReduxState(
-    ({ folderExplorer: { docRefInfoByUuid } }) => ({
-      docRefInfoByUuid
-    })
+  const docRefInfoByUuid = useReduxState(
+    ({ folderExplorer: { docRefInfoByUuid } }) => docRefInfoByUuid
   );
 
   const explorerApi = useExplorerApi();

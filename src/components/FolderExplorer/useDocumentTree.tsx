@@ -6,10 +6,8 @@ import useExplorerApi from "./useExplorerApi";
 import { DocRefTree } from "../../types";
 
 export const useDocumentTree = (): DocRefTree => {
-  const { documentTree } = useReduxState(
-    ({ folderExplorer: { documentTree } }: GlobalStoreState) => ({
-      documentTree
-    })
+  const documentTree = useReduxState(
+    ({ folderExplorer: { documentTree } }: GlobalStoreState) => documentTree
   );
   const explorerApi = useExplorerApi();
 

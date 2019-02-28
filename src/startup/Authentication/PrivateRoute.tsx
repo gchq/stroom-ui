@@ -26,9 +26,7 @@ export interface Props extends RouteProps {}
 
 const PrivateRoute = ({ render, ...rest }: Props) => {
   const config = useConfig();
-  const { idToken } = useReduxState(({ authentication: { idToken } }) => ({
-    idToken
-  }));
+  const idToken = useReduxState(({ authentication: { idToken } }) => idToken);
 
   const {
     isReady,

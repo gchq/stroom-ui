@@ -32,10 +32,8 @@ const UserPermissions = () => {
   const [selectedUser, setSelectedUser] = useState<User | undefined>(undefined);
 
   // Get data from and subscribe to the store
-  const { users } = useReduxState(
-    ({ userPermissions: { users } }: GlobalStoreState) => ({
-      users: users[LISTING_ID]
-    })
+  const users = useReduxState(
+    ({ userPermissions: { users } }: GlobalStoreState) => users[LISTING_ID]
   );
 
   const onSelection = (selectedUuid: string) => {

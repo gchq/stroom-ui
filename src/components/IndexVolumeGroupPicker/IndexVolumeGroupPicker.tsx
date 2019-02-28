@@ -18,8 +18,8 @@ const IndexVolumeGroupPicker = ({ value, onChange }: Props) => {
     api.getIndexVolumeGroupNames();
   }, []);
 
-  const { groupNames } = useReduxState(
-    ({ indexVolumeGroups: { groupNames } }) => ({ groupNames })
+  const groupNames = useReduxState(
+    ({ indexVolumeGroups: { groupNames } }) => groupNames
   );
 
   const options: Array<SelectOptionType> = groupNames.map(n => ({

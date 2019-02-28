@@ -36,9 +36,7 @@ export interface Props {
 const PipelineDebugger = ({ pipelineId, debuggerId }: Props) => {
   const { startDebugging } = useActionCreators();
   const { fetchPipeline } = usePipelineApi();
-  const { debuggers } = useReduxState(({ debuggers }) => ({
-    debuggers
-  }));
+  const debuggers = useReduxState(({ debuggers }) => debuggers);
   const debuggerState = debuggers[debuggerId];
   const pipelineStateProps = usePipelineState(pipelineId);
   const {

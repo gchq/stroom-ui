@@ -51,7 +51,13 @@ export interface Api {
 
 export const useApi = (): Api => {
   const store = useContext(StoreContext);
-  const { httpGet, httpPost, httpPut, httpDelete } = useHttpClient();
+  const {
+    httpGet,
+    httpGetPromise,
+    httpPost,
+    httpPut,
+    httpDelete
+  } = useHttpClient();
 
   const {
     docTreeReceived,
@@ -83,17 +89,7 @@ export const useApi = (): Api => {
       state.config.values.stroomBaseServiceUrl
     }/explorer/v1/docRefTypes`;
 
-    return new Promise<DocRefTypeList>((resolve, reject) => {
-      httpGet(
-        url,
-        response =>
-          response
-            .json()
-            .then((docRefTypes: DocRefTypeList) => resolve(docRefTypes)),
-        {},
-        true
-      );
-    });
+    return httpGetPromise(url, r => r.json());
   }, [httpGet]);
   const fetchDocInfo = useCallback(
     (docRef: DocRefType) => {

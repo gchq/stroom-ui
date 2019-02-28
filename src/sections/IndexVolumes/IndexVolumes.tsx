@@ -23,10 +23,8 @@ export interface Props {}
 const IndexVolumes = () => {
   const { history } = useRouter();
 
-  const { indexVolumes } = useReduxState(
-    ({ indexVolumes: { indexVolumes } }) => ({
-      indexVolumes
-    })
+  const indexVolumes = useReduxState(
+    ({ indexVolumes: { indexVolumes } }) => indexVolumes
   );
   const { getIndexVolumes, deleteIndexVolume, addVolumeToGroup } = useApi();
   const { componentProps: tableProps } = useTable(indexVolumes);

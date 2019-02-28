@@ -19,10 +19,8 @@ const GroupsForUser = ({ user }: Props) => {
     }
   }, [!!user ? user.uuid : null]);
 
-  const { groupsForUser } = useReduxState(
-    ({ userPermissions: { groupsForUser } }) => ({
-      groupsForUser
-    })
+  const groupsForUser = useReduxState(
+    ({ userPermissions: { groupsForUser } }) => groupsForUser
   );
   const groups = groupsForUser[user.uuid];
 

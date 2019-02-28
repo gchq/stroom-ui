@@ -17,7 +17,7 @@ import * as React from "react";
 
 import DocRefImage from "../DocRefImage";
 import { DocRefTypeList } from "../../types";
-import useDocRefTypes from "./useDocRefTypes";
+import useDocRefTypes from "../FolderExplorer/useDocRefTypes";
 
 enum AllSelectState {
   ALL,
