@@ -19,7 +19,7 @@ import FetchAdapter, {
   HttpResponse
 } from "@pollyjs/adapter-fetch";
 
-import { useActionCreators as useFetchActionCreators } from "../useHttpClient/useHttpClient";
+import { useHttpClient } from "../useHttpClient";
 import { Config } from "../../startup/config";
 import { TestData } from "../test/testTypes";
 
@@ -73,11 +73,10 @@ export interface Props {
 }
 
 export const useTestServer = (testData: TestData) => {
-  const actionCreators = useFetchActionCreators();
+  const { clearCache } = useHttpClient();
 
   useEffect(() => {
-    actionCreators.resetAllUrls();
-
+    clearCache();
     testCache.data = {
       documentTree: { ...testData.documentTree },
       docRefTypes: testData.docRefTypes,

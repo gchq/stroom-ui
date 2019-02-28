@@ -22,7 +22,12 @@ interface Api {
 
 const useApi = (): Api => {
   const store = useContext(StoreContext);
-  const { httpGet, httpPost, httpDelete, httpPut } = useHttpClient();
+  const {
+    httpGetJson,
+    httpPostJsonResponse,
+    httpDeleteEmptyResponse,
+    httpPutEmptyResponse
+  } = useHttpClient();
   const {
     usersReceived,
     usersInGroupReceived,
@@ -48,15 +53,9 @@ const useApi = (): Api => {
       if (uuid !== undefined && uuid.length > 0)
         url.searchParams.append("uuid", uuid);
 
-      httpGet(
-        url.href,
-        r =>
-          r.json().then((users: Array<User>) => usersReceived(listId, users)),
-        {},
-        true
-      );
+      httpGetJson(url.href, {}, true).then(u => usersReceived(listId, u));
     },
-    [httpGet, usersReceived]
+    [httpGetJson, usersReceived]
   );
 
   const findUsersInGroup = useCallback(
@@ -66,19 +65,11 @@ const useApi = (): Api => {
         state.config.values.stroomBaseServiceUrl
       }/users/v1/usersInGroup/${groupUuid}`;
 
-      httpGet(
-        url,
-        r =>
-          r
-            .json()
-            .then((users: Array<User>) =>
-              usersInGroupReceived(groupUuid, users)
-            ),
-        {},
-        true
+      httpGetJson(url, {}, true).then((users: Array<User>) =>
+        usersInGroupReceived(groupUuid, users)
       );
     },
-    [httpGet, usersInGroupReceived]
+    [httpGetJson, usersInGroupReceived]
   );
 
   const findGroupsForUser = useCallback(
@@ -88,19 +79,11 @@ const useApi = (): Api => {
         state.config.values.stroomBaseServiceUrl
       }/users/v1/groupsForUser/${userUuid}`;
 
-      httpGet(
-        url,
-        r =>
-          r
-            .json()
-            .then((users: Array<User>) =>
-              groupsForUserReceived(userUuid, users)
-            ),
-        {},
-        true
+      httpGetJson(url, {}, true).then((users: Array<User>) =>
+        groupsForUserReceived(userUuid, users)
       );
     },
-    [httpGet, groupsForUserReceived]
+    [httpGetJson, groupsForUserReceived]
   );
 
   const createUser = useCallback(
@@ -114,15 +97,9 @@ const useApi = (): Api => {
         isGroup
       });
 
-      httpPost(
-        url,
-        response => response.json().then((user: User) => userCreated(user)),
-        {
-          body
-        }
-      );
+      httpPostJsonResponse(url, { body }).then(userCreated);
     },
-    [httpPost, userCreated]
+    [httpPostJsonResponse, userCreated]
   );
 
   const deleteUser = useCallback(
@@ -130,11 +107,9 @@ const useApi = (): Api => {
       const state = store.getState();
       var url = `${state.config.values.stroomBaseServiceUrl}/users/v1/${uuid}`;
 
-      httpDelete(url, response =>
-        response.text().then(() => userDeleted(uuid))
-      );
+      httpDeleteEmptyResponse(url).then(() => userDeleted(uuid));
     },
-    [httpDelete, userDeleted]
+    [httpDeleteEmptyResponse, userDeleted]
   );
 
   const addUserToGroup = useCallback(
@@ -144,11 +119,11 @@ const useApi = (): Api => {
         state.config.values.stroomBaseServiceUrl
       }/users/v1/${userUuid}/${groupUuid}`;
 
-      httpPut(url, response =>
-        response.text().then(() => userAddedToGroup(userUuid, groupUuid))
+      httpPutEmptyResponse(url).then(() =>
+        userAddedToGroup(userUuid, groupUuid)
       );
     },
-    [httpPut, userAddedToGroup]
+    [httpPutEmptyResponse, userAddedToGroup]
   );
 
   const removeUserFromGroup = useCallback(
@@ -158,11 +133,11 @@ const useApi = (): Api => {
         state.config.values.stroomBaseServiceUrl
       }/users/v1/${userUuid}/${groupUuid}`;
 
-      httpDelete(url, response =>
-        response.text().then(() => userRemovedFromGroup(userUuid, groupUuid))
+      httpDeleteEmptyResponse(url).then(() =>
+        userRemovedFromGroup(userUuid, groupUuid)
       );
     },
-    [httpDelete, userRemovedFromGroup]
+    [httpDeleteEmptyResponse, userRemovedFromGroup]
   );
 
   return {

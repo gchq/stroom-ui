@@ -26,7 +26,7 @@ export interface Api {
 
 export const useApi = (): Api => {
   const store = useContext(StoreContext);
-  const { httpGet, httpPost } = useHttpClient();
+  const { httpGetJson, httpPostEmptyResponse } = useHttpClient();
   const { documentReceived, documentSaved } = useActionCreators();
 
   if (!store) {
@@ -37,21 +37,18 @@ export const useApi = (): Api => {
     (uuid: string) => {
       const state = store.getState();
       const url = `${state.config.values.stroomBaseServiceUrl}/xslt/v1/${uuid}`;
-      httpGet(
+      httpGetJson(
         url,
-        response =>
-          response
-            .json()
-            .then((document: XsltDoc) => documentReceived(uuid, document)),
+
         {
           headers: {
             Accept: "application/xml",
             "Content-Type": "application/xml"
           }
         }
-      );
+      ).then((document: XsltDoc) => documentReceived(uuid, document));
     },
-    [httpGet]
+    [httpGetJson]
   );
 
   const saveDocument = useCallback(
@@ -61,19 +58,15 @@ export const useApi = (): Api => {
         xslt.uuid
       }`;
 
-      httpPost(
-        url,
-        response => response.text().then(() => documentSaved(xslt.uuid)),
-        {
-          body: xslt.data,
-          headers: {
-            Accept: "application/xml",
-            "Content-Type": "application/xml"
-          }
+      httpPostEmptyResponse(url, {
+        body: xslt.data,
+        headers: {
+          Accept: "application/xml",
+          "Content-Type": "application/xml"
         }
-      );
+      }).then(() => documentSaved(xslt.uuid));
     },
-    [httpPost, documentSaved]
+    [httpPostEmptyResponse, documentSaved]
   );
 
   return {

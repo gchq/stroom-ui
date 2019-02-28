@@ -1,7 +1,5 @@
-import useHttpClient, {StoreState} from './useHttpClient'
+import useHttpClient from "./useHttpClient";
 
-export {
-  useHttpClient,StoreState
-}
+export { useHttpClient };
 
 export default useHttpClient;

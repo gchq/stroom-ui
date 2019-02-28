@@ -26,7 +26,7 @@ export interface Api {
 
 export const useApi = (): Api => {
   const store = useContext(StoreContext);
-  const { httpGet, httpPost } = useHttpClient();
+  const { httpGetJson, httpPostEmptyResponse } = useHttpClient();
   const { documentReceived, documentSaved } = useActionCreators();
 
   if (!store) {
@@ -39,15 +39,9 @@ export const useApi = (): Api => {
       const url = `${
         state.config.values.stroomBaseServiceUrl
       }/dictionary/v1/${dictionaryUuid}`;
-      httpGet(url, response =>
-        response
-          .json()
-          .then((dictionary: Dictionary) =>
-            documentReceived(dictionaryUuid, dictionary)
-          )
-      );
+      httpGetJson(url).then(d => documentReceived(dictionaryUuid, d));
     },
-    [httpGet, documentReceived]
+    [httpGetJson, documentReceived]
   );
   const saveDocument = useCallback(
     (document: Dictionary) => {
@@ -56,15 +50,11 @@ export const useApi = (): Api => {
         document.uuid
       }`;
 
-      httpPost(
-        url,
-        response => response.text().then(() => documentSaved(document.uuid)),
-        {
-          body: document
-        }
-      );
+      httpPostEmptyResponse(url, {
+        body: document
+      }).then(() => documentSaved(document.uuid));
     },
-    [httpPost, documentSaved]
+    [httpPostEmptyResponse, documentSaved]
   );
 
   return {

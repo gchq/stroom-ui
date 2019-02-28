@@ -18,7 +18,12 @@ export interface Api {
 
 export const useApi = (): Api => {
   const store = useContext(StoreContext);
-  const { httpGet, httpDelete, httpPost } = useHttpClient();
+  const {
+    httpGetJson,
+    httpDeleteEmptyResponse,
+    httpPostJsonResponse,
+    httpPostEmptyResponse
+  } = useHttpClient();
   const {
     indexVolumesReceived,
     indexVolumeReceived,
@@ -40,18 +45,8 @@ export const useApi = (): Api => {
       `${state.config.values.stroomBaseServiceUrl}/stroom-index/volume/v1`
     );
 
-    httpGet(
-      url.href,
-      r =>
-        r
-          .json()
-          .then((indexVolumes: Array<IndexVolume>) =>
-            indexVolumesReceived(indexVolumes)
-          ),
-      {},
-      true
-    );
-  }, [httpGet]);
+    httpGetJson(url.href).then(indexVolumesReceived);
+  }, [httpGetJson]);
 
   const getIndexVolumeById = useCallback(
     (id: string) => {
@@ -61,20 +56,9 @@ export const useApi = (): Api => {
           state.config.values.stroomBaseServiceUrl
         }/stroom-index/volume/v1/${id}`
       );
-
-      httpGet(
-        url.href,
-        r =>
-          r
-            .json()
-            .then((indexVolume: IndexVolume) =>
-              indexVolumeReceived(indexVolume)
-            ),
-        {},
-        true
-      );
+      httpGetJson(url.href).then(indexVolumeReceived);
     },
-    [httpGet, indexVolumeReceived]
+    [httpGetJson, indexVolumeReceived]
   );
 
   const deleteIndexVolume = useCallback(
@@ -86,14 +70,9 @@ export const useApi = (): Api => {
         }/stroom-index/volume/v1/${id}`
       );
 
-      httpDelete(
-        url.href,
-        r =>
-          r.text().then((indexVolume: IndexVolume) => indexVolumeDeleted(id)),
-        {}
-      );
+      httpDeleteEmptyResponse(url.href).then(() => indexVolumeDeleted(id));
     },
-    [httpDelete, indexVolumeDeleted]
+    [httpDeleteEmptyResponse, indexVolumeDeleted]
   );
 
   const getIndexVolumesInGroup = useCallback(
@@ -105,17 +84,11 @@ export const useApi = (): Api => {
         }/stroom-index/volume/v1/inGroup/${groupName}`
       );
 
-      httpGet(
-        url.href,
-        r =>
-          r.json().then((indexVolumes: Array<IndexVolume>) => {
-            indexVolumesInGroupReceived(groupName, indexVolumes);
-          }),
-        {},
-        true
-      );
+      httpGetJson(url.href, {}, true).then((i: Array<IndexVolume>) => {
+        indexVolumesInGroupReceived(groupName, i);
+      });
     },
-    [httpGet, indexVolumesInGroupReceived]
+    [httpGetJson, indexVolumesInGroupReceived]
   );
 
   const getGroupsForIndexVolume = useCallback(
@@ -127,19 +100,11 @@ export const useApi = (): Api => {
         }/stroom-index/volume/v1/groupsFor/${id}`
       );
 
-      httpGet(
-        url.href,
-        r =>
-          r
-            .json()
-            .then((groups: Array<IndexVolumeGroup>) =>
-              indexGroupsForVolumeReceived(id, groups)
-            ),
-        {},
-        true
+      httpGetJson(url.href, {}, true).then((groups: Array<IndexVolumeGroup>) =>
+        indexGroupsForVolumeReceived(id, groups)
       );
     },
-    [httpGet, indexGroupsForVolumeReceived]
+    [httpGetJson, indexGroupsForVolumeReceived]
   );
 
   const createIndexVolume = useCallback(
@@ -153,18 +118,9 @@ export const useApi = (): Api => {
 
       const body = JSON.stringify({ nodeName, path });
 
-      httpPost(
-        url.href,
-        response =>
-          response
-            .json()
-            .then((indexVolume: IndexVolume) =>
-              indexVolumeCreated(indexVolume)
-            ),
-        { body }
-      );
+      httpPostJsonResponse(url.href, { body }).then(indexVolumeCreated);
     },
-    [httpPost, indexVolumeCreated]
+    [httpPostJsonResponse, indexVolumeCreated]
   );
 
   const addVolumeToGroup = useCallback(
@@ -176,13 +132,11 @@ export const useApi = (): Api => {
         }/stroom-index/volume/v1/inGroup/${indexVolumeId}/${groupName}`
       );
 
-      httpPost(url.href, response =>
-        response
-          .text()
-          .then(() => indexVolumeAddedToGroup(indexVolumeId, groupName))
+      httpPostEmptyResponse(url.href).then(() =>
+        indexVolumeAddedToGroup(indexVolumeId, groupName)
       );
     },
-    [httpPost, indexVolumeAddedToGroup]
+    [httpPostEmptyResponse, indexVolumeAddedToGroup]
   );
 
   const removeVolumeFromGroup = useCallback(
@@ -194,13 +148,11 @@ export const useApi = (): Api => {
         }/stroom-index/volume/v1/inGroup/${indexVolumeId}/${groupName}`
       );
 
-      httpDelete(url.href, response =>
-        response
-          .text()
-          .then(() => indexVolumeRemovedFromGroup(indexVolumeId, groupName))
+      httpDeleteEmptyResponse(url.href).then(() =>
+        indexVolumeRemovedFromGroup(indexVolumeId, groupName)
       );
     },
-    [httpDelete, indexVolumeRemovedFromGroup]
+    [httpDeleteEmptyResponse, indexVolumeRemovedFromGroup]
   );
 
   return {

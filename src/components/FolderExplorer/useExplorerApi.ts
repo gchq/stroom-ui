@@ -4,12 +4,7 @@ import { StoreContext } from "redux-react-hook";
 import { useActionCreators as useFolderExplorerActionCreators } from "./redux";
 import useHttpClient from "../../lib/useHttpClient/useHttpClient";
 import { findByUuids, findItem } from "../../lib/treeUtils";
-import {
-  DocRefType,
-  DocRefTree,
-  DocRefInfoType,
-  DocRefTypeList
-} from "../../types";
+import { DocRefType, DocRefTree } from "../../types";
 
 const stripDocRef = (docRef: DocRefType) => ({
   uuid: docRef.uuid,
@@ -26,7 +21,7 @@ export interface SearchProps {
 
 export interface Api {
   fetchDocTree: () => void;
-  fetchDocRefTypes: () => Promise<DocRefTypeList>;
+  fetchDocRefTypes: () => void;
   fetchDocInfo: (docRef: DocRefType) => void;
   searchApp: (args: SearchProps) => Promise<Array<DocRefType>>;
   createDocument: (
@@ -52,11 +47,10 @@ export interface Api {
 export const useApi = (): Api => {
   const store = useContext(StoreContext);
   const {
-    httpGet,
-    httpGetPromise,
-    httpPost,
-    httpPut,
-    httpDelete
+    httpGetJson,
+    httpPostJsonResponse,
+    httpPutJsonResponse,
+    httpDeleteJsonResponse
   } = useHttpClient();
 
   const {
@@ -66,7 +60,8 @@ export const useApi = (): Api => {
     docRefRenamed,
     docRefsCopied,
     docRefsMoved,
-    docRefsDeleted
+    docRefsDeleted,
+    docRefTypesReceived
   } = useFolderExplorerActionCreators();
 
   if (!store) {
@@ -76,12 +71,8 @@ export const useApi = (): Api => {
   const fetchDocTree = useCallback(() => {
     const state = store.getState();
     const url = `${state.config.values.stroomBaseServiceUrl}/explorer/v1/all`;
-    httpGet(url, response =>
-      response
-        .json()
-        .then((documentTree: DocRefTree) => docTreeReceived(documentTree))
-    );
-  }, [httpGet, docTreeReceived]);
+    httpGetJson(url).then(docTreeReceived);
+  }, [httpGetJson, docTreeReceived]);
 
   const fetchDocRefTypes = useCallback(() => {
     const state = store.getState();
@@ -89,21 +80,17 @@ export const useApi = (): Api => {
       state.config.values.stroomBaseServiceUrl
     }/explorer/v1/docRefTypes`;
 
-    return httpGetPromise(url, r => r.json());
-  }, [httpGet]);
+    httpGetJson(url).then(docRefTypesReceived);
+  }, [httpGetJson]);
   const fetchDocInfo = useCallback(
     (docRef: DocRefType) => {
       const state = store.getState();
       const url = `${
         state.config.values.stroomBaseServiceUrl
       }/explorer/v1/info/${docRef.type}/${docRef.uuid}`;
-      httpGet(url, response =>
-        response
-          .json()
-          .then((docRefInfo: DocRefInfoType) => docRefInfoReceived(docRefInfo))
-      );
+      httpGetJson(url).then(docRefInfoReceived);
     },
-    [httpGet, docRefInfoReceived]
+    [httpGetJson, docRefInfoReceived]
   );
 
   const searchApp = useCallback(
@@ -114,21 +101,9 @@ export const useApi = (): Api => {
         state.config.values.stroomBaseServiceUrl
       }/explorer/v1/search?${params}`;
 
-      return new Promise<Array<DocRefType>>((resolve, reject) => {
-        httpGet(
-          url,
-          r =>
-            r
-              .json()
-              .then((searchResults: Array<DocRefType>) =>
-                resolve(searchResults)
-              ),
-          {},
-          true
-        );
-      });
+      return httpGetJson(url, {}, true);
     },
-    [httpGet]
+    [httpGetJson]
   );
 
   const createDocument = useCallback(
@@ -142,23 +117,16 @@ export const useApi = (): Api => {
       const url = `${
         state.config.values.stroomBaseServiceUrl
       }/explorer/v1/create`;
-      httpPost(
-        url,
-        response =>
-          response
-            .json()
-            .then((updatedTree: DocRefTree) => docRefCreated(updatedTree)),
-        {
-          body: JSON.stringify({
-            docRefType,
-            docRefName,
-            destinationFolderRef: stripDocRef(destinationFolderRef),
-            permissionInheritance
-          })
-        }
-      );
+      httpPostJsonResponse(url, {
+        body: JSON.stringify({
+          docRefType,
+          docRefName,
+          destinationFolderRef: stripDocRef(destinationFolderRef),
+          permissionInheritance
+        })
+      }).then(docRefCreated);
     },
-    [httpPost, docRefCreated]
+    [httpPostJsonResponse, docRefCreated]
   );
 
   const renameDocument = useCallback(
@@ -168,23 +136,16 @@ export const useApi = (): Api => {
         state.config.values.stroomBaseServiceUrl
       }/explorer/v1/rename`;
 
-      httpPut(
-        url,
-        response =>
-          response
-            .json()
-            .then((resultDocRef: DocRefType) =>
-              docRefRenamed(docRef, name, resultDocRef)
-            ),
-        {
-          body: JSON.stringify({
-            docRef: stripDocRef(docRef),
-            name
-          })
-        }
+      httpPutJsonResponse(url, {
+        body: JSON.stringify({
+          docRef: stripDocRef(docRef),
+          name
+        })
+      }).then((resultDocRef: DocRefType) =>
+        docRefRenamed(docRef, name, resultDocRef)
       );
     },
-    [httpPut, docRefRenamed]
+    [httpPutJsonResponse, docRefRenamed]
   );
   const copyDocuments = useCallback(
     (
@@ -202,24 +163,17 @@ export const useApi = (): Api => {
       const docRefs = findByUuids(documentTree, uuids);
       const destination = findItem(documentTree, destinationUuid)!;
 
-      httpPost(
-        url,
-        response =>
-          response
-            .json()
-            .then((updatedTree: DocRefTree) =>
-              docRefsCopied(docRefs, destination.node, updatedTree)
-            ),
-        {
-          body: JSON.stringify({
-            docRefs: docRefs.map(stripDocRef),
-            destinationFolderRef: stripDocRef(destination.node),
-            permissionInheritance
-          })
-        }
+      httpPostJsonResponse(url, {
+        body: JSON.stringify({
+          docRefs: docRefs.map(stripDocRef),
+          destinationFolderRef: stripDocRef(destination.node),
+          permissionInheritance
+        })
+      }).then((updatedTree: DocRefTree) =>
+        docRefsCopied(docRefs, destination.node, updatedTree)
       );
     },
-    [httpPost, docRefsCopied]
+    [httpPostJsonResponse, docRefsCopied]
   );
 
   const moveDocuments = useCallback(
@@ -237,24 +191,17 @@ export const useApi = (): Api => {
       }/explorer/v1/move`;
       const docRefs = findByUuids(documentTree, uuids);
       const destination = findItem(documentTree, destinationUuid)!;
-      httpPut(
-        url,
-        response =>
-          response
-            .json()
-            .then((updatedTree: DocRefTree) =>
-              docRefsMoved(docRefs, destination.node, updatedTree)
-            ),
-        {
-          body: JSON.stringify({
-            docRefs: docRefs.map(stripDocRef),
-            destinationFolderRef: stripDocRef(destination.node),
-            permissionInheritance
-          })
-        }
+      httpPutJsonResponse(url, {
+        body: JSON.stringify({
+          docRefs: docRefs.map(stripDocRef),
+          destinationFolderRef: stripDocRef(destination.node),
+          permissionInheritance
+        })
+      }).then((updatedTree: DocRefTree) =>
+        docRefsMoved(docRefs, destination.node, updatedTree)
       );
     },
-    [httpPut, docRefsMoved]
+    [httpPutJsonResponse, docRefsMoved]
   );
   const deleteDocuments = useCallback(
     (uuids: Array<string>) => {
@@ -266,20 +213,13 @@ export const useApi = (): Api => {
         state.config.values.stroomBaseServiceUrl
       }/explorer/v1/delete`;
       const docRefs = findByUuids(documentTree, uuids);
-      httpDelete(
-        url,
-        response =>
-          response
-            .json()
-            .then((updatedTree: DocRefTree) =>
-              docRefsDeleted(docRefs, updatedTree)
-            ),
-        {
-          body: JSON.stringify(docRefs.map(stripDocRef))
-        }
+      httpDeleteJsonResponse(url, {
+        body: JSON.stringify(docRefs.map(stripDocRef))
+      }).then((updatedTree: DocRefTree) =>
+        docRefsDeleted(docRefs, updatedTree)
       );
     },
-    [httpDelete, docRefsDeleted]
+    [httpDeleteJsonResponse, docRefsDeleted]
   );
 
   return {

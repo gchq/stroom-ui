@@ -62,7 +62,7 @@ interface Api {
 
 const useApi = (): Api => {
   const store = useContext(StoreContext);
-  const { httpGet } = useHttpClient();
+  const { httpGetJson } = useHttpClient();
   const { updateConfig } = useActionCreators();
 
   if (!store) {
@@ -71,10 +71,8 @@ const useApi = (): Api => {
 
   const fetchConfig = useCallback(() => {
     const url = "/config.json";
-    httpGet(url, response => {
-      response.json().then(updateConfig);
-    });
-  }, [httpGet, updateConfig]);
+    httpGetJson(url).then(updateConfig);
+  }, [httpGetJson, updateConfig]);
 
   return { fetchConfig };
 };

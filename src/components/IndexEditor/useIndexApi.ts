@@ -26,7 +26,7 @@ export interface Api {
 
 export const useApi = (): Api => {
   const store = useContext(StoreContext);
-  const { httpGet, httpPost } = useHttpClient();
+  const { httpGetJson, httpPostEmptyResponse } = useHttpClient();
   const { documentReceived, documentSaved } = useActionCreators();
 
   if (!store) {
@@ -39,21 +39,11 @@ export const useApi = (): Api => {
       const url = `${
         state.config.values.stroomBaseServiceUrl
       }/index/v1/${indexUuid}`;
-      httpGet(
-        url,
-        response =>
-          response
-            .json()
-            .then((index: IndexDoc) => documentReceived(indexUuid, index)),
-        {
-          headers: {
-            Accept: "application/xml",
-            "Content-Type": "application/xml"
-          }
-        }
+      httpGetJson(url).then((index: IndexDoc) =>
+        documentReceived(indexUuid, index)
       );
     },
-    [httpGet, documentReceived]
+    [httpGetJson, documentReceived]
   );
   const saveDocument = useCallback(
     (index: IndexDoc) => {
@@ -62,19 +52,15 @@ export const useApi = (): Api => {
         index.uuid
       }`;
 
-      httpPost(
-        url,
-        response => response.text().then(() => documentSaved(index.uuid)),
-        {
-          body: index.data,
-          headers: {
-            Accept: "application/xml",
-            "Content-Type": "application/xml"
-          }
+      httpPostEmptyResponse(url, {
+        body: index.data,
+        headers: {
+          Accept: "application/xml",
+          "Content-Type": "application/xml"
         }
-      );
+      }).then(() => documentSaved(index.uuid));
     },
-    [httpPost, documentSaved]
+    [httpPostEmptyResponse, documentSaved]
   );
 
   return {

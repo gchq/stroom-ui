@@ -19,7 +19,7 @@ export interface Api {
 
 export const useApi = (): Api => {
   const store = useContext(StoreContext);
-  const { httpGet, httpPatch } = useHttpClient();
+  const { httpGetJson, httpPatchEmptyResponse } = useHttpClient();
   const {
     updatePageSize,
     updateTrackers,
@@ -57,32 +57,25 @@ export const useApi = (): Api => {
         url += `&filter=${state.processing.searchCriteria}`;
       }
 
-      httpGet(
-        url,
-        response => {
-          response.json().then((trackers: StreamTasksResponseType) => {
-            updateTrackers(trackers.streamTasks, trackers.totalStreamTasks);
-            switch (trackerSelection) {
-              case TrackerSelection.first:
-                selectFirst();
-                break;
-              case TrackerSelection.last:
-                selectLast();
-                break;
-              case TrackerSelection.none:
-                selectNone();
-                break;
-              default:
-                break;
-            }
-          });
-        },
-        {},
-        true
-      );
+      httpGetJson(url, {}, true).then((trackers: StreamTasksResponseType) => {
+        updateTrackers(trackers.streamTasks, trackers.totalStreamTasks);
+        switch (trackerSelection) {
+          case TrackerSelection.first:
+            selectFirst();
+            break;
+          case TrackerSelection.last:
+            selectLast();
+            break;
+          case TrackerSelection.none:
+            selectNone();
+            break;
+          default:
+            break;
+        }
+      });
     },
     [
-      httpGet,
+      httpGetJson,
       updatePageSize,
       selectFirst,
       selectNone,
@@ -116,32 +109,25 @@ export const useApi = (): Api => {
         url += `&filter=${state.processing.searchCriteria}`;
       }
 
-      httpGet(
-        url,
-        response => {
-          response.json().then((trackers: StreamTasksResponseType) => {
-            addTrackers(trackers.streamTasks, trackers.totalStreamTasks);
-            switch (trackerSelection) {
-              case TrackerSelection.first:
-                selectFirst();
-                break;
-              case TrackerSelection.last:
-                selectLast();
-                break;
-              case TrackerSelection.none:
-                selectNone();
-                break;
-              default:
-                break;
-            }
-          });
-        },
-        {},
-        true
-      );
+      httpGetJson(url, {}, true).then((trackers: StreamTasksResponseType) => {
+        addTrackers(trackers.streamTasks, trackers.totalStreamTasks);
+        switch (trackerSelection) {
+          case TrackerSelection.first:
+            selectFirst();
+            break;
+          case TrackerSelection.last:
+            selectLast();
+            break;
+          case TrackerSelection.none:
+            selectNone();
+            break;
+          default:
+            break;
+        }
+      });
     },
     [
-      httpGet,
+      httpGetJson,
       updatePageSize,
       changePage,
       addTrackers,
@@ -163,11 +149,11 @@ export const useApi = (): Api => {
         value: !isCurrentlyEnabled
       });
 
-      httpPatch(url, () => updateEnabled(filterId, !isCurrentlyEnabled), {
-        body
-      });
+      httpPatchEmptyResponse(url, { body }).then(() =>
+        updateEnabled(filterId, !isCurrentlyEnabled)
+      );
     },
-    [httpPatch, updateEnabled]
+    [httpPatchEmptyResponse, updateEnabled]
   );
 
   return {

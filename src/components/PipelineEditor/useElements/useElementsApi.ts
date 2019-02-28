@@ -3,10 +3,6 @@ import { StoreContext } from "redux-react-hook";
 
 import { useActionCreators } from "./redux";
 import useHttpClient from "../../../lib/useHttpClient/useHttpClient";
-import {
-  ElementPropertiesByElementIdType,
-  ElementDefinition
-} from "../../../types";
 
 export interface Api {
   fetchElements: () => void;
@@ -15,7 +11,7 @@ export interface Api {
 
 export const useApi = (): Api => {
   const store = useContext(StoreContext);
-  const { httpGet } = useHttpClient();
+  const { httpGetJson } = useHttpClient();
   const { elementsReceived, elementPropertiesReceived } = useActionCreators();
 
   if (!store) {
@@ -27,27 +23,15 @@ export const useApi = (): Api => {
     const url = `${
       state.config.values.stroomBaseServiceUrl
     }/elements/v1/elements`;
-    httpGet(url, response =>
-      response
-        .json()
-        .then((elements: Array<ElementDefinition>) =>
-          elementsReceived(elements)
-        )
-    );
-  }, [httpGet, elementsReceived]);
+    httpGetJson(url).then(elementsReceived);
+  }, [httpGetJson, elementsReceived]);
   const fetchElementProperties = useCallback(() => {
     const state = store.getState();
     const url = `${
       state.config.values.stroomBaseServiceUrl
     }/elements/v1/elementProperties`;
-    httpGet(url, response =>
-      response
-        .json()
-        .then((elementProperties: ElementPropertiesByElementIdType) =>
-          elementPropertiesReceived(elementProperties)
-        )
-    );
-  }, [httpGet, elementPropertiesReceived]);
+    httpGetJson(url).then(elementPropertiesReceived);
+  }, [httpGetJson, elementPropertiesReceived]);
 
   return {
     fetchElementProperties,

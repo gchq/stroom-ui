@@ -30,10 +30,6 @@ import {
 } from "./Authentication";
 
 import {
-  reducer as fetch,
-  StoreState as FetchStoreStore
-} from "../lib/useHttpClient/useHttpClient";
-import {
   reducer as userPermissions,
   StoreState as UserStoreState
 } from "../sections/UserPermissions/redux";
@@ -79,7 +75,6 @@ export interface GlobalStoreState {
   config: ConfigStoreState;
   authentication: AuthenticationStoreState;
   authorisation: AuthorisationStoreState;
-  fetch: FetchStoreStore;
   folderExplorer: FolderExplorerStoreState;
   pipelineEditor: PipelineEditorStoreState;
   debuggers: DebuggersStoreState;
@@ -97,7 +92,6 @@ export default combineReducers({
   config,
   authentication,
   authorisation,
-  fetch,
   folderExplorer,
   pipelineEditor,
   debuggers,
