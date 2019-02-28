@@ -44,8 +44,11 @@ export interface HttpClient {
   clearCache: () => void;
 }
 
-// Cache GET Promises by URL
+// Cache GET Promises by URL -- Effectively static/global to the application
 let cache = {};
+
+// Map of the URL's that have been requested, further requests will be rejected unless they force a refetch
+let urlsRequested = {};
 
 export const useHttpClient = (): HttpClient => {
   const store = useContext(StoreContext);
@@ -66,17 +69,20 @@ export const useHttpClient = (): HttpClient => {
       options: {
         [s: string]: any;
       } = {},
-      forceGet: boolean = true
+      forceGet: boolean = false
     ): Promise<T | void> => {
       const state = store.getState();
       const jwsToken = state.authentication.idToken;
       let needToFetch = true;
 
-      if (!forceGet && !!cache[url]) {
+      // If we aren't forcing a GET, and we already have the URL being requested, we do not need to fetch
+      if (!forceGet && !!urlsRequested[url]) {
         needToFetch = false;
       }
 
       if (needToFetch) {
+        urlsRequested[url] = true;
+
         const p = fetch(url, {
           method: "get",
           mode: "cors",
@@ -102,7 +108,14 @@ export const useHttpClient = (): HttpClient => {
         cache[url] = p;
         return p;
       } else {
-        return cache[url];
+        // Do we have a promise already?
+        if (cache[url]) {
+          return cache[url];
+        } else {
+          // Another process must have requested ,but the response has not made it back.
+          // reject this request and hopefully the caller will not mind
+          return Promise.reject();
+        }
       }
 
       // console.groupEnd();
@@ -194,6 +207,7 @@ export const useHttpClient = (): HttpClient => {
     httpPatchEmptyResponse: wrappedFetchWithBodyAndEmptyResponse("patch"),
     clearCache: () => {
       cache = {};
+      urlsRequested = {};
     }
   };
 };

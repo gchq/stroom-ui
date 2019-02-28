@@ -102,7 +102,7 @@ export type IndexFieldType = "FIELD" | "NUMERIC_FIELD" | "DATE_FIELD" | "ID";
 export const IndexFieldTypeDisplayValues = {
   FIELD: "Text",
   NUMERIC_FIELD: "Number",
-  DATE_FIELD: "Data",
+  DATE_FIELD: "Date",
   ID: "Id"
 };
 

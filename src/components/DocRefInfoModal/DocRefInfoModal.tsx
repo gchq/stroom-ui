@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import * as React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 import useReduxState from "../../lib/useReduxState/useReduxState";
 import Loader from "../Loader";
@@ -170,15 +170,18 @@ export const useDocRefInfoDialog = (): UseDocRefInfoDialog => {
     componentProps: {
       docRef,
       isOpen,
-      onCloseDialog: () => {
+      onCloseDialog: useCallback(() => {
         setIsOpen(false);
         setDocRef(undefined);
-      }
+      }, [setIsOpen, setDocRef])
     },
-    showDialog: (_docRef: DocRefType) => {
-      setIsOpen(true);
-      setDocRef(_docRef);
-    }
+    showDialog: useCallback(
+      (_docRef: DocRefType) => {
+        setIsOpen(true);
+        setDocRef(_docRef);
+      },
+      [setIsOpen, setDocRef]
+    )
   };
 };
 
