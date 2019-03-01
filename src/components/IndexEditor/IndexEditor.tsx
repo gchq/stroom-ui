@@ -28,7 +28,7 @@ import ThemedConfirm, { useDialog as useThemedConfirm } from "../ThemedConfirm";
 import Button from "../Button";
 import IndexFieldEditor, {
   useEditor as useFieldEditor
-} from "./IndexFieldEditor/IndexFieldEditor";
+} from "./IndexFieldEditor";
 
 export interface Props {
   indexUuid: string;
@@ -52,7 +52,7 @@ const IndexEditor = ({ indexUuid }: Props) => {
     document && document.data ? document.data.fields : []
   );
   const {
-    selectableTableProps: { selectedItems }
+    selectableTableProps: { selectedItems, lastSelectedIndex }
   } = componentProps;
 
   const {
@@ -87,13 +87,13 @@ const IndexEditor = ({ indexUuid }: Props) => {
     showEditor: showFieldEditor
   } = useFieldEditor(
     useCallback(
-      (fieldUpdates: Partial<IndexField>) => {
+      (id: number, fieldUpdates: Partial<IndexField>) => {
         if (!!document) {
           let updatedIndex: Partial<IndexDoc> = {
             data: {
               ...document.data,
-              fields: document.data.fields.map(f =>
-                f.fieldName === fieldUpdates.fieldName
+              fields: document.data.fields.map((f, _id) =>
+                _id === id
                   ? {
                       ...f,
                       ...fieldUpdates
@@ -109,8 +109,12 @@ const IndexEditor = ({ indexUuid }: Props) => {
     )
   );
   const onEditClick = useCallback(() => {
-    showFieldEditor(selectedItems[0]);
-  }, [showFieldEditor, selectedItems]);
+    if (lastSelectedIndex !== undefined) {
+      showFieldEditor(lastSelectedIndex, selectedItems[0]);
+    } else {
+      console.error("Could not determine last selected index of field");
+    }
+  }, [showFieldEditor, lastSelectedIndex, selectedItems]);
 
   if (!document) {
     return <Loader message="Loading Index..." />;

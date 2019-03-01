@@ -1,52 +1,46 @@
 import * as React from "react";
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback } from "react";
 
-import { IndexField, IndexFieldType, AnalyzerType } from "../../../types";
+import { IndexField } from "../../../types";
 import ThemedModal from "../../ThemedModal";
 import { DialogActionButtons } from "../../Button";
-import IndexFieldTypePicker from "./IndexFieldTypePicker";
-import AnalyzerPicker from "./AnalyzerPicker";
+import IndexFieldTypePicker from "../IndexFieldTypePicker/IndexFieldTypePicker";
+import AnalyzerPicker from "../AnalyzerPicker";
+import useForm from "../../../lib/useForm";
 
 export interface Props {
+  id: number;
   indexField?: IndexField;
-  onUpdateField: (updates: Partial<IndexField>) => void;
+  onUpdateField: (id: number, updates: Partial<IndexField>) => void;
   onCloseDialog: () => void;
 }
 
 export const IndexFieldEditor = ({
+  id,
   indexField,
   onUpdateField,
   onCloseDialog
 }: Props) => {
-  const [fieldType, setFieldType] = useState<IndexFieldType | undefined>(
-    undefined
+  const { onUpdate, currentValues: indexUpdates } = useForm<IndexField>(
+    indexField
   );
-  const [analyzerType, setAnalyzerType] = useState<AnalyzerType | undefined>(
-    undefined
-  );
-  const [stored, setStored] = useState<boolean>(false);
-  const [termPositions, setTermPositions] = useState<boolean>(false);
-  const [caseSensitive, setCaseSensitive] = useState<boolean>(false);
 
-  useEffect(() => {
-    if (!!indexField) {
-      setFieldType(indexField.fieldType);
-      setAnalyzerType(indexField.analyzerType);
-      setStored(indexField.stored);
-      setTermPositions(indexField.termPositions);
-      setCaseSensitive(indexField.caseSensitive);
-    }
-  }, [indexField]);
+  const {
+    fieldName,
+    fieldType,
+    stored,
+    termPositions,
+    caseSensitive,
+    analyzerType
+  } = indexUpdates;
+
+  const onNameChange: React.ChangeEventHandler<HTMLInputElement> = useCallback(
+    ({ target: { value } }) => onUpdate({ fieldName: value }),
+    [onUpdate]
+  );
 
   const onConfirm = () => {
-    onUpdateField({
-      fieldName: indexField!.fieldName,
-      fieldType,
-      analyzerType,
-      stored,
-      termPositions,
-      caseSensitive
-    });
+    onUpdateField(id, indexUpdates);
     onCloseDialog();
   };
 
@@ -57,27 +51,35 @@ export const IndexFieldEditor = ({
       content={
         <React.Fragment>
           <form>
+            <label>Field Name</label>
+            <input value={fieldName} onChange={onNameChange} />
             <label>Field Type</label>
-            <IndexFieldTypePicker onChange={setFieldType} value={fieldType} />
+            <IndexFieldTypePicker
+              onChange={fieldType => onUpdate({ fieldType })}
+              value={fieldType}
+            />
             <label>Stored</label>
             <input
               type="checkbox"
               checked={stored}
-              onChange={() => setStored(!stored)}
+              onChange={() => onUpdate({ stored: !stored })}
             />
             <label>Positions</label>
             <input
               type="checkbox"
               checked={termPositions}
-              onChange={() => setTermPositions(!termPositions)}
+              onChange={() => onUpdate({ termPositions: !termPositions })}
             />
             <label>Analyzer</label>
-            <AnalyzerPicker onChange={setAnalyzerType} value={analyzerType} />
+            <AnalyzerPicker
+              onChange={analyzerType => onUpdate({ analyzerType })}
+              value={analyzerType}
+            />
             <label>Case Sensitive</label>
             <input
               type="checkbox"
               checked={caseSensitive}
-              onChange={() => setCaseSensitive(!caseSensitive)}
+              onChange={() => onUpdate({ caseSensitive: !caseSensitive })}
             />
           </form>
         </React.Fragment>
@@ -91,25 +93,33 @@ export const IndexFieldEditor = ({
 
 export interface UseIndexFieldEditor {
   componentProps: Props;
-  showEditor: (indexField: IndexField) => void;
+  showEditor: (id: number, indexField: IndexField) => void;
 }
 
 export const useEditor = (
-  onUpdateField: (updates: IndexField) => void
+  onUpdateField: (id: number, updates: IndexField) => void
 ): UseIndexFieldEditor => {
+  const [id, setId] = useState<number>(0);
   const [indexField, setIndexField] = useState<IndexField | undefined>(
     undefined
   );
 
   return {
     componentProps: {
+      id,
       indexField,
       onUpdateField,
       onCloseDialog: useCallback(() => setIndexField(undefined), [
         setIndexField
       ])
     },
-    showEditor: useCallback(setIndexField, [setIndexField])
+    showEditor: useCallback(
+      (_id, _indexField) => {
+        setId(_id);
+        setIndexField(_indexField);
+      },
+      [setId, setIndexField]
+    )
   };
 };
 

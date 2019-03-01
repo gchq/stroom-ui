@@ -42,7 +42,9 @@ export function useSelectableItemListing<TItem>({
   const [focussedItem, setFocussedItem] = useState<TItem | undefined>(
     undefined
   );
-  const [lastSelectedIndex, setLastSelectedIndex] = useState<number>(-1);
+  const [lastSelectedIndex, setLastSelectedIndex] = useState<
+    number | undefined
+  >(-1);
   const [selectedItems, setSelectedItems] = useState<Array<TItem>>([]);
   const [selectedItemIndexes, setSelectedItemIndexes] = useState<Set<number>>(
     new Set()
@@ -81,7 +83,7 @@ export function useSelectableItemListing<TItem>({
         } else if (keyIsDown.Shift) {
           newSelectedItemIndexes = new Set();
 
-          if (lastSelectedIndex < 0) {
+          if (lastSelectedIndex === undefined) {
             newSelectedItemIndexes.add(indexToUse);
           } else if (indexToUse < lastSelectedIndex) {
             for (let i = indexToUse; i <= lastSelectedIndex; i++) {
