@@ -1,14 +1,15 @@
 import * as React from "react";
-import { useState, useEffect, useCallback } from "react";
+import { useEffect, useCallback } from "react";
 
 import { Formik, Field, Form } from "formik";
 
 import useReduxState from "../../lib/useReduxState/useReduxState";
 import useApi from "./useUserPermissionsApi";
 import { GlobalStoreState } from "../../startup/reducers";
-import { User } from "../../types";
 import IconHeader from "../../components/IconHeader";
-import UsersTable from "./UsersTable";
+import UsersTable, {
+  useTable
+} from "../../components/UserPermissionEditor/UsersTable";
 import Button from "../../components/Button";
 import NewUserDialog, { useDialog as useNewUserDialog } from "./NewUserDialog";
 import ThemedConfirm, {
@@ -28,21 +29,21 @@ interface Values {
 
 const UserPermissions = () => {
   const { history } = useRouter();
-  const api = useApi();
-  const [selectedUser, setSelectedUser] = useState<User | undefined>(undefined);
+  const { findUsers, deleteUser } = useApi();
 
   // Get data from and subscribe to the store
   const users = useReduxState(
     ({ userPermissions: { users } }: GlobalStoreState) => users[LISTING_ID]
   );
 
-  const onSelection = (selectedUuid: string) => {
-    setSelectedUser(users.find((u: User) => u.uuid === selectedUuid));
-  };
-
   useEffect(() => {
-    api.findUsers(LISTING_ID);
+    findUsers(LISTING_ID);
   }, []);
+
+  const { componentProps: tableProps } = useTable(users);
+  const {
+    selectableTableProps: { selectedItems }
+  } = tableProps;
 
   const {
     componentProps: newDialogComponentProps,
@@ -53,13 +54,12 @@ const UserPermissions = () => {
     showDialog: showDeleteDialog
   } = useThemedConfim({
     getQuestion: useCallback(() => `Are you sure you want to delete user`, []),
-    getDetails: useCallback(
-      () => (selectedUser ? selectedUser.name : "no user"),
-      [selectedUser]
-    ),
+    getDetails: useCallback(() => selectedItems.map(v => v.name).join(", "), [
+      selectedItems.map(v => v.uuid)
+    ]),
     onConfirm: useCallback(() => {
-      api.deleteUser(selectedUser!.uuid);
-    }, [selectedUser])
+      selectedItems.forEach(v => deleteUser(v.uuid));
+    }, [selectedItems.map(v => v.uuid)])
   });
 
   return (
@@ -72,7 +72,7 @@ const UserPermissions = () => {
         }}
         onSubmit={() => {}}
         validate={({ name, isGroup, uuid }: Values) =>
-          api.findUsers(LISTING_ID, name, isGroup, uuid)
+          findUsers(LISTING_ID, name, isGroup, uuid)
         }
       >
         <Form>
@@ -92,19 +92,19 @@ const UserPermissions = () => {
         <Button text="Create" onClick={showNewDialog} />
         <Button
           text="View/Edit"
-          disabled={!selectedUser}
+          disabled={selectedItems.length !== 1}
           onClick={() =>
-            history.push(`/s/userPermissions/${selectedUser!.uuid}`)
+            history.push(`/s/userPermissions/${selectedItems[0].uuid}`)
           }
         />
         <Button
           text="Delete"
-          disabled={!selectedUser}
+          disabled={selectedItems.length === 0}
           onClick={showDeleteDialog}
         />
 
         <ThemedConfirm {...deleteDialogProps} />
-        <UsersTable {...{ users, onSelection, selectedUser }} />
+        <UsersTable {...tableProps} />
       </div>
 
       <NewUserDialog {...newDialogComponentProps} />

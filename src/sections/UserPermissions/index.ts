@@ -15,9 +15,8 @@
  */
 
 import UserPermissions from "./UserPermissions";
-import UserTable from "./UsersTable";
 import { useActionCreators, reducer, StoreState } from "./redux";
 
-export { UserPermissions, UserTable, useActionCreators, reducer, StoreState };
+export { UserPermissions, useActionCreators, reducer, StoreState };
 
 export default UserPermissions;

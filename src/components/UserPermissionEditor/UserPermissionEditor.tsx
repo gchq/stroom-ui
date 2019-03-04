@@ -18,9 +18,9 @@ export interface Props {
 
 const UserPermissionEditor = ({ listingId, userUuid }: Props) => {
   const { history } = useRouter();
-  const api = useApi();
+  const { findUsers } = useApi();
   useEffect(() => {
-    api.findUsers(listingId, undefined, undefined, userUuid);
+    findUsers(listingId, undefined, undefined, userUuid);
   }, []);
 
   const user = useReduxState(

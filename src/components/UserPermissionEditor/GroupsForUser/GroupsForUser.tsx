@@ -6,16 +6,17 @@ import { User } from "../../../types";
 import useApi from "../../../sections/UserPermissions/useUserPermissionsApi";
 import useReduxState from "../../../lib/useReduxState";
 import Loader from "../../../components/Loader";
+import UsersTable, { useTable as useUsersTable } from "../UsersTable";
 
 export interface Props {
   user: User;
 }
 
 const GroupsForUser = ({ user }: Props) => {
-  const api = useApi();
+  const { findGroupsForUser } = useApi();
   useEffect(() => {
     if (user) {
-      api.findGroupsForUser(user.uuid);
+      findGroupsForUser(user.uuid);
     }
   }, [!!user ? user.uuid : null]);
 
@@ -24,17 +25,15 @@ const GroupsForUser = ({ user }: Props) => {
   );
   const groups = groupsForUser[user.uuid];
 
+  const { componentProps: tableProps } = useUsersTable(groups);
+
   if (!groups) {
     return <Loader message={`Loading Groups for User ${user.uuid}`} />;
   }
 
   return (
     <div>
-      <ul>
-        {groups.map(g => (
-          <li key={g.uuid}>{g.name}</li>
-        ))}
-      </ul>
+      <UsersTable {...tableProps} />
     </div>
   );
 };
