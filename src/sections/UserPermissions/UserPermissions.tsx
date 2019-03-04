@@ -25,7 +25,7 @@ export interface Props {}
 
 interface Values {
   name: string;
-  isGroup?: boolean;
+  isGroup?: "User" | "Group";
   uuid: string;
 }
 
@@ -85,8 +85,8 @@ const UserPermissions = () => {
           <label htmlFor="isGroup">Is Group</label>
           <Field name="isGroup" component="select" placeholder="Group">
             <option value="">N/A</option>
-            <option value="true">Group</option>
-            <option value="false">User</option>
+            <option value="Group">Group</option>
+            <option value="User">User</option>
           </Field>
         </Form>
       </Formik>

@@ -25,26 +25,35 @@ export const IndexFieldEditor = ({
     onUpdate,
     currentValues: indexUpdates,
     inputProps: {
-      text: { fieldName: fieldNameProps }
+      text: {
+        fieldName: fieldNameProps,
+        stored: storedProps,
+        caseSensitive: caseSensitiveProps,
+        termPositions: termPositionsProps
+      }
     }
   } = useForm<IndexField>({
     initialValues: indexField,
-    inputs: { text: ["fieldName"] }
+    inputs: {
+      text: ["fieldName"],
+      checkbox: ["stored", "caseSensitive", "termPositions"]
+    }
   });
 
-  const {
-    fieldType,
-    stored,
-    termPositions,
-    caseSensitive,
-    analyzerType
-  } = indexUpdates;
+  const { fieldType, analyzerType } = indexUpdates;
 
   const onConfirm = () => {
     onUpdateField(id, indexUpdates);
     onCloseDialog();
   };
 
+  const onFieldTypeChange = useCallback(fieldType => onUpdate({ fieldType }), [
+    onUpdate
+  ]);
+  const onAnalyzerChange = useCallback(
+    analyzerType => onUpdate({ analyzerType }),
+    [onUpdate]
+  );
   return !!indexField ? (
     <ThemedModal
       isOpen={!!indexField}
@@ -56,32 +65,17 @@ export const IndexFieldEditor = ({
             <input {...fieldNameProps} />
             <label>Field Type</label>
             <IndexFieldTypePicker
-              onChange={fieldType => onUpdate({ fieldType })}
+              onChange={onFieldTypeChange}
               value={fieldType}
             />
             <label>Stored</label>
-            <input
-              type="checkbox"
-              checked={stored}
-              onChange={() => onUpdate({ stored: !stored })}
-            />
+            <input {...storedProps} />
             <label>Positions</label>
-            <input
-              type="checkbox"
-              checked={termPositions}
-              onChange={() => onUpdate({ termPositions: !termPositions })}
-            />
+            <input {...termPositionsProps} />
             <label>Analyzer</label>
-            <AnalyzerPicker
-              onChange={analyzerType => onUpdate({ analyzerType })}
-              value={analyzerType}
-            />
+            <AnalyzerPicker onChange={onAnalyzerChange} value={analyzerType} />
             <label>Case Sensitive</label>
-            <input
-              type="checkbox"
-              checked={caseSensitive}
-              onChange={() => onUpdate({ caseSensitive: !caseSensitive })}
-            />
+            <input {...caseSensitiveProps} />
           </form>
         </React.Fragment>
       }

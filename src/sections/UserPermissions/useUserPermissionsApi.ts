@@ -9,7 +9,7 @@ interface Api {
   findUsers: (
     listId: string,
     name?: string,
-    isGroup?: Boolean,
+    isGroup?: "User" | "Group",
     uuid?: string
   ) => void;
   findUsersInGroup: (groupUuid: string) => void;
@@ -43,13 +43,27 @@ const useApi = (): Api => {
   }
 
   const findUsers = useCallback(
-    (listId: string, name?: string, isGroup?: Boolean, uuid?: string) => {
+    (
+      listId: string,
+      name?: string,
+      isGroup?: "Group" | "User",
+      uuid?: string
+    ) => {
       const state = store.getState();
       var url = new URL(`${state.config.values.stroomBaseServiceUrl}/users/v1`);
       if (name !== undefined && name.length > 0)
         url.searchParams.append("name", name);
-      if (isGroup !== undefined)
-        url.searchParams.append("isGroup", isGroup.toString());
+      if (isGroup !== undefined) {
+        switch (isGroup) {
+          case "Group":
+            url.searchParams.append("isGroup", "true");
+            break;
+          case "User":
+            url.searchParams.append("isGroup", "false");
+            break;
+        }
+      }
+
       if (uuid !== undefined && uuid.length > 0)
         url.searchParams.append("uuid", uuid);
 

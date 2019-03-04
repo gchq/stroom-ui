@@ -1,16 +1,16 @@
 import { useCallback, useEffect, useState } from "react";
 
 interface InputProps {
-  onChange: React.ChangeEventHandler<HTMLInputElement>;
+  onChange: React.ChangeEventHandler<HTMLElement>;
   value: string;
 }
-type InputPropsByType<T> = {
-  text: InputPropsMap<T>;
-  checkbox: InputPropsMap<T>;
+type InputPropsMapByName<T> = { [s in keyof T]?: InputProps };
+type InputPropsByNameByType<T> = {
+  text: InputPropsMapByName<T>;
+  checkbox: InputPropsMapByName<T>;
 };
 
-type InputPropsMap<T> = { [s in keyof T]?: InputProps };
-type InputPropsMapByType<T> = {
+type InputNameListsByType<T> = {
   text?: Array<keyof T>;
   checkbox?: Array<keyof T>;
 };
@@ -18,12 +18,17 @@ type InputPropsMapByType<T> = {
 export interface Form<T> {
   onUpdate: (updates: Partial<T>) => void;
   currentValues: Partial<T>;
-  inputProps: InputPropsByType<T>;
+  inputProps: InputPropsByNameByType<T>;
 }
 
+/**
+ * The form can be given lists of field names for text and checkbox based HTML input elements.
+ * It will then generate onChange/value pairs for those fields which can be destructed from
+ * the response to useForm.
+ */
 export interface UseForm<T> {
   initialValues?: T;
-  inputs?: InputPropsMapByType<T>;
+  inputs?: InputNameListsByType<T>;
 }
 
 const defaultInputs = { text: [], checkbox: [] };
@@ -49,7 +54,7 @@ export const useForm = function<T>({
 
   const { text: textInputs = [], checkbox: checkboxInputs = [] } = inputs;
 
-  let inputProps: InputPropsByType<T> = {
+  let inputProps: InputPropsByNameByType<T> = {
     text: textInputs.reduce(
       (acc, key) => ({
         ...acc,

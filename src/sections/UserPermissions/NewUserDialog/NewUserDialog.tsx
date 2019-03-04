@@ -26,7 +26,7 @@ const NewUserDialog = ({ isOpen, onCreateUser, onCloseDialog }: Props) => {
   const {
     currentValues: { name, isGroup },
     inputProps: {
-      text: { name: nameInputProps },
+      text: { name: nameProps },
       checkbox: { isGroup: isGroupProps }
     }
   } = useForm<FormValues>({
@@ -49,7 +49,7 @@ const NewUserDialog = ({ isOpen, onCreateUser, onCloseDialog }: Props) => {
         <form>
           <div>
             <label>Name</label>
-            <input {...nameInputProps} />
+            <input {...nameProps} />
             <label>Is Group</label>
             <input {...isGroupProps} />
           </div>
