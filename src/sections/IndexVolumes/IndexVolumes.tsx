@@ -26,7 +26,12 @@ const IndexVolumes = () => {
   const indexVolumes = useReduxState(
     ({ indexVolumes: { indexVolumes } }) => indexVolumes
   );
-  const { getIndexVolumes, deleteIndexVolume, addVolumeToGroup } = useApi();
+  const {
+    getIndexVolumes,
+    deleteIndexVolume,
+    addVolumeToGroup,
+    createIndexVolume
+  } = useApi();
   const { componentProps: tableProps } = useTable(indexVolumes);
   const {
     selectableTableProps: { selectedItems }
@@ -37,7 +42,7 @@ const IndexVolumes = () => {
   const {
     showDialog: showCreateNewDialog,
     componentProps: createNewDialogProps
-  } = useCreateNewIndexVolumeDialog();
+  } = useCreateNewIndexVolumeDialog(createIndexVolume);
 
   const {
     showDialog: showDeleteDialog,

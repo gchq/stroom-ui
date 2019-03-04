@@ -18,7 +18,7 @@ const DocRefTypeOption = ({
 
 export interface Props {
   onChange: (docRefType: string) => any;
-  value: string;
+  value?: string;
 }
 
 let DocRefTypePicker = ({ ...rest }: Props) => {

@@ -41,7 +41,7 @@ const PipelineDebugger = ({ pipelineId, debuggerId }: Props) => {
   const pipelineStateProps = usePipelineState(pipelineId);
   const {
     pipelineEditApi: { selectedElementId, elementSelected },
-    useEditorProps: { document: pipeline },
+    useEditorProps: { docRefContents: pipeline },
     asTree
   } = pipelineStateProps;
 

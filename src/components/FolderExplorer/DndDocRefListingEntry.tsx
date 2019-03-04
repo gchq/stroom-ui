@@ -24,8 +24,8 @@ import { KeyDownState } from "../../lib/useKeyIsDown/useKeyIsDown";
 
 export interface Props extends DocRefListingEntryProps {
   keyIsDown: KeyDownState;
-  showCopyDialog: (docRefUuids: Array<string>, destinationUuid: string) => void;
-  showMoveDialog: (docRefUuids: Array<string>, destinationUuid: string) => void;
+  showCopyDialog: (docRefUuids: Array<string>, destination: DocRefType) => void;
+  showMoveDialog: (docRefUuids: Array<string>, destination: DocRefType) => void;
 }
 
 export interface DndProps extends Props {}

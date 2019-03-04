@@ -7,7 +7,7 @@ import IndexVolumeGroupsTable, { useTable } from "./IndexVolumeGroupsTable";
 import Button from "../../components/Button";
 import NewIndexVolumeGroupDialog, {
   useDialog as useNewDialog
-} from "./NewIndexVolumeGroupDialog";
+} from "./NewIndexVolumeGroupDialog/NewIndexVolumeGroupDialog";
 import ThemedConfirm, {
   useDialog as useConfirmDialog
 } from "../../components/ThemedConfirm";
@@ -20,20 +20,24 @@ const IndexVolumeGroups = () => {
   const { history } = useRouter();
 
   const groups = useReduxState(({ indexVolumeGroups: { groups } }) => groups);
-  const api = useApi();
+  const {
+    createIndexVolumeGroup,
+    deleteIndexVolumeGroup,
+    getIndexVolumeGroups
+  } = useApi();
   const { componentProps: tableProps } = useTable(groups);
   const {
     selectableTableProps: { selectedItems }
   } = tableProps;
 
   useEffect(() => {
-    api.getIndexVolumeGroups();
-  }, []);
+    getIndexVolumeGroups();
+  }, [getIndexVolumeGroups]);
 
   const {
     showDialog: showNewDialog,
     componentProps: newDialogComponentProps
-  } = useNewDialog();
+  } = useNewDialog(createIndexVolumeGroup);
 
   const {
     showDialog: showDeleteDialog,
@@ -47,8 +51,8 @@ const IndexVolumeGroups = () => {
       selectedItems.map(v => v.name)
     ]),
     onConfirm: useCallback(() => {
-      selectedItems.forEach(g => api.deleteIndexVolumeGroup(g.name));
-    }, [selectedItems.map(v => v.name)])
+      selectedItems.forEach(g => deleteIndexVolumeGroup(g.name));
+    }, [deleteIndexVolumeGroup, selectedItems.map(v => v.name)])
   });
 
   return (

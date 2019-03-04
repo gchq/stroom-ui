@@ -14,66 +14,75 @@
  * limitations under the License.
  */
 import * as React from "react";
-import { useState } from "react";
-
-import { Formik, Field } from "formik";
+import { useState, useMemo, useCallback } from "react";
 
 import DialogActionButtons from "../Button/DialogActionButtons";
 import IconHeader from "../IconHeader";
-import useExplorerApi from "./useExplorerApi";
 import ThemedModal from "../ThemedModal";
-import { required, minLength2 } from "../../lib/reduxUtils";
+// import { required, minLength2 } from "../../lib/reduxUtils";
 import { DocRefType } from "../../types";
+import useForm from "../../lib/useForm";
 
 export interface Props {
   isOpen: boolean;
   docRef?: DocRefType;
+  onConfirm: (docRef: DocRefType, newName: string) => void;
   onCloseDialog: () => void;
 }
 
 interface FormValues {
-  docRefName: string;
+  docRefName?: string;
 }
 
-let RenameDocRefDialog = ({ isOpen, docRef, onCloseDialog }: Props) => {
-  const explorerApi = useExplorerApi();
+let RenameDocRefDialog = ({
+  isOpen,
+  docRef,
+  onConfirm,
+  onCloseDialog
+}: Props) => {
+  const initialValues = useMemo(
+    () => ({
+      docRefName: !!docRef ? docRef.name : "no document"
+    }),
+    [docRef]
+  );
+
+  const {
+    currentValues: { docRefName },
+    inputProps: {
+      text: { docRefName: docRefNameProps }
+    }
+  } = useForm<FormValues>({
+    initialValues,
+    inputs: {
+      text: ["docRefName"]
+    }
+  });
+
+  const onConfirmLocal = useCallback(() => {
+    if (!!docRef && !!docRefName) {
+      onConfirm(docRef, docRefName);
+      onCloseDialog();
+    }
+  }, [onConfirm, onCloseDialog, docRef, docRefName]);
 
   return (
-    <Formik<FormValues>
-      initialValues={{
-        docRefName: !!docRef && !!docRef.name ? docRef.name : ""
-      }}
-      onSubmit={values => {
-        if (!!docRef) {
-          explorerApi.renameDocument(docRef, values.docRefName);
-        }
-        onCloseDialog();
-      }}
-    >
-      {({ submitForm }) => (
-        <ThemedModal
-          isOpen={isOpen}
-          header={<IconHeader icon="edit" text="Enter New Name for Doc Ref" />}
-          content={
-            <form>
-              <label>Type</label>
-              <Field
-                name="docRefName"
-                type="text"
-                placeholder="Name"
-                validate={[required, minLength2]}
-              />
-            </form>
-          }
-          actions={
-            <DialogActionButtons
-              onCancel={onCloseDialog}
-              onConfirm={submitForm}
-            />
-          }
+    <ThemedModal
+      isOpen={isOpen}
+      header={<IconHeader icon="edit" text="Enter New Name for Doc Ref" />}
+      content={
+        <form>
+          <label>Type</label>
+          <input {...docRefNameProps} />
+        </form>
+      }
+      actions={
+        <DialogActionButtons
+          onCancel={onCloseDialog}
+          onConfirm={onConfirmLocal}
         />
-      )}
-    </Formik>
+      }
+    />
   );
 };
 
@@ -97,7 +106,9 @@ export type UseDialog = {
 /**
  * This is a React custom hook that sets up things required by the owning component.
  */
-export const useDialog = (): UseDialog => {
+export const useDialog = (
+  onConfirm: (docRef: DocRefType, newName: string) => void
+): UseDialog => {
   const [docRef, setDocRef] = useState<DocRefType | undefined>(undefined);
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
@@ -105,6 +116,7 @@ export const useDialog = (): UseDialog => {
     componentProps: {
       docRef,
       isOpen,
+      onConfirm,
       onCloseDialog: () => {
         setIsOpen(false);
         setDocRef(undefined);

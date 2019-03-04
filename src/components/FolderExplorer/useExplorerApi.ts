@@ -3,7 +3,7 @@ import { StoreContext } from "redux-react-hook";
 
 import { useActionCreators as useFolderExplorerActionCreators } from "./redux";
 import useHttpClient from "../../lib/useHttpClient/useHttpClient";
-import { findByUuids, findItem } from "../../lib/treeUtils";
+import { findByUuids } from "../../lib/treeUtils";
 import { DocRefType, DocRefTree } from "../../types";
 
 const stripDocRef = (docRef: DocRefType) => ({
@@ -33,12 +33,12 @@ export interface Api {
   renameDocument: (docRef: DocRefType, name: string) => void;
   copyDocuments: (
     uuids: Array<string>,
-    destinationUuid: string,
+    destination: DocRefType,
     permissionInheritance: string
   ) => void;
   moveDocuments: (
     uuids: Array<string>,
-    destinationUuid: string,
+    destination: DocRefType,
     permissionInheritance: string
   ) => void;
   deleteDocuments: (uuids: Array<string>) => void;
@@ -150,7 +150,7 @@ export const useApi = (): Api => {
   const copyDocuments = useCallback(
     (
       uuids: Array<string>,
-      destinationUuid: string,
+      destination: DocRefType,
       permissionInheritance: string
     ) => {
       const state = store.getState();
@@ -161,16 +161,15 @@ export const useApi = (): Api => {
         state.config.values.stroomBaseServiceUrl
       }/explorer/v1/copy`;
       const docRefs = findByUuids(documentTree, uuids);
-      const destination = findItem(documentTree, destinationUuid)!;
 
       httpPostJsonResponse(url, {
         body: JSON.stringify({
           docRefs: docRefs.map(stripDocRef),
-          destinationFolderRef: stripDocRef(destination.node),
+          destinationFolderRef: stripDocRef(destination),
           permissionInheritance
         })
       }).then((updatedTree: DocRefTree) =>
-        docRefsCopied(docRefs, destination.node, updatedTree)
+        docRefsCopied(docRefs, destination, updatedTree)
       );
     },
     [httpPostJsonResponse, docRefsCopied]
@@ -179,7 +178,7 @@ export const useApi = (): Api => {
   const moveDocuments = useCallback(
     (
       uuids: Array<string>,
-      destinationUuid: string,
+      destination: DocRefType,
       permissionInheritance: string
     ) => {
       const state = store.getState();
@@ -190,15 +189,14 @@ export const useApi = (): Api => {
         state.config.values.stroomBaseServiceUrl
       }/explorer/v1/move`;
       const docRefs = findByUuids(documentTree, uuids);
-      const destination = findItem(documentTree, destinationUuid)!;
       httpPutJsonResponse(url, {
         body: JSON.stringify({
           docRefs: docRefs.map(stripDocRef),
-          destinationFolderRef: stripDocRef(destination.node),
+          destinationFolderRef: stripDocRef(destination),
           permissionInheritance
         })
       }).then((updatedTree: DocRefTree) =>
-        docRefsMoved(docRefs, destination.node, updatedTree)
+        docRefsMoved(docRefs, destination, updatedTree)
       );
     },
     [httpPutJsonResponse, docRefsMoved]

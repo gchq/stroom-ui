@@ -5,11 +5,13 @@ import { useActionCreators } from "./redux";
 import useHttpClient from "../../lib/useHttpClient/useHttpClient";
 import { User } from "../../types";
 
+export type IsGroup = "User" | "Group" | "" | undefined;
+
 interface Api {
   findUsers: (
     listId: string,
     name?: string,
-    isGroup?: "User" | "Group",
+    isGroup?: IsGroup,
     uuid?: string
   ) => void;
   findUsersInGroup: (groupUuid: string) => void;

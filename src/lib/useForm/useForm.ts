@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
+import { ControlledInput } from "../../types";
 
 interface InputProps {
   onChange: React.ChangeEventHandler<HTMLElement>;
@@ -18,6 +19,9 @@ type InputNameListsByType<T> = {
 export interface Form<T> {
   onUpdate: (updates: Partial<T>) => void;
   currentValues: Partial<T>;
+  generateControlledInputProps: <FIELD_TYPE>(
+    s: keyof T
+  ) => ControlledInput<FIELD_TYPE>;
   inputProps: InputPropsByNameByType<T>;
 }
 
@@ -29,16 +33,20 @@ export interface Form<T> {
 export interface UseForm<T> {
   initialValues?: T;
   inputs?: InputNameListsByType<T>;
+  onValidate?: (updates: Partial<T>) => void;
 }
 
 const defaultInputs = { text: [], checkbox: [] };
+const defaultOnValidate = () => {};
 
 export const useForm = function<T>({
   initialValues,
-  inputs = defaultInputs
+  inputs = defaultInputs,
+  onValidate = defaultOnValidate
 }: UseForm<T>): Form<T> {
   const [currentValues, setCurrentValues] = useState<Partial<T>>({});
 
+  // Memo-ized function to combine updates with existing state
   const onUpdate = useCallback(
     (newUpdates: Partial<T>) => {
       setCurrentValues({ ...currentValues, ...newUpdates });
@@ -46,11 +54,17 @@ export const useForm = function<T>({
     [currentValues, setCurrentValues]
   );
 
+  // Set the current values to the initial values, whenever those change
   useEffect(() => {
     if (!!initialValues) {
       setCurrentValues(initialValues);
     }
   }, [initialValues]);
+
+  // Call out to the validation function when the values change
+  useEffect(() => {
+    onValidate(currentValues);
+  }, [currentValues]);
 
   const { text: textInputs = [], checkbox: checkboxInputs = [] } = inputs;
 
@@ -86,10 +100,18 @@ export const useForm = function<T>({
     )
   };
 
+  const generateControlledInputProps = <FIELD_TYPE>(
+    s: keyof T
+  ): ControlledInput<FIELD_TYPE> => ({
+    value: (currentValues[s] as unknown) as FIELD_TYPE,
+    onChange: useCallback(v => onUpdate({ [s]: v } as T), [onUpdate])
+  });
+
   return {
     onUpdate,
     currentValues,
-    inputProps
+    inputProps,
+    generateControlledInputProps
   };
 };
 

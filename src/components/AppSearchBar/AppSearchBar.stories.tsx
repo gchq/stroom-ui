@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import * as React from "react";
-import { useState, useCallback } from "react";
+import { useState } from "react";
 
 import { storiesOf } from "@storybook/react";
 
@@ -25,6 +25,7 @@ import AppSearchBar from "./AppSearchBar";
 import "../../styles/main.css";
 import { DocRefType } from "../../types";
 import useForm from "../../lib/useForm";
+import FormDebug from "../../lib/useForm/FormDebug";
 
 interface Props {
   typeFilters?: Array<string>;
@@ -41,8 +42,8 @@ const defaultValues: FormValues = {
 
 let AppSearchAsForm = ({ typeFilters }: Props) => {
   const {
-    onUpdate,
-    currentValues: { someName, chosenDocRef },
+    currentValues,
+    generateControlledInputProps,
     inputProps: {
       text: { someName: someNameProps }
     }
@@ -51,9 +52,8 @@ let AppSearchAsForm = ({ typeFilters }: Props) => {
     inputs: { text: ["someName"] }
   });
 
-  const onChosenDocRefChange = useCallback(
-    (chosenDocRef: DocRefType) => onUpdate({ chosenDocRef }),
-    [onUpdate]
+  const chosenDocRefProps = generateControlledInputProps<DocRefType>(
+    "chosenDocRef"
   );
 
   return (
@@ -64,20 +64,10 @@ let AppSearchAsForm = ({ typeFilters }: Props) => {
       </div>
       <div>
         <label>Chosen Doc Ref</label>
-        <AppSearchBar
-          typeFilters={typeFilters}
-          onChange={onChosenDocRefChange}
-          value={chosenDocRef}
-        />
+        <AppSearchBar typeFilters={typeFilters} {...chosenDocRefProps} />
       </div>
-      <div>
-        <fieldset>
-          <label>Name</label>
-          <div>{someName}</div>
-          <label>Chosen Doc Ref</label>
-          <div>{JSON.stringify(chosenDocRef, null, 2)}</div>
-        </fieldset>
-      </div>
+
+      <FormDebug currentValues={currentValues} />
     </form>
   );
 };

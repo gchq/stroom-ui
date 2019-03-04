@@ -33,12 +33,14 @@ const XsltEditor = ({ xsltUuid }: Props) => {
     api.fetchDocument(xsltUuid);
   });
 
-  const { document, onDocumentChange, editorProps } = useDocRefEditor<XsltDoc>({
+  const { docRefContents, onDocumentChange, editorProps } = useDocRefEditor<
+    XsltDoc
+  >({
     docRefUuid: xsltUuid,
     saveDocument: api.saveDocument
   });
 
-  if (!document) {
+  if (!docRefContents) {
     return <Loader message="Loading XSLT..." />;
   }
 
@@ -48,9 +50,9 @@ const XsltEditor = ({ xsltUuid }: Props) => {
         style={{ width: "100%", height: "100%", minHeight: "25rem" }}
         name={`${xsltUuid}-ace-editor`}
         mode="xml"
-        value={document.data}
+        value={docRefContents.data}
         onChange={newValue => {
-          if (newValue !== document.data) {
+          if (newValue !== docRefContents.data) {
             onDocumentChange({ data: newValue });
           }
         }}

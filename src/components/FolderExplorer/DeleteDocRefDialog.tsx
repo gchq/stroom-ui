@@ -14,25 +14,31 @@
  * limitations under the License.
  */
 import * as React from "react";
-import { useState } from "react";
+import { useState, useCallback } from "react";
 
-import useExplorerApi from "./useExplorerApi";
 import ThemedConfirm from "../ThemedConfirm";
 
 export interface Props {
   uuids: Array<string>;
   isOpen: boolean;
+  onConfirm: (uuids: Array<string>) => void;
   onCloseDialog: () => void;
 }
 
-const DeleteDocRefDialog = ({ uuids, isOpen, onCloseDialog }: Props) => {
-  const explorerApi = useExplorerApi();
+const DeleteDocRefDialog = ({
+  uuids,
+  isOpen,
+  onConfirm,
+  onCloseDialog
+}: Props) => {
+  const onConfirmLocal = useCallback(() => {
+    onConfirm(uuids);
+    onCloseDialog();
+  }, [uuids, onConfirm, onCloseDialog]);
+
   return (
     <ThemedConfirm
-      onConfirm={() => {
-        explorerApi.deleteDocuments(uuids);
-        onCloseDialog();
-      }}
+      onConfirm={onConfirmLocal}
       onCloseDialog={onCloseDialog}
       isOpen={isOpen}
       question={`Delete these doc refs? ${JSON.stringify(uuids)}?`}
@@ -60,7 +66,9 @@ export type UseDialog = {
 /**
  * This is a React custom hook that sets up things required by the owning component.
  */
-export const useDialog = (): UseDialog => {
+export const useDialog = (
+  onConfirm: (uuids: Array<string>) => void
+): UseDialog => {
   const [uuidsToDelete, setUuidToDelete] = useState<Array<string>>([]);
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
@@ -68,6 +76,7 @@ export const useDialog = (): UseDialog => {
     componentProps: {
       uuids: uuidsToDelete,
       isOpen,
+      onConfirm,
       onCloseDialog: () => {
         setIsOpen(false);
         setUuidToDelete([]);

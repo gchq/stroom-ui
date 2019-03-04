@@ -8,6 +8,7 @@ import XsltEditor from "../XsltEditor";
 import PathNotFound from "../PathNotFound";
 import { DocRefType } from "../../types";
 import useRecentItems from "../../lib/useRecentItems";
+import IndexEditor from "../IndexEditor";
 
 export interface Props {
   docRef: DocRefType;
@@ -39,7 +40,7 @@ let SwitchedDocRefEditor = ({ docRef }: Props) => {
     case "Feed":
       return <div>Feed Editor</div>;
     case "Index":
-      return <div>Index Editor</div>;
+      return <IndexEditor indexUuid={docRef.uuid} />;
     case "Script":
       return <div>Script Editor</div>;
     case "StatisticStore":

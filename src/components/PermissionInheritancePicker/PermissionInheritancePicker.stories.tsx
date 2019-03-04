@@ -14,39 +14,40 @@
  * limitations under the License.
  */
 import * as React from "react";
-import { Formik, FormikProps } from "formik";
 import { storiesOf } from "@storybook/react";
 
 import PermissionInheritancePicker from "./PermissionInheritancePicker";
 import StroomDecorator from "../../lib/storybook/StroomDecorator";
 import { addThemedStories } from "../../lib/themedStoryGenerator";
 import "../../styles/main.css";
+import useForm from "../../lib/useForm";
+import { PermissionInheritance } from "src/types";
+import FormDebug from "../../lib/useForm/FormDebug";
 
-interface PermissionInheritanceForm {
-  permissionInheritance?: string;
+interface FormValues {
+  permissionInheritance?: PermissionInheritance;
 }
+const initialValues: FormValues = {};
 
-const TestForm = () => (
-  <Formik
-    initialValues={{ permissionInheritance: undefined, color: undefined }}
-    onSubmit={() => console.log("Do nothing on submit")}
-  >
-    {({ values, setFieldValue }: FormikProps<PermissionInheritanceForm>) => (
-      <form>
-        <div>
-          <label>Chosen Permission Inheritance</label>
-          <PermissionInheritancePicker
-            onChange={e => setFieldValue("permissionInheritance", e)}
-            value={values.permissionInheritance}
-          />
-        </div>
-        <div>
-          <div>Permission Inheritance: {values.permissionInheritance}</div>
-        </div>
-      </form>
-    )}
-  </Formik>
-);
+const TestForm = () => {
+  const { currentValues, generateControlledInputProps } = useForm<FormValues>({
+    initialValues
+  });
+
+  const permissionInheritanceProps = generateControlledInputProps<
+    PermissionInheritance
+  >("permissionInheritance");
+
+  return (
+    <form>
+      <div>
+        <label>Chosen Permission Inheritance</label>
+        <PermissionInheritancePicker {...permissionInheritanceProps} />
+      </div>
+      <FormDebug currentValues={currentValues} />
+    </form>
+  );
+};
 
 const stories = storiesOf(
   "Pickers/Permission Inheritance",

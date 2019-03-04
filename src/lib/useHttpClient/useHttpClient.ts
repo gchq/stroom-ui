@@ -161,17 +161,16 @@ export const useHttpClient = (): HttpClient => {
 
   const wrappedFetchWithBodyAndEmptyResponse = (method: string) =>
     useCallback(
-      <T>(
+      (
         url: string,
         options?: {
           [s: string]: any;
         }
-      ): Promise<T | void> => {
+      ): Promise<string | void> => {
         const state = store.getState();
         const jwsToken = state.authentication.idToken;
 
         const headers = {
-          Accept: "application/json",
           "Content-Type": "application/json",
           Authorization: `Bearer ${jwsToken}`,
           ...(options ? options.headers : {})
@@ -184,7 +183,7 @@ export const useHttpClient = (): HttpClient => {
           headers
         })
           .then(handleStatus)
-          .then(r => r.json())
+          .then(r => r.text())
           .catch(error => {
             setErrorMessage(error.message);
             setStackTrace(error.stack);

@@ -28,7 +28,7 @@ export const DOCUMENT_SAVE_REQUESTED = "DOCUMENT_SAVE_REQUESTED";
 export const DOCUMENT_SAVED = "DOCUMENT_SAVED";
 
 export interface DocumentAction extends ActionId {
-  document: object;
+  docRefContents: object;
 }
 
 export interface DocumentReceivedAction
@@ -45,18 +45,21 @@ export interface DocumentSaveRequestedAction
     ActionId {}
 
 export const useActionCreators = genUseActionCreators({
-  documentReceived: (id: string, document: object): DocumentReceivedAction => ({
+  documentReceived: (
+    id: string,
+    docRefContents: object
+  ): DocumentReceivedAction => ({
     type: DOCUMENT_RECEIVED,
     id,
-    document
+    docRefContents
   }),
   documentChangesMade: (
     id: string,
-    document: object
+    docRefContents: object
   ): DocumentChangesMadeAction => ({
     type: DOCUMENT_CHANGES_MADE,
     id,
-    document
+    docRefContents
   }),
   documentSaveRequested: (id: string): DocumentSaveRequestedAction => ({
     type: DOCUMENT_SAVE_REQUESTED,
@@ -71,34 +74,34 @@ export const useActionCreators = genUseActionCreators({
 export interface StoreStateById {
   isDirty: boolean;
   isSaving: boolean;
-  document?: object;
+  docRefContents?: object;
 }
 
 export type StoreState = StateById<StoreStateById>;
 
 export const defaultStatePerId: StoreStateById = {
   isDirty: false,
-  document: undefined,
+  docRefContents: undefined,
   isSaving: false
 };
 
 export const reducer = prepareReducerById(defaultStatePerId)
   .handleAction<DocumentReceivedAction>(
     DOCUMENT_RECEIVED,
-    (_, { document }) => ({
+    (_, { docRefContents }) => ({
       isDirty: false,
       isSaving: false,
-      document
+      docRefContents
     })
   )
   .handleAction<DocumentChangesMadeAction>(
     DOCUMENT_CHANGES_MADE,
-    (state: StoreStateById, { document }) => ({
+    (state: StoreStateById, { docRefContents }) => ({
       isDirty: true,
       isSaving: false,
-      document: {
-        ...state.document,
-        ...document
+      docRefContents: {
+        ...state.docRefContents,
+        ...docRefContents
       }
     })
   )

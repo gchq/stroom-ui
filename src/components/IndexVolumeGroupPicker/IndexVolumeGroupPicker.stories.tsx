@@ -18,7 +18,6 @@ import * as React from "react";
 import { useState } from "react";
 
 import { storiesOf } from "@storybook/react";
-import { Formik, FormikProps } from "formik";
 
 import StroomDecorator from "../../lib/storybook/StroomDecorator";
 
@@ -29,32 +28,31 @@ import { addThemedStories } from "../../lib/themedStoryGenerator";
 import "../../styles/main.css";
 import { useDialog } from "./IndexVolumeGroupModalPicker";
 import Button from "../Button";
+import useForm, { FormDebug } from "../../lib/useForm";
 
-interface IndexVolumeGroupForm {
+interface FormValues {
   groupName?: string;
 }
 
-const TestForm: React.FunctionComponent = () => (
-  <Formik
-    initialValues={{ groupName: undefined }}
-    onSubmit={() => console.log("Do nothing on submit")}
-  >
-    {({ values, setFieldValue }: FormikProps<IndexVolumeGroupForm>) => (
-      <form>
-        <div>
-          <label>Chosen Index Volume Group</label>
-          <IndexVolumeGroupPicker
-            onChange={e => setFieldValue("groupName", e)}
-            value={values.groupName}
-          />
-        </div>
-        <div>
-          <div>Group Name: {values.groupName}</div>
-        </div>
-      </form>
-    )}
-  </Formik>
-);
+const initialValues: FormValues = {};
+
+const TestForm: React.FunctionComponent = () => {
+  const { currentValues, generateControlledInputProps } = useForm({
+    initialValues
+  });
+
+  const groupPickerProps = generateControlledInputProps<string>("groupName");
+
+  return (
+    <form>
+      <div>
+        <label>Chosen Index Volume Group</label>
+        <IndexVolumeGroupPicker {...groupPickerProps} />
+      </div>
+      <FormDebug currentValues={currentValues} />
+    </form>
+  );
+};
 
 const TestModal: React.FunctionComponent = () => {
   const [picked, setPicked] = useState<string>("");

@@ -1,12 +1,12 @@
 import * as React from "react";
-import { useState } from "react";
-import { Formik, Field } from "formik";
+import { useState, useMemo, useCallback } from "react";
 
 import IconHeader from "../IconHeader";
 import Button from "../Button";
 import ThemedModal from "../ThemedModal";
-import { required, minLength2 } from "../../lib/reduxUtils";
+// import { required, minLength2 } from "../../lib/reduxUtils";
 import { ElementDefinition } from "../../types";
+import useForm from "../../lib/useForm";
 
 export type OnAddElement = (
   parentId: string,
@@ -24,7 +24,7 @@ export interface Props {
 }
 
 interface FormValues {
-  name: string;
+  newName: string;
 }
 
 const AddElementModal = ({
@@ -35,60 +35,76 @@ const AddElementModal = ({
   elementDefinition,
   existingNames
 }: Props) => {
+  const initialValues = useMemo<FormValues>(
+    () => ({
+      newName: !!elementDefinition
+        ? elementDefinition.type
+        : "no element definition"
+    }),
+    [elementDefinition]
+  );
+
+  const onUniqueNameCheck = useCallback(
+    (value: string) => {
+      return existingNames.includes(value);
+    },
+    [existingNames]
+  );
+
+  const {
+    currentValues: { newName },
+    inputProps: {
+      text: { newName: newNameProps }
+    }
+  } = useForm<FormValues>({
+    initialValues,
+    inputs: {
+      text: ["newName"]
+    },
+    onValidate: useCallback(v => {
+      onUniqueNameCheck(v.newName);
+    }, [])
+  });
+  const onAddElementLocal = useCallback(() => {
+    if (!!parentId && !!elementDefinition && !!newName) {
+      onAddElement(parentId, elementDefinition, newName);
+      onCloseDialog();
+    } else {
+      console.error("Form invalid");
+    }
+  }, [onAddElement, onCloseDialog, parentId, elementDefinition, newName]);
+
   if (!elementDefinition || !parentId) {
     return null;
   }
-
-  const onUniqueNameCheck = (value: string) => {
-    return existingNames.includes(value);
-  };
 
   // TODO figure this out
   // const submitDisabled = invalid || submitting;
 
   return (
-    <Formik<FormValues>
-      enableReinitialize
-      initialValues={{
-        name: elementDefinition.type
-      }}
-      onSubmit={values => {
-        onAddElement(parentId, elementDefinition, values.name);
-        onCloseDialog();
-      }}
-    >
-      {({ submitForm }: Formik) => (
-        <ThemedModal
-          isOpen={isOpen}
-          onRequestClose={onCloseDialog}
-          header={<IconHeader icon="file" text="Add New Element" />}
-          content={
-            <form>
-              <div>
-                <label>Name</label>
-                <Field
-                  name="name"
-                  type="text"
-                  placeholder="Name"
-                  validate={[required, minLength2, onUniqueNameCheck]}
-                  autoFocus
-                />
-              </div>
-            </form>
-          }
-          actions={
-            <React.Fragment>
-              <Button
-                text="Submit"
-                // disabled={submitDisabled}
-                onClick={submitForm}
-              />
-              <Button text="Cancel" onClick={onCloseDialog} />
-            </React.Fragment>
-          }
-        />
-      )}
-    </Formik>
+    <ThemedModal
+      isOpen={isOpen}
+      onRequestClose={onCloseDialog}
+      header={<IconHeader icon="file" text="Add New Element" />}
+      content={
+        <form>
+          <div>
+            <label>Name</label>
+            <input {...newNameProps} />
+          </div>
+        </form>
+      }
+      actions={
+        <React.Fragment>
+          <Button
+            text="Submit"
+            // disabled={submitDisabled}
+            onClick={onAddElementLocal}
+          />
+          <Button text="Cancel" onClick={onCloseDialog} />
+        </React.Fragment>
+      }
+    />
   );
 };
 

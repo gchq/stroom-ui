@@ -15,6 +15,7 @@
  */
 
 import * as React from "react";
+import { useCallback } from "react";
 
 import DocRefEditor from "../DocRefEditor";
 import Loader from "../Loader";
@@ -52,27 +53,42 @@ const FolderExplorer = ({ folderUuid }: Props) => {
 
   const { history } = useRouter();
   const folder = findItem(documentTree, folderUuid)!;
-  const explorerApi = useExplorerApi();
+  const {
+    createDocument,
+    copyDocuments,
+    moveDocuments,
+    renameDocument,
+    deleteDocuments
+  } = useExplorerApi();
 
   const openDocRef: DocRefConsumer = (d: DocRefType) =>
     history.push(`/s/doc/${d.type}/${d.uuid}`);
 
+  const onCreateDocument = useCallback(
+    (docRefType: string, docRefName: string, permissionInheritance: string) => {
+      if (!!folder) {
+        createDocument(docRefType, docRefName, node, permissionInheritance);
+      }
+    },
+    [createDocument, folder]
+  );
+
   const {
     showDialog: showDeleteDialog,
     componentProps: deleteDialogComponentProps
-  } = useDeleteDialog();
+  } = useDeleteDialog(deleteDocuments);
   const {
     showDialog: showCopyDialog,
     componentProps: copyDialogComponentProps
-  } = useCopyMoveDialog(explorerApi.copyDocuments);
+  } = useCopyMoveDialog(copyDocuments);
   const {
     showDialog: showMoveDialog,
     componentProps: moveDialogComponentProps
-  } = useCopyMoveDialog(explorerApi.moveDocuments);
+  } = useCopyMoveDialog(moveDocuments);
   const {
     showDialog: showRenameDialog,
     componentProps: renameDialogComponentProps
-  } = useRenameDialog();
+  } = useRenameDialog(renameDocument);
   const {
     showDialog: showDocRefInfoDialog,
     componentProps: docRefInfoDialogComponentProps
@@ -80,7 +96,7 @@ const FolderExplorer = ({ folderUuid }: Props) => {
   const {
     showDialog: showCreateDialog,
     componentProps: createDialogComponentProps
-  } = useCreateDialog();
+  } = useCreateDialog(onCreateDocument);
   const {
     onKeyDownWithShortcuts,
     selectedItems: selectedDocRefs,

@@ -1,7 +1,10 @@
 import * as React from "react";
-import { FormikContext, FormikConsumer } from "formik";
 
-export default () => (
+export interface Props {
+  currentValues: any;
+}
+
+export default ({ currentValues }: Props) => (
   <div
     style={{
       margin: "3rem 0",
@@ -24,20 +27,16 @@ export default () => (
         letterSpacing: "1px"
       }}
     >
-      Formik State
+      Form State
     </div>
-    <FormikConsumer>
-      {({ validationSchema, validate, ...rest }: FormikContext<any>) => (
-        <pre
-          style={{
-            fontSize: ".65rem",
-            padding: ".25rem .5rem",
-            overflowX: "scroll"
-          }}
-        >
-          {JSON.stringify(rest, null, 2)}
-        </pre>
-      )}
-    </FormikConsumer>
+    <pre
+      style={{
+        fontSize: ".65rem",
+        padding: ".25rem .5rem",
+        overflowX: "scroll"
+      }}
+    >
+      {JSON.stringify(currentValues, null, 2)}
+    </pre>
   </div>
 );

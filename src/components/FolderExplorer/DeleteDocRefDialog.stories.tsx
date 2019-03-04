@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useState } from "react";
 import { storiesOf } from "@storybook/react";
 
 import DeleteDocRefDialog, { useDialog } from "./DeleteDocRefDialog";
@@ -7,6 +8,7 @@ import { fromSetupSampleData } from "./test";
 import { DocRefType } from "../../types";
 
 import "../../styles/main.css";
+import { FormDebug } from "../../lib/useForm";
 
 const testFolder2 = fromSetupSampleData.children![1];
 
@@ -16,12 +18,14 @@ interface Props {
 
 // Delete
 const TestDeleteDialog = ({ testUuids }: Props) => {
-  const { showDialog, componentProps } = useDialog();
+  const [lastConfirmed, setLastConfirmed] = useState<object>({});
+  const { showDialog, componentProps } = useDialog(setLastConfirmed);
 
   return (
     <div>
       <button onClick={() => showDialog(testUuids)}>Show</button>
       <DeleteDocRefDialog {...componentProps} />
+      <FormDebug currentValues={lastConfirmed} />
     </div>
   );
 };

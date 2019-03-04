@@ -29,18 +29,19 @@ const UserPermissionEditor = ({ listingId, userUuid }: Props) => {
     [listingId, userUuid]
   );
 
+  if (!user) {
+    return <Loader message="Loading user..." />;
+  }
+
   return (
     <div>
-      <IconHeader text={`User Permissions for ${userUuid}`} icon="user" />
+      <IconHeader text={`Permissions for ${user.name}`} icon="user" />
       <Button text="Back" onClick={() => history.push("/s/userPermissions")} />
-      {user ? (
-        user.isGroup ? (
-          <UsersInGroup group={user} />
-        ) : (
-          <GroupsForUser user={user} />
-        )
+
+      {user.isGroup ? (
+        <UsersInGroup group={user} />
       ) : (
-        <Loader message="Loading user..." />
+        <GroupsForUser user={user} />
       )}
     </div>
   );

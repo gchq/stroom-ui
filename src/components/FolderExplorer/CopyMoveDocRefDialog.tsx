@@ -14,9 +14,7 @@
  * limitations under the License.
  */
 import * as React from "react";
-import { useState } from "react";
-
-import { Formik, Field, FieldProps } from "formik";
+import { useState, useCallback, useMemo } from "react";
 
 import IconHeader from "../IconHeader";
 import DialogActionButtons from "../Button/DialogActionButtons";
@@ -24,14 +22,15 @@ import ThemedModal from "../ThemedModal";
 import AppSearchBar from "../AppSearchBar";
 import PermissionInheritancePicker from "../PermissionInheritancePicker";
 import { PermissionInheritance, DocRefType } from "../../types";
+import useForm from "../../lib/useForm";
 
 export interface Props {
   uuids: Array<string>;
-  destinationUuid?: string;
+  initialDestination?: DocRefType;
   isOpen: boolean;
   onConfirm: (
     uuids: Array<string>,
-    destinationUuid: string,
+    destination: DocRefType,
     permissionInheritance: PermissionInheritance
   ) => void;
   onCloseDialog: () => void;
@@ -44,77 +43,79 @@ interface FormValues {
 
 let CopyMoveDocRefDialog = ({
   uuids,
-  destinationUuid,
+  initialDestination,
   isOpen,
   onConfirm,
   onCloseDialog
-}: Props) => (
-  <Formik<FormValues>
-    initialValues={{
-      destination: undefined, // TODO - fix initial value
-      permissionInheritance: PermissionInheritance.NONE
-    }}
-    onSubmit={values => {
-      if (!!values.destination) {
-        onConfirm(
-          uuids,
-          values.destination!.uuid,
-          values.permissionInheritance
-        );
-      }
+}: Props) => {
+  const initialValues = useMemo<FormValues>(
+    () => ({
+      permissionInheritance: PermissionInheritance.NONE,
+      destination: initialDestination
+    }),
+    [initialDestination, uuids]
+  );
+
+  const {
+    currentValues: { destination, permissionInheritance },
+    generateControlledInputProps
+  } = useForm<FormValues>({
+    initialValues
+  });
+
+  const destinationProps = generateControlledInputProps<DocRefType>(
+    "destination"
+  );
+  const permissionInheritanceProps = generateControlledInputProps<
+    PermissionInheritance
+  >("permissionInheritance");
+
+  const onConfirmLocal = useCallback(() => {
+    if (!!destination && !!permissionInheritance) {
+      onConfirm(uuids, destination, permissionInheritance);
       onCloseDialog();
-    }}
-  >
-    {({ setFieldValue, submitForm }: Formik) => (
-      <ThemedModal
-        isOpen={isOpen}
-        header={
-          <IconHeader
-            icon="copy"
-            text="Select a Destination Folder for the Copy"
-          />
-        }
-        content={
-          <form>
-            <div>
-              <label>Destination</label>
-              <Field name="destination">
-                {({ field: { value } }: FieldProps) => (
-                  <AppSearchBar
-                    onChange={d => setFieldValue("destination", d)}
-                    value={value}
-                    typeFilters={[]}
-                  />
-                )}
-              </Field>
-            </div>
-            <div>
-              <label>Permission Inheritance</label>
-              <Field name="permissionInheritance">
-                {({ field: { value } }: FieldProps) => (
-                  <PermissionInheritancePicker
-                    onChange={d => setFieldValue("permissionInheritance", d)}
-                    value={value}
-                  />
-                )}
-              </Field>
-            </div>
-          </form>
-        }
-        actions={
-          <DialogActionButtons
-            onCancel={onCloseDialog}
-            onConfirm={submitForm}
-          />
-        }
-      />
-    )}
-  </Formik>
-);
+    } else {
+      console.error("Destination or Permission Inheritance Missing", {
+        destination,
+        permissionInheritance
+      });
+    }
+  }, [destination, permissionInheritance, uuids, onConfirm, onCloseDialog]);
+
+  return (
+    <ThemedModal
+      isOpen={isOpen}
+      header={
+        <IconHeader
+          icon="copy"
+          text="Select a Destination Folder for the Copy"
+        />
+      }
+      content={
+        <form>
+          <div>
+            <label>Destination</label>
+            <AppSearchBar {...destinationProps} typeFilters={[]} />
+          </div>
+          <div>
+            <label>Permission Inheritance</label>
+            <PermissionInheritancePicker {...permissionInheritanceProps} />
+          </div>
+        </form>
+      }
+      actions={
+        <DialogActionButtons
+          onCancel={onCloseDialog}
+          onConfirm={onConfirmLocal}
+        />
+      }
+    />
+  );
+};
 
 export type ShowDialog = (
   uuids: Array<string>,
-  destinationUuid?: string
+  destination?: DocRefType
 ) => void;
 
 export type UseDialog = {
@@ -125,13 +126,13 @@ export type UseDialog = {
 export const useDialog = (
   onConfirm: (
     uuids: Array<string>,
-    destinationUuid: string,
+    destination: DocRefType,
     permissionInheritance: PermissionInheritance
   ) => void
 ): UseDialog => {
-  const [destinationUuid, setDestinationUuid] = useState<string | undefined>(
-    undefined
-  );
+  const [initialDestination, setInitialDestination] = useState<
+    DocRefType | undefined
+  >(undefined);
   const [uuidsToCopy, setUuidToCopy] = useState<Array<string>>([]);
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
@@ -139,18 +140,18 @@ export const useDialog = (
     componentProps: {
       onConfirm,
       uuids: uuidsToCopy,
-      destinationUuid,
+      initialDestination,
       isOpen,
       onCloseDialog: () => {
         setIsOpen(false);
         setUuidToCopy([]);
-        setDestinationUuid(undefined);
+        setInitialDestination(undefined);
       }
     },
-    showDialog: (_uuids, _destinationUuid) => {
+    showDialog: (_uuids, _destination) => {
       setIsOpen(true);
       setUuidToCopy(_uuids);
-      setDestinationUuid(_destinationUuid);
+      setInitialDestination(_destination);
     }
   };
 };

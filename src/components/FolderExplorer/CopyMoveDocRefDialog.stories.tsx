@@ -1,5 +1,6 @@
 import * as React from "react";
 import { storiesOf } from "@storybook/react";
+import { useState } from "react";
 
 import StroomDecorator from "../../lib/storybook/StroomDecorator";
 import { fromSetupSampleData } from "./test";
@@ -8,25 +9,26 @@ import CopyDocRefDialog, {
 } from "./CopyMoveDocRefDialog";
 
 import "../../styles/main.css";
-import { PermissionInheritance } from "../../types";
+import { PermissionInheritance, DocRefType } from "../../types";
+import { FormDebug } from "../../lib/useForm";
 
 const testFolder2 = fromSetupSampleData.children![1];
 
 interface Props {
   testUuids: Array<string>;
-  testDestination: string;
+  testDestination: DocRefType;
 }
 
 // Copy
 const TestCopyDialog = ({ testUuids, testDestination }: Props) => {
+  const [lastConfirmed, setLastConfirmed] = useState<object>({});
+
   const { showDialog, componentProps } = useCopyMoveDocRefDialog(
     (
       uuids: Array<string>,
-      destinationUuid: string,
+      destination: DocRefType,
       permissionInheritance: PermissionInheritance
-    ) => {
-      console.log("Yaaas", { uuids, destinationUuid, permissionInheritance });
-    }
+    ) => setLastConfirmed({ uuids, destination, permissionInheritance })
   );
 
   return (
@@ -36,6 +38,7 @@ const TestCopyDialog = ({ testUuids, testDestination }: Props) => {
         Show
       </button>
       <CopyDocRefDialog {...componentProps} />
+      <FormDebug currentValues={lastConfirmed} />
     </div>
   );
 };
@@ -45,6 +48,6 @@ storiesOf("Explorer/Copy Doc Ref Dialog", module)
   .add("simple", () => (
     <TestCopyDialog
       testUuids={testFolder2.children!.map(d => d.uuid)}
-      testDestination={testFolder2.uuid}
+      testDestination={testFolder2}
     />
   ));

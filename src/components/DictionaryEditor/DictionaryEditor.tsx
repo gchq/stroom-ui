@@ -20,21 +20,21 @@ const DictionaryEditor: React.FunctionComponent<Props> = ({
     fetchDocument(dictionaryUuid);
   }, [fetchDocument, dictionaryUuid]);
 
-  const { document, onDocumentChange, editorProps } = useDocRefEditor<
+  const { docRefContents, onDocumentChange, editorProps } = useDocRefEditor<
     Dictionary
   >({
     docRefUuid: dictionaryUuid,
     saveDocument
   });
 
-  if (!document) {
+  if (!docRefContents) {
     return <Loader message={`Loading Dictionary ${dictionaryUuid}`} />;
   }
 
   return (
     <DocRefEditor {...editorProps}>
       <textarea
-        value={document.data}
+        value={docRefContents.data}
         onChange={({ target: { value } }) => onDocumentChange({ data: value })}
       />
     </DocRefEditor>

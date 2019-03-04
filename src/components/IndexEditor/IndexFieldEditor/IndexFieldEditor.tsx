@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useState, useCallback } from "react";
 
-import { IndexField } from "../../../types";
+import { IndexField, IndexFieldType, AnalyzerType } from "../../../types";
 import ThemedModal from "../../ThemedModal";
 import { DialogActionButtons } from "../../Button";
 import IndexFieldTypePicker from "../IndexFieldTypePicker/IndexFieldTypePicker";
@@ -22,8 +22,8 @@ export const IndexFieldEditor = ({
   onCloseDialog
 }: Props) => {
   const {
-    onUpdate,
     currentValues: indexUpdates,
+    generateControlledInputProps,
     inputProps: {
       text: {
         fieldName: fieldNameProps,
@@ -40,20 +40,18 @@ export const IndexFieldEditor = ({
     }
   });
 
-  const { fieldType, analyzerType } = indexUpdates;
-
   const onConfirm = () => {
     onUpdateField(id, indexUpdates);
     onCloseDialog();
   };
 
-  const onFieldTypeChange = useCallback(fieldType => onUpdate({ fieldType }), [
-    onUpdate
-  ]);
-  const onAnalyzerChange = useCallback(
-    analyzerType => onUpdate({ analyzerType }),
-    [onUpdate]
+  const fieldTypeProps = generateControlledInputProps<IndexFieldType>(
+    "fieldType"
   );
+  const analyzerTypeProps = generateControlledInputProps<AnalyzerType>(
+    "analyzerType"
+  );
+
   return !!indexField ? (
     <ThemedModal
       isOpen={!!indexField}
@@ -64,16 +62,13 @@ export const IndexFieldEditor = ({
             <label>Field Name</label>
             <input {...fieldNameProps} />
             <label>Field Type</label>
-            <IndexFieldTypePicker
-              onChange={onFieldTypeChange}
-              value={fieldType}
-            />
+            <IndexFieldTypePicker {...fieldTypeProps} />
             <label>Stored</label>
             <input {...storedProps} />
             <label>Positions</label>
             <input {...termPositionsProps} />
             <label>Analyzer</label>
-            <AnalyzerPicker onChange={onAnalyzerChange} value={analyzerType} />
+            <AnalyzerPicker {...analyzerTypeProps} />
             <label>Case Sensitive</label>
             <input {...caseSensitiveProps} />
           </form>

@@ -17,51 +17,46 @@ import * as React from "react";
 
 import StroomDecorator from "../../lib/storybook/StroomDecorator";
 import { storiesOf } from "@storybook/react";
-import { Formik, Field, FieldProps } from "formik";
 
 import DocTypeFilters from "./DocTypeFilters";
 import DocRefTypePicker from "./DocRefTypePicker";
 
 import "../../styles/main.css";
-import FormikDebug from "../../lib/FormikDebug";
+import useForm from "../../lib/useForm";
+import FormDebug from "../../lib/useForm/FormDebug";
 
-const TestForm = () => (
-  <Formik
-    initialValues={{
-      docType: undefined,
-      docTypes: []
-    }}
-    onSubmit={() => {}}
-  >
-    {({ setFieldValue }: Formik) => (
-      <form>
-        <div>
-          <label>Chosen Doc Type</label>
-          <Field name="docType">
-            {({ field: { value } }: FieldProps) => (
-              <DocRefTypePicker
-                onChange={d => setFieldValue("docType", d)}
-                value={value}
-              />
-            )}
-          </Field>
-        </div>
-        <div>
-          <label>Chosen Doc Types</label>
-          <Field name="docTypes">
-            {({ field: { value } }: FieldProps) => (
-              <DocTypeFilters
-                onChange={d => setFieldValue("docTypes", d)}
-                value={value}
-              />
-            )}
-          </Field>
-        </div>
-        <FormikDebug />
-      </form>
-    )}
-  </Formik>
-);
+interface FormValues {
+  docRefType?: string;
+  multipleDocRefTypes: Array<string>;
+}
+const initialValues: FormValues = {
+  docRefType: undefined,
+  multipleDocRefTypes: []
+};
+
+const TestForm = () => {
+  const { currentValues, generateControlledInputProps } = useForm<FormValues>({
+    initialValues
+  });
+
+  const docRefTypeProps = generateControlledInputProps<string>("docRefType");
+  const multipleDocRefTypeProps = generateControlledInputProps<Array<string>>(
+    "multipleDocRefTypes"
+  );
+
+  return (
+    <form>
+      <div>
+        <label>Chosen Doc Type</label>
+        <DocRefTypePicker {...docRefTypeProps} />
+        <label>Chosen Doc Types</label>
+        <DocTypeFilters {...multipleDocRefTypeProps} />
+      </div>
+
+      <FormDebug currentValues={currentValues} />
+    </form>
+  );
+};
 
 storiesOf("Pickers/Doc Ref Type", module)
   .addDecorator(StroomDecorator)

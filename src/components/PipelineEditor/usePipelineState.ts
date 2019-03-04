@@ -67,8 +67,10 @@ export const usePipelineState = (pipelineId: string): PipelineProps => {
     saveDocument: pipelineApi.savePipeline
   });
 
-  const { document, onDocumentChange } = useEditorProps;
-  const asTree = useMemo(() => getPipelineAsTree(document), [document]);
+  const { docRefContents, onDocumentChange } = useEditorProps;
+  const asTree = useMemo(() => getPipelineAsTree(docRefContents), [
+    docRefContents
+  ]);
 
   return {
     asTree,
@@ -97,28 +99,30 @@ export const usePipelineState = (pipelineId: string): PipelineProps => {
       }, [setSelectedElementId, setInitialValues]),
       elementDeleted: useCallback<PipelineEditApi["elementDeleted"]>(
         elementId => {
-          if (!!document) {
-            onDocumentChange(removeElementFromPipeline(document, elementId));
-          }
-        },
-        [document]
-      ),
-      elementReinstated: useCallback<PipelineEditApi["elementReinstated"]>(
-        (parentId, recycleData) => {
-          if (!!document) {
+          if (!!docRefContents) {
             onDocumentChange(
-              reinstateElementToPipeline(document, parentId, recycleData)
+              removeElementFromPipeline(docRefContents, elementId)
             );
           }
         },
-        [document]
+        [docRefContents]
+      ),
+      elementReinstated: useCallback<PipelineEditApi["elementReinstated"]>(
+        (parentId, recycleData) => {
+          if (!!docRefContents) {
+            onDocumentChange(
+              reinstateElementToPipeline(docRefContents, parentId, recycleData)
+            );
+          }
+        },
+        [docRefContents]
       ),
       elementAdded: useCallback<PipelineEditApi["elementAdded"]>(
         (parentId, elementDefinition, name) => {
-          if (!!document) {
+          if (!!docRefContents) {
             onDocumentChange(
               createNewElementInPipeline(
-                document,
+                docRefContents,
                 parentId,
                 elementDefinition,
                 name
@@ -126,13 +130,13 @@ export const usePipelineState = (pipelineId: string): PipelineProps => {
             );
           }
         },
-        [document, onDocumentChange]
+        [docRefContents, onDocumentChange]
       ),
       elementMoved: useCallback<PipelineEditApi["elementMoved"]>(
         (itemToMove, destination) => {
-          if (!!document) {
+          if (!!docRefContents) {
             onDocumentChange(
-              moveElementInPipeline(document, itemToMove, destination)
+              moveElementInPipeline(docRefContents, itemToMove, destination)
             );
           }
         },
@@ -141,10 +145,10 @@ export const usePipelineState = (pipelineId: string): PipelineProps => {
       elementPropertyUpdated: useCallback<
         PipelineEditApi["elementPropertyUpdated"]
       >((element, name, propertyType, propertyValue) => {
-        if (!!document) {
+        if (!!docRefContents) {
           onDocumentChange(
             setElementPropertyValueInPipeline(
-              document,
+              docRefContents,
               element,
               name,
               propertyType,
@@ -156,15 +160,19 @@ export const usePipelineState = (pipelineId: string): PipelineProps => {
       elementPropertyRevertToDefault: useCallback<
         PipelineEditApi["elementPropertyRevertToDefault"]
       >((elementId, name) => {
-        if (!!document) {
-          onDocumentChange(revertPropertyToDefault(document, elementId, name));
+        if (!!docRefContents) {
+          onDocumentChange(
+            revertPropertyToDefault(docRefContents, elementId, name)
+          );
         }
       }, []),
       elementPropertyRevertToParent: useCallback<
         PipelineEditApi["elementPropertyRevertToParent"]
       >((elementId, name) => {
-        if (!!document) {
-          onDocumentChange(revertPropertyToParent(document, elementId, name));
+        if (!!docRefContents) {
+          onDocumentChange(
+            revertPropertyToParent(docRefContents, elementId, name)
+          );
         }
       }, [])
     }

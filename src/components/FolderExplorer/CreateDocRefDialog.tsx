@@ -15,22 +15,25 @@
  */
 
 import * as React from "react";
-import { useState } from "react";
-
-import { Formik, Field, FieldProps } from "formik";
+import { useState, useCallback } from "react";
 
 import IconHeader from "../IconHeader";
 import ThemedModal from "../ThemedModal";
 import DialogActionButtons from "../Button/DialogActionButtons";
-import { required, minLength2 } from "../../lib/reduxUtils";
 import { DocRefTypePicker } from "../DocRefTypes";
-import useExplorerApi from "./useExplorerApi";
 import PermissionInheritancePicker from "../PermissionInheritancePicker";
 import { PermissionInheritance, DocRefType } from "../../types";
+import useForm from "../../lib/useForm";
+// import { required, minLength2 } from "../../lib/reduxUtils";
 
 export interface Props {
   destination?: DocRefType;
   isOpen: boolean;
+  onConfirm: (
+    docRefType: string,
+    docRefName: string,
+    permissionInheritance: string
+  ) => void;
   onCloseDialog: () => void;
 }
 
@@ -40,80 +43,69 @@ interface FormValues {
   permissionInheritance: PermissionInheritance;
 }
 
-let CreateDocRefDialog = ({ isOpen, destination, onCloseDialog }: Props) => {
-  const explorerApi = useExplorerApi();
+const initialValues: FormValues = {
+  docRefName: "New Document",
+  permissionInheritance: PermissionInheritance.NONE
+};
+
+let CreateDocRefDialog = ({ isOpen, onConfirm, onCloseDialog }: Props) => {
+  const {
+    currentValues: { docRefType, docRefName, permissionInheritance },
+    generateControlledInputProps,
+    inputProps: {
+      text: { docRefName: docRefNameProps }
+    }
+  } = useForm<FormValues>({
+    initialValues,
+    inputs: { text: ["docRefName"] }
+  });
+
+  const docRefTypeProps = generateControlledInputProps<string>("docRefType");
+  const permissionInheritanceProps = generateControlledInputProps<
+    PermissionInheritance
+  >("permissionInheritance");
+
+  const onConfirmLocal = useCallback(() => {
+    if (!!docRefType && !!docRefName && !!permissionInheritance) {
+      onConfirm(docRefType, docRefName, permissionInheritance);
+      onCloseDialog();
+    } else {
+      console.error("Form Invalid", {
+        docRefType,
+        docRefName,
+        permissionInheritance
+      });
+    }
+  }, [docRefType, docRefName, permissionInheritance, onConfirm, onCloseDialog]);
 
   return (
-    <Formik<FormValues>
-      initialValues={{
-        docRefType: undefined,
-        permissionInheritance: PermissionInheritance.NONE
-      }}
-      onSubmit={values => {
-        explorerApi.createDocument(
-          values.docRefType!,
-          values.docRefName!,
-          destination!,
-          values.permissionInheritance
-        );
-        onCloseDialog();
-      }}
-    >
-      {({ setFieldValue, submitForm }) => (
-        <ThemedModal
-          isOpen={isOpen}
-          onRequestClose={onCloseDialog}
-          header={
-            <IconHeader
-              icon="plus"
-              text={`Create a New Doc Ref in ${destination &&
-                destination.name}`}
-            />
-          }
-          content={
-            <form>
-              <div>
-                <label>Doc Ref Type</label>
-                <Field name="docRefType">
-                  {({ field: { value } }: FieldProps) => (
-                    <DocRefTypePicker
-                      onChange={d => setFieldValue("docRefType", d)}
-                      value={value}
-                    />
-                  )}
-                </Field>
-              </div>
-              <div>
-                <label>Name</label>
-                <Field
-                  name="docRefName"
-                  type="text"
-                  placeholder="Name"
-                  validate={[required, minLength2]}
-                />
-              </div>
-              <div>
-                <label>Permission Inheritance</label>
-                <Field name="permissionInheritance">
-                  {({ field: { value } }: FieldProps) => (
-                    <PermissionInheritancePicker
-                      onChange={d => setFieldValue("permissionInheritance", d)}
-                      value={value}
-                    />
-                  )}
-                </Field>
-              </div>
-            </form>
-          }
-          actions={
-            <DialogActionButtons
-              onCancel={onCloseDialog}
-              onConfirm={submitForm}
-            />
-          }
+    <ThemedModal
+      isOpen={isOpen}
+      onRequestClose={onCloseDialog}
+      header={<IconHeader icon="plus" text="Create a New Doc Ref" />}
+      content={
+        <form>
+          <div>
+            <label>Doc Ref Type</label>
+            <DocRefTypePicker {...docRefTypeProps} />
+          </div>
+          <div>
+            <label>Name</label>
+            <input {...docRefNameProps} />
+          </div>
+          <div>
+            <label>Permission Inheritance</label>
+            <PermissionInheritancePicker {...permissionInheritanceProps} />
+          </div>
+        </form>
+      }
+      actions={
+        <DialogActionButtons
+          onCancel={onCloseDialog}
+          onConfirm={onConfirmLocal}
         />
-      )}
-    </Formik>
+      }
+    />
   );
 };
 
@@ -137,7 +129,13 @@ export type UseDialog = {
 /**
  * This is a React custom hook that sets up things required by the owning component.
  */
-export const useDialog = (): UseDialog => {
+export const useDialog = (
+  onConfirm: (
+    docRefType: string,
+    docRefName: string,
+    permissionInheritance: string
+  ) => void
+): UseDialog => {
   const [destination, setDestination] = useState<DocRefType | undefined>(
     undefined
   );
@@ -147,6 +145,7 @@ export const useDialog = (): UseDialog => {
     componentProps: {
       destination,
       isOpen,
+      onConfirm,
       onCloseDialog: () => {
         setIsOpen(false);
         setDestination(undefined);

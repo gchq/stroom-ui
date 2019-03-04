@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useState } from "react";
 import { storiesOf } from "@storybook/react";
 
 import CreateDocRefDialog, { useDialog } from "./CreateDocRefDialog";
@@ -7,6 +8,7 @@ import { DocRefType } from "../../types";
 import StroomDecorator from "../../lib/storybook/StroomDecorator";
 
 import "../../styles/main.css";
+import { FormDebug } from "../../lib/useForm";
 
 const testFolder2 = fromSetupSampleData.children![1];
 
@@ -16,13 +18,19 @@ interface Props {
 
 // New Doc
 const TestNewDocRefDialog = ({ testDestination }: Props) => {
-  const { showDialog, componentProps } = useDialog();
+  const [lastConfirmed, setLastConfirmed] = useState<object>({});
+  const { showDialog, componentProps } = useDialog(
+    (docRefType: string, docRefName: string, permissionInheritance: string) => {
+      setLastConfirmed({ docRefType, docRefName, permissionInheritance });
+    }
+  );
 
   return (
     <div>
       <h1>Create Doc Ref Test</h1>
       <button onClick={() => showDialog(testDestination)}>Show</button>
       <CreateDocRefDialog {...componentProps} />
+      <FormDebug currentValues={lastConfirmed} />
     </div>
   );
 };

@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useState } from "react";
 import { storiesOf } from "@storybook/react";
 import { DocRefType } from "../../types";
 
@@ -7,6 +8,7 @@ import { fromSetupSampleData } from "./test";
 import StroomDecorator from "../../lib/storybook/StroomDecorator";
 
 import "../../styles/main.css";
+import { FormDebug } from "../../lib/useForm";
 
 const testDocRef = fromSetupSampleData.children![0].children![0].children![0];
 
@@ -16,13 +18,17 @@ interface Props {
 
 // Rename
 const TestRenameDialog = ({ testDocRef }: Props) => {
-  const { showDialog, componentProps } = useDialog();
+  const [lastConfirmed, setLastConfirmed] = useState<object>({});
+  const { showDialog, componentProps } = useDialog((docRef, newName) =>
+    setLastConfirmed({ docRef, newName })
+  );
 
   return (
     <div>
       <h1>Rename Document Test</h1>
       <button onClick={() => showDialog(testDocRef)}>Show</button>
       <RenameDocRefDialog {...componentProps} />
+      <FormDebug currentValues={lastConfirmed} />
     </div>
   );
 };

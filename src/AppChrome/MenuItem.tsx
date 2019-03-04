@@ -49,8 +49,8 @@ interface Props extends StyledComponentProps {
   keyIsDown: KeyDownState;
   areMenuItemsOpen: MenuItemsOpenState;
   menuItemOpened: MenuItemOpened;
-  showCopyDialog: (docRefUuids: Array<string>, destinationUuid: string) => void;
-  showMoveDialog: (docRefUuids: Array<string>, destinationUuid: string) => void;
+  showCopyDialog: (docRefUuids: Array<string>, destination: DocRefType) => void;
+  showMoveDialog: (docRefUuids: Array<string>, destination: DocRefType) => void;
 }
 
 interface EnhancedProps extends Props, DragCollectedProps, DropCollectedProps {}
@@ -73,9 +73,9 @@ const dropTarget: DropTargetSpec<Props> = {
 
     if (docRef) {
       if (isCopy) {
-        showCopyDialog(docRefUuids, docRef.uuid);
+        showCopyDialog(docRefUuids, docRef);
       } else {
-        showMoveDialog(docRefUuids, docRef.uuid);
+        showMoveDialog(docRefUuids, docRef);
       }
     }
   }

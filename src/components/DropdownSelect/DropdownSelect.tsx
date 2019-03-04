@@ -13,7 +13,7 @@ export interface DropdownOptionProps {
 
 export interface PickerProps {
   onChange: (x: string) => void;
-  value: string;
+  value?: string;
 }
 
 export interface Props extends PickerProps {

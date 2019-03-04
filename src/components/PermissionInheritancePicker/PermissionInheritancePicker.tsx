@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useCallback } from "react";
 
 import Select from "react-select";
 import {
@@ -9,7 +10,7 @@ import {
 
 export interface Props {
   value?: string;
-  onChange: (v: string) => any;
+  onChange: (v: PermissionInheritance) => any;
 }
 
 const options: SelectOptionsType = Object.values(PermissionInheritance).map(
@@ -22,7 +23,10 @@ const options: SelectOptionsType = Object.values(PermissionInheritance).map(
 const PermissionInheritancePicker = ({ value, onChange }: Props) => (
   <Select
     value={options.find(o => o.value === value)}
-    onChange={(o: SelectOptionType) => onChange(o.value)}
+    onChange={useCallback(
+      (o: SelectOptionType) => onChange(o.value as PermissionInheritance),
+      [onChange]
+    )}
     placeholder="Permission Inheritance"
     options={options}
   />

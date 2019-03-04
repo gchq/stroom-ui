@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import { Action } from "redux";
 import {
   genUseActionCreators,
   prepareReducer
@@ -31,57 +32,52 @@ export interface StoreState {
 }
 
 const SET_ERROR_MESSAGE = "SET_ERROR_MESSAGE";
-export interface ISetErrorMessage {
-  type: typeof SET_ERROR_MESSAGE;
+export interface SetErrorMessageAction extends Action<"SET_ERROR_MESSAGE"> {
   errorMessage: string;
 }
 
 const SET_STACK_TRACE = "SET_STACK_TRACE";
-export interface ISetStackTrace {
-  type: typeof SET_STACK_TRACE;
+export interface SetStackTraceAction extends Action<"SET_STACK_TRACE"> {
   stackTrace: string;
 }
 
 const SET_HTTP_ERROR_CODE = "SET_HTTP_ERROR_CODE";
-export interface ISetHttpErrorCode {
-  type: typeof SET_HTTP_ERROR_CODE;
+export interface SetHttpErrorCodeAction extends Action<"SET_HTTP_ERROR_CODE"> {
   httpErrorCode: number;
 }
 
-export type StoreAction = ISetErrorMessage | ISetStackTrace | ISetHttpErrorCode;
-
 export const useActionCreators = genUseActionCreators({
-  setErrorMessage: (errorMessage: string): ISetErrorMessage => ({
+  setErrorMessage: (errorMessage: string): SetErrorMessageAction => ({
     type: SET_ERROR_MESSAGE,
     errorMessage
   }),
-  setStackTrace: (stackTrace: string): ISetStackTrace => ({
+  setStackTrace: (stackTrace: string): SetStackTraceAction => ({
     type: SET_STACK_TRACE,
     stackTrace
   }),
-  setHttpErrorCode: (httpErrorCode: number): ISetHttpErrorCode => ({
+  setHttpErrorCode: (httpErrorCode: number): SetHttpErrorCodeAction => ({
     type: SET_HTTP_ERROR_CODE,
     httpErrorCode
   })
 });
 
 export const reducer = prepareReducer<StoreState>(initialState)
-  .handleAction<ISetErrorMessage>(
+  .handleAction<SetErrorMessageAction>(
     SET_ERROR_MESSAGE,
     (state: StoreState, { errorMessage }) => ({
       ...state,
       errorMessage
     })
   )
-  .handleAction<ISetStackTrace>(
-    SET_ERROR_MESSAGE,
+  .handleAction<SetStackTraceAction>(
+    SET_STACK_TRACE,
     (state: StoreState, { stackTrace }) => ({
       ...state,
       stackTrace
     })
   )
-  .handleAction<ISetHttpErrorCode>(
-    SET_ERROR_MESSAGE,
+  .handleAction<SetHttpErrorCodeAction>(
+    SET_HTTP_ERROR_CODE,
     (state: StoreState, { httpErrorCode }) => ({
       ...state,
       httpErrorCode

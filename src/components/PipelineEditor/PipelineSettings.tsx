@@ -1,10 +1,10 @@
 import * as React from "react";
-import { useState } from "react";
-import { Formik, Field } from "formik";
+import { useState, useMemo, useCallback } from "react";
 
 import Button from "../Button";
 import IconHeader from "../IconHeader";
 import ThemedModal from "../ThemedModal";
+import useForm from "../../lib/useForm";
 
 export interface Props {
   isOpen: boolean;
@@ -23,46 +23,55 @@ const PipelineSettings = ({
   updateValues,
   onCloseDialog
 }: Props) => {
+  const initialValues = useMemo(() => ({ description: initialDescription }), [
+    initialDescription
+  ]);
+
+  const {
+    currentValues: { description },
+    inputProps: {
+      text: { description: descriptionProps }
+    }
+  } = useForm<FormValues>({
+    initialValues,
+    inputs: {
+      text: ["description"]
+    }
+  });
+
+  const onConfirmLocal = useCallback(() => {
+    if (!!description) {
+      updateValues(description);
+      onCloseDialog();
+    } else {
+      console.error("Form invalid", { description });
+    }
+  }, [description]);
+
   return (
-    <Formik<FormValues>
-      enableReinitialize
-      initialValues={{ description: initialDescription || "default" }}
-      onSubmit={values => {
-        updateValues(values.description);
-        onCloseDialog();
-      }}
-    >
-      {({ submitForm }) => (
-        <ThemedModal
-          isOpen={isOpen}
-          onRequestClose={onCloseDialog}
-          header={<IconHeader icon="cog" text="Pipeline Settings" />}
-          content={
-            <form>
-              <div>
-                <label>Description</label>
-                <Field
-                  name="description"
-                  type="text"
-                  placeholder="Description"
-                  autoFocus
-                />
-              </div>
-            </form>
-          }
-          actions={
-            <React.Fragment>
-              <Button
-                text="Submit"
-                // disabled={invalid || submitting}
-                onClick={submitForm}
-              />
-              <Button text="Cancel" onClick={onCloseDialog} />
-            </React.Fragment>
-          }
-        />
-      )}
-    </Formik>
+    <ThemedModal
+      isOpen={isOpen}
+      onRequestClose={onCloseDialog}
+      header={<IconHeader icon="cog" text="Pipeline Settings" />}
+      content={
+        <form>
+          <div>
+            <label>Description</label>
+            <input {...descriptionProps} autoFocus />
+          </div>
+        </form>
+      }
+      actions={
+        <React.Fragment>
+          <Button
+            text="Submit"
+            // disabled={invalid || submitting}
+            onClick={onConfirmLocal}
+          />
+          <Button text="Cancel" onClick={onCloseDialog} />
+        </React.Fragment>
+      }
+    />
   );
 };
 

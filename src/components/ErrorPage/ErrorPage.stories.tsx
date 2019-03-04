@@ -67,8 +67,8 @@ const TestErrorPage = ({
   } = useActionCreators();
   useEffect(() => {
     if (!!_errorMessage) setErrorMessage(_errorMessage);
-    if (!!_stackTrace) setStackTrace(stackTrace);
-    if (!!_httpErrorStatus) setHttpErrorCode(httpErrorStatus);
+    if (!!_stackTrace) setStackTrace(_stackTrace);
+    if (!!_httpErrorStatus) setHttpErrorCode(_httpErrorStatus);
   }, [
     setErrorMessage,
     setStackTrace,

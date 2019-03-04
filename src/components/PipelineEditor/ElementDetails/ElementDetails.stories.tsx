@@ -37,18 +37,21 @@ const TestElementDetails = ({
 }: Props) => {
   const {
     pipelineEditApi,
-    useEditorProps: { document }
+    useEditorProps: { docRefContents }
   } = usePipelineState(pipelineId);
   useEffect(() => {
     pipelineEditApi.elementSelected(testElementId, testElementConfig);
   }, [pipelineId]);
 
-  if (!document) {
+  if (!docRefContents) {
     return null;
   }
 
   return (
-    <ElementDetails pipeline={document} pipelineEditApi={pipelineEditApi} />
+    <ElementDetails
+      pipeline={docRefContents}
+      pipelineEditApi={pipelineEditApi}
+    />
   );
 };
 

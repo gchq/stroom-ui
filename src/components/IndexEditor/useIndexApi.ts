@@ -46,19 +46,15 @@ export const useApi = (): Api => {
     [httpGetJson, documentReceived]
   );
   const saveDocument = useCallback(
-    (index: IndexDoc) => {
+    (docRefContents: IndexDoc) => {
       const state = store.getState();
       const url = `${state.config.values.stroomBaseServiceUrl}/index/v1/${
-        index.uuid
+        docRefContents.uuid
       }`;
 
       httpPostEmptyResponse(url, {
-        body: index.data,
-        headers: {
-          Accept: "application/xml",
-          "Content-Type": "application/xml"
-        }
-      }).then(() => documentSaved(index.uuid));
+        body: docRefContents
+      }).then(() => documentSaved(docRefContents.uuid));
     },
     [httpPostEmptyResponse, documentSaved]
   );

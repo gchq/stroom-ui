@@ -44,15 +44,15 @@ export const useApi = (): Api => {
     [httpGetJson, documentReceived]
   );
   const saveDocument = useCallback(
-    (document: Dictionary) => {
+    (docRefContents: Dictionary) => {
       const state = store.getState();
       const url = `${state.config.values.stroomBaseServiceUrl}/dictionary/v1/${
-        document.uuid
+        docRefContents.uuid
       }`;
 
       httpPostEmptyResponse(url, {
-        body: document
-      }).then(() => documentSaved(document.uuid));
+        body: docRefContents
+      }).then(() => documentSaved(docRefContents.uuid));
     },
     [httpPostEmptyResponse, documentSaved]
   );

@@ -41,15 +41,15 @@ const IndexEditor = ({ indexUuid }: Props) => {
     fetchDocument(indexUuid);
   }, [fetchDocument, indexUuid]);
 
-  const { document, editorProps, onDocumentChange } = useDocRefEditor<IndexDoc>(
-    {
-      docRefUuid: indexUuid,
-      saveDocument
-    }
-  );
+  const { docRefContents, editorProps, onDocumentChange } = useDocRefEditor<
+    IndexDoc
+  >({
+    docRefUuid: indexUuid,
+    saveDocument
+  });
 
   const { componentProps } = useFieldsTable(
-    document && document.data ? document.data.fields : []
+    docRefContents && docRefContents.data ? docRefContents.data.fields : []
   );
   const {
     fields,
@@ -62,17 +62,17 @@ const IndexEditor = ({ indexUuid }: Props) => {
   } = useThemedConfirm({
     onConfirm: useCallback(() => {
       let fieldNamesToDelete = selectedItems.map(s => s.fieldName);
-      if (!!document) {
+      if (!!docRefContents) {
         onDocumentChange({
           data: {
-            ...document.data,
-            fields: document.data.fields.filter(
+            ...docRefContents.data,
+            fields: docRefContents.data.fields.filter(
               f => !fieldNamesToDelete.includes(f.fieldName)
             )
           }
         });
       }
-    }, [onDocumentChange, document, selectedItems]),
+    }, [onDocumentChange, docRefContents, selectedItems]),
     getQuestion: useCallback(
       () => "Are you sure you want to delete these fields",
       []
@@ -89,10 +89,10 @@ const IndexEditor = ({ indexUuid }: Props) => {
   } = useFieldEditor(
     useCallback(
       (id: number, fieldUpdates: Partial<IndexField>) => {
-        if (!!document) {
+        if (!!docRefContents) {
           let updatedIndex: Partial<IndexDoc> = {
             data: {
-              ...document.data,
+              ...docRefContents.data,
               fields: fields.map((f, _id) =>
                 _id === id
                   ? {
@@ -106,20 +106,20 @@ const IndexEditor = ({ indexUuid }: Props) => {
           onDocumentChange(updatedIndex);
         }
       },
-      [document, onDocumentChange]
+      [docRefContents, onDocumentChange]
     )
   );
 
   const onCreateClick = useCallback(() => {
-    if (!!document && !!document.data) {
+    if (!!docRefContents && !!docRefContents.data) {
       let updatedIndex: Partial<IndexDoc> = {
-        ...document,
+        ...docRefContents,
         data: {
-          ...document.data,
+          ...docRefContents.data,
           fields: [
-            ...document.data.fields,
+            ...docRefContents.data.fields,
             {
-              fieldName: `New Field ${document.data.fields.length}`,
+              fieldName: `New Field ${docRefContents.data.fields.length}`,
               fieldType: "ID",
               stored: true,
               indexed: true,
@@ -134,7 +134,7 @@ const IndexEditor = ({ indexUuid }: Props) => {
 
       onDocumentChange(updatedIndex);
     }
-  }, [document, onDocumentChange]);
+  }, [docRefContents, onDocumentChange]);
 
   const onEditClick = useCallback(() => {
     if (lastSelectedIndex !== undefined) {
@@ -146,7 +146,7 @@ const IndexEditor = ({ indexUuid }: Props) => {
 
   const onMoveUpClick = useCallback(() => {
     if (
-      !!document &&
+      !!docRefContents &&
       !!lastSelectedIndex &&
       lastSelectedIndex > 0 &&
       selectedItems.length > 0
@@ -160,17 +160,17 @@ const IndexEditor = ({ indexUuid }: Props) => {
 
       let updatedIndex: Partial<IndexDoc> = {
         data: {
-          ...document.data,
+          ...docRefContents.data,
           fields: newFields
         }
       };
       onDocumentChange(updatedIndex);
     }
-  }, [lastSelectedIndex, document]);
+  }, [lastSelectedIndex, docRefContents]);
 
   const onMoveDownClick = useCallback(() => {
     if (
-      !!document &&
+      !!docRefContents &&
       !!lastSelectedIndex &&
       lastSelectedIndex > 0 &&
       selectedItems.length > 0
@@ -184,15 +184,15 @@ const IndexEditor = ({ indexUuid }: Props) => {
 
       let updatedIndex: Partial<IndexDoc> = {
         data: {
-          ...document.data,
+          ...docRefContents.data,
           fields: newFields
         }
       };
       onDocumentChange(updatedIndex);
     }
-  }, [lastSelectedIndex, document]);
+  }, [lastSelectedIndex, docRefContents]);
 
-  if (!document) {
+  if (!docRefContents) {
     return <Loader message="Loading Index..." />;
   }
 

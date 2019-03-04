@@ -1,10 +1,8 @@
 import * as React from "react";
 import { useEffect, useCallback } from "react";
 
-import { Formik, Field, Form } from "formik";
-
 import useReduxState from "../../lib/useReduxState/useReduxState";
-import useApi from "./useUserPermissionsApi";
+import useApi, { IsGroup } from "./useUserPermissionsApi";
 import { GlobalStoreState } from "../../startup/reducers";
 import IconHeader from "../../components/IconHeader";
 import UsersTable, {
@@ -18,6 +16,8 @@ import ThemedConfirm, {
   useDialog as useThemedConfim
 } from "../../components/ThemedConfirm";
 import useRouter from "../../lib/useRouter";
+import useForm from "../../lib/useForm";
+import IsGroupPicker from "./IsGroupPicker";
 
 const LISTING_ID = "user_permissions";
 
@@ -25,9 +25,15 @@ export interface Props {}
 
 interface Values {
   name: string;
-  isGroup?: "User" | "Group";
+  isGroup?: IsGroup;
   uuid: string;
 }
+
+const defaultValues: Values = {
+  name: "",
+  uuid: "",
+  isGroup: ""
+};
 
 const UserPermissions = () => {
   const { history } = useRouter();
@@ -64,32 +70,33 @@ const UserPermissions = () => {
     }, [selectedItems.map(v => v.uuid)])
   });
 
+  const {
+    generateControlledInputProps,
+    inputProps: {
+      text: { name: nameProps, uuid: uuidProps }
+    }
+  } = useForm({
+    initialValues: defaultValues,
+    inputs: { text: ["name", "uuid"] },
+    onValidate: ({ name, isGroup, uuid }: Values) =>
+      findUsers(LISTING_ID, name, isGroup, uuid)
+  });
+
+  const isGroupProps = generateControlledInputProps<IsGroup>("isGroup");
+
   return (
     <div className="UserPermissions">
       <IconHeader icon="users" text="User Permissions" />
-      <Formik
-        initialValues={{
-          name: "",
-          uuid: ""
-        }}
-        onSubmit={() => {}}
-        validate={({ name, isGroup, uuid }: Values) =>
-          findUsers(LISTING_ID, name, isGroup, uuid)
-        }
-      >
-        <Form>
-          <label htmlFor="name">Name</label>
-          <Field name="name" type="text" />
-          <label htmlFor="uuid">UUID</label>
-          <Field name="uuid" type="text" />
-          <label htmlFor="isGroup">Is Group</label>
-          <Field name="isGroup" component="select" placeholder="Group">
-            <option value="">N/A</option>
-            <option value="Group">Group</option>
-            <option value="User">User</option>
-          </Field>
-        </Form>
-      </Formik>
+
+      <form>
+        <label htmlFor="name">Name</label>
+        <input {...nameProps} />
+        <label htmlFor="uuid">UUID</label>
+        <input {...uuidProps} />
+        <label htmlFor="isGroup">Is Group</label>
+        <IsGroupPicker {...isGroupProps} />
+      </form>
+
       <div className="UserTable__container">
         <Button text="Create" onClick={showNewDialog} />
         <Button
@@ -105,10 +112,10 @@ const UserPermissions = () => {
           onClick={showDeleteDialog}
         />
 
-        <ThemedConfirm {...deleteDialogProps} />
         <UsersTable {...tableProps} />
       </div>
 
+      <ThemedConfirm {...deleteDialogProps} />
       <NewUserDialog {...newDialogComponentProps} />
     </div>
   );

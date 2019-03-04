@@ -8,13 +8,13 @@ import { useActionCreators } from "./redux";
 
 export interface Props<T extends object> {
   docRefUuid: string;
-  saveDocument: (document: T) => void;
+  saveDocument: (docRefContents: T) => void;
 }
 
 export interface OutProps<T extends object> {
   isDirty: boolean;
   isSaving: boolean;
-  document?: T;
+  docRefContents?: T;
   editorProps: DocRefEditorProps;
   onDocumentChange: (updates: Partial<T>) => void;
 }
@@ -24,7 +24,7 @@ export function useDocRefEditor<T extends object>({
   saveDocument
 }: Props<T>): OutProps<T> {
   const { documentChangesMade } = useActionCreators();
-  const { isDirty, isSaving, document }: StoreStateById = useReduxState(
+  const { isDirty, isSaving, docRefContents }: StoreStateById = useReduxState(
     ({ docRefEditors }) => docRefEditors[docRefUuid] || defaultStatePerId,
     [docRefUuid]
   );
@@ -36,18 +36,20 @@ export function useDocRefEditor<T extends object>({
         disabled: !(isDirty || isSaving),
         title: isSaving ? "Saving..." : isDirty ? "Save" : "Saved",
         onClick: () => {
-          if (!!document) {
-            saveDocument((document as unknown) as T);
+          if (!!docRefContents) {
+            saveDocument((docRefContents as unknown) as T);
           }
         }
       }
     ] as Array<ButtonProps>;
-  }, [isSaving, isDirty, docRefUuid, document, saveDocument]);
+  }, [isSaving, isDirty, docRefUuid, docRefContents, saveDocument]);
 
   return {
     isDirty,
     isSaving,
-    document: !!document ? ((document as unknown) as T) : undefined,
+    docRefContents: !!docRefContents
+      ? ((docRefContents as unknown) as T)
+      : undefined,
     onDocumentChange: useCallback(
       (updates: Partial<T>) => documentChangesMade(docRefUuid, updates),
       [documentChangesMade, docRefUuid]

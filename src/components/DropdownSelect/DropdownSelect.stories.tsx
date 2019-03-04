@@ -22,8 +22,7 @@ import DropdownSelect, {
   DropdownOptionProps,
   PickerProps
 } from "./DropdownSelect";
-import { Formik, Field, FieldProps } from "formik";
-import FormikDebug from "../../lib/FormikDebug";
+import useForm, { FormDebug } from "../../lib/useForm";
 
 import "../../styles/main.css";
 
@@ -76,44 +75,38 @@ const WeekdayPicker = (props: PickerProps) => (
   <DropdownSelect {...props} options={weekdayOptions} />
 );
 
-const TestForm = () => (
-  <Formik
-    initialValues={{
-      color: ""
-    }}
-    onSubmit={(e: any) => console.log("Submitting", e)}
-  >
-    {({ setFieldValue }: Formik) => (
-      <React.Fragment>
-        <form>
-          <div>
-            <label>Colour</label>
-            <Field name="colour">
-              {({ field: { value } }: FieldProps) => (
-                <ColourPicker
-                  onChange={e => setFieldValue("colour", e)}
-                  value={value}
-                />
-              )}
-            </Field>
-          </div>
-          <div>
-            <label>Weekday</label>
-            <Field name="weekday">
-              {({ field: { value } }: FieldProps) => (
-                <WeekdayPicker
-                  onChange={e => setFieldValue("weekday", e)}
-                  value={value}
-                />
-              )}
-            </Field>
-          </div>
-        </form>
-        <FormikDebug />
-      </React.Fragment>
-    )}
-  </Formik>
-);
+interface FormValues {
+  colour?: string;
+  weekday?: string;
+}
+
+const initialValues: FormValues = {};
+
+const TestForm = () => {
+  const { currentValues, generateControlledInputProps } = useForm({
+    initialValues
+  });
+
+  const colourPickerProps = generateControlledInputProps<string>("colour");
+  const weekdayPickerProps = generateControlledInputProps<string>("weekday");
+
+  return (
+    <React.Fragment>
+      <form>
+        <div>
+          <label>Colour</label>
+          <ColourPicker {...colourPickerProps} />
+        </div>
+        <div>
+          <label>Weekday</label>
+          <WeekdayPicker {...weekdayPickerProps} />
+        </div>
+      </form>
+
+      <FormDebug currentValues={currentValues} />
+    </React.Fragment>
+  );
+};
 
 storiesOf("General Purpose/Dropdown Select", module)
   .addDecorator(StroomDecorator)
