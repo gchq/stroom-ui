@@ -21,23 +21,24 @@ export const IndexFieldEditor = ({
   onUpdateField,
   onCloseDialog
 }: Props) => {
-  const { onUpdate, currentValues: indexUpdates } = useForm<IndexField>(
-    indexField
-  );
+  const {
+    onUpdate,
+    currentValues: indexUpdates,
+    inputProps: {
+      text: { fieldName: fieldNameProps }
+    }
+  } = useForm<IndexField>({
+    initialValues: indexField,
+    inputs: { text: ["fieldName"] }
+  });
 
   const {
-    fieldName,
     fieldType,
     stored,
     termPositions,
     caseSensitive,
     analyzerType
   } = indexUpdates;
-
-  const onNameChange: React.ChangeEventHandler<HTMLInputElement> = useCallback(
-    ({ target: { value } }) => onUpdate({ fieldName: value }),
-    [onUpdate]
-  );
 
   const onConfirm = () => {
     onUpdateField(id, indexUpdates);
@@ -52,7 +53,7 @@ export const IndexFieldEditor = ({
         <React.Fragment>
           <form>
             <label>Field Name</label>
-            <input value={fieldName} onChange={onNameChange} />
+            <input {...fieldNameProps} />
             <label>Field Type</label>
             <IndexFieldTypePicker
               onChange={fieldType => onUpdate({ fieldType })}

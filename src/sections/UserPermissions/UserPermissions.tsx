@@ -11,7 +11,9 @@ import UsersTable, {
   useTable
 } from "../../components/UserPermissionEditor/UsersTable";
 import Button from "../../components/Button";
-import NewUserDialog, { useDialog as useNewUserDialog } from "./NewUserDialog";
+import NewUserDialog, {
+  useDialog as useNewUserDialog
+} from "./NewUserDialog/NewUserDialog";
 import ThemedConfirm, {
   useDialog as useThemedConfim
 } from "../../components/ThemedConfirm";
@@ -29,7 +31,7 @@ interface Values {
 
 const UserPermissions = () => {
   const { history } = useRouter();
-  const { findUsers, deleteUser } = useApi();
+  const { createUser, findUsers, deleteUser } = useApi();
 
   // Get data from and subscribe to the store
   const users = useReduxState(
@@ -38,7 +40,7 @@ const UserPermissions = () => {
 
   useEffect(() => {
     findUsers(LISTING_ID);
-  }, []);
+  }, [findUsers]);
 
   const { componentProps: tableProps } = useTable(users);
   const {
@@ -48,7 +50,7 @@ const UserPermissions = () => {
   const {
     componentProps: newDialogComponentProps,
     showDialog: showNewDialog
-  } = useNewUserDialog();
+  } = useNewUserDialog(createUser);
   const {
     componentProps: deleteDialogProps,
     showDialog: showDeleteDialog

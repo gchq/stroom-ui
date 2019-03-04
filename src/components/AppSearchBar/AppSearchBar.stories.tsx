@@ -14,8 +14,7 @@
  * limitations under the License.
  */
 import * as React from "react";
-import { useState } from "react";
-import { Formik, Field, FieldProps } from "formik";
+import { useState, useCallback } from "react";
 
 import { storiesOf } from "@storybook/react";
 
@@ -25,45 +24,63 @@ import AppSearchBar from "./AppSearchBar";
 
 import "../../styles/main.css";
 import { DocRefType } from "../../types";
-import FormikDebug from "../../lib/FormikDebug";
+import useForm from "../../lib/useForm";
 
 interface Props {
   typeFilters?: Array<string>;
 }
 
-let AppSearchAsForm = ({ typeFilters }: Props) => (
-  <Formik
-    initialValues={{
-      someName: "",
-      chosenDocRef: undefined
-    }}
-    onSubmit={() => {}}
-  >
-    {({ setFieldValue }: Formik) => (
-      <React.Fragment>
-        <form>
-          <div>
-            <label htmlFor="someName">Some Name</label>
-            <Field name="someName" type="text" />
-          </div>
-          <div>
-            <label>Chosen Doc Ref</label>
-            <Field name="chosenDocRef">
-              {({ field: { value } }: FieldProps) => (
-                <AppSearchBar
-                  typeFilters={typeFilters}
-                  onChange={e => setFieldValue("chosenDocRef", e)}
-                  value={value}
-                />
-              )}
-            </Field>
-          </div>
-        </form>
-        <FormikDebug />
-      </React.Fragment>
-    )}
-  </Formik>
-);
+interface FormValues {
+  someName: string;
+  chosenDocRef?: DocRefType;
+}
+const defaultValues: FormValues = {
+  someName: "",
+  chosenDocRef: undefined
+};
+
+let AppSearchAsForm = ({ typeFilters }: Props) => {
+  const {
+    onUpdate,
+    currentValues: { someName, chosenDocRef },
+    inputProps: {
+      text: { someName: someNameProps }
+    }
+  } = useForm<FormValues>({
+    initialValues: defaultValues,
+    inputs: { text: ["someName"] }
+  });
+
+  const onChosenDocRefChange = useCallback(
+    (chosenDocRef: DocRefType) => onUpdate({ chosenDocRef }),
+    [onUpdate]
+  );
+
+  return (
+    <form>
+      <div>
+        <label htmlFor="someName">Some Name</label>
+        <input {...someNameProps} />
+      </div>
+      <div>
+        <label>Chosen Doc Ref</label>
+        <AppSearchBar
+          typeFilters={typeFilters}
+          onChange={onChosenDocRefChange}
+          value={chosenDocRef}
+        />
+      </div>
+      <div>
+        <fieldset>
+          <label>Name</label>
+          <div>{someName}</div>
+          <label>Chosen Doc Ref</label>
+          <div>{JSON.stringify(chosenDocRef, null, 2)}</div>
+        </fieldset>
+      </div>
+    </form>
+  );
+};
 
 const AppSearchAsPicker = ({ typeFilters }: Props) => {
   const [pickedDocRef, setPickedDocRef] = useState<DocRefType | undefined>(
