@@ -26,7 +26,11 @@ export interface Props {
 
 const IndexVolumeEditor = ({ volumeId }: Props) => {
   const { history } = useRouter();
-  const volumeApi = useIndexVolumeApi();
+  const {
+    getGroupsForIndexVolume,
+    addVolumeToGroup,
+    removeVolumeFromGroup
+  } = useIndexVolumeApi();
   const { indexVolumes, groupsByIndexVolume } = useReduxState(
     ({ indexVolumes: { indexVolumes, groupsByIndexVolume } }) => ({
       indexVolumes,
@@ -35,8 +39,8 @@ const IndexVolumeEditor = ({ volumeId }: Props) => {
   );
 
   useEffect(() => {
-    volumeApi.getGroupsForIndexVolume(volumeId);
-  }, [volumeId]);
+    getGroupsForIndexVolume(volumeId);
+  }, [volumeId, getGroupsForIndexVolume]);
 
   const { componentProps: tableProps } = useIndexVolumeGroupsTable(
     groupsByIndexVolume[volumeId]
@@ -50,10 +54,10 @@ const IndexVolumeEditor = ({ volumeId }: Props) => {
     showDialog: showRemoveDialog,
     componentProps: removeDialogProps
   } = useConfirmDialog({
-    onConfirm: () =>
-      selectedItems.forEach(g =>
-        volumeApi.removeVolumeFromGroup(volumeId, g.name)
-      ),
+    onConfirm: useCallback(
+      () => selectedItems.forEach(g => removeVolumeFromGroup(volumeId, g.name)),
+      [selectedItems, removeVolumeFromGroup]
+    ),
     getQuestion: useCallback(() => "Remove volume from selected groups?", []),
     getDetails: useCallback(() => selectedItems.map(s => s.name).join(", "), [
       selectedItems.map(s => s.name)
@@ -65,8 +69,8 @@ const IndexVolumeEditor = ({ volumeId }: Props) => {
     showDialog: showIndexVolumeGroupPicker
   } = useIndexVolumeGroupModalPicker({
     onConfirm: useCallback(
-      (groupName: string) => volumeApi.addVolumeToGroup(volumeId, groupName),
-      [volumeId]
+      (groupName: string) => addVolumeToGroup(volumeId, groupName),
+      [volumeId, addVolumeToGroup]
     )
   });
 

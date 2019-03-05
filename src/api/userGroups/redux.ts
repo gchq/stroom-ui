@@ -21,6 +21,7 @@ import {
 } from "../../lib/redux-actions-ts";
 import { User } from "../../types";
 import { mapObject } from "../../lib/treeUtils";
+import { onlyUnique } from "../../lib/reduxUtils";
 
 const USERS_RECEIVED = "USERS_RECEIVED";
 const USERS_IN_GROUP_RECEIVED = "USERS_IN_GROUP_RECEIVED";
@@ -115,6 +116,7 @@ export const useActionCreators = genUseActionCreators({
 });
 
 export interface StoreState {
+  allUsers: Array<User>;
   users: {
     [listId: string]: Array<User>;
   };
@@ -127,6 +129,7 @@ export interface StoreState {
 }
 
 export const defaultState: StoreState = {
+  allUsers: [],
   users: {},
   usersInGroup: {},
   groupsForUser: {}
@@ -137,6 +140,7 @@ export const reducer = prepareReducer(defaultState)
     USERS_RECEIVED,
     (state: StoreState, { listId, users }) => ({
       ...state,
+      allUsers: state.allUsers.concat(users).filter(onlyUnique),
       users: {
         ...state.users,
         [listId]: users
@@ -147,6 +151,7 @@ export const reducer = prepareReducer(defaultState)
     USERS_IN_GROUP_RECEIVED,
     (state: StoreState, { groupUuid, users }) => ({
       ...state,
+      allUsers: state.allUsers.concat(users).filter(onlyUnique),
       usersInGroup: {
         ...state.usersInGroup,
         [groupUuid]: users
@@ -157,6 +162,7 @@ export const reducer = prepareReducer(defaultState)
     GROUPS_FOR_USER_RECEIEVED,
     (state: StoreState, { userUuid, groups }) => ({
       ...state,
+      allUsers: state.allUsers.concat(groups).filter(onlyUnique),
       groupsForUser: {
         ...state.groupsForUser,
         [userUuid]: groups
@@ -167,6 +173,7 @@ export const reducer = prepareReducer(defaultState)
     USER_CREATED,
     (state: StoreState, { user }) => ({
       ...state,
+      allUsers: state.allUsers.concat([user]),
       users: mapObject(state.users, (_, u: Array<User>) => u.concat(user))
     })
   )
@@ -174,6 +181,7 @@ export const reducer = prepareReducer(defaultState)
     USER_DELETED,
     (state: StoreState, { userUuid }) => ({
       ...state,
+      allUsers: state.allUsers.filter(u => u.uuid !== userUuid),
       users: mapObject(state.users, (_, users: Array<User>) =>
         users.filter(u => u.uuid !== userUuid)
       ),
@@ -189,8 +197,32 @@ export const reducer = prepareReducer(defaultState)
   .handleAction<UserAddedToGroupAction>(
     USER_ADDED_TO_GROUP,
     (state: StoreState, { userUuid, groupUuid }) => ({
-      ...state
-      // this seems somewhat incomplete
+      ...state,
+      usersInGroup: mapObject(
+        state.usersInGroup,
+        (gUuid, users: Array<User>) => {
+          if (gUuid === groupUuid) {
+            let newUser = state.allUsers.find(u => u.uuid === userUuid);
+            if (!!newUser) {
+              return users.concat([newUser]);
+            }
+          }
+          return users;
+        }
+      ),
+      groupsForUser: mapObject(
+        state.groupsForUser,
+        (uUuid, groups: Array<User>) => {
+          if (uUuid === userUuid) {
+            let newGroup = state.allUsers.find(g => g.uuid === groupUuid);
+            if (!!newGroup) {
+              return groups.concat([newGroup]);
+            }
+          }
+
+          return groups;
+        }
+      )
     })
   )
   .handleAction<UserRemovedFromGroupAction>(

@@ -3,11 +3,15 @@ import { useEffect, useCallback } from "react";
 
 import { User } from "../../../types";
 
-import useApi from "../../../api/userGroups/useApi";
+import useApi from "../../../api/userGroups";
 import useReduxState from "../../../lib/useReduxState";
 import Loader from "../../../components/Loader";
 import UsersTable, { useTable as useUsersTable } from "../UsersTable";
 import Button from "../../../components/Button";
+import {
+  UserGroupModalPicker,
+  useDialog as useUserGroupModalPicker
+} from "../UserGroupPicker";
 import ThemedConfirm, {
   useDialog as useThemedConfirm
 } from "../../../components/ThemedConfirm";
@@ -17,12 +21,10 @@ export interface Props {
 }
 
 const GroupsForUser = ({ user }: Props) => {
-  const { findGroupsForUser, removeUserFromGroup } = useApi();
+  const { findGroupsForUser, addUserToGroup, removeUserFromGroup } = useApi();
   useEffect(() => {
-    if (user) {
-      findGroupsForUser(user.uuid);
-    }
-  }, [!!user ? user.uuid : null]);
+    findGroupsForUser(user.uuid);
+  }, [user]);
 
   const groupsForUser = useReduxState(
     ({ userGroups: { groupsForUser } }) => groupsForUser
@@ -54,6 +56,16 @@ const GroupsForUser = ({ user }: Props) => {
     ])
   });
 
+  const {
+    componentProps: userGroupPickerProps,
+    showDialog: showUserGroupPicker
+  } = useUserGroupModalPicker({
+    onConfirm: useCallback(
+      (groupUuid: string) => addUserToGroup(user.uuid, groupUuid),
+      [addUserToGroup]
+    )
+  });
+
   if (!groups) {
     return <Loader message={`Loading Groups for User ${user.uuid}`} />;
   }
@@ -61,6 +73,7 @@ const GroupsForUser = ({ user }: Props) => {
   return (
     <div>
       <h2>Groups for User {user.name}</h2>
+      <Button text="Add to Group" onClick={showUserGroupPicker} />
       <Button
         text="Remove from Group"
         disabled={selectedItems.length === 0}
@@ -68,6 +81,7 @@ const GroupsForUser = ({ user }: Props) => {
       />
       <ThemedConfirm {...deleteGroupMembershipComponentProps} />
       <UsersTable {...tableProps} />
+      <UserGroupModalPicker {...userGroupPickerProps} />
     </div>
   );
 };

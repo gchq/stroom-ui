@@ -23,10 +23,8 @@ export interface ConnectState {
 const UsersInGroup = ({ group }: Props) => {
   const { findUsersInGroup, removeUserFromGroup } = useApi();
   useEffect(() => {
-    if (group) {
-      findUsersInGroup(group.uuid);
-    }
-  }, [!!group ? group.uuid : null]);
+    findUsersInGroup(group.uuid);
+  }, [group]);
 
   const { usersInGroup } = useReduxState(
     ({ userGroups: { usersInGroup } }) => ({
