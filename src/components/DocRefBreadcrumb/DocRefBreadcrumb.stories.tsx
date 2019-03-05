@@ -25,6 +25,7 @@ import { DocRefType } from "../../types";
 import { testPipelines } from "../PipelineEditor/test";
 
 import "../../styles/main.css";
+import JsonDebug from "../../lib/storybook/JsonDebug";
 
 interface Props {
   docRefUuid: string;
@@ -39,8 +40,7 @@ const BreadcrumbOpen = ({ docRefUuid }: Props) => {
     <div>
       <div>Doc Ref Breadcrumb</div>
       <DocRefBreadcrumb docRefUuid={docRefUuid} openDocRef={setOpenDocRef} />
-      <h2>Open Doc Ref</h2>
-      <div>{JSON.stringify(openDocRef)}</div>
+      <JsonDebug currentValues={openDocRef} />
     </div>
   );
 };

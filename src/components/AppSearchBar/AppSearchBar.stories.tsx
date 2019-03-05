@@ -25,7 +25,7 @@ import AppSearchBar from "./AppSearchBar";
 import "../../styles/main.css";
 import { DocRefType } from "../../types";
 import useForm from "../../lib/useForm";
-import FormDebug from "../../lib/useForm/FormDebug";
+import JsonDebug from "../../lib/storybook/JsonDebug";
 
 interface Props {
   typeFilters?: Array<string>;
@@ -67,7 +67,7 @@ let AppSearchAsForm = ({ typeFilters }: Props) => {
         <AppSearchBar typeFilters={typeFilters} {...chosenDocRefProps} />
       </div>
 
-      <FormDebug currentValues={currentValues} />
+      <JsonDebug currentValues={currentValues} />
     </form>
   );
 };

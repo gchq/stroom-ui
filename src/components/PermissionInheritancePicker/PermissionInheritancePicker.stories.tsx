@@ -22,7 +22,7 @@ import { addThemedStories } from "../../lib/themedStoryGenerator";
 import "../../styles/main.css";
 import useForm from "../../lib/useForm";
 import { PermissionInheritance } from "src/types";
-import FormDebug from "../../lib/useForm/FormDebug";
+import JsonDebug from "../../lib/storybook/JsonDebug";
 
 interface FormValues {
   permissionInheritance?: PermissionInheritance;
@@ -44,7 +44,7 @@ const TestForm = () => {
         <label>Chosen Permission Inheritance</label>
         <PermissionInheritancePicker {...permissionInheritanceProps} />
       </div>
-      <FormDebug currentValues={currentValues} />
+      <JsonDebug currentValues={currentValues} />
     </form>
   );
 };

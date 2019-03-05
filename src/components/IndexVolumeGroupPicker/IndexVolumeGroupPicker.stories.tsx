@@ -28,7 +28,8 @@ import { addThemedStories } from "../../lib/themedStoryGenerator";
 import "../../styles/main.css";
 import { useDialog } from "./IndexVolumeGroupModalPicker";
 import Button from "../Button";
-import useForm, { FormDebug } from "../../lib/useForm";
+import useForm from "../../lib/useForm";
+import JsonDebug from "../../lib/storybook/JsonDebug";
 
 interface FormValues {
   groupName?: string;
@@ -49,7 +50,7 @@ const TestForm: React.FunctionComponent = () => {
         <label>Chosen Index Volume Group</label>
         <IndexVolumeGroupPicker {...groupPickerProps} />
       </div>
-      <FormDebug currentValues={currentValues} />
+      <JsonDebug currentValues={currentValues} />
     </form>
   );
 };

@@ -22,7 +22,8 @@ import DropdownSelect, {
   DropdownOptionProps,
   PickerProps
 } from "./DropdownSelect";
-import useForm, { FormDebug } from "../../lib/useForm";
+import useForm from "../../lib/useForm";
+import JsonDebug from "../../lib/storybook/JsonDebug";
 
 import "../../styles/main.css";
 
@@ -103,7 +104,7 @@ const TestForm = () => {
         </div>
       </form>
 
-      <FormDebug currentValues={currentValues} />
+      <JsonDebug currentValues={currentValues} />
     </React.Fragment>
   );
 };

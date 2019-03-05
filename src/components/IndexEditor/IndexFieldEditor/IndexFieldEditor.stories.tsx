@@ -23,6 +23,7 @@ import IndexFieldEditor, { useEditor } from "./IndexFieldEditor";
 import { generateTestField } from "../test";
 import { IndexField } from "../../../types";
 import Button from "../../Button";
+import JsonDebug from "../../../lib/storybook/JsonDebug";
 
 const stories = storiesOf("Document Editors/Index/Field Editor", module);
 
@@ -44,10 +45,9 @@ const B: React.FunctionComponent = () => {
   return (
     <div>
       <h2>Index Field Editor</h2>
-      <p>Last ID: {lastId}</p>
-      <div>{JSON.stringify(indexField, null, 2)}</div>
       <Button text="Edit" onClick={onClick} />
       <IndexFieldEditor {...componentProps} />
+      <JsonDebug currentValues={{ FIELD_ID, lastId, indexField }} />
     </div>
   );
 };

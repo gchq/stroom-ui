@@ -121,10 +121,7 @@ export default [
       <AppChrome
         activeMenuItem="User Permissions"
         content={
-          <UserAuthorisationEditor
-            userUuid={props.match.params.userUuid}
-            listingId="app-chrome"
-          />
+          <UserAuthorisationEditor userUuid={props.match.params.userUuid} />
         }
       />
     )

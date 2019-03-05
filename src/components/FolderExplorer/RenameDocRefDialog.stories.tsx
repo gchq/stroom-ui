@@ -8,7 +8,7 @@ import { fromSetupSampleData } from "./test";
 import StroomDecorator from "../../lib/storybook/StroomDecorator";
 
 import "../../styles/main.css";
-import { FormDebug } from "../../lib/useForm";
+import JsonDebug from "../../lib/storybook/JsonDebug";
 
 const testDocRef = fromSetupSampleData.children![0].children![0].children![0];
 
@@ -28,7 +28,7 @@ const TestRenameDialog = ({ testDocRef }: Props) => {
       <h1>Rename Document Test</h1>
       <button onClick={() => showDialog(testDocRef)}>Show</button>
       <RenameDocRefDialog {...componentProps} />
-      <FormDebug currentValues={lastConfirmed} />
+      <JsonDebug currentValues={lastConfirmed} />
     </div>
   );
 };

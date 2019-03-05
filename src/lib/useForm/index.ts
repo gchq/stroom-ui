@@ -1,6 +1,5 @@
 import useForm from "./useForm";
-import FormDebug from "./FormDebug";
 
-export { useForm, FormDebug };
+export { useForm };
 
 export default useForm;

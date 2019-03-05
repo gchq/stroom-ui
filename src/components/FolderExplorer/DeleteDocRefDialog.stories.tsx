@@ -8,7 +8,7 @@ import { fromSetupSampleData } from "./test";
 import { DocRefType } from "../../types";
 
 import "../../styles/main.css";
-import { FormDebug } from "../../lib/useForm";
+import JsonDebug from "../../lib/storybook/JsonDebug";
 
 const testFolder2 = fromSetupSampleData.children![1];
 
@@ -25,7 +25,7 @@ const TestDeleteDialog = ({ testUuids }: Props) => {
     <div>
       <button onClick={() => showDialog(testUuids)}>Show</button>
       <DeleteDocRefDialog {...componentProps} />
-      <FormDebug currentValues={lastConfirmed} />
+      <JsonDebug currentValues={lastConfirmed} />
     </div>
   );
 };

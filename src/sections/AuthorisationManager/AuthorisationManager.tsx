@@ -1,10 +1,8 @@
 import * as React from "react";
-import { useEffect, useCallback } from "react";
+import { useCallback } from "react";
 
-import useReduxState from "../../lib/useReduxState";
-import useApi from "../../api/userGroups/useApi";
+import useApi, { useFindUsers } from "../../api/userGroups";
 import { IsGroup } from "../../api/userGroups/useApi";
-import { GlobalStoreState } from "../../startup/reducers";
 import IconHeader from "../../components/IconHeader";
 import UsersTable, { useTable } from "./UsersTable";
 import Button from "../../components/Button";
@@ -17,8 +15,6 @@ import ThemedConfirm, {
 import useRouter from "../../lib/useRouter";
 import useForm from "../../lib/useForm";
 import IsGroupPicker from "./IsGroupPicker/IsGroupPicker";
-
-const LISTING_ID = "user_permissions";
 
 export interface Props {}
 
@@ -36,16 +32,8 @@ const defaultValues: Values = {
 
 const Authorisation = () => {
   const { history } = useRouter();
-  const { createUser, findUsers, deleteUser } = useApi();
-
-  // Get data from and subscribe to the store
-  const users = useReduxState(
-    ({ authorisationManager: { users } }: GlobalStoreState) => users[LISTING_ID]
-  );
-
-  useEffect(() => {
-    findUsers(LISTING_ID);
-  }, [findUsers]);
+  const { findUsers, users } = useFindUsers();
+  const { createUser, deleteUser } = useApi();
 
   const { componentProps: tableProps } = useTable(users);
   const {
@@ -78,7 +66,7 @@ const Authorisation = () => {
     initialValues: defaultValues,
     inputs: { text: ["name", "uuid"] },
     onValidate: ({ name, isGroup, uuid }: Values) =>
-      findUsers(LISTING_ID, name, isGroup, uuid)
+      findUsers(name, isGroup, uuid)
   });
 
   const isGroupProps = generateControlledInputProps<IsGroup>("isGroup");

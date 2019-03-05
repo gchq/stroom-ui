@@ -32,10 +32,7 @@ const AuthorisationManagerWithRouter = () => (
       exact
       path="/s/authorisation/:userUuid"
       render={(props: RouteComponentProps<any>) => (
-        <UserAuthorisationEditor
-          userUuid={props.match.params.userUuid}
-          listingId="storybook"
-        />
+        <UserAuthorisationEditor userUuid={props.match.params.userUuid} />
       )}
     />
     <Route component={AuthorisationManager} />

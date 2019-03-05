@@ -22,9 +22,10 @@ import "../../../styles/main.css";
 import NewUserDialog, { useDialog } from "./NewUserDialog";
 import Button from "../../../components/Button";
 import StroomDecorator from "../../../lib/storybook/StroomDecorator";
+import JsonDebug from "../../../lib/storybook/JsonDebug";
 
 const stories = storiesOf(
-  "Sections/User Permissions/New User Dialog",
+  "Sections/Authorisation Manager/New User Dialog",
   module
 ).addDecorator(StroomDecorator);
 
@@ -40,7 +41,7 @@ const B: React.FunctionComponent = () => {
       <Button text="Edit" onClick={showDialog} />
       <fieldset>
         <label>Last Value</label>
-        <div>{JSON.stringify(newUser, null, 2)}</div>
+        <JsonDebug currentValues={newUser} />
       </fieldset>
       <NewUserDialog {...componentProps} />
     </div>

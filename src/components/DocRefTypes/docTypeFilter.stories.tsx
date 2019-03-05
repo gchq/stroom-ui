@@ -23,7 +23,7 @@ import DocRefTypePicker from "./DocRefTypePicker";
 
 import "../../styles/main.css";
 import useForm from "../../lib/useForm";
-import FormDebug from "../../lib/useForm/FormDebug";
+import JsonDebug from "../../lib/storybook/JsonDebug";
 
 interface FormValues {
   docRefType?: string;
@@ -53,7 +53,7 @@ const TestForm = () => {
         <DocTypeFilters {...multipleDocRefTypeProps} />
       </div>
 
-      <FormDebug currentValues={currentValues} />
+      <JsonDebug currentValues={currentValues} />
     </form>
   );
 };

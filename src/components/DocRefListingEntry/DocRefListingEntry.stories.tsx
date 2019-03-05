@@ -32,7 +32,6 @@ const testFolder = fullTestData.documentTree;
 const testDocRef = fullTestData.documentTree.children![0].children![0];
 
 interface Props {
-  listingId: string;
   docRefs: Array<DocRefType>;
   dndIsOver?: boolean;
   dndCanDrop?: boolean;
@@ -124,32 +123,20 @@ let TestDocRefListingEntry = ({
 
 storiesOf("Doc Ref/Listing Entry", module)
   .addDecorator(StroomDecorator)
-  .add("docRef", () => (
-    <TestDocRefListingEntry listingId="one" docRefs={[testDocRef]} />
-  ))
+  .add("docRef", () => <TestDocRefListingEntry docRefs={[testDocRef]} />)
   .add("docRef isOver canDrop", () => (
-    <TestDocRefListingEntry
-      listingId="two"
-      docRefs={[testDocRef]}
-      dndIsOver
-      dndCanDrop
-    />
+    <TestDocRefListingEntry docRefs={[testDocRef]} dndIsOver dndCanDrop />
   ))
   .add("docRef isOver cannotDrop", () => (
     <TestDocRefListingEntry
-      listingId="three"
       docRefs={[testDocRef]}
       dndIsOver
       dndCanDrop={false}
     />
   ))
   .add("folder", () => (
-    <TestDocRefListingEntry listingId="four" docRefs={testFolder.children!} />
+    <TestDocRefListingEntry docRefs={testFolder.children!} />
   ))
   .add("folder (w/breadcrumbs)", () => (
-    <TestDocRefListingEntry
-      listingId="four"
-      docRefs={testFolder.children!}
-      provideBreadcrumbs
-    />
+    <TestDocRefListingEntry docRefs={testFolder.children!} provideBreadcrumbs />
   ));

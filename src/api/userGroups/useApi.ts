@@ -7,7 +7,7 @@ import { User } from "../../types";
 
 export type IsGroup = "User" | "Group" | "" | undefined;
 
-interface Api {
+export interface Api {
   fetchUser: (uuid: string) => Promise<User>;
   findUsers: (
     listId: string,

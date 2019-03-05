@@ -12,10 +12,9 @@ import { User } from "../../../types";
 
 export interface Props {
   userUuid: string;
-  listingId: string;
 }
 
-const UserAuthorisationEditor = ({ listingId, userUuid }: Props) => {
+const UserAuthorisationEditor = ({ userUuid }: Props) => {
   const { history } = useRouter();
   const { fetchUser } = useApi();
   const [user, setUser] = useState<User | undefined>(undefined);

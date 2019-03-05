@@ -8,7 +8,7 @@ import { DocRefType } from "../../types";
 import StroomDecorator from "../../lib/storybook/StroomDecorator";
 
 import "../../styles/main.css";
-import { FormDebug } from "../../lib/useForm";
+import JsonDebug from "../../lib/storybook/JsonDebug";
 
 const testFolder2 = fromSetupSampleData.children![1];
 
@@ -30,7 +30,7 @@ const TestNewDocRefDialog = ({ testDestination }: Props) => {
       <h1>Create Doc Ref Test</h1>
       <button onClick={() => showDialog(testDestination)}>Show</button>
       <CreateDocRefDialog {...componentProps} />
-      <FormDebug currentValues={lastConfirmed} />
+      <JsonDebug currentValues={lastConfirmed} />
     </div>
   );
 };

@@ -30,8 +30,8 @@ import {
 } from "./Authentication";
 
 import {
-  reducer as authorisationManager,
-  StoreState as UserStoreState
+  reducer as userGroups,
+  StoreState as UserGroupStoreState
 } from "../api/userGroups";
 import {
   reducer as folderExplorer,
@@ -80,7 +80,7 @@ export interface GlobalStoreState {
   debuggers: DebuggersStoreState;
   processing: ProcessingStoreState;
   dataViewers: DataViewersStoreState;
-  authorisationManager: UserStoreState;
+  userGroups: UserGroupStoreState;
   indexVolumeGroups: IndexVolumeGroupStoreState;
   indexVolumes: IndexVolumeStoreState;
   docRefEditors: DocRefEditorStoreState;
@@ -97,7 +97,7 @@ export default combineReducers({
   debuggers,
   processing,
   dataViewers,
-  authorisationManager,
+  userGroups,
   indexVolumeGroups,
   indexVolumes,
   docRefEditors,

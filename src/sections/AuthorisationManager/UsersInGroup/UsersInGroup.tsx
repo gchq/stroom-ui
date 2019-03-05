@@ -29,7 +29,7 @@ const UsersInGroup = ({ group }: Props) => {
   }, [!!group ? group.uuid : null]);
 
   const { usersInGroup } = useReduxState(
-    ({ authorisationManager: { usersInGroup } }) => ({
+    ({ userGroups: { usersInGroup } }) => ({
       usersInGroup
     })
   );

@@ -10,7 +10,7 @@ import CopyDocRefDialog, {
 
 import "../../styles/main.css";
 import { PermissionInheritance, DocRefType } from "../../types";
-import { FormDebug } from "../../lib/useForm";
+import JsonDebug from "../../lib/storybook/JsonDebug";
 
 const testFolder2 = fromSetupSampleData.children![1];
 
@@ -38,7 +38,7 @@ const TestCopyDialog = ({ testUuids, testDestination }: Props) => {
         Show
       </button>
       <CopyDocRefDialog {...componentProps} />
-      <FormDebug currentValues={lastConfirmed} />
+      <JsonDebug currentValues={lastConfirmed} />
     </div>
   );
 };
