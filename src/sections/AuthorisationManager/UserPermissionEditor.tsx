@@ -1,15 +1,14 @@
 import * as React from "react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
-import useReduxState from "../../lib/useReduxState/useReduxState";
-import IconHeader from "../IconHeader";
-import Button from "../Button";
+import IconHeader from "../../components/IconHeader";
+import Button from "../../components/Button";
 import UsersInGroup from "./UsersInGroup";
 import GroupsForUser from "./GroupsForUser";
-import { GlobalStoreState } from "../../startup/reducers";
-import useApi from "../../sections/UserPermissions/useUserPermissionsApi";
-import Loader from "../Loader";
+import useApi from "./useUserPermissionsApi";
+import Loader from "../../components/Loader";
 import useRouter from "../../lib/useRouter";
+import { User } from "../../types";
 
 export interface Props {
   userUuid: string;
@@ -18,16 +17,11 @@ export interface Props {
 
 const UserPermissionEditor = ({ listingId, userUuid }: Props) => {
   const { history } = useRouter();
-  const { findUsers } = useApi();
+  const { fetchUser } = useApi();
+  const [user, setUser] = useState<User | undefined>(undefined);
   useEffect(() => {
-    findUsers(listingId, undefined, undefined, userUuid);
+    fetchUser(userUuid).then(setUser);
   }, []);
-
-  const user = useReduxState(
-    ({ userPermissions: { users } }: GlobalStoreState) =>
-      users[listingId] && users[listingId].find(u => u.uuid === userUuid),
-    [listingId, userUuid]
-  );
 
   if (!user) {
     return <Loader message="Loading user..." />;
@@ -36,7 +30,7 @@ const UserPermissionEditor = ({ listingId, userUuid }: Props) => {
   return (
     <div>
       <IconHeader text={`Permissions for ${user.name}`} icon="user" />
-      <Button text="Back" onClick={() => history.push("/s/userPermissions")} />
+      <Button text="Back" onClick={() => history.push("/s/authorisation")} />
 
       {user.isGroup ? (
         <UsersInGroup group={user} />

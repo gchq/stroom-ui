@@ -12,11 +12,12 @@ import IFrame from "../components/IFrame";
 import ErrorPage from "../components/ErrorPage";
 
 import { RouteComponentProps, RouteProps } from "react-router";
-import UserPermissions from "../sections/UserPermissions";
+import AuthorisationManager, {
+  UserPermissionEditor
+} from "../sections/AuthorisationManager";
 import IndexVolumes from "../sections/IndexVolumes";
 import IndexVolumeGroups from "../sections/IndexVolumeGroups";
 import IndexVolumeGroupEditor from "../components/IndexVolumeGroupEditor";
-import UserPermissionEditor from "../components/UserPermissionEditor";
 import useConfig from "../startup/useConfig";
 import Loader from "../components/Loader";
 
@@ -105,17 +106,17 @@ export default [
   },
   {
     exact: true,
-    path: "/s/userPermissions",
+    path: "/s/authorisationManager",
     render: () => (
       <AppChrome
         activeMenuItem="User Permissions"
-        content={<UserPermissions />}
+        content={<AuthorisationManager />}
       />
     )
   },
   {
     exact: true,
-    path: "/s/userPermissions/:userUuid",
+    path: "/s/authorisationManager/:userUuid",
     render: (props: RouteComponentProps<any>) => (
       <AppChrome
         activeMenuItem="User Permissions"

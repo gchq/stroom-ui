@@ -8,6 +8,7 @@ import { User } from "../../types";
 export type IsGroup = "User" | "Group" | "" | undefined;
 
 interface Api {
+  fetchUser: (uuid: string) => Promise<User>;
   findUsers: (
     listId: string,
     name?: string,
@@ -43,6 +44,18 @@ const useApi = (): Api => {
   if (!store) {
     throw new Error("Could not get Redux Store for processing Thunks");
   }
+
+  const fetchUser = useCallback(
+    (userUuid: string): Promise<User> => {
+      const state = store.getState();
+      var url = new URL(
+        `${state.config.values.stroomBaseServiceUrl}/users/v1/${userUuid}`
+      );
+
+      return httpGetJson(url.href, {}, true);
+    },
+    [httpGetJson]
+  );
 
   const findUsers = useCallback(
     (
@@ -157,6 +170,7 @@ const useApi = (): Api => {
   );
 
   return {
+    fetchUser,
     addUserToGroup,
     createUser,
     deleteUser,

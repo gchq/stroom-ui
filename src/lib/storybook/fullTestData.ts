@@ -37,7 +37,7 @@ import { dataList, dataSource } from "../../sections/DataViewer/test";
 import {
   generateTestUser,
   generateTestGroup
-} from "../../sections/UserPermissions/test";
+} from "../../sections/AuthorisationManager/test";
 import {
   generateTestIndexVolumeGroup,
   generateTestIndexVolume

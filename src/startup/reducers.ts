@@ -30,9 +30,9 @@ import {
 } from "./Authentication";
 
 import {
-  reducer as userPermissions,
+  reducer as authorisationManager,
   StoreState as UserStoreState
-} from "../sections/UserPermissions/redux";
+} from "../sections/AuthorisationManager/redux";
 import {
   reducer as folderExplorer,
   StoreState as FolderExplorerStoreState
@@ -80,7 +80,7 @@ export interface GlobalStoreState {
   debuggers: DebuggersStoreState;
   processing: ProcessingStoreState;
   dataViewers: DataViewersStoreState;
-  userPermissions: UserStoreState;
+  authorisationManager: UserStoreState;
   indexVolumeGroups: IndexVolumeGroupStoreState;
   indexVolumes: IndexVolumeStoreState;
   docRefEditors: DocRefEditorStoreState;
@@ -97,7 +97,7 @@ export default combineReducers({
   debuggers,
   processing,
   dataViewers,
-  userPermissions,
+  authorisationManager,
   indexVolumeGroups,
   indexVolumes,
   docRefEditors,

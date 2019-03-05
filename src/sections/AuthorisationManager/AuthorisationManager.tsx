@@ -5,9 +5,7 @@ import useReduxState from "../../lib/useReduxState/useReduxState";
 import useApi, { IsGroup } from "./useUserPermissionsApi";
 import { GlobalStoreState } from "../../startup/reducers";
 import IconHeader from "../../components/IconHeader";
-import UsersTable, {
-  useTable
-} from "../../components/UserPermissionEditor/UsersTable";
+import UsersTable, { useTable } from "./UsersTable";
 import Button from "../../components/Button";
 import NewUserDialog, {
   useDialog as useNewUserDialog
@@ -17,7 +15,7 @@ import ThemedConfirm, {
 } from "../../components/ThemedConfirm";
 import useRouter from "../../lib/useRouter";
 import useForm from "../../lib/useForm";
-import IsGroupPicker from "./IsGroupPicker";
+import IsGroupPicker from "./IsGroupPicker/IsGroupPicker";
 
 const LISTING_ID = "user_permissions";
 
@@ -35,13 +33,13 @@ const defaultValues: Values = {
   isGroup: ""
 };
 
-const UserPermissions = () => {
+const Authorisation = () => {
   const { history } = useRouter();
   const { createUser, findUsers, deleteUser } = useApi();
 
   // Get data from and subscribe to the store
   const users = useReduxState(
-    ({ userPermissions: { users } }: GlobalStoreState) => users[LISTING_ID]
+    ({ authorisationManager: { users } }: GlobalStoreState) => users[LISTING_ID]
   );
 
   useEffect(() => {
@@ -85,7 +83,7 @@ const UserPermissions = () => {
   const isGroupProps = generateControlledInputProps<IsGroup>("isGroup");
 
   return (
-    <div className="UserPermissions">
+    <div className="Authorisation">
       <IconHeader icon="users" text="User Permissions" />
 
       <form>
@@ -103,7 +101,7 @@ const UserPermissions = () => {
           text="View/Edit"
           disabled={selectedItems.length !== 1}
           onClick={() =>
-            history.push(`/s/userPermissions/${selectedItems[0].uuid}`)
+            history.push(`/s/authorisation/${selectedItems[0].uuid}`)
           }
         />
         <Button
@@ -121,4 +119,4 @@ const UserPermissions = () => {
   );
 };
 
-export default UserPermissions;
+export default Authorisation;

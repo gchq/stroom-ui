@@ -14,9 +14,16 @@
  * limitations under the License.
  */
 
-import UserPermissions from "./UserPermissions";
+import AuthorisationManager from "./AuthorisationManager";
+import UserPermissionEditor from "./UserPermissionEditor";
 import { useActionCreators, reducer, StoreState } from "./redux";
 
-export { UserPermissions, useActionCreators, reducer, StoreState };
+export {
+  AuthorisationManager,
+  UserPermissionEditor,
+  useActionCreators,
+  reducer,
+  StoreState
+};
 
-export default UserPermissions;
+export default AuthorisationManager;

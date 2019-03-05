@@ -2,8 +2,8 @@ import * as React from "react";
 import { useCallback } from "react";
 
 import Select from "react-select";
-import { SelectOptionType } from "../../types";
-import { IsGroup } from "./useUserPermissionsApi";
+import { SelectOptionType } from "../../../types";
+import { IsGroup } from "../useUserPermissionsApi";
 
 export interface Props {
   value?: IsGroup;

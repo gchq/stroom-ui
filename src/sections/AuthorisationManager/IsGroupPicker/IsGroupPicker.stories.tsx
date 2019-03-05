@@ -19,10 +19,10 @@ import { useState } from "react";
 
 import { storiesOf } from "@storybook/react";
 
-import "../../styles/main.css";
-import { addThemedStories } from "../../lib/themedStoryGenerator";
+import "../../../styles/main.css";
+import { addThemedStories } from "../../../lib/themedStoryGenerator";
 import IsGroupPicker from "./IsGroupPicker";
-import { IsGroup } from "./useUserPermissionsApi";
+import { IsGroup } from "../useUserPermissionsApi";
 
 const IsGroupPickerInForm = () => {
   const [isGroup, setIsGroup] = useState<IsGroup>("");

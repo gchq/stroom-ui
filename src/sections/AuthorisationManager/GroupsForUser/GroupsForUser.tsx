@@ -3,39 +3,33 @@ import { useEffect, useCallback } from "react";
 
 import { User } from "../../../types";
 
-import useApi from "../../../sections/UserPermissions/useUserPermissionsApi";
-import Loader from "../../Loader";
+import useApi from "../../../sections/AuthorisationManager/useUserPermissionsApi";
 import useReduxState from "../../../lib/useReduxState";
+import Loader from "../../../components/Loader";
 import UsersTable, { useTable as useUsersTable } from "../UsersTable";
-import Button from "../../Button";
+import Button from "../../../components/Button";
 import ThemedConfirm, {
   useDialog as useThemedConfirm
-} from "../../ThemedConfirm";
+} from "../../../components/ThemedConfirm";
 
 export interface Props {
-  group: User;
+  user: User;
 }
 
-export interface ConnectState {
-  users: Array<User>;
-}
-
-const UsersInGroup = ({ group }: Props) => {
-  const { findUsersInGroup, removeUserFromGroup } = useApi();
+const GroupsForUser = ({ user }: Props) => {
+  const { findGroupsForUser, removeUserFromGroup } = useApi();
   useEffect(() => {
-    if (group) {
-      findUsersInGroup(group.uuid);
+    if (user) {
+      findGroupsForUser(user.uuid);
     }
-  }, [!!group ? group.uuid : null]);
+  }, [!!user ? user.uuid : null]);
 
-  const { usersInGroup } = useReduxState(
-    ({ userPermissions: { usersInGroup } }) => ({
-      usersInGroup
-    })
+  const groupsForUser = useReduxState(
+    ({ authorisationManager: { groupsForUser } }) => groupsForUser
   );
-  const users = usersInGroup[group.uuid];
+  const groups = groupsForUser[user.uuid];
 
-  const { componentProps: tableProps } = useUsersTable(users);
+  const { componentProps: tableProps } = useUsersTable(groups);
   const {
     selectableTableProps: { selectedItems }
   } = tableProps;
@@ -47,12 +41,12 @@ const UsersInGroup = ({ group }: Props) => {
     onConfirm: useCallback(
       () =>
         selectedItems
-          .map(s => s.uuid)
-          .forEach(uUuid => removeUserFromGroup(uUuid, group.uuid)),
-      [removeUserFromGroup, group, selectedItems]
+          .map(g => g.uuid)
+          .forEach(gUuid => removeUserFromGroup(user.uuid, gUuid)),
+      [removeUserFromGroup, user, selectedItems]
     ),
     getQuestion: useCallback(
-      () => "Are you sure you want to remove these users from the group?",
+      () => "Are you sure you want to remove the user from these groups?",
       []
     ),
     getDetails: useCallback(() => selectedItems.map(s => s.name).join(", "), [
@@ -60,13 +54,13 @@ const UsersInGroup = ({ group }: Props) => {
     ])
   });
 
-  if (!users) {
-    return <Loader message={`Loading Users for Group ${group.uuid}`} />;
+  if (!groups) {
+    return <Loader message={`Loading Groups for User ${user.uuid}`} />;
   }
 
   return (
     <div>
-      <h2>Users in Group {group.name}</h2>
+      <h2>Groups for User {user.name}</h2>
       <Button
         text="Delete"
         disabled={selectedItems.length === 0}
@@ -78,4 +72,4 @@ const UsersInGroup = ({ group }: Props) => {
   );
 };
 
-export default UsersInGroup;
+export default GroupsForUser;

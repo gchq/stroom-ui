@@ -261,11 +261,10 @@ const AppChrome = ({ content }: Props) => {
         {
           key: "admin-user-permissions",
           title: "User Permissions",
-          onClick: () => history.push(`${pathPrefix}/userPermissions`),
+          onClick: () => history.push(`${pathPrefix}/authorisation`),
           icon: "users",
           style: "nav",
-          isActive:
-            !!location && location.pathname.includes("/s/userPermissions")
+          isActive: !!location && location.pathname.includes("/s/authorisation")
         },
         {
           key: "admin-users",

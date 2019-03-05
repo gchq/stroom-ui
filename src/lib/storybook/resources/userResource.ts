@@ -39,6 +39,16 @@ const resourceBuilder: ResourceBuilder = (
       res.json(newUser);
     });
   server
+    .get(`${testConfig.stroomBaseServiceUrl}/users/v1/:userUuid`)
+    .intercept((req: HttpRequest, res: HttpResponse) => {
+      let userUuid = req.params.userUuid;
+      let user = testCache.data!.usersAndGroups.users.find(
+        u => u.uuid === userUuid
+      );
+
+      res.json(user);
+    });
+  server
     .get(`${testConfig.stroomBaseServiceUrl}/users/v1`)
     .intercept((req: HttpRequest, res: HttpResponse) => {
       const { name, uuid, isGroup } = req.query;
