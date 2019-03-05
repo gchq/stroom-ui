@@ -17,11 +17,8 @@
 import PipelineEditor from "./PipelineEditor";
 import Pipeline from "./Pipeline";
 
-import usePipelineApi from "./usePipelineApi";
-import useElements from "./useElements";
-
 import { testPipelines } from "./test";
 
-export { PipelineEditor, Pipeline, useElements, testPipelines, usePipelineApi };
+export { PipelineEditor, Pipeline, testPipelines };
 
 export default PipelineEditor;

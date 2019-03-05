@@ -31,7 +31,7 @@ import DeletePipelineElement, {
   useDialog as useDeleteElementDialog
 } from "./DeletePipelineElement";
 import { ElementDetails } from "./ElementDetails";
-import usePipelineApi from "./usePipelineApi";
+import usePipelineApi from "../../api/pipelineDocument";
 import Pipeline from "./Pipeline";
 import DocRefEditor from "../DocRefEditor";
 import usePipelineState from "./usePipelineState";

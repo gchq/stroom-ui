@@ -25,7 +25,7 @@ import { useActionCreators } from "./redux";
 import DebuggerStep from "./DebuggerStep";
 import { getNext, getPrevious } from "./pipelineDebugger.utils";
 import useReduxState from "../../lib/useReduxState";
-import usePipelineApi from "../PipelineEditor/usePipelineApi";
+import usePipelineApi from "../../api/pipelineDocument";
 import usePipelineState from "../PipelineEditor/usePipelineState";
 
 export interface Props {

@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-import useExplorerApi from "./useExplorerApi";
+import useApi from "../../api/explorer";
 import { DocRefTypeList } from "../../types";
 import useReduxState from "../../lib/useReduxState";
 
@@ -12,7 +12,7 @@ const useDocRefTypes = (): OutProps => {
   const docRefTypes = useReduxState(
     ({ folderExplorer: { docRefTypes } }) => docRefTypes
   );
-  const { fetchDocRefTypes } = useExplorerApi();
+  const { fetchDocRefTypes } = useApi();
 
   useEffect(fetchDocRefTypes, [fetchDocRefTypes]);
 

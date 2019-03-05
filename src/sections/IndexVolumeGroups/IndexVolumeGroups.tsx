@@ -2,7 +2,7 @@ import * as React from "react";
 import { useEffect, useCallback } from "react";
 
 import useReduxState from "../../lib/useReduxState/useReduxState";
-import useApi from "./useIndexVolumeGroupApi";
+import useApi from "../../api/indexVolumeGroup/useApi";
 import IndexVolumeGroupsTable, { useTable } from "./IndexVolumeGroupsTable";
 import Button from "../../components/Button";
 import NewIndexVolumeGroupDialog, {

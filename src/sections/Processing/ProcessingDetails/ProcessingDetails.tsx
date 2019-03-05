@@ -19,7 +19,7 @@ import * as moment from "moment";
 import { useCallback } from "react";
 
 import { useActionCreators } from "../redux";
-import useApi from "../useStreamTasksApi";
+import useApi from "../../../api/streamTasks/useApi";
 import HorizontalPanel from "../../../components/HorizontalPanel";
 import useReduxState from "../../../lib/useReduxState";
 

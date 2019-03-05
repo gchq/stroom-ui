@@ -23,7 +23,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Tooltip from "../../../components/Tooltip";
 import IconHeader from "../../../components/IconHeader";
 import { useActionCreators } from "../redux";
-import useApi from "../useStreamTasksApi";
+import useApi from "../../../api/streamTasks/useApi";
 import ProcessingDetails from "../ProcessingDetails/ProcessingDetails";
 import ProcessingList from "../ProcessingList/ProcessingList";
 import { StreamTaskType } from "../../../types";

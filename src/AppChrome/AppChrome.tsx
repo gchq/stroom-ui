@@ -24,7 +24,7 @@ import MenuItem, {
   MenuItemOpened
 } from "./MenuItem";
 
-import useExplorerApi from "../components/FolderExplorer/useExplorerApi";
+import useExplorerApi from "../api/explorer/useApi";
 import useSelectableItemListing from "../lib/useSelectableItemListing";
 import { DocRefType, DocRefConsumer, DocRefTree } from "../types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -260,11 +260,12 @@ const AppChrome = ({ content }: Props) => {
         },
         {
           key: "admin-user-permissions",
-          title: "User Permissions",
-          onClick: () => history.push(`${pathPrefix}/authorisation`),
+          title: "User Authorisation",
+          onClick: () => history.push(`${pathPrefix}/authorisationManager`),
           icon: "users",
           style: "nav",
-          isActive: !!location && location.pathname.includes("/s/authorisation")
+          isActive:
+            !!location && location.pathname.includes("/s/authorisationManager")
         },
         {
           key: "admin-users",

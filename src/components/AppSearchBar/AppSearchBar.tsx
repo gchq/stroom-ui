@@ -6,7 +6,7 @@ import { findItem, filterTree } from "../../lib/treeUtils";
 import { DocRefType, DocRefTree, DocRefWithLineage } from "../../types";
 import { DocRefBreadcrumb } from "../DocRefBreadcrumb";
 import DocRefListingEntry from "../DocRefListingEntry";
-import useExplorerApi from "../FolderExplorer/useExplorerApi";
+import useExplorerApi from "../../api/explorer/useApi";
 
 import ModeOptionButtons, { SearchMode } from "./ModeOptionButtons";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";

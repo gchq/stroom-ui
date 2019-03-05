@@ -3,7 +3,7 @@ import { useEffect, useCallback } from "react";
 
 import { User } from "../../../types";
 
-import useApi from "../../../sections/AuthorisationManager/useUserPermissionsApi";
+import useApi from "../../../api/userGroups/useApi";
 import useReduxState from "../../../lib/useReduxState";
 import Loader from "../../../components/Loader";
 import UsersTable, { useTable as useUsersTable } from "../UsersTable";

@@ -19,7 +19,7 @@ import FetchAdapter, {
   HttpResponse
 } from "@pollyjs/adapter-fetch";
 
-import { useHttpClient } from "../useHttpClient";
+import { useHttpClient } from "../../api/useHttpClient";
 import { Config } from "../../startup/config";
 import { TestData } from "../test/testTypes";
 

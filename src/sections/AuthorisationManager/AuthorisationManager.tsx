@@ -2,7 +2,8 @@ import * as React from "react";
 import { useEffect, useCallback } from "react";
 
 import useReduxState from "../../lib/useReduxState/useReduxState";
-import useApi, { IsGroup } from "./useUserPermissionsApi";
+import useApi from "../../api/userGroups/useApi";
+import { IsGroup } from "../../api/userGroups/useApi";
 import { GlobalStoreState } from "../../startup/reducers";
 import IconHeader from "../../components/IconHeader";
 import UsersTable, { useTable } from "./UsersTable";

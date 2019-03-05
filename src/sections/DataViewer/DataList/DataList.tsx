@@ -24,8 +24,8 @@ import ReactTable, { RowInfo, Column } from "react-table";
 import "react-table/react-table.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import useStreamAttributeMapApi from "../useStreamAttributeMapApi";
-import useDataApi from "../useDataApi";
+import useStreamAttributeMapApi from "../../../api/streamAttributeMap/useApi";
+import useDataApi from "../../../api/data/useApi";
 import { useActionCreators, defaultStatePerId } from "../redux";
 
 import Loader from "../../../components/Loader";

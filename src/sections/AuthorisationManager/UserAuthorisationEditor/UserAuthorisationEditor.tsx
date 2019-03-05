@@ -5,7 +5,7 @@ import IconHeader from "../../../components/IconHeader";
 import Button from "../../../components/Button";
 import UsersInGroup from "../UsersInGroup";
 import GroupsForUser from "../GroupsForUser";
-import useApi from "../useUserPermissionsApi";
+import useApi from "../../../api/userGroups/useApi";
 import Loader from "../../../components/Loader";
 import useRouter from "../../../lib/useRouter";
 import { User } from "../../../types";

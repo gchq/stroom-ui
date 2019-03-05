@@ -19,7 +19,7 @@ import { useEffect } from "react";
 
 import DocRefEditor, { useDocRefEditor } from "../DocRefEditor";
 import Loader from "../Loader";
-import useApi from "./useXsltApi";
+import useApi from "../../api/xsltDocument";
 import ThemedAceEditor from "../ThemedAceEditor";
 import { XsltDoc } from "../../types";
 

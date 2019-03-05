@@ -20,7 +20,7 @@ import { useCallback } from "react";
 import DocRefEditor from "../DocRefEditor";
 import Loader from "../Loader";
 import { findItem } from "../../lib/treeUtils";
-import useExplorerApi from "./useExplorerApi";
+import useExplorerApi from "../../api/explorer/useApi";
 import DndDocRefListingEntry from "./DndDocRefListingEntry";
 import CreateDocRefDialog, {
   useDialog as useCreateDialog

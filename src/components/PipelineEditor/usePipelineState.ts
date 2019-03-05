@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState, useCallback } from "react";
 
-import usePipelineApi from "./usePipelineApi";
+import usePipelineApi from "../../api/pipelineDocument";
 import { useDocRefEditor, UseDocRefEditorOutProps } from "../DocRefEditor";
 import {
   PipelineModelType,

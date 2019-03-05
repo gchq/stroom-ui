@@ -40,11 +40,11 @@ import {
 import {
   reducer as pipelineEditor,
   StoreState as PipelineEditorStoreState
-} from "../components/PipelineEditor/pipelineSearch";
+} from "../api/pipelineDocument";
 import {
   reducer as elements,
   StoreState as ElementStoreState
-} from "../components/PipelineEditor/useElements";
+} from "../api/elements";
 import {
   reducer as debuggers,
   StoreState as DebuggersStoreState

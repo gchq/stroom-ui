@@ -30,7 +30,7 @@ import {
   SortByOptions,
   sortByFromString
 } from "../redux";
-import useApi from "../useStreamTasksApi";
+import useApi from "../../../api/streamTasks/useApi";
 import { StreamTaskType } from "../../../types";
 import useReduxState from "../../../lib/useReduxState";
 

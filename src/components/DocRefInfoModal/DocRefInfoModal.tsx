@@ -21,7 +21,7 @@ import Loader from "../Loader";
 import ThemedModal from "../ThemedModal";
 import IconHeader from "../IconHeader";
 import Button from "../Button";
-import useExplorerApi from "../FolderExplorer/useExplorerApi";
+import useExplorerApi from "../../api/explorer/useApi";
 import { DocRefType } from "../../types";
 
 export interface Props {

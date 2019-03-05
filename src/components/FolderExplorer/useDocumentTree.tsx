@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 
-import useReduxState from "../../lib/useReduxState/useReduxState";
+import useReduxState from "../../lib/useReduxState";
 import { GlobalStoreState } from "../../startup/reducers";
-import useExplorerApi from "./useExplorerApi";
+import useApi from "../../api/explorer";
 import { DocRefTree } from "../../types";
 
 export const useDocumentTree = (): DocRefTree => {
@@ -11,7 +11,7 @@ export const useDocumentTree = (): DocRefTree => {
       folderExplorer: { waitingForTree, documentTree }
     }: GlobalStoreState) => ({ documentTree, waitingForTree })
   );
-  const { fetchDocTree } = useExplorerApi();
+  const { fetchDocTree } = useApi();
 
   useEffect(() => {
     if (waitingForTree) {

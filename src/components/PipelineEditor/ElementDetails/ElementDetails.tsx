@@ -27,7 +27,7 @@ import {
   PipelineModelType
 } from "../../../types";
 import Loader from "../../../components/Loader";
-import useElements from "../useElements";
+import useElements from "../../../api/elements";
 import { PipelineEditApi } from "../usePipelineState";
 
 export interface Props {

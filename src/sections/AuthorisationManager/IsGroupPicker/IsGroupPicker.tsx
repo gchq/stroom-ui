@@ -3,7 +3,7 @@ import { useCallback } from "react";
 
 import Select from "react-select";
 import { SelectOptionType } from "../../../types";
-import { IsGroup } from "../useUserPermissionsApi";
+import { IsGroup } from "../../../api/userGroups/useApi";
 
 export interface Props {
   value?: IsGroup;

@@ -1,6 +1,12 @@
 {
   "extends": [],
   "defaultSeverity": "warning",
+  "rules": {
+    "no-empty": true
+  },
+  "jsRules": {
+    "no-empty": true
+  },
   "linterOptions": {
     "exclude": [
       "config/**/*.js",
