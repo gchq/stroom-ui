@@ -14,7 +14,11 @@ import ThemedConfirm, {
 } from "../../components/ThemedConfirm";
 import useRouter from "../../lib/useRouter";
 import useForm from "../../lib/useForm";
-import IsGroupFilterPicker from "./IsGroupFilterPicker/IsGroupFilterPicker";
+import IsGroupFilterPicker from "./IsGroupFilterPicker";
+import {
+  UserGroupModalPicker,
+  useDialog as useGroupModalDialog
+} from "./UserGroupPicker";
 
 export interface Props {}
 
@@ -33,7 +37,7 @@ const defaultValues: Values = {
 const Authorisation = () => {
   const { history } = useRouter();
   const { findUsers, users } = useFindUsers();
-  const { createUser, deleteUser } = useApi();
+  const { createUser, deleteUser, addUserToGroup } = useApi();
 
   const { componentProps: tableProps } = useTable(users);
   const {
@@ -71,6 +75,19 @@ const Authorisation = () => {
 
   const isGroupProps = generateControlledInputProps<IsGroup>("isGroup");
 
+  const {
+    componentProps: userGroupPickerProps,
+    showDialog: showGroupPicker
+  } = useGroupModalDialog({
+    onConfirm: useCallback(
+      (groupUuid: string) =>
+        selectedItems.forEach(u => {
+          addUserToGroup(u.uuid, groupUuid);
+        }),
+      [addUserToGroup, selectedItems]
+    )
+  });
+
   return (
     <div className="Authorisation">
       <IconHeader icon="users" text="User Permissions" />
@@ -94,6 +111,13 @@ const Authorisation = () => {
           }
         />
         <Button
+          text="Add to Group"
+          disabled={
+            selectedItems.length === 0 || !!selectedItems.find(u => u.isGroup)
+          }
+          onClick={showGroupPicker}
+        />
+        <Button
           text="Delete"
           disabled={selectedItems.length === 0}
           onClick={showDeleteDialog}
@@ -102,6 +126,7 @@ const Authorisation = () => {
         <UsersTable {...tableProps} />
       </div>
 
+      <UserGroupModalPicker {...userGroupPickerProps} />
       <ThemedConfirm {...deleteDialogProps} />
       <NewUserDialog {...newDialogComponentProps} />
     </div>

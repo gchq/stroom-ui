@@ -64,10 +64,13 @@ const IndexVolumes = () => {
     showDialog: showAddToGroupDialog,
     componentProps: addToGroupProps
   } = useIndexVolumeGroupModalPicker({
-    onConfirm: groupName =>
-      selectedItems
-        .map(v => v.id)
-        .forEach(vId => addVolumeToGroup(vId, groupName))
+    onConfirm: useCallback(
+      groupName =>
+        selectedItems
+          .map(v => v.id)
+          .forEach(vId => addVolumeToGroup(vId, groupName)),
+      [addVolumeToGroup, selectedItems]
+    )
   });
 
   const onViewClick: React.MouseEventHandler<HTMLButtonElement> = useCallback(

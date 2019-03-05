@@ -68,7 +68,7 @@ const UsersInGroup = ({ group }: Props) => {
     <div>
       <h2>Users in Group {group.name}</h2>
       <Button
-        text="Delete"
+        text="Remove Users"
         disabled={selectedItems.length === 0}
         onClick={showDeleteGroupMembershipDialog}
       />

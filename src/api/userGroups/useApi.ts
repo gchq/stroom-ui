@@ -17,7 +17,7 @@ export interface Api {
   ) => void;
   findUsersInGroup: (groupUuid: string) => void;
   findGroupsForUser: (userUuid: string) => void;
-  createUser: (name: string, isGroup: boolean) => void;
+  createUser: (name: string, isGroup: boolean) => Promise<User>;
   deleteUser: (uuid: string) => void;
   addUserToGroup: (userUuid: string, groupUuid: string) => void;
   removeUserFromGroup: (userUuid: string, groupUuid: string) => void;
@@ -126,7 +126,10 @@ export const useApi = (): Api => {
         isGroup
       });
 
-      httpPostJsonResponse(url, { body }).then(userCreated);
+      let p: Promise<User> = httpPostJsonResponse(url, { body });
+      p.then(userCreated);
+
+      return p;
     },
     [httpPostJsonResponse, userCreated]
   );

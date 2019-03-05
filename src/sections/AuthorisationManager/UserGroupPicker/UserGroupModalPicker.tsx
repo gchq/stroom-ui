@@ -1,14 +1,14 @@
 import * as React from "react";
 import { useState, useCallback } from "react";
 
-import IndexVolumeGroupPicker, { usePicker } from "./IndexVolumeGroupPicker";
+import UserGroupPicker, { usePicker } from "./UserGroupPicker";
 import ThemedModal from "../../../components/ThemedModal";
 import IconHeader from "../../../components/IconHeader";
 import Button, { DialogActionButtons } from "../../../components/Button";
-import useIndexVolumeGroupApi from "../../../api/indexVolumeGroup";
+import useUserGroupApi from "../../../api/userGroups";
 
 export interface BaseProps {
-  onConfirm: (groupName: string) => void;
+  onConfirm: (groupUuid: string) => void;
 }
 
 export interface Props extends BaseProps {
@@ -16,21 +16,18 @@ export interface Props extends BaseProps {
   setIsOpen: (i: boolean) => void;
 }
 
-export const IndexVolumeGroupModalPicker = ({
+export const UserGroupModalPicker = ({
   onConfirm,
   isOpen,
   setIsOpen
 }: Props) => {
-  const volumeGroupPickerProps = usePicker();
-  const {
-    reset: resetVolumeGroup,
-    value: volumeGroupName
-  } = volumeGroupPickerProps;
+  const useGroupPickerProps = usePicker();
+  const { reset: resetUserGroup, value: userGroupUuid } = useGroupPickerProps;
 
   const [isNewGroup, setIsNewGroup] = useState<boolean>(false);
   const [newGroupName, setNewGroupName] = useState<string>("");
 
-  const { createIndexVolumeGroup } = useIndexVolumeGroupApi();
+  const { createUser } = useUserGroupApi();
 
   const onNewGroupNameChange: React.ChangeEventHandler<
     HTMLInputElement
@@ -46,34 +43,33 @@ export const IndexVolumeGroupModalPicker = ({
   const newGroupButtonText = isNewGroup ? "Choose Existing" : "Create New";
 
   const onClose = useCallback(() => {
-    resetVolumeGroup();
+    resetUserGroup();
     setIsOpen(false);
     setIsNewGroup(false);
-  }, [resetVolumeGroup, setIsOpen, setIsNewGroup]);
+  }, [resetUserGroup, setIsOpen, setIsNewGroup]);
 
   const onConfirmLocal = useCallback(() => {
     if (isNewGroup) {
-      createIndexVolumeGroup(newGroupName);
-      onConfirm(newGroupName);
-    } else if (!!volumeGroupName) {
-      onConfirm(volumeGroupName);
+      createUser(newGroupName, true).then(newGroup => onConfirm(newGroup.uuid));
+    } else if (!!userGroupUuid) {
+      onConfirm(userGroupUuid);
     }
     onClose();
-  }, [onClose, onConfirm, newGroupName, isNewGroup, createIndexVolumeGroup]);
+  }, [onConfirm, onClose, createUser, newGroupName, isNewGroup]);
 
   return (
     <ThemedModal
       isOpen={isOpen}
-      header={<IconHeader icon="plus" text="Add Volume to Group" />}
+      header={<IconHeader icon="plus" text="Add Users to Group" />}
       content={
         <div>
           {isNewGroup ? (
             <React.Fragment>
-              <label>New Group Name</label>
+              <label>New User Group Name</label>
               <input value={newGroupName} onChange={onNewGroupNameChange} />
             </React.Fragment>
           ) : (
-            <IndexVolumeGroupPicker {...volumeGroupPickerProps} />
+            <UserGroupPicker {...useGroupPickerProps} />
           )}
 
           <Button text={newGroupButtonText} onClick={toggleNewGroup} />
@@ -104,4 +100,4 @@ export const useDialog = (props: BaseProps): UseDialog => {
   };
 };
 
-export default IndexVolumeGroupModalPicker;
+export default UserGroupModalPicker;

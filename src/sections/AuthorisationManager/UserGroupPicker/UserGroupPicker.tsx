@@ -3,35 +3,30 @@ import { useEffect, useState } from "react";
 
 import Select from "react-select";
 
-import useApi from "../../../api/indexVolumeGroup";
+import { useFindUsers } from "../../../api/userGroups";
 import { SelectOptionType } from "../../../types";
-import useReduxState from "../../../lib/useReduxState";
 
 export interface Props {
   value?: string;
   onChange: (v: string) => any;
 }
 
-const IndexVolumeGroupPicker = ({ value, onChange }: Props) => {
-  const {getIndexVolumeGroupNames} = useApi();
+const UserGroupGroupPicker = ({ value, onChange }: Props) => {
+  const { findUsers, users: groups } = useFindUsers();
   useEffect(() => {
-    getIndexVolumeGroupNames();
-  }, [getIndexVolumeGroupNames]);
+    findUsers(undefined, "Group", undefined);
+  }, [findUsers]);
 
-  const groupNames = useReduxState(
-    ({ indexVolumeGroups: { groupNames } }) => groupNames
-  );
-
-  const options: Array<SelectOptionType> = groupNames.map(n => ({
-    value: n,
-    label: n
+  const options: Array<SelectOptionType> = groups.map(g => ({
+    value: g.uuid,
+    label: g.name
   }));
 
   return (
     <Select
       value={options.find(o => o.value === value)}
       onChange={(o: SelectOptionType) => onChange(o.value)}
-      placeholder="Index Volume Group"
+      placeholder="User Group"
       options={options}
     />
   );
@@ -51,4 +46,4 @@ export const usePicker = (): UseProps => {
   };
 };
 
-export default IndexVolumeGroupPicker;
+export default UserGroupGroupPicker;

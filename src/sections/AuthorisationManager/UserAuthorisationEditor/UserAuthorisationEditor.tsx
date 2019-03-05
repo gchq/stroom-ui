@@ -1,14 +1,12 @@
 import * as React from "react";
-import { useEffect, useState } from "react";
 
 import IconHeader from "../../../components/IconHeader";
 import Button from "../../../components/Button";
 import UsersInGroup from "../UsersInGroup";
 import GroupsForUser from "../GroupsForUser";
-import useApi from "../../../api/userGroups/useApi";
+import { useUser } from "../../../api/userGroups";
 import Loader from "../../../components/Loader";
 import useRouter from "../../../lib/useRouter";
-import { User } from "../../../types";
 
 export interface Props {
   userUuid: string;
@@ -16,19 +14,17 @@ export interface Props {
 
 const UserAuthorisationEditor = ({ userUuid }: Props) => {
   const { history } = useRouter();
-  const { fetchUser } = useApi();
-  const [user, setUser] = useState<User | undefined>(undefined);
-  useEffect(() => {
-    fetchUser(userUuid).then(setUser);
-  }, []);
+  const user = useUser(userUuid);
 
   if (!user) {
     return <Loader message="Loading user..." />;
   }
 
+  const title = user.isGroup ? `Group ${user.name}` : `User ${user.name}`;
+
   return (
     <div>
-      <IconHeader text={`Permissions for ${user.name}`} icon="user" />
+      <IconHeader text={title} icon="user" />
       <Button text="Back" onClick={() => history.push("/s/authorisation")} />
 
       {user.isGroup ? (

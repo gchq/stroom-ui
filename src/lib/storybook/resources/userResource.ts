@@ -10,6 +10,49 @@ const resourceBuilder: ResourceBuilder = (
   testConfig: Config,
   testCache: TestCache
 ) => {
+  // Get User by UUID
+  server
+    .get(`${testConfig.stroomBaseServiceUrl}/users/v1/:userUuid`)
+    .intercept((req: HttpRequest, res: HttpResponse) => {
+      let userUuid = req.params.userUuid;
+      let user = testCache.data!.usersAndGroups.users.find(
+        u => u.uuid === userUuid
+      );
+
+      res.json(user);
+    });
+
+  // Find Users
+  server
+    .get(`${testConfig.stroomBaseServiceUrl}/users/v1`)
+    .intercept((req: HttpRequest, res: HttpResponse) => {
+      const { name, uuid, isGroup } = req.query;
+      let filtered = testCache
+        .data!.usersAndGroups.users.filter(
+          u => name === undefined || u.name.includes(name)
+        )
+        .filter(u => uuid === undefined || u.uuid === uuid)
+        .filter(
+          u =>
+            isGroup === undefined || Boolean(u.isGroup).toString() === isGroup
+        );
+      res.json(filtered);
+    });
+
+  // Create User
+  server
+    .post(`${testConfig.stroomBaseServiceUrl}/users/v1`)
+    .intercept((req: HttpRequest, res: HttpResponse) => {
+      const { name, isGroup } = JSON.parse(req.body);
+      let newUser = { name, isGroup, uuid: uuidv4() };
+
+      testCache.data!.usersAndGroups.users = testCache.data!.usersAndGroups.users.concat(
+        [newUser]
+      );
+
+      res.json(newUser);
+    });
+  // Delete User
   server
     .delete(`${testConfig.stroomBaseServiceUrl}/users/v1/:userUuid`)
     .intercept((req: HttpRequest, res: HttpResponse) => {
@@ -26,43 +69,7 @@ const resourceBuilder: ResourceBuilder = (
       res.send(undefined);
       // res.sendStatus(204);
     });
-  server
-    .post(`${testConfig.stroomBaseServiceUrl}/users/v1`)
-    .intercept((req: HttpRequest, res: HttpResponse) => {
-      const { name, isGroup } = JSON.parse(req.body);
-      let newUser = { name, isGroup, uuid: uuidv4() };
-
-      testCache.data!.usersAndGroups.users = testCache.data!.usersAndGroups.users.concat(
-        [newUser]
-      );
-
-      res.json(newUser);
-    });
-  server
-    .get(`${testConfig.stroomBaseServiceUrl}/users/v1/:userUuid`)
-    .intercept((req: HttpRequest, res: HttpResponse) => {
-      let userUuid = req.params.userUuid;
-      let user = testCache.data!.usersAndGroups.users.find(
-        u => u.uuid === userUuid
-      );
-
-      res.json(user);
-    });
-  server
-    .get(`${testConfig.stroomBaseServiceUrl}/users/v1`)
-    .intercept((req: HttpRequest, res: HttpResponse) => {
-      const { name, uuid, isGroup } = req.query;
-      let filtered = testCache
-        .data!.usersAndGroups.users.filter(
-          u => name === undefined || u.name.includes(name)
-        )
-        .filter(u => uuid === undefined || u.uuid === uuid)
-        .filter(
-          u =>
-            isGroup === undefined || Boolean(u.isGroup).toString() === isGroup
-        );
-      res.json(filtered);
-    });
+  // Users in Group
   server
     .get(`${testConfig.stroomBaseServiceUrl}/users/v1/usersInGroup/:groupUuid`)
     .intercept((req: HttpRequest, res: HttpResponse) => {
@@ -79,6 +86,8 @@ const resourceBuilder: ResourceBuilder = (
 
       res.json(users);
     });
+
+  // Groups for User
   server
     .get(`${testConfig.stroomBaseServiceUrl}/users/v1/groupsForUser/:userUuid`)
     .intercept((req: HttpRequest, res: HttpResponse) => {
@@ -93,6 +102,39 @@ const resourceBuilder: ResourceBuilder = (
             .find(user => user.uuid === groupUuid)
         );
       res.json(users);
+    });
+
+  // Add User to Group
+  server
+    .put(`${testConfig.stroomBaseServiceUrl}/users/v1/:userUuid/:groupUuid`)
+    .intercept((req: HttpRequest, res: HttpResponse) => {
+      testCache.data!.usersAndGroups.userGroupMemberships = testCache.data!.usersAndGroups.userGroupMemberships.concat(
+        [
+          {
+            userUuid: req.params.userUuid,
+            groupUuid: req.params.groupUuid
+          }
+        ]
+      );
+
+      res.send(undefined);
+      // res.sendStatus(204);
+    });
+
+  // Remove User from Group
+  server
+    .delete(`${testConfig.stroomBaseServiceUrl}/users/v1/:userUuid/:groupUuid`)
+    .intercept((req: HttpRequest, res: HttpResponse) => {
+      testCache.data!.usersAndGroups.userGroupMemberships = testCache.data!.usersAndGroups.userGroupMemberships.filter(
+        m =>
+          !(
+            m.groupUuid === req.params.groupUuid &&
+            m.userUuid === req.params.userUuid
+          )
+      );
+
+      res.send(undefined);
+      // res.sendStatus(204);
     });
 };
 
