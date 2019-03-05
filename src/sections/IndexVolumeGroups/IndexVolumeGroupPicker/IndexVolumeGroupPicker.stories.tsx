@@ -19,17 +19,17 @@ import { useState } from "react";
 
 import { storiesOf } from "@storybook/react";
 
-import StroomDecorator from "../../lib/storybook/StroomDecorator";
+import StroomDecorator from "../../../lib/storybook/StroomDecorator";
 
 import IndexVolumeGroupPicker from "./IndexVolumeGroupPicker";
 import IndexVolumeGroupModalPicker from "./IndexVolumeGroupModalPicker";
-import { addThemedStories } from "../../lib/themedStoryGenerator";
+import { addThemedStories } from "../../../lib/themedStoryGenerator";
 
-import "../../styles/main.css";
+import "../../../styles/main.css";
 import { useDialog } from "./IndexVolumeGroupModalPicker";
-import Button from "../Button";
-import useForm from "../../lib/useForm";
-import JsonDebug from "../../lib/storybook/JsonDebug";
+import Button from "../../../components/Button";
+import useForm from "../../../lib/useForm";
+import JsonDebug from "../../../lib/storybook/JsonDebug";
 
 interface FormValues {
   groupName?: string;

@@ -25,7 +25,7 @@ const IS_GROUP_OPTIONS: Array<SelectOptionType> = [
   }
 ];
 
-const IsGroupPicker = ({ value, onChange }: Props) => (
+const IsGroupFilterPicker = ({ value, onChange }: Props) => (
   <Select
     value={IS_GROUP_OPTIONS.find(o => o.value === value)}
     onChange={useCallback(
@@ -37,4 +37,4 @@ const IsGroupPicker = ({ value, onChange }: Props) => (
   />
 );
 
-export default IsGroupPicker;
+export default IsGroupFilterPicker;

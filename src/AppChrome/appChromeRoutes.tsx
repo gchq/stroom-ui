@@ -17,7 +17,7 @@ import AuthorisationManager, {
 } from "../sections/AuthorisationManager";
 import IndexVolumes from "../sections/IndexVolumes";
 import IndexVolumeGroups from "../sections/IndexVolumeGroups";
-import IndexVolumeGroupEditor from "../components/IndexVolumeGroupEditor";
+import IndexVolumeGroupEditor from "../sections/IndexVolumeGroups/IndexVolumeGroupEditor";
 import useConfig from "../startup/useConfig";
 import Loader from "../components/Loader";
 

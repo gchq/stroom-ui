@@ -24,7 +24,7 @@ import IndexVolumes from "./IndexVolumes";
 
 import "../../styles/main.css";
 import { Switch, Route, RouteComponentProps } from "react-router";
-import IndexVolumeEditor from "../../components/IndexVolumeEditor";
+import IndexVolumeEditor from "./IndexVolumeEditor";
 
 const IndexVolumeGroupsWithRouter = () => (
   <Switch>

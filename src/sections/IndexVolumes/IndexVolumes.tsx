@@ -15,7 +15,7 @@ import IndexVolumesTable, { useTable } from "./IndexVolumesTable";
 import {
   IndexVolumeGroupModalPicker,
   useIndexVolumeGroupModalPicker
-} from "../../components/IndexVolumeGroupPicker";
+} from "../IndexVolumeGroups/IndexVolumeGroupPicker";
 import useRouter from "../../lib/useRouter";
 
 export interface Props {}

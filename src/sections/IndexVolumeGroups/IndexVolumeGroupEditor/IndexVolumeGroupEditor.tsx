@@ -1,21 +1,18 @@
 import * as React from "react";
 import { useEffect, useCallback } from "react";
 
-import IconHeader from "../IconHeader";
-import Button from "../Button";
-import useRouter from "../../lib/useRouter";
-import useIndexVolumeGroupApi from "../../api/indexVolumeGroup";
-import {
-  useIndexVolumeApi,
-  useIndexVolumesTable,
-  IndexVolumesTable
-} from "../../sections/IndexVolumes";
+import IconHeader from "../../../components/IconHeader";
+import Button from "../../../components/Button";
+import useRouter from "../../../lib/useRouter";
+import useIndexVolumeGroupApi from "../../../api/indexVolumeGroup";
+import useIndexVolumeApi from "../../../api/indexVolume";
+import { useIndexVolumesTable, IndexVolumesTable } from "../../IndexVolumes";
 import ThemedConfirm, {
   useDialog as useConfirmDialog
-} from "../../components/ThemedConfirm";
-import useReduxState from "../../lib/useReduxState";
-import { IndexVolumeGroup } from "../../types";
-import Loader from "../Loader";
+} from "../../../components/ThemedConfirm";
+import useReduxState from "../../../lib/useReduxState";
+import { IndexVolumeGroup } from "../../../types";
+import Loader from "../../../components/Loader";
 
 export interface Props {
   groupName: string;

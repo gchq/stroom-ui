@@ -21,15 +21,15 @@ import { storiesOf } from "@storybook/react";
 
 import "../../../styles/main.css";
 import { addThemedStories } from "../../../lib/themedStoryGenerator";
-import IsGroupPicker from "./IsGroupPicker";
+import IsGroupFilterPicker from "./IsGroupFilterPicker";
 import { IsGroup } from "../../../api/userGroups/useApi";
 
-const IsGroupPickerInForm = () => {
+const IsGroupFilterPickerInForm = () => {
   const [isGroup, setIsGroup] = useState<IsGroup>("");
 
   return (
     <div>
-      <IsGroupPicker value={isGroup} onChange={setIsGroup} />
+      <IsGroupFilterPicker value={isGroup} onChange={setIsGroup} />
 
       <fieldset>
         <label>Current Value</label>
@@ -40,4 +40,4 @@ const IsGroupPickerInForm = () => {
 };
 
 const pickerStories = storiesOf("Pickers/IsGroup", module);
-addThemedStories(pickerStories, <IsGroupPickerInForm />);
+addThemedStories(pickerStories, <IsGroupFilterPickerInForm />);

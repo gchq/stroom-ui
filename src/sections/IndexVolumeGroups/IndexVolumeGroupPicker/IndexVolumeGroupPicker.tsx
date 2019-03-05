@@ -3,9 +3,9 @@ import { useEffect, useState } from "react";
 
 import Select from "react-select";
 
-import useApi from "../../api/indexVolumeGroup/useApi";
-import { SelectOptionType } from "../../types";
-import useReduxState from "../../lib/useReduxState";
+import useApi from "../../../api/indexVolumeGroup";
+import { SelectOptionType } from "../../../types";
+import useReduxState from "../../../lib/useReduxState";
 
 export interface Props {
   value?: string;

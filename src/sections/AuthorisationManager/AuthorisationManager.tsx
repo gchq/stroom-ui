@@ -14,7 +14,7 @@ import ThemedConfirm, {
 } from "../../components/ThemedConfirm";
 import useRouter from "../../lib/useRouter";
 import useForm from "../../lib/useForm";
-import IsGroupPicker from "./IsGroupPicker/IsGroupPicker";
+import IsGroupFilterPicker from "./IsGroupFilterPicker/IsGroupFilterPicker";
 
 export interface Props {}
 
@@ -81,7 +81,7 @@ const Authorisation = () => {
         <label htmlFor="uuid">UUID</label>
         <input {...uuidProps} />
         <label htmlFor="isGroup">Is Group</label>
-        <IsGroupPicker {...isGroupProps} />
+        <IsGroupFilterPicker {...isGroupProps} />
       </form>
 
       <div className="UserTable__container">
