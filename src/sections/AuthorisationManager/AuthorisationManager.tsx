@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useEffect, useCallback } from "react";
 
-import useReduxState from "../../lib/useReduxState/useReduxState";
+import useReduxState from "../../lib/useReduxState";
 import useApi from "../../api/userGroups/useApi";
 import { IsGroup } from "../../api/userGroups/useApi";
 import { GlobalStoreState } from "../../startup/reducers";

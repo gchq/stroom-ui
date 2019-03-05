@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useEffect, useCallback } from "react";
 
-import useReduxState from "../../lib/useReduxState/useReduxState";
+import useReduxState from "../../lib/useReduxState";
 import useApi from "../../api/indexVolume/useApi";
 import IconHeader from "../../components/IconHeader";
 import Button from "../../components/Button";

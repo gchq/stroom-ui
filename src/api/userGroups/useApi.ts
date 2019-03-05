@@ -1,7 +1,7 @@
 import { useContext, useCallback } from "react";
 import { StoreContext } from "redux-react-hook";
 
-import { useActionCreators } from "../../sections/AuthorisationManager/redux";
+import { useActionCreators } from "./redux";
 import useHttpClient from "../useHttpClient";
 import { User } from "../../types";
 

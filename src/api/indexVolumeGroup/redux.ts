@@ -24,7 +24,7 @@ import { onlyUnique } from "../../lib/reduxUtils";
 import {
   IndexGroupsForVolumeReceivedAction,
   INDEX_GROUPS_FOR_VOLUME_RECEIVED
-} from "../IndexVolumes/redux";
+} from "../indexVolume/redux";
 
 const INDEX_VOLUME_GROUP_NAMES_RECEIVED = "INDEX_VOLUME_GROUP_NAMES_RECEIVED";
 const INDEX_VOLUME_GROUPS_RECEIVED = "INDEX_VOLUME_GROUPS_RECEIVED";

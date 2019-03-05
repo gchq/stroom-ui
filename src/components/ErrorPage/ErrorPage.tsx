@@ -16,7 +16,7 @@
 
 import * as React from "react";
 
-import useReduxState from "../../lib/useReduxState/useReduxState";
+import useReduxState from "../../lib/useReduxState";
 import IconHeader from "../IconHeader";
 import ErrorSection from "./ErrorSection";
 

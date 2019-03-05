@@ -1,7 +1,7 @@
 import { useContext, useCallback } from "react";
 import { StoreContext } from "redux-react-hook";
 
-import { useActionCreators } from "../../sections/IndexVolumes/redux";
+import { useActionCreators } from "./redux";
 import useHttpClient from "../useHttpClient";
 import { IndexVolume, IndexVolumeGroup } from "../../types";
 

@@ -32,11 +32,11 @@ import {
 import {
   reducer as authorisationManager,
   StoreState as UserStoreState
-} from "../sections/AuthorisationManager/redux";
+} from "../api/userGroups";
 import {
   reducer as folderExplorer,
   StoreState as FolderExplorerStoreState
-} from "../components/FolderExplorer/redux";
+} from "../api/explorer";
 import {
   reducer as pipelineEditor,
   StoreState as PipelineEditorStoreState
@@ -52,11 +52,11 @@ import {
 import {
   reducer as indexVolumeGroups,
   StoreState as IndexVolumeGroupStoreState
-} from "../sections/IndexVolumeGroups";
+} from "../api/indexVolumeGroup";
 import {
   reducer as indexVolumes,
   StoreState as IndexVolumeStoreState
-} from "../sections/IndexVolumes";
+} from "../api/indexVolume";
 import {
   reducer as processing,
   StoreState as ProcessingStoreState
@@ -64,7 +64,7 @@ import {
 import {
   reducer as dataViewers,
   StoreState as DataViewersStoreState
-} from "../sections/DataViewer";
+} from "../api/data";
 import {
   reducer as docRefEditors,
   StoreState as DocRefEditorStoreState

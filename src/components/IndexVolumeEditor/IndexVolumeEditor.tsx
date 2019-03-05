@@ -6,9 +6,9 @@ import Button from "../Button";
 import useRouter from "../../lib/useRouter";
 import { useIndexVolumeApi } from "../../sections/IndexVolumes";
 import {
-  useIndexVolumeGroupsTable,
+  useTable as useIndexVolumeGroupsTable,
   IndexVolumeGroupsTable
-} from "../../sections/IndexVolumeGroups";
+} from "../../sections/IndexVolumeGroups/IndexVolumeGroupsTable";
 import {
   useIndexVolumeGroupModalPicker,
   IndexVolumeGroupModalPicker

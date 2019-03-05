@@ -16,7 +16,7 @@
 import * as React from "react";
 import { useState, useEffect, useCallback } from "react";
 
-import useReduxState from "../../lib/useReduxState/useReduxState";
+import useReduxState from "../../lib/useReduxState";
 import Loader from "../Loader";
 import ThemedModal from "../ThemedModal";
 import IconHeader from "../IconHeader";

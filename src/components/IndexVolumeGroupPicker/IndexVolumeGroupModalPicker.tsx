@@ -5,7 +5,7 @@ import IndexVolumeGroupPicker, { usePicker } from "./IndexVolumeGroupPicker";
 import ThemedModal from "../ThemedModal";
 import IconHeader from "../IconHeader";
 import Button, { DialogActionButtons } from "../Button";
-import { useIndexVolumeGroupApi } from "../../sections/IndexVolumeGroups";
+import useIndexVolumeGroupApi from "../../api/indexVolumeGroup";
 
 export interface BaseProps {
   onConfirm: (groupName: string) => void;

@@ -4,7 +4,7 @@ import { useEffect, useCallback } from "react";
 import IconHeader from "../IconHeader";
 import Button from "../Button";
 import useRouter from "../../lib/useRouter";
-import { useIndexVolumeGroupApi } from "../../sections/IndexVolumeGroups";
+import useIndexVolumeGroupApi from "../../api/indexVolumeGroup";
 import {
   useIndexVolumeApi,
   useIndexVolumesTable,

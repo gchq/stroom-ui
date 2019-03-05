@@ -1,13 +1,15 @@
 import * as React from "react";
 import { useEffect, useCallback } from "react";
 
-import useReduxState from "../../lib/useReduxState/useReduxState";
-import useApi from "../../api/indexVolumeGroup/useApi";
-import IndexVolumeGroupsTable, { useTable } from "./IndexVolumeGroupsTable";
+import useReduxState from "../../lib/useReduxState";
+import useApi from "../../api/indexVolumeGroup";
+import IndexVolumeGroupsTable, {
+  useTable
+} from "./IndexVolumeGroupsTable/IndexVolumeGroupsTable";
 import Button from "../../components/Button";
 import NewIndexVolumeGroupDialog, {
   useDialog as useNewDialog
-} from "./NewIndexVolumeGroupDialog/NewIndexVolumeGroupDialog";
+} from "./NewIndexVolumeGroupDialog";
 import ThemedConfirm, {
   useDialog as useConfirmDialog
 } from "../../components/ThemedConfirm";

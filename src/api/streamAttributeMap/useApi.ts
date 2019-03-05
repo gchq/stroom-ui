@@ -1,6 +1,6 @@
 import { useContext, useCallback } from "react";
 import { StoreContext } from "redux-react-hook";
-import { useActionCreators } from "../../sections/DataViewer/redux";
+import { useActionCreators } from "../data/redux";
 import useHttpClient from "../useHttpClient";
 import {
   ExpressionOperatorType,

@@ -28,7 +28,7 @@ import useStreamAttributeMapApi from "../../api/streamAttributeMap/useApi";
 import useDataApi from "../../api/data/useApi";
 import DetailsTabs from "./DetailsTabs";
 import DataList from "./DataList";
-import { useActionCreators, defaultStatePerId } from "./redux";
+import { useActionCreators, defaultStatePerId } from "../../api/data/redux";
 import { Direction, ExpressionOperatorWithUuid } from "../../types";
 import useLocalStorage, { storeNumber } from "../../lib/useLocalStorage";
 import useReduxState from "../../lib/useReduxState";

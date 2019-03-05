@@ -1,5 +1,6 @@
 import useApi from "./useApi";
+import { reducer, StoreState } from "./redux";
 
-export { useApi };
+export { useApi, reducer, StoreState };
 
 export default useApi;
