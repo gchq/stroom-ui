@@ -47,9 +47,6 @@ export interface HttpClient {
 // Cache GET Promises by URL -- Effectively static/global to the application
 let cache = {};
 
-// Map of the URL's that have been requested, further requests will be rejected unless they force a refetch
-let urlsRequested = {};
-
 export const useHttpClient = (): HttpClient => {
   const store = useContext(StoreContext);
   const {
@@ -73,17 +70,10 @@ export const useHttpClient = (): HttpClient => {
     ): Promise<T | void> => {
       const state = store.getState();
       const jwsToken = state.authentication.idToken;
-      let needToFetch = true;
 
-      // If we aren't forcing a GET, and we already have the URL being requested, we do not need to fetch
-      if (!forceGet && !!urlsRequested[url]) {
-        needToFetch = false;
-      }
-
-      if (needToFetch) {
-        urlsRequested[url] = true;
-
-        const p = fetch(url, {
+      // If we do not have an entry in the cache or we are forcing GET, create a new call
+      if (!cache[url] || forceGet) {
+        cache[url] = fetch(url, {
           method: "get",
           mode: "cors",
           ...options,
@@ -102,21 +92,9 @@ export const useHttpClient = (): HttpClient => {
             setHttpErrorCode(error.status);
             history.push("/s/error");
           });
-
-        // If a couple of things go at this at once, then the caching will not quite prevent double gets...
-        // Does it matter?
-        cache[url] = p;
-        return p;
-      } else {
-        // Do we have a promise already?
-        if (cache[url]) {
-          return cache[url];
-        } else {
-          // Another process must have requested ,but the response has not made it back.
-          // reject this request and hopefully the caller will not mind
-          return Promise.reject();
-        }
       }
+
+      return cache[url];
 
       // console.groupEnd();
     },
@@ -206,7 +184,6 @@ export const useHttpClient = (): HttpClient => {
     httpPatchEmptyResponse: wrappedFetchWithBodyAndEmptyResponse("patch"),
     clearCache: () => {
       cache = {};
-      urlsRequested = {};
     }
   };
 };

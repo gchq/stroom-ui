@@ -44,7 +44,9 @@ export const useForm = function<T>({
   inputs = defaultInputs,
   onValidate = defaultOnValidate
 }: UseForm<T>): Form<T> {
-  const [currentValues, setCurrentValues] = useState<Partial<T>>({});
+  const [currentValues, setCurrentValues] = useState<Partial<T>>(
+    initialValues || {}
+  );
 
   // Memo-ized function to combine updates with existing state
   const onUpdate = useCallback(

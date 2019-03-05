@@ -2,7 +2,7 @@ import { useContext, useCallback } from "react";
 import { StoreContext } from "redux-react-hook";
 
 import { useActionCreators as useFolderExplorerActionCreators } from "./redux";
-import useHttpClient from "../../lib/useHttpClient/useHttpClient";
+import useHttpClient from "../../lib/useHttpClient";
 import { findByUuids } from "../../lib/treeUtils";
 import { DocRefType, DocRefTree } from "../../types";
 

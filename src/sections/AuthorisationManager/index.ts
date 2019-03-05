@@ -15,12 +15,12 @@
  */
 
 import AuthorisationManager from "./AuthorisationManager";
-import UserPermissionEditor from "./UserPermissionEditor";
+import UserAuthorisationEditor from "./UserAuthorisationEditor/UserAuthorisationEditor";
 import { useActionCreators, reducer, StoreState } from "./redux";
 
 export {
   AuthorisationManager,
-  UserPermissionEditor,
+  UserAuthorisationEditor,
   useActionCreators,
   reducer,
   StoreState

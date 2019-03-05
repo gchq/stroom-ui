@@ -13,7 +13,7 @@ import ErrorPage from "../components/ErrorPage";
 
 import { RouteComponentProps, RouteProps } from "react-router";
 import AuthorisationManager, {
-  UserPermissionEditor
+  UserAuthorisationEditor
 } from "../sections/AuthorisationManager";
 import IndexVolumes from "../sections/IndexVolumes";
 import IndexVolumeGroups from "../sections/IndexVolumeGroups";
@@ -121,7 +121,7 @@ export default [
       <AppChrome
         activeMenuItem="User Permissions"
         content={
-          <UserPermissionEditor
+          <UserAuthorisationEditor
             userUuid={props.match.params.userUuid}
             listingId="app-chrome"
           />

@@ -2,7 +2,7 @@ import { StoreContext } from "redux-react-hook";
 import { useContext, useCallback } from "react";
 
 import { useActionCreators } from "./redux";
-import useHttpClient from "../../lib/useHttpClient/useHttpClient";
+import useHttpClient from "../../lib/useHttpClient";
 
 export interface Api {
   getIndexVolumeGroupNames: () => void;

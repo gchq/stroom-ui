@@ -15,7 +15,7 @@
  */
 import { Action } from "redux";
 import { prepareReducer, genUseActionCreators } from "../lib/redux-actions-ts";
-import useHttpClient from "../lib/useHttpClient/useHttpClient";
+import useHttpClient from "../lib/useHttpClient";
 import { useContext, useCallback } from "react";
 import { StoreContext } from "redux-react-hook";
 

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import { useActionCreators as useDocRefActionCreators } from "../DocRefEditor";
-import useHttpClient from "../../lib/useHttpClient/useHttpClient";
+import useHttpClient from "../../lib/useHttpClient";
 import { PipelineModelType } from "../../types";
 import { useContext, useCallback } from "react";
 import { StoreContext } from "redux-react-hook";

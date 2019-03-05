@@ -24,7 +24,7 @@ import StroomDecorator from "../../lib/storybook/StroomDecorator";
 import { addThemedStories } from "../../lib/themedStoryGenerator";
 
 import "../../styles/main.css";
-import UserPermissionEditor from "./UserPermissionEditor";
+import UserAuthorisationEditor from "./UserAuthorisationEditor";
 
 const AuthorisationManagerWithRouter = () => (
   <Switch>
@@ -32,7 +32,7 @@ const AuthorisationManagerWithRouter = () => (
       exact
       path="/s/authorisation/:userUuid"
       render={(props: RouteComponentProps<any>) => (
-        <UserPermissionEditor
+        <UserAuthorisationEditor
           userUuid={props.match.params.userUuid}
           listingId="storybook"
         />

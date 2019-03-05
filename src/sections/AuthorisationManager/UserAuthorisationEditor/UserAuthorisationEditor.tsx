@@ -1,21 +1,21 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
 
-import IconHeader from "../../components/IconHeader";
-import Button from "../../components/Button";
-import UsersInGroup from "./UsersInGroup";
-import GroupsForUser from "./GroupsForUser";
-import useApi from "./useUserPermissionsApi";
-import Loader from "../../components/Loader";
-import useRouter from "../../lib/useRouter";
-import { User } from "../../types";
+import IconHeader from "../../../components/IconHeader";
+import Button from "../../../components/Button";
+import UsersInGroup from "../UsersInGroup";
+import GroupsForUser from "../GroupsForUser";
+import useApi from "../useUserPermissionsApi";
+import Loader from "../../../components/Loader";
+import useRouter from "../../../lib/useRouter";
+import { User } from "../../../types";
 
 export interface Props {
   userUuid: string;
   listingId: string;
 }
 
-const UserPermissionEditor = ({ listingId, userUuid }: Props) => {
+const UserAuthorisationEditor = ({ listingId, userUuid }: Props) => {
   const { history } = useRouter();
   const { fetchUser } = useApi();
   const [user, setUser] = useState<User | undefined>(undefined);
@@ -41,4 +41,4 @@ const UserPermissionEditor = ({ listingId, userUuid }: Props) => {
   );
 };
 
-export default UserPermissionEditor;
+export default UserAuthorisationEditor;

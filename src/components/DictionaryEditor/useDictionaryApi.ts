@@ -16,7 +16,7 @@
 import { useContext, useCallback } from "react";
 import { StoreContext } from "redux-react-hook";
 import { useActionCreators } from "../DocRefEditor";
-import useHttpClient from "../../lib/useHttpClient/useHttpClient";
+import useHttpClient from "../../lib/useHttpClient";
 import { Dictionary } from "../../types";
 
 export interface Api {
