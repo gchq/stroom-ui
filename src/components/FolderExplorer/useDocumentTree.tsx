@@ -6,14 +6,18 @@ import useExplorerApi from "./useExplorerApi";
 import { DocRefTree } from "../../types";
 
 export const useDocumentTree = (): DocRefTree => {
-  const documentTree = useReduxState(
-    ({ folderExplorer: { documentTree } }: GlobalStoreState) => documentTree
+  const { documentTree, waitingForTree } = useReduxState(
+    ({
+      folderExplorer: { waitingForTree, documentTree }
+    }: GlobalStoreState) => ({ documentTree, waitingForTree })
   );
-  const explorerApi = useExplorerApi();
+  const { fetchDocTree } = useExplorerApi();
 
   useEffect(() => {
-    explorerApi.fetchDocTree();
-  }, []);
+    if (waitingForTree) {
+      fetchDocTree();
+    }
+  }, [waitingForTree, fetchDocTree]);
 
   return documentTree;
 };

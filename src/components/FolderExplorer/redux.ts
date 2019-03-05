@@ -32,7 +32,7 @@ const DOC_REF_INFO_RECEIVED = "DOC_REF_INFO_RECEIVED";
 const DOC_REF_TYPES_RECEIVED = "DOC_REF_TYPES_RECEIVED";
 
 export interface StoreState {
-  waitingForTree?: boolean;
+  waitingForTree: boolean;
   documentTree: DocRefTree;
   docRefInfoByUuid: {
     [s: string]: DocRefInfoType;
