@@ -39,7 +39,7 @@ import useLocalStorage, {
 } from "../lib/useLocalStorage";
 import { useTheme } from "../lib/theme";
 import useRouter from "../lib/useRouter";
-import { useDocumentTree } from "../components/FolderExplorer/useDocumentTree";
+import { useDocumentTree } from "../api/explorer";
 
 const pathPrefix = "/s";
 

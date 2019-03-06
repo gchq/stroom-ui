@@ -1,11 +1,10 @@
 import * as React from "react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import Select from "react-select";
 
-import useApi from "../../../api/indexVolumeGroup";
+import { useIndexVolumeGroupNames } from "../../../api/indexVolumeGroup";
 import { SelectOptionType } from "../../../types";
-import useReduxState from "../../../lib/useReduxState";
 
 export interface Props {
   value?: string;
@@ -13,14 +12,7 @@ export interface Props {
 }
 
 const IndexVolumeGroupPicker = ({ value, onChange }: Props) => {
-  const {getIndexVolumeGroupNames} = useApi();
-  useEffect(() => {
-    getIndexVolumeGroupNames();
-  }, [getIndexVolumeGroupNames]);
-
-  const groupNames = useReduxState(
-    ({ indexVolumeGroups: { groupNames } }) => groupNames
-  );
+  const groupNames = useIndexVolumeGroupNames();
 
   const options: Array<SelectOptionType> = groupNames.map(n => ({
     value: n,

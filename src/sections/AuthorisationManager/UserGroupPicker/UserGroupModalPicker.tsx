@@ -5,7 +5,7 @@ import UserGroupPicker, { usePicker } from "./UserGroupPicker";
 import ThemedModal from "../../../components/ThemedModal";
 import IconHeader from "../../../components/IconHeader";
 import Button, { DialogActionButtons } from "../../../components/Button";
-import useUserGroupApi from "../../../api/userGroups";
+import { useApi as useUserGroupApi } from "../../../api/userGroups";
 
 export interface BaseProps {
   onConfirm: (groupUuid: string) => void;

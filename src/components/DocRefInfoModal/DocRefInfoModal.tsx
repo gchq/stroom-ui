@@ -14,14 +14,13 @@
  * limitations under the License.
  */
 import * as React from "react";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useCallback } from "react";
 
-import useReduxState from "../../lib/useReduxState";
 import Loader from "../Loader";
 import ThemedModal from "../ThemedModal";
 import IconHeader from "../IconHeader";
 import Button from "../Button";
-import useExplorerApi from "../../api/explorer/useApi";
+import { useDocRefInfo } from "../../api/explorer";
 import { DocRefType } from "../../types";
 
 export interface Props {
@@ -33,22 +32,11 @@ export interface Props {
 const doNothing = () => {};
 
 const DocRefInfoModal = ({ isOpen, onCloseDialog, docRef }: Props) => {
-  const docRefInfoByUuid = useReduxState(
-    ({ folderExplorer: { docRefInfoByUuid } }) => docRefInfoByUuid
-  );
-
-  const explorerApi = useExplorerApi();
-  useEffect(() => {
-    if (!!docRef) {
-      explorerApi.fetchDocInfo(docRef);
-    }
-  });
+  const docRefInfo = useDocRefInfo(docRef);
 
   if (!isOpen || !docRef) {
     return null;
   }
-
-  const docRefInfo = docRefInfoByUuid[docRef.uuid];
 
   if (!docRefInfo) {
     return <Loader message="Awaiting DocRef info..." />;

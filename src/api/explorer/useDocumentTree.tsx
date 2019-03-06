@@ -2,10 +2,10 @@ import { useEffect } from "react";
 
 import useReduxState from "../../lib/useReduxState";
 import { GlobalStoreState } from "../../startup/reducers";
-import useApi from "../../api/explorer";
+import useApi from "./useApi";
 import { DocRefTree } from "../../types";
 
-export const useDocumentTree = (): DocRefTree => {
+export default (): DocRefTree => {
   const { documentTree, waitingForTree } = useReduxState(
     ({
       folderExplorer: { waitingForTree, documentTree }

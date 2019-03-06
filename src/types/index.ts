@@ -369,6 +369,17 @@ export enum PermissionInheritance {
   COMBINED = "Combined"
 }
 
+export interface PermissionsByUuid {
+  [userUuid: string]: Array<string>;
+}
+
+export interface DocumentPermissions {
+  document: DocRefType;
+  byUser: PermissionsByUuid;
+  users: Array<string>;
+  groups: Array<string>;
+}
+
 export interface OffsetRange {
   offset: number;
   length: number;

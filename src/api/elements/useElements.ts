@@ -5,16 +5,14 @@ import useElementsApi from "./useApi";
 import useReduxState from "../../lib/useReduxState";
 
 export const useElements = (): ElementsStoreState => {
-  const elementsApi = useElementsApi();
+  const { fetchElements, fetchElementProperties } = useElementsApi();
 
   useEffect(() => {
-    elementsApi.fetchElements();
-    elementsApi.fetchElementProperties();
-  }, []);
+    fetchElements();
+    fetchElementProperties();
+  }, [fetchElements, fetchElementProperties]);
 
-  const elements = useReduxState(({ elements }) => elements);
-
-  return elements;
+  return useReduxState(({ elements }) => elements);
 };
 
 export default useElements;

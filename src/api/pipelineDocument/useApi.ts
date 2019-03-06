@@ -49,6 +49,7 @@ export const useApi = (): Api => {
       documentReceived(pipelineId, pipeline)
     );
   }, []);
+
   const savePipeline = useCallback((document: PipelineModelType) => {
     const state = store.getState();
     const url = `${state.config.values.stroomBaseServiceUrl}/pipelines/v1/${
@@ -62,6 +63,7 @@ export const useApi = (): Api => {
       documentSaved(document.docRef.uuid)
     );
   }, []);
+
   const searchPipelines = useCallback(() => {
     const state = store.getState();
     let url = `${state.config.values.stroomBaseServiceUrl}/pipelines/v1/?`;

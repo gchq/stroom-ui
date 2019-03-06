@@ -1,17 +1,14 @@
 import * as React from "react";
-import { useEffect, useCallback } from "react";
+import { useCallback } from "react";
 
 import IconHeader from "../../../components/IconHeader";
 import Button from "../../../components/Button";
 import useRouter from "../../../lib/useRouter";
-import useIndexVolumeGroupApi from "../../../api/indexVolumeGroup";
-import useIndexVolumeApi from "../../../api/indexVolume";
+import { useIndexVolumeGroup } from "../../../api/indexVolumeGroup";
 import { useIndexVolumesTable, IndexVolumesTable } from "../../IndexVolumes";
 import ThemedConfirm, {
   useDialog as useConfirmDialog
 } from "../../../components/ThemedConfirm";
-import useReduxState from "../../../lib/useReduxState";
-import { IndexVolumeGroup } from "../../../types";
 import Loader from "../../../components/Loader";
 
 export interface Props {
@@ -20,26 +17,12 @@ export interface Props {
 
 const IndexVolumeGroupEditor = ({ groupName }: Props) => {
   const { history } = useRouter();
-  const groupApi = useIndexVolumeGroupApi();
-  const volumeApi = useIndexVolumeApi();
-  const { indexVolumesByGroup, groups } = useReduxState(
-    ({
-      indexVolumeGroups: { groups },
-      indexVolumes: { indexVolumesByGroup }
-    }) => ({
-      groups,
-      indexVolumesByGroup
-    })
+
+  const { indexVolumes, indexVolumeGroup, removeVolume } = useIndexVolumeGroup(
+    groupName
   );
 
-  useEffect(() => {
-    groupApi.getIndexVolumeGroup(groupName);
-    volumeApi.getIndexVolumesInGroup(groupName);
-  }, [groupName]);
-
-  const { componentProps: tableProps } = useIndexVolumesTable(
-    indexVolumesByGroup[groupName]
-  );
+  const { componentProps: tableProps } = useIndexVolumesTable(indexVolumes);
 
   const {
     selectableTableProps: { selectedItems }
@@ -49,19 +32,12 @@ const IndexVolumeGroupEditor = ({ groupName }: Props) => {
     showDialog: showRemoveDialog,
     componentProps: removeDialogProps
   } = useConfirmDialog({
-    onConfirm: () =>
-      selectedItems.forEach(v =>
-        volumeApi.removeVolumeFromGroup(v.id, groupName)
-      ),
+    onConfirm: () => selectedItems.forEach(v => removeVolume(v.id)),
     getQuestion: useCallback(() => "Remove selected volumes from group?", []),
     getDetails: useCallback(() => selectedItems.map(s => s.id).join(", "), [
       selectedItems.map(s => s.id)
     ])
   });
-
-  const indexVolumeGroup: IndexVolumeGroup | undefined = groups.find(
-    g => g.name === groupName
-  );
 
   if (!indexVolumeGroup) {
     return <Loader message={`Loading Index Volume Group ${groupName}`} />;

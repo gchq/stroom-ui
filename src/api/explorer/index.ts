@@ -1,6 +1,14 @@
 import useApi from "./useApi";
-import { useActionCreators, reducer, StoreState } from "./redux";
+import { reducer, StoreState } from "./redux";
+import useDocRefInfo from "./useDocRefInfo";
+import useDocRefTypes from "./useDocRefTypes";
+import useDocumentTree from "./useDocumentTree";
 
-export { useApi, useActionCreators, reducer, StoreState };
-
-export default useApi;
+export {
+  useApi,
+  reducer,
+  StoreState,
+  useDocRefInfo,
+  useDocRefTypes,
+  useDocumentTree
+};

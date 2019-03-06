@@ -1,10 +1,9 @@
 import * as React from "react";
-import { useEffect, useCallback } from "react";
+import { useCallback } from "react";
 
 import { User } from "../../../types";
 
-import useApi from "../../../api/userGroups";
-import useReduxState from "../../../lib/useReduxState";
+import { useGroupsForUser } from "../../../api/userGroups";
 import Loader from "../../../components/Loader";
 import UsersTable, { useTable as useUsersTable } from "../UsersTable";
 import Button from "../../../components/Button";
@@ -21,15 +20,7 @@ export interface Props {
 }
 
 const GroupsForUser = ({ user }: Props) => {
-  const { findGroupsForUser, addUserToGroup, removeUserFromGroup } = useApi();
-  useEffect(() => {
-    findGroupsForUser(user.uuid);
-  }, [user]);
-
-  const groupsForUser = useReduxState(
-    ({ userGroups: { groupsForUser } }) => groupsForUser
-  );
-  const groups = groupsForUser[user.uuid];
+  const { groups, addToGroup, removeFromGroup } = useGroupsForUser(user);
 
   const { componentProps: tableProps } = useUsersTable(groups);
   const {
@@ -42,10 +33,8 @@ const GroupsForUser = ({ user }: Props) => {
   } = useThemedConfirm({
     onConfirm: useCallback(
       () =>
-        selectedItems
-          .map(g => g.uuid)
-          .forEach(gUuid => removeUserFromGroup(user.uuid, gUuid)),
-      [removeUserFromGroup, user, selectedItems]
+        selectedItems.map(g => g.uuid).forEach(gUuid => removeFromGroup(gUuid)),
+      [removeFromGroup, user, selectedItems]
     ),
     getQuestion: useCallback(
       () => "Are you sure you want to remove the user from these groups?",
@@ -60,10 +49,9 @@ const GroupsForUser = ({ user }: Props) => {
     componentProps: userGroupPickerProps,
     showDialog: showUserGroupPicker
   } = useUserGroupModalPicker({
-    onConfirm: useCallback(
-      (groupUuid: string) => addUserToGroup(user.uuid, groupUuid),
-      [addUserToGroup]
-    )
+    onConfirm: useCallback((groupUuid: string) => addToGroup(groupUuid), [
+      addToGroup
+    ])
   });
 
   if (!groups) {

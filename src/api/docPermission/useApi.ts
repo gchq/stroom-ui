@@ -2,10 +2,13 @@ import { useContext, useCallback } from "react";
 import { StoreContext } from "redux-react-hook";
 
 import useHttpClient from "../useHttpClient";
-import { DocRefType } from "src/types";
+import { DocRefType, DocumentPermissions } from "src/types";
 
 interface Api {
+  // Server Side Constant
   getPermissionForDocType: (docRefType: string) => Promise<Array<string>>;
+
+  // By Doc and User
   getPermissionsForDocumentForUser: (
     docRef: DocRefType,
     userUuid: string
@@ -20,6 +23,9 @@ interface Api {
     userUuid: string,
     permissionName: string
   ) => Promise<void>;
+
+  // By Doc
+  getPermissionForDoc: (docRef: DocRefType) => Promise<DocumentPermissions>;
   clearDocPermissions: (docRef: DocRefType) => Promise<void>;
 }
 
@@ -92,12 +98,24 @@ export const useApi = (): Api => {
     [httpDeleteEmptyResponse]
   );
 
+  const getPermissionForDoc = useCallback(
+    ({ type, uuid }: DocRefType) => {
+      const state = store.getState();
+      var url = `${
+        state.config.values.stroomBaseServiceUrl
+      }/docPermissions/v1/forDoc/${type}/${uuid}`;
+
+      return httpGetJson(url);
+    },
+    [httpGetJson]
+  );
+
   const clearDocPermissions = useCallback(
     ({ type, uuid }: DocRefType) => {
       const state = store.getState();
       var url = `${
         state.config.values.stroomBaseServiceUrl
-      }/docPermissions/v1/forDoc/${type}/{$uuid}`;
+      }/docPermissions/v1/forDoc/${type}/${uuid}`;
 
       return httpDeleteEmptyResponse(url);
     },
@@ -106,6 +124,7 @@ export const useApi = (): Api => {
 
   return {
     getPermissionForDocType,
+    getPermissionForDoc,
     getPermissionsForDocumentForUser,
     addDocPermission,
     removeDocPermission,

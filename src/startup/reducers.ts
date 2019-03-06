@@ -34,6 +34,10 @@ import {
   StoreState as AppPermissionStoreState
 } from "../api/appPermission";
 import {
+  reducer as docPermissions,
+  StoreState as DocPermissionStoreState
+} from "../api/docPermission";
+import {
   reducer as userGroups,
   StoreState as UserGroupStoreState
 } from "../api/userGroups";
@@ -76,6 +80,7 @@ import {
 
 export interface GlobalStoreState {
   appPermissions: AppPermissionStoreState;
+  docPermissions: DocPermissionStoreState;
   errorPage: ErrorPageState;
   config: ConfigStoreState;
   authentication: AuthenticationStoreState;
@@ -94,6 +99,7 @@ export interface GlobalStoreState {
 
 export default combineReducers({
   appPermissions,
+  docPermissions,
   errorPage,
   config,
   authentication,

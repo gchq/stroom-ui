@@ -8,7 +8,7 @@ import Button, { ButtonProps } from "../Button";
 import { DocRefWithLineage, DocRefConsumer } from "../../types";
 import { findItem } from "../../lib/treeUtils";
 import Loader from "../Loader";
-import { useDocumentTree } from "../FolderExplorer/useDocumentTree";
+import { useDocumentTree } from "../../api/explorer";
 import useRouter from "../../lib/useRouter";
 
 export interface Props {

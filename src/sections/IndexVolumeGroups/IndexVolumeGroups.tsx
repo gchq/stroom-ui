@@ -1,8 +1,7 @@
 import * as React from "react";
-import { useEffect, useCallback } from "react";
+import { useCallback } from "react";
 
-import useReduxState from "../../lib/useReduxState";
-import useApi from "../../api/indexVolumeGroup";
+import { useIndexVolumeGroups } from "../../api/indexVolumeGroup";
 import IndexVolumeGroupsTable, {
   useTable
 } from "./IndexVolumeGroupsTable/IndexVolumeGroupsTable";
@@ -21,20 +20,16 @@ export interface Props {}
 const IndexVolumeGroups = () => {
   const { history } = useRouter();
 
-  const groups = useReduxState(({ indexVolumeGroups: { groups } }) => groups);
   const {
+    groups,
     createIndexVolumeGroup,
-    deleteIndexVolumeGroup,
-    getIndexVolumeGroups
-  } = useApi();
+    deleteIndexVolumeGroup
+  } = useIndexVolumeGroups();
+
   const { componentProps: tableProps } = useTable(groups);
   const {
     selectableTableProps: { selectedItems }
   } = tableProps;
-
-  useEffect(() => {
-    getIndexVolumeGroups();
-  }, [getIndexVolumeGroups]);
 
   const {
     showDialog: showNewDialog,

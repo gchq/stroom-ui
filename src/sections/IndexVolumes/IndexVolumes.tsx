@@ -1,8 +1,6 @@
 import * as React from "react";
-import { useEffect, useCallback } from "react";
+import { useCallback } from "react";
 
-import useReduxState from "../../lib/useReduxState";
-import useApi from "../../api/indexVolume/useApi";
 import IconHeader from "../../components/IconHeader";
 import Button from "../../components/Button";
 import NewIndexVolumeDialog, {
@@ -17,27 +15,24 @@ import {
   useIndexVolumeGroupModalPicker
 } from "../IndexVolumeGroups/IndexVolumeGroupPicker";
 import useRouter from "../../lib/useRouter";
+import { useIndexVolumes } from "../../api/indexVolume";
 
 export interface Props {}
 
 const IndexVolumes = () => {
   const { history } = useRouter();
 
-  const indexVolumes = useReduxState(
-    ({ indexVolumes: { indexVolumes } }) => indexVolumes
-  );
   const {
-    getIndexVolumes,
+    indexVolumes,
+    createIndexVolume,
     deleteIndexVolume,
-    addVolumeToGroup,
-    createIndexVolume
-  } = useApi();
+    addVolumeToGroup
+  } = useIndexVolumes();
+
   const { componentProps: tableProps } = useTable(indexVolumes);
   const {
     selectableTableProps: { selectedItems }
   } = tableProps;
-
-  useEffect(getIndexVolumes, []);
 
   const {
     showDialog: showCreateNewDialog,

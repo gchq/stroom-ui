@@ -1,16 +1,15 @@
 import * as React from "react";
-import { useEffect, useCallback } from "react";
+import { useCallback } from "react";
 
 import { User } from "../../../types";
 
-import useApi from "../../../api/userGroups/useApi";
 import Loader from "../../../components/Loader";
-import useReduxState from "../../../lib/useReduxState";
 import UsersTable, { useTable as useUsersTable } from "../UsersTable";
 import Button from "../../../components/Button";
 import ThemedConfirm, {
   useDialog as useThemedConfirm
 } from "../../../components/ThemedConfirm";
+import { useUsersInGroup } from "../../../api/userGroups";
 
 export interface Props {
   group: User;
@@ -21,17 +20,7 @@ export interface ConnectState {
 }
 
 const UsersInGroup = ({ group }: Props) => {
-  const { findUsersInGroup, removeUserFromGroup } = useApi();
-  useEffect(() => {
-    findUsersInGroup(group.uuid);
-  }, [group]);
-
-  const { usersInGroup } = useReduxState(
-    ({ userGroups: { usersInGroup } }) => ({
-      usersInGroup
-    })
-  );
-  const users = usersInGroup[group.uuid];
+  const { users, removeFromGroup } = useUsersInGroup(group);
 
   const { componentProps: tableProps } = useUsersTable(users);
   const {
@@ -44,10 +33,8 @@ const UsersInGroup = ({ group }: Props) => {
   } = useThemedConfirm({
     onConfirm: useCallback(
       () =>
-        selectedItems
-          .map(s => s.uuid)
-          .forEach(uUuid => removeUserFromGroup(uUuid, group.uuid)),
-      [removeUserFromGroup, group, selectedItems]
+        selectedItems.map(s => s.uuid).forEach(uUuid => removeFromGroup(uUuid)),
+      [removeFromGroup, group, selectedItems]
     ),
     getQuestion: useCallback(
       () => "Are you sure you want to remove these users from the group?",

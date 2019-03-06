@@ -19,7 +19,7 @@ import { useEffect, useCallback } from "react";
 
 import DocRefEditor, { useDocRefEditor } from "../DocRefEditor";
 import Loader from "../Loader";
-import useIndexApi from "../../api/indexDocument";
+import { useApi as useIndexApi } from "../../api/indexDocument";
 import { IndexDoc, IndexField } from "../../types";
 import IndexFieldsTable, {
   useTable as useFieldsTable

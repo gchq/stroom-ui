@@ -3,7 +3,7 @@ import { useEffect } from "react";
 
 import Loader from "../Loader";
 import DocRefEditor, { useDocRefEditor } from "../DocRefEditor";
-import useApi from "../../api/dictionaryDocument";
+import { useApi } from "../../api/dictionaryDocument";
 import { Dictionary } from "../../types";
 
 export interface Props {

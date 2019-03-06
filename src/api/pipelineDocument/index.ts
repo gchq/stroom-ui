@@ -1,6 +1,4 @@
 import useApi from "./useApi";
-import { reducer, useActionCreators, StoreState } from "./redux";
+import { reducer, StoreState } from "./redux";
 
-export { useApi, reducer, useActionCreators, StoreState };
-
-export default useApi;
+export { useApi, reducer, StoreState };

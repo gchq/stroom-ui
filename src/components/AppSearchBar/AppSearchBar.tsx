@@ -12,7 +12,7 @@ import ModeOptionButtons, { SearchMode } from "./ModeOptionButtons";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import useSelectableItemListing from "../../lib/useSelectableItemListing";
 import useRecentItems from "../../lib/useRecentItems";
-import { useDocumentTree } from "../FolderExplorer/useDocumentTree";
+import { useDocumentTree } from "../../api/explorer";
 
 interface Props {
   typeFilters?: Array<string>;

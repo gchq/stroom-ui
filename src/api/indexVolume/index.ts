@@ -1,6 +1,7 @@
 import useApi from "./useApi";
-import { reducer, useActionCreators, StoreState } from "./redux";
+import { reducer, StoreState } from "./redux";
+import useIndexVolumes from "./useIndexVolumes";
 
-export { useApi, reducer, useActionCreators, StoreState };
+import useIndexVolume from "./useIndexVolume";
 
-export default useApi;
+export { useApi, reducer, StoreState, useIndexVolume, useIndexVolumes };

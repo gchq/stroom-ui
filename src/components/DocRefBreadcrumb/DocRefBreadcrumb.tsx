@@ -4,7 +4,7 @@ import { useMemo } from "react";
 import { findItem } from "../../lib/treeUtils";
 import { DocRefConsumer, DocRefWithLineage } from "../../types";
 import Loader from "../Loader";
-import { useDocumentTree } from "../FolderExplorer/useDocumentTree";
+import { useDocumentTree } from "../../api/explorer";
 
 export interface Props {
   docRefUuid: string;
