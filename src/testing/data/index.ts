@@ -41,6 +41,7 @@ import {
   IndexVolumeGroup,
   IndexVolume
 } from "../../types";
+import allAppPermissions from "./appPermissions";
 import { UserGroupMembership, TestData } from "../testTypes";
 
 let groups: Array<User> = Array(5)
@@ -53,14 +54,24 @@ let userGroupMemberships: Array<UserGroupMembership> = [];
 let userIndex = 0;
 groups.forEach(group => {
   for (let x = 0; x < 10; x++) {
-    var user: User = users[userIndex];
+    var user: User = users[userIndex++];
+    userIndex %= users.length; // wrap
     userGroupMemberships.push({
       userUuid: user.uuid,
       groupUuid: group.uuid
     });
-
-    userIndex = (userIndex + 1) % users.length;
   }
+});
+const allUsers = users.concat(groups);
+let permissionIndex = 0;
+const userAppPermissions = {};
+allUsers.forEach(u => {
+  let permissions = [];
+  for (let x = 0; x < 2; x++) {
+    permissions.push(allAppPermissions[permissionIndex++]);
+    permissionIndex %= allAppPermissions.length; // wrap the index
+  }
+  userAppPermissions[u.uuid] = permissions;
 });
 
 let indexVolumeGroups: Array<IndexVolumeGroup> = Array(5)
@@ -181,7 +192,7 @@ export const fullTestData: TestData = {
   dataSource,
   trackers,
   usersAndGroups: {
-    users: users.concat(groups),
+    users: allUsers,
     userGroupMemberships
   },
   indexVolumesAndGroups: {
@@ -189,7 +200,9 @@ export const fullTestData: TestData = {
     groups: indexVolumeGroups,
     groupMemberships: indexVolumeGroupMemberships
   },
-  indexes
+  indexes,
+  allAppPermissions,
+  userAppPermissions
 };
 
 export default fullTestData;

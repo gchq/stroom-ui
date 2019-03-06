@@ -7,6 +7,8 @@ import GroupsForUser from "../GroupsForUser";
 import { useUser } from "../../../api/userGroups";
 import Loader from "../../../components/Loader";
 import useRouter from "../../../lib/useRouter";
+import { useAppPermissionsForUser } from "../../../api/appPermission";
+import { AppPermissionPicker } from "../AppPermissionPicker";
 
 export interface Props {
   userUuid: string;
@@ -15,6 +17,11 @@ export interface Props {
 const UserAuthorisationEditor = ({ userUuid }: Props) => {
   const { history } = useRouter();
   const user = useUser(userUuid);
+  const {
+    userAppPermissions,
+    addPermission,
+    removePermission
+  } = useAppPermissionsForUser(userUuid);
 
   if (!user) {
     return <Loader message="Loading user..." />;
@@ -26,6 +33,13 @@ const UserAuthorisationEditor = ({ userUuid }: Props) => {
     <div>
       <IconHeader text={title} icon="user" />
       <Button text="Back" onClick={() => history.push("/s/authorisation")} />
+
+      <section>
+        <h2>Application Permissions</h2>
+        <AppPermissionPicker
+          {...{ value: userAppPermissions, addPermission, removePermission }}
+        />
+      </section>
 
       {user.isGroup ? (
         <UsersInGroup group={user} />

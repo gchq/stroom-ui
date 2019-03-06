@@ -16,7 +16,7 @@
 import * as React from "react";
 
 import DocRefImage from "../DocRefImage";
-import { DocRefTypeList } from "../../types";
+import { DocRefTypeList, ControlledInput } from "../../types";
 import useDocRefTypes from "../FolderExplorer/useDocRefTypes";
 
 enum AllSelectState {
@@ -25,10 +25,7 @@ enum AllSelectState {
   INDETERMINATE
 }
 
-export interface Props {
-  value: DocRefTypeList;
-  onChange: (a: DocRefTypeList) => any;
-}
+export interface Props extends ControlledInput<DocRefTypeList> {}
 
 let DocTypeFilters = ({ onChange, value }: Props) => {
   const { docRefTypes } = useDocRefTypes();
@@ -69,7 +66,7 @@ let DocTypeFilters = ({ onChange, value }: Props) => {
       {docRefTypes
         .map(docRefType => ({
           docRefType,
-          isSelected: value.indexOf(docRefType) !== -1
+          isSelected: value.includes(docRefType)
         }))
         .map(({ docRefType, isSelected }) => (
           <div key={docRefType}>

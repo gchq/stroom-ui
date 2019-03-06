@@ -66,7 +66,7 @@ export const useHttpClient = (): HttpClient => {
       options: {
         [s: string]: any;
       } = {},
-      forceGet: boolean = false
+      forceGet: boolean = true // default to true, take care with settings this to false, old promises can override the updated picture with old information if this is mis-used
     ): Promise<T | void> => {
       const state = store.getState();
       const jwsToken = state.authentication.idToken;

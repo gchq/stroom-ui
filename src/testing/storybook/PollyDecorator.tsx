@@ -77,20 +77,7 @@ export const useTestServer = (testData: TestData) => {
 
   useEffect(() => {
     clearCache();
-    testCache.data = {
-      documentTree: { ...testData.documentTree },
-      docRefTypes: testData.docRefTypes,
-      pipelines: { ...testData.pipelines },
-      elements: [...testData.elements],
-      elementProperties: { ...testData.elementProperties },
-      xslt: { ...testData.xslt },
-      dictionaries: { ...testData.dictionaries },
-      indexes: { ...testData.indexes },
-      trackers: [...testData.trackers],
-      dataList: { ...testData.dataList },
-      dataSource: { ...testData.dataSource },
-      usersAndGroups: { ...testData.usersAndGroups },
-      indexVolumesAndGroups: { ...testData.indexVolumesAndGroups }
-    };
+    // Make a deep copy so that each test gets it's own data
+    testCache.data = JSON.parse(JSON.stringify(testData));
   }, []);
 };

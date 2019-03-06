@@ -3,12 +3,13 @@ import { useContext, useCallback } from "react";
 
 import { useActionCreators } from "./redux";
 import useHttpClient from "../useHttpClient";
+import { IndexVolumeGroup } from "../../types";
 
 export interface Api {
   getIndexVolumeGroupNames: () => void;
   getIndexVolumeGroups: () => void;
   getIndexVolumeGroup: (name: string) => void;
-  createIndexVolumeGroup: (name: string) => void;
+  createIndexVolumeGroup: (name: string) => Promise<IndexVolumeGroup>;
   deleteIndexVolumeGroup: (name: string) => void;
 }
 
@@ -73,7 +74,9 @@ export const useApi = (): Api => {
         }/stroom-index/volumeGroup/v1/${name}`
       );
 
-      httpPostJsonResponse(url.href).then(indexVolumeGroupCreated);
+      let p = httpPostJsonResponse(url.href);
+      p.then(indexVolumeGroupCreated);
+      return p;
     },
     [httpPostJsonResponse, indexVolumeGroupCreated]
   );

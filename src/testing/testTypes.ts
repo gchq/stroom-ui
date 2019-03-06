@@ -50,4 +50,16 @@ export interface TestData {
     groups: Array<IndexVolumeGroup>;
     groupMemberships: Array<IndexVolumeGroupMembership>;
   };
+  allAppPermissions: Array<string>;
+  userAppPermissions: {
+    [userUuid: string]: Array<string>;
+  };
+  // docPermissionByType: {
+  //   [docType: string]: Array<string>;
+  // };
+  // userDocPermission: {
+  //   [userUuid: string]: {
+  //     [docUuid: string]: Array<string>;
+  //   };
+  // };
 }

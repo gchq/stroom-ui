@@ -24,6 +24,7 @@ import DocRefTypePicker from "./DocRefTypePicker";
 import "../../styles/main.css";
 import useForm from "../../lib/useForm";
 import JsonDebug from "../../testing/JsonDebug";
+import { addThemedStories } from "../../lib/themedStoryGenerator";
 
 interface FormValues {
   docRefType?: string;
@@ -58,6 +59,8 @@ const TestForm = () => {
   );
 };
 
-storiesOf("Pickers/Doc Ref Type", module)
-  .addDecorator(StroomDecorator)
-  .add("Doc Type Filter", () => <TestForm />);
+const stories = storiesOf("Pickers/Doc Ref Type", module).addDecorator(
+  StroomDecorator
+);
+
+addThemedStories(stories, <TestForm />);

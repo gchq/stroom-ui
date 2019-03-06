@@ -1,5 +1,6 @@
 import { ResourceBuilder } from "./resourceBuilder";
 
+import appPermissionResource from "./appPermissionResource";
 import dictionaryResource from "./dictionaryResource";
 import elementsResource from "./elementsResource";
 import explorerResource from "./explorerResource";
@@ -9,10 +10,11 @@ import indexVolumeResource from "./indexVolumeResource";
 import pipelineResource from "./pipelineResource";
 import streamAttributeMapResource from "./streamAttributeMapResource";
 import streamTaskResource from "./streamTaskResource";
-import userResource from "./userResource";
+import userResource from "./userAndGroupsResource";
 import xsltResource from "./xsltResource";
 
 const resourceBuilders: Array<ResourceBuilder> = [
+  appPermissionResource,
   dictionaryResource,
   elementsResource,
   explorerResource,

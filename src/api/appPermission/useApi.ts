@@ -39,7 +39,7 @@ export const useApi = (): Api => {
     const state = store.getState();
     var url = `${state.config.values.stroomBaseServiceUrl}/appPermissions/v1`;
 
-    return httpGetJson(url);
+    return httpGetJson(url, {}, false);
   }, [httpGetJson]);
 
   const addAppPermission = useCallback(
