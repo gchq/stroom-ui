@@ -1,18 +1,20 @@
 import { useContext, useCallback } from "react";
 import { StoreContext } from "redux-react-hook";
 
-import { useActionCreators } from "./redux";
 import useHttpClient from "../useHttpClient";
+import {
+  ElementDefinitions,
+  ElementPropertiesByElementIdType
+} from "../../types";
 
 export interface Api {
-  fetchElements: () => void;
-  fetchElementProperties: () => void;
+  fetchElements: () => Promise<ElementDefinitions>;
+  fetchElementProperties: () => Promise<ElementPropertiesByElementIdType>;
 }
 
 export const useApi = (): Api => {
   const store = useContext(StoreContext);
   const { httpGetJson } = useHttpClient();
-  const { elementsReceived, elementPropertiesReceived } = useActionCreators();
 
   if (!store) {
     throw new Error("Could not get Redux Store for processing Thunks");
@@ -23,15 +25,15 @@ export const useApi = (): Api => {
     const url = `${
       state.config.values.stroomBaseServiceUrl
     }/elements/v1/elements`;
-    httpGetJson(url).then(elementsReceived);
-  }, [httpGetJson, elementsReceived]);
+    return httpGetJson(url, {}, false);
+  }, [httpGetJson]);
   const fetchElementProperties = useCallback(() => {
     const state = store.getState();
     const url = `${
       state.config.values.stroomBaseServiceUrl
     }/elements/v1/elementProperties`;
-    httpGetJson(url).then(elementPropertiesReceived);
-  }, [httpGetJson, elementPropertiesReceived]);
+    return httpGetJson(url, {}, false);
+  }, [httpGetJson]);
 
   return {
     fetchElementProperties,

@@ -1,7 +1,6 @@
 import { useContext, useCallback } from "react";
 import { StoreContext } from "redux-react-hook";
 
-import { useActionCreators } from "./redux";
 import useHttpClient from "../useHttpClient";
 import { User } from "../../types";
 
@@ -10,17 +9,16 @@ export type IsGroup = "User" | "Group" | "" | undefined;
 export interface Api {
   fetchUser: (uuid: string) => Promise<User>;
   findUsers: (
-    listId: string,
     name?: string,
     isGroup?: IsGroup,
     uuid?: string
-  ) => void;
-  findUsersInGroup: (groupUuid: string) => void;
-  findGroupsForUser: (userUuid: string) => void;
+  ) => Promise<Array<User>>;
+  findUsersInGroup: (groupUuid: string) => Promise<Array<User>>;
+  findGroupsForUser: (userUuid: string) => Promise<Array<User>>;
   createUser: (name: string, isGroup: boolean) => Promise<User>;
-  deleteUser: (uuid: string) => void;
-  addUserToGroup: (userUuid: string, groupUuid: string) => void;
-  removeUserFromGroup: (userUuid: string, groupUuid: string) => void;
+  deleteUser: (uuid: string) => Promise<void>;
+  addUserToGroup: (userUuid: string, groupUuid: string) => Promise<void>;
+  removeUserFromGroup: (userUuid: string, groupUuid: string) => Promise<void>;
 }
 
 export const useApi = (): Api => {
@@ -31,15 +29,6 @@ export const useApi = (): Api => {
     httpDeleteEmptyResponse,
     httpPutEmptyResponse
   } = useHttpClient();
-  const {
-    usersReceived,
-    usersInGroupReceived,
-    groupsForUserReceived,
-    userCreated,
-    userDeleted,
-    userAddedToGroup,
-    userRemovedFromGroup
-  } = useActionCreators();
 
   if (!store) {
     throw new Error("Could not get Redux Store for processing Thunks");
@@ -58,12 +47,7 @@ export const useApi = (): Api => {
   );
 
   const findUsers = useCallback(
-    (
-      listId: string,
-      name?: string,
-      isGroup?: "Group" | "User",
-      uuid?: string
-    ) => {
+    (name?: string, isGroup?: "Group" | "User", uuid?: string) => {
       const state = store.getState();
       var url = new URL(`${state.config.values.stroomBaseServiceUrl}/users/v1`);
       if (name !== undefined && name.length > 0)
@@ -82,9 +66,9 @@ export const useApi = (): Api => {
       if (uuid !== undefined && uuid.length > 0)
         url.searchParams.append("uuid", uuid);
 
-      httpGetJson(url.href, {}, true).then(u => usersReceived(listId, u));
+      return httpGetJson(url.href, {}, true);
     },
-    [httpGetJson, usersReceived]
+    [httpGetJson]
   );
 
   const findUsersInGroup = useCallback(
@@ -94,11 +78,9 @@ export const useApi = (): Api => {
         state.config.values.stroomBaseServiceUrl
       }/users/v1/usersInGroup/${groupUuid}`;
 
-      httpGetJson(url, {}, true).then((users: Array<User>) =>
-        usersInGroupReceived(groupUuid, users)
-      );
+      return httpGetJson(url, {}, true);
     },
-    [httpGetJson, usersInGroupReceived]
+    [httpGetJson]
   );
 
   const findGroupsForUser = useCallback(
@@ -108,11 +90,9 @@ export const useApi = (): Api => {
         state.config.values.stroomBaseServiceUrl
       }/users/v1/groupsForUser/${userUuid}`;
 
-      httpGetJson(url, {}, true).then((users: Array<User>) =>
-        groupsForUserReceived(userUuid, users)
-      );
+      return httpGetJson(url, {}, true);
     },
-    [httpGetJson, groupsForUserReceived]
+    [httpGetJson]
   );
 
   const createUser = useCallback(
@@ -126,12 +106,9 @@ export const useApi = (): Api => {
         isGroup
       });
 
-      let p: Promise<User> = httpPostJsonResponse(url, { body });
-      p.then(userCreated);
-
-      return p;
+      return httpPostJsonResponse(url, { body });
     },
-    [httpPostJsonResponse, userCreated]
+    [httpPostJsonResponse]
   );
 
   const deleteUser = useCallback(
@@ -139,9 +116,9 @@ export const useApi = (): Api => {
       const state = store.getState();
       var url = `${state.config.values.stroomBaseServiceUrl}/users/v1/${uuid}`;
 
-      httpDeleteEmptyResponse(url).then(() => userDeleted(uuid));
+      return httpDeleteEmptyResponse(url);
     },
-    [httpDeleteEmptyResponse, userDeleted]
+    [httpDeleteEmptyResponse]
   );
 
   const addUserToGroup = useCallback(
@@ -151,11 +128,9 @@ export const useApi = (): Api => {
         state.config.values.stroomBaseServiceUrl
       }/users/v1/${userUuid}/${groupUuid}`;
 
-      httpPutEmptyResponse(url).then(() =>
-        userAddedToGroup(userUuid, groupUuid)
-      );
+      return httpPutEmptyResponse(url);
     },
-    [httpPutEmptyResponse, userAddedToGroup]
+    [httpPutEmptyResponse]
   );
 
   const removeUserFromGroup = useCallback(
@@ -165,11 +140,9 @@ export const useApi = (): Api => {
         state.config.values.stroomBaseServiceUrl
       }/users/v1/${userUuid}/${groupUuid}`;
 
-      httpDeleteEmptyResponse(url).then(() =>
-        userRemovedFromGroup(userUuid, groupUuid)
-      );
+      return httpDeleteEmptyResponse(url);
     },
-    [httpDeleteEmptyResponse, userRemovedFromGroup]
+    [httpDeleteEmptyResponse]
   );
 
   return {

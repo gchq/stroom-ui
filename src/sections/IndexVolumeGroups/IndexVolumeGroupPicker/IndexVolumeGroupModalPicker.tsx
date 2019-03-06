@@ -5,7 +5,7 @@ import IndexVolumeGroupPicker, { usePicker } from "./IndexVolumeGroupPicker";
 import ThemedModal from "../../../components/ThemedModal";
 import IconHeader from "../../../components/IconHeader";
 import Button, { DialogActionButtons } from "../../../components/Button";
-import { useApi as useIndexVolumeGroupApi } from "../../../api/indexVolumeGroup";
+import { useIndexVolumeGroups } from "../../../api/indexVolumeGroup";
 
 export interface BaseProps {
   onConfirm: (groupName: string) => void;
@@ -30,7 +30,7 @@ export const IndexVolumeGroupModalPicker = ({
   const [isNewGroup, setIsNewGroup] = useState<boolean>(false);
   const [newGroupName, setNewGroupName] = useState<string>("");
 
-  const { createIndexVolumeGroup } = useIndexVolumeGroupApi();
+  const { createIndexVolumeGroup } = useIndexVolumeGroups();
 
   const onNewGroupNameChange: React.ChangeEventHandler<
     HTMLInputElement

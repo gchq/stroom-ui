@@ -1,7 +1,9 @@
 import { useEffect, useCallback } from "react";
 
 import useApi from "./useApi";
+import { useActionCreators } from "./redux";
 import { useApi as useIndexVolumeApi } from "../indexVolume/useApi";
+import { useActionCreators as useVolumeActionCreators } from "../indexVolume/redux";
 
 import useReduxState from "../../lib/useReduxState";
 import { IndexVolume, IndexVolumeGroup } from "src/types";
@@ -15,6 +17,8 @@ interface UseIndexVolumeGroup {
 export default (groupName: string): UseIndexVolumeGroup => {
   const { getIndexVolumeGroup } = useApi();
   const { getIndexVolumesInGroup, removeVolumeFromGroup } = useIndexVolumeApi();
+  const { indexVolumeGroupReceived } = useActionCreators();
+  const { indexVolumesInGroupReceived } = useVolumeActionCreators();
   const { indexVolumesByGroup, groups } = useReduxState(
     ({
       indexVolumeGroups: { groups },
@@ -26,9 +30,17 @@ export default (groupName: string): UseIndexVolumeGroup => {
   );
 
   useEffect(() => {
-    getIndexVolumeGroup(groupName);
-    getIndexVolumesInGroup(groupName);
-  }, [groupName, getIndexVolumeGroup, getIndexVolumesInGroup]);
+    getIndexVolumeGroup(groupName).then(indexVolumeGroupReceived);
+    getIndexVolumesInGroup(groupName).then(v =>
+      indexVolumesInGroupReceived(groupName, v)
+    );
+  }, [
+    groupName,
+    getIndexVolumeGroup,
+    indexVolumeGroupReceived,
+    getIndexVolumesInGroup,
+    indexVolumesInGroupReceived
+  ]);
 
   const indexVolumes = indexVolumesByGroup[groupName] || [];
 

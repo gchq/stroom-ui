@@ -1,5 +1,6 @@
-import { useEffect } from "react";
+import { useEffect, useCallback } from "react";
 
+import { useActionCreators } from "./redux";
 import useApi from "./useApi";
 import useReduxState from "../../lib/useReduxState";
 import { IndexVolumeGroup } from "../../types";
@@ -11,6 +12,11 @@ interface UseIndexVolumeGroups {
 }
 
 export default (): UseIndexVolumeGroups => {
+  const {
+    indexVolumeGroupCreated,
+    indexVolumeGroupDeleted,
+    indexVolumeGroupsReceived
+  } = useActionCreators();
   const groups = useReduxState(({ indexVolumeGroups: { groups } }) => groups);
   const {
     createIndexVolumeGroup,
@@ -19,12 +25,24 @@ export default (): UseIndexVolumeGroups => {
   } = useApi();
 
   useEffect(() => {
-    getIndexVolumeGroups();
+    getIndexVolumeGroups().then(indexVolumeGroupsReceived);
   }, [getIndexVolumeGroups]);
 
   return {
     groups,
-    createIndexVolumeGroup,
-    deleteIndexVolumeGroup
+    createIndexVolumeGroup: useCallback(
+      (groupName: string) => {
+        createIndexVolumeGroup(groupName).then(indexVolumeGroupCreated);
+      },
+      [createIndexVolumeGroup]
+    ),
+    deleteIndexVolumeGroup: useCallback(
+      (groupName: string) => {
+        deleteIndexVolumeGroup(groupName).then(() =>
+          indexVolumeGroupDeleted(groupName)
+        );
+      },
+      [deleteIndexVolumeGroup, indexVolumeGroupDeleted]
+    )
   };
 };

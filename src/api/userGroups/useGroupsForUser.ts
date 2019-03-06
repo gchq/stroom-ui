@@ -1,6 +1,7 @@
 import { useEffect, useCallback } from "react";
 
 import useApi from "./useApi";
+import { useActionCreators } from "./redux";
 import { User } from "../../types";
 import useReduxState from "../../lib/useReduxState";
 
@@ -12,8 +13,16 @@ interface UseGroupsForUser {
 
 export default (user: User): UseGroupsForUser => {
   const { findGroupsForUser, addUserToGroup, removeUserFromGroup } = useApi();
+
+  const {
+    groupsForUserReceived,
+    userAddedToGroup,
+    userRemovedFromGroup
+  } = useActionCreators();
   useEffect(() => {
-    findGroupsForUser(user.uuid);
+    findGroupsForUser(user.uuid).then((users: Array<User>) =>
+      groupsForUserReceived(user.uuid, users)
+    );
   }, [user]);
 
   const groupsForUser = useReduxState(
@@ -23,13 +32,17 @@ export default (user: User): UseGroupsForUser => {
 
   const addToGroup = useCallback(
     (groupUuid: string) => {
-      addUserToGroup(user.uuid, groupUuid);
+      addUserToGroup(user.uuid, groupUuid).then(() =>
+        userAddedToGroup(user.uuid, groupUuid)
+      );
     },
     [user, addUserToGroup]
   );
   const removeFromGroup = useCallback(
     (groupUuid: string) => {
-      removeUserFromGroup(user.uuid, groupUuid);
+      removeUserFromGroup(user.uuid, groupUuid).then(() =>
+        userRemovedFromGroup(user.uuid, groupUuid)
+      );
     },
     [user, removeUserFromGroup]
   );

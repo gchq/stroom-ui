@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useCallback } from "react";
 
-import { useApi, useFindUsers } from "../../api/userGroups";
+import { useManageUsers, useFindUsers } from "../../api/userGroups";
 import { IsGroup } from "../../api/userGroups/useApi";
 import IconHeader from "../../components/IconHeader";
 import UsersTable, { useTable } from "./UsersTable";
@@ -37,7 +37,7 @@ const defaultValues: Values = {
 const Authorisation = () => {
   const { history } = useRouter();
   const { findUsers, users } = useFindUsers();
-  const { createUser, deleteUser, addUserToGroup } = useApi();
+  const { createUser, deleteUser, addUserToGroup } = useManageUsers();
 
   const { componentProps: tableProps } = useTable(users);
   const {

@@ -15,7 +15,7 @@ interface UserAppPermissionApi {
 
 /**
  * Encapsulates the management of application permissions for a single user.
- * Presenting a simpler API that is hooked into everything.
+ * Presenting a simpler API that is hooked into the REST API and Redux.
  *
  * @param userUuid The UUID of the user or group
  */

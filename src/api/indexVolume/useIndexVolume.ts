@@ -2,6 +2,7 @@ import { useEffect, useCallback } from "react";
 
 import useApi from "./useApi";
 import { IndexVolumeGroup, IndexVolume } from "../../types";
+import { useActionCreators } from "./redux";
 import useReduxState from "../../lib/useReduxState";
 
 interface UseIndexVolume {
@@ -13,6 +14,7 @@ interface UseIndexVolume {
 
 export default (volumeId: string): UseIndexVolume => {
   const {
+    getIndexVolumeById,
     getGroupsForIndexVolume,
     addVolumeToGroup,
     removeVolumeFromGroup
@@ -24,9 +26,19 @@ export default (volumeId: string): UseIndexVolume => {
     })
   );
 
+  const {
+    indexVolumeReceived,
+    indexGroupsForVolumeReceived,
+    indexVolumeAddedToGroup,
+    indexVolumeRemovedFromGroup
+  } = useActionCreators();
+
   useEffect(() => {
-    getGroupsForIndexVolume(volumeId);
-  }, [volumeId, getGroupsForIndexVolume]);
+    getIndexVolumeById(volumeId).then(indexVolumeReceived);
+    getGroupsForIndexVolume(volumeId).then(groups =>
+      indexGroupsForVolumeReceived(volumeId, groups)
+    );
+  }, [volumeId, getGroupsForIndexVolume, indexGroupsForVolumeReceived]);
 
   const indexVolume: IndexVolume | undefined = indexVolumes.find(
     v => v.id === volumeId
@@ -36,15 +48,19 @@ export default (volumeId: string): UseIndexVolume => {
 
   const addToGroup = useCallback(
     (groupName: string) => {
-      addVolumeToGroup(volumeId, groupName);
+      addVolumeToGroup(volumeId, groupName).then(() => {
+        indexVolumeAddedToGroup(volumeId, groupName);
+      });
     },
-    [volumeId, addVolumeToGroup]
+    [volumeId, addVolumeToGroup, indexVolumeAddedToGroup]
   );
   const removeFromGroup = useCallback(
     (groupName: string) => {
-      removeVolumeFromGroup(volumeId, groupName);
+      removeVolumeFromGroup(volumeId, groupName).then(() => {
+        indexVolumeRemovedFromGroup(volumeId, groupName);
+      });
     },
-    [volumeId, removeVolumeFromGroup]
+    [volumeId, removeVolumeFromGroup, indexVolumeRemovedFromGroup]
   );
 
   return { indexVolume, groups, addToGroup, removeFromGroup };
