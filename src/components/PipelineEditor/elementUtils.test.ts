@@ -13,8 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { groupByCategory, isValidChildType, keyByType } from "../elementUtils";
-import { elements } from ".";
+import { groupByCategory, isValidChildType, keyByType } from "./elementUtils";
+import { elements } from "../../testing/data/pipelines";
 
 const jsonWriter = elements.find(f => f.type === "JSONWriter")!;
 const streamAppender = elements.find(f => f.type === "StreamAppender")!;

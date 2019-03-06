@@ -18,12 +18,12 @@ import {
   canMove,
   findItem,
   assignRandomUuids
-} from "../treeUtils";
+} from "../lib/treeUtils";
 import {
   Tree,
   ExpressionOperatorType,
   ExpressionOperatorWithUuid
-} from "../../types";
+} from "../types";
 
 type DocRef = {
   uuid: string;

@@ -15,7 +15,7 @@
  */
 import * as React from "react";
 
-import StroomDecorator from "../../lib/storybook/StroomDecorator";
+import StroomDecorator from "../../testing/storybook/StroomDecorator";
 import { storiesOf } from "@storybook/react";
 
 import DocTypeFilters from "./DocTypeFilters";
@@ -23,7 +23,7 @@ import DocRefTypePicker from "./DocRefTypePicker";
 
 import "../../styles/main.css";
 import useForm from "../../lib/useForm";
-import JsonDebug from "../../lib/storybook/JsonDebug";
+import JsonDebug from "../../testing/JsonDebug";
 
 interface FormValues {
   docRefType?: string;

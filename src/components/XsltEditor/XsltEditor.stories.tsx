@@ -16,11 +16,11 @@
 import * as React from "react";
 import { storiesOf } from "@storybook/react";
 
-import fullTestData from "../../lib/storybook/fullTestData";
+import fullTestData from "../../testing/data";
 import XsltEditor from "./XsltEditor";
 
 import "../../styles/main.css";
-import StroomDecorator from "../../lib/storybook/StroomDecorator";
+import StroomDecorator from "../../testing/storybook/StroomDecorator";
 
 const stories = storiesOf("Document Editors/XSLT", module).addDecorator(
   StroomDecorator

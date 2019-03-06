@@ -20,7 +20,7 @@ import { storiesOf } from "@storybook/react";
 import Welcome from "./Welcome";
 
 import "../../styles/main.css";
-import StroomDecorator from "../../lib/storybook/StroomDecorator";
+import StroomDecorator from "../../testing/storybook/StroomDecorator";
 import { addThemedStories } from "../../lib/themedStoryGenerator";
 
 const stories = storiesOf("Sections/Welcome", module).addDecorator(

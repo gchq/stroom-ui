@@ -6,12 +6,10 @@ import {
   ExpressionOperatorType,
   DataSourceType,
   ExpressionOperatorWithUuid,
-  ExpressionHasUuid
-} from "../../types";
-import {
+  ExpressionHasUuid,
   DataRow,
   StreamAttributeMapResult
-} from "../../sections/DataViewer/types";
+} from "../../types";
 
 export interface Api {
   search: (

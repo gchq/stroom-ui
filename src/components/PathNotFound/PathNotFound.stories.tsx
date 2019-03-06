@@ -18,7 +18,7 @@ import * as React from "react";
 import { storiesOf } from "@storybook/react";
 
 import PathNotFound from "./PathNotFound";
-import StroomDecorator from "../../lib/storybook/StroomDecorator";
+import StroomDecorator from "../../testing/storybook/StroomDecorator";
 import { addThemedStories } from "../../lib/themedStoryGenerator";
 
 import "../../styles/main.css";

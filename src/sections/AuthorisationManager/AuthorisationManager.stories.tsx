@@ -20,7 +20,7 @@ import { storiesOf } from "@storybook/react";
 import { Switch, Route, RouteComponentProps } from "react-router";
 
 import AuthorisationManager from ".";
-import StroomDecorator from "../../lib/storybook/StroomDecorator";
+import StroomDecorator from "../../testing/storybook/StroomDecorator";
 import { addThemedStories } from "../../lib/themedStoryGenerator";
 
 import "../../styles/main.css";

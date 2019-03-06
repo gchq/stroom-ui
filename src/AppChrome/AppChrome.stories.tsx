@@ -20,7 +20,7 @@ import { storiesOf } from "@storybook/react";
 import { Switch, Route } from "react-router-dom";
 
 import AppChrome, { appChromeRoutes } from ".";
-import StroomDecorator from "../lib/storybook/StroomDecorator";
+import StroomDecorator from "../testing/storybook/StroomDecorator";
 
 import "../styles/main.css";
 

@@ -20,10 +20,10 @@ import { storiesOf } from "@storybook/react";
 import { addThemedStories } from "../../../lib/themedStoryGenerator";
 import "../../../styles/main.css";
 import IndexFieldEditor, { useEditor } from "./IndexFieldEditor";
-import { generateTestField } from "../test";
+import { generateTestField } from "../../../testing/data/indexDocs";
 import { IndexField } from "../../../types";
 import Button from "../../Button";
-import JsonDebug from "../../../lib/storybook/JsonDebug";
+import JsonDebug from "../../../testing/JsonDebug";
 
 const stories = storiesOf("Document Editors/Index/Field Editor", module);
 

@@ -18,14 +18,14 @@ import { useState } from "react";
 
 import { storiesOf } from "@storybook/react";
 
-import StroomDecorator from "../../lib/storybook/StroomDecorator";
+import StroomDecorator from "../../testing/storybook/StroomDecorator";
 import { addThemedStories } from "../../lib/themedStoryGenerator";
 import AppSearchBar from "./AppSearchBar";
 
 import "../../styles/main.css";
 import { DocRefType } from "../../types";
 import useForm from "../../lib/useForm";
-import JsonDebug from "../../lib/storybook/JsonDebug";
+import JsonDebug from "../../testing/JsonDebug";
 
 interface Props {
   typeFilters?: Array<string>;

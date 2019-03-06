@@ -3,7 +3,7 @@ import { useState, useCallback } from "react";
 import { storiesOf } from "@storybook/react";
 
 import DialogActionButtons from "./DialogActionButtons";
-import StroomDecorator from "../../lib/storybook/StroomDecorator";
+import StroomDecorator from "../../testing/storybook/StroomDecorator";
 
 import "../../styles/main.css";
 

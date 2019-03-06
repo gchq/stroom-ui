@@ -18,7 +18,7 @@ import { useState } from "react";
 
 import { storiesOf } from "@storybook/react";
 
-import StroomDecorator from "../../lib/storybook/StroomDecorator";
+import StroomDecorator from "../../testing/storybook/StroomDecorator";
 
 import { simplestExpression, testDataSource } from "../ExpressionBuilder/test";
 

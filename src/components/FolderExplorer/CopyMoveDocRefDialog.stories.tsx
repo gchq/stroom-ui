@@ -2,7 +2,7 @@ import * as React from "react";
 import { storiesOf } from "@storybook/react";
 import { useState } from "react";
 
-import StroomDecorator from "../../lib/storybook/StroomDecorator";
+import StroomDecorator from "../../testing/storybook/StroomDecorator";
 import { fromSetupSampleData } from "./test";
 import CopyDocRefDialog, {
   useDialog as useCopyMoveDocRefDialog
@@ -10,7 +10,7 @@ import CopyDocRefDialog, {
 
 import "../../styles/main.css";
 import { PermissionInheritance, DocRefType } from "../../types";
-import JsonDebug from "../../lib/storybook/JsonDebug";
+import JsonDebug from "../../testing/JsonDebug";
 
 const testFolder2 = fromSetupSampleData.children![1];
 

@@ -5,10 +5,10 @@ import { storiesOf } from "@storybook/react";
 import CreateDocRefDialog, { useDialog } from "./CreateDocRefDialog";
 import { fromSetupSampleData } from "./test";
 import { DocRefType } from "../../types";
-import StroomDecorator from "../../lib/storybook/StroomDecorator";
+import StroomDecorator from "../../testing/storybook/StroomDecorator";
 
 import "../../styles/main.css";
-import JsonDebug from "../../lib/storybook/JsonDebug";
+import JsonDebug from "../../testing/JsonDebug";
 
 const testFolder2 = fromSetupSampleData.children![1];
 

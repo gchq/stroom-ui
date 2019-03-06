@@ -17,8 +17,6 @@
 import PipelineEditor from "./PipelineEditor";
 import Pipeline from "./Pipeline";
 
-import { testPipelines } from "./test";
-
-export { PipelineEditor, Pipeline, testPipelines };
+export { PipelineEditor, Pipeline };
 
 export default PipelineEditor;

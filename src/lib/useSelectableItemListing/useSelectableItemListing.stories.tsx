@@ -17,7 +17,7 @@ import * as React from "react";
 import { useState } from "react";
 import { storiesOf } from "@storybook/react";
 
-import StroomDecorator from "../storybook/StroomDecorator";
+import StroomDecorator from "../../testing/storybook/StroomDecorator";
 import useSelectableItemListing, {
   SelectionBehaviour,
   useSelectableReactTable

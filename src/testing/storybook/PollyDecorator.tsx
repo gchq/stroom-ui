@@ -21,7 +21,7 @@ import FetchAdapter, {
 
 import { useHttpClient } from "../../api/useHttpClient";
 import { Config } from "../../startup/config";
-import { TestData } from "../test/testTypes";
+import { TestData } from "../testTypes";
 
 import resources from "./resources";
 import { useEffect } from "react";

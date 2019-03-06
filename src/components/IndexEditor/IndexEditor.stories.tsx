@@ -19,8 +19,8 @@ import { storiesOf } from "@storybook/react";
 import IndexEditor from "./IndexEditor";
 
 import "../../styles/main.css";
-import StroomDecorator from "../../lib/storybook/StroomDecorator";
-import fullTestData from "../../lib/storybook/fullTestData";
+import StroomDecorator from "../../testing/storybook/StroomDecorator";
+import fullTestData from "../../testing/data";
 
 const stories = storiesOf("Document Editors/Index", module).addDecorator(
   StroomDecorator

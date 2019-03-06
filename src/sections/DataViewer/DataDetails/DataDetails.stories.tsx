@@ -18,7 +18,7 @@ import { storiesOf } from "@storybook/react";
 
 import DataDetails from "./DataDetails";
 import { errorData, eventData } from "./DataDetails.testData";
-import StroomDecorator from "../../../lib/storybook/StroomDecorator";
+import StroomDecorator from "../../../testing/storybook/StroomDecorator";
 
 import "../../../styles/main.css";
 

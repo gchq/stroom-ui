@@ -21,8 +21,8 @@ import { addThemedStories } from "../../../lib/themedStoryGenerator";
 import "../../../styles/main.css";
 import NewUserDialog, { useDialog } from "./NewUserDialog";
 import Button from "../../../components/Button";
-import StroomDecorator from "../../../lib/storybook/StroomDecorator";
-import JsonDebug from "../../../lib/storybook/JsonDebug";
+import StroomDecorator from "../../../testing/storybook/StroomDecorator";
+import JsonDebug from "../../../testing/JsonDebug";
 
 const stories = storiesOf(
   "Sections/Authorisation Manager/New User Dialog",

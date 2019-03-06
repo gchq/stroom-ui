@@ -21,8 +21,7 @@ import {
   StateById,
   genUseActionCreators
 } from "../../lib/redux-actions-ts";
-import { AbstractFetchDataResult, DataSourceType } from "../../types";
-import { DataRow } from "../../sections/DataViewer/types";
+import { AbstractFetchDataResult, DataSourceType, DataRow } from "../../types";
 
 export const ADD = "ADD";
 export const UPDATE_STREAM_ATTRIBUTE_MAPS = "UPDATE_STREAM_ATTRIBUTE_MAPS";

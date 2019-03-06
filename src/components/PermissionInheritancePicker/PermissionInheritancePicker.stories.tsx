@@ -17,12 +17,12 @@ import * as React from "react";
 import { storiesOf } from "@storybook/react";
 
 import PermissionInheritancePicker from "./PermissionInheritancePicker";
-import StroomDecorator from "../../lib/storybook/StroomDecorator";
+import StroomDecorator from "../../testing/storybook/StroomDecorator";
 import { addThemedStories } from "../../lib/themedStoryGenerator";
 import "../../styles/main.css";
 import useForm from "../../lib/useForm";
 import { PermissionInheritance } from "src/types";
-import JsonDebug from "../../lib/storybook/JsonDebug";
+import JsonDebug from "../../testing/JsonDebug";
 
 interface FormValues {
   permissionInheritance?: PermissionInheritance;

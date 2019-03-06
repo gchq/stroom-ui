@@ -30,9 +30,8 @@ import { useActionCreators, defaultStatePerId } from "../../../api/data/redux";
 
 import Loader from "../../../components/Loader";
 import Button from "../../../components/Button";
-import { Direction, ExpressionOperatorWithUuid } from "../../../types";
+import { Direction, ExpressionOperatorWithUuid, DataRow } from "../../../types";
 
-import { DataRow } from "../types";
 import useReduxState from "../../../lib/useReduxState";
 
 export interface Props {

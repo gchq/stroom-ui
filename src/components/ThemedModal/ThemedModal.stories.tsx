@@ -20,7 +20,7 @@ import { storiesOf } from "@storybook/react";
 
 import Button from "../Button";
 import ThemedModal from "./ThemedModal";
-import StroomDecorator from "../../lib/storybook/StroomDecorator";
+import StroomDecorator from "../../testing/storybook/StroomDecorator";
 import { addThemedStories } from "../../lib/themedStoryGenerator";
 
 import "../../styles/main.css";

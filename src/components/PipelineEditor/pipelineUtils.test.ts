@@ -26,18 +26,18 @@ import {
   getParentProperty,
   revertPropertyToParent,
   revertPropertyToDefault
-} from "../pipelineUtils";
+} from "./pipelineUtils";
 
-import { keyByType } from "../elementUtils";
+import { keyByType } from "./elementUtils";
 
-import { testPipelines, elements } from ".";
+import { testPipelines, elements } from "../../testing/data/pipelines";
 import {
   PipelineModelType,
   PipelinePropertyType,
   DocRefType,
   PipelinePropertyValue,
   PipelineAsTreeType
-} from "../../../types";
+} from "../../types";
 
 const elementsByType = keyByType(elements);
 

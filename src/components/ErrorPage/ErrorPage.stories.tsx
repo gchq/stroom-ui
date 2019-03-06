@@ -19,7 +19,7 @@ import { useEffect } from "react";
 import { storiesOf } from "@storybook/react";
 
 import ErrorPage from "./ErrorPage";
-import StroomDecorator from "../../lib/storybook/StroomDecorator";
+import StroomDecorator from "../../testing/storybook/StroomDecorator";
 import { useActionCreators } from "./redux";
 
 import "../../styles/main.css";

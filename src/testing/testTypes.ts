@@ -12,9 +12,9 @@ import {
   IndexVolumeGroup,
   IndexVolumeGroupMembership,
   IndexDoc,
-  XsltDoc
-} from "../../types";
-import { StreamAttributeMapResult } from "../../sections/DataViewer/types";
+  XsltDoc,
+  StreamAttributeMapResult
+} from "../types";
 
 export interface UserGroupMembership {
   userUuid: string;

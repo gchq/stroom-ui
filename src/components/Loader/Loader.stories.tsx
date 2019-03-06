@@ -3,7 +3,7 @@ import { storiesOf } from "@storybook/react";
 
 import { addThemedStories } from "../../lib/themedStoryGenerator";
 import Loader from "./Loader";
-import StroomDecorator from "../../lib/storybook/StroomDecorator";
+import StroomDecorator from "../../testing/storybook/StroomDecorator";
 
 import "../../styles/main.css";
 

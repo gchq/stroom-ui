@@ -5,10 +5,10 @@ import { DocRefType } from "../../types";
 
 import RenameDocRefDialog, { useDialog } from "./RenameDocRefDialog";
 import { fromSetupSampleData } from "./test";
-import StroomDecorator from "../../lib/storybook/StroomDecorator";
+import StroomDecorator from "../../testing/storybook/StroomDecorator";
 
 import "../../styles/main.css";
-import JsonDebug from "../../lib/storybook/JsonDebug";
+import JsonDebug from "../../testing/JsonDebug";
 
 const testDocRef = fromSetupSampleData.children![0].children![0].children![0];
 

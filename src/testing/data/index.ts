@@ -23,32 +23,25 @@ import {
   IndexDoc,
   XsltDoc
 } from "../../types";
-import {
-  testPipelines,
-  elements,
-  elementProperties
-} from "../../components/PipelineEditor/test";
-import { testDocRefsTypes } from "../../components/DocRefTypes/test";
-import { generateTestXslt } from "../../components/XsltEditor/test";
-import { generateTestIndex } from "../../components/IndexEditor/test";
-import { generateTestDictionary } from "../../components/DictionaryEditor/test";
-import { generateGenericTracker } from "../../sections/Processing/tracker.testData";
-import { dataList, dataSource } from "../../sections/DataViewer/test";
-import {
-  generateTestUser,
-  generateTestGroup
-} from "../../sections/AuthorisationManager/test";
+import { testPipelines, elements, elementProperties } from "./pipelines";
+import testDocRefsTypes from "./docRefTypes";
+import { generateTestXslt } from "./xslt";
+import { generateTestIndex } from "./indexDocs";
+import { generateTestDictionary } from "./dictionary";
+import { generateGenericTracker } from "./trackers";
+import { dataList, dataSource } from "./data";
+import { generateTestUser, generateTestGroup } from "./usersAndGroups";
 import {
   generateTestIndexVolumeGroup,
   generateTestIndexVolume
-} from "../../sections/IndexVolumes/test";
+} from "./indexVolumes";
 import {
   IndexVolumeGroupMembership,
   User,
   IndexVolumeGroup,
   IndexVolume
 } from "../../types";
-import { UserGroupMembership, TestData } from "../test/testTypes";
+import { UserGroupMembership, TestData } from "../testTypes";
 
 let groups: Array<User> = Array(5)
   .fill(1)

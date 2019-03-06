@@ -17,13 +17,13 @@ import * as React from "react";
 
 import { storiesOf } from "@storybook/react";
 
-import StroomDecorator from "../../lib/storybook/StroomDecorator";
+import StroomDecorator from "../../testing/storybook/StroomDecorator";
 import { DocRefInfoModal } from ".";
 
 import "../../styles/main.css";
 import { useDocRefInfoDialog } from "./DocRefInfoModal";
 import Button from "../Button";
-import fullTestData from "../../lib/storybook/fullTestData";
+import fullTestData from "../../testing/data";
 
 const testFolder1 = fullTestData.documentTree.children![0];
 

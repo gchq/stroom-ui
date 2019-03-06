@@ -18,8 +18,8 @@ import { storiesOf } from "@storybook/react";
 
 import PipelineEditor from "./PipelineEditor";
 
-import { testPipelines } from "./test";
-import StroomDecorator from "../../lib/storybook/StroomDecorator";
+import { testPipelines } from "../../testing/data/pipelines";
+import StroomDecorator from "../../testing/storybook/StroomDecorator";
 
 import "../../styles/main.css";
 

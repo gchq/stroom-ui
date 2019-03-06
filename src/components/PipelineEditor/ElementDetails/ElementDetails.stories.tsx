@@ -20,8 +20,8 @@ import { storiesOf } from "@storybook/react";
 import "../../../styles/main.css";
 
 import ElementDetails from "./ElementDetails";
-import StroomDecorator from "../../../lib/storybook/StroomDecorator";
-import { fullTestData } from "../../../lib/storybook/fullTestData";
+import StroomDecorator from "../../../testing/storybook/StroomDecorator";
+import { fullTestData } from "../../../testing/data";
 import usePipelineState from "../usePipelineState";
 
 interface Props {

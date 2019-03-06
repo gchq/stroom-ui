@@ -18,14 +18,14 @@ import { useState } from "react";
 
 import { storiesOf } from "@storybook/react";
 
-import StroomDecorator from "../../lib/storybook/StroomDecorator";
+import StroomDecorator from "../../testing/storybook/StroomDecorator";
 import DocRefBreadcrumb from "./DocRefBreadcrumb";
 
 import { DocRefType } from "../../types";
-import { testPipelines } from "../PipelineEditor/test";
+import { testPipelines } from "../../testing/data/pipelines";
 
 import "../../styles/main.css";
-import JsonDebug from "../../lib/storybook/JsonDebug";
+import JsonDebug from "../../testing/JsonDebug";
 
 interface Props {
   docRefUuid: string;

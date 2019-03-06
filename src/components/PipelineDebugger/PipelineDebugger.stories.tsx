@@ -19,8 +19,8 @@ import { storiesOf } from "@storybook/react";
 
 import PipelineDebugger from "./PipelineDebugger";
 
-import { testPipelines } from "../PipelineEditor";
-import StroomDecorator from "../../lib/storybook/StroomDecorator";
+import { testPipelines } from "../../testing/data/pipelines";
+import StroomDecorator from "../../testing/storybook/StroomDecorator";
 
 import "../../styles/main.css";
 

@@ -8,13 +8,13 @@ import StoryRouter from "storybook-react-router";
 
 import createStore from "../../startup/store";
 
-import { useTestServer } from "../../lib/storybook/PollyDecorator";
+import { useTestServer } from "./PollyDecorator";
 
 import useFontAwesome from "../../startup/useFontAwesome";
-import testData from "./fullTestData";
-import { ThemeContextProvider, useTheme } from "../theme";
+import testData from "../data";
+import { ThemeContextProvider, useTheme } from "../../lib/theme";
 import { withRouter, RouteComponentProps } from "react-router";
-import { CustomRouter } from "../useRouter";
+import { CustomRouter } from "../../lib/useRouter";
 import useConfig from "../../startup/useConfig";
 import Loader from "../../components/Loader";
 
