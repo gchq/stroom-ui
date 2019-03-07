@@ -5,16 +5,6 @@ interface InputProps {
   onChange: React.ChangeEventHandler<HTMLElement>;
   value: string;
 }
-type InputPropsMapByName<T> = { [s in keyof T]?: InputProps };
-type InputPropsByNameByType<T> = {
-  text: InputPropsMapByName<T>;
-  checkbox: InputPropsMapByName<T>;
-};
-
-type InputNameListsByType<T> = {
-  text?: Array<keyof T>;
-  checkbox?: Array<keyof T>;
-};
 
 export interface Form<T> {
   onUpdate: (updates: Partial<T>) => void;
@@ -22,7 +12,13 @@ export interface Form<T> {
   generateControlledInputProps: <FIELD_TYPE>(
     s: keyof T
   ) => ControlledInput<FIELD_TYPE>;
-  inputProps: InputPropsByNameByType<T>;
+  generateTextInput: (s: keyof T) => InputProps;
+  generateCheckboxInput: (
+    s: keyof T
+  ) => {
+    onChange: React.ChangeEventHandler<HTMLElement>;
+    checked: any;
+  };
 }
 
 /**
@@ -32,16 +28,13 @@ export interface Form<T> {
  */
 export interface UseForm<T> {
   initialValues?: T;
-  inputs?: InputNameListsByType<T>;
   onValidate?: (updates: Partial<T>) => void;
 }
 
-const defaultInputs = { text: [], checkbox: [] };
 const defaultOnValidate = () => {};
 
 export const useForm = function<T>({
   initialValues,
-  inputs = defaultInputs,
   onValidate = defaultOnValidate
 }: UseForm<T>): Form<T> {
   const [currentValues, setCurrentValues] = useState<Partial<T>>(
@@ -68,39 +61,24 @@ export const useForm = function<T>({
     onValidate(currentValues);
   }, [currentValues]);
 
-  const { text: textInputs = [], checkbox: checkboxInputs = [] } = inputs;
-
-  let inputProps: InputPropsByNameByType<T> = {
-    text: textInputs.reduce(
-      (acc, key) => ({
-        ...acc,
-        [key]: {
-          type: "text",
-          onChange: useCallback(
-            ({ target: { value } }) => onUpdate({ [key]: value } as T),
-            [onUpdate]
-          ),
-          value: `${currentValues[key]}`
-        }
-      }),
-      {}
+  const generateTextInput = (s: keyof T) => ({
+    type: "text",
+    onChange: useCallback(
+      ({ target: { value } }) => onUpdate({ [s]: value } as T),
+      [onUpdate]
     ),
-    checkbox: checkboxInputs.reduce(
-      (acc, key) => ({
-        ...acc,
-        [key]: {
-          type: "checkbox",
-          checked: currentValues[key],
-          onChange: useCallback(() => {
-            onUpdate(({
-              [key]: !currentValues[key]
-            } as unknown) as Partial<T>);
-          }, [onUpdate])
-        }
-      }),
-      {}
-    )
-  };
+    value: `${currentValues[s]}`
+  });
+
+  const generateCheckboxInput = (s: keyof T) => ({
+    type: "checkbox",
+    checked: currentValues[s],
+    onChange: useCallback(() => {
+      onUpdate(({
+        [s]: !currentValues[s]
+      } as unknown) as Partial<T>);
+    }, [currentValues[s], onUpdate])
+  });
 
   const generateControlledInputProps = <FIELD_TYPE>(
     s: keyof T
@@ -112,7 +90,8 @@ export const useForm = function<T>({
   return {
     onUpdate,
     currentValues,
-    inputProps,
+    generateTextInput,
+    generateCheckboxInput,
     generateControlledInputProps
   };
 };

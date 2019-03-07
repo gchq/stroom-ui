@@ -52,14 +52,12 @@ let CreateDocRefDialog = ({ isOpen, onConfirm, onCloseDialog }: Props) => {
   const {
     currentValues: { docRefType, docRefName, permissionInheritance },
     generateControlledInputProps,
-    inputProps: {
-      text: { docRefName: docRefNameProps }
-    }
+    generateTextInput
   } = useForm<FormValues>({
-    initialValues,
-    inputs: { text: ["docRefName"] }
+    initialValues
   });
 
+  const docRefNameProps = generateTextInput("docRefName");
   const docRefTypeProps = generateControlledInputProps<string>("docRefType");
   const permissionInheritanceProps = generateControlledInputProps<
     PermissionInheritance

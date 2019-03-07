@@ -61,17 +61,13 @@ const Authorisation = () => {
     }, [selectedItems.map(v => v.uuid)])
   });
 
-  const {
-    generateControlledInputProps,
-    inputProps: {
-      text: { name: nameProps, uuid: uuidProps }
-    }
-  } = useForm({
+  const { generateControlledInputProps, generateTextInput } = useForm({
     initialValues: defaultValues,
-    inputs: { text: ["name", "uuid"] },
     onValidate: ({ name, isGroup, uuid }: Values) =>
       findUsers(name, isGroup, uuid)
   });
+  const nameProps = generateTextInput("name");
+  const uuidProps = generateTextInput("uuid");
 
   const isGroupProps = generateControlledInputProps<IsGroup>("isGroup");
 

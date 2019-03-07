@@ -44,14 +44,12 @@ let AppSearchAsForm = ({ typeFilters }: Props) => {
   const {
     currentValues,
     generateControlledInputProps,
-    inputProps: {
-      text: { someName: someNameProps }
-    }
+    generateTextInput
   } = useForm<FormValues>({
-    initialValues: defaultValues,
-    inputs: { text: ["someName"] }
+    initialValues: defaultValues
   });
 
+  const someNameProps = generateTextInput("someName");
   const chosenDocRefProps = generateControlledInputProps<DocRefType>(
     "chosenDocRef"
   );

@@ -25,14 +25,13 @@ const defaultValues: FormValues = {
 const NewUserDialog = ({ isOpen, onCreateUser, onCloseDialog }: Props) => {
   const {
     currentValues: { name, isGroup },
-    inputProps: {
-      text: { name: nameProps },
-      checkbox: { isGroup: isGroupProps }
-    }
+    generateTextInput,
+    generateCheckboxInput
   } = useForm<FormValues>({
-    initialValues: defaultValues,
-    inputs: { text: ["name"], checkbox: ["isGroup"] }
+    initialValues: defaultValues
   });
+  const nameProps = generateTextInput("name");
+  const isGroupProps = generateCheckboxInput("isGroup");
 
   const onConfirm = useCallback(() => {
     if (name) {

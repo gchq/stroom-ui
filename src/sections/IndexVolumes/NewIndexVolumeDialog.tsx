@@ -24,13 +24,12 @@ const initialValues: FormValues = {
 const NewIndexVolumeDialog = ({ isOpen, onConfirm, onCloseDialog }: Props) => {
   const {
     currentValues: { nodeName, path },
-    inputProps: {
-      text: { nodeName: nodeNameProps, path: pathProps }
-    }
+    generateTextInput
   } = useForm<FormValues>({
-    initialValues,
-    inputs: { text: ["nodeName", "path"] }
+    initialValues
   });
+  const nodeNameProps = generateTextInput("nodeName");
+  const pathProps = generateTextInput("path");
 
   const onConfirmLocal = useCallback(() => {
     if (!!nodeName && !!path) {

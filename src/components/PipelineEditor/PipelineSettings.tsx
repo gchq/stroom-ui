@@ -29,15 +29,11 @@ const PipelineSettings = ({
 
   const {
     currentValues: { description },
-    inputProps: {
-      text: { description: descriptionProps }
-    }
+    generateTextInput
   } = useForm<FormValues>({
-    initialValues,
-    inputs: {
-      text: ["description"]
-    }
+    initialValues
   });
+  const descriptionProps = generateTextInput("description");
 
   const onConfirmLocal = useCallback(() => {
     if (!!description) {
