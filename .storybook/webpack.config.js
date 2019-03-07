@@ -39,10 +39,10 @@ module.exports = (config, configType) => {
     }
   });
   // jSon Loader
-  config.module.rules.push({
-    test: /\.json$/,
-    loader: "json-loader"
-  });
+  // config.module.rules.push({
+  //   test: /\.json$/,
+  //   loader: "json-loader"
+  // });
 
   config.module.rules.push({
     test: /\.(ts|tsx)$/,
