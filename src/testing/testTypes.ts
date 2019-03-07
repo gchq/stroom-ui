@@ -21,6 +21,12 @@ export interface UserGroupMembership {
   groupUuid: string;
 }
 
+export interface UserDocPermission {
+  userUuid: string;
+  docRefUuid: string;
+  permission: string;
+}
+
 export interface TestData {
   docRefTypes: DocRefTypeList;
   documentTree: DocRefTree;
@@ -54,12 +60,8 @@ export interface TestData {
   userAppPermissions: {
     [userUuid: string]: Array<string>;
   };
-  // docPermissionByType: {
-  //   [docType: string]: Array<string>;
-  // };
-  // userDocPermission: {
-  //   [userUuid: string]: {
-  //     [docUuid: string]: Array<string>;
-  //   };
-  // };
+  docPermissionByType: {
+    [docType: string]: Array<string>;
+  };
+  userDocPermission: Array<UserDocPermission>;
 }

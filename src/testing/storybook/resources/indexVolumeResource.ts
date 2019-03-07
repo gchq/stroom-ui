@@ -12,18 +12,16 @@ const resourceBuilder: ResourceBuilder = (
   testConfig: Config,
   testCache: TestCache
 ) => {
+  const resource = `${testConfig.stroomBaseServiceUrl}/stroom-index/volume/v1`;
+
   // Get All
-  server
-    .get(`${testConfig.stroomBaseServiceUrl}/stroom-index/volume/v1`)
-    .intercept((req: HttpRequest, res: HttpResponse) => {
-      res.json(testCache.data!.indexVolumesAndGroups.volumes);
-    });
+  server.get(resource).intercept((req: HttpRequest, res: HttpResponse) => {
+    res.json(testCache.data!.indexVolumesAndGroups.volumes);
+  });
 
   // Get By ID
   server
-    .get(
-      `${testConfig.stroomBaseServiceUrl}/stroom-index/volume/v1/:indexVolumeId`
-    )
+    .get(`${resource}/:indexVolumeId`)
     .intercept((req: HttpRequest, res: HttpResponse) => {
       let indexVolumeId: string = req.params.indexVolumeId;
       let indexVolume = testCache.data!.indexVolumesAndGroups.volumes.find(
@@ -37,41 +35,37 @@ const resourceBuilder: ResourceBuilder = (
     });
 
   // Create
-  server
-    .post(`${testConfig.stroomBaseServiceUrl}/stroom-index/volume/v1`)
-    .intercept((req: HttpRequest, res: HttpResponse) => {
-      const { nodeName, path } = JSON.parse(req.body);
-      let now = Date.now();
-      let newIndexVolume: IndexVolume = {
-        nodeName,
-        path,
-        id: `${nextIdToCreate++}`,
-        createTimeMs: now,
-        updateTimeMs: now,
-        createUser: "test",
-        updateUser: "test",
-        bytesFree: 100,
-        bytesLimit: 100,
-        bytesUsed: 100,
-        bytesTotal: 100,
-        statusMs: now
-      };
+  server.post(resource).intercept((req: HttpRequest, res: HttpResponse) => {
+    const { nodeName, path } = JSON.parse(req.body);
+    let now = Date.now();
+    let newIndexVolume: IndexVolume = {
+      nodeName,
+      path,
+      id: `${nextIdToCreate++}`,
+      createTimeMs: now,
+      updateTimeMs: now,
+      createUser: "test",
+      updateUser: "test",
+      bytesFree: 100,
+      bytesLimit: 100,
+      bytesUsed: 100,
+      bytesTotal: 100,
+      statusMs: now
+    };
 
-      testCache.data!.indexVolumesAndGroups = {
-        ...testCache.data!.indexVolumesAndGroups,
-        volumes: testCache.data!.indexVolumesAndGroups.volumes.concat([
-          newIndexVolume
-        ])
-      };
+    testCache.data!.indexVolumesAndGroups = {
+      ...testCache.data!.indexVolumesAndGroups,
+      volumes: testCache.data!.indexVolumesAndGroups.volumes.concat([
+        newIndexVolume
+      ])
+    };
 
-      res.json(newIndexVolume);
-    });
+    res.json(newIndexVolume);
+  });
 
   // Delete
   server
-    .delete(
-      `${testConfig.stroomBaseServiceUrl}/stroom-index/volume/v1/:indexVolumeId`
-    )
+    .delete(`${resource}/:indexVolumeId`)
     .intercept((req: HttpRequest, res: HttpResponse) => {
       let oldIndexVolumeId = req.params.indexVolumeId;
       testCache.data!.indexVolumesAndGroups = {
@@ -87,11 +81,7 @@ const resourceBuilder: ResourceBuilder = (
 
   // Get Volumes in Group
   server
-    .get(
-      `${
-        testConfig.stroomBaseServiceUrl
-      }/stroom-index/volume/v1/inGroup/:groupName`
-    )
+    .get(`${resource}/inGroup/:groupName`)
     .intercept((req: HttpRequest, res: HttpResponse) => {
       let groupName = req.params.groupName;
 
@@ -110,11 +100,7 @@ const resourceBuilder: ResourceBuilder = (
 
   // Get Groups for Volume
   server
-    .get(
-      `${
-        testConfig.stroomBaseServiceUrl
-      }/stroom-index/volume/v1/groupsFor/:indexVolumeId`
-    )
+    .get(`${resource}/groupsFor/:indexVolumeId`)
     .intercept((req: HttpRequest, res: HttpResponse) => {
       let indexVolumeId = req.params.indexVolumeId;
 
@@ -136,11 +122,7 @@ const resourceBuilder: ResourceBuilder = (
 
   // Add Volume to Group
   server
-    .post(
-      `${
-        testConfig.stroomBaseServiceUrl
-      }/stroom-index/volume/v1/inGroup/:volumeId/:groupName`
-    )
+    .post(`${resource}/inGroup/:volumeId/:groupName`)
     .intercept((req: HttpRequest, res: HttpResponse) => {
       testCache.data!.indexVolumesAndGroups.groupMemberships = testCache.data!.indexVolumesAndGroups.groupMemberships.concat(
         [
@@ -157,11 +139,7 @@ const resourceBuilder: ResourceBuilder = (
 
   // Remove Volume from Group
   server
-    .delete(
-      `${
-        testConfig.stroomBaseServiceUrl
-      }/stroom-index/volume/v1/inGroup/:volumeId/:groupName`
-    )
+    .delete(`${resource}/inGroup/:volumeId/:groupName`)
     .intercept((req: HttpRequest, res: HttpResponse) => {
       let groupName: string = req.params.groupName;
       let volumeId: string = req.params.volumeId;

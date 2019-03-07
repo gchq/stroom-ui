@@ -3,7 +3,6 @@ import { useEffect, useCallback } from "react";
 import useApi from "./useApi";
 import { useActionCreators } from "./redux";
 import useReduxState from "../../lib/useReduxState";
-import { DocRefType, User } from "../../types";
 
 interface UseDocumentPermissions {
   permissions: Array<string>;
@@ -11,7 +10,10 @@ interface UseDocumentPermissions {
   removePermission: (permissionName: string) => void;
 }
 
-export default (docRef: DocRefType, user: User): UseDocumentPermissions => {
+export default (
+  docRefUuid: string,
+  userUuid: string
+): UseDocumentPermissions => {
   const {
     getPermissionsForDocumentForUser,
     addDocPermission,
@@ -24,37 +26,37 @@ export default (docRef: DocRefType, user: User): UseDocumentPermissions => {
   } = useActionCreators();
 
   useEffect(() => {
-    getPermissionsForDocumentForUser(docRef, user.uuid).then(d =>
-      permissionsForDocumentForUserReceived(docRef, user, d)
+    getPermissionsForDocumentForUser(docRefUuid, userUuid).then(d =>
+      permissionsForDocumentForUserReceived(docRefUuid, userUuid, d)
     );
   }, [
-    docRef,
-    user,
+    docRefUuid,
+    userUuid,
     getPermissionsForDocumentForUser,
     permissionsForDocumentForUserReceived
   ]);
 
   const addPermission = useCallback(
     (permissionName: string) => {
-      addDocPermission(docRef, user.uuid, permissionName).then(() =>
-        documentPermissionAdded(docRef, user, permissionName)
+      addDocPermission(docRefUuid, userUuid, permissionName).then(() =>
+        documentPermissionAdded(docRefUuid, userUuid, permissionName)
       );
     },
-    [docRef, user, addDocPermission, documentPermissionAdded]
+    [docRefUuid, userUuid, addDocPermission, documentPermissionAdded]
   );
   const removePermission = useCallback(
     (permissionName: string) => {
-      removeDocPermission(docRef, user.uuid, permissionName).then(() =>
-        documentPermissionRemoved(docRef, user, permissionName)
+      removeDocPermission(docRefUuid, userUuid, permissionName).then(() =>
+        documentPermissionRemoved(docRefUuid, userUuid, permissionName)
       );
     },
-    [docRef, user, removeDocPermission, documentPermissionRemoved]
+    [docRefUuid, userUuid, removeDocPermission, documentPermissionRemoved]
   );
 
   const permissions = useReduxState(
     ({ docPermissions: { permissionsByDocUuidThenUserUuid } }) =>
-      !!permissionsByDocUuidThenUserUuid[docRef.uuid]
-        ? permissionsByDocUuidThenUserUuid[docRef.uuid][user.uuid]
+      !!permissionsByDocUuidThenUserUuid[docRefUuid]
+        ? permissionsByDocUuidThenUserUuid[docRefUuid][userUuid]
         : []
   );
 

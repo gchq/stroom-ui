@@ -9,8 +9,10 @@ const resourceBuilder: ResourceBuilder = (
   testConfig: Config,
   testCache: TestCache
 ) => {
+  const resource = `${testConfig.stroomBaseServiceUrl}/pipelines/v1`;
+
   server
-    .get(`${testConfig.stroomBaseServiceUrl}/pipelines/v1/:pipelineId`)
+    .get(`${resource}/:pipelineId`)
     .intercept((req: HttpRequest, res: HttpResponse) => {
       const pipeline = testCache.data!.pipelines[req.params.pipelineId];
       if (pipeline) {
@@ -19,20 +21,18 @@ const resourceBuilder: ResourceBuilder = (
         res.sendStatus(404);
       }
     });
-  server
-    .get(`${testConfig.stroomBaseServiceUrl}/pipelines/v1/`)
-    .intercept((req: HttpRequest, res: HttpResponse) => {
-      res.json({
-        total: Object.keys(testCache.data!.pipelines).length,
-        pipelines: Object.keys(testCache.data!.pipelines).map(p => ({
-          uuid: p,
-          name: p,
-          type: "Pipeline"
-        }))
-      });
+  server.get(resource).intercept((req: HttpRequest, res: HttpResponse) => {
+    res.json({
+      total: Object.keys(testCache.data!.pipelines).length,
+      pipelines: Object.keys(testCache.data!.pipelines).map(p => ({
+        uuid: p,
+        name: p,
+        type: "Pipeline"
+      }))
     });
+  });
   server
-    .post(`${testConfig.stroomBaseServiceUrl}/pipelines/v1/:pipelineId`)
+    .post(`${resource}/:pipelineId`)
     .intercept((req: HttpRequest, res: HttpResponse) => res.sendStatus(200));
 };
 

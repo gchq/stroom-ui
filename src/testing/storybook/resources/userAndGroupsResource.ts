@@ -10,9 +10,11 @@ const resourceBuilder: ResourceBuilder = (
   testConfig: Config,
   testCache: TestCache
 ) => {
+  const resource = `${testConfig.stroomBaseServiceUrl}/users/v1`;
+
   // Get User by UUID
   server
-    .get(`${testConfig.stroomBaseServiceUrl}/users/v1/:userUuid`)
+    .get(`${resource}/:userUuid`)
     .intercept((req: HttpRequest, res: HttpResponse) => {
       let userUuid = req.params.userUuid;
       let user = testCache.data!.usersAndGroups.users.find(
@@ -23,38 +25,33 @@ const resourceBuilder: ResourceBuilder = (
     });
 
   // Find Users
-  server
-    .get(`${testConfig.stroomBaseServiceUrl}/users/v1`)
-    .intercept((req: HttpRequest, res: HttpResponse) => {
-      const { name, uuid, isGroup } = req.query;
-      let filtered = testCache
-        .data!.usersAndGroups.users.filter(
-          u => name === undefined || u.name.includes(name)
-        )
-        .filter(u => uuid === undefined || u.uuid === uuid)
-        .filter(
-          u =>
-            isGroup === undefined || Boolean(u.isGroup).toString() === isGroup
-        );
-      res.json(filtered);
-    });
+  server.get(resource).intercept((req: HttpRequest, res: HttpResponse) => {
+    const { name, uuid, isGroup } = req.query;
+    let filtered = testCache
+      .data!.usersAndGroups.users.filter(
+        u => name === undefined || u.name.includes(name)
+      )
+      .filter(u => uuid === undefined || u.uuid === uuid)
+      .filter(
+        u => isGroup === undefined || Boolean(u.isGroup).toString() === isGroup
+      );
+    res.json(filtered);
+  });
 
   // Create User
-  server
-    .post(`${testConfig.stroomBaseServiceUrl}/users/v1`)
-    .intercept((req: HttpRequest, res: HttpResponse) => {
-      const { name, isGroup } = JSON.parse(req.body);
-      let newUser = { name, isGroup, uuid: uuidv4() };
+  server.post(resource).intercept((req: HttpRequest, res: HttpResponse) => {
+    const { name, isGroup } = JSON.parse(req.body);
+    let newUser = { name, isGroup, uuid: uuidv4() };
 
-      testCache.data!.usersAndGroups.users = testCache.data!.usersAndGroups.users.concat(
-        [newUser]
-      );
+    testCache.data!.usersAndGroups.users = testCache.data!.usersAndGroups.users.concat(
+      [newUser]
+    );
 
-      res.json(newUser);
-    });
+    res.json(newUser);
+  });
   // Delete User
   server
-    .delete(`${testConfig.stroomBaseServiceUrl}/users/v1/:userUuid`)
+    .delete(`${resource}/:userUuid`)
     .intercept((req: HttpRequest, res: HttpResponse) => {
       let oldUuid = req.params.userUuid;
       testCache.data!.usersAndGroups = {
@@ -71,7 +68,7 @@ const resourceBuilder: ResourceBuilder = (
     });
   // Users in Group
   server
-    .get(`${testConfig.stroomBaseServiceUrl}/users/v1/usersInGroup/:groupUuid`)
+    .get(`${resource}/usersInGroup/:groupUuid`)
     .intercept((req: HttpRequest, res: HttpResponse) => {
       let users = testCache
         .data!.usersAndGroups.userGroupMemberships.filter(
@@ -89,7 +86,7 @@ const resourceBuilder: ResourceBuilder = (
 
   // Groups for User
   server
-    .get(`${testConfig.stroomBaseServiceUrl}/users/v1/groupsForUser/:userUuid`)
+    .get(`${resource}/groupsForUser/:userUuid`)
     .intercept((req: HttpRequest, res: HttpResponse) => {
       let users = testCache
         .data!.usersAndGroups.userGroupMemberships.filter(
@@ -106,7 +103,7 @@ const resourceBuilder: ResourceBuilder = (
 
   // Add User to Group
   server
-    .put(`${testConfig.stroomBaseServiceUrl}/users/v1/:userUuid/:groupUuid`)
+    .put(`${resource}/:userUuid/:groupUuid`)
     .intercept((req: HttpRequest, res: HttpResponse) => {
       testCache.data!.usersAndGroups.userGroupMemberships = testCache.data!.usersAndGroups.userGroupMemberships.concat(
         [
@@ -123,7 +120,7 @@ const resourceBuilder: ResourceBuilder = (
 
   // Remove User from Group
   server
-    .delete(`${testConfig.stroomBaseServiceUrl}/users/v1/:userUuid/:groupUuid`)
+    .delete(`${resource}/:userUuid/:groupUuid`)
     .intercept((req: HttpRequest, res: HttpResponse) => {
       testCache.data!.usersAndGroups.userGroupMemberships = testCache.data!.usersAndGroups.userGroupMemberships.filter(
         m =>

@@ -9,8 +9,10 @@ const resourceBuilder: ResourceBuilder = (
   testConfig: Config,
   testCache: TestCache
 ) => {
+  const resource = `${testConfig.stroomBaseServiceUrl}/dictionary/v1`;
+
   server
-    .get(`${testConfig.stroomBaseServiceUrl}/dictionary/v1/:dictionaryUuid`)
+    .get(`${resource}/:dictionaryUuid`)
     .intercept((req: HttpRequest, res: HttpResponse) => {
       const dict = testCache.data!.dictionaries[req.params.dictionaryUuid];
       if (dict) {
@@ -20,7 +22,7 @@ const resourceBuilder: ResourceBuilder = (
       }
     });
   server
-    .post(`${testConfig.stroomBaseServiceUrl}/dictionary/v1/:dictionaryUuid`)
+    .post(`${resource}/:dictionaryUuid`)
     .intercept((req: HttpRequest, res: HttpResponse) => res.sendStatus(200));
 };
 

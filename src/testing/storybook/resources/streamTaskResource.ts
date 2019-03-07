@@ -9,16 +9,16 @@ const resourceBuilder: ResourceBuilder = (
   testConfig: Config,
   testCache: TestCache
 ) => {
-  server
-    .get(`${testConfig.stroomBaseServiceUrl}/streamTasks/v1/`)
-    .intercept((req: HttpRequest, res: HttpResponse) =>
-      res.json({
-        streamTasks: testCache.data!.trackers || [],
-        totalStreamTasks: testCache.data!.trackers
-          ? testCache.data!.trackers.length
-          : 0
-      })
-    );
+  const resource = `${testConfig.stroomBaseServiceUrl}/streamTasks/v1/`;
+
+  server.get(resource).intercept((req: HttpRequest, res: HttpResponse) =>
+    res.json({
+      streamTasks: testCache.data!.trackers || [],
+      totalStreamTasks: testCache.data!.trackers
+        ? testCache.data!.trackers.length
+        : 0
+    })
+  );
 };
 
 export default resourceBuilder;

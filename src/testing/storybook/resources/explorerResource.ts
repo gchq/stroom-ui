@@ -20,14 +20,15 @@ const resourceBuilder: ResourceBuilder = (
   testCache: TestCache
 ) => {
   const startTime = Date.now();
+  const resource = `${testConfig.stroomBaseServiceUrl}/explorer/v1`;
 
   server
-    .get(`${testConfig.stroomBaseServiceUrl}/explorer/v1/all`)
+    .get(`${resource}/all`)
     .intercept((req: HttpRequest, res: HttpResponse) => {
       res.json(testCache.data!.documentTree);
     });
   server
-    .get(`${testConfig.stroomBaseServiceUrl}/explorer/v1/search`)
+    .get(`${resource}/search`)
     .intercept((req: HttpRequest, res: HttpResponse) => {
       const { searchTerm, docRefType, pageOffset, pageSize } = req.query;
 
@@ -102,13 +103,13 @@ const resourceBuilder: ResourceBuilder = (
     });
   // // Get Document Types
   server
-    .get(`${testConfig.stroomBaseServiceUrl}/explorer/v1/docRefTypes`)
+    .get(`${resource}/docRefTypes`)
     .intercept((req: HttpRequest, res: HttpResponse) => {
       res.json(testCache.data!.docRefTypes);
     });
   // // Create Document
   server
-    .post(`${testConfig.stroomBaseServiceUrl}/explorer/v1/create`)
+    .post(`${resource}/create`)
     .intercept((req: HttpRequest, res: HttpResponse) => {
       const { docRefType, docRefName, destinationFolderRef } = JSON.parse(
         req.body
@@ -138,7 +139,7 @@ const resourceBuilder: ResourceBuilder = (
 
   // Copy Document
   server
-    .post(`${testConfig.stroomBaseServiceUrl}/explorer/v1/copy`)
+    .post(`${resource}/copy`)
     .intercept((req: HttpRequest, res: HttpResponse) => {
       const { destinationFolderRef, docRefs } = JSON.parse(req.body);
 
@@ -156,7 +157,7 @@ const resourceBuilder: ResourceBuilder = (
     });
   // Move Document
   server
-    .put(`${testConfig.stroomBaseServiceUrl}/explorer/v1/move`)
+    .put(`${resource}/move`)
     .intercept((req: HttpRequest, res: HttpResponse) => {
       const { destinationFolderRef, docRefs } = JSON.parse(req.body);
 
@@ -179,14 +180,14 @@ const resourceBuilder: ResourceBuilder = (
     });
   // Rename Document
   server
-    .put(`${testConfig.stroomBaseServiceUrl}/explorer/v1/rename`)
+    .put(`${resource}/rename`)
     .intercept((req: HttpRequest, res: HttpResponse) => {
       const { docRef, name } = JSON.parse(req.body);
       res.json({ ...docRef, name });
     });
   // Delete Document
   server
-    .delete(`${testConfig.stroomBaseServiceUrl}/explorer/v1/delete`)
+    .delete(`${resource}/delete`)
     .intercept((req: HttpRequest, res: HttpResponse) => {
       const docRefsToDelete: Array<DocRefType> = JSON.parse(req.body);
       const docRefUuidsToDelete = docRefsToDelete.map(d => d.uuid);

@@ -11,10 +11,6 @@ import DocRefBreadcrumb from "../DocRefBreadcrumb";
 import Button, { ButtonProps } from "../Button";
 import { DocRefWithLineage, DocRefConsumer } from "../../types";
 import { findItem } from "../../lib/treeUtils";
-import {
-  DocumentPermissionEditor,
-  useDialog as useDocumentPermissionDialog
-} from "../../sections/AuthorisationManager/DocumentPermissionEditor";
 import Loader from "../Loader";
 import { useDocumentTree } from "../../api/explorer";
 import useRouter from "../../lib/useRouter";
@@ -45,14 +41,18 @@ const DocRefEditor = function<T>({
     [documentTree, docRefUuid]
   );
 
-  const {
-    showDialog: showDocumentPermission,
-    componentProps: documentPermissionProps
-  } = useDocumentPermissionDialog();
-
   const openDocRef: DocRefConsumer = useCallback(
     d => router.history!.push(`/s/doc/${d.type}/${d.uuid}`),
     [router]
+  );
+  const openDocRefPermissions = useCallback(
+    () =>
+      router.history!.push(
+        `/s/authorisationManager/document/${
+          docRefWithLineage.node.type
+        }/${docRefUuid}`
+      ),
+    [router, docRefWithLineage]
   );
 
   const { isDirty, isSaving, docRefContents }: StoreStateById = useReduxState(
@@ -74,9 +74,7 @@ const DocRefEditor = function<T>({
     {
       icon: "key",
       title: "Permissions",
-      onClick: useCallback(() => {
-        showDocumentPermission(docRefUuid);
-      }, [showDocumentPermission, docRefUuid])
+      onClick: openDocRefPermissions
     }
   ];
 
@@ -101,8 +99,6 @@ const DocRefEditor = function<T>({
         docRefWithLineage={docRefWithLineage}
         openDocRef={openDocRef}
       />
-
-      <DocumentPermissionEditor {...documentPermissionProps} />
 
       <div className="DocRefEditor__actionButtons">
         {actionBarItems

@@ -42,7 +42,14 @@ import {
   IndexVolume
 } from "../../types";
 import allAppPermissions from "./appPermissions";
-import { UserGroupMembership, TestData } from "../testTypes";
+import { UserGroupMembership, TestData, UserDocPermission } from "../testTypes";
+import { documentPermissionNames } from "./docPermissions";
+import { iterateNodes } from "../../lib/treeUtils";
+
+let docPermissionByType = testDocRefsTypes.reduce(
+  (acc, curr) => ({ ...acc, [curr]: documentPermissionNames }),
+  {}
+);
 
 let groups: Array<User> = Array(5)
   .fill(1)
@@ -180,6 +187,20 @@ const docTree = {
   ]
 } as DocRefTree;
 
+const userDocPermission: Array<UserDocPermission> = [];
+
+iterateNodes(docTree, (_, { uuid: docRefUuid }) => {
+  allUsers.forEach(({ uuid: userUuid }) => {
+    documentPermissionNames.forEach(permission => {
+      userDocPermission.push({
+        userUuid,
+        docRefUuid,
+        permission
+      });
+    });
+  });
+});
+
 export const fullTestData: TestData = {
   documentTree: docTree,
   docRefTypes: testDocRefsTypes,
@@ -202,7 +223,9 @@ export const fullTestData: TestData = {
   },
   indexes,
   allAppPermissions,
-  userAppPermissions
+  userAppPermissions,
+  docPermissionByType,
+  userDocPermission
 };
 
 export default fullTestData;

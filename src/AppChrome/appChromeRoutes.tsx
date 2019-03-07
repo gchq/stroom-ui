@@ -20,6 +20,7 @@ import IndexVolumeGroups from "../sections/IndexVolumeGroups";
 import IndexVolumeGroupEditor from "../sections/IndexVolumeGroups/IndexVolumeGroupEditor";
 import useConfig from "../startup/useConfig";
 import Loader from "../components/Loader";
+import DocumentPermissionEditor from "../sections/AuthorisationManager/DocumentPermissionEditor";
 
 const renderWelcome = () => (
   <AppChrome activeMenuItem="Welcome" content={<Welcome />} />
@@ -109,7 +110,7 @@ export default [
     path: "/s/authorisationManager",
     render: () => (
       <AppChrome
-        activeMenuItem="User Permissions"
+        activeMenuItem="User Authorisation"
         content={<AuthorisationManager />}
       />
     )
@@ -119,9 +120,26 @@ export default [
     path: "/s/authorisationManager/:userUuid",
     render: (props: RouteComponentProps<any>) => (
       <AppChrome
-        activeMenuItem="User Permissions"
+        activeMenuItem="User Authorisation"
         content={
           <UserAuthorisationEditor userUuid={props.match.params.userUuid} />
+        }
+      />
+    )
+  },
+  {
+    exact: true,
+    path: "/s/authorisationManager/document/:docRefType/:docRefUuid",
+    render: (props: RouteComponentProps<any>) => (
+      <AppChrome
+        activeMenuItem="User Authorisation"
+        content={
+          <DocumentPermissionEditor
+            docRef={{
+              uuid: props.match.params.docRefUuid,
+              type: props.match.params.docRefType
+            }}
+          />
         }
       />
     )

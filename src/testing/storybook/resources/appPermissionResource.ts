@@ -10,23 +10,19 @@ const resourceBuilder: ResourceBuilder = (
   testConfig: Config,
   testCache: TestCache
 ) => {
+  const resource = `${testConfig.stroomBaseServiceUrl}/appPermissions/v1`;
+
   // Get All App Permission Names
+  server.get(resource).intercept((req: HttpRequest, res: HttpResponse) => {
+    res.json(testCache.data!.allAppPermissions);
+  });
   server
-    .get(`${testConfig.stroomBaseServiceUrl}/appPermissions/v1`)
-    .intercept((req: HttpRequest, res: HttpResponse) => {
-      res.json(testCache.data!.allAppPermissions);
-    });
-  server
-    .get(`${testConfig.stroomBaseServiceUrl}/appPermissions/v1/:userUuid`)
+    .get(`${resource}/:userUuid`)
     .intercept((req: HttpRequest, res: HttpResponse) => {
       res.json(testCache.data!.userAppPermissions[req.params.userUuid] || []);
     });
   server
-    .post(
-      `${
-        testConfig.stroomBaseServiceUrl
-      }/appPermissions/v1/:userUuid/:permission`
-    )
+    .post(`${resource}/:userUuid/:permission`)
     .intercept((req: HttpRequest, res: HttpResponse) => {
       testCache.data!.userAppPermissions[req.params.userUuid] = [
         ...(testCache.data!.userAppPermissions[req.params.userUuid] || []),
@@ -38,11 +34,7 @@ const resourceBuilder: ResourceBuilder = (
     });
 
   server
-    .delete(
-      `${
-        testConfig.stroomBaseServiceUrl
-      }/appPermissions/v1/:userUuid/:permission`
-    )
+    .delete(`${resource}/:userUuid/:permission`)
     .intercept((req: HttpRequest, res: HttpResponse) => {
       testCache.data!.userAppPermissions[
         req.params.userUuid

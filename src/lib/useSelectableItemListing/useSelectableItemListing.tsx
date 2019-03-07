@@ -169,7 +169,7 @@ export interface TableOutProps<TItem> extends OutProps<TItem> {
 
 export function useSelectableReactTable<TItem>(
   props: InProps<TItem>,
-  customTableProps?: Partial<TableProps>
+  customTableProps: Partial<TableProps>
 ): TableOutProps<TItem> {
   const selectableItemProps = useSelectableItemListing<TItem>(props);
   const { getKey, items } = props;

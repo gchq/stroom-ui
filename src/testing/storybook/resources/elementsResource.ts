@@ -9,13 +9,15 @@ const resourceBuilder: ResourceBuilder = (
   testConfig: Config,
   testCache: TestCache
 ) => {
+  const resource = `${testConfig.stroomBaseServiceUrl}/elements/v1/`;
+
   server
-    .get(`${testConfig.stroomBaseServiceUrl}/elements/v1/elements`)
+    .get(`${resource}/elements`)
     .intercept((req: HttpRequest, res: HttpResponse) => {
       res.json(testCache.data!.elements);
     });
   server
-    .get(`${testConfig.stroomBaseServiceUrl}/elements/v1/elementProperties`)
+    .get(`${resource}/elementProperties`)
     .intercept((req: HttpRequest, res: HttpResponse) => {
       res.json(testCache.data!.elementProperties);
     });

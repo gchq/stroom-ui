@@ -9,23 +9,25 @@ const resourceBuilder: ResourceBuilder = (
   testConfig: Config,
   testCache: TestCache
 ) => {
+  const resource = `${
+    testConfig.stroomBaseServiceUrl
+  }/stroom-index/volumeGroup/v1`;
+
   // Get All
-  server
-    .get(`${testConfig.stroomBaseServiceUrl}/stroom-index/volumeGroup/v1`)
-    .intercept((req: HttpRequest, res: HttpResponse) => {
-      res.json(testCache.data!.indexVolumesAndGroups.groups);
-    });
+  server.get(resource).intercept((req: HttpRequest, res: HttpResponse) => {
+    res.json(testCache.data!.indexVolumesAndGroups.groups);
+  });
 
   // Get All Names
   server
-    .get(`${testConfig.stroomBaseServiceUrl}/stroom-index/volumeGroup/v1/names`)
+    .get(`${resource}/names`)
     .intercept((req: HttpRequest, res: HttpResponse) => {
       res.json(testCache.data!.indexVolumesAndGroups.groups.map(g => g.name));
     });
 
   // Get by Name
   server
-    .get(`${testConfig.stroomBaseServiceUrl}/stroom-index/volumeGroup/v1/:name`)
+    .get(`${resource}/:name`)
     .intercept((req: HttpRequest, res: HttpResponse) => {
       let group = testCache.data!.indexVolumesAndGroups.groups.find(
         g => g.name === req.params.name
@@ -39,9 +41,7 @@ const resourceBuilder: ResourceBuilder = (
 
   // Create
   server
-    .post(
-      `${testConfig.stroomBaseServiceUrl}/stroom-index/volumeGroup/v1/:name`
-    )
+    .post(`${resource}/:name`)
     .intercept((req: HttpRequest, res: HttpResponse) => {
       let name = req.params.name;
       let now = Date.now();

@@ -1,53 +1,82 @@
 import * as React from "react";
-import { useState, useCallback } from "react";
+import { useCallback } from "react";
+import ReactTable from "react-table";
 
-import ThemedModal from "../../../components/ThemedModal";
-import Button from "../../../components/Button";
 import IconHeader from "../../../components/IconHeader";
+import useDocumentPermissions from "../../../api/docPermission/useDocumentPermissions";
+import { DocRefType } from "../../../types";
+import Button from "../../../components/Button";
+import ThemedConfirm, {
+  useDialog as useThemedConfirm
+} from "../../../components/ThemedConfirm";
+import DocumentPermissionForUserEditor from "../DocumentPermissionForUserEditor";
+import {
+  useSelectableReactTable,
+  SelectionBehaviour
+} from "../../../lib/useSelectableItemListing";
 
 export interface Props {
-  docRefUuid?: string;
-  onCloseDialog: () => void;
+  docRef: DocRefType;
 }
-
-export const DocumentPermissionEditor = ({
-  docRefUuid,
-  onCloseDialog
-}: Props) => {
-  if (!docRefUuid) {
-    return null;
+const COLUMNS = [
+  {
+    id: "userUuid",
+    Header: "UUID",
+    accessor: (uuid: string) => uuid
   }
+];
+
+export const DocumentPermissionEditor = ({ docRef }: Props) => {
+  const { clearPermissions, permissionsByUser } = useDocumentPermissions(
+    docRef.uuid
+  );
+
+  const { tableProps, selectedItems } = useSelectableReactTable(
+    {
+      items: Object.keys(permissionsByUser),
+      getKey: d => d,
+      selectionBehaviour: SelectionBehaviour.SINGLE
+    },
+    { columns: COLUMNS }
+  );
+
+  const selectedUserUuid: string | undefined =
+    selectedItems.length > 0 ? selectedItems[0] : undefined;
+
+  const {
+    showDialog: showConfirmClear,
+    componentProps: confirmClearProps
+  } = useThemedConfirm({
+    getQuestion: useCallback(
+      () => `Are you sure you wish to clear all permissions?`,
+      []
+    ),
+    getDetails: useCallback(() => {
+      return `From Document ${docRef.type} - ${docRef.uuid}`;
+    }, [docRef]),
+    onConfirm: clearPermissions
+  });
 
   return (
-    <ThemedModal
-      isOpen={!!docRefUuid}
-      header={<IconHeader icon="key" text="Document Permissions" />}
-      content={<div>Document Permissions for {docRefUuid}</div>}
-      actions={<Button onClick={onCloseDialog} text="Close" />}
-    />
+    <div>
+      <IconHeader
+        icon="key"
+        text={`Document Permissions for ${docRef.type} - ${docRef.name}`}
+      />
+      <div>
+        <ReactTable {...tableProps} />
+        {selectedUserUuid && (
+          <DocumentPermissionForUserEditor
+            docRef={docRef}
+            userUuid={selectedUserUuid}
+          />
+        )}
+
+        <Button text="Clear Permissions" onClick={showConfirmClear} />
+        <ThemedConfirm {...confirmClearProps} />
+      </div>
+    </div>
   );
 };
 
-interface UseDialog {
-  componentProps: Props;
-  showDialog: (docRefUuid: string) => void;
-}
-
-export const useDialog = (): UseDialog => {
-  const [docRefUuid, setDocRefUuid] = useState<string | undefined>(undefined);
-
-  return {
-    showDialog: useCallback(
-      (_docRef: string) => {
-        setDocRefUuid(_docRef);
-      },
-      [setDocRefUuid]
-    ),
-    componentProps: {
-      docRefUuid,
-      onCloseDialog: useCallback(() => {
-        setDocRefUuid(undefined);
-      }, [setDocRefUuid])
-    }
-  };
-};
+export default DocumentPermissionEditor;

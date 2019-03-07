@@ -1,4 +1,4 @@
-import { DocRefType, DocumentPermissions, User } from "../../types";
+import { DocumentPermissions } from "../../types";
 import { Action } from "redux";
 import {
   genUseActionCreators,
@@ -14,15 +14,11 @@ export interface StoreState {
       [userUuid: string]: Array<string>;
     };
   };
-  userIsGroup: {
-    [userUuid: string]: boolean;
-  };
 }
 
 const defaultState: StoreState = {
   permissionsByDocType: {},
-  permissionsByDocUuidThenUserUuid: {},
-  userIsGroup: {}
+  permissionsByDocUuidThenUserUuid: {}
 };
 
 const PERMISSIONS_FOR_DOC_TYPE_RECEIVED = "PERMISSIONS_FOR_DOC_TYPE_RECEIVED";
@@ -41,20 +37,20 @@ interface PermissionsForDocTypeReceivedAction
 
 interface PermissionsForDocumentForUserReceivedAction
   extends Action<"PERMISSIONS_FOR_DOCUMENT_FOR_USER_RECEIVED"> {
-  docRef: DocRefType;
-  user: User;
+  docRefUuid: string;
+  userUuid: string;
   permissions: Array<string>;
 }
 
 interface PermissionsForDocumentReceivedAction
   extends Action<"PERMISSIONS_FOR_DOCUMENT_RECEIVED"> {
-  docRef: DocRefType;
+  docRefUuid: string;
   documentPermissions: DocumentPermissions;
 }
 
 interface DocumentPermissionAction {
-  docRef: DocRefType;
-  user: User;
+  docRefUuid: string;
+  userUuid: string;
   permissionName: string;
 }
 
@@ -66,7 +62,7 @@ interface DocumentPermissionRemovedAction
     DocumentPermissionAction {}
 interface DocumentPermissionsClearedAction
   extends Action<"DOCUMENT_PERMISSIONS_CLEARED"> {
-  docRef: DocRefType;
+  docRefUuid: string;
 }
 
 export const useActionCreators = genUseActionCreators({
@@ -79,48 +75,48 @@ export const useActionCreators = genUseActionCreators({
     permissions
   }),
   permissionsForDocumentForUserReceived: (
-    docRef: DocRefType,
-    user: User,
+    docRefUuid: string,
+    userUuid: string,
     permissions: Array<string>
   ): PermissionsForDocumentForUserReceivedAction => ({
     type: PERMISSIONS_FOR_DOCUMENT_FOR_USER_RECEIVED,
-    docRef,
-    user,
+    docRefUuid,
+    userUuid,
     permissions
   }),
   permissionsForDocumentReceived: (
-    docRef: DocRefType,
+    docRefUuid: string,
     documentPermissions: DocumentPermissions
   ): PermissionsForDocumentReceivedAction => ({
     type: PERMISSIONS_FOR_DOCUMENT_RECEIVED,
-    docRef,
+    docRefUuid,
     documentPermissions
   }),
   documentPermissionAdded: (
-    docRef: DocRefType,
-    user: User,
+    docRefUuid: string,
+    userUuid: string,
     permissionName: string
   ): DocumentPermissionAddedAction => ({
     type: DOCUMENT_PERMISSION_ADDED,
-    docRef,
-    user,
+    docRefUuid,
+    userUuid,
     permissionName
   }),
   documentPermissionRemoved: (
-    docRef: DocRefType,
-    user: User,
+    docRefUuid: string,
+    userUuid: string,
     permissionName: string
   ): DocumentPermissionRemovedAction => ({
     type: DOCUMENT_PERMISSION_REMOVED,
-    docRef,
-    user,
+    docRefUuid,
+    userUuid,
     permissionName
   }),
   documentPermissionsCleared: (
-    docRef: DocRefType
+    docRefUuid: string
   ): DocumentPermissionsClearedAction => ({
     type: DOCUMENT_PERMISSIONS_CLEARED,
-    docRef
+    docRefUuid
   })
 });
 
@@ -137,11 +133,11 @@ export const reducer = prepareReducer(defaultState)
   )
   .handleAction<PermissionsForDocumentReceivedAction>(
     PERMISSIONS_FOR_DOCUMENT_RECEIVED,
-    (state = defaultState, { docRef, documentPermissions }) => ({
+    (state = defaultState, { docRefUuid, documentPermissions }) => ({
       ...state,
       permissionsByDocUuidThenUserUuid: {
         ...state.permissionsByDocUuidThenUserUuid,
-        [docRef.uuid]: {
+        [docRefUuid]: {
           ...documentPermissions.byUser
         }
       }
@@ -149,76 +145,60 @@ export const reducer = prepareReducer(defaultState)
   )
   .handleAction<PermissionsForDocumentForUserReceivedAction>(
     PERMISSIONS_FOR_DOCUMENT_FOR_USER_RECEIVED,
-    (state = defaultState, { docRef, user, permissions }) => ({
+    (state = defaultState, { docRefUuid, userUuid, permissions }) => ({
       ...state,
       permissionsByDocUuid: {
         ...state.permissionsByDocUuidThenUserUuid,
-        [docRef.uuid]: {
-          [user.uuid]: permissions
+        [docRefUuid]: {
+          [userUuid]: permissions
         }
-      },
-      userIsGroup: {
-        ...state.userIsGroup,
-        [user.uuid]: user.isGroup
       }
     })
   )
   .handleAction<DocumentPermissionAddedAction>(
     DOCUMENT_PERMISSION_ADDED,
-    (state = defaultState, { docRef, user, permissionName }) => ({
+    (state = defaultState, { docRefUuid, userUuid, permissionName }) => ({
       ...state,
 
       permissionsByDocUuid: {
         ...state.permissionsByDocUuidThenUserUuid,
-        [docRef.uuid]: {
-          [user.uuid]: (!!state.permissionsByDocUuidThenUserUuid[docRef.uuid] &&
-            state.permissionsByDocUuidThenUserUuid[docRef.uuid][user.uuid] &&
-            state.permissionsByDocUuidThenUserUuid[docRef.uuid][
-              user.uuid
-            ].concat([permissionName])) || [permissionName]
+        [docRefUuid]: {
+          [userUuid]: (!!state.permissionsByDocUuidThenUserUuid[docRefUuid] &&
+            state.permissionsByDocUuidThenUserUuid[docRefUuid][userUuid] &&
+            state.permissionsByDocUuidThenUserUuid[docRefUuid][userUuid].concat(
+              [permissionName]
+            )) || [permissionName]
         }
-      },
-
-      userIsGroup: {
-        ...state.userIsGroup,
-        [user.uuid]: user.isGroup
       }
     })
   )
   .handleAction<DocumentPermissionRemovedAction>(
     DOCUMENT_PERMISSION_REMOVED,
-    (state = defaultState, { docRef, user, permissionName }) => ({
+    (state = defaultState, { docRefUuid, userUuid, permissionName }) => ({
       ...state,
 
       permissionsByDocUuid: {
         ...state.permissionsByDocUuidThenUserUuid,
-        [docRef.uuid]: {
-          [user.uuid]:
-            (!!state.permissionsByDocUuidThenUserUuid[docRef.uuid] &&
-              !!state.permissionsByDocUuidThenUserUuid[docRef.uuid][
-                user.uuid
-              ] &&
-              state.permissionsByDocUuidThenUserUuid[docRef.uuid][
-                user.uuid
+        [docRefUuid]: {
+          [userUuid]:
+            (!!state.permissionsByDocUuidThenUserUuid[docRefUuid] &&
+              !!state.permissionsByDocUuidThenUserUuid[docRefUuid][userUuid] &&
+              state.permissionsByDocUuidThenUserUuid[docRefUuid][
+                userUuid
               ].filter(p => p !== permissionName)) ||
             []
         }
-      },
-
-      userIsGroup: {
-        ...state.userIsGroup,
-        [user.uuid]: user.isGroup
       }
     })
   )
   .handleAction<DocumentPermissionsClearedAction>(
     DOCUMENT_PERMISSIONS_CLEARED,
-    (state = defaultState, { docRef }) => ({
+    (state = defaultState, { docRefUuid }) => ({
       ...state,
 
       permissionsByDocUuid: {
         ...state.permissionsByDocUuidThenUserUuid,
-        [docRef.uuid]: {}
+        [docRefUuid]: {}
       }
     })
   )

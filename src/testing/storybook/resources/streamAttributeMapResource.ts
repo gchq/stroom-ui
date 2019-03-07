@@ -9,12 +9,14 @@ const resourceBuilder: ResourceBuilder = (
   testConfig: Config,
   testCache: TestCache
 ) => {
+  const resource = `${testConfig.stroomBaseServiceUrl}/streamattributemap/v1`;
+
   /**
    * The StreamAttributeMap resource supports expression-based search.
    * This responds with the datasource for this expression.
    */
   server
-    .get(`${testConfig.stroomBaseServiceUrl}/streamattributemap/v1/dataSource`)
+    .get(`${resource}/dataSource`)
     .intercept((req: HttpRequest, res: HttpResponse) =>
       res.json(testCache.data!.dataSource)
     );
@@ -23,7 +25,7 @@ const resourceBuilder: ResourceBuilder = (
    * This responds with a list of streamAttributeMaps
    */
   server
-    .get(`${testConfig.stroomBaseServiceUrl}/streamattributemap/v1/`)
+    .get(resource)
     .intercept((req: HttpRequest, res: HttpResponse) =>
       res.json(testCache.data!.dataList)
     );

@@ -1,8 +1,5 @@
-import {
-  DocumentPermissionEditor,
-  useDialog
-} from "./DocumentPermissionEditor";
+import { DocumentPermissionEditor } from "./DocumentPermissionEditor";
 
-export { DocumentPermissionEditor, useDialog };
+export { DocumentPermissionEditor };
 
 export default DocumentPermissionEditor;

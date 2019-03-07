@@ -9,8 +9,9 @@ const resourceBuilder: ResourceBuilder = (
   testConfig: Config,
   testCache: TestCache
 ) => {
+  const resource = `${testConfig.stroomBaseServiceUrl}/index/v1`;
   server
-    .get(`${testConfig.stroomBaseServiceUrl}/index/v1/:indexUuid`)
+    .get(`${resource}/:indexUuid`)
     .intercept((req: HttpRequest, res: HttpResponse) => {
       const index = testCache.data!.indexes[req.params.indexUuid];
       if (index) {
@@ -20,7 +21,7 @@ const resourceBuilder: ResourceBuilder = (
       }
     });
   server
-    .post(`${testConfig.stroomBaseServiceUrl}/index/v1/:indexUuid`)
+    .post(`${resource}/:indexUuid`)
     .intercept((req: HttpRequest, res: HttpResponse) => res.sendStatus(200));
 };
 

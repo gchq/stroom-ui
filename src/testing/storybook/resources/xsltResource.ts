@@ -9,8 +9,9 @@ const resourceBuilder: ResourceBuilder = (
   testConfig: Config,
   testCache: TestCache
 ) => {
+  const resource = `${testConfig.stroomBaseServiceUrl}/xslt/v1/`;
   server
-    .get(`${testConfig.stroomBaseServiceUrl}/xslt/v1/:xsltUuid`)
+    .get(`${resource}/:xsltUuid`)
     .intercept((req: HttpRequest, res: HttpResponse) => {
       const xslt = testCache.data!.xslt[req.params.xsltUuid];
       if (xslt) {
@@ -21,7 +22,7 @@ const resourceBuilder: ResourceBuilder = (
       }
     });
   server
-    .post(`${testConfig.stroomBaseServiceUrl}/xslt/v1/:xsltUuid`)
+    .post(`${resource}/:xsltUuid`)
     .intercept((req: HttpRequest, res: HttpResponse) => {
       testCache.data!.xslt[req.params.xsltUuid].data = req.body;
       res.sendStatus(200);
