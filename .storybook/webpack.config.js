@@ -38,10 +38,13 @@ module.exports = (config, configType) => {
       name: "static/media/images/[name].[hash:8].[ext]"
     }
   });
-  // jSon Loader
+
+  //TODO: couldn't get this working with Storybook 4, but everything seems fine without it.
+  // Leaving it here until we're sure it's not needed.
+  // json Loader
   // config.module.rules.push({
-  //   test: /\.json$/,
-  //   loader: "json-loader"
+  // test: /\.json$/,
+  // loader: "json-loader"
   // });
 
   config.module.rules.push({

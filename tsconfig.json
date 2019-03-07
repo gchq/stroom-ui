@@ -9,7 +9,7 @@
     "allowJs": true,
     "jsx": "react",
     "moduleResolution": "node",
-    "rootDir": "src",
+    "rootDir": "./",
     "forceConsistentCasingInFileNames": true,
     "noImplicitReturns": true,
     "noImplicitThis": true,
@@ -26,5 +26,9 @@
     "webpack",
     "jest",
     "src/setupTests.ts"
+  ],
+  "include": [
+    "node_modules/@pollyjs/adapter-fetch/dist/umd",
+    "src"
   ]
 }
