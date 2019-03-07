@@ -20,18 +20,23 @@ import { storiesOf } from "@storybook/react";
 
 import StroomDecorator from "../../testing/storybook/StroomDecorator";
 import DocRefBreadcrumb from "./DocRefBreadcrumb";
+import fullTestData from "../../testing/data";
 
 import { DocRefType } from "../../types";
-import { testPipelines } from "../../testing/data/pipelines";
 
 import "../../styles/main.css";
 import JsonDebug from "../../testing/JsonDebug";
+import { findItem } from "../../lib/treeUtils";
+import { addThemedStories } from "../../lib/themedStoryGenerator";
 
-interface Props {
-  docRefUuid: string;
-}
+const testDocRef = fullTestData.documentTree.children![0].children![0];
 
-const BreadcrumbOpen = ({ docRefUuid }: Props) => {
+const testDocRefWithLineage = findItem(
+  fullTestData.documentTree,
+  testDocRef.uuid
+)!;
+
+const BreadcrumbOpen = () => {
   const [openDocRef, setOpenDocRef] = useState<DocRefType | undefined>(
     undefined
   );
@@ -39,16 +44,17 @@ const BreadcrumbOpen = ({ docRefUuid }: Props) => {
   return (
     <div>
       <div>Doc Ref Breadcrumb</div>
-      <DocRefBreadcrumb docRefUuid={docRefUuid} openDocRef={setOpenDocRef} />
+      <DocRefBreadcrumb
+        docRefWithLineage={testDocRefWithLineage}
+        openDocRef={setOpenDocRef}
+      />
       <JsonDebug currentValues={openDocRef} />
     </div>
   );
 };
 
-const testPipelineUuid = Object.keys(testPipelines)[0];
+const stories = storiesOf("Doc Ref/Breadcrumb", module).addDecorator(
+  StroomDecorator
+);
 
-storiesOf("Doc Ref/Breadcrumb", module)
-  .addDecorator(StroomDecorator)
-  .add("first pipeline", () => (
-    <BreadcrumbOpen docRefUuid={testPipelineUuid} />
-  ));
+addThemedStories(stories, <BreadcrumbOpen />);

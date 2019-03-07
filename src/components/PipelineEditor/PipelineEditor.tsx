@@ -87,13 +87,12 @@ const PipelineEditor = ({ pipelineId }: Props) => {
     }
   }, [showSettingsDialog, pipeline]);
 
-  const actionBarItems: Array<ButtonProps> = [
+  const additionalActionBarItems: Array<ButtonProps> = [
     {
       icon: "cogs",
       title: "Open Settings",
       onClick: onClickOpenSettings
     },
-    ...editorProps.actionBarItems,
     {
       icon: "recycle",
       title: "Create Child Pipeline",
@@ -107,7 +106,10 @@ const PipelineEditor = ({ pipelineId }: Props) => {
   }
 
   return (
-    <DocRefEditor {...editorProps} actionBarItems={actionBarItems}>
+    <DocRefEditor
+      {...editorProps}
+      additionalActionBarItems={additionalActionBarItems}
+    >
       <div className="Pipeline-editor">
         <AddElementModal {...addElementComponentProps} />
         <DeletePipelineElement {...deleteElementComponentProps} />

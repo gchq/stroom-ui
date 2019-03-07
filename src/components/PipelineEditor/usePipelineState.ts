@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState, useCallback } from "react";
 
 import { useApi as usePipelineApi } from "../../api/pipelineDocument";
-import { useDocRefEditor, UseDocRefEditorOutProps } from "../DocRefEditor";
+import { useDocRefEditor, UseDocRefEditorProps } from "../DocRefEditor";
 import {
   PipelineModelType,
   PipelineAsTreeType,
@@ -49,7 +49,7 @@ export interface PipelineEditApi {
 export interface PipelineProps {
   asTree?: PipelineAsTreeType;
   pipelineEditApi: PipelineEditApi;
-  useEditorProps: UseDocRefEditorOutProps<PipelineModelType>;
+  useEditorProps: UseDocRefEditorProps<PipelineModelType>;
 }
 
 export const usePipelineState = (pipelineId: string): PipelineProps => {

@@ -17,7 +17,7 @@
 import * as React from "react";
 import { useCallback } from "react";
 
-import DocRefEditor from "../DocRefEditor";
+import DocRefEditor, { useDocRefEditor } from "../DocRefEditor";
 import Loader from "../Loader";
 import { findItem } from "../../lib/treeUtils";
 import useExplorerApi from "../../api/explorer/useApi";
@@ -120,7 +120,7 @@ const FolderExplorer = ({ folderUuid }: Props) => {
 
   const { node, lineage } = folder;
 
-  const actionBarItems: Array<ButtonProps> = [
+  const additionalActionBarItems: Array<ButtonProps> = [
     {
       icon: "file",
       onClick: () => showCreateDialog(node),
@@ -135,32 +135,32 @@ const FolderExplorer = ({ folderUuid }: Props) => {
 
   if (selectedDocRefs.length > 0) {
     if (singleSelectedDocRef) {
-      actionBarItems.push({
+      additionalActionBarItems.push({
         icon: "info",
         text: "Info",
         onClick: () => showDocRefInfoDialog(singleSelectedDocRef),
         title: "View Information about this document"
       });
-      actionBarItems.push({
+      additionalActionBarItems.push({
         icon: "edit",
         text: "Rename",
         onClick: () => showRenameDialog(singleSelectedDocRef),
         title: "Rename this document"
       });
     }
-    actionBarItems.push({
+    additionalActionBarItems.push({
       icon: "copy",
       text: "Copy",
       onClick: () => showCopyDialog(selectedDocRefUuids),
       title: "Copy selected documents"
     });
-    actionBarItems.push({
+    additionalActionBarItems.push({
       icon: "arrows-alt",
       text: "Move",
       onClick: () => showMoveDialog(selectedDocRefUuids),
       title: "Move selected documents"
     });
-    actionBarItems.push({
+    additionalActionBarItems.push({
       icon: "trash",
       text: "Delete",
       onClick: () => showDeleteDialog(selectedDocRefUuids),
@@ -168,8 +168,14 @@ const FolderExplorer = ({ folderUuid }: Props) => {
     });
   }
 
+  const { editorProps: folderEditorProps } = useDocRefEditor({
+    docRefUuid: folderUuid,
+    saveDocument: () => {},
+    additionalActionBarItems
+  });
+
   return (
-    <DocRefEditor docRefUuid={folderUuid} actionBarItems={actionBarItems}>
+    <DocRefEditor {...folderEditorProps}>
       <div tabIndex={0} onKeyDown={onKeyDownWithShortcuts}>
         {node &&
           node.children &&

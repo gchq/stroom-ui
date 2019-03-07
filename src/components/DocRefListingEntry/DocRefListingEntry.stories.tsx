@@ -23,10 +23,11 @@ import useSelectableItemListing, {
   SelectionBehaviour
 } from "../../lib/useSelectableItemListing";
 import DocRefListingEntry from "./DocRefListingEntry";
-import { DocRefType } from "../../types";
+import { DocRefType, DocRefWithLineage } from "../../types";
 
 import "../../styles/main.css";
 import { DocRefBreadcrumb } from "../DocRefBreadcrumb";
+import { findItem } from "../../lib/treeUtils";
 
 const testFolder = fullTestData.documentTree;
 const testDocRef = fullTestData.documentTree.children![0].children![0];
@@ -59,6 +60,11 @@ let TestDocRefListingEntry = ({
     setWentBack(false);
   };
 
+  const docRefsWithLineage: Array<DocRefWithLineage> = docRefs
+    .map(docRef => findItem(fullTestData.documentTree, docRef.uuid))
+    .filter(d => d !== undefined)
+    .map(d => d!);
+
   const {
     onKeyDownWithShortcuts,
     selectionToggled,
@@ -80,12 +86,12 @@ let TestDocRefListingEntry = ({
         onKeyDown={onKeyDownWithShortcuts}
         style={{ borderStyle: "dashed", borderWidth: "2px" }}
       >
-        {docRefs &&
-          docRefs.map(docRef => (
+        {docRefsWithLineage &&
+          docRefsWithLineage.map(docRefWithLineage => (
             <DocRefListingEntry
-              key={docRef.uuid}
+              key={docRefWithLineage.node.uuid}
               {...{
-                docRef,
+                docRef: docRefWithLineage.node,
                 openDocRef,
                 enterFolder,
                 dndCanDrop,
@@ -97,7 +103,7 @@ let TestDocRefListingEntry = ({
             >
               {provideBreadcrumbs && (
                 <DocRefBreadcrumb
-                  docRefUuid={docRef.uuid}
+                  docRefWithLineage={docRefWithLineage}
                   openDocRef={openDocRef}
                 />
               )}

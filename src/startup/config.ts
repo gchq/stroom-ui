@@ -50,7 +50,7 @@ const useActionCreators = genUseActionCreators({
 });
 
 const reducer = prepareReducer(initialState)
-  .handleAction<UpdateConfigAction>(UPDATE_CONFIG, (state, { values }) => ({
+  .handleAction<UpdateConfigAction>(UPDATE_CONFIG, (_, { values }) => ({
     isReady: true,
     values: values
   }))
@@ -71,7 +71,7 @@ const useApi = (): Api => {
 
   const fetchConfig = useCallback(() => {
     const url = "/config.json";
-    httpGetJson(url).then(updateConfig);
+    httpGetJson(url, {}, false).then(updateConfig);
   }, [httpGetJson, updateConfig]);
 
   return { fetchConfig };

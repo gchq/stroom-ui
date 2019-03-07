@@ -1,7 +1,8 @@
-import DocRefEditor, { Props } from "./DocRefEditor";
-import useDocRefEditor, {
-  OutProps as UseDocRefEditorOutProps
-} from "./useDocRefEditor";
+import DocRefEditor, {
+  useDocRefEditor,
+  UseDocRefEditorProps,
+  Props
+} from "./DocRefEditor";
 import {
   useActionCreators,
   reducer,
@@ -13,7 +14,7 @@ export {
   DocRefEditor,
   Props,
   useDocRefEditor,
-  UseDocRefEditorOutProps,
+  UseDocRefEditorProps,
   useActionCreators,
   reducer,
   StoreState,

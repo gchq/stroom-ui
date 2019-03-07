@@ -126,6 +126,11 @@ const AppSearchBar = ({
     searchMode === SearchMode.NAVIGATION ? "empty" : "no results";
   let provideBreadcrumbs = searchMode !== SearchMode.NAVIGATION;
 
+  const docRefsWithLineage: Array<DocRefWithLineage> = docRefs
+    .map(docRef => findItem(documentTree, docRef.uuid))
+    .filter(d => d !== undefined)
+    .map(d => d!);
+
   const {
     onKeyDownWithShortcuts,
     selectionToggled,
@@ -218,10 +223,10 @@ const AppSearchBar = ({
           {hasNoResults && (
             <div className="app-search-listing__empty">{noResultsText}</div>
           )}
-          {docRefs.map(searchResult => (
+          {docRefsWithLineage.map(searchResultWithLineage => (
             <DocRefListingEntry
-              key={searchResult.uuid}
-              docRef={searchResult}
+              key={searchResultWithLineage.node.uuid}
+              docRef={searchResultWithLineage.node}
               openDocRef={onThisChange}
               enterFolder={setNavFolder}
               selectionToggled={selectionToggled}
@@ -230,7 +235,7 @@ const AppSearchBar = ({
             >
               {provideBreadcrumbs && (
                 <DocRefBreadcrumb
-                  docRefUuid={searchResult.uuid}
+                  docRefWithLineage={searchResultWithLineage}
                   openDocRef={setNavFolder}
                 />
               )}
