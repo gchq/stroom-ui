@@ -7,12 +7,13 @@ module.exports = ({ config, mode }) => {
   // You can change the configuration based on that.
   // 'PRODUCTION' is used when building the static version of storybook.
 
+  // FIXME: this is failing for some reason, and that means some styles aren't getting loaded.
   // Make whatever fine-grained changes you need
-  config.module.rules.push({
-    test: /\.(css)$/,
-    loaders: ["style-loader", "css-loader"],
-    include: path.resolve(__dirname, "../")
-  });
+  // config.module.rules.push({
+  //   test: /\.(css)$/,
+  //   loaders: ["style-loader", "css-loader"],
+  //   include: path.resolve(__dirname, "../")
+  // });
 
   // Fonts
   config.module.rules.push({

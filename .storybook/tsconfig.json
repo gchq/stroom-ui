@@ -9,7 +9,7 @@
     "jsx": "react",
     "moduleResolution": "node",
     "rootDirs": ["src", "stories"],
-    "baseUrl": "./",
+    "baseUrl": "src",
     "forceConsistentCasingInFileNames": true,
     "noImplicitReturns": true,
     "noImplicitThis": true,
