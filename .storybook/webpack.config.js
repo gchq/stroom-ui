@@ -2,17 +2,18 @@ const path = require("path");
 //const TSDocgenPlugin = require("react-docgen-typescript-webpack-plugin");
 
 // Export a function. Accept the base config as the only param.
-module.exports = (config, configType) => {
-  // configType has a value of 'DEVELOPMENT' or 'PRODUCTION'
+module.exports = ({ config, mode }) => {
+  // mode has a value of 'DEVELOPMENT' or 'PRODUCTION'
   // You can change the configuration based on that.
   // 'PRODUCTION' is used when building the static version of storybook.
 
+  // FIXME: this is failing for some reason, and that means some styles aren't getting loaded.
   // Make whatever fine-grained changes you need
-  config.module.rules.push({
-    test: /\.(css)$/,
-    loaders: ["style-loader", "css-loader"],
-    include: path.resolve(__dirname, "../")
-  });
+  // config.module.rules.push({
+  //   test: /\.(css)$/,
+  //   loaders: ["style-loader", "css-loader"],
+  //   include: path.resolve(__dirname, "../")
+  // });
 
   // Fonts
   config.module.rules.push({
@@ -38,11 +39,14 @@ module.exports = (config, configType) => {
       name: "static/media/images/[name].[hash:8].[ext]"
     }
   });
-  // jSon Loader
-  config.module.rules.push({
-    test: /\.json$/,
-    loader: "json-loader"
-  });
+
+  //TODO: couldn't get this working with Storybook 4, but everything seems fine without it.
+  // Leaving it here until we're sure it's not needed.
+  // json Loader
+  // config.module.rules.push({
+  // test: /\.json$/,
+  // loader: "json-loader"
+  // });
 
   config.module.rules.push({
     test: /\.(ts|tsx)$/,
