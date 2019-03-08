@@ -100,7 +100,7 @@ const DocRefInfoModal = ({ isOpen, onCloseDialog, docRef }: Props) => {
  * These are the things returned by the custom hook that allow the owning component to interact
  * with this dialog.
  */
-export type UseDocRefInfoDialog = {
+type UseDocRefInfoDialog = {
   /**
    * The owning component is ready to start a deletion process.
    * Calling this will open the dialog, and setup the UUIDs

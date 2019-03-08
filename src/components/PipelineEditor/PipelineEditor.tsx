@@ -15,13 +15,13 @@
  */
 
 import * as React from "react";
-import { useEffect, useCallback } from "react";
+import { useCallback } from "react";
 import PanelGroup from "react-panelgroup";
 
 import Loader from "../Loader";
 import AddElementModal, {
   useDialog as useAddElementDialog
-} from "./AddElementModal";
+} from "./AddElementModal/AddElementModal";
 import { ButtonProps } from "../Button";
 import PipelineSettings, {
   useDialog as usePipelineSettingsDialog
@@ -31,7 +31,6 @@ import DeletePipelineElement, {
   useDialog as useDeleteElementDialog
 } from "./DeletePipelineElement";
 import { ElementDetails } from "./ElementDetails";
-import { useApi as usePipelineApi } from "../../api/pipelineDocument";
 import Pipeline from "./Pipeline";
 import DocRefEditor from "../DocRefEditor";
 import usePipelineState from "./usePipelineState";
@@ -41,12 +40,6 @@ interface Props {
 }
 
 const PipelineEditor = ({ pipelineId }: Props) => {
-  const { fetchPipeline } = usePipelineApi();
-
-  useEffect(() => {
-    fetchPipeline(pipelineId);
-  }, [fetchPipeline]);
-
   const piplineStateProps = usePipelineState(pipelineId);
   const {
     pipelineEditApi,

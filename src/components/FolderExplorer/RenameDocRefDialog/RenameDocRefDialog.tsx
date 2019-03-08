@@ -16,12 +16,12 @@
 import * as React from "react";
 import { useState, useMemo, useCallback } from "react";
 
-import DialogActionButtons from "../Button/DialogActionButtons";
-import IconHeader from "../IconHeader";
-import ThemedModal from "../ThemedModal";
+import DialogActionButtons from "../../Button/DialogActionButtons";
+import IconHeader from "../../IconHeader";
+import ThemedModal from "../../ThemedModal";
 // import { required, minLength2 } from "../../lib/reduxUtils";
-import { DocRefType } from "../../types";
-import useForm from "../../lib/useForm";
+import { DocRefType } from "../../../types";
+import useForm from "../../../lib/useForm";
 
 interface Props {
   isOpen: boolean;
@@ -34,7 +34,7 @@ interface FormValues {
   docRefName?: string;
 }
 
-let RenameDocRefDialog = ({
+export const RenameDocRefDialog = ({
   isOpen,
   docRef,
   onConfirm,
@@ -86,7 +86,7 @@ let RenameDocRefDialog = ({
  * These are the things returned by the custom hook that allow the owning component to interact
  * with this dialog.
  */
-export type UseDialog = {
+type UseDialog = {
   /**
    * The owning component is ready to start a deletion process.
    * Calling this will open the dialog, and setup the UUIDs

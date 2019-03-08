@@ -1,14 +1,14 @@
 import * as React from "react";
 import { useState } from "react";
 import { storiesOf } from "@storybook/react";
-import { DocRefType } from "../../types";
+import { DocRefType } from "../../../types";
 
 import RenameDocRefDialog, { useDialog } from "./RenameDocRefDialog";
-import { fromSetupSampleData } from "./test";
-import StroomDecorator from "../../testing/storybook/StroomDecorator";
+import { fromSetupSampleData } from "../test";
+import StroomDecorator from "../../../testing/storybook/StroomDecorator";
 
-import "../../styles/main.css";
-import JsonDebug from "../../testing/JsonDebug";
+import "../../../styles/main.css";
+import JsonDebug from "../../../testing/JsonDebug";
 
 const testDocRef = fromSetupSampleData.children![0].children![0].children![0];
 

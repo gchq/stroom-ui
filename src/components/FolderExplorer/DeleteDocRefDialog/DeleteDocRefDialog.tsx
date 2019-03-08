@@ -16,7 +16,7 @@
 import * as React from "react";
 import { useState, useCallback } from "react";
 
-import ThemedConfirm from "../ThemedConfirm";
+import ThemedConfirm from "../../ThemedConfirm";
 
 interface Props {
   uuids: Array<string>;
@@ -25,7 +25,7 @@ interface Props {
   onCloseDialog: () => void;
 }
 
-const DeleteDocRefDialog = ({
+export const DeleteDocRefDialog = ({
   uuids,
   isOpen,
   onConfirm,
@@ -50,7 +50,7 @@ const DeleteDocRefDialog = ({
  * These are the things returned by the custom hook that allow the owning component to interact
  * with this dialog.
  */
-export type UseDialog = {
+type UseDialog = {
   /**
    * The owning component is ready to start a deletion process.
    * Calling this will open the dialog, and setup the UUIDs

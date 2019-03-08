@@ -16,32 +16,21 @@
 import * as React from "react";
 import { useState, useCallback, useMemo } from "react";
 
-import IconHeader from "../IconHeader";
-import DialogActionButtons from "../Button/DialogActionButtons";
-import ThemedModal from "../ThemedModal";
-import AppSearchBar from "../AppSearchBar";
-import PermissionInheritancePicker from "../PermissionInheritancePicker";
-import { PermissionInheritance, DocRefType } from "../../types";
-import useForm from "../../lib/useForm";
-
-interface Props {
-  uuids: Array<string>;
-  initialDestination?: DocRefType;
-  isOpen: boolean;
-  onConfirm: (
-    uuids: Array<string>,
-    destination: DocRefType,
-    permissionInheritance: PermissionInheritance
-  ) => void;
-  onCloseDialog: () => void;
-}
+import IconHeader from "../../IconHeader";
+import DialogActionButtons from "../../Button/DialogActionButtons";
+import ThemedModal from "../../ThemedModal";
+import AppSearchBar from "../../AppSearchBar";
+import PermissionInheritancePicker from "../../PermissionInheritancePicker";
+import { PermissionInheritance, DocRefType } from "../../../types";
+import useForm from "../../../lib/useForm";
+import { UseDialog, Props } from "./types";
 
 interface FormValues {
   destination?: DocRefType;
   permissionInheritance: PermissionInheritance;
 }
 
-let CopyMoveDocRefDialog = ({
+export const CopyMoveDocRefDialog = ({
   uuids,
   initialDestination,
   isOpen,
@@ -113,16 +102,6 @@ let CopyMoveDocRefDialog = ({
   );
 };
 
-export type ShowDialog = (
-  uuids: Array<string>,
-  destination?: DocRefType
-) => void;
-
-export type UseDialog = {
-  showDialog: ShowDialog;
-  componentProps: Props;
-};
-
 export const useDialog = (
   onConfirm: (
     uuids: Array<string>,
@@ -155,5 +134,3 @@ export const useDialog = (
     }
   };
 };
-
-export default CopyMoveDocRefDialog;

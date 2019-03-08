@@ -2,15 +2,16 @@ import * as React from "react";
 import { storiesOf } from "@storybook/react";
 import { useState } from "react";
 
-import StroomDecorator from "../../testing/storybook/StroomDecorator";
-import { fromSetupSampleData } from "./test";
-import CopyDocRefDialog, {
+import StroomDecorator from "../../../testing/storybook/StroomDecorator";
+import { fromSetupSampleData } from "../test";
+import {
+  CopyMoveDocRefDialog,
   useDialog as useCopyMoveDocRefDialog
 } from "./CopyMoveDocRefDialog";
 
-import "../../styles/main.css";
-import { PermissionInheritance, DocRefType } from "../../types";
-import JsonDebug from "../../testing/JsonDebug";
+import "../../../styles/main.css";
+import { PermissionInheritance, DocRefType } from "../../../types";
+import JsonDebug from "../../../testing/JsonDebug";
 
 const testFolder2 = fromSetupSampleData.children![1];
 
@@ -37,7 +38,7 @@ const TestCopyDialog = ({ testUuids, testDestination }: Props) => {
       <button onClick={() => showDialog(testUuids, testDestination)}>
         Show
       </button>
-      <CopyDocRefDialog {...componentProps} />
+      <CopyMoveDocRefDialog {...componentProps} />
       <JsonDebug currentValues={lastConfirmed} />
     </div>
   );

@@ -1,15 +1,15 @@
 import FolderExplorer from "./FolderExplorer";
 
-import CreateDocRefDialog from "./CreateDocRefDialog";
-import RenameDocRefDialog from "./RenameDocRefDialog";
-import CopyDocRefDialog from "./CopyMoveDocRefDialog";
-import DeleteDocRefDialog from "./DeleteDocRefDialog";
+import CreateDocRefDialog from "./CreateDocRefDialog/CreateDocRefDialog";
+import RenameDocRefDialog from "./RenameDocRefDialog/RenameDocRefDialog";
+import CopyMoveDocRefDialog from "./CopyMoveDocRefDialog";
+import DeleteDocRefDialog from "./DeleteDocRefDialog/DeleteDocRefDialog";
 
 export {
   CreateDocRefDialog,
   FolderExplorer,
   RenameDocRefDialog,
-  CopyDocRefDialog,
+  CopyMoveDocRefDialog,
   DeleteDocRefDialog
 };
 

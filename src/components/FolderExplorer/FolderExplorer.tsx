@@ -24,16 +24,17 @@ import useExplorerApi from "../../api/explorer/useApi";
 import DndDocRefListingEntry from "./DndDocRefListingEntry";
 import CreateDocRefDialog, {
   useDialog as useCreateDialog
-} from "./CreateDocRefDialog";
-import CopyMoveDocRefDialog, {
+} from "./CreateDocRefDialog/CreateDocRefDialog";
+import {
+  CopyMoveDocRefDialog,
   useDialog as useCopyMoveDialog
-} from "./CopyMoveDocRefDialog";
+} from "./CopyMoveDocRefDialog/CopyMoveDocRefDialog";
 import RenameDocRefDialog, {
   useDialog as useRenameDialog
-} from "./RenameDocRefDialog";
+} from "./RenameDocRefDialog/RenameDocRefDialog";
 import DeleteDocRefDialog, {
   useDialog as useDeleteDialog
-} from "./DeleteDocRefDialog";
+} from "./DeleteDocRefDialog/DeleteDocRefDialog";
 import DocRefInfoModal from "../DocRefInfoModal";
 import { ButtonProps } from "../Button";
 import { DocRefType, DocRefConsumer } from "../../types";

@@ -26,7 +26,8 @@ import useSelectableItemListing from "../lib/useSelectableItemListing";
 import { DocRefType, DocRefConsumer, DocRefTree } from "../types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { KeyDownState } from "../lib/useKeyIsDown";
-import CopyMoveDocRefDialog, {
+import {
+  CopyMoveDocRefDialog,
   useDialog as useCopyMoveDocRefDialog,
   ShowDialog as ShowCopyDocRefDialog
 } from "../components/FolderExplorer/CopyMoveDocRefDialog";

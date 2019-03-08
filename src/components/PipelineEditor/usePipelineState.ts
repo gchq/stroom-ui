@@ -15,10 +15,10 @@ import {
 import { PipelineEditApi, PipelineProps } from "./types";
 
 export const usePipelineState = (pipelineId: string): PipelineProps => {
-  const pipelineApi = usePipelineApi();
+  const { fetchPipeline, savePipeline } = usePipelineApi();
 
   useEffect(() => {
-    pipelineApi.fetchPipeline(pipelineId);
+    fetchPipeline(pipelineId);
   }, [pipelineId]);
 
   const [selectedElementId, setSelectedElementId] = useState<
@@ -28,7 +28,7 @@ export const usePipelineState = (pipelineId: string): PipelineProps => {
 
   const useEditorProps = useDocRefEditor({
     docRefUuid: pipelineId,
-    saveDocument: pipelineApi.savePipeline
+    saveDocument: savePipeline
   });
 
   const { docRefContents, onDocumentChange } = useEditorProps;

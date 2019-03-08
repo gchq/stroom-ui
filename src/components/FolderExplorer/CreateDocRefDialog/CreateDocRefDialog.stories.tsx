@@ -3,12 +3,12 @@ import { useState } from "react";
 import { storiesOf } from "@storybook/react";
 
 import CreateDocRefDialog, { useDialog } from "./CreateDocRefDialog";
-import { fromSetupSampleData } from "./test";
-import { DocRefType } from "../../types";
-import StroomDecorator from "../../testing/storybook/StroomDecorator";
+import { fromSetupSampleData } from "../test";
+import { DocRefType } from "../../../types";
+import StroomDecorator from "../../../testing/storybook/StroomDecorator";
 
-import "../../styles/main.css";
-import JsonDebug from "../../testing/JsonDebug";
+import "../../../styles/main.css";
+import JsonDebug from "../../../testing/JsonDebug";
 
 const testFolder2 = fromSetupSampleData.children![1];
 

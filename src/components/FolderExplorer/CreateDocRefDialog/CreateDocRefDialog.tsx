@@ -17,13 +17,13 @@
 import * as React from "react";
 import { useState, useCallback } from "react";
 
-import IconHeader from "../IconHeader";
-import ThemedModal from "../ThemedModal";
-import DialogActionButtons from "../Button/DialogActionButtons";
-import { DocRefTypePicker } from "../DocRefTypes";
-import PermissionInheritancePicker from "../PermissionInheritancePicker";
-import { PermissionInheritance, DocRefType } from "../../types";
-import useForm from "../../lib/useForm";
+import IconHeader from "../../IconHeader";
+import ThemedModal from "../../ThemedModal";
+import DialogActionButtons from "../../Button/DialogActionButtons";
+import { DocRefTypePicker } from "../../DocRefTypes";
+import PermissionInheritancePicker from "../../PermissionInheritancePicker";
+import { PermissionInheritance, DocRefType } from "../../../types";
+import useForm from "../../../lib/useForm";
 // import { required, minLength2 } from "../../lib/reduxUtils";
 
 interface Props {
@@ -48,7 +48,11 @@ const initialValues: FormValues = {
   permissionInheritance: PermissionInheritance.NONE
 };
 
-let CreateDocRefDialog = ({ isOpen, onConfirm, onCloseDialog }: Props) => {
+export const CreateDocRefDialog = ({
+  isOpen,
+  onConfirm,
+  onCloseDialog
+}: Props) => {
   const {
     currentValues: { docRefType, docRefName, permissionInheritance },
     generateControlledInputProps,
@@ -111,7 +115,7 @@ let CreateDocRefDialog = ({ isOpen, onConfirm, onCloseDialog }: Props) => {
  * These are the things returned by the custom hook that allow the owning component to interact
  * with this dialog.
  */
-export type UseDialog = {
+type UseDialog = {
   /**
    * The owning component is ready to start a deletion process.
    * Calling this will open the dialog, and setup the UUIDs

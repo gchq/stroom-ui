@@ -71,7 +71,7 @@ const PipelineSettings = ({
   );
 };
 
-export type UseDialog = {
+type UseDialog = {
   /**
    * The owning component is ready to start a deletion process.
    * Calling this will open the dialog, and setup the UUIDs

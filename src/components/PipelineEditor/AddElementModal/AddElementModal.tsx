@@ -1,33 +1,19 @@
 import * as React from "react";
 import { useState, useMemo, useCallback } from "react";
 
-import IconHeader from "../IconHeader";
-import Button from "../Button";
-import ThemedModal from "../ThemedModal";
+import IconHeader from "../../IconHeader";
+import Button from "../../Button";
+import ThemedModal from "../../ThemedModal";
 // import { required, minLength2 } from "../../lib/reduxUtils";
-import { ElementDefinition } from "../../types";
-import useForm from "../../lib/useForm";
-
-type OnAddElement = (
-  parentId: string,
-  elementDefinition: ElementDefinition,
-  name: string
-) => void;
-
-interface Props {
-  isOpen: boolean;
-  onCloseDialog: () => void;
-  onAddElement: OnAddElement;
-  existingNames: Array<string>;
-  parentId?: string;
-  elementDefinition?: ElementDefinition;
-}
+import { ElementDefinition } from "../../../types";
+import useForm from "../../../lib/useForm";
+import { Props, OnAddElement, UseDialog } from "./types";
 
 interface FormValues {
   newName: string;
 }
 
-const AddElementModal = ({
+export const AddElementModal = ({
   isOpen,
   onAddElement,
   onCloseDialog,
@@ -104,17 +90,6 @@ const AddElementModal = ({
     />
   );
 };
-
-export type ShowDialog = (
-  parentId: string,
-  elementDefinition: ElementDefinition,
-  existingNames: Array<string>
-) => void;
-
-interface UseDialog {
-  componentProps: Props;
-  showDialog: ShowDialog;
-}
 
 export const useDialog = (onAddElement: OnAddElement): UseDialog => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
