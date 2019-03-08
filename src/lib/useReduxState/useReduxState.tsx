@@ -3,6 +3,9 @@ import { useCallback } from "react";
 import { useMappedState } from "redux-react-hook";
 import { GlobalStoreState } from "../../startup/reducers";
 
+/**
+ * This is a convenience function to get Redux State Retrieval.
+ */
 export const useReduxState = function<T, State = GlobalStoreState>(
   mapper: (gss: State) => T,
   params: Array<any> = []

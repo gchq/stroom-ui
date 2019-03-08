@@ -27,7 +27,7 @@ export default (userUuids: Array<string>): Array<User> => {
       .forEach(userUuid => {
         fetchUser(userUuid).then(userReceived);
       });
-  }, [userUuids]);
+  }, [userUuids, fetchUser, userReceived]);
 
   return users;
 };

@@ -9,7 +9,7 @@ export default (userUuid: string): User | undefined => {
   const [user, setUser] = useState<User | undefined>(undefined);
   useEffect(() => {
     fetchUser(userUuid).then(setUser);
-  }, []);
+  }, [userUuid, fetchUser, setUser]);
 
   return user;
 };

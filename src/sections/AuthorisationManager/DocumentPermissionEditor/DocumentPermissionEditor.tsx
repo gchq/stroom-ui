@@ -21,9 +21,10 @@ export const DocumentPermissionEditor = ({ docRef }: Props) => {
     docRef.uuid
   );
 
-  const userUuids = useMemo(() => Object.keys(permissionsByUser), [
-    permissionsByUser
-  ]);
+  const userUuids = useMemo(() => {
+    console.log("Permissions By User Changed");
+    return Object.keys(permissionsByUser);
+  }, [permissionsByUser]);
   const users = useUsers(userUuids);
   const { componentProps: usersTableProps } = useUsersTable(users);
 

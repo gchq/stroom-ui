@@ -191,13 +191,15 @@ const userDocPermission: Array<UserDocPermission> = [];
 
 iterateNodes(docTree, (_, { uuid: docRefUuid }) => {
   allUsers.forEach(({ uuid: userUuid }) => {
-    documentPermissionNames.forEach(permissionName => {
-      userDocPermission.push({
-        userUuid,
-        docRefUuid,
-        permissionName
+    documentPermissionNames
+      .filter(p => p !== "OWNER")
+      .forEach(permissionName => {
+        userDocPermission.push({
+          userUuid,
+          docRefUuid,
+          permissionName
+        });
       });
-    });
   });
 });
 

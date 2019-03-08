@@ -53,12 +53,15 @@ export default (
     [docRefUuid, userUuid, removeDocPermission, documentPermissionRemoved]
   );
 
-  const permissions = useReduxState(({ docPermissions: { permissions } }) => {
-    let ps = permissions.find(
-      p => p.userUuid === userUuid && p.docRefUuid === docRefUuid
-    );
-    return !!ps ? ps.permissionNames : [];
-  });
+  const permissions = useReduxState(
+    ({ docPermissions: { permissions } }) => {
+      let ps = permissions.find(
+        p => p.userUuid === userUuid && p.docRefUuid === docRefUuid
+      );
+      return !!ps ? ps.permissionNames : [];
+    },
+    [userUuid, docRefUuid]
+  );
 
   return {
     permissions,

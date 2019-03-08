@@ -50,7 +50,7 @@ export default (docRefUuid: string | undefined): UseDocumentPermissions => {
           [curr.userUuid]: [curr.permissionNames]
         };
       }, {});
-  }, [permissions]);
+  }, [docRefUuid, permissions]);
 
   return {
     permissionsByUser,

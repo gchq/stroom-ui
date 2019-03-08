@@ -63,9 +63,11 @@ const resourceBuilder: ResourceBuilder = (
 
       testCache.data!.userDocPermission = testCache.data!.userDocPermission.filter(
         udp =>
-          udp.userUuid !== userUuid &&
-          udp.docRefUuid !== docRefUuid &&
-          udp.permissionName !== permissionName
+          !(
+            udp.userUuid === userUuid &&
+            udp.docRefUuid === docRefUuid &&
+            udp.permissionName === permissionName
+          )
       );
 
       res.send(undefined);
