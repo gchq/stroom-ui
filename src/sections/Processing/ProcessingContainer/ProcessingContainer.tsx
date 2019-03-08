@@ -29,7 +29,6 @@ import ProcessingList from "../ProcessingList/ProcessingList";
 import { StreamTaskType } from "../../../types";
 import useReduxState from "../../../lib/useReduxState";
 
-
 const ProcessingContainer = () => {
   const { fetchTrackers } = useApi();
   const {
@@ -93,8 +92,6 @@ const ProcessingContainer = () => {
       resetPaging();
       fetchTrackers();
     });
-
-    return () => {};
   }, [fetchTrackers, resetPaging]);
 
   return (

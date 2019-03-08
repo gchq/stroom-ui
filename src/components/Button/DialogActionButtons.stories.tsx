@@ -27,11 +27,11 @@ let TestHarness = () => {
       <form>
         <div>
           <label>Has Confirmed</label>
-          <input type="checkbox" checked={hasConfirmed} onChange={() => {}} />
+          <input type="checkbox" checked={hasConfirmed} />
         </div>
         <div>
           <label>Has Cancelled</label>
-          <input type="checkbox" checked={hasCancelled} onChange={() => {}} />
+          <input type="checkbox" checked={hasCancelled} />
         </div>
       </form>
       <button onClick={onReset}>Reset</button>

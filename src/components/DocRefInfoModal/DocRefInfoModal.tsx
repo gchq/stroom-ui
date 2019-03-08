@@ -29,8 +29,6 @@ interface Props {
   onCloseDialog: () => void;
 }
 
-const doNothing = () => {};
-
 const DocRefInfoModal = ({ isOpen, onCloseDialog, docRef }: Props) => {
   const docRefInfo = useDocRefInfo(docRef);
 
@@ -60,68 +58,36 @@ const DocRefInfoModal = ({ isOpen, onCloseDialog, docRef }: Props) => {
         <form className="DocRefInfo">
           <div className="DocRefInfo__type">
             <label>Type</label>
-            <input
-              type="text"
-              value={docRefInfo.docRef.type}
-              onChange={doNothing}
-            />
+            <input type="text" value={docRefInfo.docRef.type} />
           </div>
           <div className="DocRefInfo__uuid">
             <label>UUID</label>
-            <input
-              type="text"
-              value={docRefInfo.docRef.uuid}
-              onChange={doNothing}
-            />
+            <input type="text" value={docRefInfo.docRef.uuid} />
           </div>
           <div className="DocRefInfo__name">
             <label>Name</label>
-            <input
-              type="text"
-              value={docRefInfo.docRef.name}
-              onChange={doNothing}
-            />
+            <input type="text" value={docRefInfo.docRef.name} />
           </div>
 
           <div className="DocRefInfo__createdBy">
             <label>Created by</label>
-            <input
-              type="text"
-              value={docRefInfo.createUser}
-              onChange={doNothing}
-            />
+            <input type="text" value={docRefInfo.createUser} />
           </div>
           <div className="DocRefInfo__createdOn">
             <label>at</label>
-            <input
-              type="text"
-              value={formattedCreateTime}
-              onChange={doNothing}
-            />
+            <input type="text" value={formattedCreateTime} />
           </div>
           <div className="DocRefInfo__updatedBy">
             <label>Updated by</label>
-            <input
-              type="text"
-              value={docRefInfo.updateUser}
-              onChange={doNothing}
-            />
+            <input type="text" value={docRefInfo.updateUser} />
           </div>
           <div className="DocRefInfo__updatedOn">
             <label>at</label>
-            <input
-              type="text"
-              value={formattedUpdateTime}
-              onChange={doNothing}
-            />
+            <input type="text" value={formattedUpdateTime} />
           </div>
           <div className="DocRefInfo__otherInfo">
             <label>Other Info</label>
-            <input
-              type="text"
-              value={docRefInfo.otherInfo}
-              onChange={doNothing}
-            />
+            <input type="text" value={docRefInfo.otherInfo} />
           </div>
         </form>
       }

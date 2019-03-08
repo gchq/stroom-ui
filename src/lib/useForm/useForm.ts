@@ -12,11 +12,9 @@ interface UseForm<T> {
   onValidate?: (updates: Partial<T>) => void;
 }
 
-const defaultOnValidate = () => {};
-
 export const useForm = function<T>({
   initialValues,
-  onValidate = defaultOnValidate
+  onValidate
 }: UseForm<T>): Form<T> {
   const [currentValues, setCurrentValues] = useState<Partial<T>>(
     initialValues || {}
@@ -39,8 +37,10 @@ export const useForm = function<T>({
 
   // Call out to the validation function when the values change
   useEffect(() => {
-    onValidate(currentValues);
-  }, [currentValues]);
+    if (!!onValidate) {
+      onValidate(currentValues);
+    }
+  }, [currentValues, onValidate]);
 
   const generateTextInput = (s: keyof T) => ({
     type: "text",

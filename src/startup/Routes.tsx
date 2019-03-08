@@ -29,6 +29,7 @@ import useConfig from "./config/useConfig";
 import { PrivateRoute } from "./Authentication";
 import PathNotFound from "../components/PathNotFound";
 import Loader from "../components/Loader";
+import Welcome from "../sections/Welcome";
 
 const Routes: React.FunctionComponent = () => {
   const config = useConfig();
@@ -55,6 +56,8 @@ const Routes: React.FunctionComponent = () => {
       />
 
       <Route exact path="/error" component={ErrorPage} />
+
+      <Route exact path="/openWelcome" component={Welcome} />
 
       {appChromeRoutes.map((p, i) => (
         <PrivateRoute key={i} {...p} />

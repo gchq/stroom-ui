@@ -5,6 +5,14 @@
   flex-direction: column;
 }
 
+.welcome__image {
+  background-color: darkblue;
+  height: 75px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
 .welcome__shortcuts__table {
   width: 400px;
   margin: 10px;

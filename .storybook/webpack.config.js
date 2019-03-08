@@ -15,30 +15,51 @@ module.exports = ({ config, mode }) => {
   //   include: path.resolve(__dirname, "../")
   // });
 
-  // Fonts
+  // Remove old rules
+  config.module.rules = config.module.rules.filter(
+    item =>
+      !(
+        item.test &&
+        typeof item.test === "object" &&
+        item.test.test &&
+        (item.test.test("t.svg") || item.test.test("t.png"))
+      )
+  );
+
+  // Updated image rule from a git forum
   config.module.rules.push({
-    test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-    loader: "url-loader?limit=10000&mimetype=application/font-woff",
+    test: /\.(svg|ico|jpg|jpeg|png|gif|eot|otf|webp|ttf|woff|woff2)(\?.*)?$/,
+    loader: require.resolve("file-loader"),
     query: {
-      name: "static/media/files/[name].[hash:8].[ext]"
+      name: "static/media/[name].[hash:8].[ext]"
     }
   });
-  config.module.rules.push({
-    test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-    loader: "file-loader",
-    query: {
-      name: "static/media/fonts/[name].[hash:8].[ext]"
-    }
-  });
-  // Load images.
-  config.module.rules.push({
-    test: /\.(gif|jpe?g|png)$/,
-    loader: "url-loader?limit=25000",
-    query: {
-      limit: 10000,
-      name: "static/media/images/[name].[hash:8].[ext]"
-    }
-  });
+
+  // This stuff also stopped working in SB4
+  // // Fonts
+  // config.module.rules.push({
+  //   test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+  //   loader: "url-loader?limit=10000&mimetype=application/font-woff",
+  //   query: {
+  //     name: "static/media/files/[name].[hash:8].[ext]"
+  //   }
+  // });
+  // config.module.rules.push({
+  //   test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+  //   loader: "file-loader",
+  //   query: {
+  //     name: "static/media/fonts/[name].[hash:8].[ext]"
+  //   }
+  // });
+  // // Load images.
+  // config.module.rules.push({
+  //   test: /\.(gif|jpe?g|png)$/,
+  //   loader: "url-loader?limit=25000",
+  //   query: {
+  //     limit: 10000,
+  //     name: "static/media/images/[name].[hash:8].[ext]"
+  //   }
+  // });
 
   //TODO: couldn't get this working with Storybook 4, but everything seems fine without it.
   // Leaving it here until we're sure it's not needed.

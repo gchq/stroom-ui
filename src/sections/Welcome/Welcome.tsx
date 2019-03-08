@@ -18,11 +18,18 @@ import * as React from "react";
 
 import IconHeader from "../../components/IconHeader";
 
- interface Props {}
+interface Props {}
 
 const Welcome = (props: Props) => (
   <div className="welcome">
     <IconHeader icon="home" text="Welcome" />
+    <div className="welcome__image">
+      <img
+        className="sidebar__logo"
+        alt="Stroom logo"
+        src={require("../../images/logo.svg")}
+      />
+    </div>
     <div className="welcome__shortcuts">
       <h4>Global shortcut keys</h4>
       <table className="welcome__shortcuts__table">

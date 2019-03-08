@@ -170,7 +170,9 @@ const FolderExplorer = ({ folderUuid }: Props) => {
 
   const { editorProps: folderEditorProps } = useDocRefEditor({
     docRefUuid: folderUuid,
-    saveDocument: () => {},
+    saveDocument: () => {
+      console.error("Cannot save folder, makes no sense");
+    },
     additionalActionBarItems
   });
 

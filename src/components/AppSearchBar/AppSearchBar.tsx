@@ -149,7 +149,7 @@ const AppSearchBar = ({
 
   let headerTitle = "unknown";
   let headerIcon: IconProp = "cross";
-  let headerAction = () => {};
+  let headerAction = () => console.error("Nothing to do");
 
   switch (searchMode) {
     case SearchMode.NAVIGATION: {
