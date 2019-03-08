@@ -8,7 +8,7 @@ import IndexFieldTypePicker from "../IndexFieldTypePicker/IndexFieldTypePicker";
 import AnalyzerPicker from "../AnalyzerPicker";
 import useForm from "../../../lib/useForm";
 
-export interface Props {
+interface Props {
   id: number;
   indexField?: IndexField;
   onUpdateField: (id: number, updates: Partial<IndexField>) => void;
@@ -75,7 +75,7 @@ export const IndexFieldEditor = ({
   ) : null;
 };
 
-export interface UseIndexFieldEditor {
+interface UseIndexFieldEditor {
   componentProps: Props;
   showEditor: (id: number, indexField: IndexField) => void;
 }

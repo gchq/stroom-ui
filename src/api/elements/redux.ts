@@ -8,25 +8,21 @@ import {
   ElementDefinitions,
   ElementPropertiesByElementIdType
 } from "../../types";
+import { StoreState } from "./types";
 
-export const ELEMENTS_RECEIVED = "ELEMENTS_RECEIVED";
-export const ELEMENT_PROPERTIES_RECEIVED = "ELEMENT_PROPERTIES_RECEIVED";
+ const ELEMENTS_RECEIVED = "ELEMENTS_RECEIVED";
+ const ELEMENT_PROPERTIES_RECEIVED = "ELEMENT_PROPERTIES_RECEIVED";
 
-export interface ElementsReceivedAction extends Action<"ELEMENTS_RECEIVED"> {
+ interface ElementsReceivedAction extends Action<"ELEMENTS_RECEIVED"> {
   elementDefinitions: ElementDefinitions;
 }
 
-export interface ElementPropertiesReceivedAction
+ interface ElementPropertiesReceivedAction
   extends Action<"ELEMENT_PROPERTIES_RECEIVED"> {
   elementProperties: ElementPropertiesByElementIdType;
 }
 
-export interface StoreState {
-  elementDefinitions: ElementDefinitions;
-  elementProperties: ElementPropertiesByElementIdType;
-}
-
-export const defaultState: StoreState = {
+ const defaultState: StoreState = {
   elementDefinitions: [],
   elementProperties: {}
 };

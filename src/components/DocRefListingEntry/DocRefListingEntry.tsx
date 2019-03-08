@@ -3,20 +3,9 @@ import { useCallback, useMemo } from "react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import { DocRefType, DocRefConsumer } from "../../types";
+import { DocRefType } from "../../types";
 import DocRefImage from "../DocRefImage";
-
-export interface Props {
-  docRef: DocRefType;
-  dndIsOver?: boolean;
-  dndCanDrop?: boolean;
-  openDocRef: DocRefConsumer;
-  enterFolder?: DocRefConsumer;
-  children?: React.ReactNode;
-  selectionToggled: (itemKey: string) => void;
-  selectedDocRefs: Array<DocRefType>;
-  focussedDocRef?: DocRefType;
-}
+import { Props } from "./types";
 
 let DocRefListingEntry = ({
   docRef,

@@ -1,45 +1,32 @@
 import * as React from "react";
-import { useCallback, useMemo } from "react";
+import { useCallback } from "react";
 
 import useReduxState from "../../lib/useReduxState";
-import { StoreStateById, defaultStatePerId } from "./redux";
+import { defaultStatePerId } from "./redux";
+import {
+  StoreStateById,
+  UseDocRefEditorProps,
+  DocRefEditorProps,
+  DocRefEditorBaseProps
+} from "./types";
 
 import { useActionCreators } from "./redux";
 import AppSearchBar from "../AppSearchBar";
 import { DocRefIconHeader } from "../IconHeader";
 import DocRefBreadcrumb from "../DocRefBreadcrumb";
 import Button, { ButtonProps } from "../Button";
-import { DocRefWithLineage, DocRefConsumer } from "../../types";
-import { findItem } from "../../lib/treeUtils";
-import Loader from "../Loader";
-import { useDocumentTree } from "../../api/explorer";
+import { DocRefConsumer } from "../../types";
+import { useDocRefWithLineage } from "../../api/explorer";
 import useRouter from "../../lib/useRouter";
-
-export interface BaseProps<T> {
-  saveDocument: (docRefContents: T) => void;
-  docRefUuid: string;
-  additionalActionBarItems?: Array<ButtonProps>;
-}
-
-export interface Props<T> extends BaseProps<T> {
-  isDirty: boolean;
-  isSaving: boolean;
-  children?: React.ReactNode;
-}
 
 const DocRefEditor = function<T>({
   saveDocument,
   children,
   docRefUuid,
   additionalActionBarItems
-}: Props<T>) {
+}: DocRefEditorProps<T>) {
   const router = useRouter();
-  const documentTree = useDocumentTree();
-
-  const docRefWithLineage = useMemo(
-    () => findItem(documentTree, docRefUuid) as DocRefWithLineage,
-    [documentTree, docRefUuid]
-  );
+  const { node: docRef } = useDocRefWithLineage(docRefUuid);
 
   const openDocRef: DocRefConsumer = useCallback(
     d => router.history!.push(`/s/doc/${d.type}/${d.uuid}`),
@@ -48,11 +35,9 @@ const DocRefEditor = function<T>({
   const openDocRefPermissions = useCallback(
     () =>
       router.history!.push(
-        `/s/authorisationManager/document/${
-          docRefWithLineage.node.type
-        }/${docRefUuid}`
+        `/s/authorisationManager/document/${docRef.type}/${docRefUuid}`
       ),
-    [router, docRefWithLineage]
+    [router, docRef]
   );
 
   const { isDirty, isSaving, docRefContents }: StoreStateById = useReduxState(
@@ -78,25 +63,19 @@ const DocRefEditor = function<T>({
     }
   ];
 
-  if (!docRefWithLineage) {
-    return <Loader message="Loading Doc Ref" />;
-  }
-
-  const { node } = docRefWithLineage;
-
   return (
     <div className="DocRefEditor">
       <AppSearchBar className="DocRefEditor__searchBar" onChange={openDocRef} />
 
       <DocRefIconHeader
-        docRefType={node.type}
+        docRefType={docRef.type}
         className="DocRefEditor__header"
-        text={node.name || "no name"}
+        text={docRef.name || "no name"}
       />
 
       <DocRefBreadcrumb
         className="DocRefEditor__breadcrumb"
-        docRefWithLineage={docRefWithLineage}
+        docRefUuid={docRef.uuid}
         openDocRef={openDocRef}
       />
 
@@ -112,16 +91,10 @@ const DocRefEditor = function<T>({
   );
 };
 
-export interface UseDocRefEditorProps<T extends object> {
-  docRefContents?: T;
-  editorProps: Props<T>;
-  onDocumentChange: (updates: Partial<T>) => void;
-}
-
 export function useDocRefEditor<T extends object>({
   docRefUuid,
   saveDocument
-}: BaseProps<T>): UseDocRefEditorProps<T> {
+}: DocRefEditorBaseProps<T>): UseDocRefEditorProps<T> {
   const { documentChangesMade } = useActionCreators();
 
   const { isDirty, isSaving, docRefContents }: StoreStateById = useReduxState(

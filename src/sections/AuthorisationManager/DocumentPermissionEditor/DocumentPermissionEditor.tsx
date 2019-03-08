@@ -1,46 +1,36 @@
 import * as React from "react";
-import { useCallback } from "react";
-import ReactTable from "react-table";
+import { useCallback, useMemo } from "react";
 
 import IconHeader from "../../../components/IconHeader";
 import useDocumentPermissions from "../../../api/docPermission/useDocumentPermissions";
-import { DocRefType } from "../../../types";
+import { DocRefType, User } from "../../../types";
 import Button from "../../../components/Button";
 import ThemedConfirm, {
   useDialog as useThemedConfirm
 } from "../../../components/ThemedConfirm";
 import DocumentPermissionForUserEditor from "../DocumentPermissionForUserEditor";
-import {
-  useSelectableReactTable,
-  SelectionBehaviour
-} from "../../../lib/useSelectableItemListing";
+import { useUsers } from "../../../api/userGroups";
+import UsersTable, { useTable as useUsersTable } from "../UsersTable";
 
-export interface Props {
+interface Props {
   docRef: DocRefType;
 }
-const COLUMNS = [
-  {
-    id: "userUuid",
-    Header: "UUID",
-    accessor: (uuid: string) => uuid
-  }
-];
 
 export const DocumentPermissionEditor = ({ docRef }: Props) => {
   const { clearPermissions, permissionsByUser } = useDocumentPermissions(
     docRef.uuid
   );
 
-  const { tableProps, selectedItems } = useSelectableReactTable(
-    {
-      items: Object.keys(permissionsByUser),
-      getKey: d => d,
-      selectionBehaviour: SelectionBehaviour.SINGLE
-    },
-    { columns: COLUMNS }
-  );
+  const userUuids = useMemo(() => Object.keys(permissionsByUser), [
+    permissionsByUser
+  ]);
+  const users = useUsers(userUuids);
+  const { componentProps: usersTableProps } = useUsersTable(users);
 
-  const selectedUserUuid: string | undefined =
+  const {
+    selectableTableProps: { selectedItems }
+  } = usersTableProps;
+  const selectedUser: User | undefined =
     selectedItems.length > 0 ? selectedItems[0] : undefined;
 
   const {
@@ -64,11 +54,11 @@ export const DocumentPermissionEditor = ({ docRef }: Props) => {
         text={`Document Permissions for ${docRef.type} - ${docRef.name}`}
       />
       <div>
-        <ReactTable {...tableProps} />
-        {selectedUserUuid && (
+        <UsersTable {...usersTableProps} />
+        {selectedUser && (
           <DocumentPermissionForUserEditor
             docRef={docRef}
-            userUuid={selectedUserUuid}
+            userUuid={selectedUser.uuid}
           />
         )}
 

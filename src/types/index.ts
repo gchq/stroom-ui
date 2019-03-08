@@ -376,8 +376,6 @@ export interface PermissionsByUuid {
 export interface DocumentPermissions {
   document: DocRefType;
   byUser: PermissionsByUuid;
-  users: Array<string>;
-  groups: Array<string>;
 }
 
 export interface OffsetRange {

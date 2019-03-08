@@ -22,8 +22,17 @@ import {
 import { User } from "../../types";
 import { mapObject } from "../../lib/treeUtils";
 import { onlyUnique } from "../../lib/reduxUtils";
+import { StoreState } from "./types";
 
-const USERS_RECEIVED = "USERS_RECEIVED";
+export const defaultState: StoreState = {
+  allUsers: [],
+  usersBySearch: {},
+  usersInGroup: {},
+  groupsForUser: {}
+};
+
+const USERS_RECEIVED_FOR_SEARCH = "USERS_RECEIVED_FOR_SEARCH";
+const USER_RECEIVED = "USER_RECEIVED";
 const USERS_IN_GROUP_RECEIVED = "USERS_IN_GROUP_RECEIVED";
 const GROUPS_FOR_USER_RECEIEVED = "GROUPS_FOR_USER_RECEIEVED";
 const USER_CREATED = "USER_CREATED";
@@ -31,47 +40,57 @@ const USER_DELETED = "USER_DELETED";
 const USER_ADDED_TO_GROUP = "USER_ADDED_TO_GROUP";
 const USER_REMOVED_FROM_GROUP = "USER_REMOVED_FROM_GROUP";
 
-export interface UsersReceivedAction extends Action<"USERS_RECEIVED"> {
+interface UsersReceivedForSearchAction
+  extends Action<"USERS_RECEIVED_FOR_SEARCH"> {
   listId: string;
   users: Array<User>;
 }
 
-export interface UsersInGroupReceivedAction
-  extends Action<"USERS_IN_GROUP_RECEIVED"> {
+interface UserReceivedAction extends Action<"USER_RECEIVED"> {
+  user: User;
+}
+
+interface UsersInGroupReceivedAction extends Action<"USERS_IN_GROUP_RECEIVED"> {
   groupUuid: string;
   users: Array<User>;
 }
 
-export interface GroupsForUserReceivedAction
+interface GroupsForUserReceivedAction
   extends Action<"GROUPS_FOR_USER_RECEIEVED"> {
   userUuid: string;
   groups: Array<User>;
 }
 
-export interface UserCreatedAction extends Action<"USER_CREATED"> {
+interface UserCreatedAction extends Action<"USER_CREATED"> {
   user: User;
 }
 
-export interface UserDeletedAction extends Action<"USER_DELETED"> {
+interface UserDeletedAction extends Action<"USER_DELETED"> {
   userUuid: string;
 }
 
-export interface UserAddedToGroupAction extends Action<"USER_ADDED_TO_GROUP"> {
+interface UserAddedToGroupAction extends Action<"USER_ADDED_TO_GROUP"> {
   userUuid: string;
   groupUuid: string;
 }
 
-export interface UserRemovedFromGroupAction
-  extends Action<"USER_REMOVED_FROM_GROUP"> {
+interface UserRemovedFromGroupAction extends Action<"USER_REMOVED_FROM_GROUP"> {
   userUuid: string;
   groupUuid: string;
 }
 
 export const useActionCreators = genUseActionCreators({
-  usersReceived: (listId: string, users: Array<User>): UsersReceivedAction => ({
-    type: USERS_RECEIVED,
+  usersReceived: (
+    listId: string,
+    users: Array<User>
+  ): UsersReceivedForSearchAction => ({
+    type: USERS_RECEIVED_FOR_SEARCH,
     listId,
     users
+  }),
+  userReceived: (user: User): UserReceivedAction => ({
+    type: USER_RECEIVED,
+    user
   }),
   usersInGroupReceived: (
     groupUuid: string,
@@ -115,41 +134,28 @@ export const useActionCreators = genUseActionCreators({
   })
 });
 
-export interface StoreState {
-  allUsers: Array<User>;
-  users: {
-    [listId: string]: Array<User>;
-  };
-  usersInGroup: {
-    [s: string]: Array<User>;
-  };
-  groupsForUser: {
-    [s: string]: Array<User>;
-  };
-}
-
-export const defaultState: StoreState = {
-  allUsers: [],
-  users: {},
-  usersInGroup: {},
-  groupsForUser: {}
-};
-
 export const reducer = prepareReducer(defaultState)
-  .handleAction<UsersReceivedAction>(
-    USERS_RECEIVED,
+  .handleAction<UserReceivedAction>(
+    USER_RECEIVED,
+    (state = defaultState, { user }) => ({
+      ...state,
+      allUsers: state.allUsers.concat([user])
+    })
+  )
+  .handleAction<UsersReceivedForSearchAction>(
+    USERS_RECEIVED_FOR_SEARCH,
     (state: StoreState, { listId, users }) => ({
       ...state,
       allUsers: state.allUsers.concat(users).filter(onlyUnique),
-      users: {
-        ...state.users,
+      usersBySearch: {
+        ...state.usersBySearch,
         [listId]: users
       }
     })
   )
   .handleAction<UsersInGroupReceivedAction>(
     USERS_IN_GROUP_RECEIVED,
-    (state: StoreState, { groupUuid, users }) => ({
+    (state = defaultState, { groupUuid, users }) => ({
       ...state,
       allUsers: state.allUsers.concat(users).filter(onlyUnique),
       usersInGroup: {
@@ -160,7 +166,7 @@ export const reducer = prepareReducer(defaultState)
   )
   .handleAction<GroupsForUserReceivedAction>(
     GROUPS_FOR_USER_RECEIEVED,
-    (state: StoreState, { userUuid, groups }) => ({
+    (state = defaultState, { userUuid, groups }) => ({
       ...state,
       allUsers: state.allUsers.concat(groups).filter(onlyUnique),
       groupsForUser: {
@@ -171,18 +177,20 @@ export const reducer = prepareReducer(defaultState)
   )
   .handleAction<UserCreatedAction>(
     USER_CREATED,
-    (state: StoreState, { user }) => ({
+    (state = defaultState, { user }) => ({
       ...state,
       allUsers: state.allUsers.concat([user]),
-      users: mapObject(state.users, (_, u: Array<User>) => u.concat(user))
+      usersBySearch: mapObject(state.usersBySearch, (_, u: Array<User>) =>
+        u.concat(user)
+      )
     })
   )
   .handleAction<UserDeletedAction>(
     USER_DELETED,
-    (state: StoreState, { userUuid }) => ({
+    (state = defaultState, { userUuid }) => ({
       ...state,
       allUsers: state.allUsers.filter(u => u.uuid !== userUuid),
-      users: mapObject(state.users, (_, users: Array<User>) =>
+      usersBySearch: mapObject(state.usersBySearch, (_, users: Array<User>) =>
         users.filter(u => u.uuid !== userUuid)
       ),
       usersInGroup: mapObject(state.usersInGroup, (_, users: Array<User>) =>
@@ -196,7 +204,7 @@ export const reducer = prepareReducer(defaultState)
   )
   .handleAction<UserAddedToGroupAction>(
     USER_ADDED_TO_GROUP,
-    (state: StoreState, { userUuid, groupUuid }) => ({
+    (state = defaultState, { userUuid, groupUuid }) => ({
       ...state,
       usersInGroup: mapObject(
         state.usersInGroup,
@@ -227,7 +235,7 @@ export const reducer = prepareReducer(defaultState)
   )
   .handleAction<UserRemovedFromGroupAction>(
     USER_REMOVED_FROM_GROUP,
-    (state: StoreState, { userUuid, groupUuid }) => ({
+    (state = defaultState, { userUuid, groupUuid }) => ({
       ...state,
       usersInGroup: mapObject(
         state.usersInGroup,

@@ -2,7 +2,7 @@ import * as React from "react";
 import { useCallback } from "react";
 
 import { useManageUsers, useFindUsers } from "../../api/userGroups";
-import { IsGroup } from "../../api/userGroups/useApi";
+import { IsGroup } from "../../api/userGroups";
 import IconHeader from "../../components/IconHeader";
 import UsersTable, { useTable } from "./UsersTable";
 import Button from "../../components/Button";
@@ -19,8 +19,6 @@ import {
   UserGroupModalPicker,
   useDialog as useGroupModalDialog
 } from "./UserGroupPicker";
-
-export interface Props {}
 
 interface Values {
   name: string;

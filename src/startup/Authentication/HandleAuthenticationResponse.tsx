@@ -22,7 +22,7 @@ import {
 } from "./authentication";
 import useRouter from "../../lib/useRouter";
 
-export interface Props {
+interface Props {
   authenticationServiceUrl: string;
   authorisationServiceUrl: string;
 }

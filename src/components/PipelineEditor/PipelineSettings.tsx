@@ -6,7 +6,7 @@ import IconHeader from "../IconHeader";
 import ThemedModal from "../ThemedModal";
 import useForm from "../../lib/useForm";
 
-export interface Props {
+interface Props {
   isOpen: boolean;
   initialDescription: string;
   updateValues: (description: string) => void;

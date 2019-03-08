@@ -1,7 +1,6 @@
-import Button, { Props as ButtonProps } from "./Button";
-import DialogActionButtons, {
-  Props as DialogActionButtonProps
-} from "./DialogActionButtons";
+import Button from "./Button";
+import { ButtonProps, DialogActionButtonProps } from "./types";
+import DialogActionButtons from "./DialogActionButtons";
 
 export default Button;
 

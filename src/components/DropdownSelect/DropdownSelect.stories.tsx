@@ -18,14 +18,13 @@ import * as React from "react";
 import { storiesOf } from "@storybook/react";
 
 import StroomDecorator from "../../testing/storybook/StroomDecorator";
-import DropdownSelect, {
-  DropdownOptionProps,
-  PickerProps
-} from "./DropdownSelect";
+import DropdownSelect from "./DropdownSelect";
+import { DropdownOptionProps } from "./types";
 import useForm from "../../lib/useForm";
 import JsonDebug from "../../testing/JsonDebug";
 
 import "../../styles/main.css";
+import { ControlledInput } from "../../types";
 
 const toSimpleOption = (c: string) => ({
   value: c.toLowerCase(),
@@ -53,7 +52,7 @@ const ColorOption = ({
   </div>
 );
 
-const ColourPicker = ({ onChange, value }: PickerProps) => (
+const ColourPicker = ({ onChange, value }: ControlledInput<string>) => (
   <DropdownSelect
     onChange={onChange}
     value={value}
@@ -72,7 +71,7 @@ const weekdayOptions = [
   "Sunday"
 ].map(toSimpleOption);
 
-const WeekdayPicker = (props: PickerProps) => (
+const WeekdayPicker = (props: ControlledInput<string>) => (
   <DropdownSelect {...props} options={weekdayOptions} />
 );
 

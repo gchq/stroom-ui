@@ -62,7 +62,7 @@ in the appropriate machine-readable metadata fields within text or
 binary files as long as those fields can be easily viewed by the user.
 
 3) No Modified Version of the Font Software may use the Reserved Font
-Name(s) unless explicit written permission is granted by the corresponding
+Name(s) unless explicit written permissionName is granted by the corresponding
 Copyright Holder. This restriction only applies to the primary font name as
 presented to the users.
 
@@ -70,7 +70,7 @@ presented to the users.
 Software shall not be used to promote, endorse or advertise any
 Modified Version, except to acknowledge the contribution(s) of the
 Copyright Holder(s) and the Author(s) or with their explicit written
-permission.
+permissionName.
 
 5) The Font Software, modified or unmodified, in part or in whole,
 must be distributed entirely under this license, and must not be

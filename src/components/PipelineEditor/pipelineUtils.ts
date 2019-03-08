@@ -27,11 +27,13 @@ import {
   PipelineLinkType,
   ElementPropertiesType
 } from "../../types";
-
-export interface RecycleBinItem {
-  recycleData?: PipelineElementType;
-  element: ElementDefinition;
-}
+import {
+  RecycleBinItem,
+  PipelineLayoutGrid,
+  PipelineLayoutInfoById,
+  PipelineLayoutRow,
+  CellType
+} from "./types";
 
 export function getBinItems(
   pipeline: PipelineModelType,
@@ -120,34 +122,6 @@ export function getPipelineAsTree(
   }
 
   return rootId ? elements[rootId] : undefined;
-}
-
-export interface PipelineLayoutInfo {
-  column: number;
-  row: number;
-}
-
-export interface PipelineLayoutInfoById {
-  [uuid: string]: PipelineLayoutInfo;
-}
-
-export enum CellType {
-  EMPTY,
-  ELBOW,
-  ELEMENT
-}
-
-export interface PipelineLayoutCell {
-  cellType: CellType;
-  uuid?: string;
-}
-
-export interface PipelineLayoutRow {
-  columns: Array<PipelineLayoutCell>;
-}
-
-export interface PipelineLayoutGrid {
-  rows: Array<PipelineLayoutRow>;
 }
 
 /**

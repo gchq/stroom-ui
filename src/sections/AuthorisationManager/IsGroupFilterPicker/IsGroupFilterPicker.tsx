@@ -3,9 +3,9 @@ import { useCallback } from "react";
 
 import Select from "react-select";
 import { SelectOptionType } from "../../../types";
-import { IsGroup } from "../../../api/userGroups/useApi";
+import { IsGroup } from "../../../api/userGroups";
 
-export interface Props {
+interface Props {
   value?: IsGroup;
   onChange: (v: IsGroup) => any;
 }

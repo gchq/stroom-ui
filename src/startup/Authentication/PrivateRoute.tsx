@@ -20,11 +20,9 @@ import { Route, RouteProps } from "react-router-dom";
 import AuthenticationRequest from "./AuthenticationRequest";
 import useReduxState from "../../lib/useReduxState";
 import Loader from "../../components/Loader";
-import useConfig from "../useConfig";
+import useConfig from "../config/useConfig";
 
-export interface Props extends RouteProps {}
-
-const PrivateRoute = ({ render, ...rest }: Props) => {
+const PrivateRoute = ({ render, ...rest }: RouteProps) => {
   const config = useConfig();
   const idToken = useReduxState(({ authentication: { idToken } }) => idToken);
 

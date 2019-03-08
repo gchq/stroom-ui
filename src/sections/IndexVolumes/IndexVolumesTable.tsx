@@ -9,7 +9,7 @@ import {
   TableOutProps
 } from "../../lib/useSelectableItemListing";
 
-export interface Props {
+ interface Props {
   indexVolumes: Array<IndexVolume>;
   selectableTableProps: TableOutProps<IndexVolume>;
 }
@@ -40,7 +40,7 @@ const IndexVolumesTable = ({
   </div>
 );
 
-export interface UseTable {
+ interface UseTable {
   componentProps: Props;
 }
 

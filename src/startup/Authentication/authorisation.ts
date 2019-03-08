@@ -1,5 +1,6 @@
 import { Dispatch, Action } from "redux";
 
+import { AuthorisationStoreState } from "./types";
 import {
   prepareReducer,
   genUseActionCreators
@@ -7,17 +8,13 @@ import {
 
 export const SET_APP_PERMISSION = "authorisation/SET_APP_PERMISSION";
 
-export interface StoreState {
-  appPermissions: Array<string>;
-}
-
-export interface SetAppPermissionAction
+interface SetAppPermissionAction
   extends Action<"authorisation/SET_APP_PERMISSION"> {
   appPermission: string;
   hasAppPermission: boolean;
 }
 
-const defaultState = {
+const defaultState: AuthorisationStoreState = {
   appPermissions: []
 };
 
@@ -68,7 +65,7 @@ export const hasAppPermission = (
     method: "post",
     mode: "cors",
     body: JSON.stringify({
-      permission: appPermission
+      permissionName: appPermission
     })
   }).then(response => {
     if (response.status === 401) {

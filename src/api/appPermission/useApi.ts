@@ -6,8 +6,11 @@ import useHttpClient from "../useHttpClient";
 interface Api {
   getPermissionsForUser: (userUuid: string) => Promise<Array<string>>;
   getAllPermissionNames: () => Promise<Array<string>>;
-  addAppPermission: (userUuid: string, permission: string) => Promise<void>;
-  removeAppPermission: (userUuid: string, permission: string) => Promise<void>;
+  addAppPermission: (userUuid: string, permissionName: string) => Promise<void>;
+  removeAppPermission: (
+    userUuid: string,
+    permissionName: string
+  ) => Promise<void>;
 }
 
 export const useApi = (): Api => {
@@ -43,11 +46,11 @@ export const useApi = (): Api => {
   }, [httpGetJson]);
 
   const addAppPermission = useCallback(
-    (userUuid: string, permission: string): Promise<void> => {
+    (userUuid: string, permissionName: string): Promise<void> => {
       const state = store.getState();
       var url = `${
         state.config.values.stroomBaseServiceUrl
-      }/appPermissions/v1/${userUuid}/${permission}`;
+      }/appPermissions/v1/${userUuid}/${permissionName}`;
 
       return httpPostEmptyResponse(url);
     },
@@ -55,11 +58,11 @@ export const useApi = (): Api => {
   );
 
   const removeAppPermission = useCallback(
-    (userUuid: string, permission: string): Promise<void> => {
+    (userUuid: string, permissionName: string): Promise<void> => {
       const state = store.getState();
       var url = `${
         state.config.values.stroomBaseServiceUrl
-      }/appPermissions/v1/${userUuid}/${permission}`;
+      }/appPermissions/v1/${userUuid}/${permissionName}`;
 
       return httpDeleteEmptyResponse(url);
     },

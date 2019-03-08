@@ -36,7 +36,7 @@ import {
 
 import { getNewTerm, getNewOperator } from "./expressionBuilderUtils";
 
-export interface Props extends StyledComponentProps {
+interface Props extends StyledComponentProps {
   dataSource: DataSourceType;
   showModeToggle?: boolean;
   editMode?: boolean;

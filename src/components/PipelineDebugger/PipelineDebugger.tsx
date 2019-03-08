@@ -28,7 +28,7 @@ import useReduxState from "../../lib/useReduxState";
 import { useApi as usePipelineApi } from "../../api/pipelineDocument";
 import usePipelineState from "../PipelineEditor/usePipelineState";
 
-export interface Props {
+interface Props {
   debuggerId: string;
   pipelineId: string;
 }

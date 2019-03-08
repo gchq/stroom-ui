@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 
-export interface OutProps<T> {
+interface OutProps<T> {
   value: T;
   setValue: (value: T) => void;
 }
 
-export interface StringConversion<T> {
+interface StringConversion<T> {
   toString: (v: T) => string;
   fromString: (v: string) => T;
 }

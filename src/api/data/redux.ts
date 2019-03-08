@@ -18,51 +18,50 @@ import { Action } from "redux";
 import {
   prepareReducerById,
   ActionId,
-  StateById,
   genUseActionCreators
 } from "../../lib/redux-actions-ts";
 import { AbstractFetchDataResult, DataSourceType, DataRow } from "../../types";
+import { StoreStatePerId } from "./types";
 
-export const ADD = "ADD";
-export const UPDATE_STREAM_ATTRIBUTE_MAPS = "UPDATE_STREAM_ATTRIBUTE_MAPS";
-export const SELECT_ROW = "SELECT_ROW";
-export const DESELECT_ROW = "DESELECT_ROW";
-export const UPDATE_DATA_FOR_SELECTED_ROW = "UPDATE_DATA_FOR_SELECTED_ROW";
-export const UPDATE_DETAILS_FOR_SELECTED_ROW =
-  "UPDATE_DETAILS_FOR_SELECTED_ROW";
-export const UPDATE_DATA_SOURCE = "UPDATE_DATA_SOURCE";
+const ADD = "ADD";
+const UPDATE_STREAM_ATTRIBUTE_MAPS = "UPDATE_STREAM_ATTRIBUTE_MAPS";
+const SELECT_ROW = "SELECT_ROW";
+const DESELECT_ROW = "DESELECT_ROW";
+const UPDATE_DATA_FOR_SELECTED_ROW = "UPDATE_DATA_FOR_SELECTED_ROW";
+const UPDATE_DETAILS_FOR_SELECTED_ROW = "UPDATE_DETAILS_FOR_SELECTED_ROW";
+const UPDATE_DATA_SOURCE = "UPDATE_DATA_SOURCE";
 
-export interface StreamAttributesMapAction extends ActionId {
+interface StreamAttributesMapAction extends ActionId {
   streamAttributeMaps: Array<DataRow>;
   total: number;
   pageSize: number;
   pageOffset: number;
 }
 
-export interface AddAction extends Action<"ADD">, StreamAttributesMapAction {}
+interface AddAction extends Action<"ADD">, StreamAttributesMapAction {}
 
-export interface UpdateStreamAttributeMapsAction
+interface UpdateStreamAttributeMapsAction
   extends Action<"UPDATE_STREAM_ATTRIBUTE_MAPS">,
     StreamAttributesMapAction {}
 
-export interface RowAction extends ActionId {
+interface RowAction extends ActionId {
   selectedRow?: number;
 }
 
-export interface SelectRowAction extends Action<"SELECT_ROW">, RowAction {}
-export interface DeselectRowAction extends Action<"DESELECT_ROW">, RowAction {}
+interface SelectRowAction extends Action<"SELECT_ROW">, RowAction {}
+interface DeselectRowAction extends Action<"DESELECT_ROW">, RowAction {}
 
-export interface UpdateDataForSelectedRowAction
+interface UpdateDataForSelectedRowAction
   extends Action<"UPDATE_DATA_FOR_SELECTED_ROW">,
     ActionId {
   dataForSelectedRow: AbstractFetchDataResult;
 }
-export interface UpdateDetailsForSelectedRowAction
+interface UpdateDetailsForSelectedRowAction
   extends Action<"UPDATE_DETAILS_FOR_SELECTED_ROW">,
     ActionId {
   detailsForSelectedRow: DataRow;
 }
-export interface UpdateDataSourceAction
+interface UpdateDataSourceAction
   extends Action<"UPDATE_DATA_SOURCE">,
     ActionId {
   dataSource: DataSourceType;
@@ -132,19 +131,6 @@ export const useActionCreators = genUseActionCreators({
     dataSource
   })
 });
-
-export interface StoreStatePerId {
-  streamAttributeMaps?: Array<DataRow>;
-  total?: number;
-  pageSize?: number;
-  pageOffset?: number;
-  selectedRow?: number;
-  dataForSelectedRow?: AbstractFetchDataResult;
-  detailsForSelectedRow?: DataRow;
-  dataSource?: DataSourceType;
-}
-
-export interface StoreState extends StateById<StoreStatePerId> {}
 
 export const defaultStatePerId: StoreStatePerId = {
   pageOffset: 0,

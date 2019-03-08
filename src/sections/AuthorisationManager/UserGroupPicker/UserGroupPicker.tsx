@@ -6,7 +6,7 @@ import Select from "react-select";
 import { useFindUsers } from "../../../api/userGroups";
 import { SelectOptionType } from "../../../types";
 
-export interface Props {
+interface Props {
   value?: string;
   onChange: (v: string) => any;
 }
@@ -32,7 +32,7 @@ const UserGroupGroupPicker = ({ value, onChange }: Props) => {
   );
 };
 
-export interface UseProps extends Props {
+interface UseProps extends Props {
   reset: () => void;
 }
 

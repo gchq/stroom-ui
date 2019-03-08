@@ -1,32 +1,13 @@
 import { useCallback, useEffect, useState } from "react";
 import { ControlledInput } from "../../types";
-
-interface InputProps {
-  onChange: React.ChangeEventHandler<HTMLElement>;
-  value: string;
-}
-
-export interface Form<T> {
-  onUpdate: (updates: Partial<T>) => void;
-  currentValues: Partial<T>;
-  generateControlledInputProps: <FIELD_TYPE>(
-    s: keyof T
-  ) => ControlledInput<FIELD_TYPE>;
-  generateTextInput: (s: keyof T) => InputProps;
-  generateCheckboxInput: (
-    s: keyof T
-  ) => {
-    onChange: React.ChangeEventHandler<HTMLElement>;
-    checked: any;
-  };
-}
+import { Form } from "./types";
 
 /**
  * The form can be given lists of field names for text and checkbox based HTML input elements.
  * It will then generate onChange/value pairs for those fields which can be destructed from
  * the response to useForm.
  */
-export interface UseForm<T> {
+interface UseForm<T> {
   initialValues?: T;
   onValidate?: (updates: Partial<T>) => void;
 }

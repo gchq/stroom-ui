@@ -1,4 +1,4 @@
-import ThemedConfirm, { Props, useDialog } from "./ThemedConfirm";
+import ThemedConfirm, { useDialog } from "./ThemedConfirm";
 
 export default ThemedConfirm;
-export { ThemedConfirm, Props, useDialog };
+export { ThemedConfirm, useDialog };

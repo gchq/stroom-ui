@@ -3,7 +3,7 @@ import { useState } from "react";
 
 import { ThemedConfirm } from "../ThemedConfirm";
 
-export interface Props {
+interface Props {
   isOpen: boolean;
   onCloseDialog: () => void;
   elementId?: string;
@@ -31,7 +31,7 @@ const DeletePipelineElement = ({
   );
 };
 
-export interface UseDialog {
+interface UseDialog {
   componentProps: Props;
   showDialog: (_elementId: string) => void;
 }

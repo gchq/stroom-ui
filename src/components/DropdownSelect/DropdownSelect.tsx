@@ -2,21 +2,11 @@ import * as React from "react";
 import { useState } from "react";
 
 import DefaultDropdownOption from "./DefaultDropdownOption";
-import { OptionType } from "../../types";
+import { OptionType, ControlledInput } from "../../types";
 import useSelectableItemListing from "../../lib/useSelectableItemListing";
+import { DropdownOptionProps } from "./types";
 
-export interface DropdownOptionProps {
-  option: OptionType;
-  inFocus: boolean;
-  onClick: () => void;
-}
-
-export interface PickerProps {
-  onChange: (x: string) => void;
-  value?: string;
-}
-
-export interface Props extends PickerProps {
+interface Props extends ControlledInput<string> {
   options: Array<OptionType>;
   OptionComponent?: React.ComponentType<DropdownOptionProps>;
 }

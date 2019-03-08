@@ -5,13 +5,13 @@ import { useActionCreators } from "../../sections/Processing/redux";
 import useHttpClient from "../useHttpClient";
 import { StreamTasksResponseType } from "../../types";
 
-export enum TrackerSelection {
+enum TrackerSelection {
   first = "first",
   last = "last",
   none = "none"
 }
 
-export interface Api {
+interface Api {
   fetchTrackers: (trackerSelection?: TrackerSelection) => void;
   fetchMore: (trackerSelection?: TrackerSelection) => void;
   enableToggle: (filterId: number, isCurrentlyEnabled: boolean) => void;

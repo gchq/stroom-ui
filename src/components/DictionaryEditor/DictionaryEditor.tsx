@@ -6,7 +6,7 @@ import DocRefEditor, { useDocRefEditor } from "../DocRefEditor";
 import { useApi } from "../../api/dictionaryDocument";
 import { Dictionary } from "../../types";
 
-export interface Props {
+interface Props {
   dictionaryUuid: string;
 }
 

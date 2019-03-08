@@ -10,7 +10,7 @@ interface FormValues {
   isGroup: boolean;
 }
 
-export interface Props {
+interface Props {
   isOpen: boolean;
   onCreateUser: (name: string, isGroup: boolean) => void;
   onCloseDialog: () => void;
@@ -61,14 +61,14 @@ const NewUserDialog = ({ isOpen, onCreateUser, onCloseDialog }: Props) => {
   );
 };
 
-export interface UseDialog {
+interface UseDialog {
   componentProps: Props;
   showDialog: () => void;
 }
 
 export const useDialog = (
   onCreateUser: (name: string, isGroup: boolean) => void
-) => {
+): UseDialog => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   return {

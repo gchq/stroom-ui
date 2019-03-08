@@ -2,7 +2,7 @@ import { HttpRequest, HttpResponse } from "@pollyjs/adapter-fetch";
 
 import { TestCache } from "../PollyDecorator";
 import { Config } from "../../../startup/config";
-import { ResourceBuilder } from "./resourceBuilder";
+import { ResourceBuilder } from "./types";
 import { DocumentPermissions } from "src/types";
 
 const resourceBuilder: ResourceBuilder = (
@@ -32,22 +32,22 @@ const resourceBuilder: ResourceBuilder = (
           .data!.userDocPermission.filter(
             udp => udp.docRefUuid === docRefUuid && udp.userUuid === userUuid
           )
-          .map(udp => udp.permission)
+          .map(udp => udp.permissionName)
       );
     });
 
   // Add Permission for User to Doc Ref
   server
-    .post(`${resource}/forDocForUser/:docRefUuid/:userUuid/:permission`)
+    .post(`${resource}/forDocForUser/:docRefUuid/:userUuid/:permissionName`)
     .intercept((req: HttpRequest, res: HttpResponse) => {
-      const { docRefUuid, userUuid, permission } = req.params;
+      const { docRefUuid, userUuid, permissionName } = req.params;
 
       testCache.data!.userDocPermission = testCache.data!.userDocPermission.concat(
         [
           {
             docRefUuid,
             userUuid,
-            permission
+            permissionName
           }
         ]
       );
@@ -59,13 +59,13 @@ const resourceBuilder: ResourceBuilder = (
   server
     .delete(`${resource}/forDocForUser/:docRefUuid/:userUuid/:permissionName`)
     .intercept((req: HttpRequest, res: HttpResponse) => {
-      const { docRefUuid, userUuid, permission } = req.params;
+      const { docRefUuid, userUuid, permissionName } = req.params;
 
       testCache.data!.userDocPermission = testCache.data!.userDocPermission.filter(
         udp =>
           udp.userUuid !== userUuid &&
           udp.docRefUuid !== docRefUuid &&
-          udp.permission !== permission
+          udp.permissionName !== permissionName
       );
 
       res.send(undefined);
@@ -84,14 +84,12 @@ const resourceBuilder: ResourceBuilder = (
         byUser: testCache
           .data!.userDocPermission.filter(d => d.docRefUuid === docRefUuid)
           .reduce(
-            (acc, { userUuid, permission }) => ({
+            (acc, { userUuid, permissionName }) => ({
               ...acc,
-              [userUuid]: [...(acc[userUuid] || [])].concat([permission])
+              [userUuid]: [...(acc[userUuid] || [])].concat([permissionName])
             }),
             {}
-          ),
-        users: [],
-        groups: []
+          )
       };
 
       res.json(documentPermissions);

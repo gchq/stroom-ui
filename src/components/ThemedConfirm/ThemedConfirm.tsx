@@ -23,13 +23,13 @@ import IconHeader from "../IconHeader";
 import reactModalOptions from "../ThemedModal/reactModalOptions";
 import { useTheme } from "../../lib/theme";
 
-export interface NewProps {
+interface NewProps {
   getQuestion: () => string;
   getDetails?: () => string;
   onConfirm: () => void;
 }
 
-export interface Props extends ReactModal.Props {
+interface Props extends ReactModal.Props {
   question: string;
   details?: string;
   onConfirm: () => void;

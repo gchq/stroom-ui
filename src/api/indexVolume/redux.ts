@@ -22,6 +22,7 @@ import {
 import { IndexVolume, IndexVolumeGroup } from "../../types";
 import { onlyUnique } from "../../lib/reduxUtils";
 import { mapObject } from "../../lib/treeUtils";
+import { StoreState, IndexGroupsForVolumeReceivedAction } from "./types";
 
 const INDEX_VOLUMES_RECEIVED = "INDEX_VOLUMES_RECEIVED";
 const INDEX_VOLUMES_IN_GROUP_RECEIVED = "INDEX_VOLUMES_IN_GROUP_RECEIVED";
@@ -33,44 +34,35 @@ const INDEX_VOLUME_DELETED = "INDEX_VOLUME_DELETED";
 const INDEX_VOLUME_ADDED_TO_GROUP = "INDEX_VOLUME_ADDED_TO_GROUP";
 const INDEX_VOLUME_REMOVED_FROM_GROUP = "INDEX_VOLUME_REMOVED_FROM_GROUP";
 
-export interface IndexVolumesReceivedAction
-  extends Action<"INDEX_VOLUMES_RECEIVED"> {
+interface IndexVolumesReceivedAction extends Action<"INDEX_VOLUMES_RECEIVED"> {
   indexVolumes: Array<IndexVolume>;
 }
 
-export interface IndexVolumesInGroupReceivedAction
+interface IndexVolumesInGroupReceivedAction
   extends Action<"INDEX_VOLUMES_IN_GROUP_RECEIVED"> {
   groupName: string;
   indexVolumes: Array<IndexVolume>;
 }
-export interface IndexGroupsForVolumeReceivedAction
-  extends Action<"INDEX_GROUPS_FOR_VOLUME_RECEIVED"> {
-  indexVolumeId: string;
-  groups: Array<IndexVolumeGroup>;
-}
 
-export interface IndexVolumeReceivedAction
-  extends Action<"INDEX_VOLUME_RECEIVED"> {
+interface IndexVolumeReceivedAction extends Action<"INDEX_VOLUME_RECEIVED"> {
   indexVolume: IndexVolume;
 }
 
-export interface IndexVolumeCreatedAction
-  extends Action<"INDEX_VOLUME_CREATED"> {
+interface IndexVolumeCreatedAction extends Action<"INDEX_VOLUME_CREATED"> {
   indexVolume: IndexVolume;
 }
 
-export interface IndexVolumeDeletedAction
-  extends Action<"INDEX_VOLUME_DELETED"> {
+interface IndexVolumeDeletedAction extends Action<"INDEX_VOLUME_DELETED"> {
   indexVolumeId: string;
 }
 
-export interface IndexVolumeAddedToGroupAction
+interface IndexVolumeAddedToGroupAction
   extends Action<"INDEX_VOLUME_ADDED_TO_GROUP"> {
   indexVolumeId: string;
   groupName: string;
 }
 
-export interface IndexVolumeRemovedFromGroupAction
+interface IndexVolumeRemovedFromGroupAction
   extends Action<"INDEX_VOLUME_REMOVED_FROM_GROUP"> {
   indexVolumeId: string;
   groupName: string;
@@ -130,13 +122,7 @@ export const useActionCreators = genUseActionCreators({
   })
 });
 
-export interface StoreState {
-  indexVolumes: Array<IndexVolume>;
-  indexVolumesByGroup: { [groupName: string]: Array<IndexVolume> };
-  groupsByIndexVolume: { [volumeId: string]: Array<IndexVolumeGroup> };
-}
-
-export const defaultState: StoreState = {
+const defaultState: StoreState = {
   indexVolumes: [],
   indexVolumesByGroup: {},
   groupsByIndexVolume: {}

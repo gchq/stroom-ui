@@ -1,5 +1,6 @@
 import * as React from "react";
 import { useAllAppPermissions } from "../../../api/appPermission";
+import CheckboxSeries from "../../../components/CheckboxSeries";
 
 interface Props {
   value: Array<string>;
@@ -15,29 +16,12 @@ export const AppPermissionPicker = ({
   const allAppPermissions = useAllAppPermissions();
 
   return (
-    <div>
-      {allAppPermissions
-        .map(permission => ({
-          permission,
-          isSelected: value.includes(permission)
-        }))
-        .map(({ permission, isSelected }) => (
-          <div key={permission}>
-            <label>{permission}</label>
-            <input
-              type="checkbox"
-              checked={isSelected}
-              onChange={() => {
-                if (isSelected) {
-                  removePermission(permission);
-                } else {
-                  addPermission(permission);
-                }
-              }}
-            />
-          </div>
-        ))}
-    </div>
+    <CheckboxSeries
+      allValues={allAppPermissions}
+      includedValues={value}
+      addValue={addPermission}
+      removeValue={removePermission}
+    />
   );
 };
 

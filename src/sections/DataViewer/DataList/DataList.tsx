@@ -34,7 +34,7 @@ import { Direction, ExpressionOperatorWithUuid, DataRow } from "../../../types";
 
 import useReduxState from "../../../lib/useReduxState";
 
-export interface Props {
+ interface Props {
   dataViewerId: string;
   expression?: ExpressionOperatorWithUuid;
 }

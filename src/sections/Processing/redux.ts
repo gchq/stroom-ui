@@ -20,17 +20,8 @@ import {
   genUseActionCreators
 } from "../../lib/redux-actions-ts";
 import { StreamTaskType } from "../../types";
-
-export enum Directions {
-  ascending = "ascending",
-  descending = "descending"
-}
-export enum SortByOptions {
-  pipelineUuid = "pipelineUuid",
-  pipelineName = "pipelineName",
-  priority = "Priority",
-  progress = "progress"
-}
+import { StoreState } from "./types";
+import { SortByOptions, Directions } from "./enums";
 
 export const sortByFromString = (asStr: string): SortByOptions => {
   return SortByOptions.pipelineName;
@@ -151,20 +142,6 @@ export const useActionCreators = genUseActionCreators({
   selectLast: (): SelectLastAction => ({ type: SELECT_LAST }),
   selectNone: (): SelectNoneAction => ({ type: SELECT_NONE })
 });
-
-export interface StoreState {
-  trackers: Array<StreamTaskType>;
-  isLoading: boolean;
-  showCompleted: boolean;
-  sortBy?: SortByOptions;
-  sortDirection: Directions;
-  pageSize: number;
-  pageOffset: number;
-  searchCriteria: string;
-  totalTrackers: number;
-  numberOfPages: number;
-  selectedTrackerId?: number;
-}
 
 export const defaultState: StoreState = {
   trackers: [],

@@ -3,13 +3,14 @@ import * as uuidv4 from "uuid/v4";
 
 import { useActionCreators } from "./redux";
 import useReduxState from "../../lib/useReduxState";
-import useApi, { IsGroup } from "./useApi";
+import useApi from "./useApi";
 import { GlobalStoreState } from "../../startup/reducers";
 import { User } from "../../types";
+import { IsGroup } from "./types";
 
 type FindUsers = (name?: string, isGroup?: IsGroup, uuid?: string) => void;
 
-export interface UseFindUsers {
+interface UseFindUsers {
   findUsers: FindUsers;
   users: Array<User>;
 }
@@ -25,7 +26,8 @@ export const useFindUsers = (): UseFindUsers => {
   const { usersReceived } = useActionCreators();
 
   const users = useReduxState(
-    ({ userGroups: { users } }: GlobalStoreState) => users[listingId] || []
+    ({ userGroups: { usersBySearch } }: GlobalStoreState) =>
+      usersBySearch[listingId] || []
   );
 
   const findUsers: FindUsers = useCallback(

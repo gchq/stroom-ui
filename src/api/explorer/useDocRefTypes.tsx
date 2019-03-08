@@ -4,7 +4,7 @@ import useApi from "./useApi";
 import { DocRefTypeList } from "../../types";
 import useReduxState from "../../lib/useReduxState";
 
-export interface OutProps {
+interface OutProps {
   docRefTypes: DocRefTypeList;
 }
 

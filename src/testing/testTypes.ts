@@ -24,7 +24,7 @@ export interface UserGroupMembership {
 export interface UserDocPermission {
   userUuid: string;
   docRefUuid: string;
-  permission: string;
+  permissionName: string;
 }
 
 export interface TestData {

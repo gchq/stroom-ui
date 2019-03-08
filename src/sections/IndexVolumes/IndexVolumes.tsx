@@ -17,8 +17,6 @@ import {
 import useRouter from "../../lib/useRouter";
 import { useIndexVolumes } from "../../api/indexVolume";
 
-export interface Props {}
-
 const IndexVolumes = () => {
   const { history } = useRouter();
 

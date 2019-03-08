@@ -1,13 +1,6 @@
 import { Action, Reducer, AnyAction } from "redux";
 import { mapObject } from "../treeUtils";
-
-export interface StateById<TStatePerId> {
-  [s: string]: TStatePerId;
-}
-
-export interface ActionId {
-  id: string;
-}
+import { StateById, ActionId } from "./index";
 
 class TypeSafeReducer<TStatePerId extends object> {
   reducers: {

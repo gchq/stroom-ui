@@ -18,6 +18,7 @@ import {
   genUseActionCreators,
   prepareReducer
 } from "../../lib/redux-actions-ts";
+import { StoreState } from "./types";
 
 const initialState = {
   errorMessage: "",
@@ -25,24 +26,18 @@ const initialState = {
   httpErrorCode: 0
 };
 
-export interface StoreState {
-  errorMessage: string;
-  stackTrace: string;
-  httpErrorCode: number;
-}
-
 const SET_ERROR_MESSAGE = "SET_ERROR_MESSAGE";
-export interface SetErrorMessageAction extends Action<"SET_ERROR_MESSAGE"> {
+interface SetErrorMessageAction extends Action<"SET_ERROR_MESSAGE"> {
   errorMessage: string;
 }
 
 const SET_STACK_TRACE = "SET_STACK_TRACE";
-export interface SetStackTraceAction extends Action<"SET_STACK_TRACE"> {
+interface SetStackTraceAction extends Action<"SET_STACK_TRACE"> {
   stackTrace: string;
 }
 
 const SET_HTTP_ERROR_CODE = "SET_HTTP_ERROR_CODE";
-export interface SetHttpErrorCodeAction extends Action<"SET_HTTP_ERROR_CODE"> {
+interface SetHttpErrorCodeAction extends Action<"SET_HTTP_ERROR_CODE"> {
   httpErrorCode: number;
 }
 

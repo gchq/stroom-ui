@@ -15,8 +15,6 @@ import ThemedConfirm, {
 import IconHeader from "../../components/IconHeader";
 import useRouter from "../../lib/useRouter";
 
-export interface Props {}
-
 const IndexVolumeGroups = () => {
   const { history } = useRouter();
 

@@ -1,6 +1,6 @@
 import * as React from "react";
 
-export interface Props {
+interface Props {
   icon: string;
   size?: "lg" | "sm";
   className?: string;

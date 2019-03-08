@@ -4,7 +4,7 @@ import { useActionCreators } from "./redux";
 import useHttpClient from "../useHttpClient";
 import { AbstractFetchDataResult } from "../../types";
 
-export interface Api {
+interface Api {
   getDataForSelectedRow: (dataViewerId: string) => void;
 }
 

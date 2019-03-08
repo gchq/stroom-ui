@@ -20,7 +20,7 @@ import { useState } from "react";
 import Button from "../../Button";
 import { ControlledInput } from "../../../types";
 
-export interface Props extends ControlledInput<any> {}
+interface Props extends ControlledInput<any> {}
 
 const InValueWidget = ({ value, onChange }: Props) => {
   const [inputHasFocus, setInputHasFocus] = useState(false);

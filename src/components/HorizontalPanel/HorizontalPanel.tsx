@@ -4,7 +4,7 @@ import * as Mousetrap from "mousetrap";
 
 import Button from "../Button";
 
-export interface Props {
+interface Props {
   title: React.ReactNode;
   headerMenuItems?: React.ReactNode;
   content: React.ReactNode;

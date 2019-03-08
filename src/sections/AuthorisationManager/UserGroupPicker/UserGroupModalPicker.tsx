@@ -7,11 +7,11 @@ import IconHeader from "../../../components/IconHeader";
 import Button, { DialogActionButtons } from "../../../components/Button";
 import { useManageUsers } from "../../../api/userGroups";
 
-export interface BaseProps {
+interface BaseProps {
   onConfirm: (groupUuid: string) => void;
 }
 
-export interface Props extends BaseProps {
+interface Props extends BaseProps {
   isOpen: boolean;
   setIsOpen: (i: boolean) => void;
 }
@@ -82,7 +82,7 @@ export const UserGroupModalPicker = ({
   );
 };
 
-export interface UseDialog {
+interface UseDialog {
   componentProps: Props;
   showDialog: () => void;
 }

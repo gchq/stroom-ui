@@ -12,7 +12,7 @@ import {
 import { DocRefType, DocRefTree, DocRefWithLineage } from "../../../types";
 import { TestCache } from "../PollyDecorator";
 import { Config } from "../../../startup/config";
-import { ResourceBuilder } from "./resourceBuilder";
+import { ResourceBuilder } from "./types";
 
 const resourceBuilder: ResourceBuilder = (
   server: any,

@@ -1,5 +1,6 @@
-import { reducer, StoreState } from "./redux";
+import { reducer } from "./redux";
 import useIndexVolumes from "./useIndexVolumes";
+import { StoreState } from "./types";
 
 import useIndexVolume from "./useIndexVolume";
 

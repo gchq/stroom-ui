@@ -1,13 +1,7 @@
 import { useEffect, useMemo, useState, useCallback } from "react";
 
 import { useApi as usePipelineApi } from "../../api/pipelineDocument";
-import { useDocRefEditor, UseDocRefEditorProps } from "../DocRefEditor";
-import {
-  PipelineModelType,
-  PipelineAsTreeType,
-  ElementDefinition,
-  PipelineElementType
-} from "../../types";
+import { useDocRefEditor } from "../DocRefEditor";
 import {
   getPipelineAsTree,
   moveElementInPipeline,
@@ -18,39 +12,7 @@ import {
   revertPropertyToParent,
   revertPropertyToDefault
 } from "./pipelineUtils";
-
-export interface PipelineEditApi {
-  selectedElementId?: string;
-  elementInitialValues: object;
-  settingsUpdated: (p: { description: string }) => void;
-  elementSelected: (elementId: string, initialValues?: object) => void;
-  elementSelectionCleared: () => void;
-  elementMoved: (itemToMove: string, destination: string) => void;
-  elementAdded: (
-    parentId: string,
-    elementDefinition: ElementDefinition,
-    name: string
-  ) => void;
-  elementDeleted: (elementId: string) => void;
-  elementReinstated: (
-    parentId: string,
-    recycleData: PipelineElementType
-  ) => void;
-  elementPropertyUpdated: (
-    element: string,
-    name: string,
-    propertyType: string,
-    propertyValue: any
-  ) => void;
-  elementPropertyRevertToParent: (elementId: string, name: string) => void;
-  elementPropertyRevertToDefault: (elementId: string, name: string) => void;
-}
-
-export interface PipelineProps {
-  asTree?: PipelineAsTreeType;
-  pipelineEditApi: PipelineEditApi;
-  useEditorProps: UseDocRefEditorProps<PipelineModelType>;
-}
+import { PipelineEditApi, PipelineProps } from "./types";
 
 export const usePipelineState = (pipelineId: string): PipelineProps => {
   const pipelineApi = usePipelineApi();

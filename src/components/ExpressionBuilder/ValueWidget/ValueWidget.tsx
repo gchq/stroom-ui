@@ -6,7 +6,7 @@ import InValueWidget from "./InValueWidget";
 import AppSearchBar from "../../AppSearchBar";
 import { ExpressionTermWithUuid } from "../../../types";
 
-export interface Props {
+interface Props {
   onChange: (value: any) => any;
   term: ExpressionTermWithUuid;
   valueType: string;

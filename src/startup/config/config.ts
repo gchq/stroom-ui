@@ -14,31 +14,20 @@
  * limitations under the License.
  */
 import { Action } from "redux";
-import { prepareReducer, genUseActionCreators } from "../lib/redux-actions-ts";
-import useHttpClient from "../api/useHttpClient";
+import {
+  prepareReducer,
+  genUseActionCreators
+} from "../../lib/redux-actions-ts";
+import useHttpClient from "../../api/useHttpClient";
 import { useContext, useCallback } from "react";
 import { StoreContext } from "redux-react-hook";
+import { Config } from "./types";
 
 const initialState = { values: {}, isReady: false };
 
-export interface Config {
-  authenticationServiceUrl?: string;
-  authorisationServiceUrl?: string;
-  stroomBaseServiceUrl?: string;
-  advertisedUrl?: string;
-  authUsersUiUrl?: string;
-  authTokensUiUrl?: string;
-  appClientId?: string;
-}
-
-export interface StoreState {
-  isReady: boolean;
-  values: Config;
-}
-
 const UPDATE_CONFIG = "UPDATE_CONFIG";
 
-export interface UpdateConfigAction extends Action<"UPDATE_CONFIG"> {
+interface UpdateConfigAction extends Action<"UPDATE_CONFIG"> {
   values: Config;
 }
 

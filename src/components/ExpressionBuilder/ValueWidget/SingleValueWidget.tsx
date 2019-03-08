@@ -1,7 +1,7 @@
 import * as React from "react";
 import { ControlledInput } from "../../../types";
 
-export interface Props extends ControlledInput<any> {
+interface Props extends ControlledInput<any> {
   valueType: string;
 }
 

@@ -1,4 +1,4 @@
-import { ResourceBuilder } from "./resourceBuilder";
+import { ResourceBuilder } from "./types";
 
 import appPermissionResource from "./appPermissionResource";
 import documentPermissionResource from "./documentPermissionResource";

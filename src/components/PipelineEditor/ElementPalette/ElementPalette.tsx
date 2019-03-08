@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import ElementCategory from "./ElementCategory";
 import { getBinItems } from "../pipelineUtils";
-import { DragDropTypes, DropCollectedProps } from "../dragDropTypes";
+import { DragDropTypes, DropCollectedProps } from "../types";
 import {
   ElementDefinition,
   ElementDefinitionsByCategory,
@@ -16,12 +16,12 @@ import {
 import { useElements } from "../../../api/elements";
 import { groupByCategory, keyByType } from "../elementUtils";
 
-export interface Props {
+interface Props {
   pipeline: PipelineModelType;
   showDeleteElementDialog: (elementId: string) => void;
 }
 
-export interface EnhancedProps extends Props, DropCollectedProps {}
+interface EnhancedProps extends Props, DropCollectedProps {}
 
 const dropTarget: DropTargetSpec<Props> = {
   canDrop(props, monitor) {

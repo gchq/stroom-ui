@@ -21,11 +21,11 @@ import { splitAt } from "ramda";
 import ReactTable, { RowInfo } from "react-table";
 import "react-table/react-table.css";
 
-import { ErrorData } from "../DataDetails";
+import { ErrorData } from "../types";
 
 import Tooltip from "../../../../components/Tooltip";
 
-export interface Props {
+interface Props {
   errors: ErrorData[];
 }
 

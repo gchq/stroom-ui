@@ -19,7 +19,7 @@ import { useActionCreators } from "../../components/DocRefEditor";
 import useHttpClient from "../useHttpClient";
 import { IndexDoc } from "../../types";
 
-export interface Api {
+interface Api {
   fetchDocument: (indexUuid: string) => void;
   saveDocument: (index: IndexDoc) => void;
 }

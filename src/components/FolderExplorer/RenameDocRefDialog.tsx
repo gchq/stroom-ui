@@ -23,7 +23,7 @@ import ThemedModal from "../ThemedModal";
 import { DocRefType } from "../../types";
 import useForm from "../../lib/useForm";
 
-export interface Props {
+interface Props {
   isOpen: boolean;
   docRef?: DocRefType;
   onConfirm: (docRef: DocRefType, newName: string) => void;

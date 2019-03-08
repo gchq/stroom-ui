@@ -23,8 +23,6 @@ import useApi from "../../../api/streamTasks/useApi";
 import HorizontalPanel from "../../../components/HorizontalPanel";
 import useReduxState from "../../../lib/useReduxState";
 
-export interface Props {}
-
 const ProcessingDetails = () => {
   const { selectNone } = useActionCreators();
   const { enableToggle } = useApi();

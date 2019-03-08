@@ -19,27 +19,10 @@ import { path } from "ramda";
 
 import ErrorTable from "./Views/ErrorTable";
 import EventView from "./Views/EventView";
+import { StroomData } from "./types";
 
-export interface Props {
+interface Props {
   data: StroomData;
-}
-
-export interface StroomData {
-  markers: ErrorData[];
-  data: string;
-}
-
-interface Location {
-  streamNo: number;
-  lineNo: number;
-  colNo: number;
-}
-
-export interface ErrorData {
-  elementId: string;
-  location: Location;
-  message: string;
-  severity: string;
 }
 
 const DataDetails = ({ data }: Props) => {

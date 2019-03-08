@@ -1,18 +1,9 @@
-import DocRefEditor, {
-  useDocRefEditor,
-  UseDocRefEditorProps,
-  Props
-} from "./DocRefEditor";
-import {
-  useActionCreators,
-  reducer,
-  StoreState,
-  StoreStateById
-} from "./redux";
+import DocRefEditor, { useDocRefEditor } from "./DocRefEditor";
+import { useActionCreators, reducer } from "./redux";
+import { StoreState, StoreStateById, UseDocRefEditorProps } from "./types";
 
 export {
   DocRefEditor,
-  Props,
   useDocRefEditor,
   UseDocRefEditorProps,
   useActionCreators,

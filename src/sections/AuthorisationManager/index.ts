@@ -16,18 +16,7 @@
 
 import AuthorisationManager from "./AuthorisationManager";
 import UserAuthorisationEditor from "./UserAuthorisationEditor/UserAuthorisationEditor";
-import {
-  useActionCreators,
-  reducer,
-  StoreState
-} from "../../api/userGroups/redux";
 
-export {
-  AuthorisationManager,
-  UserAuthorisationEditor,
-  useActionCreators,
-  reducer,
-  StoreState
-};
+export { AuthorisationManager, UserAuthorisationEditor };
 
 export default AuthorisationManager;

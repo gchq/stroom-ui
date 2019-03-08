@@ -17,30 +17,29 @@ import { Action } from "redux";
 
 import {
   prepareReducerById,
-  StateById,
   ActionId,
   genUseActionCreators
 } from "../../lib/redux-actions-ts";
+
+import { StoreStateById } from "./types";
 
 export const DOCUMENT_RECEIVED = "DOCUMENT_RECEIVED";
 export const DOCUMENT_CHANGES_MADE = "DOCUMENT_CHANGES_MADE";
 export const DOCUMENT_SAVE_REQUESTED = "DOCUMENT_SAVE_REQUESTED";
 export const DOCUMENT_SAVED = "DOCUMENT_SAVED";
 
-export interface DocumentAction extends ActionId {
+interface DocumentAction extends ActionId {
   docRefContents: object;
 }
 
-export interface DocumentReceivedAction
+interface DocumentReceivedAction
   extends Action<"DOCUMENT_RECEIVED">,
     DocumentAction {}
-export interface DocumentChangesMadeAction
+interface DocumentChangesMadeAction
   extends Action<"DOCUMENT_CHANGES_MADE">,
     DocumentAction {}
-export interface DocumentSavedAction
-  extends Action<"DOCUMENT_SAVED">,
-    ActionId {}
-export interface DocumentSaveRequestedAction
+interface DocumentSavedAction extends Action<"DOCUMENT_SAVED">, ActionId {}
+interface DocumentSaveRequestedAction
   extends Action<"DOCUMENT_SAVE_REQUESTED">,
     ActionId {}
 
@@ -70,14 +69,6 @@ export const useActionCreators = genUseActionCreators({
     id
   })
 });
-
-export interface StoreStateById {
-  isDirty: boolean;
-  isSaving: boolean;
-  docRefContents?: object;
-}
-
-export type StoreState = StateById<StoreStateById>;
 
 export const defaultStatePerId: StoreStateById = {
   isDirty: false,

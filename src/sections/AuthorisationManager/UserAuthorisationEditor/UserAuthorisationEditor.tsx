@@ -10,7 +10,7 @@ import useRouter from "../../../lib/useRouter";
 import { useAppPermissionsForUser } from "../../../api/appPermission";
 import { AppPermissionPicker } from "../AppPermissionPicker";
 
-export interface Props {
+interface Props {
   userUuid: string;
 }
 

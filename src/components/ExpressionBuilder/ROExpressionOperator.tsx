@@ -10,7 +10,7 @@ import {
   ExpressionTermWithUuid
 } from "../../types";
 
-export interface Props {
+interface Props {
   operator: ExpressionOperatorWithUuid;
   isRoot?: boolean;
   isEnabled: boolean;

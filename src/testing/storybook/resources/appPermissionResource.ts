@@ -2,7 +2,7 @@ import { HttpRequest, HttpResponse } from "@pollyjs/adapter-fetch";
 
 import { TestCache } from "../PollyDecorator";
 import { Config } from "../../../startup/config";
-import { ResourceBuilder } from "./resourceBuilder";
+import { ResourceBuilder } from "./types";
 import { onlyUnique } from "../../../lib/reduxUtils";
 
 const resourceBuilder: ResourceBuilder = (
@@ -22,11 +22,11 @@ const resourceBuilder: ResourceBuilder = (
       res.json(testCache.data!.userAppPermissions[req.params.userUuid] || []);
     });
   server
-    .post(`${resource}/:userUuid/:permission`)
+    .post(`${resource}/:userUuid/:permissionName`)
     .intercept((req: HttpRequest, res: HttpResponse) => {
       testCache.data!.userAppPermissions[req.params.userUuid] = [
         ...(testCache.data!.userAppPermissions[req.params.userUuid] || []),
-        req.params.permission
+        req.params.permissionName
       ].filter(onlyUnique);
 
       res.send(undefined);
@@ -34,12 +34,12 @@ const resourceBuilder: ResourceBuilder = (
     });
 
   server
-    .delete(`${resource}/:userUuid/:permission`)
+    .delete(`${resource}/:userUuid/:permissionName`)
     .intercept((req: HttpRequest, res: HttpResponse) => {
       testCache.data!.userAppPermissions[
         req.params.userUuid
       ] = testCache.data!.userAppPermissions[req.params.userUuid].filter(
-        p => p !== req.params.permission
+        p => p !== req.params.permissionName
       );
 
       res.send(undefined);

@@ -16,29 +16,11 @@ import {
   DragObject,
   DragCollectedProps,
   DropCollectedProps
-} from "../components/FolderExplorer/dragDropTypes";
+} from "../components/FolderExplorer/types";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { DocRefType, StyledComponentProps } from "../types";
-import { KeyDownState } from "../lib/useKeyIsDown/useKeyIsDown";
-
-export type MenuItemOpened = (name: string, isOpen: boolean) => void;
-
-export type MenuItemsOpenState = {
-  [s: string]: boolean;
-};
-
-export interface MenuItemType {
-  key: string;
-  title?: string;
-  onClick: () => void;
-  icon: IconProp;
-  style: "doc" | "nav";
-  skipInContractedMenu?: boolean;
-  children?: Array<MenuItemType>;
-  docRef?: DocRefType;
-  parentDocRef?: DocRefType;
-  isActive?: boolean;
-}
+import { KeyDownState } from "../lib/useKeyIsDown";
+import { MenuItemOpened, MenuItemType, MenuItemsOpenState } from "./types";
 
 interface Props extends StyledComponentProps {
   menuItem: MenuItemType;

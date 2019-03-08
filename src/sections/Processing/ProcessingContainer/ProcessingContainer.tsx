@@ -29,7 +29,6 @@ import ProcessingList from "../ProcessingList/ProcessingList";
 import { StreamTaskType } from "../../../types";
 import useReduxState from "../../../lib/useReduxState";
 
-export interface Props {}
 
 const ProcessingContainer = () => {
   const { fetchTrackers } = useApi();

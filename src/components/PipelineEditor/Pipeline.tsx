@@ -19,18 +19,15 @@ import * as React from "react";
 import Loader from "../Loader";
 import PipelineElement from "./PipelineElement";
 import ElbowLine from "./ElbowLine/ElbowLine";
-import {
-  getPipelineLayoutGrid,
-  PipelineLayoutGrid,
-  CellType
-} from "./pipelineUtils";
+import { getPipelineLayoutGrid } from "./pipelineUtils";
+import { PipelineLayoutGrid, CellType } from "./types";
 import { PipelineElementType } from "../../types";
 import { getAllElementNames } from "./pipelineUtils";
 import { ShowDialog as ShowAddElementDialog } from "./AddElementModal";
-import { PipelineProps } from "./usePipelineState";
+import { PipelineProps } from "./types";
 import { useElements } from "../../api/elements";
 
-export interface Props {
+interface Props {
   pipelineId: string;
   pipelineStateProps: PipelineProps;
   showAddElementDialog: ShowAddElementDialog;

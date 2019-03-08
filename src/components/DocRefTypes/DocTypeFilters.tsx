@@ -25,7 +25,7 @@ enum AllSelectState {
   INDETERMINATE
 }
 
-export interface Props extends ControlledInput<DocRefTypeList> {}
+interface Props extends ControlledInput<DocRefTypeList> {}
 
 let DocTypeFilters = ({ onChange, value }: Props) => {
   const { docRefTypes } = useDocRefTypes();

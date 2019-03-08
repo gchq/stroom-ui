@@ -24,12 +24,8 @@ import ReactTable, { RowInfo, SortingRule } from "react-table";
 import "react-table/react-table.css";
 
 import Button from "../../../components/Button";
-import {
-  useActionCreators,
-  Directions,
-  SortByOptions,
-  sortByFromString
-} from "../redux";
+import { useActionCreators, sortByFromString } from "../redux";
+import { Directions, SortByOptions } from "../enums";
 import useApi from "../../../api/streamTasks/useApi";
 import { StreamTaskType } from "../../../types";
 import useReduxState from "../../../lib/useReduxState";

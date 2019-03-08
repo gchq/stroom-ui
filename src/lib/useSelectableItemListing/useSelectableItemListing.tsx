@@ -1,33 +1,8 @@
 import { useState } from "react";
 import useKeyIsDown from "../useKeyIsDown";
-import { KeyDownState } from "../useKeyIsDown/useKeyIsDown";
 import { RowInfo, TableProps } from "react-table";
-
-export enum SelectionBehaviour {
-  NONE,
-  SINGLE,
-  MULTIPLE
-}
-
-export interface InProps<TItem> {
-  getKey: (x: TItem) => string;
-  items: Array<TItem>;
-  openItem?: (i: TItem) => void;
-  enterItem?: (i: TItem) => void;
-  goBack?: (i: TItem) => void;
-  selectionBehaviour?: SelectionBehaviour;
-}
-
-export interface OutProps<TItem> {
-  focusIndex: number;
-  focussedItem?: any;
-  lastSelectedIndex?: number;
-  selectedItems: Array<TItem>;
-  selectedItemIndexes: Set<number>;
-  selectionToggled: (itemKey: string) => void;
-  onKeyDownWithShortcuts: React.KeyboardEventHandler<HTMLDivElement>;
-  keyIsDown: KeyDownState;
-}
+import { TableOutProps, InProps, OutProps } from "./types";
+import { SelectionBehaviour } from ".";
 
 export function useSelectableItemListing<TItem>({
   getKey,
@@ -161,10 +136,6 @@ export function useSelectableItemListing<TItem>({
       }
     }
   };
-}
-
-export interface TableOutProps<TItem> extends OutProps<TItem> {
-  tableProps: Partial<TableProps>;
 }
 
 export function useSelectableReactTable<TItem>(

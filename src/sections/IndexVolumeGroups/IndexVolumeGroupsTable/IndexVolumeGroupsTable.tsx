@@ -9,7 +9,7 @@ import {
   TableOutProps
 } from "../../../lib/useSelectableItemListing";
 
-export interface Props {
+ interface Props {
   groups: Array<IndexVolumeGroup>;
   selectableTableProps: TableOutProps<IndexVolumeGroup>;
 }
@@ -30,7 +30,7 @@ const IndexVolumeGroupsTable = ({
   </div>
 );
 
-export interface UseTable {
+ interface UseTable {
   componentProps: Props;
 }
 

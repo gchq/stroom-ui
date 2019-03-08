@@ -19,7 +19,7 @@ import { useMemo } from "react";
 import * as ReactTooltip from "react-tooltip";
 import * as uuidv4 from "uuid/v4";
 
-export interface Props {
+interface Props {
   trigger: React.ReactNode;
   content: React.ReactNode;
 }

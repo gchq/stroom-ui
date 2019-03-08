@@ -10,7 +10,7 @@ import { DocRefType } from "../../types";
 import useRecentItems from "../../lib/useRecentItems";
 import IndexEditor from "../IndexEditor";
 
-export interface Props {
+interface Props {
   docRef: DocRefType;
 }
 

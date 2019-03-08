@@ -31,7 +31,7 @@ import {
   dragCollect,
   DragCollectedProps,
   DropCollectedProps
-} from "./dragDropTypes";
+} from "./types";
 import ExpressionTerm from "./ExpressionTerm";
 import Button from "../Button";
 import {
@@ -44,7 +44,7 @@ import {
 } from "../../types";
 import ElbowLine from "../PipelineEditor/ElbowLine/ElbowLine";
 
-export interface Props {
+interface Props {
   dataSource: DataSourceType;
   operator: ExpressionOperatorWithUuid;
   isRoot?: boolean;
@@ -59,10 +59,7 @@ export interface Props {
   ) => void;
 }
 
-export interface EnhancedProps
-  extends Props,
-    DragCollectedProps,
-    DropCollectedProps {}
+interface EnhancedProps extends Props, DragCollectedProps, DropCollectedProps {}
 
 const dragSource: DragSourceSpec<Props, DragObject> = {
   canDrag(props) {

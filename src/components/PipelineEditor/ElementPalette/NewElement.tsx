@@ -21,14 +21,10 @@ import { DragSource, DragSourceSpec, DragSourceCollector } from "react-dnd";
 
 import ElementImage from "../../ElementImage";
 import Button from "../../Button";
-import {
-  DragDropTypes,
-  DragObject,
-  DragCollectedProps
-} from "../dragDropTypes";
-import { RecycleBinItem } from "../pipelineUtils";
+import { DragDropTypes, DragObject, DragCollectedProps } from "../types";
+import { RecycleBinItem } from "../types";
 
-export interface Props {
+interface Props {
   elementWithData: RecycleBinItem;
 }
 
@@ -51,7 +47,7 @@ const dragCollect: DragSourceCollector<DragCollectedProps> = (
   isDragging: monitor.isDragging()
 });
 
-export interface EnhancedProps extends Props, DragCollectedProps {}
+interface EnhancedProps extends Props, DragCollectedProps {}
 
 const enhance = DragSource<Props, DragCollectedProps>(
   DragDropTypes.PALLETE_ELEMENT,

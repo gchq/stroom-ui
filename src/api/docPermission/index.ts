@@ -1,11 +1,16 @@
 import useApi from "./useApi";
 import useDocTypePermissions from "./useDocTypePermissions";
-import { useActionCreators, StoreState, reducer } from "./redux";
+import useDocumentPermissions from "./useDocumentPermissions";
+import useDocumentPermissionsForUser from "./useDocumentPermissionsForUser";
+import { useActionCreators, reducer } from "./redux";
+import { StoreState } from "./types";
 
 export {
   useApi,
   useActionCreators,
   StoreState,
   reducer,
-  useDocTypePermissions
+  useDocTypePermissions,
+  useDocumentPermissions,
+  useDocumentPermissionsForUser
 };

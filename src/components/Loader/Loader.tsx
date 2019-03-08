@@ -39,7 +39,7 @@ var options = {
   position: "relative"
 };
 
-export interface Props {
+interface Props {
   message: string;
 }
 

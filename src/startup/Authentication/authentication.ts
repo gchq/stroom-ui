@@ -18,19 +18,15 @@ import * as uuidv4 from "uuid";
 import * as sjcl from "sjcl";
 import { Action } from "redux";
 import { History } from "history";
-
+import { AuthenticationStoreState } from "./types";
 import {
   prepareReducer,
   genUseActionCreators
 } from "../../lib/redux-actions-ts";
 
-export interface StoreState {
-  idToken?: string;
-}
-
 const TOKEN_ID_CHANGE = "TOKEN_ID_CHANGE";
 
-export interface TokenIdChangeAction extends Action<"TOKEN_ID_CHANGE"> {
+interface TokenIdChangeAction extends Action<"TOKEN_ID_CHANGE"> {
   idToken: string;
 }
 
@@ -41,7 +37,7 @@ export const useActionCreators = genUseActionCreators({
   })
 });
 
-const defaultState = {
+const defaultState: AuthenticationStoreState = {
   idToken: ""
 };
 

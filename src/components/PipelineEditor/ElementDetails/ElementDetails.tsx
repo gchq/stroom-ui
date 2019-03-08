@@ -28,9 +28,9 @@ import {
 } from "../../../types";
 import Loader from "../../../components/Loader";
 import { useElements } from "../../../api/elements";
-import { PipelineEditApi } from "../usePipelineState";
+import { PipelineEditApi } from "../types";
 
-export interface Props {
+interface Props {
   pipeline: PipelineModelType;
   pipelineEditApi: PipelineEditApi;
 }

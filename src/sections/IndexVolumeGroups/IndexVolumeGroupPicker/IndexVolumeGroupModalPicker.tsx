@@ -7,11 +7,11 @@ import IconHeader from "../../../components/IconHeader";
 import Button, { DialogActionButtons } from "../../../components/Button";
 import { useIndexVolumeGroups } from "../../../api/indexVolumeGroup";
 
-export interface BaseProps {
+ interface BaseProps {
   onConfirm: (groupName: string) => void;
 }
 
-export interface Props extends BaseProps {
+ interface Props extends BaseProps {
   isOpen: boolean;
   setIsOpen: (i: boolean) => void;
 }
@@ -86,7 +86,7 @@ export const IndexVolumeGroupModalPicker = ({
   );
 };
 
-export interface UseDialog {
+ interface UseDialog {
   componentProps: Props;
   showDialog: () => void;
 }

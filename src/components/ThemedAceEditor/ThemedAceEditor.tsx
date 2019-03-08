@@ -31,8 +31,6 @@ import { useTheme } from "../../lib/theme";
 // The things I do to shut the compiler up...lol
 if (brace) console.log("Brace found");
 
-export interface Props extends AceEditorProps {}
-
 /**
  * This handles theme switching for the AceEditor. It also applies the vim keyboard handler,
  * because we'll want that everywhere we use the AceEditor.

@@ -1,6 +1,6 @@
 import * as React from "react";
 
-export interface Props {
+interface Props {
   docRefType: string;
   size?: "lg" | "sm";
   className?: string;

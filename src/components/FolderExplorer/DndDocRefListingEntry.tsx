@@ -18,24 +18,19 @@ import {
   DragCollectedProps,
   DropCollectedProps,
   DragObject
-} from "./dragDropTypes";
+} from "./types";
 import { DocRefType } from "../../types";
-import { KeyDownState } from "../../lib/useKeyIsDown/useKeyIsDown";
+import { KeyDownState } from "../../lib/useKeyIsDown";
 
-export interface Props extends DocRefListingEntryProps {
+interface Props extends DocRefListingEntryProps {
   keyIsDown: KeyDownState;
   showCopyDialog: (docRefUuids: Array<string>, destination: DocRefType) => void;
   showMoveDialog: (docRefUuids: Array<string>, destination: DocRefType) => void;
 }
 
-export interface DndProps extends Props {}
+interface EnhancedProps extends Props, DragCollectedProps, DropCollectedProps {}
 
-export interface EnhancedProps
-  extends Props,
-    DragCollectedProps,
-    DropCollectedProps {}
-
-const dropTarget: DropTargetSpec<DndProps> = {
+const dropTarget: DropTargetSpec<Props> = {
   canDrop({ docRef }, monitor) {
     const { docRefs } = monitor.getItem();
 
@@ -76,7 +71,7 @@ let dropCollect: DropTargetCollector<DropCollectedProps> = function dropCollect(
   };
 };
 
-const dragSource: DragSourceSpec<DndProps, DragObject> = {
+const dragSource: DragSourceSpec<Props, DragObject> = {
   canDrag(props) {
     return true;
   },

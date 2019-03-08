@@ -1,6 +1,6 @@
 import * as React from "react";
 
-export interface Props {
+interface Props {
   url: string;
   id?: string;
   className?: string;

@@ -16,14 +16,13 @@
 
 import * as React from "react";
 
-import Button from ".";
+import Button from "./Button";
+import { DialogActionButtonProps } from "./types";
 
-export interface Props {
-  onCancel: React.MouseEventHandler;
-  onConfirm: React.MouseEventHandler;
-}
-
-const DialogActionButtons = ({ onCancel, onConfirm }: Props) => (
+const DialogActionButtons = ({
+  onCancel,
+  onConfirm
+}: DialogActionButtonProps) => (
   <React.Fragment>
     <Button text="Cancel" onClick={onCancel} />
     <Button onClick={onConfirm} icon="check" text="Choose" />

@@ -1,5 +1,6 @@
 import prepareReducer from "./TypeSafeReducer";
-import prepareReducerById, { StateById, ActionId } from "./TypeSafeReducerById";
+import prepareReducerById from "./TypeSafeReducerById";
+import { StateById, ActionId } from "./types";
 import genUseActionCreators from "./useActionCreators";
 
 export {

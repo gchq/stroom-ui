@@ -30,7 +30,7 @@ import IndexFieldEditor, {
   useEditor as useFieldEditor
 } from "./IndexFieldEditor";
 
-export interface Props {
+interface Props {
   indexUuid: string;
 }
 

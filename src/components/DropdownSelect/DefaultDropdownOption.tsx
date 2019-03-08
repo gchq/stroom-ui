@@ -1,12 +1,12 @@
 import * as React from "react";
 
-import { DropdownOptionProps } from "./DropdownSelect";
+import { DropdownOptionProps } from "./types";
 
 interface WithClassName {
   className: string;
 }
 
-export interface Props extends DropdownOptionProps, WithClassName {}
+interface Props extends DropdownOptionProps, WithClassName {}
 
 export const DefaultDropdownOption = ({
   option,

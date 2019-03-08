@@ -59,7 +59,7 @@ export const useApi = (): Api => {
       const state = store.getState();
       var url = `${
         state.config.values.stroomBaseServiceUrl
-      }/forDocForUser/${docRefUuid}/${userUuid}`;
+      }/docPermissions/v1/forDocForUser/${docRefUuid}/${userUuid}`;
 
       return httpGetJson(url);
     },

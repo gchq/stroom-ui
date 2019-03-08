@@ -1,4 +1,4 @@
-import { useEffect, useCallback } from "react";
+import { useEffect, useCallback, useMemo } from "react";
 
 import useApi from "./useApi";
 import { useActionCreators } from "./redux";
@@ -37,16 +37,20 @@ export default (docRefUuid: string | undefined): UseDocumentPermissions => {
     }
   }, [docRefUuid, clearDocPermissions, documentPermissionsCleared]);
 
-  const { permissionsByDocUuidThenUserUuid } = useReduxState(
-    ({ docPermissions: { permissionsByDocUuidThenUserUuid } }) => ({
-      permissionsByDocUuidThenUserUuid
-    })
+  const permissions = useReduxState(
+    ({ docPermissions: { permissions } }) => permissions
   );
 
-  let permissionsByUser = {};
-  if (!!docRefUuid) {
-    permissionsByUser = permissionsByDocUuidThenUserUuid[docRefUuid] || {};
-  }
+  const permissionsByUser = useMemo(() => {
+    return permissions
+      .filter(d => d.docRefUuid === docRefUuid)
+      .reduce((acc, curr) => {
+        return {
+          ...acc,
+          [curr.userUuid]: [curr.permissionNames]
+        };
+      }, {});
+  }, [permissions]);
 
   return {
     permissionsByUser,

@@ -21,10 +21,9 @@ import {
 } from "../../lib/redux-actions-ts";
 import { IndexVolumeGroup } from "../../types";
 import { onlyUnique } from "../../lib/reduxUtils";
-import {
-  IndexGroupsForVolumeReceivedAction,
-  INDEX_GROUPS_FOR_VOLUME_RECEIVED
-} from "../indexVolume/redux";
+import { INDEX_GROUPS_FOR_VOLUME_RECEIVED } from "../indexVolume/redux";
+import { IndexGroupsForVolumeReceivedAction } from "../indexVolume/types";
+import { StoreState } from "./types";
 
 const INDEX_VOLUME_GROUP_NAMES_RECEIVED = "INDEX_VOLUME_GROUP_NAMES_RECEIVED";
 const INDEX_VOLUME_GROUPS_RECEIVED = "INDEX_VOLUME_GROUPS_RECEIVED";
@@ -32,26 +31,26 @@ const INDEX_VOLUME_GROUP_RECEIVED = "INDEX_VOLUME_GROUP_RECEIVED";
 const INDEX_VOLUME_GROUP_CREATED = "INDEX_VOLUME_GROUP_CREATED";
 const INDEX_VOLUME_GROUP_DELETED = "INDEX_VOLUME_GROUP_DELETED";
 
-export interface IndexVolumeGroupNamesReceivedAction
+interface IndexVolumeGroupNamesReceivedAction
   extends Action<"INDEX_VOLUME_GROUP_NAMES_RECEIVED"> {
   names: Array<string>;
 }
 
-export interface IndexVolumeGroupsReceivedAction
+interface IndexVolumeGroupsReceivedAction
   extends Action<"INDEX_VOLUME_GROUPS_RECEIVED"> {
   indexVolumeGroups: Array<IndexVolumeGroup>;
 }
 
-export interface IndexVolumeGroupReceivedAction
+interface IndexVolumeGroupReceivedAction
   extends Action<"INDEX_VOLUME_GROUP_RECEIVED"> {
   indexVolumeGroup: IndexVolumeGroup;
 }
 
-export interface IndexVolumeGroupCreatedAction
+interface IndexVolumeGroupCreatedAction
   extends Action<"INDEX_VOLUME_GROUP_CREATED"> {
   indexVolumeGroup: IndexVolumeGroup;
 }
-export interface IndexVolumeGroupDeletedAction
+interface IndexVolumeGroupDeletedAction
   extends Action<"INDEX_VOLUME_GROUP_DELETED"> {
   name: string;
 }
@@ -87,12 +86,7 @@ export const useActionCreators = genUseActionCreators({
   })
 });
 
-export interface StoreState {
-  groupNames: Array<string>;
-  groups: Array<IndexVolumeGroup>;
-}
-
-export const defaultState: StoreState = {
+const defaultState: StoreState = {
   groupNames: [],
   groups: []
 };

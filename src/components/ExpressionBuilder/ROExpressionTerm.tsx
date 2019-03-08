@@ -1,7 +1,7 @@
 import * as React from "react";
 import { ExpressionTermType } from "../../types";
 
-export interface Props {
+interface Props {
   term: ExpressionTermType;
   isEnabled: boolean;
 }

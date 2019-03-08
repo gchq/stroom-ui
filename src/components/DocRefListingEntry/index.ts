@@ -1,4 +1,5 @@
-import DocRefListingEntry, { Props } from "./DocRefListingEntry";
+import DocRefListingEntry from "./DocRefListingEntry";
+import { Props } from "./types";
 
 export default DocRefListingEntry;
 

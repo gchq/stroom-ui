@@ -4,7 +4,7 @@ import { StoreContext } from "redux-react-hook";
 import useHttpClient from "../useHttpClient";
 import { IndexVolume, IndexVolumeGroup } from "../../types";
 
-export interface Api {
+interface Api {
   getIndexVolumes: () => Promise<Array<IndexVolume>>;
   getIndexVolumeById: (id: string) => Promise<IndexVolume>;
   deleteIndexVolume: (id: string) => Promise<void>;

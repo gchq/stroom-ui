@@ -19,7 +19,7 @@ import * as moment from "moment";
 
 import DataDetails from "./DataDetails";
 
-export interface Props {
+interface Props {
   data: any;
   details: any;
   dataViewerId: string;

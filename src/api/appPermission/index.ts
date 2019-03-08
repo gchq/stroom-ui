@@ -1,6 +1,7 @@
 import useAllAppPermissions from "./useAllAppPermissions";
 import useAppPermissionsForUser from "./useAppPermissionsForUser";
+import { StoreState } from "./types";
 
-import { reducer, StoreState } from "./redux";
+import { reducer } from "./redux";
 
 export { useAppPermissionsForUser, useAllAppPermissions, reducer, StoreState };

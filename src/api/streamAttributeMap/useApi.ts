@@ -11,7 +11,7 @@ import {
   StreamAttributeMapResult
 } from "../../types";
 
-export interface Api {
+interface Api {
   search: (
     dataViewerId: string,
     pageOffset: number,

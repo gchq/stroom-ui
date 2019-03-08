@@ -18,17 +18,14 @@ import * as React from "react";
 import "simplebar";
 import "simplebar/dist/simplebar.css";
 
-import MenuItem, {
-  MenuItemType,
-  MenuItemsOpenState,
-  MenuItemOpened
-} from "./MenuItem";
+import MenuItem from "./MenuItem";
+import { MenuItemOpened, MenuItemType, MenuItemsOpenState } from "./types";
 
 import useExplorerApi from "../api/explorer/useApi";
 import useSelectableItemListing from "../lib/useSelectableItemListing";
 import { DocRefType, DocRefConsumer, DocRefTree } from "../types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { KeyDownState } from "../lib/useKeyIsDown/useKeyIsDown";
+import { KeyDownState } from "../lib/useKeyIsDown";
 import CopyMoveDocRefDialog, {
   useDialog as useCopyMoveDocRefDialog,
   ShowDialog as ShowCopyDocRefDialog

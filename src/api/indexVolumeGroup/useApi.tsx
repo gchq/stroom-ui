@@ -4,7 +4,7 @@ import { useContext, useCallback } from "react";
 import useHttpClient from "../useHttpClient";
 import { IndexVolumeGroup } from "../../types";
 
-export interface Api {
+interface Api {
   getIndexVolumeGroupNames: () => Promise<Array<string>>;
   getIndexVolumeGroups: () => Promise<Array<IndexVolumeGroup>>;
   getIndexVolumeGroup: (name: string) => Promise<IndexVolumeGroup>;

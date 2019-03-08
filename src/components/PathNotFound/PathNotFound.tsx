@@ -18,12 +18,12 @@ import * as React from "react";
 
 import IconHeader from "../IconHeader";
 
-export interface Props {
+interface Props {
   message?: string;
 }
 
 const PathNotFound = ({
-  message = "There's nothing here I'm afraid."
+  message = "There's nothing here I'm afraid matey."
 }: Props) => (
   <div className="path-not-found">
     <IconHeader icon="exclamation-triangle" text="Page not found!" />

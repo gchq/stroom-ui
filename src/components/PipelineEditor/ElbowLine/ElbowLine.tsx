@@ -16,7 +16,7 @@
 
 import * as React from "react";
 
-export interface Props {
+interface Props {
   north?: boolean;
   west?: boolean;
   south?: boolean;

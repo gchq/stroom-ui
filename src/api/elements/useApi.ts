@@ -7,7 +7,7 @@ import {
   ElementPropertiesByElementIdType
 } from "../../types";
 
-export interface Api {
+interface Api {
   fetchElements: () => Promise<ElementDefinitions>;
   fetchElementProperties: () => Promise<ElementPropertiesByElementIdType>;
 }

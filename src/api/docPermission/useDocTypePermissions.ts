@@ -11,7 +11,7 @@ import useReduxState from "../../lib/useReduxState";
 
 export default (docType: string): Array<string> => {
   const { getPermissionForDocType } = useApi();
-  const { permissionsForDocTypeReceived } = useActionCreators();
+  const { permissionNamesForDocTypeReceived } = useActionCreators();
 
   const permissions = useReduxState(
     ({ docPermissions: { permissionsByDocType } }) =>
@@ -20,9 +20,9 @@ export default (docType: string): Array<string> => {
 
   useEffect(() => {
     getPermissionForDocType(docType).then(permissions =>
-      permissionsForDocTypeReceived(docType, permissions)
+      permissionNamesForDocTypeReceived(docType, permissions)
     );
-  }, [getPermissionForDocType, permissionsForDocTypeReceived]);
+  }, [getPermissionForDocType, permissionNamesForDocTypeReceived]);
 
   return permissions;
 };

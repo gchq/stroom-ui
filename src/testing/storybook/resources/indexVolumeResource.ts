@@ -2,7 +2,7 @@ import { HttpRequest, HttpResponse } from "@pollyjs/adapter-fetch";
 
 import { TestCache } from "../PollyDecorator";
 import { Config } from "../../../startup/config";
-import { ResourceBuilder } from "./resourceBuilder";
+import { ResourceBuilder } from "./types";
 import { IndexVolume, IndexVolumeGroup } from "../../../types";
 
 let nextIdToCreate = 100000;

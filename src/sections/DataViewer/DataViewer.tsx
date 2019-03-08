@@ -33,7 +33,7 @@ import { Direction, ExpressionOperatorWithUuid } from "../../types";
 import useLocalStorage, { storeNumber } from "../../lib/useLocalStorage";
 import useReduxState from "../../lib/useReduxState";
 
-export interface Props {
+interface Props {
   dataViewerId: string;
 }
 

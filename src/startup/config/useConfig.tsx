@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 
-import useReduxState from "../lib/useReduxState";
-import { GlobalStoreState } from "./reducers";
+import useReduxState from "../../lib/useReduxState";
+import { GlobalStoreState } from "../reducers";
 
 import { useApi } from "./config";
 

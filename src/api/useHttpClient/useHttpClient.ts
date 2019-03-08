@@ -25,7 +25,7 @@ type HttpCall = (
   }
 ) => Promise<any>;
 
-export interface HttpClient {
+interface HttpClient {
   httpGetJson: (
     url: string,
     options?: {

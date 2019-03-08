@@ -18,7 +18,7 @@ import { FunctionComponent, useEffect } from "react";
 
 import { sendAuthenticationRequest } from "./authentication";
 
-export interface Props {
+interface Props {
   referrer: string;
   uiUrl: string;
   appClientId: string;

@@ -20,7 +20,7 @@ import { useContext, useCallback } from "react";
 import { StoreContext } from "redux-react-hook";
 import { useActionCreators as useSearchActionCreators } from "./redux";
 
-export interface Api {
+interface Api {
   fetchPipeline: (pipelineId: string) => void;
   savePipeline: (document: PipelineModelType) => void;
   searchPipelines: () => void;

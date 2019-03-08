@@ -9,11 +9,11 @@ export enum SearchMode {
   RECENT_ITEMS
 }
 
-export interface Props {
+interface Props {
   switchMode: (m: SearchMode) => void;
 }
 
-export interface ModeOption {
+interface ModeOption {
   mode: SearchMode;
   icon: IconProp;
   position: "left" | "middle" | "right";

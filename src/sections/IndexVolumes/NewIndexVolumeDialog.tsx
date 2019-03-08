@@ -5,7 +5,7 @@ import ThemedModal from "../../components/ThemedModal";
 import DialogActionButtons from "../../components/Button/DialogActionButtons";
 import useForm from "../../lib/useForm";
 
-export interface Props {
+ interface Props {
   isOpen: boolean;
   onConfirm: (nodeName: string, path: string) => void;
   onCloseDialog: () => void;
@@ -62,14 +62,14 @@ const NewIndexVolumeDialog = ({ isOpen, onConfirm, onCloseDialog }: Props) => {
   );
 };
 
-export interface UseDialog {
+ interface UseDialog {
   componentProps: Props;
   showDialog: () => void;
 }
 
 export const useDialog = (
   onConfirm: (nodeName: string, path: string) => void
-) => {
+):UseDialog => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   return {

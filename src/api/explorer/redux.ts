@@ -21,6 +21,7 @@ import {
 } from "../../lib/redux-actions-ts";
 import { updateItemInTree } from "../../lib/treeUtils";
 import { DocRefType, DocRefTree, DocRefInfoType } from "../../types";
+import { StoreState } from "./types";
 
 const DOC_TREE_RECEIVED = "DOC_TREE_RECEIVED";
 const DOC_REFS_MOVED = "DOC_REFS_MOVED";
@@ -31,53 +32,42 @@ const DOC_REF_RENAMED = "DOC_REF_RENAMED";
 const DOC_REF_INFO_RECEIVED = "DOC_REF_INFO_RECEIVED";
 const DOC_REF_TYPES_RECEIVED = "DOC_REF_TYPES_RECEIVED";
 
-export interface StoreState {
-  waitingForTree: boolean;
-  documentTree: DocRefTree;
-  docRefInfoByUuid: {
-    [s: string]: DocRefInfoType;
-  };
-  docRefTypes: Array<string>;
-}
-
-export interface DocTreeReceived extends Action<"DOC_TREE_RECEIVED"> {
+interface DocTreeReceived extends Action<"DOC_TREE_RECEIVED"> {
   documentTree: DocRefTree;
 }
 
-export interface UpdateTreeAction {
+interface UpdateTreeAction {
   updatedTree: DocRefTree;
 }
-export interface DocRefsMovedAction
+interface DocRefsMovedAction
   extends Action<"DOC_REFS_MOVED">,
     UpdateTreeAction {
   docRefs: Array<DocRefType>;
   destination: DocRefType;
 }
-export interface DocRefsCopiedAction
+interface DocRefsCopiedAction
   extends Action<"DOC_REFS_COPIED">,
     UpdateTreeAction {
   docRefs: Array<DocRefType>;
   destination: DocRefType;
 }
-export interface DocRefsDeletedAction
+interface DocRefsDeletedAction
   extends Action<"DOC_REFS_DELETED">,
     UpdateTreeAction {
   docRefs: Array<DocRefType>;
 }
-export interface DocRefCreatedAction
+interface DocRefCreatedAction
   extends Action<"DOC_REF_CREATED">,
     UpdateTreeAction {}
-export interface DocRefRenamedAction extends Action<"DOC_REF_RENAMED"> {
+interface DocRefRenamedAction extends Action<"DOC_REF_RENAMED"> {
   docRef: DocRefType;
   name: string;
   resultDocRef: DocRefType;
 }
-export interface DocRefInfoReceivedAction
-  extends Action<"DOC_REF_INFO_RECEIVED"> {
+interface DocRefInfoReceivedAction extends Action<"DOC_REF_INFO_RECEIVED"> {
   docRefInfo: DocRefInfoType;
 }
-export interface DocRefTypesReceivedAction
-  extends Action<"DOC_REF_TYPES_RECEIVED"> {
+interface DocRefTypesReceivedAction extends Action<"DOC_REF_TYPES_RECEIVED"> {
   docRefTypes: Array<string>;
 }
 

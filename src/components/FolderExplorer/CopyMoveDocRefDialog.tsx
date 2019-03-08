@@ -24,7 +24,7 @@ import PermissionInheritancePicker from "../PermissionInheritancePicker";
 import { PermissionInheritance, DocRefType } from "../../types";
 import useForm from "../../lib/useForm";
 
-export interface Props {
+interface Props {
   uuids: Array<string>;
   initialDestination?: DocRefType;
   isOpen: boolean;

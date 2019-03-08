@@ -27,11 +27,7 @@ import {
 
 import ElementImage from "../ElementImage";
 import { canMovePipelineElement, getInitialValues } from "./pipelineUtils";
-import {
-  DragDropTypes,
-  DragCollectedProps,
-  DropCollectedProps
-} from "./dragDropTypes";
+import { DragDropTypes, DragCollectedProps, DropCollectedProps } from "./types";
 import { isValidChildType } from "./elementUtils";
 import Button from "../Button";
 import {
@@ -42,9 +38,9 @@ import {
   ElementPropertiesType
 } from "../../types";
 import { ShowDialog } from "./AddElementModal";
-import { PipelineEditApi } from "./usePipelineState";
+import { PipelineEditApi } from "./types";
 
-export interface Props {
+interface Props {
   pipelineId: string;
   elementId: string;
   className?: string;
@@ -63,10 +59,7 @@ interface DragObject {
   elementDefinition: ElementDefinition;
 }
 
-export interface EnhancedProps
-  extends Props,
-    DropCollectedProps,
-    DragCollectedProps {}
+interface EnhancedProps extends Props, DropCollectedProps, DragCollectedProps {}
 
 const dragSource: DragSourceSpec<Props, DragObject> = {
   canDrag(props) {

@@ -1,4 +1,5 @@
-import { reducer, StoreState } from "./redux";
+import { reducer } from "./redux";
+import { StoreState } from "./types";
 import useIndexVolumeGroups from "./useIndexVolumeGroups";
 import useIndexVolumeGroup from "./useIndexVolumeGroup";
 import useIndexVolumeGroupNames from "./useIndexVolumeGroupNames";

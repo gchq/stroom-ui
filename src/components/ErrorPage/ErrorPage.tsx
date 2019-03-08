@@ -20,8 +20,6 @@ import useReduxState from "../../lib/useReduxState";
 import IconHeader from "../IconHeader";
 import ErrorSection from "./ErrorSection";
 
-export interface Props {}
-
 const ErrorPage = () => {
   // Redux
   const { errorMessage, stackTrace, httpErrorCode } = useReduxState(

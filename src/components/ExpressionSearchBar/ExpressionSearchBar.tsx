@@ -28,7 +28,7 @@ import { assignRandomUuids } from "../../lib/treeUtils";
 import { toString } from "../ExpressionBuilder/expressionBuilderUtils";
 import { ExpressionBuilder } from "../ExpressionBuilder";
 
-export interface Props extends StyledComponentProps {
+interface Props extends StyledComponentProps {
   expression?: ExpressionOperatorWithUuid;
   onExpressionChange: (e: ExpressionOperatorWithUuid) => void;
   dataSource: DataSourceType;

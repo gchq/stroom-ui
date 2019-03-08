@@ -1,9 +1,10 @@
 import * as React from "react";
 
-import { DocRefConsumer, DocRefWithLineage } from "../../types";
+import { DocRefConsumer } from "../../types";
+import { useDocRefWithLineage } from "../../api/explorer";
 
-export interface Props {
-  docRefWithLineage: DocRefWithLineage;
+interface Props {
+  docRefUuid: string;
   openDocRef: DocRefConsumer;
   className?: string;
 }
@@ -11,29 +12,33 @@ export interface Props {
 const Divider = () => <div className="DocRefBreadcrumb__divider">/</div>;
 
 const DocRefBreadcrumb = ({
-  docRefWithLineage: {
-    lineage,
-    node: { name }
-  },
+  docRefUuid,
   openDocRef,
   className = ""
-}: Props) => (
-  <div className={`DocRefBreadcrumb ${className || ""}`}>
-    {lineage.map(l => (
-      <React.Fragment key={l.uuid}>
-        <Divider />
-        <a
-          className="DocRefBreadcrumb__link"
-          title={l.name}
-          onClick={() => openDocRef(l)}
-        >
-          {l.name}
-        </a>
-      </React.Fragment>
-    ))}
-    <Divider />
-    <div className="DocRefBreadcrumb__name">{name}</div>
-  </div>
-);
+}: Props) => {
+  const {
+    lineage,
+    node: { name }
+  } = useDocRefWithLineage(docRefUuid);
+
+  return (
+    <div className={`DocRefBreadcrumb ${className || ""}`}>
+      {lineage.map(l => (
+        <React.Fragment key={l.uuid}>
+          <Divider />
+          <a
+            className="DocRefBreadcrumb__link"
+            title={l.name}
+            onClick={() => openDocRef(l)}
+          >
+            {l.name}
+          </a>
+        </React.Fragment>
+      ))}
+      <Divider />
+      <div className="DocRefBreadcrumb__name">{name}</div>
+    </div>
+  );
+};
 
 export default DocRefBreadcrumb;

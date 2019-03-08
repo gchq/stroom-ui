@@ -1,11 +1,6 @@
-import {
-  reducer as authenticationReducer,
-  StoreState as AuthenticationStoreState
-} from "./authentication";
-import {
-  reducer as authorisationReducer,
-  StoreState as AuthorisationStoreState
-} from "./authorisation";
+import { reducer as authenticationReducer } from "./authentication";
+import { AuthenticationStoreState, AuthorisationStoreState } from "./types";
+import { reducer as authorisationReducer } from "./authorisation";
 
 import AuthenticationRequest from "./AuthenticationRequest";
 import HandleAuthenticationResponse from "./HandleAuthenticationResponse";

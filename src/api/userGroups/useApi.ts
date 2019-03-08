@@ -3,10 +3,9 @@ import { StoreContext } from "redux-react-hook";
 
 import useHttpClient from "../useHttpClient";
 import { User } from "../../types";
+import { IsGroup } from "./types";
 
-export type IsGroup = "User" | "Group" | "" | undefined;
-
-export interface Api {
+interface Api {
   fetchUser: (uuid: string) => Promise<User>;
   findUsers: (
     name?: string,

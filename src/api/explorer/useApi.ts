@@ -5,6 +5,7 @@ import { useActionCreators as useFolderExplorerActionCreators } from "./redux";
 import useHttpClient from "../useHttpClient";
 import { findByUuids } from "../../lib/treeUtils";
 import { DocRefType, DocRefTree } from "../../types";
+import { SearchProps } from "./types";
 
 const stripDocRef = (docRef: DocRefType) => ({
   uuid: docRef.uuid,
@@ -12,14 +13,7 @@ const stripDocRef = (docRef: DocRefType) => ({
   name: docRef.name
 });
 
-export interface SearchProps {
-  term?: string;
-  docRefType?: string;
-  pageOffset?: number;
-  pageSize?: number;
-}
-
-export interface Api {
+interface Api {
   fetchDocTree: () => void;
   fetchDocRefTypes: () => void;
   fetchDocInfo: (docRef: DocRefType) => void;

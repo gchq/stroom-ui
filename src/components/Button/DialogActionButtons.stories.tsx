@@ -3,7 +3,6 @@ import { useState, useCallback } from "react";
 import { storiesOf } from "@storybook/react";
 
 import DialogActionButtons from "./DialogActionButtons";
-import StroomDecorator from "../../testing/storybook/StroomDecorator";
 
 import "../../styles/main.css";
 
@@ -13,14 +12,14 @@ let TestHarness = () => {
 
   const onCancel = useCallback(() => {
     setHasCancelled(true);
-  }, []);
+  }, [setHasCancelled]);
   const onConfirm = useCallback(() => {
     setHasConfirmed(true);
-  }, []);
+  }, [setHasConfirmed]);
   const onReset = useCallback(() => {
     setHasConfirmed(false);
     setHasCancelled(false);
-  }, []);
+  }, [setHasConfirmed, setHasCancelled]);
 
   return (
     <div>
@@ -40,6 +39,6 @@ let TestHarness = () => {
   );
 };
 
-storiesOf("General Purpose/Dialog Action Buttons", module)
-  .addDecorator(StroomDecorator)
-  .add("simple", () => <TestHarness />);
+storiesOf("General Purpose/Dialog Action Buttons", module).add("simple", () => (
+  <TestHarness />
+));

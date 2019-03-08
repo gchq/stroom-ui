@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import useApi from "./useApi";
 import { User } from "../../types";
 
-export const useUser = (userUuid: string): User | undefined => {
+export default (userUuid: string): User | undefined => {
   const { fetchUser } = useApi();
 
   const [user, setUser] = useState<User | undefined>(undefined);
@@ -13,5 +13,3 @@ export const useUser = (userUuid: string): User | undefined => {
 
   return user;
 };
-
-export default useUser;

@@ -25,9 +25,9 @@ import {
 import ElementPropertyFieldDetails from "./ElementPropertyInheritanceInfo";
 import ElementPropertyField from "./ElementPropertyField";
 import { ElementPropertyType, PipelineModelType } from "../../../types";
-import { PipelineEditApi } from "../usePipelineState";
+import { PipelineEditApi } from "../types";
 
-export interface Props {
+interface Props {
   pipeline: PipelineModelType;
   pipelineEditApi: PipelineEditApi;
   elementId: string;

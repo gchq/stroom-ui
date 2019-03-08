@@ -24,7 +24,7 @@ import { appChromeRoutes } from "../AppChrome";
 // import { Processing } from "../sections/Processing";
 import { HandleAuthenticationResponse } from "./Authentication";
 
-import useConfig from "./useConfig";
+import useConfig from "./config/useConfig";
 
 import { PrivateRoute } from "./Authentication";
 import PathNotFound from "../components/PathNotFound";

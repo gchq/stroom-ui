@@ -26,7 +26,7 @@ import {
   DragObject,
   dragCollect,
   DragCollectedProps
-} from "./dragDropTypes";
+} from "./types";
 import ValueWidget from "./ValueWidget";
 import {
   DataSourceType,
@@ -39,7 +39,7 @@ import {
 } from "../../types";
 import withValueType from "./withValueType";
 
-export interface Props {
+interface Props {
   dataSource: DataSourceType;
   term: ExpressionTermWithUuid;
   isEnabled: boolean;
@@ -47,7 +47,7 @@ export interface Props {
   expressionItemUpdated: (itemId: string, updates: object) => void;
 }
 
-export interface EnhancedProps extends Props, DragCollectedProps {}
+interface EnhancedProps extends Props, DragCollectedProps {}
 
 const dragSource: DragSourceSpec<Props, DragObject> = {
   beginDrag(props) {

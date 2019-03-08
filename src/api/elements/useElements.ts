@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-import { StoreState } from "./redux";
+import { StoreState } from "./types";
 import useApi from "./useApi";
 import useReduxState from "../../lib/useReduxState";
 import { useActionCreators } from "./redux";

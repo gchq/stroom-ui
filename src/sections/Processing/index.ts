@@ -15,6 +15,7 @@
  */
 
 import ProcessingContainer from "./ProcessingContainer/ProcessingContainer";
-import { reducer, StoreState } from "./redux";
+import { reducer } from "./redux";
+import { StoreState } from "./types";
 
 export { reducer, StoreState, ProcessingContainer as Processing };

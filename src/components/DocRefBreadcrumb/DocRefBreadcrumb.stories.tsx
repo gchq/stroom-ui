@@ -26,15 +26,9 @@ import { DocRefType } from "../../types";
 
 import "../../styles/main.css";
 import JsonDebug from "../../testing/JsonDebug";
-import { findItem } from "../../lib/treeUtils";
 import { addThemedStories } from "../../lib/themedStoryGenerator";
 
 const testDocRef = fullTestData.documentTree.children![0].children![0];
-
-const testDocRefWithLineage = findItem(
-  fullTestData.documentTree,
-  testDocRef.uuid
-)!;
 
 const BreadcrumbOpen = () => {
   const [openDocRef, setOpenDocRef] = useState<DocRefType | undefined>(
@@ -45,7 +39,7 @@ const BreadcrumbOpen = () => {
     <div>
       <div>Doc Ref Breadcrumb</div>
       <DocRefBreadcrumb
-        docRefWithLineage={testDocRefWithLineage}
+        docRefUuid={testDocRef.uuid}
         openDocRef={setOpenDocRef}
       />
       <JsonDebug currentValues={openDocRef} />

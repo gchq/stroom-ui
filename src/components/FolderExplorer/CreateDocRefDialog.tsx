@@ -26,7 +26,7 @@ import { PermissionInheritance, DocRefType } from "../../types";
 import useForm from "../../lib/useForm";
 // import { required, minLength2 } from "../../lib/reduxUtils";
 
-export interface Props {
+interface Props {
   destination?: DocRefType;
   isOpen: boolean;
   onConfirm: (

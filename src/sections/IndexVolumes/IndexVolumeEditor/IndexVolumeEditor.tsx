@@ -18,7 +18,7 @@ import ThemedConfirm, {
 } from "../../../components/ThemedConfirm";
 import Loader from "../../../components/Loader";
 
-export interface Props {
+ interface Props {
   volumeId: string;
 }
 

@@ -23,7 +23,7 @@ import Button from "../Button";
 import { useDocRefInfo } from "../../api/explorer";
 import { DocRefType } from "../../types";
 
-export interface Props {
+interface Props {
   docRef?: DocRefType;
   isOpen: boolean;
   onCloseDialog: () => void;

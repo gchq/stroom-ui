@@ -18,7 +18,7 @@ import { useState, useCallback } from "react";
 
 import ThemedConfirm from "../ThemedConfirm";
 
-export interface Props {
+interface Props {
   uuids: Array<string>;
   isOpen: boolean;
   onConfirm: (uuids: Array<string>) => void;

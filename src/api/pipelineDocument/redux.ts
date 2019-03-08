@@ -8,20 +8,16 @@ import {
   PipelineSearchResultType,
   PipelineSearchCriteriaType
 } from "../../types";
-
-export interface StoreState {
-  results: PipelineSearchResultType;
-  criteria: PipelineSearchCriteriaType;
-}
+import { StoreState } from "./types";
 
 export const PIPELINES_RECEIVED = "PIPELINES_RECEIVED";
 export const UPDATE_CRITERIA = "UPDATE_CRITERIA";
 
-export interface PipelinesReceivedAction extends Action<"PIPELINES_RECEIVED"> {
+interface PipelinesReceivedAction extends Action<"PIPELINES_RECEIVED"> {
   results: PipelineSearchResultType;
 }
 
-export interface UpdateCriteriaAction extends Action<"UPDATE_CRITERIA"> {
+interface UpdateCriteriaAction extends Action<"UPDATE_CRITERIA"> {
   criteria: PipelineSearchCriteriaType;
 }
 

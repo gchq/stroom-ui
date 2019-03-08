@@ -1,8 +1,5 @@
 import { useEffect, useState } from "react";
-
-export interface KeyDownState {
-  [s: string]: boolean;
-}
+import { KeyDownState } from "./types";
 
 export const DEFAULT_FILTERS = ["Control", "Shift", "Alt", "Meta"];
 

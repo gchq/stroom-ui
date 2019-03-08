@@ -5,9 +5,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import NewElement from "./NewElement";
 import { ElementCategories } from "../ElementCategories";
-import { RecycleBinItem } from "../pipelineUtils";
+import { RecycleBinItem } from "../types";
 
-export interface Props {
+interface Props {
   category: string;
   elementsWithData: Array<RecycleBinItem>;
 }

@@ -17,7 +17,7 @@
 import * as React from "react";
 import DocRefImage from "../DocRefImage";
 
-export interface Props {
+interface Props {
   text: string;
   docRefType: string;
   className?: string;

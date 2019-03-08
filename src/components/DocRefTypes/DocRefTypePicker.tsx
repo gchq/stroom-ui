@@ -1,7 +1,8 @@
 import * as React from "react";
+import { useMemo } from "react";
 
 import DocRefImage from "../DocRefImage";
-import { OptionType } from "../../types";
+import { OptionType, ControlledInput } from "../../types";
 import DropdownSelect, { DropdownOptionProps } from "../DropdownSelect";
 import useDocRefTypes from "../../api/explorer/useDocRefTypes";
 
@@ -16,21 +17,20 @@ const DocRefTypeOption = ({
   </div>
 );
 
-export interface Props {
-  onChange: (docRefType: string) => any;
-  value?: string;
-}
-
-let DocRefTypePicker = ({ ...rest }: Props) => {
+let DocRefTypePicker = (props: ControlledInput<string>) => {
   const { docRefTypes } = useDocRefTypes();
 
-  let options: Array<OptionType> = docRefTypes.map((d: string) => ({
-    text: d,
-    value: d
-  }));
+  let options: Array<OptionType> = useMemo(
+    () =>
+      docRefTypes.map((d: string) => ({
+        text: d,
+        value: d
+      })),
+    [docRefTypes]
+  );
   return (
     <DropdownSelect
-      {...rest}
+      {...props}
       options={options}
       OptionComponent={DocRefTypeOption}
     />

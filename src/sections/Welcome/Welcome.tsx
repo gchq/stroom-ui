@@ -18,7 +18,7 @@ import * as React from "react";
 
 import IconHeader from "../../components/IconHeader";
 
-export interface Props {}
+ interface Props {}
 
 const Welcome = (props: Props) => (
   <div className="welcome">

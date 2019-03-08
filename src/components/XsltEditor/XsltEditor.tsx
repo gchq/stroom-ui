@@ -23,7 +23,7 @@ import { useApi } from "../../api/xsltDocument";
 import ThemedAceEditor from "../ThemedAceEditor";
 import { XsltDoc } from "../../types";
 
-export interface Props {
+interface Props {
   xsltUuid: string;
 }
 

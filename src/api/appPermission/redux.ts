@@ -3,6 +3,7 @@ import {
   genUseActionCreators,
   prepareReducer
 } from "../../lib/redux-actions-ts";
+import {StoreState}from'./types';
 
 const ALL_APP_PERMISSIONS_RECEIVED = "ALL_APP_PERMISSIONS_RECEIVED";
 const USER_APP_PERMISSIONS_RECEIVED = "USER_APP_PERMISSIONS_RECEIVED";
@@ -22,7 +23,7 @@ interface UserAppPermissionReceivedAction
 
 interface UserAppPermissionAction {
   userUuid: string;
-  permission: string;
+  permissionName: string;
 }
 
 interface UserAppPermissionAddedAction
@@ -49,28 +50,23 @@ export const useActionCreators = genUseActionCreators({
   }),
   userAppPermissionAdded: (
     userUuid: string,
-    permission: string
+    permissionName: string
   ): UserAppPermissionAddedAction => ({
     type: USER_APP_PERMISSIONS_ADDED,
     userUuid,
-    permission
+    permissionName
   }),
   userAppPermissionRemoved: (
     userUuid: string,
-    permission: string
+    permissionName: string
   ): UserAppPermissionRemovedAction => ({
     type: USER_APP_PERMISSIONS_REMOVED,
     userUuid,
-    permission
+    permissionName
   })
 });
 
-export interface StoreState {
-  allAppPermissions: Array<string>;
-  userAppPermissions: {
-    [userUuid: string]: Array<string>;
-  };
-}
+
 
 const defaultState: StoreState = {
   allAppPermissions: [],
@@ -97,22 +93,25 @@ export const reducer = prepareReducer(defaultState)
   )
   .handleAction<UserAppPermissionAddedAction>(
     USER_APP_PERMISSIONS_ADDED,
-    (state = defaultState, { userUuid, permission }) => ({
+    (state = defaultState, { userUuid, permissionName }) => ({
       ...state,
       userAppPermissions: {
         ...state.userAppPermissions,
-        [userUuid]: [...(state.userAppPermissions[userUuid] || []), permission]
+        [userUuid]: [
+          ...(state.userAppPermissions[userUuid] || []),
+          permissionName
+        ]
       }
     })
   )
   .handleAction<UserAppPermissionRemovedAction>(
     USER_APP_PERMISSIONS_REMOVED,
-    (state = defaultState, { userUuid, permission }) => ({
+    (state = defaultState, { userUuid, permissionName }) => ({
       ...state,
       userAppPermissions: {
         ...state.userAppPermissions,
         [userUuid]: state.userAppPermissions[userUuid].filter(
-          p => p !== permission
+          p => p !== permissionName
         )
       }
     })

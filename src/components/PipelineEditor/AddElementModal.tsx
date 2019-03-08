@@ -8,13 +8,13 @@ import ThemedModal from "../ThemedModal";
 import { ElementDefinition } from "../../types";
 import useForm from "../../lib/useForm";
 
-export type OnAddElement = (
+type OnAddElement = (
   parentId: string,
   elementDefinition: ElementDefinition,
   name: string
 ) => void;
 
-export interface Props {
+interface Props {
   isOpen: boolean;
   onCloseDialog: () => void;
   onAddElement: OnAddElement;
@@ -111,7 +111,7 @@ export type ShowDialog = (
   existingNames: Array<string>
 ) => void;
 
-export interface UseDialog {
+interface UseDialog {
   componentProps: Props;
   showDialog: ShowDialog;
 }

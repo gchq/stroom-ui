@@ -36,7 +36,7 @@ import Pipeline from "./Pipeline";
 import DocRefEditor from "../DocRefEditor";
 import usePipelineState from "./usePipelineState";
 
-export interface Props {
+interface Props {
   pipelineId: string;
 }
 

@@ -15,7 +15,7 @@ import ThemedConfirm, {
   useDialog as useThemedConfirm
 } from "../../../components/ThemedConfirm";
 
-export interface Props {
+interface Props {
   user: User;
 }
 

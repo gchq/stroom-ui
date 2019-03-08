@@ -6,7 +6,7 @@ import Select from "react-select";
 import { useIndexVolumeGroupNames } from "../../../api/indexVolumeGroup";
 import { SelectOptionType } from "../../../types";
 
-export interface Props {
+ interface Props {
   value?: string;
   onChange: (v: string) => any;
 }
@@ -29,7 +29,7 @@ const IndexVolumeGroupPicker = ({ value, onChange }: Props) => {
   );
 };
 
-export interface UseProps extends Props {
+ interface UseProps extends Props {
   reset: () => void;
 }
 

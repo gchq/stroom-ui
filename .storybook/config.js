@@ -15,7 +15,7 @@
  */
 import * as React from "react";
 import * as storybook from "@storybook/react";
-import { setOptions } from "@storybook/addon-options";
+import { withOptions } from "@storybook/addon-options";
 import StoryRouter from "storybook-react-router";
 
 const req = require.context("../src", true, /\.stories\.tsx$/);
@@ -25,22 +25,22 @@ function loadStories() {
 }
 
 // Option defaults:
-setOptions({
+withOptions({
   /**
    * name to display in the top left corner
    * @type {String}
    */
-  name: "Stroom storybook",
+  brandTitle: "Stroom storybook",
   /**
    * URL for name in top left corner to link to
    * @type {String}
    */
-  url: "#",
+  brandUrl: "#",
   /**
    * show story component as full screen
    * @type {Boolean}
    */
-  goFullScreen: false,
+  isFullScreen: false,
   /**
    * display panel that shows a list of stories
    * @type {Boolean}

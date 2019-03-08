@@ -1,5 +1,5 @@
-import ThemedModal, { Props } from "./ThemedModal";
+import ThemedModal from "./ThemedModal";
 
-export { ThemedModal, Props };
+export { ThemedModal };
 
 export default ThemedModal;

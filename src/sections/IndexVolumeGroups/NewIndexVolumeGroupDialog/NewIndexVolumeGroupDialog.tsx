@@ -5,7 +5,7 @@ import ThemedModal from "../../../components/ThemedModal";
 import DialogActionButtons from "../../../components/Button/DialogActionButtons";
 import useForm from "../../../lib/useForm";
 
-export interface Props {
+ interface Props {
   isOpen: boolean;
   onConfirm: (name: string) => void;
   onCloseDialog: () => void;
@@ -63,9 +63,7 @@ const NewIndexVolumeGroupDialog = ({
   );
 };
 
-export interface OpenDialogProps {}
-
-export interface UseDialog {
+ interface UseDialog {
   showDialog: () => void;
   componentProps: Props;
 }

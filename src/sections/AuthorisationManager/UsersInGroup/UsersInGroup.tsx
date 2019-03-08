@@ -11,12 +11,8 @@ import ThemedConfirm, {
 } from "../../../components/ThemedConfirm";
 import { useUsersInGroup } from "../../../api/userGroups";
 
-export interface Props {
+interface Props {
   group: User;
-}
-
-export interface ConnectState {
-  users: Array<User>;
 }
 
 const UsersInGroup = ({ group }: Props) => {

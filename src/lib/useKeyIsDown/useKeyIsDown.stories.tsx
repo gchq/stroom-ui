@@ -16,8 +16,9 @@
 import * as React from "react";
 import { storiesOf } from "@storybook/react";
 
-import useKeyIsDown, { KeyDownState, DEFAULT_FILTERS } from "./useKeyIsDown";
+import useKeyIsDown, { DEFAULT_FILTERS } from "./useKeyIsDown";
 import StroomDecorator from "../../testing/storybook/StroomDecorator";
+import { KeyDownState } from "./types";
 
 storiesOf("Custom Hooks/useKeyIsDown", module)
   .addDecorator(StroomDecorator)

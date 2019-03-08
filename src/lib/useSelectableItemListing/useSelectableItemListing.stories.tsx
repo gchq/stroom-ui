@@ -14,35 +14,43 @@
  * limitations under the License.
  */
 import * as React from "react";
-import { useState } from "react";
+import * as uuidv4 from "uuid/v4";
+import { useState, useCallback } from "react";
 import { storiesOf } from "@storybook/react";
 
 import StroomDecorator from "../../testing/storybook/StroomDecorator";
 import useSelectableItemListing, {
-  SelectionBehaviour,
   useSelectableReactTable
 } from "./useSelectableItemListing";
+import { SelectionBehaviour } from "./enums";
 import ReactTable from "react-table";
+import useForm from "../useForm";
+import Button from "../../components/Button";
 
 type Animal = {
+  uuid: string;
   species: string;
   name: string;
 };
 
-let animals: Array<Animal> = [
+let initialAnimals: Array<Animal> = [
   {
+    uuid: uuidv4(),
     species: "Dog",
     name: "Rover"
   },
   {
+    uuid: uuidv4(),
     species: "Cat",
     name: "Tiddles"
   },
   {
+    uuid: uuidv4(),
     species: "Mouse",
     name: "Pixie"
   },
   {
+    uuid: uuidv4(),
     species: "Tyrannosaurus Rex",
     name: "Fluffy"
   }
@@ -61,14 +69,50 @@ const COLUMNS = [
   }
 ];
 
+interface NewItemFormValues {
+  species: string;
+  name: string;
+}
+
+const defaultFormValues: NewItemFormValues = {
+  species: "Dog",
+  name: "Fluffy"
+};
+
 storiesOf("Custom Hooks/useSelectableItemListing", module)
   .addDecorator(StroomDecorator)
   .add("React Table", () => {
+    const {
+      currentValues: { species, name },
+      generateTextInput
+    } = useForm<NewItemFormValues>({ initialValues: defaultFormValues });
+
+    const [animals, setAnimals] = useState<Array<Animal>>(initialAnimals);
+    const speciesProps = generateTextInput("species");
+    const nameProps = generateTextInput("name");
+    const onClickAddItem = useCallback(
+      e => {
+        if (!!name && !!species) {
+          setAnimals(
+            animals.concat([
+              {
+                uuid: uuidv4(),
+                species,
+                name
+              }
+            ])
+          );
+        }
+        e.preventDefault();
+      },
+      [animals, name, species, setAnimals]
+    );
+
     const { onKeyDownWithShortcuts, tableProps } = useSelectableReactTable<
       Animal
     >(
       {
-        getKey: a => a.species,
+        getKey: a => a.uuid,
         items: animals,
         selectionBehaviour: SelectionBehaviour.MULTIPLE
       },
@@ -80,6 +124,14 @@ storiesOf("Custom Hooks/useSelectableItemListing", module)
     return (
       <div tabIndex={0} onKeyDown={onKeyDownWithShortcuts}>
         <ReactTable {...tableProps} />
+        <form>
+          <label>Species</label>
+          <input {...speciesProps} />
+          <label>Name</label>
+          <input {...nameProps} />
+
+          <Button onClick={onClickAddItem} text="Add Item" />
+        </form>
       </div>
     );
   })
@@ -94,7 +146,7 @@ storiesOf("Custom Hooks/useSelectableItemListing", module)
     } = useSelectableItemListing<Animal>({
       getKey: a => a.name,
       openItem: a => setLastAction(`Opened Item ${a.name}`),
-      items: animals,
+      items: initialAnimals,
       selectionBehaviour: SelectionBehaviour.MULTIPLE
     });
 
@@ -103,7 +155,7 @@ storiesOf("Custom Hooks/useSelectableItemListing", module)
         <h3>Test Selectable Item Listing</h3>
         <p>Last Action: {lastAction}</p>
         <ul>
-          {animals.map((animal, i) => (
+          {initialAnimals.map((animal, i) => (
             <li
               key={i}
               onClick={() => selectionToggled(animal.name)}
