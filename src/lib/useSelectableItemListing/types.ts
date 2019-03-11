@@ -19,6 +19,7 @@ export interface OutProps<TItem> {
   selectedItems: Array<TItem>;
   selectedItemIndexes: Set<number>;
   selectionToggled: (itemKey: string) => void;
+  clearSelection: () => void;
   onKeyDownWithShortcuts: React.KeyboardEventHandler<HTMLDivElement>;
   keyIsDown: KeyDownState;
 }

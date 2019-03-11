@@ -34,9 +34,7 @@ const DocRefEditor = function<T>({
   );
   const openDocRefPermissions = useCallback(
     () =>
-      router.history!.push(
-        `/s/authorisationManager/document/${docRef.type}/${docRefUuid}`
-      ),
+      router.history!.push(`/s/authorisationManager/document/${docRefUuid}`),
     [router, docRef]
   );
 

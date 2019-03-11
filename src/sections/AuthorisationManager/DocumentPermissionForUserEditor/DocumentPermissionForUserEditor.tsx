@@ -1,33 +1,38 @@
 import * as React from "react";
-import { DocRefType } from "../../../types";
 import {
   useDocTypePermissions,
   useDocumentPermissionsForUser
 } from "../../../api/docPermission";
 import {} from "../../../api/docPermission";
 import CheckboxSeries from "../../../components/CheckboxSeries";
+import Button from "../../../components/Button";
+import useRouter from "../../../lib/useRouter";
+import { useDocRefWithLineage } from "../../../api/explorer";
 
 interface Props {
-  docRef: DocRefType;
+  docRefUuid: string;
   userUuid: string;
 }
 
 export const DocumentPermissionForUserEditor = ({
-  docRef,
+  docRefUuid,
   userUuid
 }: Props) => {
+  const { history } = useRouter();
+  const { node: docRef } = useDocRefWithLineage(docRefUuid);
   const permissionsForType = useDocTypePermissions(docRef.type);
   const {
     permissions,
     addPermission,
     removePermission
-  } = useDocumentPermissionsForUser(docRef.uuid, userUuid);
+  } = useDocumentPermissionsForUser(docRefUuid, userUuid);
 
   return (
     <div>
       {`Document Permissions for Doc ${docRef.type}-${
         docRef.name
       }, user ${userUuid}`}
+      <Button text="Back" onClick={history.goBack} />
 
       <CheckboxSeries
         allValues={permissionsForType}

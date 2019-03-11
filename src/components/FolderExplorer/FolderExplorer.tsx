@@ -37,13 +37,12 @@ import DeleteDocRefDialog, {
 } from "./DeleteDocRefDialog/DeleteDocRefDialog";
 import DocRefInfoModal from "../DocRefInfoModal";
 import { ButtonProps } from "../Button";
-import { DocRefType, DocRefConsumer } from "../../types";
 import useSelectableItemListing, {
   SelectionBehaviour
 } from "../../lib/useSelectableItemListing";
 import { useDocRefInfoDialog } from "../DocRefInfoModal/DocRefInfoModal";
 import { useDocumentTree } from "../../api/explorer";
-import useRouter from "../../lib/useRouter";
+import useAppNavigation from "../../AppChrome/useAppNavigation";
 
 interface Props {
   folderUuid: string;
@@ -52,7 +51,7 @@ interface Props {
 const FolderExplorer = ({ folderUuid }: Props) => {
   const documentTree = useDocumentTree();
 
-  const { history } = useRouter();
+  const { goToEditDocRef } = useAppNavigation();
   const folder = findItem(documentTree, folderUuid)!;
   const {
     createDocument,
@@ -61,9 +60,6 @@ const FolderExplorer = ({ folderUuid }: Props) => {
     renameDocument,
     deleteDocuments
   } = useExplorerApi();
-
-  const openDocRef: DocRefConsumer = (d: DocRefType) =>
-    history.push(`/s/doc/${d.type}/${d.uuid}`);
 
   const onCreateDocument = useCallback(
     (docRefType: string, docRefName: string, permissionInheritance: string) => {
@@ -107,10 +103,10 @@ const FolderExplorer = ({ folderUuid }: Props) => {
     items: folder.node.children || [],
     selectionBehaviour: SelectionBehaviour.MULTIPLE,
     getKey: d => d.uuid,
-    openItem: openDocRef,
+    openItem: goToEditDocRef,
     goBack: () => {
       if (lineage.length > 0) {
-        openDocRef(lineage[lineage.length - 1]);
+        goToEditDocRef(lineage[lineage.length - 1]);
       }
     }
   });
@@ -183,7 +179,7 @@ const FolderExplorer = ({ folderUuid }: Props) => {
             <DndDocRefListingEntry
               key={docRef.uuid}
               docRef={docRef}
-              openDocRef={openDocRef}
+              openDocRef={goToEditDocRef}
               keyIsDown={keyIsDown}
               showCopyDialog={showCopyDialog}
               showMoveDialog={showMoveDialog}

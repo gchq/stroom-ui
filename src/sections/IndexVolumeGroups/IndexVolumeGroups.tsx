@@ -13,10 +13,10 @@ import ThemedConfirm, {
   useDialog as useConfirmDialog
 } from "../../components/ThemedConfirm";
 import IconHeader from "../../components/IconHeader";
-import useRouter from "../../lib/useRouter";
+import useAppNavigation from "../../AppChrome/useAppNavigation";
 
 const IndexVolumeGroups = () => {
-  const { history } = useRouter();
+  const { goToIndexVolumeGroup } = useAppNavigation();
 
   const {
     groups,
@@ -26,7 +26,7 @@ const IndexVolumeGroups = () => {
 
   const { componentProps: tableProps } = useTable(groups);
   const {
-    selectableTableProps: { selectedItems }
+    selectableTableProps: { selectedItems: selectedGroups }
   } = tableProps;
 
   const {
@@ -42,13 +42,19 @@ const IndexVolumeGroups = () => {
       () => `Are you sure you want to delete selected groups?`,
       []
     ),
-    getDetails: useCallback(() => selectedItems.map(v => v.name).join(", "), [
-      selectedItems.map(v => v.name)
+    getDetails: useCallback(() => selectedGroups.map(v => v.name).join(", "), [
+      selectedGroups.map(v => v.name)
     ]),
     onConfirm: useCallback(() => {
-      selectedItems.forEach(g => deleteIndexVolumeGroup(g.name));
-    }, [deleteIndexVolumeGroup, selectedItems.map(v => v.name)])
+      selectedGroups.forEach(g => deleteIndexVolumeGroup(g.name));
+    }, [deleteIndexVolumeGroup, selectedGroups.map(v => v.name)])
   });
+
+  const onViewEditClick = useCallback(() => {
+    if (selectedGroups.length === 1) {
+      goToIndexVolumeGroup(selectedGroups[0].name);
+    }
+  }, [selectedGroups, goToIndexVolumeGroup]);
 
   return (
     <div>
@@ -57,14 +63,12 @@ const IndexVolumeGroups = () => {
       <Button text="Create" onClick={showNewDialog} />
       <Button
         text="View/Edit"
-        disabled={selectedItems.length !== 1}
-        onClick={() =>
-          history.push(`/s/indexing/groups/${selectedItems[0].name}`)
-        }
+        disabled={selectedGroups.length !== 1}
+        onClick={onViewEditClick}
       />
       <Button
         text="Delete"
-        disabled={selectedItems.length === 0}
+        disabled={selectedGroups.length === 0}
         onClick={() => showDeleteDialog()}
       />
 

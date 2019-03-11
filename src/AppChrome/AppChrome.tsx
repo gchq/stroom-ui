@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 import * as React from "react";
+import { useCallback } from "react";
 
 import "simplebar";
 import "simplebar/dist/simplebar.css";
@@ -38,8 +39,9 @@ import useLocalStorage, {
 import { useTheme } from "../lib/theme";
 import useRouter from "../lib/useRouter";
 import { useDocumentTree } from "../api/explorer";
+import useAppNavigation from "./useAppNavigation";
 
-const pathPrefix = "/s";
+const PATH_PREFIX = "/s";
 
 const getDocumentTreeMenuItems = (
   openDocRef: DocRefConsumer,
@@ -143,7 +145,6 @@ const getMenuItems = (
 const AppChrome = ({ content }: Props) => {
   const { theme } = useTheme();
   const {
-    history,
     router: { location }
   } = useRouter();
   const documentTree = useDocumentTree();
@@ -170,75 +171,91 @@ const AppChrome = ({ content }: Props) => {
     storeBoolean
   );
 
-  const openDocRef = (d: DocRefType) =>
-    history.push(`/s/doc/${d.type}/${d.uuid}`);
+  const {
+    goToWelcome,
+    goToDataViewer,
+    goToProcessing,
+    goToIndexVolumes,
+    goToApiKeys,
+    goToAuthorisationManager,
+    goToIndexVolumeGroups,
+    goToUserSettings,
+    goToUsers,
+    goToEditDocRef
+  } = useAppNavigation();
 
   const menuItems: Array<MenuItemType> = [
     {
       key: "welcome",
       title: "Welcome",
-      onClick: () => history.push(`${pathPrefix}/welcome/`),
+      onClick: goToWelcome,
       icon: "home",
       style: "nav",
       isActive:
-        !!location && location.pathname.includes(`${pathPrefix}/welcome/`)
+        !!location && location.pathname.includes(`${PATH_PREFIX}/welcome/`)
     },
-    getDocumentTreeMenuItems(openDocRef, undefined, documentTree),
+    getDocumentTreeMenuItems(goToEditDocRef, undefined, documentTree),
     {
       key: "data",
       title: "Data",
-      onClick: () => history.push(`${pathPrefix}/data`),
+      onClick: goToDataViewer,
       icon: "database",
       style: "nav",
-      isActive: !!location && location.pathname.includes(`${pathPrefix}/data`)
+      isActive: !!location && location.pathname.includes(`${PATH_PREFIX}/data`)
     },
     {
       key: "processing",
       title: "Processing",
-      onClick: () => history.push(`${pathPrefix}/processing`),
+      onClick: goToProcessing,
       icon: "play",
       style: "nav",
       isActive:
-        !!location && location.pathname.includes(`${pathPrefix}/processing`)
+        !!location && location.pathname.includes(`${PATH_PREFIX}/processing`)
     },
     {
       key: "indexing",
       title: "Indexing",
-      onClick: () => menuItemOpened("indexing", !areMenuItemsOpen.indexing),
+      onClick: useCallback(
+        () => menuItemOpened("indexing", !areMenuItemsOpen.indexing),
+        [menuItemOpened, areMenuItemsOpen]
+      ),
       icon: "database",
       style: "nav",
       skipInContractedMenu: true,
       isActive:
         !!location &&
-        (location.pathname.includes(`${pathPrefix}/indexing/volumes`) ||
-          location.pathname.includes(`${pathPrefix}/indexing/groups`)),
+        (location.pathname.includes(`${PATH_PREFIX}/indexing/volumes`) ||
+          location.pathname.includes(`${PATH_PREFIX}/indexing/groups`)),
       children: [
         {
           key: "indexing-volumes",
           title: "Index Volumes",
-          onClick: () => history.push(`${pathPrefix}/indexing/volumes`),
+          onClick: goToIndexVolumes,
           icon: "database",
           style: "nav",
           isActive:
             !!location &&
-            location.pathname.includes(`${pathPrefix}/indexing/volumes`)
+            location.pathname.includes(`${PATH_PREFIX}/indexing/volumes`)
         },
         {
           key: "indexing-groups",
           title: "Index Groups",
-          onClick: () => history.push(`${pathPrefix}/indexing/groups`),
+          onClick: goToIndexVolumeGroups,
           icon: "database",
           style: "nav",
           isActive:
             !!location &&
-            location.pathname.includes(`${pathPrefix}/indexing/groups`)
+            location.pathname.includes(`${PATH_PREFIX}/indexing/groups`)
         }
       ]
     },
     {
       key: "admin",
       title: "Admin",
-      onClick: () => menuItemOpened("admin", !areMenuItemsOpen.admin),
+      onClick: useCallback(
+        () => menuItemOpened("admin", !areMenuItemsOpen.admin),
+        [menuItemOpened, areMenuItemsOpen]
+      ),
       icon: "cogs",
       style: "nav",
       skipInContractedMenu: true,
@@ -251,7 +268,7 @@ const AppChrome = ({ content }: Props) => {
         {
           key: "admin-me",
           title: "Me",
-          onClick: () => history.push(`${pathPrefix}/me`),
+          onClick: goToUserSettings,
           icon: "user",
           style: "nav",
           isActive: !!location && location.pathname.includes("/s/me")
@@ -259,7 +276,7 @@ const AppChrome = ({ content }: Props) => {
         {
           key: "admin-user-permissions",
           title: "User Authorisation",
-          onClick: () => history.push(`${pathPrefix}/authorisationManager`),
+          onClick: goToAuthorisationManager,
           icon: "users",
           style: "nav",
           isActive:
@@ -268,7 +285,7 @@ const AppChrome = ({ content }: Props) => {
         {
           key: "admin-users",
           title: "Users",
-          onClick: () => history.push(`${pathPrefix}/users`),
+          onClick: goToUsers,
           icon: "users",
           style: "nav",
           isActive: !!location && location.pathname.includes("/s/users")
@@ -276,7 +293,7 @@ const AppChrome = ({ content }: Props) => {
         {
           key: "admin-apikeys",
           title: "API Keys",
-          onClick: () => history.push(`${pathPrefix}/apikeys`),
+          onClick: goToApiKeys,
           icon: "key",
           style: "nav",
           isActive: !!location && location.pathname.includes("/s/apikeys")

@@ -6,16 +6,17 @@ import DictionaryEditor from "../DictionaryEditor";
 import PipelineEditor from "../PipelineEditor";
 import XsltEditor from "../XsltEditor";
 import PathNotFound from "../PathNotFound";
-import { DocRefType } from "../../types";
 import useRecentItems from "../../lib/useRecentItems";
 import IndexEditor from "../IndexEditor";
+import { useDocRefWithLineage } from "../../api/explorer";
 
 interface Props {
-  docRef: DocRefType;
+  docRefUuid: string;
 }
 
-let SwitchedDocRefEditor = ({ docRef }: Props) => {
+let SwitchedDocRefEditor = ({ docRefUuid }: Props) => {
   const { addRecentItem } = useRecentItems();
+  const { node: docRef } = useDocRefWithLineage(docRefUuid);
 
   useEffect(() => {
     addRecentItem(docRef);

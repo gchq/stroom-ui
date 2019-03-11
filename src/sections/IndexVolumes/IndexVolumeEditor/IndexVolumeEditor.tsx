@@ -18,7 +18,7 @@ import ThemedConfirm, {
 } from "../../../components/ThemedConfirm";
 import Loader from "../../../components/Loader";
 
- interface Props {
+interface Props {
   volumeId: string;
 }
 
@@ -66,10 +66,8 @@ const IndexVolumeEditor = ({ volumeId }: Props) => {
   return (
     <div>
       <IconHeader icon="database" text={`Index Volume - ${indexVolume.id}`} />
-      <Button
-        text="Back"
-        onClick={() => history.push(`/s/indexing/volumes/`)}
-      />
+
+      <Button text="Back" onClick={history.goBack} />
       <Button text="Add to Group" onClick={showIndexVolumeGroupPicker} />
       <Button
         text="Remove From Group(s)"

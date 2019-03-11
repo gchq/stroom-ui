@@ -30,7 +30,7 @@ const AuthorisationManagerWithRouter = () => (
   <Switch>
     <Route
       exact
-      path="/s/authorisation/:userUuid"
+      path="/s/authorisationManager/:userUuid"
       render={(props: RouteComponentProps<any>) => (
         <UserAuthorisationEditor userUuid={props.match.params.userUuid} />
       )}

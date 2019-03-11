@@ -5,7 +5,7 @@ import { useActionCreators as useErrorActionCreators } from "../../components/Er
 import handleStatus from "./handleStatus";
 import { useContext } from "react";
 import { StoreContext } from "redux-react-hook";
-import useRouter from "../../lib/useRouter";
+import useAppNavigation from "../../AppChrome/useAppNavigation";
 
 /**
  * A wrapper around fetch that can be used to de-duplicate GET calls to the same resources.
@@ -54,7 +54,7 @@ export const useHttpClient = (): HttpClient => {
     setHttpErrorCode,
     setStackTrace
   } = useErrorActionCreators();
-  const { history } = useRouter();
+  const { goToError } = useAppNavigation();
 
   if (!store) {
     throw new Error("Could not get Redux Store for making HTTP calls");
@@ -90,7 +90,7 @@ export const useHttpClient = (): HttpClient => {
             setErrorMessage(error.message);
             setStackTrace(error.stack);
             setHttpErrorCode(error.status);
-            history.push("/s/error");
+            goToError();
           });
       }
 
@@ -131,7 +131,7 @@ export const useHttpClient = (): HttpClient => {
             setErrorMessage(error.message);
             setStackTrace(error.stack);
             setHttpErrorCode(error.status);
-            history.push("/s/error");
+            goToError();
           });
       },
       [setErrorMessage, setStackTrace, setHttpErrorCode]
@@ -166,7 +166,7 @@ export const useHttpClient = (): HttpClient => {
             setErrorMessage(error.message);
             setStackTrace(error.stack);
             setHttpErrorCode(error.status);
-            history.push("/s/error");
+            goToError();
           });
       },
       [setErrorMessage, setStackTrace, setHttpErrorCode]

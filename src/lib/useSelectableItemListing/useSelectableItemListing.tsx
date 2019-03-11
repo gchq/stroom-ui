@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import useKeyIsDown from "../useKeyIsDown";
 import { RowInfo, TableProps } from "react-table";
 import { TableOutProps, InProps, OutProps } from "./types";
@@ -13,6 +13,10 @@ export function useSelectableItemListing<TItem>({
   selectionBehaviour = SelectionBehaviour.NONE
 }: InProps<TItem>): OutProps<TItem> {
   const keyIsDown = useKeyIsDown();
+
+  // I think some of these state things should be recalculated in the event of
+  // the underlying items changing....may need to add a 'useEffect' which does
+  // checking of everything
   const [focusIndex, setFocusIndex] = useState<number>(-1);
   const [focussedItem, setFocussedItem] = useState<TItem | undefined>(
     undefined
@@ -36,6 +40,10 @@ export function useSelectableItemListing<TItem>({
   };
   const focusUp = focusChanged(-1);
   const focusDown = focusChanged(+1);
+  const clearSelection = useCallback(() => {
+    setSelectedItems([]);
+    setSelectedItemIndexes(new Set());
+  }, [setSelectedItems, setSelectedItemIndexes]);
   const selectionToggled = (itemKey?: string) => {
     const index = items.map(getKey).findIndex(k => k === itemKey);
     const indexToUse = index !== undefined && index >= 0 ? index : focusIndex;
@@ -97,6 +105,7 @@ export function useSelectableItemListing<TItem>({
     selectedItems,
     selectedItemIndexes,
     selectionToggled,
+    clearSelection,
     keyIsDown,
     onKeyDownWithShortcuts: (e: React.KeyboardEvent) => {
       if (e.key === "ArrowUp" || e.key === "k") {

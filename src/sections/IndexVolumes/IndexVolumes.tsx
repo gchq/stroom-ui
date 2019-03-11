@@ -14,11 +14,11 @@ import {
   IndexVolumeGroupModalPicker,
   useIndexVolumeGroupModalPicker
 } from "../IndexVolumeGroups/IndexVolumeGroupPicker";
-import useRouter from "../../lib/useRouter";
 import { useIndexVolumes } from "../../api/indexVolume";
+import useAppNavigation from "../../AppChrome/useAppNavigation";
 
 const IndexVolumes = () => {
-  const { history } = useRouter();
+  const { goToIndexVolume } = useAppNavigation();
 
   const {
     indexVolumes,
@@ -29,7 +29,7 @@ const IndexVolumes = () => {
 
   const { componentProps: tableProps } = useTable(indexVolumes);
   const {
-    selectableTableProps: { selectedItems }
+    selectableTableProps: { selectedItems: selectedIndexVolumes }
   } = tableProps;
 
   const {
@@ -45,12 +45,13 @@ const IndexVolumes = () => {
       () => `Are you sure you want to delete selected volumes`,
       []
     ),
-    getDetails: useCallback(() => selectedItems.map(v => v.id).join(", "), [
-      selectedItems.map(v => v.id)
-    ]),
+    getDetails: useCallback(
+      () => selectedIndexVolumes.map(v => v.id).join(", "),
+      [selectedIndexVolumes.map(v => v.id)]
+    ),
     onConfirm: useCallback(() => {
-      selectedItems.forEach(v => deleteIndexVolume(v.id));
-    }, [selectedItems.map(v => v.id)])
+      selectedIndexVolumes.forEach(v => deleteIndexVolume(v.id));
+    }, [selectedIndexVolumes.map(v => v.id)])
   });
 
   const {
@@ -59,17 +60,20 @@ const IndexVolumes = () => {
   } = useIndexVolumeGroupModalPicker({
     onConfirm: useCallback(
       groupName =>
-        selectedItems
+        selectedIndexVolumes
           .map(v => v.id)
           .forEach(vId => addVolumeToGroup(vId, groupName)),
-      [addVolumeToGroup, selectedItems]
+      [addVolumeToGroup, selectedIndexVolumes]
     )
   });
 
-  const onViewClick: React.MouseEventHandler<HTMLButtonElement> = useCallback(
-    () => history.push(`/s/indexing/volumes/${selectedItems[0].id}`),
-    [history, selectedItems]
-  );
+  const onViewClick: React.MouseEventHandler<
+    HTMLButtonElement
+  > = useCallback(() => {
+    if (selectedIndexVolumes.length === 1) {
+      goToIndexVolume(selectedIndexVolumes[0].id);
+    }
+  }, [goToIndexVolume, selectedIndexVolumes]);
 
   return (
     <div>
@@ -78,17 +82,17 @@ const IndexVolumes = () => {
       <Button text="Create" onClick={showCreateNewDialog} />
       <Button
         text="View/Edit"
-        disabled={selectedItems.length !== 1}
+        disabled={selectedIndexVolumes.length !== 1}
         onClick={onViewClick}
       />
       <Button
         text="Add to Group"
-        disabled={selectedItems.length == 0}
+        disabled={selectedIndexVolumes.length == 0}
         onClick={showAddToGroupDialog}
       />
       <Button
         text="Delete"
-        disabled={selectedItems.length === 0}
+        disabled={selectedIndexVolumes.length === 0}
         onClick={showDeleteDialog}
       />
 

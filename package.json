@@ -66,7 +66,7 @@
     "build": "npm-run-all build-css build-js",
     "test": "react-scripts-ts test --env=jsdom",
     "eject": "react-scripts-ts eject",
-    "storybook-js": "start-storybook -p 9001 -c .storybook",
+    "storybook-js": "start-storybook -p 9001 -c .storybook --ci",
     "storybook": "npm-run-all -p storybook-js watch-css"
   },
   "devDependencies": {

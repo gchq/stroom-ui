@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 
 import { useActionCreators } from "./redux";
 import useApi from "./useApi";
@@ -14,10 +14,10 @@ export default (userUuids: Array<string>): Array<User> => {
   const { fetchUser } = useApi();
   const { userReceived } = useActionCreators();
 
-  let users = useReduxState(
-    ({ userGroups: { allUsers } }) =>
-      allUsers.filter(u => userUuids.includes(u.uuid)),
-    [userUuids]
+  const allUsers = useReduxState(({ userGroups: { allUsers } }) => allUsers);
+  const users = useMemo(
+    () => allUsers.filter(u => userUuids.includes(u.uuid)),
+    [allUsers, userUuids]
   );
   let userUuidsFound = users.map(u => u.uuid);
 

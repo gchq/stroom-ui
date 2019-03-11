@@ -3,36 +3,38 @@ import { useCallback, useMemo } from "react";
 
 import IconHeader from "../../../components/IconHeader";
 import useDocumentPermissions from "../../../api/docPermission/useDocumentPermissions";
-import { DocRefType, User } from "../../../types";
+import { User } from "../../../types";
 import Button from "../../../components/Button";
 import ThemedConfirm, {
   useDialog as useThemedConfirm
 } from "../../../components/ThemedConfirm";
-import DocumentPermissionForUserEditor from "../DocumentPermissionForUserEditor";
 import { useUsers } from "../../../api/userGroups";
 import UsersTable, { useTable as useUsersTable } from "../UsersTable";
+import { useDocRefWithLineage } from "../../../api/explorer";
+import useAppNavigation from "../../../AppChrome/useAppNavigation";
 
 interface Props {
-  docRef: DocRefType;
+  docRefUuid: string;
 }
 
-export const DocumentPermissionEditor = ({ docRef }: Props) => {
+export const DocumentPermissionEditor = ({ docRefUuid }: Props) => {
+  const { goToAuthorisationsForDocumentForUser } = useAppNavigation();
   const { clearPermissions, permissionsByUser } = useDocumentPermissions(
-    docRef.uuid
+    docRefUuid
   );
 
-  const userUuids = useMemo(() => {
-    console.log("Permissions By User Changed");
-    return Object.keys(permissionsByUser);
-  }, [permissionsByUser]);
+  const userUuids = useMemo(() => Object.keys(permissionsByUser), [
+    permissionsByUser
+  ]);
   const users = useUsers(userUuids);
   const { componentProps: usersTableProps } = useUsersTable(users);
 
+  const { node: docRef } = useDocRefWithLineage(docRefUuid);
   const {
-    selectableTableProps: { selectedItems }
+    selectableTableProps: { selectedItems: selectedUsers, clearSelection }
   } = usersTableProps;
   const selectedUser: User | undefined =
-    selectedItems.length > 0 ? selectedItems[0] : undefined;
+    selectedUsers.length > 0 ? selectedUsers[0] : undefined;
 
   const {
     showDialog: showConfirmClear,
@@ -43,10 +45,19 @@ export const DocumentPermissionEditor = ({ docRef }: Props) => {
       []
     ),
     getDetails: useCallback(() => {
-      return `From Document ${docRef.type} - ${docRef.uuid}`;
+      return `From Document ${docRef.type} - ${docRefUuid}`;
     }, [docRef]),
-    onConfirm: clearPermissions
+    onConfirm: useCallback(() => {
+      clearSelection();
+      clearPermissions();
+    }, [clearSelection, clearPermissions])
   });
+
+  const onClickEdit = useCallback(() => {
+    if (!!selectedUser) {
+      goToAuthorisationsForDocumentForUser(docRefUuid, selectedUser.uuid);
+    }
+  }, [history, docRef, selectedUser]);
 
   return (
     <div>
@@ -55,15 +66,15 @@ export const DocumentPermissionEditor = ({ docRef }: Props) => {
         text={`Document Permissions for ${docRef.type} - ${docRef.name}`}
       />
       <div>
-        <UsersTable {...usersTableProps} />
-        {selectedUser && (
-          <DocumentPermissionForUserEditor
-            docRef={docRef}
-            userUuid={selectedUser.uuid}
-          />
-        )}
-
+        <Button
+          text="View/Edit"
+          disabled={selectedUsers.length !== 1}
+          onClick={onClickEdit}
+        />
         <Button text="Clear Permissions" onClick={showConfirmClear} />
+
+        <UsersTable {...usersTableProps} />
+
         <ThemedConfirm {...confirmClearProps} />
       </div>
     </div>

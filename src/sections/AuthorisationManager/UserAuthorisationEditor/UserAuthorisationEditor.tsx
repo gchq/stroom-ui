@@ -32,7 +32,7 @@ const UserAuthorisationEditor = ({ userUuid }: Props) => {
   return (
     <div>
       <IconHeader text={title} icon="user" />
-      <Button text="Back" onClick={() => history.push("/s/authorisation")} />
+      <Button text="Back" onClick={history.goBack} />
 
       <section>
         <h2>Application Permissions</h2>

@@ -38,6 +38,6 @@ addThemedStories(
   stories,
   <DocumentPermissionForUserEditor
     userUuid={testUser.uuid}
-    docRef={testDocRef}
+    docRefUuid={testDocRef.uuid}
   />
 );

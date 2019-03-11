@@ -1,4 +1,5 @@
 import * as React from "react";
+import { RouteComponentProps, RouteProps } from "react-router";
 
 import { AppChrome } from ".";
 import { Processing } from "../sections/Processing";
@@ -11,7 +12,6 @@ import PathNotFound from "../components/PathNotFound";
 import IFrame from "../components/IFrame";
 import ErrorPage from "../components/ErrorPage";
 
-import { RouteComponentProps, RouteProps } from "react-router";
 import AuthorisationManager, {
   UserAuthorisationEditor
 } from "../sections/AuthorisationManager";
@@ -21,6 +21,8 @@ import IndexVolumeGroupEditor from "../sections/IndexVolumeGroups/IndexVolumeGro
 import useConfig from "../startup/config/useConfig";
 import Loader from "../components/Loader";
 import DocumentPermissionEditor from "../sections/AuthorisationManager/DocumentPermissionEditor";
+import DocumentPermissionForUserEditor from "../sections/AuthorisationManager/DocumentPermissionForUserEditor";
+import IndexVolumeEditor from "../sections/IndexVolumes/IndexVolumeEditor";
 
 const renderWelcome = () => (
   <AppChrome activeMenuItem="Welcome" content={<Welcome />} />
@@ -129,16 +131,28 @@ export default [
   },
   {
     exact: true,
-    path: "/s/authorisationManager/document/:docRefType/:docRefUuid",
+    path: "/s/authorisationManager/document/:docRefUuid",
     render: (props: RouteComponentProps<any>) => (
       <AppChrome
         activeMenuItem="User Authorisation"
         content={
           <DocumentPermissionEditor
-            docRef={{
-              uuid: props.match.params.docRefUuid,
-              type: props.match.params.docRefType
-            }}
+            docRefUuid={props.match.params.docRefUuid}
+          />
+        }
+      />
+    )
+  },
+  {
+    exact: true,
+    path: "/s/authorisationManager/document/:docRefUuid/:userUuid",
+    render: (props: RouteComponentProps<any>) => (
+      <AppChrome
+        activeMenuItem="User Authorisation"
+        content={
+          <DocumentPermissionForUserEditor
+            userUuid={props.match.params.userUuid}
+            docRefUuid={props.match.params.docRefUuid}
           />
         }
       />
@@ -149,6 +163,16 @@ export default [
     path: "/s/indexing/volumes",
     render: () => (
       <AppChrome activeMenuItem="Index Volumes" content={<IndexVolumes />} />
+    )
+  },
+  {
+    exact: true,
+    path: "/s/indexing/volumes/:volumeId",
+    render: (props: RouteComponentProps<any>) => (
+      <AppChrome
+        activeMenuItem="Index Volumes"
+        content={<IndexVolumeEditor volumeId={props.match.params.volumeId} />}
+      />
     )
   },
   {
@@ -192,11 +216,13 @@ export default [
   },
   {
     exact: true,
-    path: "/s/doc/:type/:uuid",
+    path: "/s/doc/:docRefUuid",
     render: (props: RouteComponentProps<any>) => (
       <AppChrome
         activeMenuItem="Explorer"
-        content={<SwitchedDocRefEditor docRef={{ ...props.match.params }} />}
+        content={
+          <SwitchedDocRefEditor docRefUuid={props.match.params.docRefUuid} />
+        }
       />
     )
   },

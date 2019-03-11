@@ -12,13 +12,13 @@ import NewUserDialog, {
 import ThemedConfirm, {
   useDialog as useThemedConfim
 } from "../../components/ThemedConfirm";
-import useRouter from "../../lib/useRouter";
 import useForm from "../../lib/useForm";
 import IsGroupFilterPicker from "./IsGroupFilterPicker";
 import {
   UserGroupModalPicker,
   useDialog as useGroupModalDialog
 } from "./UserGroupPicker";
+import useAppNavigation from "../../AppChrome/useAppNavigation";
 
 interface Values {
   name: string;
@@ -33,13 +33,13 @@ const defaultValues: Values = {
 };
 
 const Authorisation = () => {
-  const { history } = useRouter();
+  const { goToAuthorisationsForUser } = useAppNavigation();
   const { findUsers, users } = useFindUsers();
   const { createUser, deleteUser, addUserToGroup } = useManageUsers();
 
   const { componentProps: tableProps } = useTable(users);
   const {
-    selectableTableProps: { selectedItems }
+    selectableTableProps: { selectedItems: selectedUsers }
   } = tableProps;
 
   const {
@@ -51,12 +51,12 @@ const Authorisation = () => {
     showDialog: showDeleteDialog
   } = useThemedConfim({
     getQuestion: useCallback(() => `Are you sure you want to delete user`, []),
-    getDetails: useCallback(() => selectedItems.map(v => v.name).join(", "), [
-      selectedItems.map(v => v.uuid)
+    getDetails: useCallback(() => selectedUsers.map(v => v.name).join(", "), [
+      selectedUsers.map(v => v.uuid)
     ]),
     onConfirm: useCallback(() => {
-      selectedItems.forEach(v => deleteUser(v.uuid));
-    }, [selectedItems.map(v => v.uuid)])
+      selectedUsers.forEach(v => deleteUser(v.uuid));
+    }, [selectedUsers.map(v => v.uuid)])
   });
 
   const { generateControlledInputProps, generateTextInput } = useForm({
@@ -77,12 +77,18 @@ const Authorisation = () => {
   } = useGroupModalDialog({
     onConfirm: useCallback(
       (groupUuid: string) =>
-        selectedItems.forEach(u => {
+        selectedUsers.forEach(u => {
           addUserToGroup(u.uuid, groupUuid);
         }),
-      [addUserToGroup, selectedItems]
+      [addUserToGroup, selectedUsers]
     )
   });
+
+  const onViewEditClick = useCallback(() => {
+    if (selectedUsers.length === 1) {
+      goToAuthorisationsForUser(selectedUsers[0].uuid);
+    }
+  }, [history, selectedUsers]);
 
   return (
     <div className="Authorisation">
@@ -101,21 +107,19 @@ const Authorisation = () => {
         <Button text="Create" onClick={showNewDialog} />
         <Button
           text="View/Edit"
-          disabled={selectedItems.length !== 1}
-          onClick={() =>
-            history.push(`/s/authorisation/${selectedItems[0].uuid}`)
-          }
+          disabled={selectedUsers.length !== 1}
+          onClick={onViewEditClick}
         />
         <Button
           text="Add to Group"
           disabled={
-            selectedItems.length === 0 || !!selectedItems.find(u => u.isGroup)
+            selectedUsers.length === 0 || !!selectedUsers.find(u => u.isGroup)
           }
           onClick={showGroupPicker}
         />
         <Button
           text="Delete"
-          disabled={selectedItems.length === 0}
+          disabled={selectedUsers.length === 0}
           onClick={showDeleteDialog}
         />
 

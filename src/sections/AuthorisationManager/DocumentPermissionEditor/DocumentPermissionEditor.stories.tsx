@@ -32,4 +32,7 @@ const stories = storiesOf(
   module
 ).addDecorator(StroomDecorator);
 
-addThemedStories(stories, <DocumentPermissionEditor docRef={testDocRef} />);
+addThemedStories(
+  stories,
+  <DocumentPermissionEditor docRefUuid={testDocRef.uuid} />
+);
