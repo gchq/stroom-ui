@@ -61,8 +61,10 @@ const Authorisation = () => {
 
   const { generateControlledInputProps, generateTextInput } = useForm({
     initialValues: defaultValues,
-    onValidate: ({ name, isGroup, uuid }: Values) =>
-      findUsers(name, isGroup, uuid)
+    onValidate: useCallback(
+      ({ name, isGroup, uuid }: Values) => findUsers(name, isGroup, uuid),
+      [findUsers]
+    )
   });
   const nameProps = generateTextInput("name");
   const uuidProps = generateTextInput("uuid");

@@ -33,7 +33,7 @@ export const useForm = function<T>({
     if (!!initialValues) {
       setCurrentValues(initialValues);
     }
-  }, [initialValues]);
+  }, [initialValues, setCurrentValues]);
 
   // Call out to the validation function when the values change
   useEffect(() => {

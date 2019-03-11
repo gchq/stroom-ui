@@ -15,7 +15,7 @@
  */
 import * as React from "react";
 import * as storybook from "@storybook/react";
-import { withOptions } from "@storybook/addon-options";
+import { addParameters, configure } from "@storybook/react";
 import StoryRouter from "storybook-react-router";
 
 const req = require.context("../src", true, /\.stories\.tsx$/);
@@ -25,7 +25,7 @@ function loadStories() {
 }
 
 // Option defaults:
-withOptions({
+addParameters({
   /**
    * name to display in the top left corner
    * @type {String}
@@ -45,27 +45,12 @@ withOptions({
    * display panel that shows a list of stories
    * @type {Boolean}
    */
-  showStoriesPanel: true,
+  showNav: true,
   /**
    * display panel that shows addon configurations
    * @type {Boolean}
    */
-  showAddonPanel: false,
-  /**
-   * display floating search box to search through stories
-   * @type {Boolean}
-   */
-  showSearchBox: false,
-  /**
-   * show addon panel as a vertical panel on the right
-   * @type {Boolean}
-   */
-  addonPanelInRight: false,
-  /**
-   * sorts stories
-   * @type {Boolean}
-   */
-  sortStoriesByKind: false,
+  showPanel: false,
   /**
    * regex for finding the hierarchy separator
    * @example:
@@ -101,4 +86,4 @@ withOptions({
   enableShortcuts: false // true by default
 });
 
-storybook.configure(loadStories, module);
+configure(loadStories, module);
