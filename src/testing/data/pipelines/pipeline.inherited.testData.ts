@@ -1,3 +1,4 @@
+import * as uuidv4 from 'uuid/v4';
 import { PipelineModelType } from "../../../types";
 
 /*
@@ -18,12 +19,12 @@ import { PipelineModelType } from "../../../types";
 
 export default {
   parentPipeline: {
-    uuid: "simple",
+    uuid: uuidv4(),
     type: "Pipeline",
-    name: "type"
+    name: "Simple"
   },
   docRef: {
-    uuid: "inherited",
+    uuid: uuidv4(),
     name: "Inherited",
     type: "Pipeline"
   },

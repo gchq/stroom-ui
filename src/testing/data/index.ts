@@ -189,8 +189,9 @@ const docTree = {
 
 const userDocPermission: Array<UserDocPermission> = [];
 
+// give first two users permissions to all documents
 iterateNodes(docTree, (_, { uuid: docRefUuid }) => {
-  allUsers.forEach(({ uuid: userUuid }) => {
+  allUsers.slice(0, 2).forEach(({ uuid: userUuid }) => {
     documentPermissionNames
       .filter(p => p !== "OWNER")
       .forEach(permissionName => {

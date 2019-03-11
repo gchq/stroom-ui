@@ -1,8 +1,9 @@
+import * as uuidv4 from 'uuid/v4';
 import { PipelineModelType } from "../../../types";
 
 export const noParent = {
   docRef: {
-    uuid: "noParent",
+    uuid: uuidv4(),
     name: "No Parent",
     type: "Pipeline"
   },

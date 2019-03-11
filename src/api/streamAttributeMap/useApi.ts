@@ -58,7 +58,7 @@ export const useApi = (): Api => {
       if (!!pageOffset)
         url.searchParams.append("pageOffset", pageOffset.toString());
 
-      httpGetJson(url.href, {}, true).then((data: StreamAttributeMapResult) => {
+      httpGetJson(url.href).then((data: StreamAttributeMapResult) => {
         if (addResults) {
           add(
             dataViewerId,
@@ -129,7 +129,7 @@ export const useApi = (): Api => {
         state.config.values.stroomBaseServiceUrl
       }/streamattributemap/v1/dataSource`;
 
-      httpGetJson(url, {}, true).then((data: DataSourceType) =>
+      httpGetJson(url, {}, false).then((data: DataSourceType) =>
         updateDataSource(dataViewerId, data)
       );
     },
@@ -149,7 +149,7 @@ export const useApi = (): Api => {
         state.config.values.stroomBaseServiceUrl
       }/streamattributemap/v1/${metaId}`;
 
-      httpGetJson(url, {}, true).then((data: DataRow) =>
+      httpGetJson(url, {}, false).then((data: DataRow) =>
         updateDetailsForSelectedRow(dataViewerId, data)
       );
     },

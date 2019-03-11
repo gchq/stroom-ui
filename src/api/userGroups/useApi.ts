@@ -40,7 +40,7 @@ export const useApi = (): Api => {
         `${state.config.values.stroomBaseServiceUrl}/users/v1/${userUuid}`
       );
 
-      return httpGetJson(url.href, {}, true);
+      return httpGetJson(url.href, {}, false);
     },
     [httpGetJson]
   );
@@ -65,7 +65,7 @@ export const useApi = (): Api => {
       if (uuid !== undefined && uuid.length > 0)
         url.searchParams.append("uuid", uuid);
 
-      return httpGetJson(url.href, {}, true);
+      return httpGetJson(url.href);
     },
     [httpGetJson]
   );
@@ -77,7 +77,7 @@ export const useApi = (): Api => {
         state.config.values.stroomBaseServiceUrl
       }/users/v1/usersInGroup/${groupUuid}`;
 
-      return httpGetJson(url, {}, true);
+      return httpGetJson(url, {}, false);
     },
     [httpGetJson]
   );
@@ -89,7 +89,7 @@ export const useApi = (): Api => {
         state.config.values.stroomBaseServiceUrl
       }/users/v1/groupsForUser/${userUuid}`;
 
-      return httpGetJson(url, {}, true);
+      return httpGetJson(url, {}, false);
     },
     [httpGetJson]
   );

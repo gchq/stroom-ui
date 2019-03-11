@@ -76,7 +76,7 @@ export const useApi = (): Api => {
         }/stroom-index/volume/v1/inGroup/${groupName}`
       );
 
-      return httpGetJson(url.href, {}, true);
+      return httpGetJson(url.href);
     },
     [httpGetJson]
   );
@@ -90,7 +90,7 @@ export const useApi = (): Api => {
         }/stroom-index/volume/v1/groupsFor/${id}`
       );
 
-      return httpGetJson(url.href, {}, true);
+      return httpGetJson(url.href);
     },
     [httpGetJson]
   );

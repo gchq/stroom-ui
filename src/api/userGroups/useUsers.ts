@@ -15,13 +15,15 @@ export default (userUuids: Array<string>): Array<User> => {
   const { userReceived } = useActionCreators();
 
   const allUsers = useReduxState(({ userGroups: { allUsers } }) => allUsers);
+
   const users = useMemo(
     () => allUsers.filter(u => userUuids.includes(u.uuid)),
     [allUsers, userUuids]
   );
-  let userUuidsFound = users.map(u => u.uuid);
 
+  // Don't feed 'users' into the [], otherwise it will re-run this as users come in
   useEffect(() => {
+    let userUuidsFound = allUsers.map(u => u.uuid);
     userUuids
       .filter(userUuid => !userUuidsFound.includes(userUuid))
       .forEach(userUuid => {

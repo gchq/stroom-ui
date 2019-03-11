@@ -38,7 +38,7 @@ export const useApi = (): Api => {
       url.searchParams.append("pageOffset", "0");
       url.searchParams.append("pageSize", "100");
 
-      httpGetJson(url.href, {}, true).then((data: AbstractFetchDataResult) => {
+      httpGetJson(url.href).then((data: AbstractFetchDataResult) => {
         updateDataForSelectedRow(dataViewerId, data);
       });
     },

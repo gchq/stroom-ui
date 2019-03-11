@@ -12,6 +12,7 @@ import { useUsers } from "../../../api/userGroups";
 import UsersTable, { useTable as useUsersTable } from "../UsersTable";
 import { useDocRefWithLineage } from "../../../api/explorer";
 import useAppNavigation from "../../../AppChrome/useAppNavigation";
+import useRouter from "../../../lib/useRouter";
 
 interface Props {
   docRefUuid: string;
@@ -23,6 +24,7 @@ export const DocumentPermissionEditor = ({ docRefUuid }: Props) => {
     docRefUuid
   );
 
+  const { history } = useRouter();
   const userUuids = useMemo(() => Object.keys(permissionsByUser), [
     permissionsByUser
   ]);
@@ -66,6 +68,7 @@ export const DocumentPermissionEditor = ({ docRefUuid }: Props) => {
         text={`Document Permissions for ${docRef.type} - ${docRef.name}`}
       />
       <div>
+        <Button text="Back" onClick={history.goBack} />
         <Button
           text="View/Edit"
           disabled={selectedUsers.length !== 1}

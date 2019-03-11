@@ -1,8 +1,9 @@
+import * as uuidv4 from 'uuid/v4';
 import { PipelineModelType } from "../../../types";
 
 export default {
   docRef: {
-    uuid: "childRestoredLink",
+    uuid: uuidv4(),
     name: "Child Restored Link",
     type: "Pipeline"
   },

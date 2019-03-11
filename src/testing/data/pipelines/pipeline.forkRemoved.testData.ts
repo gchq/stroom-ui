@@ -1,8 +1,9 @@
+import * as uuidv4 from 'uuid/v4';
 import { PipelineModelType } from "../../../types";
 
 export default {
   docRef: {
-    uuid: "forkRemoved",
+    uuid: uuidv4(),
     name: "Fork Removed",
     type: "Pipeline"
   },

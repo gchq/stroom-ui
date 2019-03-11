@@ -95,7 +95,7 @@ export const useApi = (): Api => {
         state.config.values.stroomBaseServiceUrl
       }/explorer/v1/search?${params}`;
 
-      return httpGetJson(url, {}, true);
+      return httpGetJson(url);
     },
     [httpGetJson]
   );

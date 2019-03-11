@@ -57,7 +57,7 @@ export const useApi = (): Api => {
         url += `&filter=${state.processing.searchCriteria}`;
       }
 
-      httpGetJson(url, {}, true).then((trackers: StreamTasksResponseType) => {
+      httpGetJson(url).then((trackers: StreamTasksResponseType) => {
         updateTrackers(trackers.streamTasks, trackers.totalStreamTasks);
         switch (trackerSelection) {
           case TrackerSelection.first:
@@ -109,7 +109,7 @@ export const useApi = (): Api => {
         url += `&filter=${state.processing.searchCriteria}`;
       }
 
-      httpGetJson(url, {}, true).then((trackers: StreamTasksResponseType) => {
+      httpGetJson(url).then((trackers: StreamTasksResponseType) => {
         addTrackers(trackers.streamTasks, trackers.totalStreamTasks);
         switch (trackerSelection) {
           case TrackerSelection.first:
