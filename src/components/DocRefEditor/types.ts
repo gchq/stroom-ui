@@ -10,7 +10,7 @@ export interface StoreStateById {
 export type StoreState = StateById<StoreStateById>;
 
 export interface DocRefEditorBaseProps<T> {
-  saveDocument: (docRefContents: T) => void;
+  saveDocument?: (docRefContents: T) => void;
   docRefUuid: string;
   additionalActionBarItems?: Array<ButtonProps>;
 }

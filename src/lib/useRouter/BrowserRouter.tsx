@@ -1,15 +1,19 @@
 import * as React from "react";
 import { Router, Route, RouteProps } from "react-router-dom";
 
-import createHistory from "history/createBrowserHistory";
 import { History } from "history";
 
-export const history = createHistory();
-
 export const RouterContext = React.createContext<RouteProps>({});
-export const HistoryContext = React.createContext<History>(history);
+export const HistoryContext = React.createContext<History | undefined>(
+  undefined
+);
 
-const CustomRouter: React.FunctionComponent = ({ children }) => (
+interface Props {
+  history: History;
+  children?: React.ReactNode;
+}
+
+const CustomRouter = ({ history, children }: Props) => (
   <Router history={history}>
     <Route>
       {routeProps => (

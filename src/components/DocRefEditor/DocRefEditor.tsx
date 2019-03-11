@@ -45,23 +45,24 @@ const DocRefEditor = function<T>({
     [docRefUuid]
   );
 
-  const actionBarItems: Array<ButtonProps> = [
-    {
+  const actionBarItems: Array<ButtonProps> = [];
+  if (!!saveDocument) {
+    actionBarItems.push({
       icon: "save",
       disabled: !(isDirty || isSaving),
       title: isSaving ? "Saving..." : isDirty ? "Save" : "Saved",
       onClick: useCallback(() => {
-        if (!!docRefContents) {
+        if (!!docRefContents && saveDocument) {
           saveDocument((docRefContents as unknown) as T);
         }
       }, [saveDocument, docRefContents])
-    },
-    {
-      icon: "key",
-      title: "Permissions",
-      onClick: openDocRefPermissions
-    }
-  ];
+    });
+  }
+  actionBarItems.push({
+    icon: "key",
+    title: "Permissions",
+    onClick: openDocRefPermissions
+  });
 
   return (
     <div className="DocRefEditor">

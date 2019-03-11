@@ -20,17 +20,16 @@ import Loader from "../../components/Loader";
 
 interface Props extends RouteComponentProps {}
 
-const enhanceLocal = compose(
+const RouteWrapper: React.StatelessComponent<Props> = ({
+  children,
+  history
+}) => <CustomRouter history={history}>{children}</CustomRouter>;
+const DragDropRouted = compose(
   DragDropContext(HTML5Backend),
   withRouter
-);
+)(RouteWrapper);
 
-const store = createStore();
-
-const WrappedComponent: React.StatelessComponent<Props> = ({
-  history,
-  children
-}) => {
+const ThemedComponent: React.StatelessComponent<{}> = ({ children }) => {
   const { theme } = useTheme();
   const { isReady } = useConfig();
   useFontAwesome();
@@ -40,21 +39,17 @@ const WrappedComponent: React.StatelessComponent<Props> = ({
     return <Loader message="Waiting for config" />;
   }
 
-  return (
-    <CustomRouter>
-      {" "}
-      <div className={`app-container ${theme}`}>{children}</div>
-    </CustomRouter>
-  );
+  return <div className={`app-container ${theme}`}>{children}</div>;
 };
 
-const ThemedComponent = enhanceLocal(WrappedComponent);
-
+const store = createStore();
 export default (storyFn: RenderFunction) =>
   StoryRouter()(() => (
     <StoreContext.Provider value={store}>
       <ThemeContextProvider>
-        <ThemedComponent>{storyFn()}</ThemedComponent>
+        <DragDropRouted>
+          <ThemedComponent>{storyFn()}</ThemedComponent>
+        </DragDropRouted>
       </ThemeContextProvider>
     </StoreContext.Provider>
   ));

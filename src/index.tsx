@@ -14,6 +14,9 @@ import "./styles/main.css";
 import { ThemeContextProvider } from "./lib/theme";
 import { CustomRouter } from "./lib/useRouter";
 
+import createHistory from "history/createBrowserHistory";
+export const history = createHistory();
+
 const DndRoutes = compose(DragDropContext(HTML5Backend))(Routes);
 
 const store = createStore();
@@ -23,7 +26,7 @@ const App: React.FunctionComponent = () => {
   return (
     <StoreContext.Provider value={store}>
       <ThemeContextProvider>
-        <CustomRouter>
+        <CustomRouter history={history}>
           <DndRoutes />
         </CustomRouter>
       </ThemeContextProvider>
