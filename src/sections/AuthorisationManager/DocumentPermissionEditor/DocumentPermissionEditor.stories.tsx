@@ -17,6 +17,7 @@
 import * as React from "react";
 
 import { storiesOf } from "@storybook/react";
+import { Switch, Route, RouteComponentProps } from "react-router";
 
 import StroomDecorator from "../../../testing/storybook/StroomDecorator";
 import fullTestData from "../../../testing/data";
@@ -24,15 +25,39 @@ import { addThemedStories } from "../../../lib/themedStoryGenerator";
 
 import "../../../styles/main.css";
 import DocumentPermissionEditor from "./DocumentPermissionEditor";
+import DocumentPermissionForUserEditor from "../DocumentPermissionForUserEditor";
 
 const testDocRef = fullTestData.documentTree.children![0].children![0];
+
+interface Props {
+  docRefUuid: string;
+}
+
+const TestHarness = ({ docRefUuid }: Props) => (
+  <Switch>
+    <Route
+      exact
+      path="/s/authorisationManager/document/:docRefUuid/:userUuid"
+      render={({
+        match: {
+          params: { userUuid, docRefUuid }
+        }
+      }: RouteComponentProps<any>) => (
+        <DocumentPermissionForUserEditor
+          docRefUuid={docRefUuid}
+          userUuid={userUuid}
+        />
+      )}
+    />
+    <Route
+      render={() => <DocumentPermissionEditor docRefUuid={docRefUuid} />}
+    />
+  </Switch>
+);
 
 const stories = storiesOf(
   "Sections/Authorisation Manager/Document Permission Editor",
   module
 ).addDecorator(StroomDecorator);
 
-addThemedStories(
-  stories,
-  <DocumentPermissionEditor docRefUuid={testDocRef.uuid} />
-);
+addThemedStories(stories, <TestHarness docRefUuid={testDocRef.uuid} />);

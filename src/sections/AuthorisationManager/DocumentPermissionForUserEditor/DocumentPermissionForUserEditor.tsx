@@ -8,6 +8,7 @@ import CheckboxSeries from "../../../components/CheckboxSeries";
 import Button from "../../../components/Button";
 import useRouter from "../../../lib/useRouter";
 import { useDocRefWithLineage } from "../../../api/explorer";
+import { useUser } from "../../../api/userGroups";
 
 interface Props {
   docRefUuid: string;
@@ -20,6 +21,7 @@ export const DocumentPermissionForUserEditor = ({
 }: Props) => {
   const { history } = useRouter();
   const { node: docRef } = useDocRefWithLineage(docRefUuid);
+  const user = useUser(userUuid);
   const permissionsForType = useDocTypePermissions(docRef.type);
   const {
     permissions,
@@ -29,9 +31,9 @@ export const DocumentPermissionForUserEditor = ({
 
   return (
     <div>
-      {`Document Permissions for Doc ${docRef.type}-${
+      <h2>{`Document Permissions for Doc ${docRef.type}-${
         docRef.name
-      }, user ${userUuid}`}
+      }, user ${user && user.name}`}</h2>
       <Button text="Back" onClick={history.goBack} />
 
       <CheckboxSeries

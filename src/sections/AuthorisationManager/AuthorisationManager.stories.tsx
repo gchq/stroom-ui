@@ -26,7 +26,7 @@ import { addThemedStories } from "../../lib/themedStoryGenerator";
 import "../../styles/main.css";
 import UserAuthorisationEditor from "./UserAuthorisationEditor";
 
-const AuthorisationManagerWithRouter = () => (
+const TestHarness = () => (
   <Switch>
     <Route
       exact
@@ -44,4 +44,4 @@ const stories = storiesOf(
   module
 ).addDecorator(StroomDecorator);
 
-addThemedStories(stories, <AuthorisationManagerWithRouter />);
+addThemedStories(stories, <TestHarness />);

@@ -7,13 +7,18 @@ import useReduxState from "../../lib/useReduxState";
 
 interface UseUsersInGroup {
   users: Array<User>;
+  addToGroup: (userUuid: string) => void;
   removeFromGroup: (groupUuid: string) => void;
 }
 
 export default (group: User): UseUsersInGroup => {
-  const { findUsersInGroup, removeUserFromGroup } = useApi();
+  const { findUsersInGroup, addUserToGroup, removeUserFromGroup } = useApi();
 
-  const { usersInGroupReceived, userRemovedFromGroup } = useActionCreators();
+  const {
+    usersInGroupReceived,
+    userAddedToGroup,
+    userRemovedFromGroup
+  } = useActionCreators();
   useEffect(() => {
     findUsersInGroup(group.uuid).then((users: Array<User>) =>
       usersInGroupReceived(group.uuid, users)
@@ -27,6 +32,15 @@ export default (group: User): UseUsersInGroup => {
   );
   const users = usersInGroup[group.uuid] || [];
 
+  const addToGroup = useCallback(
+    (userUuid: string) => {
+      addUserToGroup(userUuid, group.uuid).then(() =>
+        userAddedToGroup(userUuid, group.uuid)
+      );
+    },
+    [group, addUserToGroup]
+  );
+
   const removeFromGroup = useCallback(
     (userUuid: string) => {
       removeUserFromGroup(userUuid, group.uuid).then(() =>
@@ -38,6 +52,7 @@ export default (group: User): UseUsersInGroup => {
 
   return {
     users,
+    addToGroup,
     removeFromGroup
   };
 };

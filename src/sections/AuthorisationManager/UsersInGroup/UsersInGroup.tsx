@@ -3,20 +3,22 @@ import { useCallback } from "react";
 
 import { User } from "../../../types";
 
-import Loader from "../../../components/Loader";
 import UsersTable, { useTable as useUsersTable } from "../UsersTable";
 import Button from "../../../components/Button";
 import ThemedConfirm, {
   useDialog as useThemedConfirm
 } from "../../../components/ThemedConfirm";
 import { useUsersInGroup } from "../../../api/userGroups";
+import UserModalPicker, {
+  useDialog as useUserModalPicker
+} from "../UserModalPicker";
 
 interface Props {
   group: User;
 }
 
 const UsersInGroup = ({ group }: Props) => {
-  const { users, removeFromGroup } = useUsersInGroup(group);
+  const { users, addToGroup, removeFromGroup } = useUsersInGroup(group);
 
   const { componentProps: tableProps } = useUsersTable(users);
   const {
@@ -41,20 +43,26 @@ const UsersInGroup = ({ group }: Props) => {
     ])
   });
 
-  if (!users) {
-    return <Loader message={`Loading Users for Group ${group.uuid}`} />;
-  }
+  const {
+    componentProps: userPickerProps,
+    showDialog: showUserPicker
+  } = useUserModalPicker({
+    isGroup: "User",
+    onConfirm: addToGroup
+  });
 
   return (
     <div>
       <h2>Users in Group {group.name}</h2>
+      <Button text="Add" onClick={showUserPicker} />
       <Button
         text="Remove Users"
         disabled={selectedItems.length === 0}
         onClick={showDeleteGroupMembershipDialog}
       />
-      <ThemedConfirm {...deleteGroupMembershipComponentProps} />
       <UsersTable {...tableProps} />
+      <UserModalPicker {...userPickerProps} />
+      <ThemedConfirm {...deleteGroupMembershipComponentProps} />
     </div>
   );
 };
