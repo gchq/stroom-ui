@@ -11,14 +11,25 @@ interface UseDocumentPermissions {
   permissionsByUser: {
     [userUuid: string]: Array<string>;
   };
+  // This will create a client side only, empty record of permissions.
+  // This allows the user to build permissions for a new user, but if no permissions
+  // are added, and the page is refreshed, this new user would then be cleared.
+  preparePermissionsForUser: (userUuid: string) => void;
+  clearPermissionForUser: (userUuid: string) => void;
   clearPermissions: () => void;
 }
 
 export default (docRefUuid: string | undefined): UseDocumentPermissions => {
-  const { getPermissionForDoc, clearDocPermissions } = useApi();
+  const {
+    getPermissionForDoc,
+    clearDocPermissions,
+    clearDocPermissionsForUser
+  } = useApi();
   const {
     permissionsForDocumentReceived,
-    documentPermissionsCleared
+    documentPermissionsCleared,
+    documentPermissionsClearedForUser,
+    permissionsForDocumentForUserReceived
   } = useActionCreators();
 
   useEffect(() => {
@@ -28,6 +39,15 @@ export default (docRefUuid: string | undefined): UseDocumentPermissions => {
       );
     }
   }, [docRefUuid, getPermissionForDoc, permissionsForDocumentReceived]);
+
+  const preparePermissionsForUser = useCallback(
+    (userUuid: string) => {
+      if (!!docRefUuid) {
+        permissionsForDocumentForUserReceived(docRefUuid, userUuid, []);
+      }
+    },
+    [docRefUuid, permissionsForDocumentForUserReceived]
+  );
 
   const clearPermissions = useCallback(() => {
     if (!!docRefUuid) {
@@ -39,6 +59,17 @@ export default (docRefUuid: string | undefined): UseDocumentPermissions => {
 
   const permissions = useReduxState(
     ({ docPermissions: { permissions } }) => permissions
+  );
+
+  const clearPermissionForUser = useCallback(
+    (userUuid: string) => {
+      if (!!docRefUuid) {
+        clearDocPermissionsForUser(docRefUuid, userUuid).then(() =>
+          documentPermissionsClearedForUser(docRefUuid, userUuid)
+        );
+      }
+    },
+    [docRefUuid, clearDocPermissionsForUser, documentPermissionsClearedForUser]
   );
 
   const permissionsByUser = useMemo(() => {
@@ -54,6 +85,8 @@ export default (docRefUuid: string | undefined): UseDocumentPermissions => {
 
   return {
     permissionsByUser,
+    preparePermissionsForUser,
+    clearPermissionForUser,
     clearPermissions
   };
 };

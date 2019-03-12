@@ -15,9 +15,9 @@ import ThemedConfirm, {
 import useForm from "../../lib/useForm";
 import IsGroupFilterPicker from "./IsGroupFilterPicker";
 import {
-  UserGroupModalPicker,
+  UserGroupPickOrCreateDialog,
   useDialog as useGroupModalDialog
-} from "./UserGroupPicker";
+} from "./UserGroupPickOrCreateDialog";
 import useAppNavigation from "../../AppChrome/useAppNavigation";
 
 interface Values {
@@ -126,7 +126,7 @@ const Authorisation = () => {
         <UsersTable {...tableProps} />
       </div>
 
-      <UserGroupModalPicker {...userGroupPickerProps} />
+      <UserGroupPickOrCreateDialog {...userGroupPickerProps} />
       <ThemedConfirm {...deleteDialogProps} />
       <NewUserDialog {...newDialogComponentProps} />
     </div>

@@ -30,9 +30,7 @@ export interface UserDocPermission {
 export interface TestData {
   docRefTypes: DocRefTypeList;
   documentTree: DocRefTree;
-  pipelines: {
-    [pipelineId: string]: PipelineModelType;
-  };
+  pipelines: Array<PipelineModelType>;
   elements: ElementDefinitions;
   elementProperties: ElementPropertiesByElementIdType;
   xslt: {

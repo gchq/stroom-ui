@@ -3,21 +3,22 @@ import { useEffect, useState } from "react";
 
 import Select from "react-select";
 
-import { useFindUsers } from "../../../api/userGroups";
+import { useFindUsers, IsGroup } from "../../../api/userGroups";
 import { SelectOptionType } from "../../../types";
 
 interface Props {
   value?: string;
   onChange: (v: string) => any;
+  isGroup: IsGroup;
 }
 
-const UserGroupGroupPicker = ({ value, onChange }: Props) => {
-  const { findUsers, users: groups } = useFindUsers();
+const UserPicker = ({ value, onChange, isGroup }: Props) => {
+  const { findUsers, users } = useFindUsers();
   useEffect(() => {
-    findUsers(undefined, "Group", undefined);
+    findUsers(undefined, isGroup, undefined);
   }, [findUsers]);
 
-  const options: Array<SelectOptionType> = groups.map(g => ({
+  const options: Array<SelectOptionType> = users.map(g => ({
     value: g.uuid,
     label: g.name
   }));
@@ -26,24 +27,24 @@ const UserGroupGroupPicker = ({ value, onChange }: Props) => {
     <Select
       value={options.find(o => o.value === value)}
       onChange={(o: SelectOptionType) => onChange(o.value)}
-      placeholder="User Group"
+      placeholder="User"
       options={options}
     />
   );
 };
 
-interface UseProps extends Props {
+interface UseProps {
+  pickerProps: Props;
   reset: () => void;
 }
 
-export const usePicker = (): UseProps => {
+export const usePicker = (isGroup: IsGroup): UseProps => {
   const [value, onChange] = useState<string | undefined>(undefined);
 
   return {
-    value,
-    onChange,
+    pickerProps: { value, onChange, isGroup },
     reset: () => onChange(undefined)
   };
 };
 
-export default UserGroupGroupPicker;
+export default UserPicker;

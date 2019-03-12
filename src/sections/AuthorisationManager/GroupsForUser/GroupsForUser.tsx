@@ -8,9 +8,9 @@ import Loader from "../../../components/Loader";
 import UsersTable, { useTable as useUsersTable } from "../UsersTable";
 import Button from "../../../components/Button";
 import {
-  UserGroupModalPicker,
+  UserGroupPickOrCreateDialog,
   useDialog as useUserGroupModalPicker
-} from "../UserGroupPicker";
+} from "../UserGroupPickOrCreateDialog";
 import ThemedConfirm, {
   useDialog as useThemedConfirm
 } from "../../../components/ThemedConfirm";
@@ -69,7 +69,7 @@ const GroupsForUser = ({ user }: Props) => {
       />
       <ThemedConfirm {...deleteGroupMembershipComponentProps} />
       <UsersTable {...tableProps} />
-      <UserGroupModalPicker {...userGroupPickerProps} />
+      <UserGroupPickOrCreateDialog {...userGroupPickerProps} />
     </div>
   );
 };

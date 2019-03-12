@@ -5,6 +5,7 @@ import { StoreContext } from "redux-react-hook";
 import { DragDropContext } from "react-dnd";
 import HTML5Backend from "react-dnd-html5-backend";
 import StoryRouter from "storybook-react-router";
+import * as ReactModal from "react-modal";
 
 import createStore from "../../startup/store";
 
@@ -41,6 +42,8 @@ const ThemedComponent: React.StatelessComponent<{}> = ({ children }) => {
 
   return <div className={`app-container ${theme}`}>{children}</div>;
 };
+
+ReactModal.setAppElement("#root");
 
 const store = createStore();
 export default (storyFn: RenderFunction) =>

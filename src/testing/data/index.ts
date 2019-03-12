@@ -209,7 +209,7 @@ export const fullTestData: TestData = {
   docRefTypes: testDocRefsTypes,
   elements,
   elementProperties,
-  pipelines: testPipelines,
+  pipelines: Object.values(testPipelines),
   xslt,
   dictionaries,
   dataList,

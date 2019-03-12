@@ -21,48 +21,34 @@ import { storiesOf } from "@storybook/react";
 
 import StroomDecorator from "../../testing/storybook/StroomDecorator";
 import fullTestData from "../../testing/data";
-import useUsers from "./useUsers";
+import useUser from "./useUser";
 import Button from "../../components/Button";
 
 import "../../styles/main.css";
 
-const testUserLists = [
-  fullTestData.usersAndGroups.users.slice(0, 3).map(u => u.uuid),
-  fullTestData.usersAndGroups.users.slice(4, 8).map(u => u.uuid),
-  fullTestData.usersAndGroups.users.slice(10, 14).map(u => u.uuid)
-];
+const users = fullTestData.usersAndGroups.users;
 
 const TestHarness = () => {
   const [testListIndex, setTestListIndex] = useState<number>(0);
 
-  const userUuids = useMemo(() => testUserLists[testListIndex], [
-    testListIndex
-  ]);
-  const users = useUsers(userUuids);
+  const userUuid = useMemo(() => users[testListIndex].uuid, [testListIndex]);
+  const user = useUser(userUuid);
 
   const switchList = useCallback(() => {
-    setTestListIndex((testListIndex + 1) % testUserLists.length);
+    setTestListIndex((testListIndex + 1) % users.length);
   }, [setTestListIndex, testListIndex]);
 
   return (
     <div>
       <Button onClick={switchList} text="Switch List" />
       <h2>User UUIDS</h2>
-      <ul>
-        {userUuids.map(userUuid => (
-          <li key={userUuid}>{userUuid}</li>
-        ))}
-      </ul>
+      <p>{userUuid}</p>
       <h2>Users</h2>
-      <ul>
-        {users.map(user => (
-          <li key={user.uuid}>{JSON.stringify(user)}</li>
-        ))}
-      </ul>
+      <ul>{JSON.stringify(user)}</ul>
     </div>
   );
 };
 
-storiesOf("Custom Hooks/useUsers", module)
+storiesOf("Custom Hooks/useUser", module)
   .addDecorator(StroomDecorator)
   .add("Sample 1", () => <TestHarness />);

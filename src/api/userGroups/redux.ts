@@ -26,13 +26,12 @@ import { StoreState } from "./types";
 
 export const defaultState: StoreState = {
   allUsers: [],
-  usersBySearch: {},
   usersInGroup: {},
   groupsForUser: {}
 };
 
-const USERS_RECEIVED_FOR_SEARCH = "USERS_RECEIVED_FOR_SEARCH";
 const USER_RECEIVED = "USER_RECEIVED";
+const USERS_RECEIVED = "USERS_RECEIVED";
 const USERS_IN_GROUP_RECEIVED = "USERS_IN_GROUP_RECEIVED";
 const GROUPS_FOR_USER_RECEIEVED = "GROUPS_FOR_USER_RECEIEVED";
 const USER_CREATED = "USER_CREATED";
@@ -40,9 +39,7 @@ const USER_DELETED = "USER_DELETED";
 const USER_ADDED_TO_GROUP = "USER_ADDED_TO_GROUP";
 const USER_REMOVED_FROM_GROUP = "USER_REMOVED_FROM_GROUP";
 
-interface UsersReceivedForSearchAction
-  extends Action<"USERS_RECEIVED_FOR_SEARCH"> {
-  listId: string;
+interface UsersReceivedAction extends Action<"USERS_RECEIVED"> {
   users: Array<User>;
 }
 
@@ -80,12 +77,8 @@ interface UserRemovedFromGroupAction extends Action<"USER_REMOVED_FROM_GROUP"> {
 }
 
 export const useActionCreators = genUseActionCreators({
-  usersReceived: (
-    listId: string,
-    users: Array<User>
-  ): UsersReceivedForSearchAction => ({
-    type: USERS_RECEIVED_FOR_SEARCH,
-    listId,
+  usersReceived: (users: Array<User>): UsersReceivedAction => ({
+    type: USERS_RECEIVED,
     users
   }),
   userReceived: (user: User): UserReceivedAction => ({
@@ -139,18 +132,14 @@ export const reducer = prepareReducer(defaultState)
     USER_RECEIVED,
     (state = defaultState, { user }) => ({
       ...state,
-      allUsers: state.allUsers.concat([user])
+      allUsers: state.allUsers.concat([user]).filter(onlyUnique)
     })
   )
-  .handleAction<UsersReceivedForSearchAction>(
-    USERS_RECEIVED_FOR_SEARCH,
-    (state: StoreState, { listId, users }) => ({
+  .handleAction<UsersReceivedAction>(
+    USERS_RECEIVED,
+    (state = defaultState, { users }) => ({
       ...state,
-      allUsers: state.allUsers.concat(users).filter(onlyUnique),
-      usersBySearch: {
-        ...state.usersBySearch,
-        [listId]: users
-      }
+      allUsers: state.allUsers.concat(users).filter(onlyUnique)
     })
   )
   .handleAction<UsersInGroupReceivedAction>(
@@ -179,10 +168,7 @@ export const reducer = prepareReducer(defaultState)
     USER_CREATED,
     (state = defaultState, { user }) => ({
       ...state,
-      allUsers: state.allUsers.concat([user]),
-      usersBySearch: mapObject(state.usersBySearch, (_, u: Array<User>) =>
-        u.concat(user)
-      )
+      allUsers: state.allUsers.concat([user])
     })
   )
   .handleAction<UserDeletedAction>(
@@ -190,9 +176,6 @@ export const reducer = prepareReducer(defaultState)
     (state = defaultState, { userUuid }) => ({
       ...state,
       allUsers: state.allUsers.filter(u => u.uuid !== userUuid),
-      usersBySearch: mapObject(state.usersBySearch, (_, users: Array<User>) =>
-        users.filter(u => u.uuid !== userUuid)
-      ),
       usersInGroup: mapObject(state.usersInGroup, (_, users: Array<User>) =>
         users.filter(u => u.uuid !== userUuid)
       ),

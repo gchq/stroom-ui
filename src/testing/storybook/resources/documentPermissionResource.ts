@@ -97,6 +97,19 @@ const resourceBuilder: ResourceBuilder = (
       res.json(documentPermissions);
     });
 
+  // Clear Permission for Document for user
+  server
+    .delete(`${resource}/forDocForUser/:docRefUuid/:userUuid`)
+    .intercept((req: HttpRequest, res: HttpResponse) => {
+      const { docRefUuid, userUuid } = req.params;
+
+      testCache.data!.userDocPermission = testCache.data!.userDocPermission.filter(
+        udp => !(udp.docRefUuid === docRefUuid && udp.userUuid === userUuid)
+      );
+
+      res.send(undefined);
+    });
+
   // Clear Permissions for Document
   server
     .delete(`${resource}/forDoc/:docRefUuid`)

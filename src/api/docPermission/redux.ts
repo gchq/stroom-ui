@@ -18,6 +18,8 @@ const PERMISSIONS_FOR_DOCUMENT_FOR_USER_RECEIVED =
 const PERMISSIONS_FOR_DOCUMENT_RECEIVED = "PERMISSIONS_FOR_DOCUMENT_RECEIVED";
 const DOCUMENT_PERMISSION_ADDED = "DOCUMENT_PERMISSION_ADDED";
 const DOCUMENT_PERMISSION_REMOVED = "DOCUMENT_PERMISSION_REMOVED";
+const DOCUMENT_PERMISSIONS_CLEARED_FOR_USER =
+  "DOCUMENT_PERMISSIONS_CLEARED_FOR_USER";
 const DOCUMENT_PERMISSIONS_CLEARED = "DOCUMENT_PERMISSIONS_CLEARED";
 
 interface PermissionNamesForDocTypeReceivedAction
@@ -54,6 +56,11 @@ interface DocumentPermissionRemovedAction
 interface DocumentPermissionsClearedAction
   extends Action<"DOCUMENT_PERMISSIONS_CLEARED"> {
   docRefUuid: string;
+}
+interface DocumentPermissionsClearedForUserAction
+  extends Action<"DOCUMENT_PERMISSIONS_CLEARED_FOR_USER"> {
+  docRefUuid: string;
+  userUuid: string;
 }
 
 export const useActionCreators = genUseActionCreators({
@@ -108,6 +115,14 @@ export const useActionCreators = genUseActionCreators({
   ): DocumentPermissionsClearedAction => ({
     type: DOCUMENT_PERMISSIONS_CLEARED,
     docRefUuid
+  }),
+  documentPermissionsClearedForUser: (
+    docRefUuid: string,
+    userUuid: string
+  ): DocumentPermissionsClearedForUserAction => ({
+    type: DOCUMENT_PERMISSIONS_CLEARED_FOR_USER,
+    docRefUuid,
+    userUuid
   })
 });
 
@@ -194,6 +209,15 @@ export const reducer = prepareReducer(defaultState)
     (state = defaultState, { docRefUuid }) => ({
       ...state,
       permissions: state.permissions.filter(p => p.docRefUuid !== docRefUuid)
+    })
+  )
+  .handleAction<DocumentPermissionsClearedForUserAction>(
+    DOCUMENT_PERMISSIONS_CLEARED_FOR_USER,
+    (state = defaultState, { docRefUuid, userUuid }) => ({
+      ...state,
+      permissions: state.permissions.filter(
+        p => !(p.docRefUuid === docRefUuid && p.userUuid === userUuid)
+      )
     })
   )
 

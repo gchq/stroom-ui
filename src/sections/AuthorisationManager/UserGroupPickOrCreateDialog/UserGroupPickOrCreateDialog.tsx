@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useState, useCallback } from "react";
 
-import UserGroupPicker, { usePicker } from "./UserGroupPicker";
+import UserPicker, { usePicker } from "../UserPicker";
 import ThemedModal from "../../../components/ThemedModal";
 import IconHeader from "../../../components/IconHeader";
 import Button, { DialogActionButtons } from "../../../components/Button";
@@ -16,13 +16,15 @@ interface Props extends BaseProps {
   setIsOpen: (i: boolean) => void;
 }
 
-export const UserGroupModalPicker = ({
+export const UserGroupPickOrCreateDialog = ({
   onConfirm,
   isOpen,
   setIsOpen
 }: Props) => {
-  const useGroupPickerProps = usePicker();
-  const { reset: resetUserGroup, value: userGroupUuid } = useGroupPickerProps;
+  const { reset: resetUserGroup, pickerProps: useGroupPickerProps } = usePicker(
+    "Group"
+  );
+  const { value: userGroupUuid } = useGroupPickerProps;
 
   const [isNewGroup, setIsNewGroup] = useState<boolean>(false);
   const [newGroupName, setNewGroupName] = useState<string>("");
@@ -50,11 +52,13 @@ export const UserGroupModalPicker = ({
 
   const onConfirmLocal = useCallback(() => {
     if (isNewGroup) {
-      createUser(newGroupName, true).then(newGroup => onConfirm(newGroup.uuid));
+      createUser(newGroupName, true)
+        .then(newGroup => onConfirm(newGroup.uuid))
+        .finally(onClose);
     } else if (!!userGroupUuid) {
       onConfirm(userGroupUuid);
+      onClose();
     }
-    onClose();
   }, [onConfirm, onClose, createUser, newGroupName, isNewGroup]);
 
   return (
@@ -69,7 +73,7 @@ export const UserGroupModalPicker = ({
               <input value={newGroupName} onChange={onNewGroupNameChange} />
             </React.Fragment>
           ) : (
-            <UserGroupPicker {...useGroupPickerProps} />
+            <UserPicker {...useGroupPickerProps} />
           )}
 
           <Button text={newGroupButtonText} onClick={toggleNewGroup} />
@@ -100,4 +104,4 @@ export const useDialog = (props: BaseProps): UseDialog => {
   };
 };
 
-export default UserGroupModalPicker;
+export default UserGroupPickOrCreateDialog;

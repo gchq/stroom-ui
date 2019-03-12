@@ -1,10 +1,7 @@
-import { useEffect, useMemo, useCallback } from "react";
-import * as uuidv4 from "uuid/v4";
+import { useState, useCallback } from "react";
 
 import { useActionCreators } from "./redux";
-import useReduxState from "../../lib/useReduxState";
 import useApi from "./useApi";
-import { GlobalStoreState } from "../../startup/reducers";
 import { User } from "../../types";
 import { IsGroup } from "./types";
 
@@ -16,32 +13,25 @@ interface UseFindUsers {
 }
 
 /**
- * Encapsulate the retrieval of users with a per-component listing ID.
+ * Encapsulate the retrieval of users, it sends all users to the
+ * redux store, and also keeps the users for this component in local state.
  */
 export const useFindUsers = (): UseFindUsers => {
-  const listingId = useMemo(() => uuidv4(), []);
+  const [users, setUsers] = useState<Array<User>>([]);
 
-  const { findUsers: findUsersWithId } = useApi();
+  const { findUsers: findUsersRaw } = useApi();
 
   const { usersReceived } = useActionCreators();
 
-  const users = useReduxState(
-    ({ userGroups: { usersBySearch } }: GlobalStoreState) =>
-      usersBySearch[listingId] || []
-  );
-
   const findUsers: FindUsers = useCallback(
     (name, isGroup, uuid) => {
-      findUsersWithId(name, isGroup, uuid).then(u =>
-        usersReceived(listingId, u)
-      );
+      findUsersRaw(name, isGroup, uuid).then(_users => {
+        setUsers(_users);
+        usersReceived(_users);
+      });
     },
-    [listingId, findUsersWithId]
+    [findUsersRaw]
   );
-
-  useEffect(() => {
-    findUsers();
-  }, [findUsers]);
 
   return {
     users,

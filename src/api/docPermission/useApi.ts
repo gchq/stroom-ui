@@ -26,6 +26,10 @@ interface Api {
 
   // By Doc
   getPermissionForDoc: (docRefUuid: string) => Promise<DocumentPermissions>;
+  clearDocPermissionsForUser: (
+    docRefUuid: string,
+    userUuid: string
+  ) => Promise<void>;
   clearDocPermissions: (docRefUuid: string) => Promise<void>;
 }
 
@@ -110,6 +114,18 @@ export const useApi = (): Api => {
     [httpGetJson]
   );
 
+  const clearDocPermissionsForUser = useCallback(
+    (docRefUuid: string, userUuid: string) => {
+      const state = store.getState();
+      var url = `${
+        state.config.values.stroomBaseServiceUrl
+      }/docPermissions/v1/forDocForUser/${docRefUuid}/${userUuid}`;
+
+      return httpDeleteEmptyResponse(url);
+    },
+    [httpDeleteEmptyResponse]
+  );
+
   const clearDocPermissions = useCallback(
     (docRefUuid: string) => {
       const state = store.getState();
@@ -128,6 +144,7 @@ export const useApi = (): Api => {
     getPermissionsForDocumentForUser,
     addDocPermission,
     removeDocPermission,
+    clearDocPermissionsForUser,
     clearDocPermissions
   };
 };

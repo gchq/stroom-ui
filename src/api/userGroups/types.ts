@@ -4,9 +4,6 @@ export type IsGroup = "User" | "Group" | "" | undefined;
 
 export interface StoreState {
   allUsers: Array<User>;
-  usersBySearch: {
-    [listId: string]: Array<User>;
-  };
   usersInGroup: {
     [s: string]: Array<User>;
   };

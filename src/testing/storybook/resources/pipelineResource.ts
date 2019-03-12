@@ -3,6 +3,7 @@ import { HttpRequest, HttpResponse } from "@pollyjs/adapter-fetch";
 import { TestCache } from "../PollyDecorator";
 import { Config } from "../../../startup/config";
 import { ResourceBuilder } from "./types";
+import { PipelineModelType } from "src/types";
 
 const resourceBuilder: ResourceBuilder = (
   server: any,
@@ -14,7 +15,14 @@ const resourceBuilder: ResourceBuilder = (
   server
     .get(`${resource}/:pipelineId`)
     .intercept((req: HttpRequest, res: HttpResponse) => {
-      const pipeline = testCache.data!.pipelines[req.params.pipelineId];
+      const pipelineId = req.params.pipelineId;
+      console.log(`Finding`, {
+        pipelineId,
+        pipelines: testCache.data!.pipelines
+      });
+      const pipeline = testCache.data!.pipelines.find(
+        (p: PipelineModelType) => p.docRef.uuid === req.params.pipelineId
+      );
       if (pipeline) {
         res.json(pipeline);
       } else {
@@ -24,11 +32,7 @@ const resourceBuilder: ResourceBuilder = (
   server.get(resource).intercept((req: HttpRequest, res: HttpResponse) => {
     res.json({
       total: Object.keys(testCache.data!.pipelines).length,
-      pipelines: Object.keys(testCache.data!.pipelines).map(p => ({
-        uuid: p,
-        name: p,
-        type: "Pipeline"
-      }))
+      pipelines: Object.values(testCache.data!.pipelines).map(p => p.docRef)
     });
   });
   server

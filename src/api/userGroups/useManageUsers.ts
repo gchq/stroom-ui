@@ -3,8 +3,10 @@ import { useCallback } from "react";
 import useApi from "./useApi";
 import { useActionCreators } from "./redux";
 import { User } from "../../types";
+import { IsGroup } from "./types";
 
 interface ManageUsers {
+  findUsers: (name?: string, isGroup?: IsGroup, uuid?: string) => void;
   addUserToGroup: (userUuid: string, groupUuid: string) => void;
   createUser: (name: string, isGroup: boolean) => Promise<User>;
   deleteUser: (userUuid: string) => void;
@@ -12,9 +14,10 @@ interface ManageUsers {
 
 export default (): ManageUsers => {
   const { userCreated, userDeleted, userAddedToGroup } = useActionCreators();
-  const { createUser, deleteUser, addUserToGroup } = useApi();
+  const { createUser, deleteUser, addUserToGroup, findUsers } = useApi();
 
   return {
+    findUsers,
     addUserToGroup: useCallback(
       (userUuid: string, groupUuid: string) => {
         addUserToGroup(userUuid, groupUuid).then(() =>

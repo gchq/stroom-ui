@@ -15,54 +15,42 @@
  */
 
 import * as React from "react";
-import { useState, useCallback, useMemo } from "react";
+import { useCallback } from "react";
+import * as loremIpsum from "lorem-ipsum";
 
 import { storiesOf } from "@storybook/react";
 
 import StroomDecorator from "../../testing/storybook/StroomDecorator";
-import fullTestData from "../../testing/data";
-import useUsers from "./useUsers";
+import useManageUsers from "./useManageUsers";
 import Button from "../../components/Button";
+import useFindUsers from "./useFindUsers";
 
 import "../../styles/main.css";
 
-const testUserLists = [
-  fullTestData.usersAndGroups.users.slice(0, 3).map(u => u.uuid),
-  fullTestData.usersAndGroups.users.slice(4, 8).map(u => u.uuid),
-  fullTestData.usersAndGroups.users.slice(10, 14).map(u => u.uuid)
-];
-
 const TestHarness = () => {
-  const [testListIndex, setTestListIndex] = useState<number>(0);
+  const { users } = useFindUsers();
+  const { createUser, deleteUser } = useManageUsers();
 
-  const userUuids = useMemo(() => testUserLists[testListIndex], [
-    testListIndex
-  ]);
-  const users = useUsers(userUuids);
-
-  const switchList = useCallback(() => {
-    setTestListIndex((testListIndex + 1) % testUserLists.length);
-  }, [setTestListIndex, testListIndex]);
+  const onClickCreateUser = useCallback(() => {
+    createUser(loremIpsum({ count: 1, units: "words" }), false);
+  }, [createUser]);
 
   return (
     <div>
-      <Button onClick={switchList} text="Switch List" />
-      <h2>User UUIDS</h2>
-      <ul>
-        {userUuids.map(userUuid => (
-          <li key={userUuid}>{userUuid}</li>
-        ))}
-      </ul>
+      <Button onClick={onClickCreateUser} text="Create User" />
       <h2>Users</h2>
       <ul>
         {users.map(user => (
-          <li key={user.uuid}>{JSON.stringify(user)}</li>
+          <div>
+            <Button onClick={() => deleteUser(user.uuid)} text="Delete" />
+            {JSON.stringify(user)}
+          </div>
         ))}
       </ul>
     </div>
   );
 };
 
-storiesOf("Custom Hooks/useUsers", module)
+storiesOf("Custom Hooks/useManageUsers", module)
   .addDecorator(StroomDecorator)
   .add("Sample 1", () => <TestHarness />);
