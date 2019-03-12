@@ -5,7 +5,10 @@ import IconHeader from "../../../components/IconHeader";
 import Button from "../../../components/Button";
 import useRouter from "../../../lib/useRouter";
 import { useIndexVolumeGroup } from "../../../api/indexVolumeGroup";
-import { useIndexVolumesTable, IndexVolumesTable } from "../../IndexVolumes";
+import {
+  useTable as useIndexVolumesTable,
+  IndexVolumesTable
+} from "../../IndexVolumes/IndexVolumesTable";
 import ThemedConfirm, {
   useDialog as useConfirmDialog
 } from "../../../components/ThemedConfirm";

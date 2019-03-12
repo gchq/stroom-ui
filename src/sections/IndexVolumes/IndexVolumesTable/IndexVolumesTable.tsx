@@ -2,14 +2,14 @@ import * as React from "react";
 
 import ReactTable from "react-table";
 
-import { IndexVolume } from "../../types";
+import { IndexVolume } from "../../../types";
 import {
   useSelectableReactTable,
   SelectionBehaviour,
   TableOutProps
-} from "../../lib/useSelectableItemListing";
+} from "../../../lib/useSelectableItemListing";
 
- interface Props {
+interface Props {
   indexVolumes: Array<IndexVolume>;
   selectableTableProps: TableOutProps<IndexVolume>;
 }
@@ -40,7 +40,7 @@ const IndexVolumesTable = ({
   </div>
 );
 
- interface UseTable {
+interface UseTable {
   componentProps: Props;
 }
 

@@ -1,11 +1,11 @@
 import * as React from "react";
 import { useState, useCallback } from "react";
 
-import ThemedModal from "../../components/ThemedModal";
-import DialogActionButtons from "../../components/Button/DialogActionButtons";
-import useForm from "../../lib/useForm";
+import ThemedModal from "../../../components/ThemedModal";
+import DialogActionButtons from "../../../components/Button/DialogActionButtons";
+import useForm from "../../../lib/useForm";
 
- interface Props {
+interface Props {
   isOpen: boolean;
   onConfirm: (nodeName: string, path: string) => void;
   onCloseDialog: () => void;
@@ -62,14 +62,14 @@ const NewIndexVolumeDialog = ({ isOpen, onConfirm, onCloseDialog }: Props) => {
   );
 };
 
- interface UseDialog {
+interface UseDialog {
   componentProps: Props;
   showDialog: () => void;
 }
 
 export const useDialog = (
   onConfirm: (nodeName: string, path: string) => void
-):UseDialog => {
+): UseDialog => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   return {

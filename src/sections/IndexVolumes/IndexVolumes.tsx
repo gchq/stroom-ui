@@ -5,11 +5,13 @@ import IconHeader from "../../components/IconHeader";
 import Button from "../../components/Button";
 import NewIndexVolumeDialog, {
   useDialog as useCreateNewIndexVolumeDialog
-} from "./NewIndexVolumeDialog";
+} from "./NewIndexVolumeDialog/NewIndexVolumeDialog";
 import ThemedConfirm, {
   useDialog as useThemedConfirmDialog
 } from "../../components/ThemedConfirm";
-import IndexVolumesTable, { useTable } from "./IndexVolumesTable";
+import IndexVolumesTable, {
+  useTable
+} from "./IndexVolumesTable/IndexVolumesTable";
 import {
   IndexVolumeGroupModalPicker,
   useIndexVolumeGroupModalPicker

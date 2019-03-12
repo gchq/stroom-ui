@@ -15,14 +15,15 @@ export default (docType: string): Array<string> => {
 
   const permissions = useReduxState(
     ({ docPermissions: { permissionsByDocType } }) =>
-      permissionsByDocType[docType] || []
+      permissionsByDocType[docType] || [],
+    [docType]
   );
 
   useEffect(() => {
     getPermissionForDocType(docType).then(permissions =>
       permissionNamesForDocTypeReceived(docType, permissions)
     );
-  }, [getPermissionForDocType, permissionNamesForDocTypeReceived]);
+  }, [docType, getPermissionForDocType, permissionNamesForDocTypeReceived]);
 
   return permissions;
 };
