@@ -18,7 +18,7 @@ import { useState } from "react";
 
 import { storiesOf } from "@storybook/react";
 
-import { addThemedStories } from "../../lib/themedStoryGenerator";
+import { addThemedStories } from "../../testing/storybook/themedStoryGenerator";
 import AppSearchBar from "./AppSearchBar";
 
 import "../../styles/main.css";

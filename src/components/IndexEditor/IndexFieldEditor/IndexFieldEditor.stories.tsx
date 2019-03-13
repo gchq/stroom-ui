@@ -17,7 +17,7 @@ import * as React from "react";
 import { useState, useMemo, useCallback } from "react";
 import { storiesOf } from "@storybook/react";
 
-import { addThemedStories } from "../../../lib/themedStoryGenerator";
+import { addThemedStories } from "../../../testing/storybook/themedStoryGenerator";
 import "../../../styles/main.css";
 import IndexFieldEditor, { useEditor } from "./IndexFieldEditor";
 import { generateTestField } from "../../../testing/data/indexDocs";

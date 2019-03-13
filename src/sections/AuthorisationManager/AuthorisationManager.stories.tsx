@@ -21,7 +21,7 @@ import { Switch, Route, RouteComponentProps } from "react-router";
 
 import AuthorisationManager from ".";
 
-import { addThemedStories } from "../../lib/themedStoryGenerator";
+import { addThemedStories } from "../../testing/storybook/themedStoryGenerator";
 
 import "../../styles/main.css";
 import UserAuthorisationEditor from "./UserAuthorisationEditor";

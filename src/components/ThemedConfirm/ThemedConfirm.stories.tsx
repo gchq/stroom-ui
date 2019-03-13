@@ -21,7 +21,7 @@ import { storiesOf } from "@storybook/react";
 import Button from "../Button";
 import ThemedConfirm, { useDialog } from "./ThemedConfirm";
 
-import { addThemedStories } from "../../lib/themedStoryGenerator";
+import { addThemedStories } from "../../testing/storybook/themedStoryGenerator";
 
 import "../../styles/main.css";
 

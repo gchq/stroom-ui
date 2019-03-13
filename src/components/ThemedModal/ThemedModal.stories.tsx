@@ -21,7 +21,7 @@ import { storiesOf } from "@storybook/react";
 import Button from "../Button";
 import ThemedModal from "./ThemedModal";
 
-import { addThemedStories } from "../../lib/themedStoryGenerator";
+import { addThemedStories } from "../../testing/storybook/themedStoryGenerator";
 
 import "../../styles/main.css";
 

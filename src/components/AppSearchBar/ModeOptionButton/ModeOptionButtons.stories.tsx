@@ -4,7 +4,7 @@ import { useState } from "react";
 import { storiesOf } from "@storybook/react";
 
 import ModeOptionButtons from "./ModeOptionButtons";
-import { addThemedStories } from "../../../lib/themedStoryGenerator";
+import { addThemedStories } from "../../../testing/storybook/themedStoryGenerator";
 import { SearchMode } from "./types";
 import JsonDebug from "../../../testing/JsonDebug";
 

@@ -19,7 +19,7 @@ import { storiesOf } from "@storybook/react";
 
 import PathNotFound from "./PathNotFound";
 
-import { addThemedStories } from "../../lib/themedStoryGenerator";
+import { addThemedStories } from "../../testing/storybook/themedStoryGenerator";
 
 import "../../styles/main.css";
 

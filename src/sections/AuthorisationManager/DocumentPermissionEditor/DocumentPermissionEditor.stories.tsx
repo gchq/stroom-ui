@@ -20,7 +20,7 @@ import { storiesOf } from "@storybook/react";
 import { Switch, Route, RouteComponentProps } from "react-router";
 
 import fullTestData from "../../../testing/data";
-import { addThemedStories } from "../../../lib/themedStoryGenerator";
+import { addThemedStories } from "../../../testing/storybook/themedStoryGenerator";
 
 import "../../../styles/main.css";
 import DocumentPermissionEditor from "./DocumentPermissionEditor";

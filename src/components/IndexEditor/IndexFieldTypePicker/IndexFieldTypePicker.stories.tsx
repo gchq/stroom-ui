@@ -17,7 +17,7 @@ import * as React from "react";
 import { useState } from "react";
 import { storiesOf } from "@storybook/react";
 
-import { addThemedStories } from "../../../lib/themedStoryGenerator";
+import { addThemedStories } from "../../../testing/storybook/themedStoryGenerator";
 import "../../../styles/main.css";
 import IndexFieldTypePicker from "./IndexFieldTypePicker";
 import { IndexFieldType } from "../../../types";

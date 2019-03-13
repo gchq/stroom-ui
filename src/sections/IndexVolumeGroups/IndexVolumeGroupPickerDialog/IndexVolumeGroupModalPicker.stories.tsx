@@ -20,7 +20,7 @@ import { useState, useMemo } from "react";
 import { storiesOf } from "@storybook/react";
 
 import IndexVolumeGroupModalPicker from "./IndexVolumeGroupModalPicker";
-import { addThemedStories } from "../../../lib/themedStoryGenerator";
+import { addThemedStories } from "../../../testing/storybook/themedStoryGenerator";
 
 import "../../../styles/main.css";
 import { useDialog } from "./IndexVolumeGroupModalPicker";

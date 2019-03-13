@@ -21,7 +21,7 @@ import Welcome from "./Welcome";
 
 import "../../styles/main.css";
 
-import { addThemedStories } from "../../lib/themedStoryGenerator";
+import { addThemedStories } from "../../testing/storybook/themedStoryGenerator";
 
 const stories = storiesOf("Sections/Welcome", module);
 

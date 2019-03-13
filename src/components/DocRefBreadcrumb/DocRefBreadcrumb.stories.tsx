@@ -25,7 +25,7 @@ import { DocRefType } from "../../types";
 
 import "../../styles/main.css";
 import JsonDebug from "../../testing/JsonDebug";
-import { addThemedStories } from "../../lib/themedStoryGenerator";
+import { addThemedStories } from "../../testing/storybook/themedStoryGenerator";
 
 const testDocRef = fullTestData.documentTree.children![0].children![0];
 

@@ -20,7 +20,7 @@ import { storiesOf } from "@storybook/react";
 
 import UserSettings from "./UserSettings";
 
-import { addThemedStories } from "../../lib/themedStoryGenerator";
+import { addThemedStories } from "../../testing/storybook/themedStoryGenerator";
 
 import "../../styles/main.css";
 
