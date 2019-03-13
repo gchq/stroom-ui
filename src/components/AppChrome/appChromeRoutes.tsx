@@ -2,27 +2,27 @@ import * as React from "react";
 import { RouteComponentProps, RouteProps } from "react-router";
 
 import { AppChrome } from ".";
-import { Processing } from "../sections/Processing";
-import SwitchedDocRefEditor from "../components/SwitchedDocRefEditor";
-import IconHeader from "../components/IconHeader";
-import Welcome from "../sections/Welcome";
-import DataViewer from "../sections/DataViewer";
-import UserSettings from "../sections/UserSettings";
-import PathNotFound from "../components/PathNotFound";
-import IFrame from "../components/IFrame";
-import ErrorPage from "../components/ErrorPage";
+import { Processing } from "../Processing";
+import SwitchedDocRefEditor from "../SwitchedDocRefEditor";
+import IconHeader from "../IconHeader";
+import Welcome from "../Welcome";
+import DataViewer from "../DataViewer";
+import UserSettings from "../UserSettings";
+import PathNotFound from "../PathNotFound";
+import IFrame from "../IFrame";
+import ErrorPage from "../ErrorPage";
 
 import AuthorisationManager, {
   UserAuthorisationEditor
-} from "../sections/AuthorisationManager";
-import IndexVolumes from "../sections/IndexVolumes";
-import IndexVolumeGroups from "../sections/IndexVolumeGroups";
-import IndexVolumeGroupEditor from "../sections/IndexVolumeGroups/IndexVolumeGroupEditor";
-import useConfig from "../startup/config/useConfig";
-import Loader from "../components/Loader";
-import DocumentPermissionEditor from "../sections/AuthorisationManager/DocumentPermissionEditor";
-import DocumentPermissionForUserEditor from "../sections/AuthorisationManager/DocumentPermissionForUserEditor";
-import IndexVolumeEditor from "../sections/IndexVolumes/IndexVolumeEditor";
+} from "../AuthorisationManager";
+import IndexVolumes from "../IndexVolumes";
+import IndexVolumeGroups from "../IndexVolumeGroups";
+import IndexVolumeGroupEditor from "../IndexVolumeGroups/IndexVolumeGroupEditor";
+import useConfig from "../../startup/config/useConfig";
+import Loader from "../Loader";
+import DocumentPermissionEditor from "../AuthorisationManager/DocumentPermissionEditor";
+import DocumentPermissionForUserEditor from "../AuthorisationManager/DocumentPermissionForUserEditor";
+import IndexVolumeEditor from "../IndexVolumes/IndexVolumeEditor";
 
 const renderWelcome = () => (
   <AppChrome activeMenuItem="Welcome" content={<Welcome />} />

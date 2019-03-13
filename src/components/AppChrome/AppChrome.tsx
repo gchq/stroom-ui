@@ -22,23 +22,23 @@ import "simplebar/dist/simplebar.css";
 import MenuItem from "./MenuItem";
 import { MenuItemOpened, MenuItemType, MenuItemsOpenState } from "./types";
 
-import useExplorerApi from "../api/explorer/useApi";
-import useSelectableItemListing from "../lib/useSelectableItemListing";
-import { DocRefType, DocRefConsumer, DocRefTree } from "../types";
+import useExplorerApi from "../../api/explorer/useApi";
+import useSelectableItemListing from "../../lib/useSelectableItemListing";
+import { DocRefType, DocRefConsumer, DocRefTree } from "../../types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { KeyDownState } from "../lib/useKeyIsDown";
+import { KeyDownState } from "../../lib/useKeyIsDown";
 import {
   CopyMoveDocRefDialog,
   useDialog as useCopyMoveDocRefDialog,
   ShowDialog as ShowCopyDocRefDialog
-} from "../components/FolderExplorer/CopyMoveDocRefDialog";
+} from "../FolderExplorer/CopyMoveDocRefDialog";
 import useLocalStorage, {
   storeBoolean,
   storeObjectFactory
-} from "../lib/useLocalStorage";
-import { useTheme } from "../lib/theme";
-import useRouter from "../lib/useRouter";
-import { useDocumentTree } from "../api/explorer";
+} from "../../lib/useLocalStorage";
+import { useTheme } from "../../lib/theme";
+import useRouter from "../../lib/useRouter";
+import { useDocumentTree } from "../../api/explorer";
 import useAppNavigation from "./useAppNavigation";
 
 const PATH_PREFIX = "/s";
@@ -365,7 +365,7 @@ const AppChrome = ({ content }: Props) => {
                 <img
                   className="sidebar__logo"
                   alt="Stroom logo"
-                  src={require("../images/logo.svg")}
+                  src={require("../../images/logo.svg")}
                 />
               ) : (
                 undefined

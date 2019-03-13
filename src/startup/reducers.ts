@@ -68,7 +68,7 @@ import {
 import {
   reducer as processing,
   StoreState as ProcessingStoreState
-} from "../sections/Processing";
+} from "../components/Processing";
 import {
   reducer as dataViewers,
   StoreState as DataViewersStoreState

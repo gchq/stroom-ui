@@ -1,5 +1,5 @@
 import { NavigateApp } from "./types";
-import useRouter from "..//lib/useRouter";
+import useRouter from "../../lib/useRouter";
 import { useMemo } from "react";
 import { DocRefType } from "src/types";
 

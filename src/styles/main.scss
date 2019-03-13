@@ -4,7 +4,7 @@
 @import "./table";
 @import "./dropdown";
 
-@import "../AppChrome/AppChrome";
+@import "../components/AppChrome/AppChrome";
 
 @import "../components/AppSearchBar/AppSearchBar";
 @import "../components/Button/Button";
@@ -28,11 +28,11 @@
 @import "../components/DocRefInfoModal/DocRefInfoModal";
 @import "../components/PipelineDebugger/PipelineDebugger";
 
-@import "../sections/DataViewer/DataViewer";
-@import "../sections/Welcome/Welcome";
-@import "../sections/Processing/ProcessingContainer";
-@import "../sections/UserSettings/UserSettings";
-@import "../sections/AuthorisationManager/AuthorisationManager";
+@import "../components/DataViewer/DataViewer";
+@import "../components/Welcome/Welcome";
+@import "../components/Processing/ProcessingContainer";
+@import "../components/UserSettings/UserSettings";
+@import "../components/AuthorisationManager/AuthorisationManager";
 
 @import "./themes";
 @import "./theme_styling";

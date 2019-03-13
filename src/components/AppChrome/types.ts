@@ -1,5 +1,5 @@
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
-import { DocRefType } from "../types";
+import { DocRefType } from "../../types";
 
 export type MenuItemOpened = (name: string, isOpen: boolean) => void;
 

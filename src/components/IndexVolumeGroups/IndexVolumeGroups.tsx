@@ -13,7 +13,7 @@ import ThemedConfirm, {
   useDialog as useConfirmDialog
 } from "../../components/ThemedConfirm";
 import IconHeader from "../../components/IconHeader";
-import useAppNavigation from "../../AppChrome/useAppNavigation";
+import useAppNavigation from "../AppChrome/useAppNavigation";
 
 const IndexVolumeGroups = () => {
   const { goToIndexVolumeGroup } = useAppNavigation();

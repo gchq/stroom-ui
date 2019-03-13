@@ -11,7 +11,7 @@ import ThemedConfirm, {
 import { useUsers } from "../../../api/userGroups";
 import UsersTable, { useTable as useUsersTable } from "../UsersTable";
 import { useDocRefWithLineage } from "../../../api/explorer";
-import useAppNavigation from "../../../AppChrome/useAppNavigation";
+import useAppNavigation from "../../AppChrome/useAppNavigation";
 import useRouter from "../../../lib/useRouter";
 import UserModalPicker, {
   useDialog as useUserModalPicker

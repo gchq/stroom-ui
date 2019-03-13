@@ -5,7 +5,7 @@ import { useActionCreators as useErrorActionCreators } from "../../components/Er
 import handleStatus from "./handleStatus";
 import { useContext } from "react";
 import { StoreContext } from "redux-react-hook";
-import useAppNavigation from "../../AppChrome/useAppNavigation";
+import useAppNavigation from "../../components/AppChrome/useAppNavigation";
 
 /**
  * A wrapper around fetch that can be used to de-duplicate GET calls to the same resources.

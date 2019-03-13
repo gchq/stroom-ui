@@ -1,7 +1,7 @@
 import { useContext, useCallback } from "react";
 import { StoreContext } from "redux-react-hook";
 
-import { useActionCreators } from "../../sections/Processing/redux";
+import { useActionCreators } from "../../components/Processing/redux";
 import useHttpClient from "../useHttpClient";
 import { StreamTasksResponseType } from "../../types";
 

@@ -42,7 +42,7 @@ import useSelectableItemListing, {
 } from "../../lib/useSelectableItemListing";
 import { useDocRefInfoDialog } from "../DocRefInfoModal/DocRefInfoModal";
 import { useDocumentTree } from "../../api/explorer";
-import useAppNavigation from "../../AppChrome/useAppNavigation";
+import useAppNavigation from "../AppChrome/useAppNavigation";
 
 interface Props {
   folderUuid: string;

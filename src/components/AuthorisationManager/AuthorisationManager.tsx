@@ -18,7 +18,7 @@ import {
   UserGroupPickOrCreateDialog,
   useDialog as useGroupModalDialog
 } from "./UserGroupPickOrCreateDialog";
-import useAppNavigation from "../../AppChrome/useAppNavigation";
+import useAppNavigation from "../AppChrome/useAppNavigation";
 
 interface Values {
   name: string;

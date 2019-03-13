@@ -21,7 +21,7 @@ import { Switch, Route } from "react-router-dom";
 
 import AppChrome, { appChromeRoutes } from ".";
 
-import "../styles/main.css";
+import "../../styles/main.css";
 
 // This basically replicates the 'Routes' implementation, but for test
 const AppChromeWithRouter = () => (

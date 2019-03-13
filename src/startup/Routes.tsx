@@ -20,7 +20,7 @@ import { Route, Switch } from "react-router-dom";
 
 // TODO
 import ErrorPage from "../components/ErrorPage";
-import { appChromeRoutes } from "../AppChrome";
+import { appChromeRoutes } from "../components/AppChrome";
 // import { Processing } from "../sections/Processing";
 import { HandleAuthenticationResponse } from "./Authentication";
 
@@ -29,7 +29,7 @@ import useConfig from "./config/useConfig";
 import { PrivateRoute } from "./Authentication";
 import PathNotFound from "../components/PathNotFound";
 import Loader from "../components/Loader";
-import Welcome from "../sections/Welcome";
+import Welcome from "../components/Welcome";
 
 const Routes: React.FunctionComponent = () => {
   const config = useConfig();
