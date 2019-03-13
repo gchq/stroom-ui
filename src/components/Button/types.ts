@@ -22,8 +22,3 @@ export interface ButtonProps
   /** The size of the icon*/
   size?: IconSize;
 }
-
-export interface DialogActionButtonProps {
-  onCancel: React.MouseEventHandler;
-  onConfirm: React.MouseEventHandler;
-}

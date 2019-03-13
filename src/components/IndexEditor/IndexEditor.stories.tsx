@@ -19,15 +19,11 @@ import { storiesOf } from "@storybook/react";
 import IndexEditor from "./IndexEditor";
 
 import "../../styles/main.css";
-import StroomDecorator from "../../testing/storybook/StroomDecorator";
+
 import fullTestData from "../../testing/data";
 
-const stories = storiesOf("Document Editors/Index", module).addDecorator(
-  StroomDecorator
-);
+const stories = storiesOf("Document Editors/Index", module);
 
-let uuid: string = Object.entries(fullTestData.indexes)
-  .map(k => k[0])
-  .find(() => true)!;
+let uuid: string = fullTestData.indexes[0].uuid;
 
 stories.add("editor", () => <IndexEditor indexUuid={uuid} />);

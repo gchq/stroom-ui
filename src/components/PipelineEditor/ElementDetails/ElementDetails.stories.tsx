@@ -20,7 +20,7 @@ import { storiesOf } from "@storybook/react";
 import "../../../styles/main.css";
 
 import ElementDetails from "./ElementDetails";
-import StroomDecorator from "../../../testing/storybook/StroomDecorator";
+
 import { fullTestData } from "../../../testing/data";
 import usePipelineState from "../usePipelineState";
 
@@ -55,9 +55,7 @@ const TestElementDetails = ({
   );
 };
 
-const stories = storiesOf("Pipeline/Element Details", module).addDecorator(
-  StroomDecorator
-);
+const stories = storiesOf("Pipeline/Element Details", module);
 
 Object.values(fullTestData.pipelines).map(pipeline => {
   pipeline.merged.elements.add!.map(element => {

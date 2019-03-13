@@ -4,7 +4,8 @@ import { useState, useCallback } from "react";
 import UserPicker, { usePicker } from "../UserPicker";
 import ThemedModal from "../../../components/ThemedModal";
 import IconHeader from "../../../components/IconHeader";
-import Button, { DialogActionButtons } from "../../../components/Button";
+import Button from "../../../components/Button";
+import DialogActionButtons from "../../../components/DialogActionButtons";
 import { useManageUsers } from "../../../api/userGroups";
 
 interface BaseProps {

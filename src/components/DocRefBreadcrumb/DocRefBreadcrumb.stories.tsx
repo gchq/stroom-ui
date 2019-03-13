@@ -18,7 +18,6 @@ import { useState } from "react";
 
 import { storiesOf } from "@storybook/react";
 
-import StroomDecorator from "../../testing/storybook/StroomDecorator";
 import DocRefBreadcrumb from "./DocRefBreadcrumb";
 import fullTestData from "../../testing/data";
 
@@ -47,8 +46,6 @@ const BreadcrumbOpen = () => {
   );
 };
 
-const stories = storiesOf("Doc Ref/Breadcrumb", module).addDecorator(
-  StroomDecorator
-);
+const stories = storiesOf("Doc Ref/Breadcrumb", module);
 
 addThemedStories(stories, <BreadcrumbOpen />);

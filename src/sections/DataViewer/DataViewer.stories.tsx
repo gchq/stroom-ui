@@ -19,12 +19,9 @@ import { storiesOf } from "@storybook/react";
 
 import DataViewer from "./DataViewer";
 import { addThemedStories } from "../../lib/themedStoryGenerator";
-import StroomDecorator from "../../testing/storybook/StroomDecorator";
 
 import "../../styles/main.css";
 
-const stories = storiesOf("Sections/Data/Viewer", module).addDecorator(
-  StroomDecorator
-);
+const stories = storiesOf("Sections/Data/Viewer", module);
 
 addThemedStories(stories, <DataViewer dataViewerId="test" />);

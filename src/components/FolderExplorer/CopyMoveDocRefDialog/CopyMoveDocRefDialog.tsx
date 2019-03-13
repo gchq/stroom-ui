@@ -17,7 +17,7 @@ import * as React from "react";
 import { useState, useCallback, useMemo } from "react";
 
 import IconHeader from "../../IconHeader";
-import DialogActionButtons from "../../Button/DialogActionButtons";
+import DialogActionButtons from "../../DialogActionButtons";
 import ThemedModal from "../../ThemedModal";
 import AppSearchBar from "../../AppSearchBar";
 import PermissionInheritancePicker from "../../PermissionInheritancePicker";

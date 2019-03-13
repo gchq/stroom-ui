@@ -18,7 +18,7 @@ import { useState } from "react";
 
 import { storiesOf } from "@storybook/react";
 
-import StroomDecorator from "../../testing/storybook/StroomDecorator";
+
 
 import { simplestExpression, testDataSource } from "../ExpressionBuilder/test";
 
@@ -27,7 +27,7 @@ import ExpressionSearchBar from "./ExpressionSearchBar";
 import "../../styles/main.css";
 
 storiesOf("Expression/Search Bar", module)
-  .addDecorator(StroomDecorator)
+  
   .add("Basic", () => {
     const [expression, onExpressionChange] = useState(simplestExpression);
 

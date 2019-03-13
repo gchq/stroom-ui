@@ -19,14 +19,14 @@ import { storiesOf } from "@storybook/react";
 import PipelineEditor from "./PipelineEditor";
 
 import { testPipelines } from "../../testing/data/pipelines";
-import StroomDecorator from "../../testing/storybook/StroomDecorator";
+
 
 import "../../styles/main.css";
 
 const pipelineStories = storiesOf(
   "Document Editors/Pipeline",
   module
-).addDecorator(StroomDecorator);
+);
 
 Object.entries(testPipelines).forEach(k => {
   pipelineStories.add(k[0], () => (

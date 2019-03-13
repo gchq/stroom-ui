@@ -16,7 +16,7 @@
 import * as React from "react";
 import { useState, useMemo, useCallback } from "react";
 
-import DialogActionButtons from "../../Button/DialogActionButtons";
+import DialogActionButtons from "../../DialogActionButtons";
 import IconHeader from "../../IconHeader";
 import ThemedModal from "../../ThemedModal";
 // import { required, minLength2 } from "../../lib/reduxUtils";

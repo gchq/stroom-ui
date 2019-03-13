@@ -18,7 +18,7 @@ import * as React from "react";
 
 import { storiesOf } from "@storybook/react";
 
-import StroomDecorator from "../../../testing/storybook/StroomDecorator";
+
 import fullTestData from "../../../testing/data";
 import { addThemedStories } from "../../../lib/themedStoryGenerator";
 
@@ -34,6 +34,6 @@ let aGroup: User = fullTestData.usersAndGroups.users
 const stories = storiesOf(
   "Sections/Authorisation Manager/Users In Group",
   module
-).addDecorator(StroomDecorator);
+);
 
 addThemedStories(stories, <UsersInGroup group={aGroup} />);

@@ -18,7 +18,7 @@ import * as React from "react";
 import { storiesOf } from "@storybook/react";
 
 import PathNotFound from "./PathNotFound";
-import StroomDecorator from "../../testing/storybook/StroomDecorator";
+
 import { addThemedStories } from "../../lib/themedStoryGenerator";
 
 import "../../styles/main.css";
@@ -26,6 +26,6 @@ import "../../styles/main.css";
 const pipelineStories = storiesOf(
   "Sections/Path not found",
   module
-).addDecorator(StroomDecorator);
+);
 
 addThemedStories(pipelineStories, <PathNotFound />);

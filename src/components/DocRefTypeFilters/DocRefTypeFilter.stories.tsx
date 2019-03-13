@@ -14,53 +14,30 @@
  * limitations under the License.
  */
 import * as React from "react";
+import { useState } from "react";
 
-import StroomDecorator from "../../testing/storybook/StroomDecorator";
 import { storiesOf } from "@storybook/react";
 
-import DocTypeFilters from "./DocTypeFilters";
-import DocRefTypePicker from "./DocRefTypePicker";
+import DocRefTypeFilters from "./DocRefTypeFilters";
 
 import "../../styles/main.css";
-import useForm from "../../lib/useForm";
 import JsonDebug from "../../testing/JsonDebug";
 import { addThemedStories } from "../../lib/themedStoryGenerator";
 
-interface FormValues {
-  docRefType?: string;
-  multipleDocRefTypes: Array<string>;
-}
-const initialValues: FormValues = {
-  docRefType: undefined,
-  multipleDocRefTypes: []
-};
-
 const TestForm = () => {
-  const { value, generateControlledInputProps } = useForm<FormValues>({
-    initialValues
-  });
-
-  const docRefTypeProps = generateControlledInputProps<string>("docRefType");
-  const multipleDocRefTypeProps = generateControlledInputProps<Array<string>>(
-    "multipleDocRefTypes"
-  );
-
+  const [chosenTypes, setChosenTypes] = useState<Array<string>>([]);
   return (
     <form>
       <div>
-        <label>Chosen Doc Type</label>
-        <DocRefTypePicker {...docRefTypeProps} />
         <label>Chosen Doc Types</label>
-        <DocTypeFilters {...multipleDocRefTypeProps} />
+        <DocRefTypeFilters value={chosenTypes} onChange={setChosenTypes} />
       </div>
 
-      <JsonDebug value={value} />
+      <JsonDebug value={{ chosenTypes }} />
     </form>
   );
 };
 
-const stories = storiesOf("Pickers/Doc Ref Type", module).addDecorator(
-  StroomDecorator
-);
+const stories = storiesOf("Pickers/Doc Ref Type Filters", module);
 
 addThemedStories(stories, <TestForm />);

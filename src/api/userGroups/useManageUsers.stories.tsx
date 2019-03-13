@@ -20,7 +20,6 @@ import * as loremIpsum from "lorem-ipsum";
 
 import { storiesOf } from "@storybook/react";
 
-import StroomDecorator from "../../testing/storybook/StroomDecorator";
 import useManageUsers from "./useManageUsers";
 import Button from "../../components/Button";
 import useFindUsers from "./useFindUsers";
@@ -51,6 +50,6 @@ const TestHarness = () => {
   );
 };
 
-storiesOf("Custom Hooks/useManageUsers", module)
-  .addDecorator(StroomDecorator)
-  .add("Sample 1", () => <TestHarness />);
+storiesOf("Custom Hooks/useManageUsers", module).add("Sample 1", () => (
+  <TestHarness />
+));

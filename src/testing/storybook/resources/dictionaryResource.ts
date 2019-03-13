@@ -14,7 +14,9 @@ const resourceBuilder: ResourceBuilder = (
   server
     .get(`${resource}/:dictionaryUuid`)
     .intercept((req: HttpRequest, res: HttpResponse) => {
-      const dict = testCache.data!.dictionaries[req.params.dictionaryUuid];
+      const dict = testCache.data!.dictionaries.find(
+        d => d.uuid === req.params.dictionaryUuid
+      );
       if (dict) {
         res.json(dict);
       } else {

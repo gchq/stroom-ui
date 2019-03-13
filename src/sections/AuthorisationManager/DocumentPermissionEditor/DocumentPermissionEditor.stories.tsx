@@ -19,7 +19,6 @@ import * as React from "react";
 import { storiesOf } from "@storybook/react";
 import { Switch, Route, RouteComponentProps } from "react-router";
 
-import StroomDecorator from "../../../testing/storybook/StroomDecorator";
 import fullTestData from "../../../testing/data";
 import { addThemedStories } from "../../../lib/themedStoryGenerator";
 
@@ -58,6 +57,6 @@ const TestHarness = ({ docRefUuid }: Props) => (
 const stories = storiesOf(
   "Sections/Authorisation Manager/Document Permission Editor",
   module
-).addDecorator(StroomDecorator);
+);
 
 addThemedStories(stories, <TestHarness docRefUuid={testDocRef.uuid} />);

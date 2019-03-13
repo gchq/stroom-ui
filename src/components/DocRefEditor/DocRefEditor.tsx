@@ -12,7 +12,7 @@ import {
 
 import { useActionCreators } from "./redux";
 import AppSearchBar from "../AppSearchBar";
-import { DocRefIconHeader } from "../IconHeader";
+import DocRefIconHeader from "../DocRefIconHeader";
 import DocRefBreadcrumb from "../DocRefBreadcrumb";
 import Button, { ButtonProps } from "../Button";
 import { DocRefConsumer } from "../../types";

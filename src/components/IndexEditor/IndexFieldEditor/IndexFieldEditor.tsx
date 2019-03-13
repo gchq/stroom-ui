@@ -3,7 +3,7 @@ import { useState, useCallback } from "react";
 
 import { IndexField, IndexFieldType, AnalyzerType } from "../../../types";
 import ThemedModal from "../../ThemedModal";
-import { DialogActionButtons } from "../../Button";
+import { DialogActionButtons } from "../../DialogActionButtons";
 import IndexFieldTypePicker from "../IndexFieldTypePicker/IndexFieldTypePicker";
 import AnalyzerPicker from "../AnalyzerPicker";
 import useForm from "../../../lib/useForm";

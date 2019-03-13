@@ -16,7 +16,6 @@
 import * as React from "react";
 import { useState, useCallback } from "react";
 
-import StroomDecorator from "../../../testing/storybook/StroomDecorator";
 import fullTestData from "../../../testing/data";
 import { storiesOf } from "@storybook/react";
 
@@ -62,8 +61,6 @@ const TestForm = () => {
   );
 };
 
-const stories = storiesOf("Pickers/App Permissions", module).addDecorator(
-  StroomDecorator
-);
+const stories = storiesOf("Pickers/App Permissions", module);
 
 addThemedStories(stories, <TestForm />);

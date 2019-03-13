@@ -20,14 +20,9 @@ import fullTestData from "../../testing/data";
 import XsltEditor from "./XsltEditor";
 
 import "../../styles/main.css";
-import StroomDecorator from "../../testing/storybook/StroomDecorator";
 
-const stories = storiesOf("Document Editors/XSLT", module).addDecorator(
-  StroomDecorator
-);
+const stories = storiesOf("Document Editors/XSLT", module);
 
-let uuid: string = Object.values(fullTestData.xslt)
-  .map(x => x.uuid)
-  .find(() => true)!;
+let uuid: string = fullTestData.xslt[0].uuid;
 
 stories.add("editor", () => <XsltEditor xsltUuid={uuid} />);

@@ -17,7 +17,7 @@ import * as React from "react";
 
 import { storiesOf } from "@storybook/react";
 
-import StroomDecorator from "../../testing/storybook/StroomDecorator";
+
 import DropdownSelect from "./DropdownSelect";
 import { DropdownOptionProps } from "./types";
 import useForm from "../../lib/useForm";
@@ -109,5 +109,5 @@ const TestForm = () => {
 };
 
 storiesOf("General Purpose/Dropdown Select", module)
-  .addDecorator(StroomDecorator)
+  
   .add("simple pickers", () => <TestForm />);

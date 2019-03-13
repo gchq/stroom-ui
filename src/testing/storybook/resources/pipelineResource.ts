@@ -16,12 +16,8 @@ const resourceBuilder: ResourceBuilder = (
     .get(`${resource}/:pipelineId`)
     .intercept((req: HttpRequest, res: HttpResponse) => {
       const pipelineId = req.params.pipelineId;
-      console.log(`Finding`, {
-        pipelineId,
-        pipelines: testCache.data!.pipelines
-      });
       const pipeline = testCache.data!.pipelines.find(
-        (p: PipelineModelType) => p.docRef.uuid === req.params.pipelineId
+        (p: PipelineModelType) => p.docRef.uuid === pipelineId
       );
       if (pipeline) {
         res.json(pipeline);
@@ -31,8 +27,8 @@ const resourceBuilder: ResourceBuilder = (
     });
   server.get(resource).intercept((req: HttpRequest, res: HttpResponse) => {
     res.json({
-      total: Object.keys(testCache.data!.pipelines).length,
-      pipelines: Object.values(testCache.data!.pipelines).map(p => p.docRef)
+      total: testCache.data!.pipelines.length,
+      pipelines: testCache.data!.pipelines.map(p => p.docRef)
     });
   });
   server

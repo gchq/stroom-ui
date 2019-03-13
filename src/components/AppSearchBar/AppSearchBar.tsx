@@ -8,7 +8,7 @@ import { DocRefBreadcrumb } from "../DocRefBreadcrumb";
 import DocRefListingEntry from "../DocRefListingEntry";
 import useExplorerApi from "../../api/explorer/useApi";
 
-import ModeOptionButtons, { SearchMode } from "./ModeOptionButtons";
+import ModeOptionButtons, { SearchMode } from "./ModeOptionButton";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import useSelectableItemListing from "../../lib/useSelectableItemListing";
 import useRecentItems from "../../lib/useRecentItems";

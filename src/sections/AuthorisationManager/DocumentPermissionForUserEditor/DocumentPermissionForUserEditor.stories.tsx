@@ -18,7 +18,7 @@ import * as React from "react";
 
 import { storiesOf } from "@storybook/react";
 
-import StroomDecorator from "../../../testing/storybook/StroomDecorator";
+
 import fullTestData from "../../../testing/data";
 import { addThemedStories } from "../../../lib/themedStoryGenerator";
 
@@ -32,7 +32,7 @@ const testDocRef: DocRefType = fullTestData.documentTree.children![0];
 const stories = storiesOf(
   "Sections/Authorisation Manager/Document Permission For User Editor",
   module
-).addDecorator(StroomDecorator);
+);
 
 addThemedStories(
   stories,

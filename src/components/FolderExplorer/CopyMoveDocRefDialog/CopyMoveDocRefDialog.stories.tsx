@@ -2,7 +2,6 @@ import * as React from "react";
 import { storiesOf } from "@storybook/react";
 import { useState } from "react";
 
-import StroomDecorator from "../../../testing/storybook/StroomDecorator";
 import { fromSetupSampleData } from "../test";
 import {
   CopyMoveDocRefDialog,
@@ -44,11 +43,9 @@ const TestCopyDialog = ({ testUuids, testDestination }: Props) => {
   );
 };
 
-storiesOf("Explorer/Copy Doc Ref Dialog", module)
-  .addDecorator(StroomDecorator)
-  .add("simple", () => (
-    <TestCopyDialog
-      testUuids={testFolder2.children!.map(d => d.uuid)}
-      testDestination={testFolder2}
-    />
-  ));
+storiesOf("Explorer/Copy Doc Ref Dialog", module).add("simple", () => (
+  <TestCopyDialog
+    testUuids={testFolder2.children!.map(d => d.uuid)}
+    testDestination={testFolder2}
+  />
+));

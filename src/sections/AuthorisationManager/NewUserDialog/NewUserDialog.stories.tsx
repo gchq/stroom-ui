@@ -21,13 +21,13 @@ import { addThemedStories } from "../../../lib/themedStoryGenerator";
 import "../../../styles/main.css";
 import NewUserDialog, { useDialog } from "./NewUserDialog";
 import Button from "../../../components/Button";
-import StroomDecorator from "../../../testing/storybook/StroomDecorator";
+
 import JsonDebug from "../../../testing/JsonDebug";
 
 const stories = storiesOf(
   "Sections/Authorisation Manager/New User Dialog",
   module
-).addDecorator(StroomDecorator);
+);
 
 const B: React.FunctionComponent = () => {
   const [newUser, setNewUser] = useState<object>({});

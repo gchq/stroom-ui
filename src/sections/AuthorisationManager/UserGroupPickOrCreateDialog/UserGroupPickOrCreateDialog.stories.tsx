@@ -19,7 +19,7 @@ import { useState } from "react";
 
 import { storiesOf } from "@storybook/react";
 
-import StroomDecorator from "../../../testing/storybook/StroomDecorator";
+
 import { addThemedStories } from "../../../lib/themedStoryGenerator";
 
 import "../../../styles/main.css";
@@ -32,7 +32,7 @@ import JsonDebug from "../../../testing/JsonDebug";
 const stories = storiesOf(
   "Pickers/User (or Create) Modal",
   module
-).addDecorator(StroomDecorator);
+);
 
 const TestHarness = () => {
   const [pickedUser, setPickedUser] = useState<string | undefined>(undefined);

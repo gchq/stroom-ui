@@ -20,7 +20,7 @@ import { storiesOf } from "@storybook/react";
 import { Switch, Route, RouteComponentProps } from "react-router";
 
 import AuthorisationManager from ".";
-import StroomDecorator from "../../testing/storybook/StroomDecorator";
+
 import { addThemedStories } from "../../lib/themedStoryGenerator";
 
 import "../../styles/main.css";
@@ -42,6 +42,6 @@ const TestHarness = () => (
 const stories = storiesOf(
   "Sections/Authorisation Manager",
   module
-).addDecorator(StroomDecorator);
+);
 
 addThemedStories(stories, <TestHarness />);

@@ -13,7 +13,9 @@ const resourceBuilder: ResourceBuilder = (
   server
     .get(`${resource}/:xsltUuid`)
     .intercept((req: HttpRequest, res: HttpResponse) => {
-      const xslt = testCache.data!.xslt[req.params.xsltUuid];
+      const xslt = testCache.data!.xslt.find(
+        xslt => xslt.uuid === req.params.xsltUuid
+      );
       if (xslt) {
         res.setHeader("Content-Type", "application/xml");
         res.send(xslt);

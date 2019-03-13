@@ -27,7 +27,7 @@ enum AllSelectState {
 
 interface Props extends ControlledInput<DocRefTypeList> {}
 
-let DocTypeFilters = ({ onChange, value }: Props) => {
+let DocRefTypeFilters = ({ onChange, value }: Props) => {
   const { docRefTypes } = useDocRefTypes();
 
   let allSelectState = AllSelectState.INDETERMINATE;
@@ -89,4 +89,4 @@ let DocTypeFilters = ({ onChange, value }: Props) => {
   );
 };
 
-export default DocTypeFilters;
+export default DocRefTypeFilters;

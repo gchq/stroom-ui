@@ -5,7 +5,7 @@ import { storiesOf } from "@storybook/react";
 import CreateDocRefDialog, { useDialog } from "./CreateDocRefDialog";
 import { fromSetupSampleData } from "../test";
 import { DocRefType } from "../../../types";
-import StroomDecorator from "../../../testing/storybook/StroomDecorator";
+
 
 import "../../../styles/main.css";
 import JsonDebug from "../../../testing/JsonDebug";
@@ -36,5 +36,5 @@ const TestNewDocRefDialog = ({ testDestination }: Props) => {
 };
 
 storiesOf("Explorer/Create Doc Ref Dialog", module)
-  .addDecorator(StroomDecorator)
+  
   .add("simple", () => <TestNewDocRefDialog testDestination={testFolder2} />);

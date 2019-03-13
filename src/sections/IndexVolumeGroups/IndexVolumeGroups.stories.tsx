@@ -18,7 +18,7 @@ import * as React from "react";
 
 import { storiesOf } from "@storybook/react";
 
-import StroomDecorator from "../../testing/storybook/StroomDecorator";
+
 
 import IndexVolumeGroups from "./IndexVolumeGroups";
 
@@ -40,5 +40,5 @@ const IndexVolumeGroupsWithRouter = () => (
 );
 
 storiesOf("Sections/Index Volume Groups", module)
-  .addDecorator(StroomDecorator)
+  
   .add("Index Volume Groups", () => <IndexVolumeGroupsWithRouter />);

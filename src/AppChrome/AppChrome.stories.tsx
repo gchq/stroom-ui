@@ -20,7 +20,6 @@ import { storiesOf } from "@storybook/react";
 import { Switch, Route } from "react-router-dom";
 
 import AppChrome, { appChromeRoutes } from ".";
-import StroomDecorator from "../testing/storybook/StroomDecorator";
 
 import "../styles/main.css";
 
@@ -34,7 +33,6 @@ const AppChromeWithRouter = () => (
 );
 
 storiesOf("App Chrome", module)
-  .addDecorator(StroomDecorator)
   .add("Just the chrome", () => (
     <AppChrome activeMenuItem="welcome" content={<div>Stuff goes here</div>} />
   ))

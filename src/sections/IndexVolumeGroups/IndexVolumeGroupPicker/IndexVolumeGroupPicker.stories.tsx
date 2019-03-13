@@ -19,8 +19,6 @@ import { useMemo } from "react";
 
 import { storiesOf } from "@storybook/react";
 
-import StroomDecorator from "../../../testing/storybook/StroomDecorator";
-
 import IndexVolumeGroupPicker from "./IndexVolumeGroupPicker";
 import { addThemedStories } from "../../../lib/themedStoryGenerator";
 
@@ -62,7 +60,5 @@ const TestForm: React.FunctionComponent = () => {
   );
 };
 
-const stories = storiesOf("Pickers/Index Volume Group", module).addDecorator(
-  StroomDecorator
-);
+const stories = storiesOf("Pickers/Index Volume Group", module);
 addThemedStories(stories, <TestForm />);

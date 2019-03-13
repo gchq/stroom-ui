@@ -18,7 +18,7 @@ import { useState } from "react";
 
 import { storiesOf } from "@storybook/react";
 
-import StroomDecorator from "../../testing/storybook/StroomDecorator";
+
 import ExpressionBuilder from "./ExpressionBuilder";
 
 import { testExpression, testDataSource, simplestExpression } from "./test";
@@ -27,7 +27,7 @@ import "../../styles/main.css";
 import { ExpressionOperatorWithUuid } from "src/types";
 
 storiesOf("Expression/Builder", module)
-  .addDecorator(StroomDecorator)
+  
   .add("Populated Editable", () => {
     const [expression, onChange] = useState<ExpressionOperatorWithUuid>(
       testExpression

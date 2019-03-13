@@ -18,7 +18,7 @@ import * as uuidv4 from "uuid/v4";
 import { useState, useCallback } from "react";
 import { storiesOf } from "@storybook/react";
 
-import StroomDecorator from "../../testing/storybook/StroomDecorator";
+
 import useSelectableItemListing, {
   useSelectableReactTable
 } from "./useSelectableItemListing";
@@ -80,7 +80,7 @@ const defaultFormValues: NewItemFormValues = {
 };
 
 storiesOf("Custom Hooks/useSelectableItemListing", module)
-  .addDecorator(StroomDecorator)
+  
   .add("React Table", () => {
     const {
       value: { species, name },

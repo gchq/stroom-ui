@@ -1,7 +1,6 @@
 import Button from "./Button";
-import { ButtonProps, DialogActionButtonProps } from "./types";
-import DialogActionButtons from "./DialogActionButtons";
+import { ButtonProps } from "./types";
 
 export default Button;
 
-export { Button, DialogActionButtons, ButtonProps, DialogActionButtonProps };
+export { Button, ButtonProps };

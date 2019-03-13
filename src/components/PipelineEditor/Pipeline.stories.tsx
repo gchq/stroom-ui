@@ -19,14 +19,11 @@ import { storiesOf } from "@storybook/react";
 
 import Pipeline from "./Pipeline";
 import { testPipelines } from "../../testing/data/pipelines";
-import StroomDecorator from "../../testing/storybook/StroomDecorator";
 
 import "../../styles/main.css";
 import usePipelineState from "./usePipelineState";
 
-const pipelineStories = storiesOf("Pipeline/Display", module).addDecorator(
-  StroomDecorator
-);
+const pipelineStories = storiesOf("Pipeline/Display", module);
 
 interface TestProps {
   pipelineId: string;

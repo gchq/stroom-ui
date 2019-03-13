@@ -5,7 +5,7 @@ import ThemedModal from "../../../components/ThemedModal";
 import IconHeader from "../../../components/IconHeader";
 import UserPicker, { usePicker } from "../UserPicker";
 import { BaseProps as PickerBaseProps } from "../UserPicker/types";
-import { DialogActionButtons } from "../../../components/Button";
+import DialogActionButtons from "../../../components/DialogActionButtons";
 
 interface BaseProps extends PickerBaseProps {
   onConfirm: (userUuid: string) => void;

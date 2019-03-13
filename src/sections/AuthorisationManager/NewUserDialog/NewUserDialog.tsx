@@ -2,7 +2,7 @@ import * as React from "react";
 import { useState, useCallback } from "react";
 
 import ThemedModal from "../../../components/ThemedModal";
-import DialogActionButtons from "../../../components/Button/DialogActionButtons";
+import DialogActionButtons from "../../../components/DialogActionButtons";
 import useForm from "../../../lib/useForm";
 
 interface FormValues {

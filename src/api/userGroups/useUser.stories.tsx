@@ -19,7 +19,6 @@ import { useState, useCallback, useMemo } from "react";
 
 import { storiesOf } from "@storybook/react";
 
-import StroomDecorator from "../../testing/storybook/StroomDecorator";
 import fullTestData from "../../testing/data";
 import useUser from "./useUser";
 import Button from "../../components/Button";
@@ -49,6 +48,6 @@ const TestHarness = () => {
   );
 };
 
-storiesOf("Custom Hooks/useUser", module)
-  .addDecorator(StroomDecorator)
-  .add("Sample 1", () => <TestHarness />);
+storiesOf("Custom Hooks/useUser", module).add("Sample 1", () => (
+  <TestHarness />
+));

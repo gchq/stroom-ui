@@ -17,14 +17,13 @@
 import * as React from "react";
 import { storiesOf } from "@storybook/react";
 
-import StroomDecorator from "../../testing/storybook/StroomDecorator";
 import { addThemedStories } from "../../lib/themedStoryGenerator";
 import Button from "./Button";
 
 import "../../styles/main.css";
 
 const stories = storiesOf("General Purpose/Button", module);
-stories.addDecorator(StroomDecorator);
+stories;
 
 stories.add("button group - icon only", () => (
   <div>

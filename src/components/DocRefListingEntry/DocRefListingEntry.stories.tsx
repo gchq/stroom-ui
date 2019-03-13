@@ -17,7 +17,7 @@ import * as React from "react";
 import { useState } from "react";
 import { storiesOf } from "@storybook/react";
 
-import StroomDecorator from "../../testing/storybook/StroomDecorator";
+
 import fullTestData from "../../testing/data";
 import useSelectableItemListing, {
   SelectionBehaviour
@@ -27,6 +27,8 @@ import { DocRefType } from "../../types";
 
 import "../../styles/main.css";
 import { DocRefBreadcrumb } from "../DocRefBreadcrumb";
+import JsonDebug from "../../testing/JsonDebug";
+import Button from "../Button";
 
 const testFolder = fullTestData.documentTree;
 const testDocRef = fullTestData.documentTree.children![0].children![0];
@@ -104,25 +106,14 @@ let TestDocRefListingEntry = ({
             </DocRefListingEntry>
           ))}
       </div>
-      <div>
-        <label>Entered Folder</label>
-        <input readOnly value={!!enteredFolder ? enteredFolder.name : ""} />
-      </div>
-      <div>
-        <label>Opened Doc Ref</label>
-        <input readOnly value={!!openedDocRef ? openedDocRef.name : ""} />
-      </div>
-      <div>
-        <label>Went Back</label>
-        <input type="checkbox" readOnly checked={wentBack} />
-      </div>
-      <button onClick={onClickClear}>Clear</button>
+      <Button text="Clear" onClick={onClickClear} />
+      <JsonDebug value={{ wentBack, openedDocRef, enteredFolder }} />
     </div>
   );
 };
 
 storiesOf("Doc Ref/Listing Entry", module)
-  .addDecorator(StroomDecorator)
+  
   .add("docRef", () => <TestDocRefListingEntry docRefs={[testDocRef]} />)
   .add("docRef isOver canDrop", () => (
     <TestDocRefListingEntry docRefs={[testDocRef]} dndIsOver dndCanDrop />

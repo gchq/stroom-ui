@@ -6,12 +6,18 @@ interface Props {
   className?: string;
 }
 
-const DocRefImage = ({ docRefType, size = "lg", className = "" }: Props) => (
-  <img
-    className={`stroom-icon--${size} ${className || ""}`}
-    alt={`doc ref icon ${docRefType}`}
-    src={require(`../../images/docRefTypes/${docRefType}.svg`)}
-  />
-);
+const DocRefImage = ({ docRefType, size = "lg", className = "" }: Props) => {
+  if (docRefType !== "NONE") {
+    return (
+      <img
+        className={`stroom-icon--${size} ${className || ""}`}
+        alt={`doc ref icon ${docRefType}`}
+        src={require(`../../images/docRefTypes/${docRefType}.svg`)}
+      />
+    );
+  } else {
+    return null;
+  }
+};
 
 export default DocRefImage;

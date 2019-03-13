@@ -13,7 +13,9 @@ const resourceBuilder: ResourceBuilder = (
   server
     .get(`${resource}/:indexUuid`)
     .intercept((req: HttpRequest, res: HttpResponse) => {
-      const index = testCache.data!.indexes[req.params.indexUuid];
+      const index = testCache.data!.indexes.find(
+        index => index.uuid === req.params.indexUuid
+      );
       if (index) {
         res.json(index);
       } else {

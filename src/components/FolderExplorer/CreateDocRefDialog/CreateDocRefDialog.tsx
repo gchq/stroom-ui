@@ -19,8 +19,8 @@ import { useState, useCallback } from "react";
 
 import IconHeader from "../../IconHeader";
 import ThemedModal from "../../ThemedModal";
-import DialogActionButtons from "../../Button/DialogActionButtons";
-import { DocRefTypePicker } from "../../DocRefTypes";
+import DialogActionButtons from "../../DialogActionButtons";
+import { DocRefTypePicker } from "../../DocRefTypePicker";
 import PermissionInheritancePicker from "../../PermissionInheritancePicker";
 import { PermissionInheritance, DocRefType } from "../../../types";
 import useForm from "../../../lib/useForm";

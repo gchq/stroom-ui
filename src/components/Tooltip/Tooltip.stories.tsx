@@ -1,13 +1,11 @@
 import * as React from "react";
 import { storiesOf } from "@storybook/react";
-import StroomDecorator from "../../testing/storybook/StroomDecorator";
+
 import { addThemedStories } from "../../lib/themedStoryGenerator";
 
 import Tooltip from "./Tooltip";
 
-const stories = storiesOf("General Purpose/Tooltip", module).addDecorator(
-  StroomDecorator
-);
+const stories = storiesOf("General Purpose/Tooltip", module);
 
 addThemedStories(
   stories,

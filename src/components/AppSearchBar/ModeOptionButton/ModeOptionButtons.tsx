@@ -1,13 +1,8 @@
 import * as React from "react";
 
-import Button from "../Button";
+import Button from "../../Button";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
-
-export enum SearchMode {
-  GLOBAL_SEARCH,
-  NAVIGATION,
-  RECENT_ITEMS
-}
+import { SearchMode } from "./types";
 
 interface Props {
   switchMode: (m: SearchMode) => void;

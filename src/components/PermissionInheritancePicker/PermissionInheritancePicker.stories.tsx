@@ -17,7 +17,7 @@ import * as React from "react";
 import { storiesOf } from "@storybook/react";
 
 import PermissionInheritancePicker from "./PermissionInheritancePicker";
-import StroomDecorator from "../../testing/storybook/StroomDecorator";
+
 import { addThemedStories } from "../../lib/themedStoryGenerator";
 import "../../styles/main.css";
 import useForm from "../../lib/useForm";
@@ -52,6 +52,6 @@ const TestForm = () => {
 const stories = storiesOf(
   "Pickers/Permission Inheritance",
   module
-).addDecorator(StroomDecorator);
+);
 
 addThemedStories(stories, <TestForm />);

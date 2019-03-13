@@ -18,11 +18,11 @@ import { storiesOf } from "@storybook/react";
 
 import DataDetails from "./DataDetails";
 import { errorData, eventData } from "./DataDetails.testData";
-import StroomDecorator from "../../../testing/storybook/StroomDecorator";
+
 
 import "../../../styles/main.css";
 
 storiesOf("Sections/Data/Details", module)
-  .addDecorator(StroomDecorator)
+  
   .add("Showing errors", () => <DataDetails data={errorData} />)
   .add("Showing events", () => <DataDetails data={eventData} />);

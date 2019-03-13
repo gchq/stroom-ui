@@ -19,13 +19,11 @@ import * as React from "react";
 import { storiesOf } from "@storybook/react";
 
 import UserSettings from "./UserSettings";
-import StroomDecorator from "../../testing/storybook/StroomDecorator";
+
 import { addThemedStories } from "../../lib/themedStoryGenerator";
 
 import "../../styles/main.css";
 
-const stories = storiesOf("Sections/User Settings", module).addDecorator(
-  StroomDecorator
-);
+const stories = storiesOf("Sections/User Settings", module);
 
 addThemedStories(stories, <UserSettings />);

@@ -17,7 +17,7 @@ import * as React from "react";
 
 import { storiesOf } from "@storybook/react";
 
-import StroomDecorator from "../../testing/storybook/StroomDecorator";
+
 import { DocRefInfoModal } from ".";
 
 import "../../styles/main.css";
@@ -28,7 +28,7 @@ import fullTestData from "../../testing/data";
 const testFolder1 = fullTestData.documentTree.children![0];
 
 storiesOf("Doc Ref/Info Modal", module)
-  .addDecorator(StroomDecorator)
+  
   .add("Doc Ref Info Modal", () => {
     const { showDialog, componentProps } = useDocRefInfoDialog();
 

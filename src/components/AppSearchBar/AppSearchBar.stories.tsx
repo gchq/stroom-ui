@@ -18,7 +18,6 @@ import { useState } from "react";
 
 import { storiesOf } from "@storybook/react";
 
-import StroomDecorator from "../../testing/storybook/StroomDecorator";
 import { addThemedStories } from "../../lib/themedStoryGenerator";
 import AppSearchBar from "./AppSearchBar";
 
@@ -41,11 +40,9 @@ const defaultValues: FormValues = {
 };
 
 let AppSearchAsForm = ({ typeFilters }: Props) => {
-  const {
-    value,
-    generateControlledInputProps,
-    generateTextInput
-  } = useForm<FormValues>({
+  const { value, generateControlledInputProps, generateTextInput } = useForm<
+    FormValues
+  >({
     initialValues: defaultValues
   });
 
@@ -82,7 +79,7 @@ const AppSearchAsPicker = ({ typeFilters }: Props) => {
         onChange={setPickedDocRef}
         value={pickedDocRef}
       />
-      <div>Picked Doc Ref: {pickedDocRef && pickedDocRef.name}</div>
+      <JsonDebug value={{ pickedDocRef }} />
     </div>
   );
 };
@@ -124,7 +121,6 @@ class AppSearchAsNavigator extends React.Component<
 const stories = storiesOf("Doc Ref/App Search Bar", module);
 
 stories
-  .addDecorator(StroomDecorator)
   .add("Search Bar (global)", () => <AppSearchAsNavigator />)
   .add("Doc Ref Form", () => <AppSearchAsForm />)
   .add("Doc Ref Picker", () => <AppSearchAsPicker />)

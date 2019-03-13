@@ -15,14 +15,17 @@
  */
 import * as React from "react";
 import * as storybook from "@storybook/react";
-import { addParameters, configure } from "@storybook/react";
+import { addParameters, configure, addDecorator } from "@storybook/react";
 import StoryRouter from "storybook-react-router";
+import StroomDecorator from "../src/testing/storybook/StroomDecorator";
 
 const req = require.context("../src", true, /\.stories\.tsx$/);
 
 function loadStories() {
   req.keys().forEach(filename => req(filename));
 }
+
+addDecorator(StroomDecorator);
 
 // Option defaults:
 addParameters({

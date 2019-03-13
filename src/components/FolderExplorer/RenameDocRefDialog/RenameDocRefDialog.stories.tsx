@@ -5,7 +5,7 @@ import { DocRefType } from "../../../types";
 
 import RenameDocRefDialog, { useDialog } from "./RenameDocRefDialog";
 import { fromSetupSampleData } from "../test";
-import StroomDecorator from "../../../testing/storybook/StroomDecorator";
+
 
 import "../../../styles/main.css";
 import JsonDebug from "../../../testing/JsonDebug";
@@ -34,5 +34,5 @@ const TestRenameDialog = ({ testDocRef }: Props) => {
 };
 
 storiesOf("Explorer/Rename Doc Ref Dialog", module)
-  .addDecorator(StroomDecorator)
+  
   .add("simple", () => <TestRenameDialog testDocRef={testDocRef} />);

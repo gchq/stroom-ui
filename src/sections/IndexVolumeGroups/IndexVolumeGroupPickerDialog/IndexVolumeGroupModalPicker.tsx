@@ -6,7 +6,8 @@ import IndexVolumeGroupPicker, {
 } from "../IndexVolumeGroupPicker/IndexVolumeGroupPicker";
 import ThemedModal from "../../../components/ThemedModal";
 import IconHeader from "../../../components/IconHeader";
-import Button, { DialogActionButtons } from "../../../components/Button";
+import Button from "../../../components/Button";
+import DialogActionButtons from "../../../components/DialogActionButtons";
 import { useIndexVolumeGroups } from "../../../api/indexVolumeGroup";
 import { PickerBaseProps } from "../IndexVolumeGroupPicker/types";
 

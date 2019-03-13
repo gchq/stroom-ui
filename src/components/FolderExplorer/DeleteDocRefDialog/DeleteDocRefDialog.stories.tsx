@@ -3,7 +3,7 @@ import { useState } from "react";
 import { storiesOf } from "@storybook/react";
 
 import DeleteDocRefDialog, { useDialog } from "./DeleteDocRefDialog";
-import StroomDecorator from "../../../testing/storybook/StroomDecorator";
+
 import { fromSetupSampleData } from "../test";
 import { DocRefType } from "../../../types";
 
@@ -31,7 +31,7 @@ const TestDeleteDialog = ({ testUuids }: Props) => {
 };
 
 storiesOf("Explorer/Delete Doc Ref Dialog", module)
-  .addDecorator(StroomDecorator)
+  
   .add("simple", () => (
     <TestDeleteDialog
       testUuids={testFolder2.children!.map((d: DocRefType) => d.uuid)}

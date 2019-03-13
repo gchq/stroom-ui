@@ -20,7 +20,7 @@ import { storiesOf } from "@storybook/react";
 
 import Button from "../Button";
 import ThemedConfirm, { useDialog } from "./ThemedConfirm";
-import StroomDecorator from "../../testing/storybook/StroomDecorator";
+
 import { addThemedStories } from "../../lib/themedStoryGenerator";
 
 import "../../styles/main.css";
@@ -51,6 +51,6 @@ let TestConfirm = () => {
 const stories = storiesOf(
   "General Purpose/Themed Confirm",
   module
-).addDecorator(StroomDecorator);
+);
 
 addThemedStories(stories, <TestConfirm />);

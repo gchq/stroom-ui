@@ -20,7 +20,7 @@ import { storiesOf } from "@storybook/react";
 
 import Button from "../Button";
 import ThemedModal from "./ThemedModal";
-import StroomDecorator from "../../testing/storybook/StroomDecorator";
+
 import { addThemedStories } from "../../lib/themedStoryGenerator";
 
 import "../../styles/main.css";
@@ -47,8 +47,6 @@ const TestModal = () => {
   );
 };
 
-const stories = storiesOf("General Purpose/Themed Modal", module).addDecorator(
-  StroomDecorator
-);
+const stories = storiesOf("General Purpose/Themed Modal", module);
 
 addThemedStories(stories, <TestModal />);

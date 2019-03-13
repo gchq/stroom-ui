@@ -1,17 +1,12 @@
 import * as React from "react";
 import ReactTable from "react-table";
 
-import { IndexField } from "../../types";
+import { IndexField } from "../../../types";
 import {
   useSelectableReactTable,
-  SelectionBehaviour,
-  TableOutProps
-} from "../../lib/useSelectableItemListing";
-
-interface Props {
-  fields: Array<IndexField>;
-  selectableTableProps: TableOutProps<IndexField>;
-}
+  SelectionBehaviour
+} from "../../../lib/useSelectableItemListing";
+import { Props, UseTable } from "./types";
 
 const COLUMNS = [
   {
@@ -53,10 +48,6 @@ const IndexFieldsTable = ({
     <ReactTable {...tableProps} />
   </div>
 );
-
-interface UseTable {
-  componentProps: Props;
-}
 
 export const useTable = (fields: Array<IndexField>): UseTable => {
   const selectableTableProps = useSelectableReactTable<IndexField>(

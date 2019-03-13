@@ -17,11 +17,11 @@ import * as React from "react";
 import { storiesOf } from "@storybook/react";
 
 import useKeyIsDown, { DEFAULT_FILTERS } from "./useKeyIsDown";
-import StroomDecorator from "../../testing/storybook/StroomDecorator";
+
 import { KeyDownState } from "./types";
 
 storiesOf("Custom Hooks/useKeyIsDown", module)
-  .addDecorator(StroomDecorator)
+  
   .add("Test Component", () => {
     const keyIsDown1: KeyDownState = useKeyIsDown();
     const filters2: Array<string> = ["Control", "Alt"];

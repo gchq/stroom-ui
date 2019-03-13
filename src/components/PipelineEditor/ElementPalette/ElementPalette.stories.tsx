@@ -17,7 +17,7 @@ import * as React from "react";
 import { storiesOf } from "@storybook/react";
 
 import ElementPalette from "./ElementPalette";
-import StroomDecorator from "../../../testing/storybook/StroomDecorator";
+
 import { fullTestData } from "../../../testing/data";
 
 import "../../../styles/main.css";
@@ -26,7 +26,7 @@ const showDeleteElementDialog = () =>
   console.error("Deleting Elements Not Supported in this Story");
 
 storiesOf("Pipeline/Element Palette", module)
-  .addDecorator(StroomDecorator)
+  
   .add("Element Palette", () => {
     return (
       <ElementPalette

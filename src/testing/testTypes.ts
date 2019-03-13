@@ -33,15 +33,9 @@ export interface TestData {
   pipelines: Array<PipelineModelType>;
   elements: ElementDefinitions;
   elementProperties: ElementPropertiesByElementIdType;
-  xslt: {
-    [xsltId: string]: XsltDoc;
-  };
-  dictionaries: {
-    [dictionaryId: string]: Dictionary;
-  };
-  indexes: {
-    [indexUuid: string]: IndexDoc;
-  };
+  xslt: Array<XsltDoc>;
+  dictionaries: Array<Dictionary>;
+  indexes: Array<IndexDoc>;
   trackers: Array<StreamTaskType>;
   dataList: StreamAttributeMapResult;
   dataSource: DataSourceType;
