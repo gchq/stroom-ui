@@ -28,7 +28,7 @@ const TestRenameDialog = ({ testDocRef }: Props) => {
       <h1>Rename Document Test</h1>
       <button onClick={() => showDialog(testDocRef)}>Show</button>
       <RenameDocRefDialog {...componentProps} />
-      <JsonDebug currentValues={lastConfirmed} />
+      <JsonDebug value={lastConfirmed} />
     </div>
   );
 };

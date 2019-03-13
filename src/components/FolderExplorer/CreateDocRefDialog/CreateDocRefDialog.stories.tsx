@@ -30,7 +30,7 @@ const TestNewDocRefDialog = ({ testDestination }: Props) => {
       <h1>Create Doc Ref Test</h1>
       <button onClick={() => showDialog(testDestination)}>Show</button>
       <CreateDocRefDialog {...componentProps} />
-      <JsonDebug currentValues={lastConfirmed} />
+      <JsonDebug value={lastConfirmed} />
     </div>
   );
 };

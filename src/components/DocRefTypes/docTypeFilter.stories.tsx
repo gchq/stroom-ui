@@ -36,7 +36,7 @@ const initialValues: FormValues = {
 };
 
 const TestForm = () => {
-  const { currentValues, generateControlledInputProps } = useForm<FormValues>({
+  const { value, generateControlledInputProps } = useForm<FormValues>({
     initialValues
   });
 
@@ -54,7 +54,7 @@ const TestForm = () => {
         <DocTypeFilters {...multipleDocRefTypeProps} />
       </div>
 
-      <JsonDebug currentValues={currentValues} />
+      <JsonDebug value={value} />
     </form>
   );
 };

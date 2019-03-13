@@ -39,7 +39,7 @@ const TestCopyDialog = ({ testUuids, testDestination }: Props) => {
         Show
       </button>
       <CopyMoveDocRefDialog {...componentProps} />
-      <JsonDebug currentValues={lastConfirmed} />
+      <JsonDebug value={lastConfirmed} />
     </div>
   );
 };

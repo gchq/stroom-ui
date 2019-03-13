@@ -83,7 +83,7 @@ interface FormValues {
 const initialValues: FormValues = {};
 
 const TestForm = () => {
-  const { currentValues, generateControlledInputProps } = useForm({
+  const { value, generateControlledInputProps } = useForm({
     initialValues
   });
 
@@ -103,7 +103,7 @@ const TestForm = () => {
         </div>
       </form>
 
-      <JsonDebug currentValues={currentValues} />
+      <JsonDebug value={value} />
     </React.Fragment>
   );
 };

@@ -46,7 +46,7 @@ export const CopyMoveDocRefDialog = ({
   );
 
   const {
-    currentValues: { destination, permissionInheritance },
+    value: { destination, permissionInheritance },
     generateControlledInputProps
   } = useForm<FormValues>({
     initialValues

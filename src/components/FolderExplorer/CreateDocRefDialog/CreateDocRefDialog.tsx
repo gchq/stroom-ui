@@ -54,7 +54,7 @@ export const CreateDocRefDialog = ({
   onCloseDialog
 }: Props) => {
   const {
-    currentValues: { docRefType, docRefName, permissionInheritance },
+    value: { docRefType, docRefName, permissionInheritance },
     generateControlledInputProps,
     generateTextInput
   } = useForm<FormValues>({

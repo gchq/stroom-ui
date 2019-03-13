@@ -26,7 +26,7 @@ const stories = storiesOf("Document Editors/Dictionary", module).addDecorator(
   StroomDecorator
 );
 
-let uuid: string = Object.entries(fullTestData.dictionaries)
-  .map(k => k[0])
+let uuid: string = Object.values(fullTestData.dictionaries)
+  .map(k => k.uuid)
   .find(() => true)!;
 stories.add("editor", () => <DictionaryEditor dictionaryUuid={uuid} />);

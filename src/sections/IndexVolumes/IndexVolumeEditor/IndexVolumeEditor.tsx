@@ -12,7 +12,7 @@ import {
 import {
   useIndexVolumeGroupModalPicker,
   IndexVolumeGroupModalPicker
-} from "../../IndexVolumeGroups/IndexVolumeGroupPicker";
+} from "../../IndexVolumeGroups/IndexVolumeGroupPickerDialog";
 import ThemedConfirm, {
   useDialog as useConfirmDialog
 } from "../../../components/ThemedConfirm";

@@ -5,7 +5,7 @@ import ThemedModal from "../../../components/ThemedModal";
 import DialogActionButtons from "../../../components/Button/DialogActionButtons";
 import useForm from "../../../lib/useForm";
 
- interface Props {
+interface Props {
   isOpen: boolean;
   onConfirm: (name: string) => void;
   onCloseDialog: () => void;
@@ -26,7 +26,7 @@ const NewIndexVolumeGroupDialog = ({
 }: Props) => {
   const {
     generateTextInput,
-    currentValues: { name }
+    value: { name }
   } = useForm<FormValues>({
     initialValues
   });
@@ -63,7 +63,7 @@ const NewIndexVolumeGroupDialog = ({
   );
 };
 
- interface UseDialog {
+interface UseDialog {
   showDialog: () => void;
   componentProps: Props;
 }

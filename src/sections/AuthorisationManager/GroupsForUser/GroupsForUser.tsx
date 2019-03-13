@@ -1,10 +1,9 @@
 import * as React from "react";
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 
 import { User } from "../../../types";
 
 import { useGroupsForUser } from "../../../api/userGroups";
-import Loader from "../../../components/Loader";
 import UsersTable, { useTable as useUsersTable } from "../UsersTable";
 import Button from "../../../components/Button";
 import {
@@ -51,12 +50,9 @@ const GroupsForUser = ({ user }: Props) => {
   } = useUserGroupModalPicker({
     onConfirm: useCallback((groupUuid: string) => addToGroup(groupUuid), [
       addToGroup
-    ])
+    ]),
+    valuesToFilterOut: useMemo(() => groups.map(g => g.uuid), [groups])
   });
-
-  if (!groups) {
-    return <Loader message={`Loading Groups for User ${user.uuid}`} />;
-  }
 
   return (
     <div>

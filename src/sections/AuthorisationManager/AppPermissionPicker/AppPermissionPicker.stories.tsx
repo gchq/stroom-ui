@@ -57,7 +57,7 @@ const TestForm = () => {
         />
       </div>
 
-      <JsonDebug currentValues={value} />
+      <JsonDebug value={value} />
     </form>
   );
 };

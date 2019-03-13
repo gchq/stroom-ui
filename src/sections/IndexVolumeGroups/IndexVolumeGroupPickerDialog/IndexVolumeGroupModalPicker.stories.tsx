@@ -20,43 +20,45 @@ import { useState, useMemo } from "react";
 import { storiesOf } from "@storybook/react";
 
 import StroomDecorator from "../../../testing/storybook/StroomDecorator";
+
+import IndexVolumeGroupModalPicker from "./IndexVolumeGroupModalPicker";
 import { addThemedStories } from "../../../lib/themedStoryGenerator";
 
 import "../../../styles/main.css";
-import UserModalPicker, { useDialog } from "./UserModalPicker";
+import { useDialog } from "./IndexVolumeGroupModalPicker";
 import Button from "../../../components/Button";
 import JsonDebug from "../../../testing/JsonDebug";
 import fullTestData from "../../../testing/data";
 
-const stories = storiesOf("Pickers/User Picker (Modal)", module).addDecorator(
-  StroomDecorator
-);
+const TestModal: React.FunctionComponent = () => {
+  const [picked, setPicked] = useState<string>("");
 
-const TestHarness = () => {
-  const [pickedUser, setPickedUser] = useState<string | undefined>(undefined);
+  const valuesToFilterOut = useMemo(
+    () =>
+      fullTestData.indexVolumesAndGroups.groups.slice(0, 1).map(g => g.name),
+    []
+  );
 
-  const { userNamesToFilterOut, valuesToFilterOut } = useMemo(() => {
-    let usersToFilterOut = fullTestData.usersAndGroups.users.slice(0, 3);
-    let valuesToFilterOut = usersToFilterOut.map(u => u.uuid);
-    let userNamesToFilterOut = usersToFilterOut.map(u => u.name);
-    return {
-      userNamesToFilterOut,
-      valuesToFilterOut
-    };
-  }, []);
   const { componentProps, showDialog } = useDialog({
-    isGroup: undefined,
-    onConfirm: setPickedUser,
+    onConfirm: setPicked,
     valuesToFilterOut
   });
 
   return (
     <div>
-      <Button text="Show Dialog" onClick={showDialog} />
-      <JsonDebug value={{ pickedUser, userNamesToFilterOut }} />
-      <UserModalPicker {...componentProps} />
+      <fieldset>
+        <label>Picked Group Name</label>
+        <p>{picked}</p>
+      </fieldset>
+      <Button text="Pick" onClick={showDialog} />
+      <IndexVolumeGroupModalPicker {...componentProps} />
+      <JsonDebug value={{ picked }} />
     </div>
   );
 };
 
-addThemedStories(stories, <TestHarness />);
+const storiesModal = storiesOf(
+  "Pickers/Index Volume Group (modal)",
+  module
+).addDecorator(StroomDecorator);
+addThemedStories(storiesModal, <TestModal />);

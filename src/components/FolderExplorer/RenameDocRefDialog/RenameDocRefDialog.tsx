@@ -48,7 +48,7 @@ export const RenameDocRefDialog = ({
   );
 
   const {
-    currentValues: { docRefName },
+    value: { docRefName },
     generateTextInput
   } = useForm<FormValues>({
     initialValues

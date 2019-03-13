@@ -42,7 +42,7 @@ const defaultValues: FormValues = {
 
 let AppSearchAsForm = ({ typeFilters }: Props) => {
   const {
-    currentValues,
+    value,
     generateControlledInputProps,
     generateTextInput
   } = useForm<FormValues>({
@@ -65,7 +65,7 @@ let AppSearchAsForm = ({ typeFilters }: Props) => {
         <AppSearchBar typeFilters={typeFilters} {...chosenDocRefProps} />
       </div>
 
-      <JsonDebug currentValues={currentValues} />
+      <JsonDebug value={value} />
     </form>
   );
 };

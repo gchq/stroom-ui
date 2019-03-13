@@ -28,7 +28,7 @@ const PipelineSettings = ({
   ]);
 
   const {
-    currentValues: { description },
+    value: { description },
     generateTextInput
   } = useForm<FormValues>({
     initialValues

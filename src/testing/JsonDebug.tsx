@@ -1,10 +1,10 @@
 import * as React from "react";
 
 export interface Props {
-  currentValues: any;
+  value: any;
 }
 
-export default ({ currentValues }: Props) => (
+export default ({ value }: Props) => (
   <div
     style={{
       margin: "3rem 0",
@@ -36,7 +36,7 @@ export default ({ currentValues }: Props) => (
         overflowX: "scroll"
       }}
     >
-      {JSON.stringify(currentValues, null, 2)}
+      {JSON.stringify(value, null, 2)}
     </pre>
   </div>
 );

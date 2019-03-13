@@ -22,7 +22,7 @@ export const IndexFieldEditor = ({
   onCloseDialog
 }: Props) => {
   const {
-    currentValues: indexUpdates,
+    value: indexUpdates,
     generateControlledInputProps,
     generateTextInput,
     generateCheckboxInput

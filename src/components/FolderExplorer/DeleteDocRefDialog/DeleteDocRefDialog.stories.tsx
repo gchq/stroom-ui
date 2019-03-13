@@ -25,7 +25,7 @@ const TestDeleteDialog = ({ testUuids }: Props) => {
     <div>
       <button onClick={() => showDialog(testUuids)}>Show</button>
       <DeleteDocRefDialog {...componentProps} />
-      <JsonDebug currentValues={lastConfirmed} />
+      <JsonDebug value={lastConfirmed} />
     </div>
   );
 };

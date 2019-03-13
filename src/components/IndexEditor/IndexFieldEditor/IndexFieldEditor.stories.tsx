@@ -47,7 +47,7 @@ const B: React.FunctionComponent = () => {
       <h2>Index Field Editor</h2>
       <Button text="Edit" onClick={onClick} />
       <IndexFieldEditor {...componentProps} />
-      <JsonDebug currentValues={{ FIELD_ID, lastId, indexField }} />
+      <JsonDebug value={{ FIELD_ID, lastId, indexField }} />
     </div>
   );
 };

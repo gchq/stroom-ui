@@ -83,7 +83,7 @@ storiesOf("Custom Hooks/useSelectableItemListing", module)
   .addDecorator(StroomDecorator)
   .add("React Table", () => {
     const {
-      currentValues: { species, name },
+      value: { species, name },
       generateTextInput
     } = useForm<NewItemFormValues>({ initialValues: defaultFormValues });
 

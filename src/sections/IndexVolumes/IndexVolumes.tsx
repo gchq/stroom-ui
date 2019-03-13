@@ -15,7 +15,7 @@ import IndexVolumesTable, {
 import {
   IndexVolumeGroupModalPicker,
   useIndexVolumeGroupModalPicker
-} from "../IndexVolumeGroups/IndexVolumeGroupPicker";
+} from "../IndexVolumeGroups/IndexVolumeGroupPickerDialog";
 import { useIndexVolumes } from "../../api/indexVolume";
 import useAppNavigation from "../../AppChrome/useAppNavigation";
 

@@ -1,23 +1,29 @@
 import * as React from "react";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 
 import Select from "react-select";
 
 import { useIndexVolumeGroupNames } from "../../../api/indexVolumeGroup";
 import { SelectOptionType } from "../../../types";
+import { PickerProps, UsePickerProps, PickerBaseProps } from "./types";
 
- interface Props {
-  value?: string;
-  onChange: (v: string) => any;
-}
-
-const IndexVolumeGroupPicker = ({ value, onChange }: Props) => {
+const IndexVolumeGroupPicker = ({
+  value,
+  onChange,
+  valuesToFilterOut = []
+}: PickerProps) => {
   const groupNames = useIndexVolumeGroupNames();
 
-  const options: Array<SelectOptionType> = groupNames.map(n => ({
-    value: n,
-    label: n
-  }));
+  const options: Array<SelectOptionType> = useMemo(
+    () =>
+      groupNames
+        .filter(n => !valuesToFilterOut.includes(n))
+        .map(n => ({
+          value: n,
+          label: n
+        })),
+    [groupNames, valuesToFilterOut]
+  );
 
   return (
     <Select
@@ -29,14 +35,11 @@ const IndexVolumeGroupPicker = ({ value, onChange }: Props) => {
   );
 };
 
- interface UseProps extends Props {
-  reset: () => void;
-}
-
-export const usePicker = (): UseProps => {
+export const usePicker = (baseProps?: PickerBaseProps): UsePickerProps => {
   const [value, onChange] = useState<string | undefined>(undefined);
 
   return {
+    ...baseProps,
     value,
     onChange,
     reset: () => onChange(undefined)

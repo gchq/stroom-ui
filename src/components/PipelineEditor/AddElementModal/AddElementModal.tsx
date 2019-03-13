@@ -38,7 +38,7 @@ export const AddElementModal = ({
   );
 
   const {
-    currentValues: { newName },
+    value: { newName },
     generateTextInput
   } = useForm<FormValues>({
     initialValues,

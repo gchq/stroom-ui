@@ -16,16 +16,16 @@ export const useForm = function<T>({
   initialValues,
   onValidate
 }: UseForm<T>): Form<T> {
-  const [currentValues, setCurrentValues] = useState<Partial<T>>(
+  const [value, setCurrentValues] = useState<Partial<T>>(
     initialValues || {}
   );
 
   // Memo-ized function to combine updates with existing state
   const onUpdate = useCallback(
     (newUpdates: Partial<T>) => {
-      setCurrentValues({ ...currentValues, ...newUpdates });
+      setCurrentValues({ ...value, ...newUpdates });
     },
-    [currentValues, setCurrentValues]
+    [value, setCurrentValues]
   );
 
   // Set the current values to the initial values, whenever those change
@@ -38,9 +38,9 @@ export const useForm = function<T>({
   // Call out to the validation function when the values change
   useEffect(() => {
     if (!!onValidate) {
-      onValidate(currentValues);
+      onValidate(value);
     }
-  }, [currentValues, onValidate]);
+  }, [value, onValidate]);
 
   const generateTextInput = (s: keyof T) => ({
     type: "text",
@@ -48,29 +48,29 @@ export const useForm = function<T>({
       ({ target: { value } }) => onUpdate({ [s]: value } as T),
       [onUpdate]
     ),
-    value: `${currentValues[s]}`
+    value: `${value[s]}`
   });
 
   const generateCheckboxInput = (s: keyof T) => ({
     type: "checkbox",
-    checked: currentValues[s],
+    checked: value[s],
     onChange: useCallback(() => {
       onUpdate(({
-        [s]: !currentValues[s]
+        [s]: !value[s]
       } as unknown) as Partial<T>);
-    }, [currentValues[s], onUpdate])
+    }, [value[s], onUpdate])
   });
 
   const generateControlledInputProps = <FIELD_TYPE>(
     s: keyof T
   ): ControlledInput<FIELD_TYPE> => ({
-    value: (currentValues[s] as unknown) as FIELD_TYPE,
+    value: (value[s] as unknown) as FIELD_TYPE,
     onChange: useCallback(v => onUpdate({ [s]: v } as T), [onUpdate])
   });
 
   return {
     onUpdate,
-    currentValues,
+    value,
     generateTextInput,
     generateCheckboxInput,
     generateControlledInputProps

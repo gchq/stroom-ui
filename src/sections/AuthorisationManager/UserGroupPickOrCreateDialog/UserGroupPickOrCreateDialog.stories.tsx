@@ -44,7 +44,7 @@ const TestHarness = () => {
   return (
     <div>
       <Button text="Show Dialog" onClick={showDialog} />
-      <JsonDebug currentValues={{ pickedUser }} />
+      <JsonDebug value={{ pickedUser }} />
       <UserGroupPickOrCreateDialog {...componentProps} />
     </div>
   );

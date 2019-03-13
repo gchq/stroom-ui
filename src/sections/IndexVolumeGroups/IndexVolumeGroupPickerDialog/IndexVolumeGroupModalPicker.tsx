@@ -1,17 +1,20 @@
 import * as React from "react";
 import { useState, useCallback } from "react";
 
-import IndexVolumeGroupPicker, { usePicker } from "./IndexVolumeGroupPicker";
+import IndexVolumeGroupPicker, {
+  usePicker
+} from "../IndexVolumeGroupPicker/IndexVolumeGroupPicker";
 import ThemedModal from "../../../components/ThemedModal";
 import IconHeader from "../../../components/IconHeader";
 import Button, { DialogActionButtons } from "../../../components/Button";
 import { useIndexVolumeGroups } from "../../../api/indexVolumeGroup";
+import { PickerBaseProps } from "../IndexVolumeGroupPicker/types";
 
- interface BaseProps {
+interface BaseProps extends PickerBaseProps {
   onConfirm: (groupName: string) => void;
 }
 
- interface Props extends BaseProps {
+interface Props extends BaseProps {
   isOpen: boolean;
   setIsOpen: (i: boolean) => void;
 }
@@ -19,9 +22,10 @@ import { useIndexVolumeGroups } from "../../../api/indexVolumeGroup";
 export const IndexVolumeGroupModalPicker = ({
   onConfirm,
   isOpen,
-  setIsOpen
+  setIsOpen,
+  valuesToFilterOut
 }: Props) => {
-  const volumeGroupPickerProps = usePicker();
+  const volumeGroupPickerProps = usePicker({ valuesToFilterOut });
   const {
     reset: resetVolumeGroup,
     value: volumeGroupName
@@ -86,7 +90,7 @@ export const IndexVolumeGroupModalPicker = ({
   );
 };
 
- interface UseDialog {
+interface UseDialog {
   componentProps: Props;
   showDialog: () => void;
 }

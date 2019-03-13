@@ -23,7 +23,7 @@ const initialValues: FormValues = {
 
 const NewIndexVolumeDialog = ({ isOpen, onConfirm, onCloseDialog }: Props) => {
   const {
-    currentValues: { nodeName, path },
+    value: { nodeName, path },
     generateTextInput
   } = useForm<FormValues>({
     initialValues

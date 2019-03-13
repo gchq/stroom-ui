@@ -4,11 +4,10 @@ import { useCallback, useState } from "react";
 import ThemedModal from "../../../components/ThemedModal";
 import IconHeader from "../../../components/IconHeader";
 import UserPicker, { usePicker } from "../UserPicker";
+import { BaseProps as PickerBaseProps } from "../UserPicker/types";
 import { DialogActionButtons } from "../../../components/Button";
-import { IsGroup } from "../../../api/userGroups";
 
-interface BaseProps {
-  isGroup: IsGroup;
+interface BaseProps extends PickerBaseProps {
   onConfirm: (userUuid: string) => void;
 }
 
@@ -21,9 +20,9 @@ export const UserModalPicker = ({
   isOpen,
   onConfirm,
   onCloseDialog,
-  isGroup
+  ...rest
 }: Props) => {
-  const { pickerProps } = usePicker(isGroup);
+  const { pickerProps } = usePicker(rest);
   const { value: userUuid } = pickerProps;
 
   const onConfirmLocal = useCallback(() => {
@@ -58,14 +57,13 @@ interface UseDialog {
   showDialog: () => void;
 }
 
-export const useDialog = ({ isGroup, onConfirm }: BaseProps): UseDialog => {
+export const useDialog = (baseProps: BaseProps): UseDialog => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   return {
     componentProps: {
-      onConfirm,
+      ...baseProps,
       isOpen,
-      isGroup,
       onCloseDialog: useCallback(() => {
         setIsOpen(false);
       }, [setIsOpen])

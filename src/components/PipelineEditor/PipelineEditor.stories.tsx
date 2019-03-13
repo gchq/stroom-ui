@@ -28,6 +28,8 @@ const pipelineStories = storiesOf(
   module
 ).addDecorator(StroomDecorator);
 
-Object.keys(testPipelines).forEach(k => {
-  pipelineStories.add(k, () => <PipelineEditor pipelineId={k} />);
+Object.entries(testPipelines).forEach(k => {
+  pipelineStories.add(k[0], () => (
+    <PipelineEditor pipelineId={k[1].docRef.uuid} />
+  ));
 });

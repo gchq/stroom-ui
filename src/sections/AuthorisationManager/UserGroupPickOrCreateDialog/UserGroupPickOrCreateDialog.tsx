@@ -9,6 +9,7 @@ import { useManageUsers } from "../../../api/userGroups";
 
 interface BaseProps {
   onConfirm: (groupUuid: string) => void;
+  valuesToFilterOut?: Array<string>;
 }
 
 interface Props extends BaseProps {
@@ -19,10 +20,11 @@ interface Props extends BaseProps {
 export const UserGroupPickOrCreateDialog = ({
   onConfirm,
   isOpen,
-  setIsOpen
+  setIsOpen,
+  valuesToFilterOut
 }: Props) => {
   const { reset: resetUserGroup, pickerProps: useGroupPickerProps } = usePicker(
-    "Group"
+    { isGroup: "Group", valuesToFilterOut }
   );
   const { value: userGroupUuid } = useGroupPickerProps;
 

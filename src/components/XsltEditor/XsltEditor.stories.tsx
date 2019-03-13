@@ -26,8 +26,8 @@ const stories = storiesOf("Document Editors/XSLT", module).addDecorator(
   StroomDecorator
 );
 
-let uuid: string = Object.entries(fullTestData.xslt)
-  .map(k => k[0])
+let uuid: string = Object.values(fullTestData.xslt)
+  .map(x => x.uuid)
   .find(() => true)!;
 
 stories.add("editor", () => <XsltEditor xsltUuid={uuid} />);

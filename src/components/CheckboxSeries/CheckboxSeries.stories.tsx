@@ -38,7 +38,7 @@ const TestHarness: React.FunctionComponent = () => {
         removeValue={removeBreakfast}
       />
 
-      <JsonDebug currentValues={breakfast} />
+      <JsonDebug value={breakfast} />
     </div>
   );
 };

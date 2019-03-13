@@ -28,16 +28,16 @@ interface Props {
 }
 
 const XsltEditor = ({ xsltUuid }: Props) => {
-  const api = useApi();
+  const { fetchDocument, saveDocument } = useApi();
   useEffect(() => {
-    api.fetchDocument(xsltUuid);
-  });
+    fetchDocument(xsltUuid);
+  }, [xsltUuid, fetchDocument]);
 
   const { docRefContents, onDocumentChange, editorProps } = useDocRefEditor<
     XsltDoc
   >({
     docRefUuid: xsltUuid,
-    saveDocument: api.saveDocument
+    saveDocument
   });
 
   if (!docRefContents) {

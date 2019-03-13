@@ -41,7 +41,7 @@ const B: React.FunctionComponent = () => {
       <Button text="Edit" onClick={showDialog} />
       <fieldset>
         <label>Last Value</label>
-        <JsonDebug currentValues={newUser} />
+        <JsonDebug value={newUser} />
       </fieldset>
       <NewUserDialog {...componentProps} />
     </div>

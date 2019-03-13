@@ -15,6 +15,7 @@
  */
 
 import * as React from "react";
+import { useMemo } from "react";
 
 import { storiesOf } from "@storybook/react";
 
@@ -25,20 +26,34 @@ import "../../../styles/main.css";
 import UserPicker, { usePicker } from "./UserPicker";
 import Button from "../../../components/Button";
 import JsonDebug from "../../../testing/JsonDebug";
+import fullTestData from "../../../testing/data";
 
 const stories = storiesOf("Pickers/User Picker", module).addDecorator(
   StroomDecorator
 );
 
 const TestHarness = () => {
-  const { pickerProps, reset } = usePicker(undefined);
+  const { userNamesToFilterOut, valuesToFilterOut } = useMemo(() => {
+    let usersToFilterOut = fullTestData.usersAndGroups.users.slice(0, 3);
+    let valuesToFilterOut = usersToFilterOut.map(u => u.uuid);
+    let userNamesToFilterOut = usersToFilterOut.map(u => u.name);
+    return {
+      userNamesToFilterOut,
+      valuesToFilterOut
+    };
+  }, []);
+
+  const { pickerProps, reset } = usePicker({
+    isGroup: undefined,
+    valuesToFilterOut
+  });
   const { value } = pickerProps;
 
   return (
     <div>
       <Button text="reset" onClick={reset} />
       <UserPicker {...pickerProps} />
-      <JsonDebug currentValues={{ value }} />
+      <JsonDebug value={{ value, userNamesToFilterOut }} />
     </div>
   );
 };

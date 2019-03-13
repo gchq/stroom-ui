@@ -24,7 +24,7 @@ const defaultValues: FormValues = {
 
 const NewUserDialog = ({ isOpen, onCreateUser, onCloseDialog }: Props) => {
   const {
-    currentValues: { name, isGroup },
+    value: { name, isGroup },
     generateTextInput,
     generateCheckboxInput
   } = useForm<FormValues>({
