@@ -66,10 +66,6 @@ import {
   StoreState as IndexVolumeStoreState
 } from "../api/indexVolume";
 import {
-  reducer as processing,
-  StoreState as ProcessingStoreState
-} from "../components/Processing";
-import {
   reducer as dataViewers,
   StoreState as DataViewersStoreState
 } from "../api/data";
@@ -88,7 +84,6 @@ export interface GlobalStoreState {
   folderExplorer: FolderExplorerStoreState;
   pipelineEditor: PipelineEditorStoreState;
   debuggers: DebuggersStoreState;
-  processing: ProcessingStoreState;
   dataViewers: DataViewersStoreState;
   userGroups: UserGroupStoreState;
   indexVolumeGroups: IndexVolumeGroupStoreState;
@@ -107,7 +102,6 @@ export default combineReducers({
   folderExplorer,
   pipelineEditor,
   debuggers,
-  processing,
   dataViewers,
   userGroups,
   indexVolumeGroups,

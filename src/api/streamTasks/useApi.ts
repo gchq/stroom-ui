@@ -1,140 +1,82 @@
 import { useContext, useCallback } from "react";
 import { StoreContext } from "redux-react-hook";
 
-import { useActionCreators } from "../../components/Processing/redux";
 import useHttpClient from "../useHttpClient";
 import { StreamTasksResponseType } from "../../types";
 
-enum TrackerSelection {
-  first = "first",
-  last = "last",
-  none = "none"
-}
+import { FetchParameters } from "./types";
 
 interface Api {
-  fetchTrackers: (trackerSelection?: TrackerSelection) => void;
-  fetchMore: (trackerSelection?: TrackerSelection) => void;
-  enableToggle: (filterId: number, isCurrentlyEnabled: boolean) => void;
+  fetchTrackers: (params: FetchParameters) => Promise<StreamTasksResponseType>;
+  fetchMore: (params: FetchParameters) => Promise<StreamTasksResponseType>;
+  enableToggle: (
+    filterId: number,
+    isCurrentlyEnabled: boolean
+  ) => Promise<void>;
 }
 
 export const useApi = (): Api => {
   const store = useContext(StoreContext);
   const { httpGetJson, httpPatchEmptyResponse } = useHttpClient();
-  const {
-    updatePageSize,
-    updateTrackers,
-    selectFirst,
-    selectNone,
-    selectLast,
-    changePage,
-    addTrackers,
-    updateEnabled
-  } = useActionCreators();
 
   if (!store) {
     throw new Error("Could not get Redux Store for processing Thunks");
   }
 
   const fetchTrackers = useCallback(
-    (trackerSelection?: TrackerSelection) => {
-      const state = store.getState();
+    ({
+      pageSize,
+      pageOffset,
+      sortBy,
+      sortDirection,
+      searchCriteria
+    }: FetchParameters): Promise<StreamTasksResponseType> => {
+      const { config } = store.getState();
 
-      const rowsToFetch = state.processing.pageSize;
-      updatePageSize(rowsToFetch);
-
-      let url = `${state.config.values.stroomBaseServiceUrl}/streamtasks/v1/?`;
-      url += `pageSize=${rowsToFetch}`;
-      url += `&offset=${state.processing.pageOffset}`;
-      if (state.processing.sortBy !== undefined) {
-        url += `&sortBy=${state.processing.sortBy}`;
-        url += `&sortDirection=${state.processing.sortDirection}`;
+      let url = `${config.values.stroomBaseServiceUrl}/streamtasks/v1/?`;
+      url += `pageSize=${pageSize}`;
+      url += `&offset=${pageOffset}`;
+      if (sortBy !== undefined) {
+        url += `&sortBy=${sortBy}`;
+        url += `&sortDirection=${sortDirection}`;
       }
 
-      if (
-        state.processing.searchCriteria !== "" &&
-        state.processing.searchCriteria !== undefined
-      ) {
-        url += `&filter=${state.processing.searchCriteria}`;
+      if (searchCriteria !== "" && searchCriteria !== undefined) {
+        url += `&filter=${searchCriteria}`;
       }
 
-      httpGetJson(url).then((trackers: StreamTasksResponseType) => {
-        updateTrackers(trackers.streamTasks, trackers.totalStreamTasks);
-        switch (trackerSelection) {
-          case TrackerSelection.first:
-            selectFirst();
-            break;
-          case TrackerSelection.last:
-            selectLast();
-            break;
-          case TrackerSelection.none:
-            selectNone();
-            break;
-          default:
-            break;
-        }
-      });
+      return httpGetJson(url);
     },
-    [
-      httpGetJson,
-      updatePageSize,
-      selectFirst,
-      selectNone,
-      selectLast,
-      updateTrackers
-    ]
+    [httpGetJson]
   );
 
   const fetchMore = useCallback(
-    (trackerSelection?: TrackerSelection) => {
-      const state = store.getState();
+    ({
+      pageSize,
+      pageOffset,
+      sortBy,
+      sortDirection,
+      searchCriteria
+    }: FetchParameters): Promise<StreamTasksResponseType> => {
+      const { config } = store.getState();
 
-      const rowsToFetch = state.processing.pageSize;
-      updatePageSize(rowsToFetch);
+      const nextPageOffset = pageOffset + 1;
 
-      const nextPageOffset = state.processing.pageOffset + 1;
-      changePage(nextPageOffset);
-
-      let url = `${state.config.values.stroomBaseServiceUrl}/streamtasks/v1/?`;
-      url += `pageSize=${rowsToFetch}`;
+      let url = `${config.values.stroomBaseServiceUrl}/streamtasks/v1/?`;
+      url += `pageSize=${pageSize}`;
       url += `&offset=${nextPageOffset}`;
-      if (state.processing.sortBy !== undefined) {
-        url += `&sortBy=${state.processing.sortBy}`;
-        url += `&sortDirection=${state.processing.sortDirection}`;
+      if (sortBy !== undefined) {
+        url += `&sortBy=${sortBy}`;
+        url += `&sortDirection=${sortDirection}`;
       }
 
-      if (
-        state.processing.searchCriteria !== "" &&
-        state.processing.searchCriteria !== undefined
-      ) {
-        url += `&filter=${state.processing.searchCriteria}`;
+      if (searchCriteria !== "" && searchCriteria !== undefined) {
+        url += `&filter=${searchCriteria}`;
       }
 
-      httpGetJson(url).then((trackers: StreamTasksResponseType) => {
-        addTrackers(trackers.streamTasks, trackers.totalStreamTasks);
-        switch (trackerSelection) {
-          case TrackerSelection.first:
-            selectFirst();
-            break;
-          case TrackerSelection.last:
-            selectLast();
-            break;
-          case TrackerSelection.none:
-            selectNone();
-            break;
-          default:
-            break;
-        }
-      });
+      return httpGetJson(url);
     },
-    [
-      httpGetJson,
-      updatePageSize,
-      changePage,
-      addTrackers,
-      selectFirst,
-      selectNone,
-      selectLast
-    ]
+    [httpGetJson]
   );
 
   const enableToggle = useCallback(
@@ -149,11 +91,9 @@ export const useApi = (): Api => {
         value: !isCurrentlyEnabled
       });
 
-      httpPatchEmptyResponse(url, { body }).then(() =>
-        updateEnabled(filterId, !isCurrentlyEnabled)
-      );
+      return httpPatchEmptyResponse(url, { body });
     },
-    [httpPatchEmptyResponse, updateEnabled]
+    [httpPatchEmptyResponse]
   );
 
   return {

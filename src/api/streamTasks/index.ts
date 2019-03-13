@@ -1,3 +1,3 @@
-import useApi from "./useApi";
+import useStreamTasks from "./useStreamTasks";
 
-export { useApi };
+export { useStreamTasks };

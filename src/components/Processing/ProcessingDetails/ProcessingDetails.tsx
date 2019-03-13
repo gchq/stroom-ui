@@ -18,21 +18,20 @@ import * as React from "react";
 import * as moment from "moment";
 import { useCallback } from "react";
 
-import { useActionCreators } from "../redux";
-import useApi from "../../../api/streamTasks/useApi";
 import HorizontalPanel from "../../../components/HorizontalPanel";
-import useReduxState from "../../../lib/useReduxState";
+import { UseStreamTasks } from "src/api/streamTasks/types";
 
-const ProcessingDetails = () => {
-  const { selectNone } = useActionCreators();
-  const { enableToggle } = useApi();
+interface Props {
+  streamTasksApi: UseStreamTasks;
+}
 
-  const { trackers, selectedTrackerId } = useReduxState(
-    ({ processing: { trackers, selectedTrackerId } }) => ({
-      trackers,
-      selectedTrackerId
-    })
-  );
+const ProcessingDetails = ({streamTasksApi}: Props) => {
+  const {
+    enableToggle,
+    selectNone,
+    selectedTrackerId,
+    pagedTrackerInfo: { trackers }
+  } = streamTasksApi;
 
   const onHandleEnableToggle = useCallback(
     (filterId: number, isCurrentlyEnabled: boolean) => {

@@ -15,7 +15,7 @@
  */
 
 import * as React from "react";
-import { useEffect, useCallback } from "react";
+import { useEffect, useCallback, useMemo } from "react";
 import { path } from "ramda";
 import * as Mousetrap from "mousetrap";
 import { Progress } from "react-sweet-progress";
@@ -24,44 +24,29 @@ import ReactTable, { RowInfo, SortingRule } from "react-table";
 import "react-table/react-table.css";
 
 import Button from "../../../components/Button";
-import { useActionCreators, sortByFromString } from "../redux";
-import { Directions, SortByOptions } from "../enums";
-import useApi from "../../../api/streamTasks/useApi";
+import {
+  Directions,
+  SortByOptions,
+  sortByFromString,
+  UseStreamTasks
+} from "../../../api/streamTasks/types";
 import { StreamTaskType } from "../../../types";
-import useReduxState from "../../../lib/useReduxState";
 
 interface Props {
+  streamTasksApi: UseStreamTasks;
   onSelection: (filterId: number, trackers: Array<StreamTaskType>) => void;
 }
 
-const ProcessingList = ({ onSelection }: Props) => {
-  const { fetchMore, fetchTrackers } = useApi();
-  const { moveSelection, updateSort } = useActionCreators();
-
+const ProcessingList = ({ onSelection, streamTasksApi }: Props) => {
   const {
-    trackers,
+    pagedTrackerInfo: { trackers, totalTrackers },
     selectedTrackerId,
-    pageSize,
-    totalTrackers
-  } = useReduxState(
-    ({
-      processing: {
-        trackers,
-        sortBy,
-        sortDirection,
-        selectedTrackerId,
-        pageSize,
-        totalTrackers
-      }
-    }) => ({
-      trackers,
-      sortBy,
-      sortDirection,
-      selectedTrackerId,
-      pageSize,
-      totalTrackers
-    })
-  );
+    updateSort,
+    moveSelection,
+    fetchMore,
+    fetchTrackers,
+    fetchParameters: { pageSize }
+  } = streamTasksApi;
 
   const onMoveSelection = useCallback(
     (direction: Directions) => {
@@ -95,22 +80,23 @@ const ProcessingList = ({ onSelection }: Props) => {
   const onHandleLoadMoreRows = fetchMore;
 
   // We add an empty 'load more' row, but we need to make sure it's not there when we re-render.
-  const trackersFiltered = trackers.filter(
-    (tracker: StreamTaskType) => tracker.filterId !== undefined
-  );
   const allRecordsRetrieved = totalTrackers === trackers.length;
 
   const retrievalStave = allRecordsRetrieved
     ? "All rows loaded"
     : "Load more rows";
 
-  const tableData = trackersFiltered.map(
-    ({ filterId, priority, trackerPercent }: StreamTaskType) => ({
-      filterId,
-      pipelineName: "TODO: awaiting backend re-write. Sorting broken too.",
-      priority,
-      progress: trackerPercent
-    })
+  const tableData = useMemo(
+    () =>
+      trackers
+        .filter((tracker: StreamTaskType) => tracker.filterId !== undefined)
+        .map(({ filterId, priority, trackerPercent }: StreamTaskType) => ({
+          filterId,
+          pipelineName: "TODO: awaiting backend re-write. Sorting broken too.",
+          priority,
+          progress: trackerPercent
+        })),
+    [trackers]
   );
 
   const tableColumns = [
@@ -123,7 +109,7 @@ const ProcessingList = ({ onSelection }: Props) => {
       Header: "Pipeline name",
       accessor: "pipelineName",
       Cell: (row: RowInfo) =>
-        row.original.filterId ? row.original.pipelineName : undefined
+        row.original.filterId ? row.original.pipelineName : "UNKNOWN"
     },
     {
       Header: "Priority",
@@ -150,7 +136,7 @@ const ProcessingList = ({ onSelection }: Props) => {
             symbolClassName="flat-text"
           />
         ) : (
-          undefined
+          "UNKNOWN"
         )
     }
   ];

@@ -9,7 +9,7 @@ const resourceBuilder: ResourceBuilder = (
   testConfig: Config,
   testCache: TestCache
 ) => {
-  const resource = `${testConfig.stroomBaseServiceUrl}/streamTasks/v1/`;
+  const resource = `${testConfig.stroomBaseServiceUrl}/streamtasks/v1/`;
 
   server.get(resource).intercept((req: HttpRequest, res: HttpResponse) =>
     res.json({

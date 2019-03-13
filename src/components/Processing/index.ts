@@ -14,8 +14,6 @@
  * limitations under the License.
  */
 
-import ProcessingContainer from "./ProcessingContainer/ProcessingContainer";
-import { reducer } from "./redux";
-import { StoreState } from "./types";
+import Processing from "./Processing";
 
-export { reducer, StoreState, ProcessingContainer as Processing };
+export { Processing };

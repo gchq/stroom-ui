@@ -20,30 +20,23 @@ import * as Mousetrap from "mousetrap";
 import PanelGroup from "react-panelgroup";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import Tooltip from "../../../components/Tooltip";
-import IconHeader from "../../../components/IconHeader";
-import { useActionCreators } from "../redux";
-import useApi from "../../../api/streamTasks/useApi";
-import ProcessingDetails from "../ProcessingDetails/ProcessingDetails";
-import ProcessingList from "../ProcessingList/ProcessingList";
-import { StreamTaskType } from "../../../types";
-import useReduxState from "../../../lib/useReduxState";
+import Tooltip from "../../components/Tooltip";
+import IconHeader from "../../components/IconHeader";
+import { useStreamTasks } from "../../api/streamTasks";
+import ProcessingDetails from "./ProcessingDetails";
+import ProcessingList from "./ProcessingList";
+import { StreamTaskType } from "../../types";
 
 const ProcessingContainer = () => {
-  const { fetchTrackers } = useApi();
+  const streamTasksApi = useStreamTasks();
   const {
+    fetchTrackers,
     updateTrackerSelection,
     resetPaging,
-    updateSearchCriteria
-  } = useActionCreators();
-
-  const { searchCriteria, selectedTrackerId } = useReduxState(
-    ({ processing: { trackers, searchCriteria, selectedTrackerId } }) => ({
-      trackers,
-      searchCriteria,
-      selectedTrackerId
-    })
-  );
+    updateSearchCriteria,
+    selectedTrackerId,
+    fetchParameters: { searchCriteria }
+  } = streamTasksApi;
 
   const onHandleTrackerSelection = useCallback(
     (filterId: number, trackers?: Array<StreamTaskType>) => {
@@ -158,6 +151,7 @@ const ProcessingContainer = () => {
             >
               {selectedTrackerId === undefined || selectedTrackerId === null ? (
                 <ProcessingList
+                  streamTasksApi={streamTasksApi}
                   onSelection={(filterId: number, trackers: any[]) =>
                     onHandleTrackerSelection(filterId, trackers)
                   }
@@ -165,11 +159,12 @@ const ProcessingContainer = () => {
               ) : (
                 <PanelGroup direction="column">
                   <ProcessingList
+                    streamTasksApi={streamTasksApi}
                     onSelection={(filterId: number, trackers: any[]) =>
                       onHandleTrackerSelection(filterId, trackers)
                     }
                   />
-                  <ProcessingDetails />
+                  <ProcessingDetails streamTasksApi={streamTasksApi} />
                 </PanelGroup>
               )}
             </div>
