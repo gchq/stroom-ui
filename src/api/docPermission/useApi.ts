@@ -1,5 +1,5 @@
-import { useContext, useCallback } from "react";
-import { StoreContext } from "redux-react-hook";
+import { useCallback } from "react";
+import useStroomBaseUrl from "../useStroomBaseUrl";
 
 import useHttpClient from "../useHttpClient";
 import { DocumentPermissions } from "src/types";
@@ -34,7 +34,7 @@ interface Api {
 }
 
 export const useApi = (): Api => {
-  const store = useContext(StoreContext);
+  const stroomBaseServiceUrl = useStroomBaseUrl();
 
   const {
     httpGetJson,
@@ -49,9 +49,7 @@ export const useApi = (): Api => {
   const getPermissionForDocType = useCallback(
     (docRefType: string): Promise<Array<string>> => {
       const state = store.getState();
-      var url = `${
-        state.config.values.stroomBaseServiceUrl
-      }/docPermissions/v1/forDocType/${docRefType}`;
+      var url = `${stroomBaseServiceUrl}/docPermissions/v1/forDocType/${docRefType}`;
 
       return httpGetJson(url);
     },
@@ -61,9 +59,7 @@ export const useApi = (): Api => {
   const getPermissionsForDocumentForUser = useCallback(
     (docRefUuid: string, userUuid: string): Promise<Array<string>> => {
       const state = store.getState();
-      var url = `${
-        state.config.values.stroomBaseServiceUrl
-      }/docPermissions/v1/forDocForUser/${docRefUuid}/${userUuid}`;
+      var url = `${stroomBaseServiceUrl}/docPermissions/v1/forDocForUser/${docRefUuid}/${userUuid}`;
 
       return httpGetJson(url);
     },
@@ -77,9 +73,7 @@ export const useApi = (): Api => {
       permissionName: string
     ): Promise<void> => {
       const state = store.getState();
-      var url = `${
-        state.config.values.stroomBaseServiceUrl
-      }/docPermissions/v1/forDocForUser/${docRefUuid}/${userUuid}/${permissionName}`;
+      var url = `${stroomBaseServiceUrl}/docPermissions/v1/forDocForUser/${docRefUuid}/${userUuid}/${permissionName}`;
 
       return httpPostEmptyResponse(url);
     },
@@ -93,9 +87,7 @@ export const useApi = (): Api => {
       permissionName: string
     ): Promise<void> => {
       const state = store.getState();
-      var url = `${
-        state.config.values.stroomBaseServiceUrl
-      }/docPermissions/v1/forDocForUser/${docRefUuid}/${userUuid}/${permissionName}`;
+      var url = `${stroomBaseServiceUrl}/docPermissions/v1/forDocForUser/${docRefUuid}/${userUuid}/${permissionName}`;
 
       return httpDeleteEmptyResponse(url);
     },
@@ -105,9 +97,7 @@ export const useApi = (): Api => {
   const getPermissionForDoc = useCallback(
     (docRefUuid: string) => {
       const state = store.getState();
-      var url = `${
-        state.config.values.stroomBaseServiceUrl
-      }/docPermissions/v1/forDoc/${docRefUuid}`;
+      var url = `${stroomBaseServiceUrl}/docPermissions/v1/forDoc/${docRefUuid}`;
 
       return httpGetJson(url);
     },
@@ -117,9 +107,7 @@ export const useApi = (): Api => {
   const clearDocPermissionsForUser = useCallback(
     (docRefUuid: string, userUuid: string) => {
       const state = store.getState();
-      var url = `${
-        state.config.values.stroomBaseServiceUrl
-      }/docPermissions/v1/forDocForUser/${docRefUuid}/${userUuid}`;
+      var url = `${stroomBaseServiceUrl}/docPermissions/v1/forDocForUser/${docRefUuid}/${userUuid}`;
 
       return httpDeleteEmptyResponse(url);
     },
@@ -129,9 +117,7 @@ export const useApi = (): Api => {
   const clearDocPermissions = useCallback(
     (docRefUuid: string) => {
       const state = store.getState();
-      var url = `${
-        state.config.values.stroomBaseServiceUrl
-      }/docPermissions/v1/forDoc/${docRefUuid}`;
+      var url = `${stroomBaseServiceUrl}/docPermissions/v1/forDoc/${docRefUuid}`;
 
       return httpDeleteEmptyResponse(url);
     },

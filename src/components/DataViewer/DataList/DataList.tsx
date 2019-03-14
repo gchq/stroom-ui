@@ -15,39 +15,42 @@
  */
 
 import * as React from "react";
-import { useEffect } from "react";
+// import { useEffect } from "react";
 
-import * as moment from "moment";
-import { path } from "ramda";
-import * as Mousetrap from "mousetrap";
-import ReactTable, { RowInfo, Column } from "react-table";
-import "react-table/react-table.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import * as moment from "moment";
+// import { path } from "ramda";
+// import * as Mousetrap from "mousetrap";
+// import ReactTable, { RowInfo, Column } from "react-table";
+// import "react-table/react-table.css";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import useStreamAttributeMapApi from "../../../api/streamAttributeMap/useApi";
-import useDataApi from "../../../api/data/useApi";
-import { useActionCreators, defaultStatePerId } from "../../../api/data/redux";
+// import useStreamAttributeMapApi from "../../../api/streamAttributeMap/useApi";
+// import useDataApi from "../../../api/data/useApi";
+// import { useActionCreators, defaultStatePerId } from "../../../api/data/redux";
 
-import Loader from "../../../components/Loader";
-import Button from "../../../components/Button";
-import { Direction, ExpressionOperatorWithUuid, DataRow } from "../../../types";
+// import Loader from "../../../components/Loader";
+// import Button from "../../../components/Button";
+// import { Direction, ExpressionOperatorWithUuid, DataRow } from "../../../types";
+import { ExpressionOperatorWithUuid } from "../../../types";
 
-import useReduxState from "../../../lib/useReduxState";
+// import useReduxState from "../../../lib/useReduxState";
 
- interface Props {
+interface Props {
   dataViewerId: string;
   expression?: ExpressionOperatorWithUuid;
 }
 
-interface TableData {
-  metaId?: string;
-  created?: string;
-  type?: string;
-  feed?: string;
-  pipeline?: string;
-}
+// interface TableData {
+//   metaId?: string;
+//   created?: string;
+//   type?: string;
+//   feed?: string;
+//   pipeline?: string;
+// }
 
 const DataList = ({ dataViewerId, expression }: Props) => {
+  return <div>Nope</div>;
+  /*
   const { selectRow } = useActionCreators();
   const dataViewers = useReduxState(({ dataViewers }) => dataViewers);
   const { selectedRow, pageOffset, pageSize, streamAttributeMaps, dataSource } =
@@ -269,6 +272,7 @@ const DataList = ({ dataViewerId, expression }: Props) => {
       }}
     />
   );
+  */
 };
 
 export default DataList;

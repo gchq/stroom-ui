@@ -1,5 +1,5 @@
-import { useContext, useCallback } from "react";
-import { StoreContext } from "redux-react-hook";
+import { useCallback } from "react";
+import useStroomBaseUrl from "../useStroomBaseUrl";
 
 import useHttpClient from "../useHttpClient";
 
@@ -14,7 +14,7 @@ interface Api {
 }
 
 export const useApi = (): Api => {
-  const store = useContext(StoreContext);
+  const stroomBaseServiceUrl = useStroomBaseUrl();
 
   const {
     httpGetJson,
@@ -29,9 +29,7 @@ export const useApi = (): Api => {
   const getPermissionsForUser = useCallback(
     (userUuid: string): Promise<Array<string>> => {
       const state = store.getState();
-      var url = `${
-        state.config.values.stroomBaseServiceUrl
-      }/appPermissions/v1/${userUuid}`;
+      var url = `${stroomBaseServiceUrl}/appPermissions/v1/${userUuid}`;
 
       return httpGetJson(url);
     },
@@ -40,7 +38,7 @@ export const useApi = (): Api => {
 
   const getAllPermissionNames = useCallback((): Promise<Array<string>> => {
     const state = store.getState();
-    var url = `${state.config.values.stroomBaseServiceUrl}/appPermissions/v1`;
+    var url = `${stroomBaseServiceUrl}/appPermissions/v1`;
 
     return httpGetJson(url);
   }, [httpGetJson]);
@@ -48,9 +46,7 @@ export const useApi = (): Api => {
   const addAppPermission = useCallback(
     (userUuid: string, permissionName: string): Promise<void> => {
       const state = store.getState();
-      var url = `${
-        state.config.values.stroomBaseServiceUrl
-      }/appPermissions/v1/${userUuid}/${permissionName}`;
+      var url = `${stroomBaseServiceUrl}/appPermissions/v1/${userUuid}/${permissionName}`;
 
       return httpPostEmptyResponse(url);
     },
@@ -60,9 +56,7 @@ export const useApi = (): Api => {
   const removeAppPermission = useCallback(
     (userUuid: string, permissionName: string): Promise<void> => {
       const state = store.getState();
-      var url = `${
-        state.config.values.stroomBaseServiceUrl
-      }/appPermissions/v1/${userUuid}/${permissionName}`;
+      var url = `${stroomBaseServiceUrl}/appPermissions/v1/${userUuid}/${permissionName}`;
 
       return httpDeleteEmptyResponse(url);
     },

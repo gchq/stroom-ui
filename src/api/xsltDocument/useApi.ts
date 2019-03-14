@@ -13,11 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { useContext, useCallback } from "react";
-import { StoreContext } from "redux-react-hook";
+import { useCallback } from "react";
 import { useActionCreators } from "../../components/DocRefEditor";
 import useHttpClient from "../useHttpClient";
 import { XsltDoc } from "../../types";
+import useStroomBaseUrl from "../useStroomBaseUrl";
 
 interface Api {
   fetchDocument: (uuid: string) => void;
@@ -25,48 +25,31 @@ interface Api {
 }
 
 export const useApi = (): Api => {
-  const store = useContext(StoreContext);
+  const stroomBaseServiceUrl = useStroomBaseUrl();
   const { httpGetJson, httpPostEmptyResponse } = useHttpClient();
   const { documentReceived, documentSaved } = useActionCreators();
 
-  if (!store) {
-    throw new Error("Could not get Redux Store for processing Thunks");
-  }
-
   const fetchDocument = useCallback(
-    (uuid: string) => {
-      const state = store.getState();
-      const url = `${state.config.values.stroomBaseServiceUrl}/xslt/v1/${uuid}`;
-      httpGetJson(
-        url,
-
-        {
-          headers: {
-            Accept: "application/xml",
-            "Content-Type": "application/xml"
-          }
+    (uuid: string) =>
+      httpGetJson(`${stroomBaseServiceUrl}/xslt/v1/${uuid}`, {
+        headers: {
+          Accept: "application/xml",
+          "Content-Type": "application/xml"
         }
-      ).then((document: XsltDoc) => documentReceived(uuid, document));
-    },
-    [httpGetJson]
+      }).then((document: XsltDoc) => documentReceived(uuid, document)),
+    [stroomBaseServiceUrl, httpGetJson]
   );
 
   const saveDocument = useCallback(
-    (xslt: XsltDoc) => {
-      const state = store.getState();
-      const url = `${state.config.values.stroomBaseServiceUrl}/xslt/v1/${
-        xslt.uuid
-      }`;
-
-      httpPostEmptyResponse(url, {
+    (xslt: XsltDoc) =>
+      httpPostEmptyResponse(`${stroomBaseServiceUrl}/xslt/v1/${xslt.uuid}`, {
         body: xslt.data,
         headers: {
           Accept: "application/xml",
           "Content-Type": "application/xml"
         }
-      }).then(() => documentSaved(xslt.uuid));
-    },
-    [httpPostEmptyResponse, documentSaved]
+      }).then(() => documentSaved(xslt.uuid)),
+    [stroomBaseServiceUrl, httpPostEmptyResponse, documentSaved]
   );
 
   return {

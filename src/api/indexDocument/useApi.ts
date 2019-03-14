@@ -13,8 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { useContext, useCallback } from "react";
-import { StoreContext } from "redux-react-hook";
+import { useCallback } from "react";
+import useStroomBaseUrl from "../useStroomBaseUrl";
 import { useActionCreators } from "../../components/DocRefEditor";
 import useHttpClient from "../useHttpClient";
 import { IndexDoc } from "../../types";
@@ -25,7 +25,7 @@ interface Api {
 }
 
 export const useApi = (): Api => {
-  const store = useContext(StoreContext);
+  const stroomBaseServiceUrl = useStroomBaseUrl();
   const { httpGetJson, httpPostEmptyResponse } = useHttpClient();
   const { documentReceived, documentSaved } = useActionCreators();
 
@@ -36,9 +36,7 @@ export const useApi = (): Api => {
   const fetchDocument = useCallback(
     (indexUuid: string) => {
       const state = store.getState();
-      const url = `${
-        state.config.values.stroomBaseServiceUrl
-      }/index/v1/${indexUuid}`;
+      const url = `${stroomBaseServiceUrl}/index/v1/${indexUuid}`;
       httpGetJson(url).then((index: IndexDoc) =>
         documentReceived(indexUuid, index)
       );
@@ -48,9 +46,7 @@ export const useApi = (): Api => {
   const saveDocument = useCallback(
     (docRefContents: IndexDoc) => {
       const state = store.getState();
-      const url = `${state.config.values.stroomBaseServiceUrl}/index/v1/${
-        docRefContents.uuid
-      }`;
+      const url = `${stroomBaseServiceUrl}/index/v1/${docRefContents.uuid}`;
 
       httpPostEmptyResponse(url, {
         body: docRefContents

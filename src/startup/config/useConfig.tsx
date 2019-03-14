@@ -6,11 +6,11 @@ import { GlobalStoreState } from "../reducers";
 import { useApi } from "./config";
 
 export const useConfig = () => {
-  const api = useApi();
+  const { fetchConfig } = useApi();
 
   useEffect(() => {
-    api.fetchConfig();
-  }, []);
+    fetchConfig();
+  }, [fetchConfig]);
 
   // Get data from and subscribe to the store
   const config = useReduxState(({ config }: GlobalStoreState) => config);

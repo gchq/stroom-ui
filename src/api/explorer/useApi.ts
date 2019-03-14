@@ -1,5 +1,5 @@
-import { useContext, useCallback } from "react";
-import { StoreContext } from "redux-react-hook";
+import { useCallback } from "react";
+import useStroomBaseUrl from "../useStroomBaseUrl";
 
 import { useActionCreators as useFolderExplorerActionCreators } from "./redux";
 import useHttpClient from "../useHttpClient";
@@ -39,7 +39,7 @@ interface Api {
 }
 
 export const useApi = (): Api => {
-  const store = useContext(StoreContext);
+  const stroomBaseServiceUrl = useStroomBaseUrl();
   const {
     httpGetJson,
     httpPostJsonResponse,
@@ -64,24 +64,22 @@ export const useApi = (): Api => {
 
   const fetchDocTree = useCallback(() => {
     const state = store.getState();
-    const url = `${state.config.values.stroomBaseServiceUrl}/explorer/v1/all`;
+    const url = `${stroomBaseServiceUrl}/explorer/v1/all`;
     httpGetJson(url).then(docTreeReceived);
   }, [httpGetJson, docTreeReceived]);
 
   const fetchDocRefTypes = useCallback(() => {
     const state = store.getState();
-    const url = `${
-      state.config.values.stroomBaseServiceUrl
-    }/explorer/v1/docRefTypes`;
+    const url = `${stroomBaseServiceUrl}/explorer/v1/docRefTypes`;
 
     httpGetJson(url).then(docRefTypesReceived);
   }, [httpGetJson]);
   const fetchDocInfo = useCallback(
     (docRef: DocRefType) => {
       const state = store.getState();
-      const url = `${
-        state.config.values.stroomBaseServiceUrl
-      }/explorer/v1/info/${docRef.type}/${docRef.uuid}`;
+      const url = `${stroomBaseServiceUrl}/explorer/v1/info/${docRef.type}/${
+        docRef.uuid
+      }`;
       httpGetJson(url).then(docRefInfoReceived);
     },
     [httpGetJson, docRefInfoReceived]
@@ -91,9 +89,7 @@ export const useApi = (): Api => {
     ({ term = "", docRefType = "", pageOffset = 0, pageSize = 10 }) => {
       const state = store.getState();
       const params = `searchTerm=${term}&docRefType=${docRefType}&pageOffset=${pageOffset}&pageSize=${pageSize}`;
-      const url = `${
-        state.config.values.stroomBaseServiceUrl
-      }/explorer/v1/search?${params}`;
+      const url = `${stroomBaseServiceUrl}/explorer/v1/search?${params}`;
 
       return httpGetJson(url);
     },
@@ -108,9 +104,7 @@ export const useApi = (): Api => {
       permissionInheritance: string
     ) => {
       const state = store.getState();
-      const url = `${
-        state.config.values.stroomBaseServiceUrl
-      }/explorer/v1/create`;
+      const url = `${stroomBaseServiceUrl}/explorer/v1/create`;
       httpPostJsonResponse(url, {
         body: JSON.stringify({
           docRefType,
@@ -126,9 +120,7 @@ export const useApi = (): Api => {
   const renameDocument = useCallback(
     (docRef: DocRefType, name: string) => {
       const state = store.getState();
-      const url = `${
-        state.config.values.stroomBaseServiceUrl
-      }/explorer/v1/rename`;
+      const url = `${stroomBaseServiceUrl}/explorer/v1/rename`;
 
       httpPutJsonResponse(url, {
         body: JSON.stringify({
@@ -151,9 +143,7 @@ export const useApi = (): Api => {
       const {
         folderExplorer: { documentTree }
       } = state;
-      const url = `${
-        state.config.values.stroomBaseServiceUrl
-      }/explorer/v1/copy`;
+      const url = `${stroomBaseServiceUrl}/explorer/v1/copy`;
       const docRefs = findByUuids(documentTree, uuids);
 
       httpPostJsonResponse(url, {
@@ -179,9 +169,7 @@ export const useApi = (): Api => {
       const {
         folderExplorer: { documentTree }
       } = state;
-      const url = `${
-        state.config.values.stroomBaseServiceUrl
-      }/explorer/v1/move`;
+      const url = `${stroomBaseServiceUrl}/explorer/v1/move`;
       const docRefs = findByUuids(documentTree, uuids);
       httpPutJsonResponse(url, {
         body: JSON.stringify({
@@ -201,9 +189,7 @@ export const useApi = (): Api => {
       const {
         folderExplorer: { documentTree }
       } = state;
-      const url = `${
-        state.config.values.stroomBaseServiceUrl
-      }/explorer/v1/delete`;
+      const url = `${stroomBaseServiceUrl}/explorer/v1/delete`;
       const docRefs = findByUuids(documentTree, uuids);
       httpDeleteJsonResponse(url, {
         body: JSON.stringify(docRefs.map(stripDocRef))

@@ -15,23 +15,23 @@
  */
 
 import * as React from "react";
-import { useEffect, useState, useCallback } from "react";
-import PanelGroup from "react-panelgroup";
-import HorizontalPanel from "../../components/HorizontalPanel";
-import * as Mousetrap from "mousetrap";
-import "react-table/react-table.css";
+// import { useEffect, useState, useCallback } from "react";
+// import PanelGroup from "react-panelgroup";
+// import HorizontalPanel from "../../components/HorizontalPanel";
+// import * as Mousetrap from "mousetrap";
+// import "react-table/react-table.css";
 
-import Loader from "../../components/Loader";
-import IconHeader from "../../components/IconHeader";
-import ExpressionSearchBar from "../../components/ExpressionSearchBar";
-import useStreamAttributeMapApi from "../../api/streamAttributeMap/useApi";
-import useDataApi from "../../api/data/useApi";
-import DetailsTabs from "./DetailsTabs";
-import DataList from "./DataList";
-import { useActionCreators, defaultStatePerId } from "../../api/data/redux";
-import { Direction, ExpressionOperatorWithUuid } from "../../types";
-import useLocalStorage, { storeNumber } from "../../lib/useLocalStorage";
-import useReduxState from "../../lib/useReduxState";
+// import Loader from "../../components/Loader";
+// import IconHeader from "../../components/IconHeader";
+// import ExpressionSearchBar from "../../components/ExpressionSearchBar";
+// import useStreamAttributeMapApi from "../../api/streamAttributeMap/useApi";
+// import useDataApi from "../../api/data/useApi";
+// import DetailsTabs from "./DetailsTabs";
+// import DataList from "./DataList";
+// import { useActionCreators, defaultStatePerId } from "../../api/data/redux";
+// import { Direction, ExpressionOperatorWithUuid } from "../../types";
+// import useLocalStorage, { storeNumber } from "../../lib/useLocalStorage";
+// import useReduxState from "../../lib/useReduxState";
 
 interface Props {
   dataViewerId: string;
@@ -44,185 +44,187 @@ const DataViewer = ({
 // tableData
 
 Props) => {
-  const { selectRow, deselectRow } = useActionCreators();
-  const { dataViewers } = useReduxState(({ dataViewers }) => ({ dataViewers }));
-  const {
-    dataSource,
-    streamAttributeMaps,
-    pageSize,
-    pageOffset,
-    selectedRow = 0,
-    dataForSelectedRow,
-    detailsForSelectedRow
-  } = dataViewers[dataViewerId] || defaultStatePerId;
+  return <div>Nope</div>;
 
-  const {
-    getDetailsForSelectedRow,
-    searchWithExpression,
-    fetchDataSource,
-    search
-  } = useStreamAttributeMapApi();
-  const { getDataForSelectedRow } = useDataApi();
-  const [expression, onExpressionChange] = useState<
-    ExpressionOperatorWithUuid | undefined
-  >(undefined);
+  // const { selectRow, deselectRow } = useActionCreators();
+  // const { dataViewers } = useReduxState(({ dataViewers }) => ({ dataViewers }));
+  // const {
+  //   dataSource,
+  //   streamAttributeMaps,
+  //   pageSize,
+  //   pageOffset,
+  //   selectedRow = 0,
+  //   dataForSelectedRow,
+  //   detailsForSelectedRow
+  // } = dataViewers[dataViewerId] || defaultStatePerId;
 
-  const onRowSelected = useCallback(
-    (selectedRow: number) => {
-      selectRow(dataViewerId, selectedRow);
-      getDataForSelectedRow(dataViewerId);
-      getDetailsForSelectedRow(dataViewerId);
-    },
-    [dataViewerId, selectRow, getDataForSelectedRow, getDetailsForSelectedRow]
-  );
-  // Not using this yet?
-  // const onHandleLoadMoreRows = () => {
-  //   searchWithExpression(dataViewerId, pageOffset, pageSize, dataViewerId);
-  //   // TODO: need to search with expression too
-  //   // search(dataViewerId, pageOffset + 1, pageSize, true);
+  // const {
+  //   getDetailsForSelectedRow,
+  //   searchWithExpression,
+  //   fetchDataSource,
+  //   search
+  // } = useStreamAttributeMapApi();
+  // const { getDataForSelectedRow } = useDataApi();
+  // const [expression, onExpressionChange] = useState<
+  //   ExpressionOperatorWithUuid | undefined
+  // >(undefined);
+
+  // const onRowSelected = useCallback(
+  //   (selectedRow: number) => {
+  //     selectRow(dataViewerId, selectedRow);
+  //     getDataForSelectedRow(dataViewerId);
+  //     getDetailsForSelectedRow(dataViewerId);
+  //   },
+  //   [dataViewerId, selectRow, getDataForSelectedRow, getDetailsForSelectedRow]
+  // );
+  // // Not using this yet?
+  // // const onHandleLoadMoreRows = () => {
+  // //   searchWithExpression(dataViewerId, pageOffset, pageSize, dataViewerId);
+  // //   // TODO: need to search with expression too
+  // //   // search(dataViewerId, pageOffset + 1, pageSize, true);
+  // // };
+  // const onMoveSelection = (direction: Direction) => {
+  //   if (!streamAttributeMaps) {
+  //     console.error("Could not move selection, stream attribute maps is null");
+  //     return;
+  //   }
+
+  //   const isAtEndOfList = selectedRow === streamAttributeMaps.length - 1;
+  //   if (isAtEndOfList) {
+  //     if (!!expression) {
+  //       searchWithExpression(
+  //         dataViewerId,
+  //         expression,
+  //         pageOffset,
+  //         pageSize,
+  //         true
+  //       );
+  //     } else {
+  //       console.error("No expression present to search with");
+  //     }
+  //     // search(dataViewerId, pageOffset + 1, pageSize, dataViewerId, true);
+  //   } else {
+  //     if (direction === "down") {
+  //       onRowSelected(selectedRow + 1);
+  //     } else if (direction === "up") {
+  //       onRowSelected(selectedRow - 1);
+  //     }
+  //   }
   // };
-  const onMoveSelection = (direction: Direction) => {
-    if (!streamAttributeMaps) {
-      console.error("Could not move selection, stream attribute maps is null");
-      return;
-    }
 
-    const isAtEndOfList = selectedRow === streamAttributeMaps.length - 1;
-    if (isAtEndOfList) {
-      if (!!expression) {
-        searchWithExpression(
-          dataViewerId,
-          expression,
-          pageOffset,
-          pageSize,
-          true
-        );
-      } else {
-        console.error("No expression present to search with");
-      }
-      // search(dataViewerId, pageOffset + 1, pageSize, dataViewerId, true);
-    } else {
-      if (direction === "down") {
-        onRowSelected(selectedRow + 1);
-      } else if (direction === "up") {
-        onRowSelected(selectedRow - 1);
-      }
-    }
-  };
+  // useEffect(() => {
+  //   fetchDataSource(dataViewerId);
 
-  useEffect(() => {
-    fetchDataSource(dataViewerId);
+  //   // // We need to set up an expression so we've got something to search with,
+  //   // // even though it'll be empty.
+  //   // const { expressionChanged, expressionId, dataSource } = this.props;
+  //   // const parsedExpression = processSearchString(dataSource, '');
+  //   // expressionChanged(expressionId, parsedExpression.expression);
 
-    // // We need to set up an expression so we've got something to search with,
-    // // even though it'll be empty.
-    // const { expressionChanged, expressionId, dataSource } = this.props;
-    // const parsedExpression = processSearchString(dataSource, '');
-    // expressionChanged(expressionId, parsedExpression.expression);
+  //   // // If we're got a selectedRow that means the user has already been to this page.
+  //   // // Re-doing the search will wipe out their previous location, and we want to remember it.
+  //   if (!selectedRow) {
+  //     // searchWithExpression(dataViewerId, pageOffset, pageSize, dataViewerId);
+  //     search(dataViewerId, 0, 400);
+  //   }
 
-    // // If we're got a selectedRow that means the user has already been to this page.
-    // // Re-doing the search will wipe out their previous location, and we want to remember it.
-    if (!selectedRow) {
-      // searchWithExpression(dataViewerId, pageOffset, pageSize, dataViewerId);
-      search(dataViewerId, 0, 400);
-    }
+  //   Mousetrap.bind("up", () => onMoveSelection(Direction.UP));
+  //   Mousetrap.bind("down", () => onMoveSelection(Direction.DOWN));
 
-    Mousetrap.bind("up", () => onMoveSelection(Direction.UP));
-    Mousetrap.bind("down", () => onMoveSelection(Direction.DOWN));
+  //   return () => {
+  //     Mousetrap.unbind("up");
+  //     Mousetrap.unbind("down");
+  //   };
+  // });
 
-    return () => {
-      Mousetrap.unbind("up");
-      Mousetrap.unbind("down");
-    };
-  });
+  // const table = <DataList dataViewerId={dataViewerId} />;
+  // const { value: listHeight, setValue: setListHeight } = useLocalStorage(
+  //   "listHeight",
+  //   500,
+  //   storeNumber
+  // );
+  // const { value: detailsHeight, setValue: setDetailsHeight } = useLocalStorage(
+  //   "detailsHeight",
+  //   500,
+  //   storeNumber
+  // );
 
-  const table = <DataList dataViewerId={dataViewerId} />;
-  const { value: listHeight, setValue: setListHeight } = useLocalStorage(
-    "listHeight",
-    500,
-    storeNumber
-  );
-  const { value: detailsHeight, setValue: setDetailsHeight } = useLocalStorage(
-    "detailsHeight",
-    500,
-    storeNumber
-  );
+  // if (!dataSource) {
+  //   return <Loader message="Loading data source" />;
+  // }
 
-  if (!dataSource) {
-    return <Loader message="Loading data source" />;
-  }
+  // const details = (
+  //   <HorizontalPanel
+  //     className="element-details__panel"
+  //     title=""
+  //     onClose={() => deselectRow(dataViewerId)}
+  //     content={
+  //       <DetailsTabs
+  //         data={dataForSelectedRow}
+  //         details={detailsForSelectedRow}
+  //         dataViewerId={dataViewerId}
+  //       />
+  //     }
+  //   />
+  // );
 
-  const details = (
-    <HorizontalPanel
-      className="element-details__panel"
-      title=""
-      onClose={() => deselectRow(dataViewerId)}
-      content={
-        <DetailsTabs
-          data={dataForSelectedRow}
-          details={detailsForSelectedRow}
-          dataViewerId={dataViewerId}
-        />
-      }
-    />
-  );
-
-  return (
-    <React.Fragment>
-      <div className="content-tabs__grid">
-        <div className="data-viewer__header">
-          <IconHeader icon="database" text="Data" />
-          <ExpressionSearchBar
-            className="data-viewer__search-bar"
-            dataSource={dataSource}
-            expression={expression}
-            onExpressionChange={onExpressionChange}
-            onSearch={e => {
-              if (!!expression) {
-                searchWithExpression(
-                  dataViewerId,
-                  expression,
-                  pageOffset,
-                  pageSize
-                );
-              } else {
-                console.error("No expression present to search with");
-              }
-            }}
-          />
-        </div>
-      </div>
-      <div className="DataTable__container">
-        <div className="DataTable__reactTable__container">
-          {selectedRow === undefined ? (
-            table
-          ) : (
-            <PanelGroup
-              direction="column"
-              panelWidths={[
-                {
-                  resize: "dynamic",
-                  minSize: 100,
-                  size: listHeight
-                },
-                {
-                  resize: "dynamic",
-                  minSize: 100,
-                  size: detailsHeight
-                }
-              ]}
-              onUpdate={(panelWidths: any[]) => {
-                setListHeight(panelWidths[0].size);
-                setDetailsHeight(panelWidths[1].size);
-              }}
-            >
-              {table}
-              {details}
-            </PanelGroup>
-          )}
-        </div>
-      </div>
-    </React.Fragment>
-  );
+  // return (
+  //   <React.Fragment>
+  //     <div className="content-tabs__grid">
+  //       <div className="data-viewer__header">
+  //         <IconHeader icon="database" text="Data" />
+  //         <ExpressionSearchBar
+  //           className="data-viewer__search-bar"
+  //           dataSource={dataSource}
+  //           expression={expression}
+  //           onExpressionChange={onExpressionChange}
+  //           onSearch={e => {
+  //             if (!!expression) {
+  //               searchWithExpression(
+  //                 dataViewerId,
+  //                 expression,
+  //                 pageOffset,
+  //                 pageSize
+  //               );
+  //             } else {
+  //               console.error("No expression present to search with");
+  //             }
+  //           }}
+  //         />
+  //       </div>
+  //     </div>
+  //     <div className="DataTable__container">
+  //       <div className="DataTable__reactTable__container">
+  //         {selectedRow === undefined ? (
+  //           table
+  //         ) : (
+  //           <PanelGroup
+  //             direction="column"
+  //             panelWidths={[
+  //               {
+  //                 resize: "dynamic",
+  //                 minSize: 100,
+  //                 size: listHeight
+  //               },
+  //               {
+  //                 resize: "dynamic",
+  //                 minSize: 100,
+  //                 size: detailsHeight
+  //               }
+  //             ]}
+  //             onUpdate={(panelWidths: any[]) => {
+  //               setListHeight(panelWidths[0].size);
+  //               setDetailsHeight(panelWidths[1].size);
+  //             }}
+  //           >
+  //             {table}
+  //             {details}
+  //           </PanelGroup>
+  //         )}
+  //       </div>
+  //     </div>
+  //   </React.Fragment>
+  // );
 };
 
 export default DataViewer;

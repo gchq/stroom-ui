@@ -16,18 +16,24 @@
 import { useActionCreators as useDocRefActionCreators } from "../../components/DocRefEditor";
 import useHttpClient from "../useHttpClient";
 import { PipelineModelType } from "../../types";
-import { useContext, useCallback } from "react";
-import { StoreContext } from "redux-react-hook";
+import { useCallback } from "react";
+import useStroomBaseUrl from "../useStroomBaseUrl";
 import { useActionCreators as useSearchActionCreators } from "./redux";
+
+interface FetchParams {
+  filter: string;
+  pageSize: number;
+  pageOffset: number;
+}
 
 interface Api {
   fetchPipeline: (pipelineId: string) => void;
   savePipeline: (document: PipelineModelType) => void;
-  searchPipelines: () => void;
+  searchPipelines: (fetchParams: FetchParams) => void;
 }
 
 export const useApi = (): Api => {
-  const store = useContext(StoreContext);
+  const stroomBaseServiceUrl = useStroomBaseUrl();
   const { httpGetJson, httpPostEmptyResponse } = useHttpClient();
   const {
     documentReceived,
@@ -36,54 +42,49 @@ export const useApi = (): Api => {
   } = useDocRefActionCreators();
   const { pipelinesReceived } = useSearchActionCreators();
 
-  if (!store) {
-    throw new Error("Could not get Redux Store for processing Thunks");
-  }
+  const fetchPipeline = useCallback(
+    (pipelineId: string) => {
+      const url = `${stroomBaseServiceUrl}/pipelines/v1/${pipelineId}`;
+      httpGetJson(url).then((pipeline: PipelineModelType) =>
+        documentReceived(pipelineId, pipeline)
+      );
+    },
+    [stroomBaseServiceUrl, httpGetJson]
+  );
 
-  const fetchPipeline = useCallback((pipelineId: string) => {
-    const state = store.getState();
-    const url = `${
-      state.config.values.stroomBaseServiceUrl
-    }/pipelines/v1/${pipelineId}`;
-    httpGetJson(url).then((pipeline: PipelineModelType) =>
-      documentReceived(pipelineId, pipeline)
-    );
-  }, []);
+  const savePipeline = useCallback(
+    (document: PipelineModelType) => {
+      const url = `${stroomBaseServiceUrl}/pipelines/v1/${
+        document.docRef.uuid
+      }`;
 
-  const savePipeline = useCallback((document: PipelineModelType) => {
-    const state = store.getState();
-    const url = `${state.config.values.stroomBaseServiceUrl}/pipelines/v1/${
-      document.docRef.uuid
-    }`;
+      const body = JSON.stringify(document);
 
-    const body = JSON.stringify(document);
+      documentSaveRequested(document.docRef.uuid);
+      httpPostEmptyResponse(url, { body }).then(() =>
+        documentSaved(document.docRef.uuid)
+      );
+    },
+    [httpPostEmptyResponse, documentSaveRequested, stroomBaseServiceUrl]
+  );
 
-    documentSaveRequested(document.docRef.uuid);
-    httpPostEmptyResponse(url, { body }).then(() =>
-      documentSaved(document.docRef.uuid)
-    );
-  }, []);
+  const searchPipelines = useCallback(
+    ({ filter, pageSize, pageOffset }: FetchParams) => {
+      let url = `${stroomBaseServiceUrl}/pipelines/v1/?`;
 
-  const searchPipelines = useCallback(() => {
-    const state = store.getState();
-    let url = `${state.config.values.stroomBaseServiceUrl}/pipelines/v1/?`;
-    const {
-      filter,
-      pageSize,
-      pageOffset
-    } = state.pipelineEditor.search.criteria;
+      if (filter !== undefined && filter !== "") {
+        url += `&filter=${filter}`;
+      }
 
-    if (filter !== undefined && filter !== "") {
-      url += `&filter=${filter}`;
-    }
+      if (pageSize !== undefined && pageOffset !== undefined) {
+        url += `&pageSize=${pageSize}&offset=${pageOffset}`;
+      }
 
-    if (pageSize !== undefined && pageOffset !== undefined) {
-      url += `&pageSize=${pageSize}&offset=${pageOffset}`;
-    }
-
-    const forceGet = true;
-    httpGetJson(url, {}, forceGet).then(pipelinesReceived);
-  }, []);
+      const forceGet = true;
+      httpGetJson(url, {}, forceGet).then(pipelinesReceived);
+    },
+    []
+  );
 
   return {
     fetchPipeline,

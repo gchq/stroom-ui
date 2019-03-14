@@ -1,6 +1,4 @@
-import { useContext, useCallback } from "react";
-import { StoreContext } from "redux-react-hook";
-import { useActionCreators } from "../data/redux";
+import { useCallback } from "react";
 import useHttpClient from "../useHttpClient";
 import {
   ExpressionOperatorType,
@@ -10,150 +8,73 @@ import {
   DataRow,
   StreamAttributeMapResult
 } from "../../types";
+import useStroomBaseUrl from "../useStroomBaseUrl";
 
 interface Api {
   search: (
-    dataViewerId: string,
     pageOffset: number,
-    pageSize: number,
-    addResults?: boolean
-  ) => void;
+    pageSize: number
+  ) => Promise<StreamAttributeMapResult>;
   searchWithExpression: (
-    dataViewerId: string,
     expressionWithUuids: ExpressionOperatorWithUuid,
     pageOffset?: number,
-    pageSize?: number,
-    addResults?: boolean
-  ) => void;
-  fetchDataSource: (dataViewerId: string) => void;
-  getDetailsForSelectedRow: (dataViewerId: string) => void;
+    pageSize?: number
+  ) => Promise<StreamAttributeMapResult>;
+  fetchDataSource: () => Promise<DataSourceType>;
+  getDetailsForSelectedRow: (metaId: number) => Promise<DataRow>;
 }
 
 export const useApi = (): Api => {
-  const store = useContext(StoreContext);
+  const stroomBaseServiceUrl = useStroomBaseUrl();
   const { httpGetJson, httpPostJsonResponse } = useHttpClient();
-  const {
-    add,
-    updateStreamAttributeMaps,
-    updateDataSource,
-    updateDetailsForSelectedRow
-  } = useActionCreators();
-
-  if (!store) {
-    throw new Error("Could not get Redux Store for processing Thunks");
-  }
 
   const search = useCallback(
-    (
-      dataViewerId: string,
-      pageOffset: number,
-      pageSize: number,
-      addResults?: boolean
-    ) => {
-      const state = store.getState();
-      var url = new URL(
-        `${state.config.values.stroomBaseServiceUrl}/streamattributemap/v1`
-      );
+    (pageOffset: number, pageSize: number) => {
+      var url = new URL(`${stroomBaseServiceUrl}/streamattributemap/v1`);
       if (!!pageSize) url.searchParams.append("pageSize", pageSize.toString());
       if (!!pageOffset)
         url.searchParams.append("pageOffset", pageOffset.toString());
 
-      httpGetJson(url.href).then((data: StreamAttributeMapResult) => {
-        if (addResults) {
-          add(
-            dataViewerId,
-            data.streamAttributeMaps,
-            data.pageResponse.total,
-            pageSize,
-            pageOffset
-          );
-        } else {
-          updateStreamAttributeMaps(
-            dataViewerId,
-            data.streamAttributeMaps,
-            data.pageResponse.total,
-            pageSize,
-            pageOffset
-          );
-        }
-      });
+      return httpGetJson(url.href);
     },
-    [httpGetJson, add, updateStreamAttributeMaps]
+    [stroomBaseServiceUrl, httpGetJson]
   );
   const searchWithExpression = useCallback(
     (
-      dataViewerId: string,
       expressionWithUuids: ExpressionOperatorWithUuid,
       pageOffset: number = 0,
-      pageSize: number = 10,
-      addResults?: boolean
+      pageSize: number = 10
     ) => {
-      const state = store.getState();
       const expression = cleanExpression(expressionWithUuids);
 
-      let url = `${
-        state.config.values.stroomBaseServiceUrl
-      }/streamattributemap/v1/?`;
+      let url = `${stroomBaseServiceUrl}/streamattributemap/v1/?`;
       url += `pageSize=${pageSize}`;
       url += `&pageOffset=${pageOffset}`;
 
-      httpPostJsonResponse(url, {
+      return httpPostJsonResponse(url, {
         body: JSON.stringify(expression)
-      }).then((data: StreamAttributeMapResult) => {
-        if (addResults) {
-          add(
-            dataViewerId,
-            data.streamAttributeMaps,
-            data.pageResponse.total,
-            pageSize,
-            pageOffset
-          );
-        } else {
-          updateStreamAttributeMaps(
-            dataViewerId,
-            data.streamAttributeMaps,
-            data.pageResponse.total,
-            pageSize,
-            pageOffset
-          );
-        }
       });
     },
-    [httpPostJsonResponse, add, updateStreamAttributeMaps]
+    [stroomBaseServiceUrl, httpPostJsonResponse]
   );
 
   const fetchDataSource = useCallback(
-    (dataViewerId: string) => {
-      const state = store.getState();
-      const url = `${
-        state.config.values.stroomBaseServiceUrl
-      }/streamattributemap/v1/dataSource`;
-
-      httpGetJson(url, {}, false).then((data: DataSourceType) =>
-        updateDataSource(dataViewerId, data)
-      );
-    },
-    [httpGetJson, updateDataSource]
+    () =>
+      httpGetJson(
+        `${stroomBaseServiceUrl}/streamattributemap/v1/dataSource`,
+        {},
+        false
+      ),
+    [stroomBaseServiceUrl, httpGetJson]
   );
   const getDetailsForSelectedRow = useCallback(
-    (dataViewerId: string) => {
-      const state = store.getState();
-      const dataView = state.dataViewers[dataViewerId];
-      const metaId =
-        dataView.streamAttributeMaps &&
-        dataView.selectedRow &&
-        dataView.streamAttributeMaps[dataView.selectedRow]
-          ? dataView.streamAttributeMaps[dataView.selectedRow]!.data.id
-          : undefined;
-      const url = `${
-        state.config.values.stroomBaseServiceUrl
-      }/streamattributemap/v1/${metaId}`;
-
-      httpGetJson(url, {}, false).then((data: DataRow) =>
-        updateDetailsForSelectedRow(dataViewerId, data)
-      );
-    },
-    [httpGetJson, updateDetailsForSelectedRow]
+    (metaId: number) =>
+      httpGetJson(
+        `${stroomBaseServiceUrl}/streamattributemap/v1/${metaId}`,
+        {},
+        false
+      ),
+    [stroomBaseServiceUrl, httpGetJson]
   );
 
   return {

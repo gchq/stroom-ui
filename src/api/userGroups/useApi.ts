@@ -1,9 +1,9 @@
-import { useContext, useCallback } from "react";
-import { StoreContext } from "redux-react-hook";
+import { useCallback } from "react";
 
 import useHttpClient from "../useHttpClient";
 import { User } from "../../types";
 import { IsGroup } from "./types";
+import useStroomBaseUrl from "../useStroomBaseUrl";
 
 interface Api {
   fetchUser: (uuid: string) => Promise<User>;
@@ -21,7 +21,7 @@ interface Api {
 }
 
 export const useApi = (): Api => {
-  const store = useContext(StoreContext);
+  const stroomBaseServiceUrl = useStroomBaseUrl();
   const {
     httpGetJson,
     httpPostJsonResponse,
@@ -29,26 +29,18 @@ export const useApi = (): Api => {
     httpPutEmptyResponse
   } = useHttpClient();
 
-  if (!store) {
-    throw new Error("Could not get Redux Store for processing Thunks");
-  }
-
   const fetchUser = useCallback(
     (userUuid: string): Promise<User> => {
-      const state = store.getState();
-      var url = new URL(
-        `${state.config.values.stroomBaseServiceUrl}/users/v1/${userUuid}`
-      );
+      var url = new URL(`${stroomBaseServiceUrl}/users/v1/${userUuid}`);
 
       return httpGetJson(url.href, {}, false);
     },
-    [httpGetJson]
+    [stroomBaseServiceUrl, httpGetJson]
   );
 
   const findUsers = useCallback(
     (name?: string, isGroup?: "Group" | "User", uuid?: string) => {
-      const state = store.getState();
-      var url = new URL(`${state.config.values.stroomBaseServiceUrl}/users/v1`);
+      var url = new URL(`${stroomBaseServiceUrl}/users/v1`);
       if (name !== undefined && name.length > 0)
         url.searchParams.append("name", name);
       if (isGroup !== undefined) {
@@ -67,37 +59,32 @@ export const useApi = (): Api => {
 
       return httpGetJson(url.href);
     },
-    [httpGetJson]
+    [stroomBaseServiceUrl, httpGetJson]
   );
 
   const findUsersInGroup = useCallback(
-    (groupUuid: string) => {
-      const state = store.getState();
-      var url = `${
-        state.config.values.stroomBaseServiceUrl
-      }/users/v1/usersInGroup/${groupUuid}`;
-
-      return httpGetJson(url, {}, false);
-    },
-    [httpGetJson]
+    (groupUuid: string) =>
+      httpGetJson(
+        `${stroomBaseServiceUrl}/users/v1/usersInGroup/${groupUuid}`,
+        {},
+        false
+      ),
+    [stroomBaseServiceUrl, httpGetJson]
   );
 
   const findGroupsForUser = useCallback(
-    (userUuid: string) => {
-      const state = store.getState();
-      var url = `${
-        state.config.values.stroomBaseServiceUrl
-      }/users/v1/groupsForUser/${userUuid}`;
-
-      return httpGetJson(url, {}, false);
-    },
-    [httpGetJson]
+    (userUuid: string) =>
+      httpGetJson(
+        `${stroomBaseServiceUrl}/users/v1/groupsForUser/${userUuid}`,
+        {},
+        false
+      ),
+    [stroomBaseServiceUrl, httpGetJson]
   );
 
   const createUser = useCallback(
     (name: string, isGroup: boolean) => {
-      const state = store.getState();
-      var url = `${state.config.values.stroomBaseServiceUrl}/users/v1`;
+      var url = `${stroomBaseServiceUrl}/users/v1`;
 
       // Create DTO
       const body = JSON.stringify({
@@ -107,40 +94,28 @@ export const useApi = (): Api => {
 
       return httpPostJsonResponse(url, { body });
     },
-    [httpPostJsonResponse]
+    [stroomBaseServiceUrl, httpPostJsonResponse]
   );
 
   const deleteUser = useCallback(
-    (uuid: string) => {
-      const state = store.getState();
-      var url = `${state.config.values.stroomBaseServiceUrl}/users/v1/${uuid}`;
-
-      return httpDeleteEmptyResponse(url);
-    },
-    [httpDeleteEmptyResponse]
+    (uuid: string) =>
+      httpDeleteEmptyResponse(`${stroomBaseServiceUrl}/users/v1/${uuid}`),
+    [stroomBaseServiceUrl, httpDeleteEmptyResponse]
   );
 
   const addUserToGroup = useCallback(
-    (userUuid: string, groupUuid: string) => {
-      const state = store.getState();
-      var url = `${
-        state.config.values.stroomBaseServiceUrl
-      }/users/v1/${userUuid}/${groupUuid}`;
-
-      return httpPutEmptyResponse(url);
-    },
-    [httpPutEmptyResponse]
+    (userUuid: string, groupUuid: string) =>
+      httpPutEmptyResponse(
+        `${stroomBaseServiceUrl}/users/v1/${userUuid}/${groupUuid}`
+      ),
+    [stroomBaseServiceUrl, httpPutEmptyResponse]
   );
 
   const removeUserFromGroup = useCallback(
-    (userUuid: string, groupUuid: string) => {
-      const state = store.getState();
-      var url = `${
-        state.config.values.stroomBaseServiceUrl
-      }/users/v1/${userUuid}/${groupUuid}`;
-
-      return httpDeleteEmptyResponse(url);
-    },
+    (userUuid: string, groupUuid: string) =>
+      httpDeleteEmptyResponse(
+        `${stroomBaseServiceUrl}/users/v1/${userUuid}/${groupUuid}`
+      ),
     [httpDeleteEmptyResponse]
   );
 

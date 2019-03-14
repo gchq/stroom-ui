@@ -1,5 +1,5 @@
-import { useContext, useCallback } from "react";
-import { StoreContext } from "redux-react-hook";
+import { useCallback } from "react";
+import useStroomBaseUrl from "../useStroomBaseUrl";
 
 import useHttpClient from "../useHttpClient";
 import { IndexVolume, IndexVolumeGroup } from "../../types";
@@ -19,7 +19,7 @@ interface Api {
 }
 
 export const useApi = (): Api => {
-  const store = useContext(StoreContext);
+  const stroomBaseServiceUrl = useStroomBaseUrl();
   const {
     httpGetJson,
     httpDeleteEmptyResponse,
@@ -33,9 +33,7 @@ export const useApi = (): Api => {
 
   const getIndexVolumes = useCallback(() => {
     const state = store.getState();
-    var url = new URL(
-      `${state.config.values.stroomBaseServiceUrl}/stroom-index/volume/v1`
-    );
+    var url = new URL(`${stroomBaseServiceUrl}/stroom-index/volume/v1`);
 
     return httpGetJson(url.href);
   }, [httpGetJson]);
@@ -43,11 +41,7 @@ export const useApi = (): Api => {
   const getIndexVolumeById = useCallback(
     (id: string) => {
       const state = store.getState();
-      var url = new URL(
-        `${
-          state.config.values.stroomBaseServiceUrl
-        }/stroom-index/volume/v1/${id}`
-      );
+      var url = new URL(`${stroomBaseServiceUrl}/stroom-index/volume/v1/${id}`);
       return httpGetJson(url.href);
     },
     [httpGetJson]
@@ -56,11 +50,7 @@ export const useApi = (): Api => {
   const deleteIndexVolume = useCallback(
     (id: string) => {
       const state = store.getState();
-      var url = new URL(
-        `${
-          state.config.values.stroomBaseServiceUrl
-        }/stroom-index/volume/v1/${id}`
-      );
+      var url = new URL(`${stroomBaseServiceUrl}/stroom-index/volume/v1/${id}`);
 
       return httpDeleteEmptyResponse(url.href);
     },
@@ -71,9 +61,7 @@ export const useApi = (): Api => {
     (groupName: string) => {
       const state = store.getState();
       var url = new URL(
-        `${
-          state.config.values.stroomBaseServiceUrl
-        }/stroom-index/volume/v1/inGroup/${groupName}`
+        `${stroomBaseServiceUrl}/stroom-index/volume/v1/inGroup/${groupName}`
       );
 
       return httpGetJson(url.href);
@@ -85,9 +73,7 @@ export const useApi = (): Api => {
     (id: string) => {
       const state = store.getState();
       var url = new URL(
-        `${
-          state.config.values.stroomBaseServiceUrl
-        }/stroom-index/volume/v1/groupsFor/${id}`
+        `${stroomBaseServiceUrl}/stroom-index/volume/v1/groupsFor/${id}`
       );
 
       return httpGetJson(url.href);
@@ -99,9 +85,7 @@ export const useApi = (): Api => {
     (nodeName: string, path: string) => {
       const state = store.getState();
       var url = new URL(
-        `${
-          state.config.values.stroomBaseServiceUrl
-        }/stroom-index/volume/v1/${name}`
+        `${stroomBaseServiceUrl}/stroom-index/volume/v1/${name}`
       );
 
       const body = JSON.stringify({ nodeName, path });
@@ -115,9 +99,7 @@ export const useApi = (): Api => {
     (indexVolumeId: string, groupName: string) => {
       const state = store.getState();
       const url = new URL(
-        `${
-          state.config.values.stroomBaseServiceUrl
-        }/stroom-index/volume/v1/inGroup/${indexVolumeId}/${groupName}`
+        `${stroomBaseServiceUrl}/stroom-index/volume/v1/inGroup/${indexVolumeId}/${groupName}`
       );
 
       return httpPostEmptyResponse(url.href);
@@ -129,9 +111,7 @@ export const useApi = (): Api => {
     (indexVolumeId: string, groupName: string) => {
       const state = store.getState();
       const url = new URL(
-        `${
-          state.config.values.stroomBaseServiceUrl
-        }/stroom-index/volume/v1/inGroup/${indexVolumeId}/${groupName}`
+        `${stroomBaseServiceUrl}/stroom-index/volume/v1/inGroup/${indexVolumeId}/${groupName}`
       );
 
       return httpDeleteEmptyResponse(url.href);

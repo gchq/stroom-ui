@@ -1,3 +1,3 @@
-import useApi from "./useApi";
+import useStreams from "./useStreams";
 
-export { useApi };
+export { useStreams };

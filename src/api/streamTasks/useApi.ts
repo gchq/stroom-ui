@@ -1,10 +1,10 @@
-import { useContext, useCallback } from "react";
-import { StoreContext } from "redux-react-hook";
+import { useCallback } from "react";
 
 import useHttpClient from "../useHttpClient";
 import { StreamTasksResponseType } from "../../types";
 
 import { FetchParameters } from "./types";
+import useStroomBaseUrl from "../useStroomBaseUrl";
 
 interface Api {
   fetchTrackers: (params: FetchParameters) => Promise<StreamTasksResponseType>;
@@ -16,12 +16,8 @@ interface Api {
 }
 
 export const useApi = (): Api => {
-  const store = useContext(StoreContext);
+  const stroomBaseServiceUrl = useStroomBaseUrl();
   const { httpGetJson, httpPatchEmptyResponse } = useHttpClient();
-
-  if (!store) {
-    throw new Error("Could not get Redux Store for processing Thunks");
-  }
 
   const fetchTrackers = useCallback(
     ({
@@ -31,9 +27,7 @@ export const useApi = (): Api => {
       sortDirection,
       searchCriteria
     }: FetchParameters): Promise<StreamTasksResponseType> => {
-      const { config } = store.getState();
-
-      let url = `${config.values.stroomBaseServiceUrl}/streamtasks/v1/?`;
+      let url = `${stroomBaseServiceUrl}/streamtasks/v1/?`;
       url += `pageSize=${pageSize}`;
       url += `&offset=${pageOffset}`;
       if (sortBy !== undefined) {
@@ -47,7 +41,7 @@ export const useApi = (): Api => {
 
       return httpGetJson(url);
     },
-    [httpGetJson]
+    [stroomBaseServiceUrl, httpGetJson]
   );
 
   const fetchMore = useCallback(
@@ -58,11 +52,9 @@ export const useApi = (): Api => {
       sortDirection,
       searchCriteria
     }: FetchParameters): Promise<StreamTasksResponseType> => {
-      const { config } = store.getState();
-
       const nextPageOffset = pageOffset + 1;
 
-      let url = `${config.values.stroomBaseServiceUrl}/streamtasks/v1/?`;
+      let url = `${stroomBaseServiceUrl}/streamtasks/v1/?`;
       url += `pageSize=${pageSize}`;
       url += `&offset=${nextPageOffset}`;
       if (sortBy !== undefined) {
@@ -76,15 +68,12 @@ export const useApi = (): Api => {
 
       return httpGetJson(url);
     },
-    [httpGetJson]
+    [stroomBaseServiceUrl, httpGetJson]
   );
 
   const enableToggle = useCallback(
     (filterId: number, isCurrentlyEnabled: boolean) => {
-      const state = store.getState();
-      const url = `${
-        state.config.values.stroomBaseServiceUrl
-      }/streamtasks/v1/${filterId}`;
+      const url = `${stroomBaseServiceUrl}/streamtasks/v1/${filterId}`;
       const body = JSON.stringify({
         op: "replace",
         path: "enabled",
@@ -93,7 +82,7 @@ export const useApi = (): Api => {
 
       return httpPatchEmptyResponse(url, { body });
     },
-    [httpPatchEmptyResponse]
+    [stroomBaseServiceUrl, httpPatchEmptyResponse]
   );
 
   return {
