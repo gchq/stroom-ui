@@ -22,6 +22,6 @@ import { addThemedStories } from "../../testing/storybook/themedStoryGenerator";
 
 import "../../styles/main.css";
 
-const stories = storiesOf("Sections/Data/Viewer", module);
+const stories = storiesOf("Sections/Data", module);
 
-addThemedStories(stories, <DataViewer dataViewerId="test" />);
+addThemedStories(stories, <DataViewer />);

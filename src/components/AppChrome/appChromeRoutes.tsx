@@ -88,12 +88,7 @@ export default [
   {
     exact: true,
     path: "/s/data",
-    render: () => (
-      <AppChrome
-        activeMenuItem="Data"
-        content={<DataViewer dataViewerId="system" />}
-      />
-    )
+    render: () => <AppChrome activeMenuItem="Data" content={<DataViewer />} />
   },
   {
     exact: true,

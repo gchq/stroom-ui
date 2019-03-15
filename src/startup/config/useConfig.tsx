@@ -4,12 +4,14 @@ import useReduxState from "../../lib/useReduxState";
 import { GlobalStoreState } from "../reducers";
 
 import { useApi } from "./config";
+import { useActionCreators } from "./redux";
 
 export const useConfig = () => {
   const { fetchConfig } = useApi();
+  const { updateConfig } = useActionCreators();
 
   useEffect(() => {
-    fetchConfig();
+    fetchConfig().then(updateConfig);
   }, [fetchConfig]);
 
   // Get data from and subscribe to the store

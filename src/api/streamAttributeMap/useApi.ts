@@ -9,16 +9,12 @@ import {
   StreamAttributeMapResult
 } from "../../types";
 import useGetStroomBaseServiceUrl from "../useGetStroomBaseServiceUrl";
+import { SearchProps, SearchWithExpressionProps } from "./types";
 
 interface Api {
-  search: (
-    pageOffset: number,
-    pageSize: number
-  ) => Promise<StreamAttributeMapResult>;
+  search: (props: SearchProps) => Promise<StreamAttributeMapResult>;
   searchWithExpression: (
-    expressionWithUuids: ExpressionOperatorWithUuid,
-    pageOffset?: number,
-    pageSize?: number
+    props: SearchWithExpressionProps
   ) => Promise<StreamAttributeMapResult>;
   fetchDataSource: () => Promise<DataSourceType>;
   getDetailsForSelectedRow: (metaId: number) => Promise<DataRow>;
@@ -48,7 +44,7 @@ export const useApi = (): Api => {
       [getStroomBaseServiceUrl, httpGetJson]
     ),
     search: useCallback(
-      (pageOffset: number, pageSize: number) => {
+      ({ pageInfo: { pageOffset, pageSize } }: SearchProps) => {
         var url = new URL(`${getStroomBaseServiceUrl()}/streamattributemap/v1`);
         if (!!pageSize)
           url.searchParams.append("pageSize", pageSize.toString());
@@ -60,11 +56,10 @@ export const useApi = (): Api => {
       [getStroomBaseServiceUrl, httpGetJson]
     ),
     searchWithExpression: useCallback(
-      (
-        expressionWithUuids: ExpressionOperatorWithUuid,
-        pageOffset: number = 0,
-        pageSize: number = 10
-      ) => {
+      ({
+        pageInfo: { pageOffset, pageSize },
+        expressionWithUuids
+      }: SearchWithExpressionProps) => {
         const expression = cleanExpression(expressionWithUuids);
 
         let url = `${getStroomBaseServiceUrl()}/streamattributemap/v1/?`;

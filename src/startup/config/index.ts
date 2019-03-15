@@ -1,4 +1,4 @@
-import { reducer } from "./config";
+import { reducer } from "./redux";
 import { useConfig } from "./useConfig";
 import { Config, StoreState } from "./types";
 

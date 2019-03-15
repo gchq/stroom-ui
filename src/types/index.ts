@@ -313,6 +313,11 @@ export interface PipelineDataType {
   links: AddRemove<PipelineLinkType>;
 }
 
+export interface PageRequest {
+  pageOffset?: number;
+  pageSize?: number;
+}
+
 export interface PipelineModelType {
   docRef: DocRefType;
   description?: string;

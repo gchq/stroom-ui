@@ -1,16 +1,4 @@
-import { AbstractFetchDataResult, DataSourceType, DataRow } from "../../types";
-import { StateById } from "../../lib/redux-actions-ts";
-
-export interface StoreStatePerId {
-  streamAttributeMaps?: Array<DataRow>;
-  total?: number;
-  pageSize?: number;
-  pageOffset?: number;
-  selectedRow?: number;
-  dataForSelectedRow?: AbstractFetchDataResult;
-  detailsForSelectedRow?: DataRow;
-  dataSource?: DataSourceType;
-}
+import { DataRow } from "../../types";
 
 export interface FetchDataParams {
   metaId?: number;
@@ -30,5 +18,3 @@ export interface UseData {
   updateFetchParams: (updates: Partial<FetchDataParams>) => void;
   getDataForSelectedRow: () => void;
 }
-
-export interface StoreState extends StateById<StoreStatePerId> {}
