@@ -1,11 +1,12 @@
-import { useCallback } from "react";
-import useStroomBaseUrl from "../useStroomBaseUrl";
+import { useCallback, useContext } from "react";
+import { StoreContext } from "redux-react-hook";
 
 import { useActionCreators as useFolderExplorerActionCreators } from "./redux";
 import useHttpClient from "../useHttpClient";
 import { findByUuids } from "../../lib/treeUtils";
 import { DocRefType, DocRefTree } from "../../types";
 import { SearchProps } from "./types";
+import useGetStroomBaseServiceUrl from "../useGetStroomBaseServiceUrl";
 
 const stripDocRef = (docRef: DocRefType) => ({
   uuid: docRef.uuid,
@@ -39,7 +40,13 @@ interface Api {
 }
 
 export const useApi = (): Api => {
-  const stroomBaseServiceUrl = useStroomBaseUrl();
+  const store = useContext(StoreContext);
+  const getStroomBaseServiceUrl = useGetStroomBaseServiceUrl();
+
+  if (!store) {
+    throw new Error("Could not connect to redux store");
+  }
+
   const {
     httpGetJson,
     httpPostJsonResponse,
@@ -58,158 +65,133 @@ export const useApi = (): Api => {
     docRefTypesReceived
   } = useFolderExplorerActionCreators();
 
-  if (!store) {
-    throw new Error("Could not get Redux Store for processing Thunks");
-  }
-
-  const fetchDocTree = useCallback(() => {
-    const state = store.getState();
-    const url = `${stroomBaseServiceUrl}/explorer/v1/all`;
-    httpGetJson(url).then(docTreeReceived);
-  }, [httpGetJson, docTreeReceived]);
-
-  const fetchDocRefTypes = useCallback(() => {
-    const state = store.getState();
-    const url = `${stroomBaseServiceUrl}/explorer/v1/docRefTypes`;
-
-    httpGetJson(url).then(docRefTypesReceived);
-  }, [httpGetJson]);
-  const fetchDocInfo = useCallback(
-    (docRef: DocRefType) => {
-      const state = store.getState();
-      const url = `${stroomBaseServiceUrl}/explorer/v1/info/${docRef.type}/${
-        docRef.uuid
-      }`;
-      httpGetJson(url).then(docRefInfoReceived);
-    },
-    [httpGetJson, docRefInfoReceived]
-  );
-
-  const searchApp = useCallback(
-    ({ term = "", docRefType = "", pageOffset = 0, pageSize = 10 }) => {
-      const state = store.getState();
-      const params = `searchTerm=${term}&docRefType=${docRefType}&pageOffset=${pageOffset}&pageSize=${pageSize}`;
-      const url = `${stroomBaseServiceUrl}/explorer/v1/search?${params}`;
-
-      return httpGetJson(url);
-    },
-    [httpGetJson]
-  );
-
-  const createDocument = useCallback(
-    (
-      docRefType: string,
-      docRefName: string,
-      destinationFolderRef: DocRefType,
-      permissionInheritance: string
-    ) => {
-      const state = store.getState();
-      const url = `${stroomBaseServiceUrl}/explorer/v1/create`;
-      httpPostJsonResponse(url, {
-        body: JSON.stringify({
-          docRefType,
-          docRefName,
-          destinationFolderRef: stripDocRef(destinationFolderRef),
-          permissionInheritance
-        })
-      }).then(docRefCreated);
-    },
-    [httpPostJsonResponse, docRefCreated]
-  );
-
-  const renameDocument = useCallback(
-    (docRef: DocRefType, name: string) => {
-      const state = store.getState();
-      const url = `${stroomBaseServiceUrl}/explorer/v1/rename`;
-
-      httpPutJsonResponse(url, {
-        body: JSON.stringify({
-          docRef: stripDocRef(docRef),
-          name
-        })
-      }).then((resultDocRef: DocRefType) =>
-        docRefRenamed(docRef, name, resultDocRef)
-      );
-    },
-    [httpPutJsonResponse, docRefRenamed]
-  );
-  const copyDocuments = useCallback(
-    (
-      uuids: Array<string>,
-      destination: DocRefType,
-      permissionInheritance: string
-    ) => {
-      const state = store.getState();
-      const {
-        folderExplorer: { documentTree }
-      } = state;
-      const url = `${stroomBaseServiceUrl}/explorer/v1/copy`;
-      const docRefs = findByUuids(documentTree, uuids);
-
-      httpPostJsonResponse(url, {
-        body: JSON.stringify({
-          docRefs: docRefs.map(stripDocRef),
-          destinationFolderRef: stripDocRef(destination),
-          permissionInheritance
-        })
-      }).then((updatedTree: DocRefTree) =>
-        docRefsCopied(docRefs, destination, updatedTree)
-      );
-    },
-    [httpPostJsonResponse, docRefsCopied]
-  );
-
-  const moveDocuments = useCallback(
-    (
-      uuids: Array<string>,
-      destination: DocRefType,
-      permissionInheritance: string
-    ) => {
-      const state = store.getState();
-      const {
-        folderExplorer: { documentTree }
-      } = state;
-      const url = `${stroomBaseServiceUrl}/explorer/v1/move`;
-      const docRefs = findByUuids(documentTree, uuids);
-      httpPutJsonResponse(url, {
-        body: JSON.stringify({
-          docRefs: docRefs.map(stripDocRef),
-          destinationFolderRef: stripDocRef(destination),
-          permissionInheritance
-        })
-      }).then((updatedTree: DocRefTree) =>
-        docRefsMoved(docRefs, destination, updatedTree)
-      );
-    },
-    [httpPutJsonResponse, docRefsMoved]
-  );
-  const deleteDocuments = useCallback(
-    (uuids: Array<string>) => {
-      const state = store.getState();
-      const {
-        folderExplorer: { documentTree }
-      } = state;
-      const url = `${stroomBaseServiceUrl}/explorer/v1/delete`;
-      const docRefs = findByUuids(documentTree, uuids);
-      httpDeleteJsonResponse(url, {
-        body: JSON.stringify(docRefs.map(stripDocRef))
-      }).then((updatedTree: DocRefTree) =>
-        docRefsDeleted(docRefs, updatedTree)
-      );
-    },
-    [httpDeleteJsonResponse, docRefsDeleted]
-  );
-
   return {
-    fetchDocTree,
-    fetchDocRefTypes,
-    fetchDocInfo,
-    searchApp,
-    createDocument,
-    copyDocuments,
-    moveDocuments,
-    deleteDocuments,
-    renameDocument
+    fetchDocTree: useCallback(() => {
+      httpGetJson(`${getStroomBaseServiceUrl()}/explorer/v1/all`).then(
+        docTreeReceived
+      );
+    }, [getStroomBaseServiceUrl, httpGetJson, docTreeReceived]),
+
+    fetchDocRefTypes: useCallback(() => {
+      httpGetJson(`${getStroomBaseServiceUrl()}/explorer/v1/docRefTypes`).then(
+        docRefTypesReceived
+      );
+    }, [getStroomBaseServiceUrl, httpGetJson]),
+    fetchDocInfo: useCallback(
+      (docRef: DocRefType) => {
+        httpGetJson(
+          `${getStroomBaseServiceUrl()}/explorer/v1/info/${docRef.type}/${
+            docRef.uuid
+          }`
+        ).then(docRefInfoReceived);
+      },
+      [getStroomBaseServiceUrl, httpGetJson, docRefInfoReceived]
+    ),
+    searchApp: useCallback(
+      ({ term = "", docRefType = "", pageOffset = 0, pageSize = 10 }) => {
+        const params = `searchTerm=${term}&docRefType=${docRefType}&pageOffset=${pageOffset}&pageSize=${pageSize}`;
+        const url = `${getStroomBaseServiceUrl()}/explorer/v1/search?${params}`;
+
+        return httpGetJson(url);
+      },
+      [getStroomBaseServiceUrl, httpGetJson]
+    ),
+    createDocument: useCallback(
+      (
+        docRefType: string,
+        docRefName: string,
+        destinationFolderRef: DocRefType,
+        permissionInheritance: string
+      ) => {
+        httpPostJsonResponse(
+          `${getStroomBaseServiceUrl()}/explorer/v1/create`,
+          {
+            body: JSON.stringify({
+              docRefType,
+              docRefName,
+              destinationFolderRef: stripDocRef(destinationFolderRef),
+              permissionInheritance
+            })
+          }
+        ).then(docRefCreated);
+      },
+      [getStroomBaseServiceUrl, httpPostJsonResponse, docRefCreated]
+    ),
+    renameDocument: useCallback(
+      (docRef: DocRefType, name: string) => {
+        httpPutJsonResponse(`${getStroomBaseServiceUrl()}/explorer/v1/rename`, {
+          body: JSON.stringify({
+            docRef: stripDocRef(docRef),
+            name
+          })
+        }).then((resultDocRef: DocRefType) =>
+          docRefRenamed(docRef, name, resultDocRef)
+        );
+      },
+      [getStroomBaseServiceUrl, httpPutJsonResponse, docRefRenamed]
+    ),
+    copyDocuments: useCallback(
+      (
+        uuids: Array<string>,
+        destination: DocRefType,
+        permissionInheritance: string
+      ) => {
+        const {
+          folderExplorer: { documentTree }
+        } = store.getState();
+        const docRefs = findByUuids(documentTree, uuids);
+
+        httpPostJsonResponse(`${getStroomBaseServiceUrl()}/explorer/v1/copy`, {
+          body: JSON.stringify({
+            docRefs: docRefs.map(stripDocRef),
+            destinationFolderRef: stripDocRef(destination),
+            permissionInheritance
+          })
+        }).then((updatedTree: DocRefTree) =>
+          docRefsCopied(docRefs, destination, updatedTree)
+        );
+      },
+      [getStroomBaseServiceUrl, httpPostJsonResponse, docRefsCopied]
+    ),
+    moveDocuments: useCallback(
+      (
+        uuids: Array<string>,
+        destination: DocRefType,
+        permissionInheritance: string
+      ) => {
+        const {
+          folderExplorer: { documentTree }
+        } = store.getState();
+        const docRefs = findByUuids(documentTree, uuids);
+        httpPutJsonResponse(`${getStroomBaseServiceUrl()}/explorer/v1/move`, {
+          body: JSON.stringify({
+            docRefs: docRefs.map(stripDocRef),
+            destinationFolderRef: stripDocRef(destination),
+            permissionInheritance
+          })
+        }).then((updatedTree: DocRefTree) =>
+          docRefsMoved(docRefs, destination, updatedTree)
+        );
+      },
+      [getStroomBaseServiceUrl, httpPutJsonResponse, docRefsMoved]
+    ),
+    deleteDocuments: useCallback(
+      (uuids: Array<string>) => {
+        const {
+          folderExplorer: { documentTree }
+        } = store.getState();
+        const docRefs = findByUuids(documentTree, uuids);
+        httpDeleteJsonResponse(
+          `${getStroomBaseServiceUrl()}/explorer/v1/delete`,
+          {
+            body: JSON.stringify(docRefs.map(stripDocRef))
+          }
+        ).then((updatedTree: DocRefTree) =>
+          docRefsDeleted(docRefs, updatedTree)
+        );
+      },
+      [getStroomBaseServiceUrl, httpDeleteJsonResponse, docRefsDeleted]
+    )
   };
 };
 

@@ -16,7 +16,7 @@ import testData from "../data";
 import { ThemeContextProvider, useTheme } from "../../lib/theme";
 import { withRouter, RouteComponentProps } from "react-router";
 import { CustomRouter } from "../../lib/useRouter";
-import useConfig from "../../startup/config/useConfig";
+import { useConfig } from "../../startup/config";
 import Loader from "../../components/Loader";
 
 interface Props extends RouteComponentProps {}

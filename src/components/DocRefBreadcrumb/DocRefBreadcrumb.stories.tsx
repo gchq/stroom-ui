@@ -41,7 +41,7 @@ const BreadcrumbOpen = () => {
         docRefUuid={testDocRef.uuid}
         openDocRef={setOpenDocRef}
       />
-      <JsonDebug value={openDocRef} />
+      <JsonDebug value={{ openDocRef }} />
     </div>
   );
 };

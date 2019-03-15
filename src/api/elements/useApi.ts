@@ -1,11 +1,11 @@
 import { useCallback } from "react";
-import useStroomBaseUrl from "../useStroomBaseUrl";
 
 import useHttpClient from "../useHttpClient";
 import {
   ElementDefinitions,
   ElementPropertiesByElementIdType
 } from "../../types";
+import useGetStroomBaseServiceUrl from "../useGetStroomBaseServiceUrl";
 
 interface Api {
   fetchElements: () => Promise<ElementDefinitions>;
@@ -13,19 +13,27 @@ interface Api {
 }
 
 export const useApi = (): Api => {
-  const stroomBaseServiceUrl = useStroomBaseUrl();
+  const getStroomBaseServiceUrl = useGetStroomBaseServiceUrl();
   const { httpGetJson } = useHttpClient();
 
-  const fetchElements = useCallback(() => {
-    const state = store.getState();
-    const url = `${stroomBaseServiceUrl}/elements/v1/elements`;
-    return httpGetJson(url, {}, false);
-  }, [httpGetJson]);
-  const fetchElementProperties = useCallback(() => {
-    const state = store.getState();
-    const url = `${stroomBaseServiceUrl}/elements/v1/elementProperties`;
-    return httpGetJson(url, {}, false);
-  }, [httpGetJson]);
+  const fetchElements = useCallback(
+    () =>
+      httpGetJson(
+        `${getStroomBaseServiceUrl()}/elements/v1/elements`,
+        {},
+        false
+      ),
+    [getStroomBaseServiceUrl, httpGetJson]
+  );
+  const fetchElementProperties = useCallback(
+    () =>
+      httpGetJson(
+        `${getStroomBaseServiceUrl()}/elements/v1/elementProperties`,
+        {},
+        false
+      ),
+    [getStroomBaseServiceUrl, httpGetJson]
+  );
 
   return {
     fetchElementProperties,

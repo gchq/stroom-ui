@@ -1,8 +1,8 @@
 import { useCallback } from "react";
-import useStroomBaseUrl from "../useStroomBaseUrl";
 
 import useHttpClient from "../useHttpClient";
 import { IndexVolume, IndexVolumeGroup } from "../../types";
+import useGetStroomBaseServiceUrl from "../useGetStroomBaseServiceUrl";
 
 interface Api {
   getIndexVolumes: () => Promise<Array<IndexVolume>>;
@@ -19,7 +19,7 @@ interface Api {
 }
 
 export const useApi = (): Api => {
-  const stroomBaseServiceUrl = useStroomBaseUrl();
+  const getStroomBaseServiceUrl = useGetStroomBaseServiceUrl();
   const {
     httpGetJson,
     httpDeleteEmptyResponse,
@@ -27,107 +27,61 @@ export const useApi = (): Api => {
     httpPostEmptyResponse
   } = useHttpClient();
 
-  if (!store) {
-    throw new Error("Could not get Redux Store for processing Thunks");
-  }
-
-  const getIndexVolumes = useCallback(() => {
-    const state = store.getState();
-    var url = new URL(`${stroomBaseServiceUrl}/stroom-index/volume/v1`);
-
-    return httpGetJson(url.href);
-  }, [httpGetJson]);
-
-  const getIndexVolumeById = useCallback(
-    (id: string) => {
-      const state = store.getState();
-      var url = new URL(`${stroomBaseServiceUrl}/stroom-index/volume/v1/${id}`);
-      return httpGetJson(url.href);
-    },
-    [httpGetJson]
-  );
-
-  const deleteIndexVolume = useCallback(
-    (id: string) => {
-      const state = store.getState();
-      var url = new URL(`${stroomBaseServiceUrl}/stroom-index/volume/v1/${id}`);
-
-      return httpDeleteEmptyResponse(url.href);
-    },
-    [httpDeleteEmptyResponse]
-  );
-
-  const getIndexVolumesInGroup = useCallback(
-    (groupName: string) => {
-      const state = store.getState();
-      var url = new URL(
-        `${stroomBaseServiceUrl}/stroom-index/volume/v1/inGroup/${groupName}`
-      );
-
-      return httpGetJson(url.href);
-    },
-    [httpGetJson]
-  );
-
-  const getGroupsForIndexVolume = useCallback(
-    (id: string) => {
-      const state = store.getState();
-      var url = new URL(
-        `${stroomBaseServiceUrl}/stroom-index/volume/v1/groupsFor/${id}`
-      );
-
-      return httpGetJson(url.href);
-    },
-    [httpGetJson]
-  );
-
-  const createIndexVolume = useCallback(
-    (nodeName: string, path: string) => {
-      const state = store.getState();
-      var url = new URL(
-        `${stroomBaseServiceUrl}/stroom-index/volume/v1/${name}`
-      );
-
-      const body = JSON.stringify({ nodeName, path });
-
-      return httpPostJsonResponse(url.href, { body });
-    },
-    [httpPostJsonResponse]
-  );
-
-  const addVolumeToGroup = useCallback(
-    (indexVolumeId: string, groupName: string) => {
-      const state = store.getState();
-      const url = new URL(
-        `${stroomBaseServiceUrl}/stroom-index/volume/v1/inGroup/${indexVolumeId}/${groupName}`
-      );
-
-      return httpPostEmptyResponse(url.href);
-    },
-    [httpPostEmptyResponse]
-  );
-
-  const removeVolumeFromGroup = useCallback(
-    (indexVolumeId: string, groupName: string) => {
-      const state = store.getState();
-      const url = new URL(
-        `${stroomBaseServiceUrl}/stroom-index/volume/v1/inGroup/${indexVolumeId}/${groupName}`
-      );
-
-      return httpDeleteEmptyResponse(url.href);
-    },
-    [httpDeleteEmptyResponse]
-  );
-
   return {
-    addVolumeToGroup,
-    createIndexVolume,
-    deleteIndexVolume,
-    getIndexVolumeById,
-    getIndexVolumes,
-    getIndexVolumesInGroup,
-    removeVolumeFromGroup,
-    getGroupsForIndexVolume
+    addVolumeToGroup: useCallback(
+      (indexVolumeId: string, groupName: string) =>
+        httpPostEmptyResponse(
+          `${getStroomBaseServiceUrl()}/stroom-index/volume/v1/inGroup/${indexVolumeId}/${groupName}`
+        ),
+      [getStroomBaseServiceUrl, httpPostEmptyResponse]
+    ),
+    createIndexVolume: useCallback(
+      (nodeName: string, path: string) =>
+        httpPostJsonResponse(
+          `${getStroomBaseServiceUrl()}/stroom-index/volume/v1/${name}`,
+          { body: JSON.stringify({ nodeName, path }) }
+        ),
+      [getStroomBaseServiceUrl, httpPostJsonResponse]
+    ),
+    deleteIndexVolume: useCallback(
+      (id: string) =>
+        httpDeleteEmptyResponse(
+          `${getStroomBaseServiceUrl()}/stroom-index/volume/v1/${id}`
+        ),
+      [getStroomBaseServiceUrl, httpDeleteEmptyResponse]
+    ),
+    getIndexVolumeById: useCallback(
+      (id: string) =>
+        httpGetJson(
+          `${getStroomBaseServiceUrl()}/stroom-index/volume/v1/${id}`
+        ),
+      [getStroomBaseServiceUrl, httpGetJson]
+    ),
+    getIndexVolumes: useCallback(
+      () => httpGetJson(`${getStroomBaseServiceUrl()}/stroom-index/volume/v1`),
+      [getStroomBaseServiceUrl, httpGetJson]
+    ),
+    getIndexVolumesInGroup: useCallback(
+      (groupName: string) =>
+        httpGetJson(
+          `${getStroomBaseServiceUrl()}/stroom-index/volume/v1/inGroup/${groupName}`
+        ),
+      [getStroomBaseServiceUrl, httpGetJson]
+    ),
+    removeVolumeFromGroup: useCallback(
+      (indexVolumeId: string, groupName: string) =>
+        httpDeleteEmptyResponse(
+          `${getStroomBaseServiceUrl()}/stroom-index/volume/v1/inGroup/${indexVolumeId}/${groupName}`
+        ),
+      [getStroomBaseServiceUrl, httpDeleteEmptyResponse]
+    ),
+    getGroupsForIndexVolume: useCallback(
+      (id: string) =>
+        httpGetJson(
+          `${getStroomBaseServiceUrl()}/stroom-index/volume/v1/groupsFor/${id}`
+        ),
+      [getStroomBaseServiceUrl, httpGetJson]
+    )
   };
 };
 

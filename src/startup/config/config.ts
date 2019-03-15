@@ -19,7 +19,8 @@ import {
   genUseActionCreators
 } from "../../lib/redux-actions-ts";
 import useHttpClient from "../../api/useHttpClient";
-import { useCallback } from "react";
+import { useContext, useCallback } from "react";
+import { StoreContext } from "redux-react-hook";
 import { Config } from "./types";
 
 const initialState = { values: {}, isReady: false };
@@ -49,8 +50,13 @@ interface Api {
 }
 
 const useApi = (): Api => {
+  const store = useContext(StoreContext);
   const { httpGetJson } = useHttpClient();
   const { updateConfig } = useActionCreators();
+
+  if (!store) {
+    throw new Error("Could not get Redux Store for processing Thunks");
+  }
 
   const fetchConfig = useCallback(() => {
     const url = "/config.json";

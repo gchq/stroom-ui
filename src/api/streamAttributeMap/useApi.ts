@@ -8,7 +8,7 @@ import {
   DataRow,
   StreamAttributeMapResult
 } from "../../types";
-import useStroomBaseUrl from "../useStroomBaseUrl";
+import useGetStroomBaseServiceUrl from "../useGetStroomBaseServiceUrl";
 
 interface Api {
   search: (
@@ -25,63 +25,58 @@ interface Api {
 }
 
 export const useApi = (): Api => {
-  const stroomBaseServiceUrl = useStroomBaseUrl();
+  const getStroomBaseServiceUrl = useGetStroomBaseServiceUrl();
   const { httpGetJson, httpPostJsonResponse } = useHttpClient();
 
-  const search = useCallback(
-    (pageOffset: number, pageSize: number) => {
-      var url = new URL(`${stroomBaseServiceUrl}/streamattributemap/v1`);
-      if (!!pageSize) url.searchParams.append("pageSize", pageSize.toString());
-      if (!!pageOffset)
-        url.searchParams.append("pageOffset", pageOffset.toString());
-
-      return httpGetJson(url.href);
-    },
-    [stroomBaseServiceUrl, httpGetJson]
-  );
-  const searchWithExpression = useCallback(
-    (
-      expressionWithUuids: ExpressionOperatorWithUuid,
-      pageOffset: number = 0,
-      pageSize: number = 10
-    ) => {
-      const expression = cleanExpression(expressionWithUuids);
-
-      let url = `${stroomBaseServiceUrl}/streamattributemap/v1/?`;
-      url += `pageSize=${pageSize}`;
-      url += `&pageOffset=${pageOffset}`;
-
-      return httpPostJsonResponse(url, {
-        body: JSON.stringify(expression)
-      });
-    },
-    [stroomBaseServiceUrl, httpPostJsonResponse]
-  );
-
-  const fetchDataSource = useCallback(
-    () =>
-      httpGetJson(
-        `${stroomBaseServiceUrl}/streamattributemap/v1/dataSource`,
-        {},
-        false
-      ),
-    [stroomBaseServiceUrl, httpGetJson]
-  );
-  const getDetailsForSelectedRow = useCallback(
-    (metaId: number) =>
-      httpGetJson(
-        `${stroomBaseServiceUrl}/streamattributemap/v1/${metaId}`,
-        {},
-        false
-      ),
-    [stroomBaseServiceUrl, httpGetJson]
-  );
-
   return {
-    fetchDataSource,
-    getDetailsForSelectedRow,
-    search,
-    searchWithExpression
+    fetchDataSource: useCallback(
+      () =>
+        httpGetJson(
+          `${getStroomBaseServiceUrl()}/streamattributemap/v1/dataSource`,
+          {},
+          false
+        ),
+      [getStroomBaseServiceUrl, httpGetJson]
+    ),
+    getDetailsForSelectedRow: useCallback(
+      (metaId: number) =>
+        httpGetJson(
+          `${getStroomBaseServiceUrl()}/streamattributemap/v1/${metaId}`,
+          {},
+          false
+        ),
+      [getStroomBaseServiceUrl, httpGetJson]
+    ),
+    search: useCallback(
+      (pageOffset: number, pageSize: number) => {
+        var url = new URL(`${getStroomBaseServiceUrl()}/streamattributemap/v1`);
+        if (!!pageSize)
+          url.searchParams.append("pageSize", pageSize.toString());
+        if (!!pageOffset)
+          url.searchParams.append("pageOffset", pageOffset.toString());
+
+        return httpGetJson(url.href);
+      },
+      [getStroomBaseServiceUrl, httpGetJson]
+    ),
+    searchWithExpression: useCallback(
+      (
+        expressionWithUuids: ExpressionOperatorWithUuid,
+        pageOffset: number = 0,
+        pageSize: number = 10
+      ) => {
+        const expression = cleanExpression(expressionWithUuids);
+
+        let url = `${getStroomBaseServiceUrl()}/streamattributemap/v1/?`;
+        url += `pageSize=${pageSize}`;
+        url += `&pageOffset=${pageOffset}`;
+
+        return httpPostJsonResponse(url, {
+          body: JSON.stringify(expression)
+        });
+      },
+      [getStroomBaseServiceUrl, httpPostJsonResponse]
+    )
   };
 };
 

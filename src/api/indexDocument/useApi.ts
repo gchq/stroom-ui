@@ -14,10 +14,11 @@
  * limitations under the License.
  */
 import { useCallback } from "react";
-import useStroomBaseUrl from "../useStroomBaseUrl";
+
 import { useActionCreators } from "../../components/DocRefEditor";
 import useHttpClient from "../useHttpClient";
 import { IndexDoc } from "../../types";
+import useGetStroomBaseServiceUrl from "../useGetStroomBaseServiceUrl";
 
 interface Api {
   fetchDocument: (indexUuid: string) => void;
@@ -25,39 +26,30 @@ interface Api {
 }
 
 export const useApi = (): Api => {
-  const stroomBaseServiceUrl = useStroomBaseUrl();
+  const getStroomBaseServiceUrl = useGetStroomBaseServiceUrl();
   const { httpGetJson, httpPostEmptyResponse } = useHttpClient();
   const { documentReceived, documentSaved } = useActionCreators();
 
-  if (!store) {
-    throw new Error("Could not get Redux Store for processing Thunks");
-  }
-
-  const fetchDocument = useCallback(
-    (indexUuid: string) => {
-      const state = store.getState();
-      const url = `${stroomBaseServiceUrl}/index/v1/${indexUuid}`;
-      httpGetJson(url).then((index: IndexDoc) =>
-        documentReceived(indexUuid, index)
-      );
-    },
-    [httpGetJson, documentReceived]
-  );
-  const saveDocument = useCallback(
-    (docRefContents: IndexDoc) => {
-      const state = store.getState();
-      const url = `${stroomBaseServiceUrl}/index/v1/${docRefContents.uuid}`;
-
-      httpPostEmptyResponse(url, {
-        body: docRefContents
-      }).then(() => documentSaved(docRefContents.uuid));
-    },
-    [httpPostEmptyResponse, documentSaved]
-  );
-
   return {
-    fetchDocument,
-    saveDocument
+    fetchDocument: useCallback(
+      (indexUuid: string) => {
+        httpGetJson(`${getStroomBaseServiceUrl()}/index/v1/${indexUuid}`).then(
+          (index: IndexDoc) => documentReceived(indexUuid, index)
+        );
+      },
+      [getStroomBaseServiceUrl, httpGetJson, documentReceived]
+    ),
+    saveDocument: useCallback(
+      (docRefContents: IndexDoc) => {
+        httpPostEmptyResponse(
+          `${getStroomBaseServiceUrl()}/index/v1/${docRefContents.uuid}`,
+          {
+            body: docRefContents
+          }
+        ).then(() => documentSaved(docRefContents.uuid));
+      },
+      [getStroomBaseServiceUrl, httpPostEmptyResponse, documentSaved]
+    )
   };
 };
 

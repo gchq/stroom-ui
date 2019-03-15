@@ -1,7 +1,7 @@
 import { useCallback } from "react";
-import useStroomBaseUrl from "../useStroomBaseUrl";
 
 import useHttpClient from "../useHttpClient";
+import useGetStroomBaseServiceUrl from "../useGetStroomBaseServiceUrl";
 
 interface Api {
   getPermissionsForUser: (userUuid: string) => Promise<Array<string>>;
@@ -14,60 +14,40 @@ interface Api {
 }
 
 export const useApi = (): Api => {
-  const stroomBaseServiceUrl = useStroomBaseUrl();
-
+  const getStroomBaseServiceUrl = useGetStroomBaseServiceUrl();
   const {
     httpGetJson,
     httpPostEmptyResponse,
     httpDeleteEmptyResponse
   } = useHttpClient();
 
-  if (!store) {
-    throw new Error("Could not get Redux Store for processing Thunks");
-  }
-
-  const getPermissionsForUser = useCallback(
-    (userUuid: string): Promise<Array<string>> => {
-      const state = store.getState();
-      var url = `${stroomBaseServiceUrl}/appPermissions/v1/${userUuid}`;
-
-      return httpGetJson(url);
-    },
-    [httpGetJson]
-  );
-
-  const getAllPermissionNames = useCallback((): Promise<Array<string>> => {
-    const state = store.getState();
-    var url = `${stroomBaseServiceUrl}/appPermissions/v1`;
-
-    return httpGetJson(url);
-  }, [httpGetJson]);
-
-  const addAppPermission = useCallback(
-    (userUuid: string, permissionName: string): Promise<void> => {
-      const state = store.getState();
-      var url = `${stroomBaseServiceUrl}/appPermissions/v1/${userUuid}/${permissionName}`;
-
-      return httpPostEmptyResponse(url);
-    },
-    [httpPostEmptyResponse]
-  );
-
-  const removeAppPermission = useCallback(
-    (userUuid: string, permissionName: string): Promise<void> => {
-      const state = store.getState();
-      var url = `${stroomBaseServiceUrl}/appPermissions/v1/${userUuid}/${permissionName}`;
-
-      return httpDeleteEmptyResponse(url);
-    },
-    [httpDeleteEmptyResponse]
-  );
-
   return {
-    getPermissionsForUser,
-    getAllPermissionNames,
-    addAppPermission,
-    removeAppPermission
+    getPermissionsForUser: useCallback(
+      (userUuid: string): Promise<Array<string>> =>
+        httpGetJson(
+          `${getStroomBaseServiceUrl()}/appPermissions/v1/${userUuid}`
+        ),
+      [getStroomBaseServiceUrl, httpGetJson]
+    ),
+    getAllPermissionNames: useCallback(
+      (): Promise<Array<string>> =>
+        httpGetJson(`${getStroomBaseServiceUrl()}/appPermissions/v1`),
+      [getStroomBaseServiceUrl, httpGetJson]
+    ),
+    addAppPermission: useCallback(
+      (userUuid: string, permissionName: string): Promise<void> =>
+        httpPostEmptyResponse(
+          `${getStroomBaseServiceUrl()}/appPermissions/v1/${userUuid}/${permissionName}`
+        ),
+      [httpPostEmptyResponse]
+    ),
+    removeAppPermission: useCallback(
+      (userUuid: string, permissionName: string): Promise<void> =>
+        httpDeleteEmptyResponse(
+          `${getStroomBaseServiceUrl()}/appPermissions/v1/${userUuid}/${permissionName}`
+        ),
+      [httpDeleteEmptyResponse]
+    )
   };
 };
 

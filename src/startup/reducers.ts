@@ -75,10 +75,10 @@ import {
 } from "../components/DocRefEditor";
 
 export interface GlobalStoreState {
+  config: ConfigStoreState;
   appPermissions: AppPermissionStoreState;
   docPermissions: DocPermissionStoreState;
   errorPage: ErrorPageState;
-  config: ConfigStoreState;
   authentication: AuthenticationStoreState;
   authorisation: AuthorisationStoreState;
   folderExplorer: FolderExplorerStoreState;
@@ -93,10 +93,10 @@ export interface GlobalStoreState {
 }
 
 export default combineReducers({
+  config,
   appPermissions,
   docPermissions,
   errorPage,
-  config,
   authentication,
   authorisation,
   folderExplorer,

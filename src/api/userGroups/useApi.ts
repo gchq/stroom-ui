@@ -3,7 +3,7 @@ import { useCallback } from "react";
 import useHttpClient from "../useHttpClient";
 import { User } from "../../types";
 import { IsGroup } from "./types";
-import useStroomBaseUrl from "../useStroomBaseUrl";
+import useGetStroomBaseServiceUrl from "../useGetStroomBaseServiceUrl";
 
 interface Api {
   fetchUser: (uuid: string) => Promise<User>;
@@ -21,7 +21,7 @@ interface Api {
 }
 
 export const useApi = (): Api => {
-  const stroomBaseServiceUrl = useStroomBaseUrl();
+  const getStroomBaseServiceUrl = useGetStroomBaseServiceUrl();
   const {
     httpGetJson,
     httpPostJsonResponse,
@@ -29,105 +29,88 @@ export const useApi = (): Api => {
     httpPutEmptyResponse
   } = useHttpClient();
 
-  const fetchUser = useCallback(
-    (userUuid: string): Promise<User> => {
-      var url = new URL(`${stroomBaseServiceUrl}/users/v1/${userUuid}`);
-
-      return httpGetJson(url.href, {}, false);
-    },
-    [stroomBaseServiceUrl, httpGetJson]
-  );
-
-  const findUsers = useCallback(
-    (name?: string, isGroup?: "Group" | "User", uuid?: string) => {
-      var url = new URL(`${stroomBaseServiceUrl}/users/v1`);
-      if (name !== undefined && name.length > 0)
-        url.searchParams.append("name", name);
-      if (isGroup !== undefined) {
-        switch (isGroup) {
-          case "Group":
-            url.searchParams.append("isGroup", "true");
-            break;
-          case "User":
-            url.searchParams.append("isGroup", "false");
-            break;
-        }
-      }
-
-      if (uuid !== undefined && uuid.length > 0)
-        url.searchParams.append("uuid", uuid);
-
-      return httpGetJson(url.href);
-    },
-    [stroomBaseServiceUrl, httpGetJson]
-  );
-
-  const findUsersInGroup = useCallback(
-    (groupUuid: string) =>
-      httpGetJson(
-        `${stroomBaseServiceUrl}/users/v1/usersInGroup/${groupUuid}`,
-        {},
-        false
-      ),
-    [stroomBaseServiceUrl, httpGetJson]
-  );
-
-  const findGroupsForUser = useCallback(
-    (userUuid: string) =>
-      httpGetJson(
-        `${stroomBaseServiceUrl}/users/v1/groupsForUser/${userUuid}`,
-        {},
-        false
-      ),
-    [stroomBaseServiceUrl, httpGetJson]
-  );
-
-  const createUser = useCallback(
-    (name: string, isGroup: boolean) => {
-      var url = `${stroomBaseServiceUrl}/users/v1`;
-
-      // Create DTO
-      const body = JSON.stringify({
-        name,
-        isGroup
-      });
-
-      return httpPostJsonResponse(url, { body });
-    },
-    [stroomBaseServiceUrl, httpPostJsonResponse]
-  );
-
-  const deleteUser = useCallback(
-    (uuid: string) =>
-      httpDeleteEmptyResponse(`${stroomBaseServiceUrl}/users/v1/${uuid}`),
-    [stroomBaseServiceUrl, httpDeleteEmptyResponse]
-  );
-
-  const addUserToGroup = useCallback(
-    (userUuid: string, groupUuid: string) =>
-      httpPutEmptyResponse(
-        `${stroomBaseServiceUrl}/users/v1/${userUuid}/${groupUuid}`
-      ),
-    [stroomBaseServiceUrl, httpPutEmptyResponse]
-  );
-
-  const removeUserFromGroup = useCallback(
-    (userUuid: string, groupUuid: string) =>
-      httpDeleteEmptyResponse(
-        `${stroomBaseServiceUrl}/users/v1/${userUuid}/${groupUuid}`
-      ),
-    [httpDeleteEmptyResponse]
-  );
-
   return {
-    fetchUser,
-    addUserToGroup,
-    createUser,
-    deleteUser,
-    findGroupsForUser,
-    findUsers,
-    findUsersInGroup,
-    removeUserFromGroup
+    fetchUser: useCallback(
+      (userUuid: string): Promise<User> =>
+        httpGetJson(
+          `${getStroomBaseServiceUrl()}/users/v1/${userUuid}`,
+          {},
+          false
+        ),
+      [getStroomBaseServiceUrl, httpGetJson]
+    ),
+    addUserToGroup: useCallback(
+      (userUuid: string, groupUuid: string) =>
+        httpPutEmptyResponse(
+          `${getStroomBaseServiceUrl()}/users/v1/${userUuid}/${groupUuid}`
+        ),
+      [getStroomBaseServiceUrl, httpPutEmptyResponse]
+    ),
+    createUser: useCallback(
+      (name: string, isGroup: boolean) =>
+        httpPostJsonResponse(`${getStroomBaseServiceUrl()}/users/v1`, {
+          body: JSON.stringify({
+            name,
+            isGroup
+          })
+        }),
+      [getStroomBaseServiceUrl, httpPostJsonResponse]
+    ),
+    deleteUser: useCallback(
+      (uuid: string) =>
+        httpDeleteEmptyResponse(
+          `${getStroomBaseServiceUrl()}/users/v1/${uuid}`
+        ),
+      [getStroomBaseServiceUrl, httpDeleteEmptyResponse]
+    ),
+    findGroupsForUser: useCallback(
+      (userUuid: string) =>
+        httpGetJson(
+          `${getStroomBaseServiceUrl()}/users/v1/groupsForUser/${userUuid}`,
+          {},
+          false
+        ),
+      [getStroomBaseServiceUrl, httpGetJson]
+    ),
+    findUsers: useCallback(
+      (name?: string, isGroup?: "Group" | "User", uuid?: string) => {
+        var url = new URL(`${getStroomBaseServiceUrl()}/users/v1`);
+        if (name !== undefined && name.length > 0)
+          url.searchParams.append("name", name);
+        if (isGroup !== undefined) {
+          switch (isGroup) {
+            case "Group":
+              url.searchParams.append("isGroup", "true");
+              break;
+            case "User":
+              url.searchParams.append("isGroup", "false");
+              break;
+          }
+        }
+
+        if (uuid !== undefined && uuid.length > 0)
+          url.searchParams.append("uuid", uuid);
+
+        return httpGetJson(url.href);
+      },
+      [getStroomBaseServiceUrl, httpGetJson]
+    ),
+    findUsersInGroup: useCallback(
+      (groupUuid: string) =>
+        httpGetJson(
+          `${getStroomBaseServiceUrl()}/users/v1/usersInGroup/${groupUuid}`,
+          {},
+          false
+        ),
+      [getStroomBaseServiceUrl, httpGetJson]
+    ),
+    removeUserFromGroup: useCallback(
+      (userUuid: string, groupUuid: string) =>
+        httpDeleteEmptyResponse(
+          `${getStroomBaseServiceUrl()}/users/v1/${userUuid}/${groupUuid}`
+        ),
+      [httpDeleteEmptyResponse]
+    )
   };
 };
 

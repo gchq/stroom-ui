@@ -1,8 +1,8 @@
 import { useCallback } from "react";
-import useStroomBaseUrl from "../useStroomBaseUrl";
 
 import useHttpClient from "../useHttpClient";
 import { DocumentPermissions } from "src/types";
+import useGetStroomBaseServiceUrl from "../useGetStroomBaseServiceUrl";
 
 interface Api {
   // Server Side Constant
@@ -34,7 +34,7 @@ interface Api {
 }
 
 export const useApi = (): Api => {
-  const stroomBaseServiceUrl = useStroomBaseUrl();
+  const getStroomBaseServiceUrl = useGetStroomBaseServiceUrl();
 
   const {
     httpGetJson,
@@ -42,96 +42,66 @@ export const useApi = (): Api => {
     httpDeleteEmptyResponse
   } = useHttpClient();
 
-  if (!store) {
-    throw new Error("Could not get Redux Store for processing Thunks");
-  }
-
-  const getPermissionForDocType = useCallback(
-    (docRefType: string): Promise<Array<string>> => {
-      const state = store.getState();
-      var url = `${stroomBaseServiceUrl}/docPermissions/v1/forDocType/${docRefType}`;
-
-      return httpGetJson(url);
-    },
-    [httpGetJson]
-  );
-
-  const getPermissionsForDocumentForUser = useCallback(
-    (docRefUuid: string, userUuid: string): Promise<Array<string>> => {
-      const state = store.getState();
-      var url = `${stroomBaseServiceUrl}/docPermissions/v1/forDocForUser/${docRefUuid}/${userUuid}`;
-
-      return httpGetJson(url);
-    },
-    [httpGetJson]
-  );
-
-  const addDocPermission = useCallback(
-    (
-      docRefUuid: string,
-      userUuid: string,
-      permissionName: string
-    ): Promise<void> => {
-      const state = store.getState();
-      var url = `${stroomBaseServiceUrl}/docPermissions/v1/forDocForUser/${docRefUuid}/${userUuid}/${permissionName}`;
-
-      return httpPostEmptyResponse(url);
-    },
-    [httpPostEmptyResponse]
-  );
-
-  const removeDocPermission = useCallback(
-    (
-      docRefUuid: string,
-      userUuid: string,
-      permissionName: string
-    ): Promise<void> => {
-      const state = store.getState();
-      var url = `${stroomBaseServiceUrl}/docPermissions/v1/forDocForUser/${docRefUuid}/${userUuid}/${permissionName}`;
-
-      return httpDeleteEmptyResponse(url);
-    },
-    [httpDeleteEmptyResponse]
-  );
-
-  const getPermissionForDoc = useCallback(
-    (docRefUuid: string) => {
-      const state = store.getState();
-      var url = `${stroomBaseServiceUrl}/docPermissions/v1/forDoc/${docRefUuid}`;
-
-      return httpGetJson(url);
-    },
-    [httpGetJson]
-  );
-
-  const clearDocPermissionsForUser = useCallback(
-    (docRefUuid: string, userUuid: string) => {
-      const state = store.getState();
-      var url = `${stroomBaseServiceUrl}/docPermissions/v1/forDocForUser/${docRefUuid}/${userUuid}`;
-
-      return httpDeleteEmptyResponse(url);
-    },
-    [httpDeleteEmptyResponse]
-  );
-
-  const clearDocPermissions = useCallback(
-    (docRefUuid: string) => {
-      const state = store.getState();
-      var url = `${stroomBaseServiceUrl}/docPermissions/v1/forDoc/${docRefUuid}`;
-
-      return httpDeleteEmptyResponse(url);
-    },
-    [httpDeleteEmptyResponse]
-  );
-
   return {
-    getPermissionForDocType,
-    getPermissionForDoc,
-    getPermissionsForDocumentForUser,
-    addDocPermission,
-    removeDocPermission,
-    clearDocPermissionsForUser,
-    clearDocPermissions
+    getPermissionForDocType: useCallback(
+      (docRefType: string): Promise<Array<string>> =>
+        httpGetJson(
+          `${getStroomBaseServiceUrl()}/docPermissions/v1/forDocType/${docRefType}`,
+          {},
+          false
+        ),
+      [getStroomBaseServiceUrl, httpGetJson]
+    ),
+    getPermissionsForDocumentForUser: useCallback(
+      (docRefUuid: string, userUuid: string): Promise<Array<string>> =>
+        httpGetJson(
+          `${getStroomBaseServiceUrl()}/docPermissions/v1/forDocForUser/${docRefUuid}/${userUuid}`
+        ),
+      [getStroomBaseServiceUrl, httpGetJson]
+    ),
+    addDocPermission: useCallback(
+      (
+        docRefUuid: string,
+        userUuid: string,
+        permissionName: string
+      ): Promise<void> =>
+        httpPostEmptyResponse(
+          `${getStroomBaseServiceUrl()}/docPermissions/v1/forDocForUser/${docRefUuid}/${userUuid}/${permissionName}`
+        ),
+      [getStroomBaseServiceUrl, httpPostEmptyResponse]
+    ),
+    removeDocPermission: useCallback(
+      (
+        docRefUuid: string,
+        userUuid: string,
+        permissionName: string
+      ): Promise<void> =>
+        httpDeleteEmptyResponse(
+          `${getStroomBaseServiceUrl()}/docPermissions/v1/forDocForUser/${docRefUuid}/${userUuid}/${permissionName}`
+        ),
+      [getStroomBaseServiceUrl, httpDeleteEmptyResponse]
+    ),
+    getPermissionForDoc: useCallback(
+      (docRefUuid: string) =>
+        httpGetJson(
+          `${getStroomBaseServiceUrl()}/docPermissions/v1/forDoc/${docRefUuid}`
+        ),
+      [getStroomBaseServiceUrl, httpGetJson]
+    ),
+    clearDocPermissionsForUser: useCallback(
+      (docRefUuid: string, userUuid: string) =>
+        httpDeleteEmptyResponse(
+          `${getStroomBaseServiceUrl()}/docPermissions/v1/forDocForUser/${docRefUuid}/${userUuid}`
+        ),
+      [getStroomBaseServiceUrl, httpDeleteEmptyResponse]
+    ),
+    clearDocPermissions: useCallback(
+      (docRefUuid: string) =>
+        httpDeleteEmptyResponse(
+          `${getStroomBaseServiceUrl()}/docPermissions/v1/forDoc/${docRefUuid}`
+        ),
+      [getStroomBaseServiceUrl, httpDeleteEmptyResponse]
+    )
   };
 };
 

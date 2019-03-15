@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import { useCallback } from "react";
-import useStroomBaseUrl from "../useStroomBaseUrl";
+import useGetStroomBaseServiceUrl from "../useGetStroomBaseServiceUrl";
 import { useActionCreators } from "../../components/DocRefEditor";
 import useHttpClient from "../useHttpClient";
 import { Dictionary } from "../../types";
@@ -25,39 +25,30 @@ interface Api {
 }
 
 export const useApi = (): Api => {
-  const stroomBaseServiceUrl = useStroomBaseUrl();
+  const getStroomBaseServiceUrl = useGetStroomBaseServiceUrl();
   const { httpGetJson, httpPostEmptyResponse } = useHttpClient();
   const { documentReceived, documentSaved } = useActionCreators();
 
-  if (!store) {
-    throw new Error("Could not get Redux Store for processing Thunks");
-  }
-
-  const fetchDocument = useCallback(
-    (dictionaryUuid: string) => {
-      const state = store.getState();
-      const url = `${stroomBaseServiceUrl}/dictionary/v1/${dictionaryUuid}`;
-      httpGetJson(url).then(d => documentReceived(dictionaryUuid, d));
-    },
-    [httpGetJson, documentReceived]
-  );
-  const saveDocument = useCallback(
-    (docRefContents: Dictionary) => {
-      const state = store.getState();
-      const url = `${stroomBaseServiceUrl}/dictionary/v1/${
-        docRefContents.uuid
-      }`;
-
-      httpPostEmptyResponse(url, {
-        body: docRefContents
-      }).then(() => documentSaved(docRefContents.uuid));
-    },
-    [httpPostEmptyResponse, documentSaved]
-  );
-
   return {
-    fetchDocument,
-    saveDocument
+    fetchDocument: useCallback(
+      (dictionaryUuid: string) => {
+        httpGetJson(
+          `${getStroomBaseServiceUrl()}/dictionary/v1/${dictionaryUuid}`
+        ).then(d => documentReceived(dictionaryUuid, d));
+      },
+      [httpGetJson, documentReceived]
+    ),
+    saveDocument: useCallback(
+      (docRefContents: Dictionary) => {
+        httpPostEmptyResponse(
+          `${getStroomBaseServiceUrl()}/dictionary/v1/${docRefContents.uuid}`,
+          {
+            body: docRefContents
+          }
+        ).then(() => documentSaved(docRefContents.uuid));
+      },
+      [httpPostEmptyResponse, documentSaved]
+    )
   };
 };
 

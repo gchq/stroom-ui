@@ -17,7 +17,7 @@ import { useCallback } from "react";
 import { useActionCreators } from "../../components/DocRefEditor";
 import useHttpClient from "../useHttpClient";
 import { XsltDoc } from "../../types";
-import useStroomBaseUrl from "../useStroomBaseUrl";
+import useGetStroomBaseServiceUrl from "../useGetStroomBaseServiceUrl";
 
 interface Api {
   fetchDocument: (uuid: string) => void;
@@ -25,31 +25,34 @@ interface Api {
 }
 
 export const useApi = (): Api => {
-  const stroomBaseServiceUrl = useStroomBaseUrl();
+  const getStroomBaseServiceUrl = useGetStroomBaseServiceUrl();
   const { httpGetJson, httpPostEmptyResponse } = useHttpClient();
   const { documentReceived, documentSaved } = useActionCreators();
 
   const fetchDocument = useCallback(
     (uuid: string) =>
-      httpGetJson(`${stroomBaseServiceUrl}/xslt/v1/${uuid}`, {
+      httpGetJson(`${getStroomBaseServiceUrl()}/xslt/v1/${uuid}`, {
         headers: {
           Accept: "application/xml",
           "Content-Type": "application/xml"
         }
       }).then((document: XsltDoc) => documentReceived(uuid, document)),
-    [stroomBaseServiceUrl, httpGetJson]
+    [getStroomBaseServiceUrl, httpGetJson]
   );
 
   const saveDocument = useCallback(
     (xslt: XsltDoc) =>
-      httpPostEmptyResponse(`${stroomBaseServiceUrl}/xslt/v1/${xslt.uuid}`, {
-        body: xslt.data,
-        headers: {
-          Accept: "application/xml",
-          "Content-Type": "application/xml"
+      httpPostEmptyResponse(
+        `${getStroomBaseServiceUrl()}/xslt/v1/${xslt.uuid}`,
+        {
+          body: xslt.data,
+          headers: {
+            Accept: "application/xml",
+            "Content-Type": "application/xml"
+          }
         }
-      }).then(() => documentSaved(xslt.uuid)),
-    [stroomBaseServiceUrl, httpPostEmptyResponse, documentSaved]
+      ).then(() => documentSaved(xslt.uuid)),
+    [getStroomBaseServiceUrl, httpPostEmptyResponse, documentSaved]
   );
 
   return {
