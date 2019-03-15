@@ -14,8 +14,7 @@
  * limitations under the License.
  */
 import useHttpClient from "../../api/useHttpClient";
-import { useContext, useCallback } from "react";
-import { StoreContext } from "redux-react-hook";
+import { useCallback } from "react";
 import { Config } from "./types";
 
 interface Api {
@@ -23,12 +22,7 @@ interface Api {
 }
 
 const useApi = (): Api => {
-  const store = useContext(StoreContext);
   const { httpGetJson } = useHttpClient();
-
-  if (!store) {
-    throw new Error("Could not get Redux Store for processing Thunks");
-  }
 
   const fetchConfig = useCallback(() => {
     return httpGetJson("/config.json", {}, false);
@@ -38,3 +32,5 @@ const useApi = (): Api => {
 };
 
 export { Api, useApi };
+
+export default useApi;

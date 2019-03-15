@@ -7,8 +7,3 @@ export interface Config {
   authTokensUiUrl?: string;
   appClientId?: string;
 }
-
-export interface StoreState {
-  isReady: boolean;
-  values: Config;
-}

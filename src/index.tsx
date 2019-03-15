@@ -15,6 +15,7 @@ import { ThemeContextProvider } from "./lib/theme";
 import { CustomRouter } from "./lib/useRouter";
 
 import createHistory from "history/createBrowserHistory";
+import { ConfigProvider } from "./startup/config";
 export const history = createHistory();
 
 const DndRoutes = compose(DragDropContext(HTML5Backend))(Routes);
@@ -25,11 +26,13 @@ const App: React.FunctionComponent = () => {
   useFontAwesome();
   return (
     <StoreContext.Provider value={store}>
-      <ThemeContextProvider>
-        <CustomRouter history={history}>
-          <DndRoutes />
-        </CustomRouter>
-      </ThemeContextProvider>
+      <ConfigProvider>
+        <ThemeContextProvider>
+          <CustomRouter history={history}>
+            <DndRoutes />
+          </CustomRouter>
+        </ThemeContextProvider>
+      </ConfigProvider>
     </StoreContext.Provider>
   );
 };

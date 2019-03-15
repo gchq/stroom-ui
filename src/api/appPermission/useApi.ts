@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 
 import useHttpClient from "../useHttpClient";
-import useGetStroomBaseServiceUrl from "../useGetStroomBaseServiceUrl";
+import { useConfig } from "../../startup/config";
 
 interface Api {
   getPermissionsForUser: (userUuid: string) => Promise<Array<string>>;
@@ -14,7 +14,7 @@ interface Api {
 }
 
 export const useApi = (): Api => {
-  const getStroomBaseServiceUrl = useGetStroomBaseServiceUrl();
+  const { stroomBaseServiceUrl } = useConfig();
   const {
     httpGetJson,
     httpPostEmptyResponse,
@@ -24,27 +24,25 @@ export const useApi = (): Api => {
   return {
     getPermissionsForUser: useCallback(
       (userUuid: string): Promise<Array<string>> =>
-        httpGetJson(
-          `${getStroomBaseServiceUrl()}/appPermissions/v1/${userUuid}`
-        ),
-      [getStroomBaseServiceUrl, httpGetJson]
+        httpGetJson(`${stroomBaseServiceUrl}/appPermissions/v1/${userUuid}`),
+      [stroomBaseServiceUrl, httpGetJson]
     ),
     getAllPermissionNames: useCallback(
       (): Promise<Array<string>> =>
-        httpGetJson(`${getStroomBaseServiceUrl()}/appPermissions/v1`),
-      [getStroomBaseServiceUrl, httpGetJson]
+        httpGetJson(`${stroomBaseServiceUrl}/appPermissions/v1`),
+      [stroomBaseServiceUrl, httpGetJson]
     ),
     addAppPermission: useCallback(
       (userUuid: string, permissionName: string): Promise<void> =>
         httpPostEmptyResponse(
-          `${getStroomBaseServiceUrl()}/appPermissions/v1/${userUuid}/${permissionName}`
+          `${stroomBaseServiceUrl}/appPermissions/v1/${userUuid}/${permissionName}`
         ),
       [httpPostEmptyResponse]
     ),
     removeAppPermission: useCallback(
       (userUuid: string, permissionName: string): Promise<void> =>
         httpDeleteEmptyResponse(
-          `${getStroomBaseServiceUrl()}/appPermissions/v1/${userUuid}/${permissionName}`
+          `${stroomBaseServiceUrl}/appPermissions/v1/${userUuid}/${permissionName}`
         ),
       [httpDeleteEmptyResponse]
     )

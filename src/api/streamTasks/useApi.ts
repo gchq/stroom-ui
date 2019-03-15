@@ -4,7 +4,7 @@ import useHttpClient from "../useHttpClient";
 import { StreamTasksResponseType } from "../../types";
 
 import { FetchParameters } from "./types";
-import useGetStroomBaseServiceUrl from "../useGetStroomBaseServiceUrl";
+import { useConfig } from "../../startup/config";
 
 interface Api {
   fetchTrackers: (params: FetchParameters) => Promise<StreamTasksResponseType>;
@@ -16,7 +16,7 @@ interface Api {
 }
 
 export const useApi = (): Api => {
-  const getStroomBaseServiceUrl = useGetStroomBaseServiceUrl();
+  const { stroomBaseServiceUrl } = useConfig();
   const { httpGetJson, httpPatchEmptyResponse } = useHttpClient();
 
   const fetchTrackers = useCallback(
@@ -27,7 +27,7 @@ export const useApi = (): Api => {
       sortDirection,
       searchCriteria
     }: FetchParameters): Promise<StreamTasksResponseType> => {
-      let url = `${getStroomBaseServiceUrl()}/streamtasks/v1/?`;
+      let url = `${stroomBaseServiceUrl}/streamtasks/v1/?`;
       url += `pageSize=${pageSize}`;
       url += `&offset=${pageOffset}`;
       if (sortBy !== undefined) {
@@ -41,7 +41,7 @@ export const useApi = (): Api => {
 
       return httpGetJson(url);
     },
-    [getStroomBaseServiceUrl, httpGetJson]
+    [stroomBaseServiceUrl, httpGetJson]
   );
 
   const fetchMore = useCallback(
@@ -54,7 +54,7 @@ export const useApi = (): Api => {
     }: FetchParameters): Promise<StreamTasksResponseType> => {
       const nextPageOffset = pageOffset + 1;
 
-      let url = `${getStroomBaseServiceUrl()}/streamtasks/v1/?`;
+      let url = `${stroomBaseServiceUrl}/streamtasks/v1/?`;
       url += `pageSize=${pageSize}`;
       url += `&offset=${nextPageOffset}`;
       if (sortBy !== undefined) {
@@ -68,12 +68,12 @@ export const useApi = (): Api => {
 
       return httpGetJson(url);
     },
-    [getStroomBaseServiceUrl, httpGetJson]
+    [stroomBaseServiceUrl, httpGetJson]
   );
 
   const enableToggle = useCallback(
     (filterId: number, isCurrentlyEnabled: boolean) => {
-      const url = `${getStroomBaseServiceUrl()}/streamtasks/v1/${filterId}`;
+      const url = `${stroomBaseServiceUrl}/streamtasks/v1/${filterId}`;
       const body = JSON.stringify({
         op: "replace",
         path: "enabled",
@@ -82,7 +82,7 @@ export const useApi = (): Api => {
 
       return httpPatchEmptyResponse(url, { body });
     },
-    [getStroomBaseServiceUrl, httpPatchEmptyResponse]
+    [stroomBaseServiceUrl, httpPatchEmptyResponse]
   );
 
   return {

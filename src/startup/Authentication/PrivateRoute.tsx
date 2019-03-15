@@ -23,17 +23,10 @@ import Loader from "../../components/Loader";
 import useConfig from "../config/useConfig";
 
 const PrivateRoute = ({ render, ...rest }: RouteProps) => {
-  const config = useConfig();
+  const { advertisedUrl, appClientId, authenticationServiceUrl } = useConfig();
   const idToken = useReduxState(({ authentication: { idToken } }) => idToken);
 
-  const {
-    isReady,
-    values: { advertisedUrl, appClientId, authenticationServiceUrl }
-  } = config;
-
-  if (
-    !(isReady && !!advertisedUrl && !!appClientId && !!authenticationServiceUrl)
-  ) {
+  if (!(!!advertisedUrl && !!appClientId && !!authenticationServiceUrl)) {
     return <Loader message="Waiting for config" />;
   }
 

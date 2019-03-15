@@ -28,19 +28,10 @@ import useConfig from "./config/useConfig";
 
 import { PrivateRoute } from "./Authentication";
 import PathNotFound from "../components/PathNotFound";
-import Loader from "../components/Loader";
 import Welcome from "../components/Welcome";
 
 const Routes: React.FunctionComponent = () => {
-  const config = useConfig();
-
-  if (!config.isReady) {
-    return <Loader message="Configuration Loading" />;
-  }
-
-  const {
-    values: { authenticationServiceUrl, authorisationServiceUrl }
-  } = config;
+  const { authenticationServiceUrl, authorisationServiceUrl } = useConfig();
 
   return (
     <Switch>

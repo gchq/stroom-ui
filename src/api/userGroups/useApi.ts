@@ -3,7 +3,7 @@ import { useCallback } from "react";
 import useHttpClient from "../useHttpClient";
 import { User } from "../../types";
 import { IsGroup } from "./types";
-import useGetStroomBaseServiceUrl from "../useGetStroomBaseServiceUrl";
+import { useConfig } from "../../startup/config";
 
 interface Api {
   fetchUser: (uuid: string) => Promise<User>;
@@ -21,7 +21,7 @@ interface Api {
 }
 
 export const useApi = (): Api => {
-  const getStroomBaseServiceUrl = useGetStroomBaseServiceUrl();
+  const { stroomBaseServiceUrl } = useConfig();
   const {
     httpGetJson,
     httpPostJsonResponse,
@@ -32,49 +32,43 @@ export const useApi = (): Api => {
   return {
     fetchUser: useCallback(
       (userUuid: string): Promise<User> =>
-        httpGetJson(
-          `${getStroomBaseServiceUrl()}/users/v1/${userUuid}`,
-          {},
-          false
-        ),
-      [getStroomBaseServiceUrl, httpGetJson]
+        httpGetJson(`${stroomBaseServiceUrl}/users/v1/${userUuid}`, {}, false),
+      [stroomBaseServiceUrl, httpGetJson]
     ),
     addUserToGroup: useCallback(
       (userUuid: string, groupUuid: string) =>
         httpPutEmptyResponse(
-          `${getStroomBaseServiceUrl()}/users/v1/${userUuid}/${groupUuid}`
+          `${stroomBaseServiceUrl}/users/v1/${userUuid}/${groupUuid}`
         ),
-      [getStroomBaseServiceUrl, httpPutEmptyResponse]
+      [stroomBaseServiceUrl, httpPutEmptyResponse]
     ),
     createUser: useCallback(
       (name: string, isGroup: boolean) =>
-        httpPostJsonResponse(`${getStroomBaseServiceUrl()}/users/v1`, {
+        httpPostJsonResponse(`${stroomBaseServiceUrl}/users/v1`, {
           body: JSON.stringify({
             name,
             isGroup
           })
         }),
-      [getStroomBaseServiceUrl, httpPostJsonResponse]
+      [stroomBaseServiceUrl, httpPostJsonResponse]
     ),
     deleteUser: useCallback(
       (uuid: string) =>
-        httpDeleteEmptyResponse(
-          `${getStroomBaseServiceUrl()}/users/v1/${uuid}`
-        ),
-      [getStroomBaseServiceUrl, httpDeleteEmptyResponse]
+        httpDeleteEmptyResponse(`${stroomBaseServiceUrl}/users/v1/${uuid}`),
+      [stroomBaseServiceUrl, httpDeleteEmptyResponse]
     ),
     findGroupsForUser: useCallback(
       (userUuid: string) =>
         httpGetJson(
-          `${getStroomBaseServiceUrl()}/users/v1/groupsForUser/${userUuid}`,
+          `${stroomBaseServiceUrl}/users/v1/groupsForUser/${userUuid}`,
           {},
           false
         ),
-      [getStroomBaseServiceUrl, httpGetJson]
+      [stroomBaseServiceUrl, httpGetJson]
     ),
     findUsers: useCallback(
       (name?: string, isGroup?: "Group" | "User", uuid?: string) => {
-        var url = new URL(`${getStroomBaseServiceUrl()}/users/v1`);
+        var url = new URL(`${stroomBaseServiceUrl}/users/v1`);
         if (name !== undefined && name.length > 0)
           url.searchParams.append("name", name);
         if (isGroup !== undefined) {
@@ -93,21 +87,21 @@ export const useApi = (): Api => {
 
         return httpGetJson(url.href);
       },
-      [getStroomBaseServiceUrl, httpGetJson]
+      [stroomBaseServiceUrl, httpGetJson]
     ),
     findUsersInGroup: useCallback(
       (groupUuid: string) =>
         httpGetJson(
-          `${getStroomBaseServiceUrl()}/users/v1/usersInGroup/${groupUuid}`,
+          `${stroomBaseServiceUrl}/users/v1/usersInGroup/${groupUuid}`,
           {},
           false
         ),
-      [getStroomBaseServiceUrl, httpGetJson]
+      [stroomBaseServiceUrl, httpGetJson]
     ),
     removeUserFromGroup: useCallback(
       (userUuid: string, groupUuid: string) =>
         httpDeleteEmptyResponse(
-          `${getStroomBaseServiceUrl()}/users/v1/${userUuid}/${groupUuid}`
+          `${stroomBaseServiceUrl}/users/v1/${userUuid}/${groupUuid}`
         ),
       [httpDeleteEmptyResponse]
     )

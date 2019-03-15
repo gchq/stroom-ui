@@ -20,7 +20,6 @@ import {
   reducer as errorPage,
   StoreState as ErrorPageState
 } from "../components/ErrorPage";
-import { reducer as config, StoreState as ConfigStoreState } from "./config";
 
 import {
   authenticationReducer as authentication,
@@ -71,7 +70,6 @@ import {
 } from "../components/DocRefEditor";
 
 export interface GlobalStoreState {
-  config: ConfigStoreState;
   appPermissions: AppPermissionStoreState;
   docPermissions: DocPermissionStoreState;
   errorPage: ErrorPageState;
@@ -88,7 +86,6 @@ export interface GlobalStoreState {
 }
 
 export default combineReducers({
-  config,
   appPermissions,
   docPermissions,
   errorPage,

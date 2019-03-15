@@ -16,8 +16,7 @@ import testData from "../data";
 import { ThemeContextProvider, useTheme } from "../../lib/theme";
 import { withRouter, RouteComponentProps } from "react-router";
 import { CustomRouter } from "../../lib/useRouter";
-import { useConfig } from "../../startup/config";
-import Loader from "../../components/Loader";
+import { ConfigProvider } from "../../startup/config";
 
 interface Props extends RouteComponentProps {}
 
@@ -32,13 +31,8 @@ const DragDropRouted = compose(
 
 const ThemedComponent: React.StatelessComponent<{}> = ({ children }) => {
   const { theme } = useTheme();
-  const { isReady } = useConfig();
   useFontAwesome();
   useTestServer(testData);
-
-  if (!isReady) {
-    return <Loader message="Waiting for config" />;
-  }
 
   return <div className={`app-container ${theme}`}>{children}</div>;
 };
@@ -49,10 +43,12 @@ const store = createStore();
 export default (storyFn: RenderFunction) =>
   StoryRouter()(() => (
     <StoreContext.Provider value={store}>
-      <ThemeContextProvider>
-        <DragDropRouted>
-          <ThemedComponent>{storyFn()}</ThemedComponent>
-        </DragDropRouted>
-      </ThemeContextProvider>
+      <ConfigProvider>
+        <ThemeContextProvider>
+          <DragDropRouted>
+            <ThemedComponent>{storyFn()}</ThemedComponent>
+          </DragDropRouted>
+        </ThemeContextProvider>
+      </ConfigProvider>
     </StoreContext.Provider>
   ));

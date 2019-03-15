@@ -18,7 +18,7 @@ import useHttpClient from "../useHttpClient";
 import { PipelineModelType } from "../../types";
 import { useCallback } from "react";
 import { useActionCreators as useSearchActionCreators } from "./redux";
-import useGetStroomBaseServiceUrl from "../useGetStroomBaseServiceUrl";
+import { useConfig } from "../../startup/config";
 
 interface FetchParams {
   filter: string;
@@ -33,7 +33,7 @@ interface Api {
 }
 
 export const useApi = (): Api => {
-  const getStroomBaseServiceUrl = useGetStroomBaseServiceUrl();
+  const { stroomBaseServiceUrl } = useConfig();
   const { httpGetJson, httpPostEmptyResponse } = useHttpClient();
   const {
     documentReceived,
@@ -45,27 +45,26 @@ export const useApi = (): Api => {
   return {
     fetchPipeline: useCallback(
       (pipelineId: string) => {
-        httpGetJson(
-          `${getStroomBaseServiceUrl()}/pipelines/v1/${pipelineId}`
-        ).then((pipeline: PipelineModelType) =>
-          documentReceived(pipelineId, pipeline)
+        httpGetJson(`${stroomBaseServiceUrl}/pipelines/v1/${pipelineId}`).then(
+          (pipeline: PipelineModelType) =>
+            documentReceived(pipelineId, pipeline)
         );
       },
-      [getStroomBaseServiceUrl, httpGetJson]
+      [stroomBaseServiceUrl, httpGetJson]
     ),
     savePipeline: useCallback(
       (document: PipelineModelType) => {
         documentSaveRequested(document.docRef.uuid);
         httpPostEmptyResponse(
-          `${getStroomBaseServiceUrl()}/pipelines/v1/${document.docRef.uuid}`,
+          `${stroomBaseServiceUrl}/pipelines/v1/${document.docRef.uuid}`,
           { body: JSON.stringify(document) }
         ).then(() => documentSaved(document.docRef.uuid));
       },
-      [getStroomBaseServiceUrl, httpPostEmptyResponse, documentSaveRequested]
+      [stroomBaseServiceUrl, httpPostEmptyResponse, documentSaveRequested]
     ),
     searchPipelines: useCallback(
       ({ filter, pageSize, pageOffset }: FetchParams) => {
-        let url = `${getStroomBaseServiceUrl()}/pipelines/v1/?`;
+        let url = `${stroomBaseServiceUrl}/pipelines/v1/?`;
 
         if (filter !== undefined && filter !== "") {
           url += `&filter=${filter}`;
@@ -78,7 +77,7 @@ export const useApi = (): Api => {
         const forceGet = true;
         httpGetJson(url, {}, forceGet).then(pipelinesReceived);
       },
-      [getStroomBaseServiceUrl, httpGetJson, pipelinesReceived]
+      [stroomBaseServiceUrl, httpGetJson, pipelinesReceived]
     )
   };
 };

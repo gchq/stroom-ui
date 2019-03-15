@@ -2,7 +2,7 @@ import { useCallback } from "react";
 
 import useHttpClient from "../useHttpClient";
 import { IndexVolumeGroup } from "../../types";
-import useGetStroomBaseServiceUrl from "../useGetStroomBaseServiceUrl";
+import { useConfig } from "../../startup/config";
 
 interface Api {
   getIndexVolumeGroupNames: () => Promise<Array<string>>;
@@ -13,7 +13,7 @@ interface Api {
 }
 
 export const useApi = (): Api => {
-  const getStroomBaseServiceUrl = useGetStroomBaseServiceUrl();
+  const { stroomBaseServiceUrl } = useConfig();
   const {
     httpGetJson,
     httpPostJsonResponse,
@@ -24,35 +24,34 @@ export const useApi = (): Api => {
     getIndexVolumeGroupNames: useCallback(
       () =>
         httpGetJson(
-          `${getStroomBaseServiceUrl()}/stroom-index/volumeGroup/v1/names`
+          `${stroomBaseServiceUrl}/stroom-index/volumeGroup/v1/names`
         ),
-      [getStroomBaseServiceUrl, httpGetJson]
+      [stroomBaseServiceUrl, httpGetJson]
     ),
     getIndexVolumeGroups: useCallback(
-      () =>
-        httpGetJson(`${getStroomBaseServiceUrl()}/stroom-index/volumeGroup/v1`),
-      [getStroomBaseServiceUrl, httpGetJson]
+      () => httpGetJson(`${stroomBaseServiceUrl}/stroom-index/volumeGroup/v1`),
+      [stroomBaseServiceUrl, httpGetJson]
     ),
     getIndexVolumeGroup: useCallback(
       (name: string) =>
         httpGetJson(
-          `${getStroomBaseServiceUrl()}/stroom-index/volumeGroup/v1/${name}`
+          `${stroomBaseServiceUrl}/stroom-index/volumeGroup/v1/${name}`
         ),
-      [getStroomBaseServiceUrl, httpGetJson]
+      [stroomBaseServiceUrl, httpGetJson]
     ),
     createIndexVolumeGroup: useCallback(
       (name: string) =>
         httpPostJsonResponse(
-          `${getStroomBaseServiceUrl()}/stroom-index/volumeGroup/v1/${name}`
+          `${stroomBaseServiceUrl}/stroom-index/volumeGroup/v1/${name}`
         ),
-      [getStroomBaseServiceUrl, httpPostJsonResponse]
+      [stroomBaseServiceUrl, httpPostJsonResponse]
     ),
     deleteIndexVolumeGroup: useCallback(
       (name: string) =>
         httpDeleteEmptyResponse(
-          `${getStroomBaseServiceUrl()}/stroom-index/volumeGroup/v1/${name}`
+          `${stroomBaseServiceUrl}/stroom-index/volumeGroup/v1/${name}`
         ),
-      [getStroomBaseServiceUrl, httpDeleteEmptyResponse]
+      [stroomBaseServiceUrl, httpDeleteEmptyResponse]
     )
   };
 };

@@ -18,7 +18,7 @@ import { useCallback } from "react";
 import { useActionCreators } from "../../components/DocRefEditor";
 import useHttpClient from "../useHttpClient";
 import { IndexDoc } from "../../types";
-import useGetStroomBaseServiceUrl from "../useGetStroomBaseServiceUrl";
+import { useConfig } from "../../startup/config";
 
 interface Api {
   fetchDocument: (indexUuid: string) => void;
@@ -26,29 +26,29 @@ interface Api {
 }
 
 export const useApi = (): Api => {
-  const getStroomBaseServiceUrl = useGetStroomBaseServiceUrl();
+  const { stroomBaseServiceUrl } = useConfig();
   const { httpGetJson, httpPostEmptyResponse } = useHttpClient();
   const { documentReceived, documentSaved } = useActionCreators();
 
   return {
     fetchDocument: useCallback(
       (indexUuid: string) => {
-        httpGetJson(`${getStroomBaseServiceUrl()}/index/v1/${indexUuid}`).then(
+        httpGetJson(`${stroomBaseServiceUrl}/index/v1/${indexUuid}`).then(
           (index: IndexDoc) => documentReceived(indexUuid, index)
         );
       },
-      [getStroomBaseServiceUrl, httpGetJson, documentReceived]
+      [stroomBaseServiceUrl, httpGetJson, documentReceived]
     ),
     saveDocument: useCallback(
       (docRefContents: IndexDoc) => {
         httpPostEmptyResponse(
-          `${getStroomBaseServiceUrl()}/index/v1/${docRefContents.uuid}`,
+          `${stroomBaseServiceUrl}/index/v1/${docRefContents.uuid}`,
           {
             body: docRefContents
           }
         ).then(() => documentSaved(docRefContents.uuid));
       },
-      [getStroomBaseServiceUrl, httpPostEmptyResponse, documentSaved]
+      [stroomBaseServiceUrl, httpPostEmptyResponse, documentSaved]
     )
   };
 };

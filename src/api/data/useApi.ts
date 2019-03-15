@@ -2,7 +2,7 @@ import { useCallback } from "react";
 import useHttpClient from "../useHttpClient";
 import { AbstractFetchDataResult } from "../../types";
 import { FetchDataParams } from "./types";
-import useGetStroomBaseServiceUrl from "../useGetStroomBaseServiceUrl";
+import { useConfig } from "../../startup/config";
 
 interface Api {
   getDataForSelectedRow: (
@@ -11,12 +11,12 @@ interface Api {
 }
 
 export const useApi = (): Api => {
-  const getStroomBaseServiceUrl = useGetStroomBaseServiceUrl();
+  const { stroomBaseServiceUrl } = useConfig();
   const { httpGetJson } = useHttpClient();
 
   const getDataForSelectedRow = useCallback(
     ({ pageOffset, pageSize, metaId }: FetchDataParams) => {
-      var url = new URL(`${getStroomBaseServiceUrl()}/data/v1/`);
+      var url = new URL(`${stroomBaseServiceUrl}/data/v1/`);
       if (!!metaId) url.searchParams.append("metaId", metaId.toString());
       url.searchParams.append("streamsOffset", "0");
       url.searchParams.append("streamsLength", "1");

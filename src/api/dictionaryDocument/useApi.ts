@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import { useCallback } from "react";
-import useGetStroomBaseServiceUrl from "../useGetStroomBaseServiceUrl";
+import { useConfig } from "../../startup/config";
 import { useActionCreators } from "../../components/DocRefEditor";
 import useHttpClient from "../useHttpClient";
 import { Dictionary } from "../../types";
@@ -25,7 +25,7 @@ interface Api {
 }
 
 export const useApi = (): Api => {
-  const getStroomBaseServiceUrl = useGetStroomBaseServiceUrl();
+  const { stroomBaseServiceUrl } = useConfig();
   const { httpGetJson, httpPostEmptyResponse } = useHttpClient();
   const { documentReceived, documentSaved } = useActionCreators();
 
@@ -33,7 +33,7 @@ export const useApi = (): Api => {
     fetchDocument: useCallback(
       (dictionaryUuid: string) => {
         httpGetJson(
-          `${getStroomBaseServiceUrl()}/dictionary/v1/${dictionaryUuid}`
+          `${stroomBaseServiceUrl}/dictionary/v1/${dictionaryUuid}`
         ).then(d => documentReceived(dictionaryUuid, d));
       },
       [httpGetJson, documentReceived]
@@ -41,7 +41,7 @@ export const useApi = (): Api => {
     saveDocument: useCallback(
       (docRefContents: Dictionary) => {
         httpPostEmptyResponse(
-          `${getStroomBaseServiceUrl()}/dictionary/v1/${docRefContents.uuid}`,
+          `${stroomBaseServiceUrl}/dictionary/v1/${docRefContents.uuid}`,
           {
             body: docRefContents
           }

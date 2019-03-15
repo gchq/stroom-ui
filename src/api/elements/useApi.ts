@@ -5,7 +5,7 @@ import {
   ElementDefinitions,
   ElementPropertiesByElementIdType
 } from "../../types";
-import useGetStroomBaseServiceUrl from "../useGetStroomBaseServiceUrl";
+import { useConfig } from "../../startup/config";
 
 interface Api {
   fetchElements: () => Promise<ElementDefinitions>;
@@ -13,26 +13,22 @@ interface Api {
 }
 
 export const useApi = (): Api => {
-  const getStroomBaseServiceUrl = useGetStroomBaseServiceUrl();
+  const { stroomBaseServiceUrl } = useConfig();
   const { httpGetJson } = useHttpClient();
 
   const fetchElements = useCallback(
     () =>
-      httpGetJson(
-        `${getStroomBaseServiceUrl()}/elements/v1/elements`,
-        {},
-        false
-      ),
-    [getStroomBaseServiceUrl, httpGetJson]
+      httpGetJson(`${stroomBaseServiceUrl}/elements/v1/elements`, {}, false),
+    [stroomBaseServiceUrl, httpGetJson]
   );
   const fetchElementProperties = useCallback(
     () =>
       httpGetJson(
-        `${getStroomBaseServiceUrl()}/elements/v1/elementProperties`,
+        `${stroomBaseServiceUrl}/elements/v1/elementProperties`,
         {},
         false
       ),
-    [getStroomBaseServiceUrl, httpGetJson]
+    [stroomBaseServiceUrl, httpGetJson]
   );
 
   return {

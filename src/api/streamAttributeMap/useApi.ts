@@ -8,7 +8,7 @@ import {
   DataRow,
   StreamAttributeMapResult
 } from "../../types";
-import useGetStroomBaseServiceUrl from "../useGetStroomBaseServiceUrl";
+import { useConfig } from "../../startup/config";
 import { SearchProps, SearchWithExpressionProps } from "./types";
 
 interface Api {
@@ -21,31 +21,31 @@ interface Api {
 }
 
 export const useApi = (): Api => {
-  const getStroomBaseServiceUrl = useGetStroomBaseServiceUrl();
+  const { stroomBaseServiceUrl } = useConfig();
   const { httpGetJson, httpPostJsonResponse } = useHttpClient();
 
   return {
     fetchDataSource: useCallback(
       () =>
         httpGetJson(
-          `${getStroomBaseServiceUrl()}/streamattributemap/v1/dataSource`,
+          `${stroomBaseServiceUrl}/streamattributemap/v1/dataSource`,
           {},
           false
         ),
-      [getStroomBaseServiceUrl, httpGetJson]
+      [stroomBaseServiceUrl, httpGetJson]
     ),
     getDetailsForSelectedRow: useCallback(
       (metaId: number) =>
         httpGetJson(
-          `${getStroomBaseServiceUrl()}/streamattributemap/v1/${metaId}`,
+          `${stroomBaseServiceUrl}/streamattributemap/v1/${metaId}`,
           {},
           false
         ),
-      [getStroomBaseServiceUrl, httpGetJson]
+      [stroomBaseServiceUrl, httpGetJson]
     ),
     search: useCallback(
       ({ pageInfo: { pageOffset, pageSize } }: SearchProps) => {
-        var url = new URL(`${getStroomBaseServiceUrl()}/streamattributemap/v1`);
+        var url = new URL(`${stroomBaseServiceUrl}/streamattributemap/v1`);
         if (!!pageSize)
           url.searchParams.append("pageSize", pageSize.toString());
         if (!!pageOffset)
@@ -53,7 +53,7 @@ export const useApi = (): Api => {
 
         return httpGetJson(url.href);
       },
-      [getStroomBaseServiceUrl, httpGetJson]
+      [stroomBaseServiceUrl, httpGetJson]
     ),
     searchWithExpression: useCallback(
       ({
@@ -62,7 +62,7 @@ export const useApi = (): Api => {
       }: SearchWithExpressionProps) => {
         const expression = cleanExpression(expressionWithUuids);
 
-        let url = `${getStroomBaseServiceUrl()}/streamattributemap/v1/?`;
+        let url = `${stroomBaseServiceUrl}/streamattributemap/v1/?`;
         url += `pageSize=${pageSize}`;
         url += `&pageOffset=${pageOffset}`;
 
@@ -70,7 +70,7 @@ export const useApi = (): Api => {
           body: JSON.stringify(expression)
         });
       },
-      [getStroomBaseServiceUrl, httpPostJsonResponse]
+      [stroomBaseServiceUrl, httpPostJsonResponse]
     )
   };
 };

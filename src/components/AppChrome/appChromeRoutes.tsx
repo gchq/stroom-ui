@@ -19,7 +19,6 @@ import IndexVolumes from "../IndexVolumes";
 import IndexVolumeGroups from "../IndexVolumeGroups";
 import IndexVolumeGroupEditor from "../IndexVolumeGroups/IndexVolumeGroupEditor";
 import useConfig from "../../startup/config/useConfig";
-import Loader from "../Loader";
 import DocumentPermissionEditor from "../AuthorisationManager/DocumentPermissionEditor";
 import DocumentPermissionForUserEditor from "../AuthorisationManager/DocumentPermissionForUserEditor";
 import IndexVolumeEditor from "../IndexVolumes/IndexVolumeEditor";
@@ -29,15 +28,7 @@ const renderWelcome = () => (
 );
 
 const UsersIFrame = () => {
-  const config = useConfig();
-
-  if (!config.isReady) {
-    return <Loader message="Awaiting Config" />;
-  }
-
-  const {
-    values: { authUsersUiUrl }
-  } = config;
+  const { authUsersUiUrl } = useConfig();
 
   return (
     <React.Fragment>
@@ -52,15 +43,7 @@ const UsersIFrame = () => {
 };
 
 const ApiTokensIFrame = () => {
-  const config = useConfig();
-
-  if (!config.isReady) {
-    return <Loader message="Awaiting Config" />;
-  }
-
-  const {
-    values: { authTokensUiUrl }
-  } = config;
+  const { authTokensUiUrl } = useConfig();
 
   return (
     <React.Fragment>
