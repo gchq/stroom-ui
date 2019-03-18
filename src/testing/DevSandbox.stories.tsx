@@ -1,5 +1,4 @@
 import * as React from "react";
-import styled from "styled-components";
 import { storiesOf } from "@storybook/react";
 import { addThemedStories } from "./storybook/themedStoryGenerator";
 import { Table, Input } from "../styled/ThemeStyling";
