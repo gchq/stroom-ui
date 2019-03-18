@@ -63,26 +63,14 @@ const DataViewer = () => {
     }
   );
 
-  const onSearch: ({
-    isExpression,
-    expression,
-    searchString
-  }: {
-    isExpression: boolean;
-    expression: ExpressionOperatorWithUuid;
-    searchString: string;
-  }) => void = useCallback(
-    ({ isExpression, expression, searchString }) => {
-      if (isExpression && !!expression) {
-        search({
-          expressionWithUuids: expression,
-          pageInfo: defaultPageRequest
-        });
-      } else {
-        page({ pageInfo: defaultPageRequest });
-      }
+  const onSearch = useCallback(
+    (expression: ExpressionOperatorWithUuid) => {
+      search({
+        expressionWithUuids: expression,
+        pageInfo: defaultPageRequest
+      });
     },
-    [search, search]
+    [search]
   );
 
   return (

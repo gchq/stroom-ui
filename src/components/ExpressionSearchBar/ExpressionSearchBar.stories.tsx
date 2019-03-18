@@ -18,26 +18,26 @@ import { useState, useCallback } from "react";
 
 import { storiesOf } from "@storybook/react";
 
-import { testDataSource } from "../ExpressionBuilder/test";
+import { testDataSource as dataSource } from "../ExpressionBuilder/test";
 import ExpressionSearchBar from "./ExpressionSearchBar";
 import { addThemedStories } from "../../testing/storybook/themedStoryGenerator";
 
 import "../../styles/main.css";
-import { ExpressionSearchCallback } from "./types";
 import JsonDebug from "../../testing/JsonDebug";
 import Button from "../Button";
+import { ExpressionOperatorWithUuid } from "../../types";
 
 const TestHarness = () => {
   const [lastSearch, setLastSearch] = useState<
-    ExpressionSearchCallback | undefined
+    ExpressionOperatorWithUuid | undefined
   >(undefined);
 
   return (
     <div>
       <ExpressionSearchBar
         onSearch={setLastSearch}
-        initialSearchString="foo1=bar1 foo2=bar2 foo3=bar3 someOtherKey=sometOtherValue"
-        dataSource={testDataSource}
+        initialSearchString="numberOfDoors=1 createUser=someGuy createTime>1234"
+        dataSource={dataSource}
       />
       <Button
         text="Reset"
@@ -45,7 +45,7 @@ const TestHarness = () => {
           setLastSearch(undefined);
         }, [setLastSearch])}
       />
-      <JsonDebug value={{ lastSearch }} />
+      <JsonDebug value={{ lastSearch, dataSource }} />
     </div>
   );
 };

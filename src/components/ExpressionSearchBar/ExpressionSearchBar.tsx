@@ -15,7 +15,7 @@
  */
 
 import * as React from "react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import * as uuidv4 from "uuid/v4";
 
 import { processSearchString } from "./expressionSearchBarUtils";
@@ -28,11 +28,10 @@ import {
 import { assignRandomUuids } from "../../lib/treeUtils";
 import { toString } from "../ExpressionBuilder/expressionBuilderUtils";
 import { ExpressionBuilder } from "../ExpressionBuilder";
-import { ExpressionSearchCallback } from "./types";
 
 interface Props extends StyledComponentProps {
   dataSource: DataSourceType;
-  onSearch: (e: ExpressionSearchCallback) => void;
+  onSearch: (e: ExpressionOperatorWithUuid) => void;
   initialSearchString?: string;
   initialSearchExpression?: ExpressionOperatorWithUuid;
 }
@@ -73,7 +72,7 @@ const ExpressionSearchBar = ({
       setExpression(e);
     }
 
-    onSearch({ isExpression, expression, searchString });
+    onSearch(expression);
   }, [onSearch, setExpression]);
 
   const onChange: React.ChangeEventHandler<HTMLInputElement> = ({
@@ -105,6 +104,23 @@ const ExpressionSearchBar = ({
     setExpression(e);
   };
 
+  const onClickSearch = useCallback(() => {
+    onSearch(expression);
+  }, [onSearch, expression]);
+  const onClickSetTextSearch = useCallback(() => {
+    setIsExpression(false);
+  }, [setIsExpression]);
+  const onClickSetExpressionSearch = useCallback(() => {
+    if (!isExpression) {
+      const parsedExpression = processSearchString(dataSource, searchString);
+      const e = assignRandomUuids(
+        parsedExpression.expression
+      ) as ExpressionOperatorWithUuid;
+      setExpression(e);
+      setIsExpression(true);
+    }
+  }, [dataSource, searchString, setExpression, setIsExpression]);
+
   return (
     <div className="dropdown search-bar borderless">
       <div className="search-bar__header">
@@ -119,9 +135,7 @@ const ExpressionSearchBar = ({
         <Button
           disabled={!isSearchStringValid}
           icon="search"
-          onClick={() => {
-            onSearch({ isExpression, expression, searchString });
-          }}
+          onClick={onClickSearch}
         />
       </div>
       <div tabIndex={0} className={`dropdown__content search-bar__content`}>
@@ -131,9 +145,7 @@ const ExpressionSearchBar = ({
             selected={!isExpression}
             icon="i-cursor"
             className="search-bar__modeButton raised-low bordered hoverable"
-            onClick={() => {
-              setIsExpression(false);
-            }}
+            onClick={onClickSetTextSearch}
           />
           <Button
             text="Expression search"
@@ -141,19 +153,7 @@ const ExpressionSearchBar = ({
             disabled={!isSearchStringValid}
             className="search-bar__modeButton raised-low bordered hoverable"
             icon="edit"
-            onClick={() => {
-              if (!isExpression) {
-                const parsedExpression = processSearchString(
-                  dataSource,
-                  searchString
-                );
-                const e = assignRandomUuids(
-                  parsedExpression.expression
-                ) as ExpressionOperatorWithUuid;
-                setExpression(e);
-                setIsExpression(true);
-              }
-            }}
+            onClick={onClickSetExpressionSearch}
           />
         </div>
         {isExpression && !!expression ? (
