@@ -19,7 +19,7 @@ import { storiesOf } from "@storybook/react";
 import fullTestData from "../../testing/data";
 import XsltEditor from "./XsltEditor";
 
-import "../../styles/main.css";
+
 
 const stories = storiesOf("Document Editors/XSLT", module);
 

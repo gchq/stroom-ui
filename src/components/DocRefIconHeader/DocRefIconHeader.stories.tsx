@@ -20,8 +20,6 @@ import { storiesOf } from "@storybook/react";
 import { addThemedStories } from "../../testing/storybook/themedStoryGenerator";
 import DocRefIconHeader from "./DocRefIconHeader";
 
-import "../../styles/main.css";
-
 const docRefIconHeaderStories = storiesOf("Doc Ref/Icon Header", module);
 addThemedStories(
   docRefIconHeaderStories,

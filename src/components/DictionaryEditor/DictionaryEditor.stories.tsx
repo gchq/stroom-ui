@@ -19,7 +19,7 @@ import { storiesOf } from "@storybook/react";
 import fullTestData from "../../testing/data";
 import DictionaryEditor from "./DictionaryEditor";
 
-import "../../styles/main.css";
+
 
 const stories = storiesOf("Document Editors/Dictionary", module);
 

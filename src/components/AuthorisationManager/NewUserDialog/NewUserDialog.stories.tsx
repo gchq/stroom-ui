@@ -18,7 +18,7 @@ import { useState } from "react";
 import { storiesOf } from "@storybook/react";
 
 import { addThemedStories } from "../../../testing/storybook/themedStoryGenerator";
-import "../../../styles/main.css";
+
 import NewUserDialog, { useDialog } from "./NewUserDialog";
 import Button from "../../../components/Button";
 

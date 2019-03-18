@@ -6,7 +6,7 @@ import SingleValueWidget from "./SingleValueWidget";
 import InValueWidget from "./InValueWidget";
 import BetweenValueWidget from "./BetweenValueWidget";
 
-import "../../../styles/main.css";
+
 
 const stories = storiesOf("Expression/Value Widgets", module);
 

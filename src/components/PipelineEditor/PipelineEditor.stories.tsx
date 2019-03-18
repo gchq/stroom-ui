@@ -21,7 +21,7 @@ import PipelineEditor from "./PipelineEditor";
 import { testPipelines } from "../../testing/data/pipelines";
 
 
-import "../../styles/main.css";
+
 
 const pipelineStories = storiesOf(
   "Document Editors/Pipeline",

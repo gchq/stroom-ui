@@ -23,7 +23,7 @@ import fullTestData from "../../testing/data";
 import useUser from "./useUser";
 import Button from "../../components/Button";
 
-import "../../styles/main.css";
+
 
 const users = fullTestData.usersAndGroups.users;
 

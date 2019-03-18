@@ -20,7 +20,7 @@ import { storiesOf } from "@storybook/react";
 
 import HorizontalPanel from "./HorizontalPanel";
 
-import "../../styles/main.css";
+
 
 const EnabledCheckbox = () => (
   <label>

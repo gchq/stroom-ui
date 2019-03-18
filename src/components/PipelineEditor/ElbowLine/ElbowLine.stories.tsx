@@ -18,7 +18,7 @@ import { storiesOf } from "@storybook/react";
 
 import ElbowLine from "./ElbowLine";
 
-import "../../../styles/main.css";
+
 
 storiesOf("Pipeline/Elbow Line", module)
   .add("Pipeline Cell", () => (

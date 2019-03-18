@@ -21,7 +21,7 @@ import { storiesOf } from "@storybook/react";
 
 import AppPermissionPicker from "./AppPermissionPicker";
 
-import "../../../styles/main.css";
+
 import JsonDebug from "../../../testing/JsonDebug";
 import { addThemedStories } from "../../../testing/storybook/themedStoryGenerator";
 

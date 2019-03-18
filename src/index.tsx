@@ -10,13 +10,14 @@ import Routes from "./startup/Routes";
 import createStore from "./startup/store";
 import useFontAwesome from "./startup/useFontAwesome";
 
-import "./styles/main.css";
 import { ThemeContextProvider } from "./styled/theme";
 import { CustomRouter } from "./lib/useRouter";
 
 import createHistory from "history/createBrowserHistory";
 import { ConfigProvider } from "./startup/config";
 export const history = createHistory();
+
+import "./styled/fonts.css";
 
 const DndRoutes = compose(DragDropContext(HTML5Backend))(Routes);
 

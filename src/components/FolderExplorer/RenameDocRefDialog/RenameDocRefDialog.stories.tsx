@@ -7,7 +7,7 @@ import RenameDocRefDialog, { useDialog } from "./RenameDocRefDialog";
 import { fromSetupSampleData } from "../test";
 
 
-import "../../../styles/main.css";
+
 import JsonDebug from "../../../testing/JsonDebug";
 
 const testDocRef = fromSetupSampleData.children![0].children![0].children![0];

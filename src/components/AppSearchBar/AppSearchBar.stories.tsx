@@ -21,7 +21,7 @@ import { storiesOf } from "@storybook/react";
 import { addThemedStories } from "../../testing/storybook/themedStoryGenerator";
 import AppSearchBar from "./AppSearchBar";
 
-import "../../styles/main.css";
+
 import { DocRefType } from "../../types";
 import useForm from "../../lib/useForm";
 import JsonDebug from "../../testing/JsonDebug";

@@ -19,7 +19,7 @@ import { storiesOf } from "@storybook/react";
 import PermissionInheritancePicker from "./PermissionInheritancePicker";
 
 import { addThemedStories } from "../../testing/storybook/themedStoryGenerator";
-import "../../styles/main.css";
+
 import useForm from "../../lib/useForm";
 import { PermissionInheritance } from "src/types";
 import JsonDebug from "../../testing/JsonDebug";

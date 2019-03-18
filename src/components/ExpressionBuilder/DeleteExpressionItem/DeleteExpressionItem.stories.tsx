@@ -8,7 +8,7 @@ import JsonDebug from "../../../testing/JsonDebug";
 import Button from "../../Button";
 import { addThemedStories } from "../../../testing/storybook/themedStoryGenerator";
 
-import "../../../styles/main.css";
+
 
 const EXPRESSION_ITEM_ID = "SomeItemID";
 

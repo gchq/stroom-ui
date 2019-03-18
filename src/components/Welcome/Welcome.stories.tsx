@@ -19,7 +19,7 @@ import { storiesOf } from "@storybook/react";
 
 import Welcome from "./Welcome";
 
-import "../../styles/main.css";
+
 
 import { addThemedStories } from "../../testing/storybook/themedStoryGenerator";
 

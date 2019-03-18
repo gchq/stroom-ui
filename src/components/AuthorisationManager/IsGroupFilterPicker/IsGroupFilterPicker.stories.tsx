@@ -19,7 +19,7 @@ import { useState } from "react";
 
 import { storiesOf } from "@storybook/react";
 
-import "../../../styles/main.css";
+
 import { addThemedStories } from "../../../testing/storybook/themedStoryGenerator";
 import IsGroupFilterPicker from "./IsGroupFilterPicker";
 import { IsGroup } from "../../../api/userGroups";

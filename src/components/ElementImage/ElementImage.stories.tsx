@@ -4,7 +4,6 @@ import { storiesOf } from "@storybook/react";
 
 import ElementImage from "./ElementImage";
 
-import "../../styles/main.css";
 import { addThemedStories } from "../../testing/storybook/themedStoryGenerator";
 
 storiesOf("Pipeline/Element Image", module)

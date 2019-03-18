@@ -17,7 +17,7 @@ import * as React from "react";
 import { useEffect } from "react";
 
 import { storiesOf } from "@storybook/react";
-import "../../../styles/main.css";
+
 
 import ElementDetails from "./ElementDetails";
 

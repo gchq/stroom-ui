@@ -21,7 +21,7 @@ import PathNotFound from "./PathNotFound";
 
 import { addThemedStories } from "../../testing/storybook/themedStoryGenerator";
 
-import "../../styles/main.css";
+
 
 const pipelineStories = storiesOf(
   "Sections/Path not found",

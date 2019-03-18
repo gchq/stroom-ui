@@ -23,7 +23,7 @@ import fullTestData from "../../testing/data";
 
 import { DocRefType } from "../../types";
 
-import "../../styles/main.css";
+
 import JsonDebug from "../../testing/JsonDebug";
 import { addThemedStories } from "../../testing/storybook/themedStoryGenerator";
 

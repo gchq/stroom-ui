@@ -36,7 +36,7 @@ const styles = {
 interface Props {
   theme: string;
   component: React.ReactNode;
-  centerComponent?: React.ReactNode;
+  centerComponent?: boolean;
 }
 
 const ThemedContainer = ({ theme, component, centerComponent }: Props) => {
@@ -56,7 +56,7 @@ const ThemedContainer = ({ theme, component, centerComponent }: Props) => {
           {component}
         </div>
       ) : (
-        { component }
+        <React.Fragment>{component}</React.Fragment>
       )}
     </div>
   );
@@ -65,7 +65,7 @@ const ThemedContainer = ({ theme, component, centerComponent }: Props) => {
 export const addThemedStories = (
   stories: Story,
   component: React.ReactNode,
-  centerComponent?: React.ReactNode
+  centerComponent: boolean = false
 ) => {
   themeOptions
     .map(t => t.value)

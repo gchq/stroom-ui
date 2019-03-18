@@ -22,7 +22,7 @@ import ErrorPage from "./ErrorPage";
 
 import { useActionCreators } from "./redux";
 
-import "../../styles/main.css";
+
 
 const errorMessage = "Everything is a disaster";
 const stackTrace = `Invariant Violation: Objects are not valid as a React child (found: object with keys {sdfs}). If you meant to render a collection of children, use an array instead.

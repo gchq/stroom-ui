@@ -20,7 +20,7 @@ import { storiesOf } from "@storybook/react";
 import { addThemedStories } from "../../testing/storybook/themedStoryGenerator";
 import Button from "./Button";
 
-import "../../styles/main.css";
+
 
 const stories = storiesOf("General Purpose/Button", module);
 stories;

@@ -23,7 +23,7 @@ import AuthorisationManager from ".";
 
 import { addThemedStories } from "../../testing/storybook/themedStoryGenerator";
 
-import "../../styles/main.css";
+
 import UserAuthorisationEditor from "./UserAuthorisationEditor";
 
 const TestHarness = () => (

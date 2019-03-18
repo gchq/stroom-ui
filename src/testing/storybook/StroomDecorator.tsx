@@ -17,6 +17,7 @@ import { ThemeContextProvider, useTheme } from "../../styled/theme";
 import { withRouter, RouteComponentProps } from "react-router";
 import { CustomRouter } from "../../lib/useRouter";
 import { ConfigProvider } from "../../startup/config";
+import GlobalStyle from "../../styled/GlobalStyle";
 
 interface Props extends RouteComponentProps {}
 
@@ -34,7 +35,11 @@ const ThemedComponent: React.StatelessComponent<{}> = ({ children }) => {
   useFontAwesome();
   useTestServer(testData);
 
-  return <div className={`app-container ${theme}`}>{children}</div>;
+  return (
+    <div className={`app-container ${theme}`}>
+      <GlobalStyle /> {children}
+    </div>
+  );
 };
 
 ReactModal.setAppElement("#root");

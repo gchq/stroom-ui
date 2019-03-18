@@ -20,7 +20,7 @@ import DataDetails from "./DataDetails";
 import { errorData, eventData } from "./DataDetails.testData";
 
 
-import "../../../styles/main.css";
+
 
 storiesOf("Sections/Data/Details", module)
   

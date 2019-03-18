@@ -23,7 +23,7 @@ import { DropdownOptionProps } from "./types";
 import useForm from "../../lib/useForm";
 import JsonDebug from "../../testing/JsonDebug";
 
-import "../../styles/main.css";
+
 import { ControlledInput } from "../../types";
 
 const toSimpleOption = (c: string) => ({

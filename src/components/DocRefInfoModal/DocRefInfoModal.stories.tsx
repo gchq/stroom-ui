@@ -20,7 +20,7 @@ import { storiesOf } from "@storybook/react";
 
 import { DocRefInfoModal } from ".";
 
-import "../../styles/main.css";
+
 import { useDocRefInfoDialog } from "./DocRefInfoModal";
 import Button from "../Button";
 import fullTestData from "../../testing/data";

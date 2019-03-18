@@ -22,8 +22,6 @@ import UserSettings from "./UserSettings";
 
 import { addThemedStories } from "../../testing/storybook/themedStoryGenerator";
 
-import "../../styles/main.css";
-
 const stories = storiesOf("Sections/User Settings", module);
 
 addThemedStories(stories, <UserSettings />);

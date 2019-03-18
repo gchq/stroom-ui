@@ -19,6 +19,8 @@ import { addParameters, configure, addDecorator } from "@storybook/react";
 import StoryRouter from "storybook-react-router";
 import StroomDecorator from "../src/testing/storybook/StroomDecorator";
 
+import "../src/styled/fonts.css";
+
 const req = require.context("../src", true, /\.stories\.tsx$/);
 
 function loadStories() {

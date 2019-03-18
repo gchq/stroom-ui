@@ -21,7 +21,7 @@ import PipelineDebugger from "./PipelineDebugger";
 
 import { testPipelines } from "../../testing/data/pipelines";
 
-import "../../styles/main.css";
+
 
 const pipelineStories = storiesOf("Pipeline/Debugger", module);
 

@@ -23,8 +23,6 @@ import ThemedConfirm, { useDialog } from "./ThemedConfirm";
 
 import { addThemedStories } from "../../testing/storybook/themedStoryGenerator";
 
-import "../../styles/main.css";
-
 let TestConfirm = () => {
   const [confirmCount, setConfirmCount] = useState<number>(0);
 
@@ -48,9 +46,6 @@ let TestConfirm = () => {
   );
 };
 
-const stories = storiesOf(
-  "General Purpose/Themed Confirm",
-  module
-);
+const stories = storiesOf("General Purpose/Themed Confirm", module);
 
 addThemedStories(stories, <TestConfirm />);

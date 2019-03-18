@@ -21,7 +21,7 @@ import { storiesOf } from "@storybook/react";
 
 import { addThemedStories } from "../../../testing/storybook/themedStoryGenerator";
 
-import "../../../styles/main.css";
+
 import UserPicker, { usePicker } from "./UserPicker";
 import Button from "../../../components/Button";
 import JsonDebug from "../../../testing/JsonDebug";

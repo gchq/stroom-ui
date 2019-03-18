@@ -22,7 +22,7 @@ import { storiesOf } from "@storybook/react";
 import IndexVolumeGroupPicker from "./IndexVolumeGroupPicker";
 import { addThemedStories } from "../../../testing/storybook/themedStoryGenerator";
 
-import "../../../styles/main.css";
+
 
 import useForm from "../../../lib/useForm";
 import JsonDebug from "../../../testing/JsonDebug";

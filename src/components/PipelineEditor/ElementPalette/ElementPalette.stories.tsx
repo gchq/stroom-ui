@@ -20,7 +20,7 @@ import ElementPalette from "./ElementPalette";
 
 import { fullTestData } from "../../../testing/data";
 
-import "../../../styles/main.css";
+
 
 const showDeleteElementDialog = () =>
   console.error("Deleting Elements Not Supported in this Story");

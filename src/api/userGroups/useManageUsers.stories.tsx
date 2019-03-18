@@ -24,7 +24,7 @@ import useManageUsers from "./useManageUsers";
 import Button from "../../components/Button";
 import useFindUsers from "./useFindUsers";
 
-import "../../styles/main.css";
+
 
 const TestHarness = () => {
   const { users } = useFindUsers();

@@ -20,7 +20,7 @@ import { storiesOf } from "@storybook/react";
 import DataViewer from "./DataViewer";
 import { addThemedStories } from "../../testing/storybook/themedStoryGenerator";
 
-import "../../styles/main.css";
+
 
 const stories = storiesOf("Sections/Data", module);
 

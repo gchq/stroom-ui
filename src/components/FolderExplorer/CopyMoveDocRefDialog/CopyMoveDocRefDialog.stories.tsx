@@ -8,7 +8,7 @@ import {
   useDialog as useCopyMoveDocRefDialog
 } from "./CopyMoveDocRefDialog";
 
-import "../../../styles/main.css";
+
 import { PermissionInheritance, DocRefType } from "../../../types";
 import JsonDebug from "../../../testing/JsonDebug";
 

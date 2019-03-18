@@ -18,7 +18,7 @@ import { storiesOf } from "@storybook/react";
 
 import IndexEditor from "./IndexEditor";
 
-import "../../styles/main.css";
+
 
 import fullTestData from "../../testing/data";
 

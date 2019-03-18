@@ -3,7 +3,7 @@ import { StroomTheme } from "./types";
 const theme: StroomTheme = {
   // General
   backgroundColor: "#282829",
-  textColor: "#cacbcb",
+  textColor: "yellow",
   textColor_deemphasised: "#cacbcb",
   selectedColor: "#185e90",
   focussedColor: "#0f3e5f",

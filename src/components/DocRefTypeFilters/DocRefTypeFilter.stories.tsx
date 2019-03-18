@@ -20,7 +20,7 @@ import { storiesOf } from "@storybook/react";
 
 import DocRefTypeFilters from "./DocRefTypeFilters";
 
-import "../../styles/main.css";
+
 import JsonDebug from "../../testing/JsonDebug";
 import { addThemedStories } from "../../testing/storybook/themedStoryGenerator";
 

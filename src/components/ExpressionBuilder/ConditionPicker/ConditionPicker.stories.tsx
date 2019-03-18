@@ -21,7 +21,7 @@ import { addThemedStories } from "../../../testing/storybook/themedStoryGenerato
 import ConditionPicker from "./ConditionPicker";
 import { ConditionType } from "../../../types";
 
-import "../../../styles/main.css";
+
 
 const stories = storiesOf("Pickers/Condition", module);
 

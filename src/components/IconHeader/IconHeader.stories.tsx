@@ -20,7 +20,7 @@ import { storiesOf } from "@storybook/react";
 import { addThemedStories } from "../../testing/storybook/themedStoryGenerator";
 import IconHeader from "./IconHeader";
 
-import "../../styles/main.css";
+
 
 const iconHeaderStories = storiesOf("General Purpose/Icon Header", module);
 addThemedStories(

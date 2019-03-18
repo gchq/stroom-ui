@@ -4,7 +4,7 @@ import { storiesOf } from "@storybook/react";
 
 import DialogActionButtons from "./DialogActionButtons";
 
-import "../../styles/main.css";
+
 
 let TestHarness = () => {
   const [hasConfirmed, setHasConfirmed] = useState<boolean>(false);

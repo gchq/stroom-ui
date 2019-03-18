@@ -23,8 +23,6 @@ import ThemedModal from "./ThemedModal";
 
 import { addThemedStories } from "../../testing/storybook/themedStoryGenerator";
 
-import "../../styles/main.css";
-
 const TestModal = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 

@@ -7,7 +7,7 @@ import DeleteDocRefDialog, { useDialog } from "./DeleteDocRefDialog";
 import { fromSetupSampleData } from "../test";
 import { DocRefType } from "../../../types";
 
-import "../../../styles/main.css";
+
 import JsonDebug from "../../../testing/JsonDebug";
 
 const testFolder2 = fromSetupSampleData.children![1];

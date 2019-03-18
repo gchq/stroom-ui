@@ -23,7 +23,7 @@ import ExpressionBuilder from "./ExpressionBuilder";
 
 import { testExpression, testDataSource, simplestExpression } from "./test";
 
-import "../../styles/main.css";
+
 import { ExpressionOperatorWithUuid } from "src/types";
 
 storiesOf("Expression/Builder", module)

@@ -22,7 +22,7 @@ import { storiesOf } from "@storybook/react";
 
 import IndexVolumeGroups from "./IndexVolumeGroups";
 
-import "../../styles/main.css";
+
 import { Switch, Route, RouteComponentProps } from "react-router";
 import IndexVolumeGroupEditor from "./IndexVolumeGroupEditor";
 

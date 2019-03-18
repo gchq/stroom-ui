@@ -5,7 +5,7 @@ import FolderExplorer from "./FolderExplorer";
 
 import fullTestData from "../../testing/data";
 
-import "../../styles/main.css";
+
 
 const testFolder1 = fullTestData.documentTree.children![0];
 

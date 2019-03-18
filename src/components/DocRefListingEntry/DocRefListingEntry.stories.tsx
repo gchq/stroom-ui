@@ -17,7 +17,6 @@ import * as React from "react";
 import { useState } from "react";
 import { storiesOf } from "@storybook/react";
 
-
 import fullTestData from "../../testing/data";
 import useSelectableItemListing, {
   SelectionBehaviour
@@ -25,7 +24,6 @@ import useSelectableItemListing, {
 import DocRefListingEntry from "./DocRefListingEntry";
 import { DocRefType } from "../../types";
 
-import "../../styles/main.css";
 import { DocRefBreadcrumb } from "../DocRefBreadcrumb";
 import JsonDebug from "../../testing/JsonDebug";
 import Button from "../Button";
@@ -113,7 +111,6 @@ let TestDocRefListingEntry = ({
 };
 
 storiesOf("Doc Ref/Listing Entry", module)
-  
   .add("docRef", () => <TestDocRefListingEntry docRefs={[testDocRef]} />)
   .add("docRef isOver canDrop", () => (
     <TestDocRefListingEntry docRefs={[testDocRef]} dndIsOver dndCanDrop />

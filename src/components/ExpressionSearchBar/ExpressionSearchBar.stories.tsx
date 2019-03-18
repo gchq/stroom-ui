@@ -22,7 +22,7 @@ import { testDataSource as dataSource } from "../ExpressionBuilder/test";
 import ExpressionSearchBar from "./ExpressionSearchBar";
 import { addThemedStories } from "../../testing/storybook/themedStoryGenerator";
 
-import "../../styles/main.css";
+
 import JsonDebug from "../../testing/JsonDebug";
 import Button from "../Button";
 import { ExpressionOperatorWithUuid } from "../../types";
