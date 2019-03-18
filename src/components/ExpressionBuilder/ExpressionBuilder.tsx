@@ -19,7 +19,7 @@ import { useEffect, useState } from "react";
 import ExpressionOperator from "./ExpressionOperator";
 import DeleteExpressionItem, {
   useDialog as useDeleteItemDialog
-} from "./DeleteExpressionItem";
+} from "./DeleteExpressionItem/DeleteExpressionItem";
 import {
   DataSourceType,
   StyledComponentProps,

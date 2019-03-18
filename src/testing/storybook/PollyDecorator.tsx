@@ -45,7 +45,7 @@ const testConfig: Config = {
 // Much easier to manage it this way
 const polly = new Polly("Mock Stroom API");
 polly.configure({
-  adapters: ["fetch"],
+  adapters: ["fetch", FetchAdapter],
   logging: true
 });
 const { server } = polly;

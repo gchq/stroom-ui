@@ -24,11 +24,10 @@ const resourceBuilder: ResourceBuilder = (
   /**
    * This responds with a list of streamAttributeMaps
    */
-  server
-    .get(resource)
-    .intercept((req: HttpRequest, res: HttpResponse) =>
-      res.json(testCache.data!.dataList)
-    );
+  server.get(resource).intercept((req: HttpRequest, res: HttpResponse) => {
+    console.log("Searching Stream Attribute Maps");
+    res.json(testCache.data!.dataList);
+  });
 };
 
 export default resourceBuilder;

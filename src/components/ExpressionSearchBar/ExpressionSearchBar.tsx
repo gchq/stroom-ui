@@ -16,6 +16,7 @@
 
 import * as React from "react";
 import { useEffect, useState } from "react";
+import * as uuidv4 from "uuid/v4";
 
 import { processSearchString } from "./expressionSearchBarUtils";
 import Button from "../Button";
@@ -27,23 +28,33 @@ import {
 import { assignRandomUuids } from "../../lib/treeUtils";
 import { toString } from "../ExpressionBuilder/expressionBuilderUtils";
 import { ExpressionBuilder } from "../ExpressionBuilder";
+import { ExpressionSearchCallback } from "./types";
 
 interface Props extends StyledComponentProps {
-  expression?: ExpressionOperatorWithUuid;
-  onExpressionChange: (e: ExpressionOperatorWithUuid) => void;
   dataSource: DataSourceType;
-  onSearch: (e: ExpressionOperatorWithUuid | string) => void;
+  onSearch: (e: ExpressionSearchCallback) => void;
   initialSearchString?: string;
+  initialSearchExpression?: ExpressionOperatorWithUuid;
 }
+
+const defaultSearchExpression: ExpressionOperatorWithUuid = {
+  type: "operator",
+  op: "AND",
+  enabled: true,
+  uuid: uuidv4(),
+  children: []
+};
 
 const ExpressionSearchBar = ({
   initialSearchString,
+  initialSearchExpression,
   dataSource,
-  expression,
-  onExpressionChange,
   onSearch
 }: Props) => {
   const [isExpression, setIsExpression] = useState<boolean>(false);
+  const [expression, setExpression] = useState<ExpressionOperatorWithUuid>(
+    initialSearchExpression || defaultSearchExpression
+  );
   const [searchString, setSearchString] = useState<string>(
     initialSearchString || ""
   );
@@ -59,10 +70,11 @@ const ExpressionSearchBar = ({
       const e = assignRandomUuids(
         parsedExpression.expression
       ) as ExpressionOperatorWithUuid;
-      onExpressionChange(e);
+      setExpression(e);
     }
-    onSearch(isExpression && !!expression ? expression : searchString);
-  }, []);
+
+    onSearch({ isExpression, expression, searchString });
+  }, [onSearch, setExpression]);
 
   const onChange: React.ChangeEventHandler<HTMLInputElement> = ({
     target: { value }
@@ -90,7 +102,7 @@ const ExpressionSearchBar = ({
     const e = assignRandomUuids(
       parsedExpression.expression
     ) as ExpressionOperatorWithUuid;
-    onExpressionChange(e);
+    setExpression(e);
   };
 
   return (
@@ -108,7 +120,7 @@ const ExpressionSearchBar = ({
           disabled={!isSearchStringValid}
           icon="search"
           onClick={() => {
-            onSearch(isExpression && !!expression ? expression : searchString);
+            onSearch({ isExpression, expression, searchString });
           }}
         />
       </div>
@@ -138,7 +150,7 @@ const ExpressionSearchBar = ({
                 const e = assignRandomUuids(
                   parsedExpression.expression
                 ) as ExpressionOperatorWithUuid;
-                onExpressionChange(e);
+                setExpression(e);
                 setIsExpression(true);
               }
             }}
@@ -151,7 +163,7 @@ const ExpressionSearchBar = ({
             editMode
             dataSource={dataSource}
             expression={expression}
-            onChange={onExpressionChange}
+            onChange={setExpression}
           />
         ) : (
           <div>{searchStringValidationMessages}</div>

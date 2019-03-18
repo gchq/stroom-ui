@@ -15,7 +15,7 @@
  */
 
 import * as React from "react";
-import { useEffect, useState } from "react";
+import { useEffect, useCallback } from "react";
 import ReactTable, { Column } from "react-table";
 
 import {
@@ -47,18 +47,15 @@ const defaultPageRequest: PageRequest = {
 
 const DataViewer = () => {
   const dataSource = useStreamDataSource();
-  const [expression, setExpression] = useState<
-    ExpressionOperatorWithUuid | undefined
-  >(undefined);
-  const { search, searchWithExpression, streams } = useStreamSearch();
+  const { page, streams, search } = useStreamSearch();
 
   useEffect(() => {
-    search({ pageInfo: defaultPageRequest });
+    page({ pageInfo: defaultPageRequest });
   }, [search]);
 
   const { tableProps } = useSelectableReactTable<DataRow>(
     {
-      items: streams.streamAttributeMaps,
+      items: !!streams ? streams.streamAttributeMaps : [],
       getKey: d => `${d.data.id}`
     },
     {
@@ -66,35 +63,38 @@ const DataViewer = () => {
     }
   );
 
+  const onSearch: ({
+    isExpression,
+    expression,
+    searchString
+  }: {
+    isExpression: boolean;
+    expression: ExpressionOperatorWithUuid;
+    searchString: string;
+  }) => void = useCallback(
+    ({ isExpression, expression, searchString }) => {
+      if (isExpression && !!expression) {
+        search({
+          expressionWithUuids: expression,
+          pageInfo: defaultPageRequest
+        });
+      } else {
+        page({ pageInfo: defaultPageRequest });
+      }
+    },
+    [search, search]
+  );
+
   return (
-    <React.Fragment>
-      <div className="content-tabs__grid">
-        <div className="data-viewer__header">
-          <IconHeader icon="database" text="Data" />
-          <ExpressionSearchBar
-            className="data-viewer__search-bar"
-            dataSource={dataSource}
-            expression={expression}
-            onExpressionChange={setExpression}
-            onSearch={e => {
-              if (!!expression) {
-                searchWithExpression({
-                  expressionWithUuids: expression,
-                  pageInfo: defaultPageRequest
-                });
-              } else {
-                console.error("No expression present to search with");
-              }
-            }}
-          />
-        </div>
-      </div>
-      <div className="DataTable__container">
-        <div className="DataTable__reactTable__container">
-          <ReactTable {...tableProps} />
-        </div>
-      </div>
-    </React.Fragment>
+    <div>
+      <IconHeader icon="database" text="Data" />
+      <ExpressionSearchBar
+        className="data-viewer__search-bar"
+        dataSource={dataSource}
+        onSearch={onSearch}
+      />
+      <ReactTable {...tableProps} />
+    </div>
   );
 };
 

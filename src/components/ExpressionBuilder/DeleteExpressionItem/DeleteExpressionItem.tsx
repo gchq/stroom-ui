@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useState } from "react";
 
-import { ThemedConfirm } from "../ThemedConfirm";
+import { ThemedConfirm } from "../../ThemedConfirm";
 
 interface Props {
   isOpen: boolean;

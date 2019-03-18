@@ -14,30 +14,42 @@
  * limitations under the License.
  */
 import * as React from "react";
-import { useState } from "react";
+import { useState, useCallback } from "react";
 
 import { storiesOf } from "@storybook/react";
 
-
-
-import { simplestExpression, testDataSource } from "../ExpressionBuilder/test";
-
+import { testDataSource } from "../ExpressionBuilder/test";
 import ExpressionSearchBar from "./ExpressionSearchBar";
+import { addThemedStories } from "../../testing/storybook/themedStoryGenerator";
 
 import "../../styles/main.css";
+import { ExpressionSearchCallback } from "./types";
+import JsonDebug from "../../testing/JsonDebug";
+import Button from "../Button";
 
-storiesOf("Expression/Search Bar", module)
-  
-  .add("Basic", () => {
-    const [expression, onExpressionChange] = useState(simplestExpression);
+const TestHarness = () => {
+  const [lastSearch, setLastSearch] = useState<
+    ExpressionSearchCallback | undefined
+  >(undefined);
 
-    return (
+  return (
+    <div>
       <ExpressionSearchBar
-        onSearch={e => console.log("Search called", e)}
-        expression={expression}
-        onExpressionChange={onExpressionChange}
+        onSearch={setLastSearch}
         initialSearchString="foo1=bar1 foo2=bar2 foo3=bar3 someOtherKey=sometOtherValue"
         dataSource={testDataSource}
       />
-    );
-  });
+      <Button
+        text="Reset"
+        onClick={useCallback(() => {
+          setLastSearch(undefined);
+        }, [setLastSearch])}
+      />
+      <JsonDebug value={{ lastSearch }} />
+    </div>
+  );
+};
+
+const stories = storiesOf("Expression/Search Bar", module);
+
+addThemedStories(stories, <TestHarness />);

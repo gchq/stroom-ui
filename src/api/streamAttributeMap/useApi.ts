@@ -9,11 +9,11 @@ import {
   StreamAttributeMapResult
 } from "../../types";
 import { useConfig } from "../../startup/config";
-import { SearchProps, SearchWithExpressionProps } from "./types";
+import { SearchWithExpressionProps, PageProps } from "./types";
 
 interface Api {
-  search: (props: SearchProps) => Promise<StreamAttributeMapResult>;
-  searchWithExpression: (
+  page: (props: PageProps) => Promise<StreamAttributeMapResult>;
+  search: (
     props: SearchWithExpressionProps
   ) => Promise<StreamAttributeMapResult>;
   fetchDataSource: () => Promise<DataSourceType>;
@@ -43,28 +43,31 @@ export const useApi = (): Api => {
         ),
       [stroomBaseServiceUrl, httpGetJson]
     ),
-    search: useCallback(
-      ({ pageInfo: { pageOffset, pageSize } }: SearchProps) => {
-        var url = new URL(`${stroomBaseServiceUrl}/streamattributemap/v1`);
-        if (!!pageSize)
-          url.searchParams.append("pageSize", pageSize.toString());
-        if (!!pageOffset)
-          url.searchParams.append("pageOffset", pageOffset.toString());
+    page: useCallback(
+      ({ pageInfo }: PageProps) => {
+        let url = `${stroomBaseServiceUrl}/streamattributemap/v1/?`;
 
-        return httpGetJson(url.href);
+        if (!!pageInfo) {
+          const { pageOffset, pageSize } = pageInfo;
+          url += `pageSize=${pageSize}`;
+          url += `&pageOffset=${pageOffset}`;
+        }
+
+        return httpGetJson(url);
       },
       [stroomBaseServiceUrl, httpGetJson]
     ),
-    searchWithExpression: useCallback(
-      ({
-        pageInfo: { pageOffset, pageSize },
-        expressionWithUuids
-      }: SearchWithExpressionProps) => {
-        const expression = cleanExpression(expressionWithUuids);
-
+    search: useCallback(
+      ({ pageInfo, expressionWithUuids }: SearchWithExpressionProps) => {
         let url = `${stroomBaseServiceUrl}/streamattributemap/v1/?`;
-        url += `pageSize=${pageSize}`;
-        url += `&pageOffset=${pageOffset}`;
+
+        if (!!pageInfo) {
+          const { pageOffset, pageSize } = pageInfo;
+          url += `pageSize=${pageSize}`;
+          url += `&pageOffset=${pageOffset}`;
+        }
+
+        const expression = cleanExpression(expressionWithUuids);
 
         return httpPostJsonResponse(url, {
           body: JSON.stringify(expression)

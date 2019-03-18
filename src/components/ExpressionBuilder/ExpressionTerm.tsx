@@ -20,7 +20,7 @@ import { DragSource, DragSourceSpec } from "react-dnd";
 
 import Select from "react-select";
 import Button from "../Button";
-import ConditionPicker from "./ConditionPicker";
+import ConditionPicker from "./ConditionPicker/ConditionPicker";
 import {
   DragDropTypes,
   DragObject,

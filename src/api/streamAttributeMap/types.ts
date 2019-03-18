@@ -5,15 +5,15 @@ import {
 } from "../../types";
 
 export interface UseStreamSearch {
-  search: (p: SearchProps) => void;
-  searchWithExpression: (p: SearchWithExpressionProps) => void;
+  page: (p: PageProps) => void;
+  search: (p: SearchWithExpressionProps) => void;
   streams: StreamAttributeMapResult;
 }
 
-export interface SearchProps {
-  pageInfo: PageRequest;
+export interface PageProps {
+  pageInfo?: PageRequest;
 }
 
-export interface SearchWithExpressionProps extends SearchProps {
+export interface SearchWithExpressionProps extends PageProps {
   expressionWithUuids: ExpressionOperatorWithUuid;
 }
