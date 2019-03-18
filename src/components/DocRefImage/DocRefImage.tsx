@@ -1,16 +1,15 @@
 import * as React from "react";
+import { StyleProps, StroomIcon } from "../../styled/StroomIcon";
 
-interface Props {
+interface Props extends StyleProps {
   docRefType: string;
-  size?: "lg" | "sm";
-  className?: string;
 }
 
-const DocRefImage = ({ docRefType, size = "lg", className = "" }: Props) => {
+const DocRefImage = ({ docRefType, ...rest }: Props) => {
   if (docRefType !== "NONE") {
     return (
-      <img
-        className={`stroom-icon--${size} ${className || ""}`}
+      <StroomIcon
+        {...rest}
         alt={`doc ref icon ${docRefType}`}
         src={require(`../../images/docRefTypes/${docRefType}.svg`)}
       />

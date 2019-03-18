@@ -85,10 +85,7 @@ let DocRefListingEntry = ({
 
   return (
     <div className={className} onClick={onSelect}>
-      <DocRefImage
-        className="DocRefListingEntry__docRefImage"
-        docRefType={docRef.type}
-      />
+      <DocRefImage docRefType={docRef.type} />
       <div className="DocRefListingEntry__name" onClick={onOpenDocRef}>
         {docRef.name}
       </div>

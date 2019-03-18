@@ -11,7 +11,7 @@ import createStore from "./startup/store";
 import useFontAwesome from "./startup/useFontAwesome";
 
 import "./styles/main.css";
-import { ThemeContextProvider } from "./lib/theme";
+import { ThemeContextProvider } from "./styled/theme";
 import { CustomRouter } from "./lib/useRouter";
 
 import createHistory from "history/createBrowserHistory";

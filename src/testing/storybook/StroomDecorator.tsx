@@ -13,7 +13,7 @@ import { useTestServer } from "./PollyDecorator";
 
 import useFontAwesome from "../../startup/useFontAwesome";
 import testData from "../data";
-import { ThemeContextProvider, useTheme } from "../../lib/theme";
+import { ThemeContextProvider, useTheme } from "../../styled/theme";
 import { withRouter, RouteComponentProps } from "react-router";
 import { CustomRouter } from "../../lib/useRouter";
 import { ConfigProvider } from "../../startup/config";

@@ -1,6 +1,8 @@
 import * as React from "react";
 
-import useLocalStorage, { storeString } from "./useLocalStorage";
+import useLocalStorage, { storeString } from "../lib/useLocalStorage";
+import { ThemeProvider } from "styled-components";
+import themes from "./themes";
 
 export const themeOptions = [
   {
@@ -34,9 +36,11 @@ const ThemeContextProvider: React.StatelessComponent<{}> = ({ children }) => {
   );
 
   return (
-    <ThemeContext.Provider value={{ theme: value, setTheme: setValue }}>
-      {children}
-    </ThemeContext.Provider>
+    <ThemeProvider theme={themes[value]}>
+      <ThemeContext.Provider value={{ theme: value, setTheme: setValue }}>
+        {children}
+      </ThemeContext.Provider>
+    </ThemeProvider>
   );
 };
 

@@ -1,14 +1,14 @@
 import * as React from "react";
+import { StyleProps, StroomIcon } from "../../styled/StroomIcon";
 
-interface Props {
+interface Props extends StyleProps {
   icon: string;
-  size?: "lg" | "sm";
   className?: string;
 }
 
-const ElementImage = ({ icon, size = "lg", className = "" }: Props) => (
-  <img
-    className={`stroom-icon--${size} ${className || ""}`}
+const ElementImage = ({ icon, ...rest }: Props) => (
+  <StroomIcon
+    {...rest}
     alt={`element icon ${icon}`}
     src={require(`../../images/elements/${icon}`)}
   />

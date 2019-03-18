@@ -36,7 +36,7 @@ import useLocalStorage, {
   storeBoolean,
   storeObjectFactory
 } from "../../lib/useLocalStorage";
-import { useTheme } from "../../lib/theme";
+import { useTheme } from "../../styled/theme";
 import useRouter from "../../lib/useRouter";
 import { useDocumentTree } from "../../api/explorer";
 import useAppNavigation from "./useAppNavigation";

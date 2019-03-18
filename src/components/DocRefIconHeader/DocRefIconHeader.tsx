@@ -25,11 +25,7 @@ interface Props {
 
 const DocRefIconHeader = ({ text, docRefType, className }: Props) => (
   <div className={`icon-header ${className || ""}`}>
-    <DocRefImage
-      docRefType={docRefType}
-      className="icon-header__icon"
-      size="lg"
-    />
+    <DocRefImage docRefType={docRefType} size="lg" />
     <p className="icon-header__text">{text}</p>
   </div>
 );
