@@ -18,11 +18,13 @@ interface Props {
  * This component is an example of a Function Component that simply returns it's value in one line.
  * It doesn't require the {} body or the return statement. This is a standard JavaScript feature.
  *
+ * Notice how I am destructuring the props to pull the title value out. rather than having to use props.title.
+ * This pattern is ubiquitous throughout our code.
+ *
  * @param param0 The properties of the component. Props flow down from parent to child components.
  */
-export const CustomHeader = ({ title }: Props) => <h1>{title}</h1>;
+export const CustomHeader = ({ title }: Props) => (
+  <h1>Custom Header - {title}</h1>
+);
 
-/**
- * If there is a function/class that is named the same as the file, then I will usually export that as a default export.
- */
 export default CustomHeader;
