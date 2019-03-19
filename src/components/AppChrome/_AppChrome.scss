@@ -49,33 +49,6 @@
   height: 2.2rem;
 }
 
-.sidebar__logo svg path {
-  @include themify($themes) {
-    fill: themed("sidebar__header-color");
-  }
-}
-.sidebar__menu-item {
-  @include themify($themes) {
-    color: themed("text__color--deemphasised");
-  }
-}
-.sidebar__menu-item.is-active {
-  @include themify($themes) {
-    background-color: themed("raised-high__selected-background-color");
-  }
-}
-.sidebar__menu-item.nav:hover {
-  @include themify($themes) {
-    background-color: themed("raised-high__selected-background-color");
-  }
-}
-
-.sidebar__menu-item.doc:hover {
-  @include themify($themes) {
-    background-color: themed("raised-high__selected-background-color");
-  }
-}
-
 .sidebar__menu-item {
   display: inline-flex;
   outline: none;

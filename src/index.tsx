@@ -10,7 +10,7 @@ import Routes from "./startup/Routes";
 import createStore from "./startup/store";
 import useFontAwesome from "./startup/useFontAwesome";
 
-import { ThemeContextProvider } from "./styled/theme";
+import { ThemeContextProvider } from "./lib/theme";
 import { CustomRouter } from "./lib/useRouter";
 
 import createHistory from "history/createBrowserHistory";

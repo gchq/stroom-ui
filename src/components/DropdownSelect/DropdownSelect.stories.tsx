@@ -23,7 +23,6 @@ import useForm from "../../lib/useForm";
 import JsonDebug from "../../testing/JsonDebug";
 
 import { ControlledInput } from "../../types";
-import { hoverable } from "../../styled/ThemeStyling";
 
 const toSimpleOption = (c: string) => ({
   value: c.toLowerCase(),
@@ -45,7 +44,7 @@ const ColorOption = ({
   onClick,
   inFocus
 }: DropdownOptionProps) => (
-  <div className={`${hoverable} ${inFocus ? "inFocus" : ""}`} onClick={onClick}>
+  <div className={`hoverable ${inFocus ? "inFocus" : ""}`} onClick={onClick}>
     <span style={{ backgroundColor: value, width: "2rem" }}>&nbsp;</span>
     {text}
   </div>

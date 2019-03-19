@@ -15,9 +15,7 @@
  */
 
 import * as React from "react";
-import { useContext, useEffect } from "react";
 import { Story } from "@storybook/react";
-import { themeOptions, ThemeContext } from "../../styled/theme";
 
 const styles = {
   fullScreen: {
@@ -33,49 +31,41 @@ const styles = {
   }
 };
 
+const themes = ["theme-light", "theme-dark"];
+
 interface Props {
   theme: string;
   component: React.ReactNode;
-  centerComponent?: boolean;
+  centerComponent?: React.ReactNode;
 }
 
-const ThemedContainer = ({ theme, component, centerComponent }: Props) => {
-  const { setTheme } = useContext(ThemeContext);
-
-  useEffect(() => {
-    setTheme(theme);
-  }, [theme, setTheme]);
-
-  return (
-    <div
-      className={`app-container ${theme} raised-low`}
-      style={styles.fullScreen}
-    >
-      {centerComponent ? (
-        <div className="flat" style={styles.center}>
-          {component}
-        </div>
-      ) : (
-        <React.Fragment>{component}</React.Fragment>
-      )}
-    </div>
-  );
-};
+const ThemedContainer = ({ theme, component, centerComponent }: Props) => (
+  <div
+    className={`app-container ${theme} raised-low`}
+    style={styles.fullScreen}
+  >
+    {centerComponent ? (
+      <div className="flat" style={styles.center}>
+        {component}
+      </div>
+    ) : (
+      <React.Fragment>{component}</React.Fragment>
+    )}
+  </div>
+);
 
 export const addThemedStories = (
   stories: Story,
   component: React.ReactNode,
-  centerComponent: boolean = false
+  centerComponent?: React.ReactNode
 ) => {
-  themeOptions
-    .map(t => t.value)
-    .forEach(theme =>
-      stories.add(theme, () => (
-        <ThemedContainer
-          theme={theme}
-          component={component}
-          centerComponent={centerComponent}
-        />
-      ))
-    );
+  themes.forEach(theme =>
+    stories.add(theme, () => (
+      <ThemedContainer
+        theme={theme}
+        component={component}
+        centerComponent={centerComponent}
+      />
+    ))
+  );
 };

@@ -1,10 +1,10 @@
 import * as React from "react";
 import { storiesOf } from "@storybook/react";
-import { addThemedStories } from "./storybook/themedStoryGenerator";
-import { Table, StyledInput } from "../styled/ThemeStyling";
-import { StyledReactTable } from "../styled/StyledReactTable";
+import ReactTable from "react-table";
 
-const tableStories = storiesOf("Dev Sandbox/Themed Table", module);
+import { addThemedStories } from "./storybook/themedStoryGenerator";
+
+const tableStories = storiesOf("Dev Sandbox/Stuff", module);
 
 interface Person {
   name: string;
@@ -37,8 +37,7 @@ const COLUMNS = [
 const ThemedTable = () => {
   return (
     <React.Fragment>
-      <StyledInput />
-      <Table>
+      <table>
         <thead>
           <tr>
             <th>Name</th>
@@ -53,10 +52,10 @@ const ThemedTable = () => {
             </tr>
           ))}
         </tbody>
-      </Table>
+      </table>
 
       <h2>React Table</h2>
-      <StyledReactTable columns={COLUMNS} data={testData} />
+      <ReactTable columns={COLUMNS} data={testData} />
     </React.Fragment>
   );
 };

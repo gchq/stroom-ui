@@ -16,10 +16,9 @@
 
 import * as React from "react";
 import * as ReactModal from "react-modal";
-import styled from "styled-components";
 
 import reactModalOptions from "./reactModalOptions";
-import { raisedLow } from "../../styled/ThemeStyling";
+import { useTheme } from "../../lib/theme";
 
 interface ContentProps {
   header: JSX.Element;
@@ -29,29 +28,6 @@ interface ContentProps {
 
 interface Props extends ContentProps, ReactModal.Props {}
 
-const Styled = styled.div`
-  ${raisedLow}
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-`;
-const StyledHeader = styled.header`
-  ${raisedLow}
-  padding: 10px;
-`;
-const StyledContent = styled.div`
-  ${raisedLow}
-  padding: 0 20px 0 20px;
-`;
-const StyledFooterActions = styled.div`
-  ${raisedLow}
-  border-top: 1px solid lightgray;
-  padding: 5px;
-  display: flex;
-  justify-content: flex-end;
-`;
-
 /**
  * A themed modal is required because Semantic UI modals are mounted
  * outside the application's root div. This means it won't inherit the
@@ -60,13 +36,17 @@ const StyledFooterActions = styled.div`
  * property, or not.
  */
 const ThemedModal = ({ header, content, actions, ...rest }: Props) => {
+  const { theme } = useTheme();
+
   return (
-    <ReactModal {...rest} style={reactModalOptions}>
-      <Styled>
-        <StyledHeader>{header}</StyledHeader>
-        <StyledContent>{content}</StyledContent>
-        <StyledFooterActions>{actions}</StyledFooterActions>
-      </Styled>
+    <ReactModal className={`${theme}`} {...rest} style={reactModalOptions}>
+      <div className="raised-low themed-modal">
+        <header className="raised-low themed-modal__header">{header}</header>
+        <div className="raised-low themed-modal__content">{content}</div>
+        <div className="raised-low themed-modal__footer__actions">
+          {actions}
+        </div>
+      </div>
     </ReactModal>
   );
 };

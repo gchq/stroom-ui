@@ -21,7 +21,7 @@ import * as ReactModal from "react-modal";
 import Button from "../Button";
 import IconHeader from "../IconHeader";
 import reactModalOptions from "../ThemedModal/reactModalOptions";
-import { useTheme } from "../../styled/theme";
+import { useTheme } from "../../lib/theme";
 
 interface NewProps {
   getQuestion: () => string;
