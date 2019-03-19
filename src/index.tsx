@@ -17,7 +17,7 @@ import createHistory from "history/createBrowserHistory";
 import { ConfigProvider } from "./startup/config";
 export const history = createHistory();
 
-import "./styled/fonts.css";
+import "./styles/main.css";
 
 const DndRoutes = compose(DragDropContext(HTML5Backend))(Routes);
 
