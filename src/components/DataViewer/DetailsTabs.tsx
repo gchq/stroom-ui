@@ -17,28 +17,35 @@
 import * as React from "react";
 import * as moment from "moment";
 
-import DataDetails from "./DataDetails";
+import { DataRow } from "../../types";
+import { useStreamDataRow } from "../../api/streamAttributeMap";
+import Loader from "../Loader";
 
 interface Props {
-  data: any;
-  details: any;
-  dataViewerId: string;
+  data: DataRow;
 }
 
-const DetailsTabs = ({ data, details, dataViewerId }: Props) => {
+const DetailsTabs = ({ data }: Props) => {
+  const dataRow = useStreamDataRow(data.data.id);
+
+  if (!dataRow) {
+    return <Loader message="Loading Data" />;
+  }
+
   const panes = [
     {
       menuItem: "Data",
       render: () => (
         <div className="tab-pane">
-          <DataDetails data={data} />
+          {/* 
+          TODO: ACtually Source the data
+          <DataDetails data={dataRow} /> */}
         </div>
       )
     },
     {
       menuItem: "Details",
       render: () => {
-        console.log({ details });
         return (
           <div className="tab-pane">
             <div className="StreamDetails__container">
@@ -48,19 +55,19 @@ const DetailsTabs = ({ data, details, dataViewerId }: Props) => {
                     <tr>
                       <td>Stream ID</td>
                       <td>
-                        <code>{details.data.id}</code>
+                        <code>{dataRow.data.id}</code>
                       </td>
                     </tr>
                     <tr>
                       <td>Status</td>
                       <td>
-                        <code> {details.data.status}</code>
+                        <code> {dataRow.data.status}</code>
                       </td>
                     </tr>
                     <tr>
                       <td>Status MS</td>
                       <td>
-                        {moment(details.data.statusMs).format(
+                        {moment(dataRow.data.statusMs).format(
                           "MMMM Do YYYY, h:mm:ss a"
                         )}
                       </td>
@@ -78,7 +85,7 @@ const DetailsTabs = ({ data, details, dataViewerId }: Props) => {
                     <tr>
                       <td>Created</td>
                       <td>
-                        {moment(details.data.createMs).format(
+                        {moment(dataRow.data.createMs).format(
                           "MMMM Do YYYY, h:mm:ss a"
                         )}
                       </td>
@@ -86,7 +93,7 @@ const DetailsTabs = ({ data, details, dataViewerId }: Props) => {
                     <tr>
                       <td>Effective</td>
                       <td>
-                        {moment(details.data.effectiveMs).format(
+                        {moment(dataRow.data.effectiveMs).format(
                           "MMMM Do YYYY, h:mm:ss a"
                         )}
                       </td>

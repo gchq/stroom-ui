@@ -95,7 +95,7 @@ const ElementDetails = ({ pipeline, pipelineEditApi }: Props) => {
     </div>
   );
 
-  const content = (
+  const detailContent = (
     <React.Fragment>
       <p className="element-details__summary">
         This element is a <strong>{typeName}</strong>.
@@ -126,7 +126,7 @@ const ElementDetails = ({ pipeline, pipelineEditApi }: Props) => {
       className="element-details__panel"
       title={title}
       onClose={() => pipelineEditApi.elementSelectionCleared()}
-      content={content}
+      content={detailContent}
     />
   );
 };

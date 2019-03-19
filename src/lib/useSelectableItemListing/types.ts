@@ -16,6 +16,7 @@ export interface OutProps<TItem> {
   focusIndex: number;
   focussedItem?: any;
   lastSelectedIndex?: number;
+  selectedItem?: TItem;
   selectedItems: Array<TItem>;
   selectedItemIndexes: Set<number>;
   selectionToggled: (itemKey: string) => void;

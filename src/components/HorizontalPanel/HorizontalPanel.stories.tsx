@@ -20,8 +20,6 @@ import { storiesOf } from "@storybook/react";
 
 import HorizontalPanel from "./HorizontalPanel";
 
-
-
 const EnabledCheckbox = () => (
   <label>
     <input type="checkbox" name="checkbox" value="value" />
@@ -37,7 +35,7 @@ storiesOf("General Purpose/Horizontal Panel", module)
       title="Some title"
       onClose={() => console.log("closed")}
       content={<div>{loremIpsum({ count: 100, units: "words" })}</div>}
-      headerMenuItems={[<EnabledCheckbox />]}
+      headerMenuItems={<EnabledCheckbox />}
     />
   ))
   .add("long title", () => (
@@ -45,7 +43,7 @@ storiesOf("General Purpose/Horizontal Panel", module)
       title="Some very, very long title"
       onClose={() => console.log("closed")}
       content={<div>{loremIpsum({ count: 100, units: "words" })}</div>}
-      headerMenuItems={[<EnabledCheckbox />]}
+      headerMenuItems={<EnabledCheckbox />}
     />
   ))
   .add("long title with adjusted columns", () => (
@@ -53,7 +51,7 @@ storiesOf("General Purpose/Horizontal Panel", module)
       title="Some very, very long title"
       onClose={() => console.log("closed")}
       content={<div>{loremIpsum({ count: 100, units: "words" })}</div>}
-      headerMenuItems={[<EnabledCheckbox />]}
+      headerMenuItems={<EnabledCheckbox />}
       //titleColumns="8"
       //menuColumns="8"
     />
@@ -63,7 +61,7 @@ storiesOf("General Purpose/Horizontal Panel", module)
       title="A smaller header"
       onClose={() => console.log("closed")}
       content={<div>{loremIpsum({ count: 100, units: "words" })}</div>}
-      headerMenuItems={[<EnabledCheckbox />]}
+      headerMenuItems={<EnabledCheckbox />}
       //headerSize="h4"
     />
   ))
@@ -72,7 +70,7 @@ storiesOf("General Purpose/Horizontal Panel", module)
       title="A smaller header"
       onClose={() => console.log("closed")}
       content={<div>{loremIpsum({ count: 6000, units: "words" })}</div>}
-      headerMenuItems={[<EnabledCheckbox />]}
+      headerMenuItems={<EnabledCheckbox />}
       //headerSize="h4"
     />
   ));

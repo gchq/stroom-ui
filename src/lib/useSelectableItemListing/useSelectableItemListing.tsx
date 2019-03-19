@@ -103,6 +103,10 @@ export function useSelectableItemListing<TItem>({
     focussedItem,
     lastSelectedIndex,
     selectedItems,
+    selectedItem:
+      selectedItems.length > 0 && !!lastSelectedIndex
+        ? selectedItems[lastSelectedIndex]
+        : undefined,
     selectedItemIndexes,
     selectionToggled,
     clearSelection,

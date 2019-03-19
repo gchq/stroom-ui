@@ -17,7 +17,7 @@ interface Api {
     props: SearchWithExpressionProps
   ) => Promise<StreamAttributeMapResult>;
   fetchDataSource: () => Promise<DataSourceType>;
-  getDetailsForSelectedRow: (metaId: number) => Promise<DataRow>;
+  getDetailsForSelectedStream: (metaId: number) => Promise<DataRow>;
 }
 
 export const useApi = (): Api => {
@@ -34,7 +34,7 @@ export const useApi = (): Api => {
         ),
       [stroomBaseServiceUrl, httpGetJson]
     ),
-    getDetailsForSelectedRow: useCallback(
+    getDetailsForSelectedStream: useCallback(
       (metaId: number) =>
         httpGetJson(
           `${stroomBaseServiceUrl}/streamattributemap/v1/${metaId}`,

@@ -63,7 +63,7 @@ const DataList = ({ dataViewerId, expression }: Props) => {
     selectRow(dataViewerId, selectedRow);
 
     dataApi.getDataForSelectedRow(dataViewerId);
-    streamAttributeMapApi.getDetailsForSelectedRow(dataViewerId);
+    streamAttributeMapApi.getDetailsForSelectedStream(dataViewerId);
   };
   const onHandleLoadMoreRows = () => {
     if (!!expression) {

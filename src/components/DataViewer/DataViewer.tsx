@@ -15,17 +15,22 @@
  */
 
 import * as React from "react";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import ReactTable, { Column } from "react-table";
 
 import {
   useStreamSearch,
   useStreamDataSource
 } from "../../api/streamAttributeMap";
-import { useSelectableReactTable } from "../../lib/useSelectableItemListing";
+import {
+  useSelectableReactTable,
+  SelectionBehaviour
+} from "../../lib/useSelectableItemListing";
 import { DataRow, PageRequest, ExpressionOperatorWithUuid } from "../../types";
 import IconHeader from "../IconHeader";
 import ExpressionSearchBar from "../ExpressionSearchBar";
+import HorizontalMainDetails from "../HorizontalMainDetails";
+import DetailsTabs from "./DetailsTabs";
 
 const COLUMNS: Array<Column> = [
   {
@@ -48,11 +53,17 @@ const defaultPageRequest: PageRequest = {
 const DataViewer = () => {
   const dataSource = useStreamDataSource();
   const { streams, search } = useStreamSearch();
+  const [isDetailOpen, setIsDetailsOpen] = useState<boolean>(false);
+  const onCloseDetails = useCallback(() => {
+    setIsDetailsOpen(false);
+  }, [setIsDetailsOpen]);
+  console.log(isDetailOpen);
 
-  const { tableProps } = useSelectableReactTable<DataRow>(
+  const { tableProps, selectedItem } = useSelectableReactTable<DataRow>(
     {
       items: !!streams ? streams.streamAttributeMaps : [],
-      getKey: d => `${d.data.id}`
+      getKey: d => `${d.data.id}`,
+      selectionBehaviour: SelectionBehaviour.SINGLE
     },
     {
       columns: COLUMNS
@@ -80,12 +91,24 @@ const DataViewer = () => {
             dataSource={dataSource}
             onSearch={onSearch}
           />
-          <ReactTable {...tableProps} />
         </div>
       </div>
       <div className="DataTable__container">
         <div className="DataTable__reactTable__container">
-          <ReactTable {...tableProps} />
+          <HorizontalMainDetails
+            storageKey="dataViewer"
+            title=""
+            onClose={onCloseDetails}
+            isOpen={!!selectedItem}
+            mainContent={<ReactTable {...tableProps} />}
+            detailContent={
+              !!selectedItem ? (
+                <DetailsTabs data={selectedItem} />
+              ) : (
+                <div>Please Select a Single Row</div>
+              )
+            }
+          />
         </div>
       </div>
     </div>

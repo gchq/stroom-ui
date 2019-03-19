@@ -14,6 +14,6 @@
  * limitations under the License.
  */
 
-import HorizontalPanel from "./HorizontalPanel";
+import HorizontalMainDetails from "./HorizontalMainDetails";
 
-export default HorizontalPanel;
+export default HorizontalMainDetails;
