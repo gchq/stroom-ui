@@ -11,7 +11,7 @@ import * as React from "react";
  * exported a mix of constants and interfaces.
  */
 interface Props {
-  title: string;
+  title: string; // this is how you specify the type
 }
 
 /**

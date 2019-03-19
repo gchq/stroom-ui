@@ -5,7 +5,7 @@ import * as React from "react";
  * TypeScript will still enforce it.
  */
 interface Props {
-  onChoice: (pill: string) => void;
+  onChoice: (pill: string) => void; // The type of this is a function that expects a string, and returns nothing.
 }
 
 /**
