@@ -27,7 +27,7 @@ export default (): UseStreamSearch => {
       [search, setStreams]
     ),
     page: useCallback((s: PageProps) => page(s).then(setStreams), [
-      search,
+      page,
       setStreams
     ])
   };

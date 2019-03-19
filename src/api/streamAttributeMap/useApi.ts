@@ -45,31 +45,35 @@ export const useApi = (): Api => {
     ),
     page: useCallback(
       ({ pageInfo }: PageProps) => {
-        let url = `${stroomBaseServiceUrl}/streamattributemap/v1/?`;
+        var url = new URL(`${stroomBaseServiceUrl}/streamattributemap/v1/`);
 
         if (!!pageInfo) {
           const { pageOffset, pageSize } = pageInfo;
-          url += `pageSize=${pageSize}`;
-          url += `&pageOffset=${pageOffset}`;
+          if (!!pageSize)
+            url.searchParams.append("pageSize", pageSize.toString());
+          if (!!pageOffset)
+            url.searchParams.append("pageOffset", pageOffset.toString());
         }
 
-        return httpGetJson(url);
+        return httpGetJson(url.href);
       },
       [stroomBaseServiceUrl, httpGetJson]
     ),
     search: useCallback(
       ({ pageInfo, expressionWithUuids }: SearchWithExpressionProps) => {
-        let url = `${stroomBaseServiceUrl}/streamattributemap/v1/?`;
+        var url = new URL(`${stroomBaseServiceUrl}/streamattributemap/v1/`);
 
         if (!!pageInfo) {
           const { pageOffset, pageSize } = pageInfo;
-          url += `pageSize=${pageSize}`;
-          url += `&pageOffset=${pageOffset}`;
+          if (!!pageSize)
+            url.searchParams.append("pageSize", pageSize.toString());
+          if (!!pageOffset)
+            url.searchParams.append("pageOffset", pageOffset.toString());
         }
 
         const expression = cleanExpression(expressionWithUuids);
 
-        return httpPostJsonResponse(url, {
+        return httpPostJsonResponse(url.href, {
           body: JSON.stringify(expression)
         });
       },

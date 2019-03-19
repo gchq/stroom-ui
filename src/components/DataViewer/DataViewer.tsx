@@ -15,7 +15,7 @@
  */
 
 import * as React from "react";
-import { useEffect, useCallback } from "react";
+import { useCallback } from "react";
 import ReactTable, { Column } from "react-table";
 
 import {
@@ -47,11 +47,7 @@ const defaultPageRequest: PageRequest = {
 
 const DataViewer = () => {
   const dataSource = useStreamDataSource();
-  const { page, streams, search } = useStreamSearch();
-
-  useEffect(() => {
-    page({ pageInfo: defaultPageRequest });
-  }, [search]);
+  const { streams, search } = useStreamSearch();
 
   const { tableProps } = useSelectableReactTable<DataRow>(
     {
@@ -63,6 +59,7 @@ const DataViewer = () => {
     }
   );
 
+  // The expression search bar will call this on mount
   const onSearch = useCallback(
     (expression: ExpressionOperatorWithUuid) => {
       search({

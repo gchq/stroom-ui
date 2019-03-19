@@ -1,7 +1,8 @@
-import { useState, useCallback } from "react";
+import { useCallback } from "react";
 
 import useApi from "./useApi";
 import { UseData, PagedData, FetchDataParams } from "./types";
+import useUpdateableState from "src/lib/useUpdateableState";
 
 const defaultPagedData: PagedData = {
   streamAttributeMaps: [],
@@ -17,24 +18,12 @@ const defaultFetchParams: FetchDataParams = {
 export default (): UseData => {
   const { getDataForSelectedRow } = useApi();
 
-  const [pagedData, setPagedData] = useState<PagedData>(defaultPagedData);
-  const [fetchParams, setFetchParams] = useState<FetchDataParams>(
-    defaultFetchParams
-  );
-
-  const updatePagedData = useCallback(
-    (updates: Partial<PagedData>) => {
-      setPagedData({ ...pagedData, ...updates });
-    },
-    [pagedData, setPagedData]
-  );
-
-  const updateFetchParams = useCallback(
-    (updates: Partial<FetchDataParams>) => {
-      setFetchParams({ ...fetchParams, ...updates });
-    },
-    [fetchParams, setFetchParams]
-  );
+  const { value: pagedData, update: updatePagedData } = useUpdateableState<
+    PagedData
+  >(defaultPagedData);
+  const { value: fetchParams, update: updateFetchParams } = useUpdateableState<
+    FetchDataParams
+  >(defaultFetchParams);
 
   const getDataForSelectedRowWrapped = useCallback(() => {
     getDataForSelectedRow(fetchParams).then(d => {

@@ -28,6 +28,15 @@ const resourceBuilder: ResourceBuilder = (
     console.log("Searching Stream Attribute Maps");
     res.json(testCache.data!.dataList);
   });
+
+  /**
+   * This responds with a list of streamAttributeMaps, body is a search
+   */
+  server.post(resource).intercept((req: HttpRequest, res: HttpResponse) => {
+    const expression = JSON.parse(req.body);
+    console.log("Searching Stream Attribute Maps", expression);
+    res.json(testCache.data!.dataList);
+  });
 };
 
 export default resourceBuilder;
