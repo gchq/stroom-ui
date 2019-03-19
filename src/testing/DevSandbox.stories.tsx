@@ -1,11 +1,17 @@
 import * as React from "react";
 import { storiesOf } from "@storybook/react";
 import { addThemedStories } from "./storybook/themedStoryGenerator";
-import { Table, Input } from "../styled/ThemeStyling";
+import { Table, StyledInput } from "../styled/ThemeStyling";
+import { StyledReactTable } from "../styled/StyledReactTable";
 
 const tableStories = storiesOf("Dev Sandbox/Themed Table", module);
 
-const TestData = [
+interface Person {
+  name: string;
+  age: number;
+}
+
+const testData: Array<Person> = [
   {
     name: "arnold",
     age: 35
@@ -15,10 +21,23 @@ const TestData = [
   { name: "kryten", age: 30000000 }
 ];
 
+const COLUMNS = [
+  {
+    id: "name",
+    Header: "Name",
+    accessor: (u: Person) => u.name
+  },
+  {
+    id: "name",
+    Header: "Name",
+    accessor: (u: Person) => u.name
+  }
+];
+
 const ThemedTable = () => {
   return (
     <React.Fragment>
-      <Input />
+      <StyledInput />
       <Table>
         <thead>
           <tr>
@@ -27,7 +46,7 @@ const ThemedTable = () => {
           </tr>
         </thead>
         <tbody>
-          {TestData.map(t => (
+          {testData.map(t => (
             <tr key={t.name}>
               <td>{t.name}</td>
               <td>{t.age}</td>
@@ -35,6 +54,9 @@ const ThemedTable = () => {
           ))}
         </tbody>
       </Table>
+
+      <h2>React Table</h2>
+      <StyledReactTable columns={COLUMNS} data={testData} />
     </React.Fragment>
   );
 };

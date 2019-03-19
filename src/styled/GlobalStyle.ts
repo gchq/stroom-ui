@@ -1,4 +1,4 @@
-import { createGlobalStyle } from "styled-components";
+import { createGlobalStyle } from "./styled-components";
 
 export default createGlobalStyle`
 body {
@@ -13,20 +13,8 @@ body {
   width: 100%;
 }
 
-// Style table headers
-.ReactTable .rt-th {
-  font-weight: bold;
-  text-align: left;
-}
-
-.ReactTable .-header {
-  // We don't need the line under the header
-  border-bottom: none;
-}
-
-.ReactTable .rt-tr-group {
-  // We don't need lines between the rows
-  border-bottom: none;
+:focus {
+  background-color: ${({ theme }) => theme.raisedHigh_selectedBackgroundColor}
 }
 
 /* apply a natural box layout model to all elements, but allowing components to change */

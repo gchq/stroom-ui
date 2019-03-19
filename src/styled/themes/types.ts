@@ -1,4 +1,4 @@
-export interface StroomTheme {
+export interface ThemeInterface {
   // General
   backgroundColor: string;
   textColor: string;
@@ -27,4 +27,11 @@ export interface StroomTheme {
   iconButton_color_hover: string;
   scrollbar_trackColor: string;
   scrollbar_thumbColor: string;
+  smallSpacing: string;
+  animationDuration: string;
 }
+
+export const ThemeDefaults = {
+  smallSpacing: "1rem",
+  animationDuration: "0.3s"
+};

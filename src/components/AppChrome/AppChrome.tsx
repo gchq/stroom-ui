@@ -25,7 +25,6 @@ import { MenuItemOpened, MenuItemType, MenuItemsOpenState } from "./types";
 import useExplorerApi from "../../api/explorer/useApi";
 import useSelectableItemListing from "../../lib/useSelectableItemListing";
 import { DocRefType, DocRefConsumer, DocRefTree } from "../../types";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { KeyDownState } from "../../lib/useKeyIsDown";
 import {
   CopyMoveDocRefDialog,
@@ -36,10 +35,17 @@ import useLocalStorage, {
   storeBoolean,
   storeObjectFactory
 } from "../../lib/useLocalStorage";
-import { useTheme } from "../../styled/theme";
 import useRouter from "../../lib/useRouter";
 import { useDocumentTree } from "../../api/explorer";
 import useAppNavigation from "./useAppNavigation";
+import {
+  StyledAppContainer,
+  StyledAppChrome,
+  StyledAppChrome_sidebar_expanded,
+  StyledAppChrome_sidebar_collapsed,
+  StyledAppChrome_sidebarHeader,
+  SidebarFontAwesomeIcon
+} from "./styles";
 
 const PATH_PREFIX = "/s";
 
@@ -143,7 +149,6 @@ const getMenuItems = (
   ));
 
 const AppChrome = ({ content }: Props) => {
-  const { theme } = useTheme();
   const {
     router: { location }
   } = useRouter();
@@ -341,23 +346,21 @@ const AppChrome = ({ content }: Props) => {
     componentProps: moveDialogComponentProps
   } = useCopyMoveDocRefDialog(explorerApi.moveDocuments);
 
-  const sidebarClassName = isExpanded
-    ? "app-chrome__sidebar--expanded"
-    : "app-chrome__sidebar--collapsed";
+  const StyledSidebar = isExpanded
+    ? StyledAppChrome_sidebar_expanded
+    : StyledAppChrome_sidebar_collapsed;
   return (
-    <div className={`app-container ${theme}`}>
-      <div className="app-chrome flat">
+    <StyledAppContainer>
+      <StyledAppChrome>
         <CopyMoveDocRefDialog {...copyDialogComponentProps} />
         <CopyMoveDocRefDialog {...moveDialogComponentProps} />
-        <div className={`app-chrome__sidebar raised-high ${sidebarClassName}`}>
+        <StyledSidebar>
           <React.Fragment>
-            <div
-              className="app-chrome__sidebar_header header"
+            <StyledAppChrome_sidebarHeader
               onClick={() => setIsExpanded(!isExpanded)}
             >
-              <FontAwesomeIcon
+              <SidebarFontAwesomeIcon
                 aria-label="Show/hide the sidebar"
-                className="menu-item__menu-icon sidebar__toggle sidebar__menu-item borderless "
                 icon="bars"
                 size="2x"
               />
@@ -370,7 +373,7 @@ const AppChrome = ({ content }: Props) => {
               ) : (
                 undefined
               )}
-            </div>
+            </StyledAppChrome_sidebarHeader>
             <div
               tabIndex={0}
               onKeyDown={onKeyDownWithShortcuts}
@@ -392,14 +395,14 @@ const AppChrome = ({ content }: Props) => {
               </div>
             </div>
           </React.Fragment>
-        </div>
+        </StyledSidebar>
         <div className="app-chrome__content">
           <div className="content-tabs">
             <div className="content-tabs__content">{content}</div>
           </div>
         </div>
-      </div>
-    </div>
+      </StyledAppChrome>
+    </StyledAppContainer>
   );
 };
 

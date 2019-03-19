@@ -1,6 +1,20 @@
-import { StroomTheme } from "./types";
+import { ThemeInterface, ThemeDefaults } from "./types";
 
-const theme: StroomTheme = {
+// These variables are lighter version of the Stroom blue.
+// We might need additional colours, e.g. border colour
+//    The main colour of an item when selected.
+// $selected-item-colour: rgb(224, 240, 255);
+// //    The hover colour of an item that might be selecter.
+// $hover-item-colour: rgb(247, 251, 255);
+// $low-priority-component-color: rgb(152, 155, 160);
+// $low-priority-component-color-hover: rgb(118, 121, 126);
+// $dark-grey: #4d5250;
+// $primary-bg-colour: #2185d0;
+// $primary-text-colour: white;
+// $very-light-grey: #eeeeee;
+
+const theme: ThemeInterface = {
+  ...ThemeDefaults,
   // General
   backgroundColor: "#fff",
   textColor: "rgba(0, 0, 0, 0.8)",

@@ -1,6 +1,7 @@
-import { StroomTheme } from "./types";
+import { ThemeInterface, ThemeDefaults } from "./types";
 
-const theme: StroomTheme = {
+const theme: ThemeInterface = {
+  ...ThemeDefaults,
   // General
   backgroundColor: "#282829",
   textColor: "yellow",

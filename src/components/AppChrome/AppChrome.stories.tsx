@@ -20,6 +20,7 @@ import { storiesOf } from "@storybook/react";
 import { Switch, Route } from "react-router-dom";
 
 import AppChrome, { appChromeRoutes } from ".";
+import { addThemedStories } from "../../testing/storybook/themedStoryGenerator";
 
 // This basically replicates the 'Routes' implementation, but for test
 const AppChromeWithRouter = () => (
@@ -30,8 +31,11 @@ const AppChromeWithRouter = () => (
   </Switch>
 );
 
-storiesOf("App Chrome", module)
-  .add("Just the chrome", () => (
-    <AppChrome activeMenuItem="welcome" content={<div>Stuff goes here</div>} />
-  ))
-  .add("With routing", () => <AppChromeWithRouter />);
+const storiesNoRouting = storiesOf("App Chrome/No Routing", module);
+addThemedStories(
+  storiesNoRouting,
+  <AppChrome activeMenuItem="welcome" content={<div>Stuff goes here</div>} />
+);
+
+const storiesWithRouting = storiesOf("App Chrome/With Routing", module);
+addThemedStories(storiesWithRouting, <AppChromeWithRouter />);
