@@ -72,13 +72,22 @@ const DataViewer = () => {
 
   return (
     <div>
-      <IconHeader icon="database" text="Data" />
-      <ExpressionSearchBar
-        className="data-viewer__search-bar"
-        dataSource={dataSource}
-        onSearch={onSearch}
-      />
-      <ReactTable {...tableProps} />
+      <div className="content-tabs__grid">
+        <div className="data-viewer__header">
+          <IconHeader icon="database" text="Data" />
+          <ExpressionSearchBar
+            className="data-viewer__search-bar"
+            dataSource={dataSource}
+            onSearch={onSearch}
+          />
+          <ReactTable {...tableProps} />
+        </div>
+      </div>
+      <div className="DataTable__container">
+        <div className="DataTable__reactTable__container">
+          <ReactTable {...tableProps} />
+        </div>
+      </div>
     </div>
   );
 };
