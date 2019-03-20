@@ -23,6 +23,8 @@ import DocRefIconHeader from "./DocRefIconHeader";
 const docRefIconHeaderStories = storiesOf("Doc Ref/Icon Header", module);
 addThemedStories(
   docRefIconHeaderStories,
-  <DocRefIconHeader docRefType="XSLT" text="Would anyone like any toast?" />,
+  () => (
+    <DocRefIconHeader docRefType="XSLT" text="Would anyone like any toast?" />
+  ),
   true
 );

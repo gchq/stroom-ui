@@ -52,4 +52,4 @@ const B: React.FunctionComponent = () => {
   );
 };
 
-addThemedStories(stories, <B />);
+addThemedStories(stories, () => <B />);

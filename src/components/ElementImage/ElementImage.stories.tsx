@@ -11,6 +11,6 @@ storiesOf("Pipeline/Element Image", module)
   .add("small", () => <ElementImage size="sm" icon="kafka.svg" />)
   .add("large", () => <ElementImage size="lg" icon="stream.svg" />);
 
-const themedStories = storiesOf("Pipeline/Element Image/Themed", module);
+const stories = storiesOf("Pipeline/Element Image/Themed", module);
 
-addThemedStories(themedStories, <ElementImage size="lg" icon="kafka.svg" />);
+addThemedStories(stories, () => <ElementImage size="lg" icon="kafka.svg" />);

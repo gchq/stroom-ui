@@ -20,11 +20,9 @@ import { storiesOf } from "@storybook/react";
 import { addThemedStories } from "../../testing/storybook/themedStoryGenerator";
 import IconHeader from "./IconHeader";
 
-
-
-const iconHeaderStories = storiesOf("General Purpose/Icon Header", module);
+const stories = storiesOf("General Purpose/Icon Header", module);
 addThemedStories(
-  iconHeaderStories,
-  <IconHeader icon="angle-up" text="Good morrow fellow human" />,
+  stories,
+  () => <IconHeader icon="angle-up" text="Good morrow fellow human" />,
   true
 );

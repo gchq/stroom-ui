@@ -134,4 +134,4 @@ stories
     <AppSearchAsForm typeFilters={["Folder"]} />
   ));
 
-addThemedStories(stories, <AppSearchAsNavigator />);
+addThemedStories(stories, () => <AppSearchAsNavigator />);

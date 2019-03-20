@@ -36,4 +36,4 @@ const TestHarness = () => {
 
 const stories = storiesOf("Expression/Delete Expression Item", module);
 
-addThemedStories(stories, <TestHarness />);
+addThemedStories(stories, () => <TestHarness />);

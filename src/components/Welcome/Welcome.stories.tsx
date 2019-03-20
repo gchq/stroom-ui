@@ -25,4 +25,4 @@ import { addThemedStories } from "../../testing/storybook/themedStoryGenerator";
 
 const stories = storiesOf("Sections/Welcome", module);
 
-addThemedStories(stories, <Welcome />);
+addThemedStories(stories, () => <Welcome />);

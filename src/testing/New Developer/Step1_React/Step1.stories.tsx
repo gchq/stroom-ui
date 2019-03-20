@@ -17,4 +17,4 @@ import { Step1 } from "./Step1";
 const stories = storiesOf("New Developer/Step 1", module);
 
 // This generates a 'theme-light' and 'theme-dark' story under our given location.
-addThemedStories(stories, <Step1 />);
+addThemedStories(stories, () => <Step1 />);

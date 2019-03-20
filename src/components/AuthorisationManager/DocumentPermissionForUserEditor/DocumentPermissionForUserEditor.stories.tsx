@@ -18,10 +18,8 @@ import * as React from "react";
 
 import { storiesOf } from "@storybook/react";
 
-
 import fullTestData from "../../../testing/data";
 import { addThemedStories } from "../../../testing/storybook/themedStoryGenerator";
-
 
 import DocumentPermissionForUserEditor from "./DocumentPermissionForUserEditor";
 import { DocRefType, User } from "../../../types";
@@ -34,10 +32,9 @@ const stories = storiesOf(
   module
 );
 
-addThemedStories(
-  stories,
+addThemedStories(stories, () => (
   <DocumentPermissionForUserEditor
     userUuid={testUser.uuid}
     docRefUuid={testDocRef.uuid}
   />
-);
+));

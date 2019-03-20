@@ -20,8 +20,6 @@ import { storiesOf } from "@storybook/react";
 import DataViewer from "./DataViewer";
 import { addThemedStories } from "../../testing/storybook/themedStoryGenerator";
 
-
-
 const stories = storiesOf("Sections/Data", module);
 
-addThemedStories(stories, <DataViewer />);
+addThemedStories(stories, () => <DataViewer />);

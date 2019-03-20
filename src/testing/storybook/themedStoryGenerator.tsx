@@ -15,7 +15,7 @@
  */
 
 import * as React from "react";
-import { Story } from "@storybook/react";
+import { Story, RenderFunction } from "@storybook/react";
 
 const styles = {
   fullScreen: {
@@ -35,7 +35,7 @@ const themes = ["theme-light", "theme-dark"];
 
 interface Props {
   theme: string;
-  component: React.ReactNode;
+  component: RenderFunction;
   centerComponent?: React.ReactNode;
 }
 
@@ -46,17 +46,17 @@ const ThemedContainer = ({ theme, component, centerComponent }: Props) => (
   >
     {centerComponent ? (
       <div className="flat" style={styles.center}>
-        {component}
+        {component()}
       </div>
     ) : (
-      <React.Fragment>{component}</React.Fragment>
+      <React.Fragment>{component()}</React.Fragment>
     )}
   </div>
 );
 
 export const addThemedStories = (
   stories: Story,
-  component: React.ReactNode,
+  component: RenderFunction,
   centerComponent?: React.ReactNode
 ) => {
   themes.forEach(theme =>

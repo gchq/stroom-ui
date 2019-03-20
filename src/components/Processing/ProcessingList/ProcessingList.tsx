@@ -34,7 +34,7 @@ import { StreamTaskType } from "../../../types";
 
 interface Props {
   streamTasksApi: UseStreamTasks;
-  onSelection: (filterId: number, trackers: Array<StreamTaskType>) => void;
+  onSelection: (filterId: number) => void;
 }
 
 const ProcessingList = ({ onSelection, streamTasksApi }: Props) => {
@@ -149,7 +149,7 @@ const ProcessingList = ({ onSelection, streamTasksApi }: Props) => {
       Mousetrap.unbind("up");
       Mousetrap.unbind("down");
     };
-  }, []);
+  }, [onMoveSelection]);
 
   return (
     <ReactTable
@@ -164,7 +164,7 @@ const ProcessingList = ({ onSelection, streamTasksApi }: Props) => {
       getTdProps={(_: any, rowInfo: RowInfo) => ({
         onClick: (_: any, handleOriginal: () => void) => {
           if (rowInfo !== undefined) {
-            onSelection(rowInfo.original.filterId, trackers);
+            onSelection(rowInfo.original.filterId);
           }
 
           // IMPORTANT! React-Table uses onClick internally to trigger

@@ -25,7 +25,6 @@ import IconHeader from "../../components/IconHeader";
 import { useStreamTasks } from "../../api/streamTasks";
 import ProcessingDetails from "./ProcessingDetails";
 import ProcessingList from "./ProcessingList";
-import { StreamTaskType } from "../../types";
 
 const ProcessingContainer = () => {
   const streamTasksApi = useStreamTasks();
@@ -39,23 +38,23 @@ const ProcessingContainer = () => {
   } = streamTasksApi;
 
   const onHandleTrackerSelection = useCallback(
-    (filterId: number, trackers?: Array<StreamTaskType>) => {
+    (filterId: number) => {
       updateTrackerSelection(filterId);
-
-      let expression;
-      if (filterId !== undefined && trackers !== undefined) {
-        const tracker = trackers.find(t => t.filterId === filterId);
-        if (tracker && tracker.filter) {
-          expression = tracker.filter.expression;
-        }
-      }
-
-      if (expression) {
-        console.log("trackerDetailsExpression", expression);
-      }
     },
     [updateTrackerSelection]
   );
+
+  // let expression;
+  //     if (filterId !== undefined && trackers !== undefined) {
+  //       const tracker = trackers.find(t => t.filterId === filterId);
+  //       if (tracker && tracker.filter) {
+  //         expression = tracker.filter.expression;
+  //       }
+  //     }
+
+  //     if (expression) {
+  //       console.log("trackerDetailsExpression", expression);
+  //     }
 
   const onHandleSearchChange: React.ChangeEventHandler<
     HTMLInputElement
@@ -72,20 +71,31 @@ const ProcessingContainer = () => {
 
   const showDetails = selectedTrackerId !== undefined;
 
+  const resetTrackerSelection = useCallback(() => {
+    onHandleTrackerSelection(-1);
+  }, [onHandleTrackerSelection]);
+
+  const onResize = useCallback(() => {
+    // Resizing the window is another time when paging gets reset.
+    resetPaging();
+    fetchTrackers();
+  }, [resetPaging, fetchTrackers]);
+
   useEffect(() => {
     fetchTrackers();
 
-    Mousetrap.bind("esc", () => onHandleTrackerSelection(-1, undefined));
+    Mousetrap.bind("esc", resetTrackerSelection);
 
     // This component monitors window size. For every change it will fetch the
     // trackers. The fetch trackers function will only fetch trackers that fit
     // in the viewport, which means the view will update to fit.
-    window.addEventListener("resize", event => {
-      // Resizing the window is another time when paging gets reset.
-      resetPaging();
-      fetchTrackers();
-    });
-  }, [fetchTrackers, resetPaging]);
+    window.addEventListener("resize", onResize);
+
+    return () => {
+      window.removeEventListener("resize", onResize);
+      Mousetrap.unbind("esc");
+    };
+  }, [fetchTrackers, resetTrackerSelection, onResize]);
 
   return (
     <React.Fragment>
@@ -149,24 +159,17 @@ const ProcessingContainer = () => {
                 showDetails ? " showing-details" : ""
               } table__reactTable__container`}
             >
-              {selectedTrackerId === undefined || selectedTrackerId === null ? (
+              <PanelGroup direction="column">
                 <ProcessingList
                   streamTasksApi={streamTasksApi}
-                  onSelection={(filterId: number, trackers: any[]) =>
-                    onHandleTrackerSelection(filterId, trackers)
+                  onSelection={(filterId: number) =>
+                    onHandleTrackerSelection(filterId)
                   }
                 />
-              ) : (
-                <PanelGroup direction="column">
-                  <ProcessingList
-                    streamTasksApi={streamTasksApi}
-                    onSelection={(filterId: number, trackers: any[]) =>
-                      onHandleTrackerSelection(filterId, trackers)
-                    }
-                  />
+                {!!selectedTrackerId === undefined && (
                   <ProcessingDetails streamTasksApi={streamTasksApi} />
-                </PanelGroup>
-              )}
+                )}
+              </PanelGroup>
             </div>
           </div>
         </div>

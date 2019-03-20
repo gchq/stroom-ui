@@ -43,4 +43,4 @@ const TestHarness: React.FunctionComponent = () => {
   );
 };
 
-addThemedStories(stories, <TestHarness />);
+addThemedStories(stories, () => <TestHarness />);

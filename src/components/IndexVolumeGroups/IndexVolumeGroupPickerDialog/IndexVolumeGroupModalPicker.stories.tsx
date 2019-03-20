@@ -22,7 +22,6 @@ import { storiesOf } from "@storybook/react";
 import IndexVolumeGroupModalPicker from "./IndexVolumeGroupModalPicker";
 import { addThemedStories } from "../../../testing/storybook/themedStoryGenerator";
 
-
 import { useDialog } from "./IndexVolumeGroupModalPicker";
 import Button from "../../../components/Button";
 import JsonDebug from "../../../testing/JsonDebug";
@@ -55,5 +54,5 @@ const TestModal: React.FunctionComponent = () => {
   );
 };
 
-const storiesModal = storiesOf("Pickers/Index Volume Group (modal)", module);
-addThemedStories(storiesModal, <TestModal />);
+const stories = storiesOf("Pickers/Index Volume Group (modal)", module);
+addThemedStories(stories, () => <TestModal />);

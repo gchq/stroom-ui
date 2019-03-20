@@ -54,4 +54,4 @@ const stories = storiesOf(
   module
 );
 
-addThemedStories(stories, <TestForm />);
+addThemedStories(stories, () => <TestForm />);

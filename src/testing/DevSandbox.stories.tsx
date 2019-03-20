@@ -4,7 +4,7 @@ import ReactTable from "react-table";
 
 import { addThemedStories } from "./storybook/themedStoryGenerator";
 
-const tableStories = storiesOf("Dev Sandbox/Stuff", module);
+const stories = storiesOf("Dev Sandbox/Stuff", module);
 
 interface Person {
   name: string;
@@ -60,4 +60,4 @@ const ThemedTable = () => {
   );
 };
 
-addThemedStories(tableStories, <ThemedTable />);
+addThemedStories(stories, () => <ThemedTable />);

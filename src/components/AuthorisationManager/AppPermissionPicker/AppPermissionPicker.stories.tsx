@@ -63,4 +63,4 @@ const TestForm = () => {
 
 const stories = storiesOf("Pickers/App Permissions", module);
 
-addThemedStories(stories, <TestForm />);
+addThemedStories(stories, () => <TestForm />);

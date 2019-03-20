@@ -6,4 +6,4 @@ import Step3 from "./Step3";
 
 const stories = storiesOf("New Developer/Step 3", module);
 
-addThemedStories(stories, <Step3 />);
+addThemedStories(stories, () => <Step3 />);

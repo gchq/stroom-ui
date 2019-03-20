@@ -30,4 +30,4 @@ const B: React.FunctionComponent = () => {
   return <IndexFieldTypePicker value={value} onChange={onChange} />;
 };
 
-addThemedStories(stories, <B />);
+addThemedStories(stories, () => <B />);

@@ -21,4 +21,4 @@ const TestHarness = () => {
 
 const stories = storiesOf("Doc Ref/App Search Bar/Mode Option", module);
 
-addThemedStories(stories, <TestHarness />);
+addThemedStories(stories, () => <TestHarness />);

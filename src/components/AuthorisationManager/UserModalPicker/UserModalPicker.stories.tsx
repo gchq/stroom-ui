@@ -56,4 +56,4 @@ const TestHarness = () => {
   );
 };
 
-addThemedStories(stories, <TestHarness />);
+addThemedStories(stories, () => <TestHarness />);

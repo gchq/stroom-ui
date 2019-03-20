@@ -6,3 +6,27 @@
 .processing-list__load-more-button {
   width: 100%;
 }
+
+.tracker-table .td {
+  padding: 0px;
+}
+
+.tracker-table .progress {
+  margin: 0px;
+  padding: 0px;
+}
+
+.tracker-table .progress-column .progress {
+  background-color: transparent;
+}
+
+.tracker-table .name-column .label {
+  width: 100%;
+}
+
+.tracker-row td {
+  padding-top: 0.185714em;
+  padding-right: 0.1785714em;
+  padding-bottom: 0.1785714em;
+  padding-left: 0.1785714em;
+}

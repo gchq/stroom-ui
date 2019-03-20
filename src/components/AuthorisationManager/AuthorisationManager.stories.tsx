@@ -44,4 +44,4 @@ const stories = storiesOf(
   module
 );
 
-addThemedStories(stories, <TestHarness />);
+addThemedStories(stories, () => <TestHarness />);

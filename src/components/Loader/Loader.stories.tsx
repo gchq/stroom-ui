@@ -8,4 +8,4 @@ import Loader from "./Loader";
 
 const stories = storiesOf("General Purpose/Loader", module);
 
-addThemedStories(stories, <Loader message="Stuff is loading" />);
+addThemedStories(stories, () => <Loader message="Stuff is loading" />);

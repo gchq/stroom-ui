@@ -52,4 +52,4 @@ const TestHarness = () => {
 
 const stories = storiesOf("Expression/Search Bar", module);
 
-addThemedStories(stories, <TestHarness />);
+addThemedStories(stories, () => <TestHarness />);

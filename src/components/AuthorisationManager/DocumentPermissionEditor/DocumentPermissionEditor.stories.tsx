@@ -59,4 +59,4 @@ const stories = storiesOf(
   module
 );
 
-addThemedStories(stories, <TestHarness docRefUuid={testDocRef.uuid} />);
+addThemedStories(stories, () => <TestHarness docRefUuid={testDocRef.uuid} />);

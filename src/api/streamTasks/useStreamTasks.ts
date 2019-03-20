@@ -54,7 +54,7 @@ export default (): UseStreamTasks => {
   const addTrackers = useCallback(
     (streamTasks: Array<StreamTaskType>, totalStreamTasks: number) => {
       setPagedTrackerInfo({
-        trackers: pagedTrackerInfo.trackers.concat(streamTasks),
+        trackers: trackers.concat(streamTasks),
         totalTrackers: totalStreamTasks,
         numberOfPages: Math.ceil(totalStreamTasks / pageSize)
       });
@@ -68,14 +68,13 @@ export default (): UseStreamTasks => {
     [updateFetchParameters]
   );
   const updateTrackers = useCallback(
-    (streamTasks: Array<StreamTaskType>, totalStreamTasks: number) => {
+    (streamTasks: Array<StreamTaskType>, totalStreamTasks: number) =>
       setPagedTrackerInfo({
         trackers: streamTasks,
         totalTrackers: totalStreamTasks,
         numberOfPages: Math.ceil(totalStreamTasks / pageSize)
-      });
-    },
-    []
+      }),
+    [setPagedTrackerInfo]
   );
   const moveSelection = useCallback(
     (direction: Directions) => {

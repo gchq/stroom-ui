@@ -61,4 +61,4 @@ const TestForm: React.FunctionComponent = () => {
 };
 
 const stories = storiesOf("Pickers/Index Volume Group", module);
-addThemedStories(stories, <TestForm />);
+addThemedStories(stories, () => <TestForm />);

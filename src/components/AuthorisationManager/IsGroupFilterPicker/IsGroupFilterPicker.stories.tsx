@@ -19,7 +19,6 @@ import { useState } from "react";
 
 import { storiesOf } from "@storybook/react";
 
-
 import { addThemedStories } from "../../../testing/storybook/themedStoryGenerator";
 import IsGroupFilterPicker from "./IsGroupFilterPicker";
 import { IsGroup } from "../../../api/userGroups";
@@ -39,5 +38,5 @@ const IsGroupFilterPickerInForm = () => {
   );
 };
 
-const pickerStories = storiesOf("Pickers/IsGroup", module);
-addThemedStories(pickerStories, <IsGroupFilterPickerInForm />);
+const stories = storiesOf("Pickers/IsGroup", module);
+addThemedStories(stories, () => <IsGroupFilterPickerInForm />);

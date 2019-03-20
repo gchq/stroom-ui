@@ -7,8 +7,7 @@ import Tooltip from "./Tooltip";
 
 const stories = storiesOf("General Purpose/Tooltip", module);
 
-addThemedStories(
-  stories,
+addThemedStories(stories, () => (
   <Tooltip
     trigger={
       <button onClick={() => console.log("Clicked the tooltip button")}>
@@ -17,4 +16,4 @@ addThemedStories(
     }
     content="Click this button, check the console"
   />
-);
+));

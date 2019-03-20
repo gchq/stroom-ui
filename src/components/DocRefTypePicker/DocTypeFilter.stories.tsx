@@ -44,4 +44,4 @@ const TestForm = () => {
 
 const stories = storiesOf("Pickers/Doc Ref Type", module);
 
-addThemedStories(stories, <TestForm />);
+addThemedStories(stories, () => <TestForm />);

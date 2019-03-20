@@ -6,4 +6,4 @@ import CustomHeader from ".";
 
 const stories = storiesOf("New Developer/Step 1/Custom Header", module);
 
-addThemedStories(stories, <CustomHeader title="Test Value" />);
+addThemedStories(stories, () => <CustomHeader title="Test Value" />);

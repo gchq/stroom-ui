@@ -31,4 +31,4 @@ const B: React.FunctionComponent = () => {
   return <ConditionPicker value={value} onChange={onChange} />;
 };
 
-addThemedStories(stories, <B />);
+addThemedStories(stories, () => <B />);

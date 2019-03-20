@@ -32,10 +32,9 @@ const AppChromeWithRouter = () => (
 );
 
 const storiesNoRouting = storiesOf("App Chrome/No Routing", module);
-addThemedStories(
-  storiesNoRouting,
+addThemedStories(storiesNoRouting, () => (
   <AppChrome activeMenuItem="welcome" content={<div>Stuff goes here</div>} />
-);
+));
 
 const storiesWithRouting = storiesOf("App Chrome/With Routing", module);
-addThemedStories(storiesWithRouting, <AppChromeWithRouter />);
+addThemedStories(storiesWithRouting, () => <AppChromeWithRouter />);

@@ -47,4 +47,4 @@ const TestModal = () => {
 
 const stories = storiesOf("General Purpose/Themed Modal", module);
 
-addThemedStories(stories, <TestModal />);
+addThemedStories(stories, () => <TestModal />);

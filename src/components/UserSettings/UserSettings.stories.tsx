@@ -24,4 +24,4 @@ import { addThemedStories } from "../../testing/storybook/themedStoryGenerator";
 
 const stories = storiesOf("Sections/User Settings", module);
 
-addThemedStories(stories, <UserSettings />);
+addThemedStories(stories, () => <UserSettings />);

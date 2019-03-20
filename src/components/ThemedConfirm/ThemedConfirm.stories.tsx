@@ -48,4 +48,4 @@ let TestConfirm = () => {
 
 const stories = storiesOf("General Purpose/Themed Confirm", module);
 
-addThemedStories(stories, <TestConfirm />);
+addThemedStories(stories, () => <TestConfirm />);

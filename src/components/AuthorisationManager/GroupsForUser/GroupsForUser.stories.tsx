@@ -36,4 +36,4 @@ const stories = storiesOf(
   module
 );
 
-addThemedStories(stories, <GroupsForUser user={aUser} />);
+addThemedStories(stories, () => <GroupsForUser user={aUser} />);
