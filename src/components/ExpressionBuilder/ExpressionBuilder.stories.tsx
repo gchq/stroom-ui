@@ -18,97 +18,106 @@ import { useState } from "react";
 
 import { storiesOf } from "@storybook/react";
 
-
 import ExpressionBuilder from "./ExpressionBuilder";
 
 import { testExpression, testDataSource, simplestExpression } from "./test";
 
-
 import { ExpressionOperatorWithUuid } from "src/types";
 
+const PopulatedEditable = () => {
+  const [expression, onChange] = useState<ExpressionOperatorWithUuid>(
+    testExpression
+  );
+
+  return (
+    <ExpressionBuilder
+      expression={expression}
+      onChange={onChange}
+      showModeToggle
+      editMode
+      dataSource={testDataSource}
+    />
+  );
+};
+
+const PopulatedReadOnly = () => {
+  const [expression, onChange] = useState<ExpressionOperatorWithUuid>(
+    testExpression
+  );
+
+  return (
+    <ExpressionBuilder
+      onChange={onChange}
+      expression={expression}
+      dataSource={testDataSource}
+    />
+  );
+};
+
+const SimplestEditable = () => {
+  const [expression, onChange] = useState<ExpressionOperatorWithUuid>(
+    simplestExpression
+  );
+
+  return (
+    <ExpressionBuilder
+      onChange={onChange}
+      expression={expression}
+      showModeToggle
+      dataSource={testDataSource}
+    />
+  );
+};
+
+const MissingDataSource = () => {
+  const [expression, onChange] = useState<ExpressionOperatorWithUuid>(
+    testExpression
+  );
+
+  return (
+    <ExpressionBuilder
+      onChange={onChange}
+      expression={expression}
+      dataSource={testDataSource}
+    />
+  );
+};
+
+const HideModeToggle = () => {
+  const [expression, onChange] = useState<ExpressionOperatorWithUuid>(
+    testExpression
+  );
+
+  return (
+    <ExpressionBuilder
+      onChange={onChange}
+      expression={expression}
+      showModeToggle={false}
+      dataSource={testDataSource}
+    />
+  );
+};
+
+const HideModeButEdit = () => {
+  const [expression, onChange] = useState<ExpressionOperatorWithUuid>(
+    testExpression
+  );
+
+  return (
+    <ExpressionBuilder
+      onChange={onChange}
+      expression={expression}
+      showModeToggle={false}
+      editMode
+      dataSource={testDataSource}
+    />
+  );
+};
+
 storiesOf("Expression/Builder", module)
-  
-  .add("Populated Editable", () => {
-    const [expression, onChange] = useState<ExpressionOperatorWithUuid>(
-      testExpression
-    );
-
-    return (
-      <ExpressionBuilder
-        expression={expression}
-        onChange={onChange}
-        showModeToggle
-        editMode
-        dataSource={testDataSource}
-      />
-    );
-  })
-  .add("Populated ReadOnly", () => {
-    const [expression, onChange] = useState<ExpressionOperatorWithUuid>(
-      testExpression
-    );
-
-    return (
-      <ExpressionBuilder
-        onChange={onChange}
-        expression={expression}
-        dataSource={testDataSource}
-      />
-    );
-  })
-  .add("Simplest Editable", () => {
-    const [expression, onChange] = useState<ExpressionOperatorWithUuid>(
-      simplestExpression
-    );
-
-    return (
-      <ExpressionBuilder
-        onChange={onChange}
-        expression={expression}
-        showModeToggle
-        dataSource={testDataSource}
-      />
-    );
-  })
-  .add("Missing Data Source (read only)", () => {
-    const [expression, onChange] = useState<ExpressionOperatorWithUuid>(
-      testExpression
-    );
-
-    return (
-      <ExpressionBuilder
-        onChange={onChange}
-        expression={expression}
-        dataSource={testDataSource}
-      />
-    );
-  })
-  .add("Hide mode toggle", () => {
-    const [expression, onChange] = useState<ExpressionOperatorWithUuid>(
-      testExpression
-    );
-
-    return (
-      <ExpressionBuilder
-        onChange={onChange}
-        expression={expression}
-        showModeToggle={false}
-        dataSource={testDataSource}
-      />
-    );
-  })
-  .add("Hide mode toggle but be in edit mode", () => {
-    const [expression, onChange] = useState<ExpressionOperatorWithUuid>(
-      testExpression
-    );
-
-    return (
-      <ExpressionBuilder
-        onChange={onChange}
-        expression={expression}
-        showModeToggle={false}
-        editMode
-        dataSource={testDataSource}
-      />
-    );
-  });
+  .add("Populated Editable", PopulatedEditable)
+  .add("Populated ReadOnly", PopulatedReadOnly)
+  .add("Simplest Editable", SimplestEditable)
+  .add("Missing Data Source (read only)", MissingDataSource)
+  .add("Hide mode toggle", HideModeToggle)
+  .add("Hide mode toggle but be in edit mode", HideModeButEdit);

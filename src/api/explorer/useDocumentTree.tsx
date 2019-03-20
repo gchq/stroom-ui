@@ -5,7 +5,7 @@ import { GlobalStoreState } from "../../startup/reducers";
 import useApi from "./useApi";
 import { DocRefTree } from "../../types";
 
-export default (): DocRefTree => {
+export const useDocumentTree = (): DocRefTree => {
   const { documentTree, waitingForTree } = useReduxState(
     ({
       folderExplorer: { waitingForTree, documentTree }
@@ -21,3 +21,5 @@ export default (): DocRefTree => {
 
   return documentTree;
 };
+
+export default useDocumentTree;

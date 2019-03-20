@@ -101,7 +101,7 @@ export const useHttpClient = (): HttpClient => {
     [setErrorMessage, setHttpErrorCode, setStackTrace]
   );
 
-  const wrappedFetchWithBodyAndJsonResponse = (method: string) =>
+  const useFetchWithBodyAndJsonResponse = (method: string) =>
     useCallback(
       <T>(
         url: string,
@@ -137,7 +137,7 @@ export const useHttpClient = (): HttpClient => {
       [setErrorMessage, setStackTrace, setHttpErrorCode]
     );
 
-  const wrappedFetchWithBodyAndEmptyResponse = (method: string) =>
+  const useFetchWithBodyAndEmptyResponse = (method: string) =>
     useCallback(
       (
         url: string,
@@ -174,14 +174,14 @@ export const useHttpClient = (): HttpClient => {
 
   return {
     httpGetJson,
-    httpPostJsonResponse: wrappedFetchWithBodyAndJsonResponse("post"),
-    httpPutJsonResponse: wrappedFetchWithBodyAndJsonResponse("put"),
-    httpDeleteJsonResponse: wrappedFetchWithBodyAndJsonResponse("delete"),
-    httpPatchJsonResponse: wrappedFetchWithBodyAndJsonResponse("patch"),
-    httpPostEmptyResponse: wrappedFetchWithBodyAndEmptyResponse("post"),
-    httpPutEmptyResponse: wrappedFetchWithBodyAndEmptyResponse("put"),
-    httpDeleteEmptyResponse: wrappedFetchWithBodyAndEmptyResponse("delete"),
-    httpPatchEmptyResponse: wrappedFetchWithBodyAndEmptyResponse("patch"),
+    httpPostJsonResponse: useFetchWithBodyAndJsonResponse("post"),
+    httpPutJsonResponse: useFetchWithBodyAndJsonResponse("put"),
+    httpDeleteJsonResponse: useFetchWithBodyAndJsonResponse("delete"),
+    httpPatchJsonResponse: useFetchWithBodyAndJsonResponse("patch"),
+    httpPostEmptyResponse: useFetchWithBodyAndEmptyResponse("post"),
+    httpPutEmptyResponse: useFetchWithBodyAndEmptyResponse("put"),
+    httpDeleteEmptyResponse: useFetchWithBodyAndEmptyResponse("delete"),
+    httpPatchEmptyResponse: useFetchWithBodyAndEmptyResponse("patch"),
     clearCache: () => {
       cache = {};
     }
