@@ -1,6 +1,5 @@
-import useSelectableItemListing, {
-  useSelectableReactTable
-} from "./useSelectableItemListing";
+import useSelectableItemListing from "./useSelectableItemListing";
+import useSelectableReactTable from "./useSelectableReactTable";
 
 import { TableOutProps } from "./types";
 import { SelectionBehaviour } from "./enums";

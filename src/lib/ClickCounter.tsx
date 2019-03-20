@@ -5,7 +5,7 @@ class ClickCounter {
   prevent: boolean;
   onSingleClickHandler: Handler;
   onDoubleClickHandler: Handler;
-  timer: NodeJS.Timer | undefined;
+  timer: NodeJS.Timeout | undefined;
 
   constructor() {
     this.timer = undefined;

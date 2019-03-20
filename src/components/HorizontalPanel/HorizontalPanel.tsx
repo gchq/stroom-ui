@@ -25,7 +25,7 @@ const HorizontalPanel = ({
     return () => {
       Mousetrap.unbind("esc");
     };
-  }, []);
+  }, [onClose]);
 
   return (
     <div className={`horizontal-panel ${className || ""}`}>

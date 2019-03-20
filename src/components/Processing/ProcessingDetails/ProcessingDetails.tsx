@@ -16,47 +16,27 @@
 
 import * as React from "react";
 import * as moment from "moment";
-import { useCallback } from "react";
 
 import HorizontalPanel from "../../../components/HorizontalPanel";
-import { UseStreamTasks } from "src/api/streamTasks/types";
+import { StreamTaskType } from "../../../types";
 
 interface Props {
-  streamTasksApi: UseStreamTasks;
+  tracker?: StreamTaskType;
+  enableToggle: () => void;
 }
 
-const ProcessingDetails = ({streamTasksApi}: Props) => {
-  const {
-    enableToggle,
-    selectNone,
-    selectedTrackerId,
-    pagedTrackerInfo: { trackers }
-  } = streamTasksApi;
+const ProcessingDetails = ({ tracker, enableToggle }: Props) => {
+  const title = !!tracker ? tracker.pipelineName : "NONE";
 
-  const onHandleEnableToggle = useCallback(
-    (filterId: number, isCurrentlyEnabled: boolean) => {
-      enableToggle(filterId, isCurrentlyEnabled);
-    },
-    [enableToggle]
-  );
-  const onDeselectTracker = selectNone;
-
-  const selectedTracker = trackers.find(
-    (tracker: any) => tracker.filterId === selectedTrackerId
-  );
-
-  if (!selectedTracker) {
-    return <div>No tracker selected</div>;
+  if (!tracker) {
+    return null;
   }
 
-  const title =
-    selectedTracker !== undefined ? selectedTracker.pipelineName : "";
   // It'd be more convenient to just check for truthy, but I'm not sure if '0' is a valid lastPollAge
   const lastPollAgeIsDefined =
-    selectedTracker !== undefined &&
-    (selectedTracker.lastPollAge === null ||
-      selectedTracker.lastPollAge === undefined ||
-      selectedTracker.lastPollAge === "");
+    tracker.lastPollAge === null ||
+    tracker.lastPollAge === undefined ||
+    tracker.lastPollAge === "";
 
   return (
     <HorizontalPanel
@@ -74,23 +54,21 @@ const ProcessingDetails = ({streamTasksApi}: Props) => {
                 <React.Fragment>
                   <li>
                     has a <strong>last poll age</strong> of{" "}
-                    {selectedTracker.lastPollAge}
+                    {tracker.lastPollAge}
                   </li>
                   <li>
-                    has a <strong>task count</strong> of{" "}
-                    {selectedTracker.taskCount}
+                    has a <strong>task count</strong> of {tracker.taskCount}
                   </li>
                   <li>
                     was <strong>last active</strong>
-                    {moment(selectedTracker.trackerMs)
+                    {moment(tracker.trackerMs)
                       .calendar()
                       .toLowerCase()}
                   </li>
                   <li>
-                    {selectedTracker.status ? (
+                    {tracker.status ? (
                       <span>
-                        has a <strong>status</strong> of{" "}
-                        {selectedTracker.status}
+                        has a <strong>status</strong> of {tracker.status}
                       </span>
                     ) : (
                       <span>
@@ -99,10 +77,10 @@ const ProcessingDetails = ({streamTasksApi}: Props) => {
                     )}
                   </li>
                   <li>
-                    {selectedTracker.streamCount ? (
+                    {tracker.streamCount ? (
                       <span>
                         has a <strong>stream count</strong> of{" "}
-                        {selectedTracker.streamCount}
+                        {tracker.streamCount}
                       </span>
                     ) : (
                       <span>
@@ -111,10 +89,10 @@ const ProcessingDetails = ({streamTasksApi}: Props) => {
                     )}
                   </li>
                   <li>
-                    {selectedTracker.eventCount ? (
+                    {tracker.eventCount ? (
                       <span>
                         has an <strong>event count</strong> of{" "}
-                        {selectedTracker.eventCount}
+                        {tracker.eventCount}
                       </span>
                     ) : (
                       <span>
@@ -127,14 +105,14 @@ const ProcessingDetails = ({streamTasksApi}: Props) => {
                 <li>has not yet done any work</li>
               )}
               <li>
-                was <strong>created</strong> by '{selectedTracker.createUser}'
-                {moment(selectedTracker.createdOn)
+                was <strong>created</strong> by '{tracker.createUser}'
+                {moment(tracker.createdOn)
                   .calendar()
                   .toLowerCase()}
               </li>
               <li>
-                was <strong>updated</strong> by '{selectedTracker.updateUser}'
-                {moment(selectedTracker.updatedOn)
+                was <strong>updated</strong> by '{tracker.updateUser}'
+                {moment(tracker.updatedOn)
                   .calendar()
                   .toLowerCase()}
               </li>
@@ -142,21 +120,14 @@ const ProcessingDetails = ({streamTasksApi}: Props) => {
           </div>
         </div>
       }
-      onClose={() => onDeselectTracker()}
+      onClose={() => console.log("Deselect")}
       headerMenuItems={
         <label>
           <input
             type="checkbox"
             name="checkbox"
-            checked={selectedTracker.enabled}
-            onChange={() => {
-              if (!!selectedTracker.filterId) {
-                onHandleEnableToggle(
-                  selectedTracker.filterId,
-                  selectedTracker.enabled
-                );
-              }
-            }}
+            checked={tracker.enabled}
+            onChange={enableToggle}
           />
           &nbsp;Enabled?
         </label>

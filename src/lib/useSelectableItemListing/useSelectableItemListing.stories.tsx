@@ -15,17 +15,12 @@
  */
 import * as React from "react";
 import * as uuidv4 from "uuid/v4";
-import { useState, useCallback } from "react";
+import { useState } from "react";
 import { storiesOf } from "@storybook/react";
 
-
-import useSelectableItemListing, {
-  useSelectableReactTable
-} from "./useSelectableItemListing";
+import useSelectableItemListing from "./useSelectableItemListing";
 import { SelectionBehaviour } from "./enums";
-import ReactTable from "react-table";
-import useForm from "../useForm";
-import Button from "../../components/Button";
+import JsonDebug from "../../testing/JsonDebug";
 
 type Animal = {
   uuid: string;
@@ -56,108 +51,33 @@ let initialAnimals: Array<Animal> = [
   }
 ];
 
-const COLUMNS = [
-  {
-    id: "species",
-    Header: "Species",
-    accessor: (u: Animal) => u.species
-  },
-  {
-    id: "name",
-    Header: "Name",
-    accessor: (u: Animal) => u.name
-  }
-];
-
-interface NewItemFormValues {
-  species: string;
-  name: string;
-}
-
-const defaultFormValues: NewItemFormValues = {
-  species: "Dog",
-  name: "Fluffy"
-};
-
-const TestTable = () => {
-  const {
-    value: { species, name },
-    useTextInput
-  } = useForm<NewItemFormValues>({ initialValues: defaultFormValues });
-
-  const [animals, setAnimals] = useState<Array<Animal>>(initialAnimals);
-  const speciesProps = useTextInput("species");
-  const nameProps = useTextInput("name");
-  const onClickAddItem = useCallback(
-    e => {
-      if (!!name && !!species) {
-        setAnimals(
-          animals.concat([
-            {
-              uuid: uuidv4(),
-              species,
-              name
-            }
-          ])
-        );
-      }
-      e.preventDefault();
-    },
-    [animals, name, species, setAnimals]
-  );
-
-  const { onKeyDownWithShortcuts, tableProps } = useSelectableReactTable<
-    Animal
-  >(
-    {
-      getKey: a => a.uuid,
-      items: animals,
-      selectionBehaviour: SelectionBehaviour.MULTIPLE
-    },
-    {
-      columns: COLUMNS
-    }
-  );
-
-  return (
-    <div tabIndex={0} onKeyDown={onKeyDownWithShortcuts}>
-      <ReactTable {...tableProps} />
-      <form>
-        <label>Species</label>
-        <input {...speciesProps} />
-        <label>Name</label>
-        <input {...nameProps} />
-
-        <Button onClick={onClickAddItem} text="Add Item" />
-      </form>
-    </div>
-  );
-};
-
 const TestList = () => {
   const [lastAction, setLastAction] = useState<string>("no action");
+  const [externalSelectedItems, setExternalSelectedItems] = useState<
+    Array<Animal>
+  >([]);
 
   const {
     onKeyDownWithShortcuts,
     selectedItemIndexes,
     focusIndex,
-    selectionToggled
+    toggleSelection
   } = useSelectableItemListing<Animal>({
     getKey: a => a.name,
     openItem: a => setLastAction(`Opened Item ${a.name}`),
     items: initialAnimals,
-    selectionBehaviour: SelectionBehaviour.MULTIPLE
+    selectionBehaviour: SelectionBehaviour.MULTIPLE,
+    onSelectionChanged: setExternalSelectedItems
   });
 
   return (
     <div tabIndex={0} onKeyDown={onKeyDownWithShortcuts}>
       <h3>Test Selectable Item Listing</h3>
-      <p>Last Action: {lastAction}</p>
       <ul>
         {initialAnimals.map((animal, i) => (
           <li
             key={i}
-            onClick={() => selectionToggled(animal.name)}
+            onClick={() => toggleSelection(animal.name)}
             style={{
               borderStyle: focusIndex === i ? "solid" : "none",
               backgroundColor: selectedItemIndexes.has(i)
@@ -169,11 +89,12 @@ const TestList = () => {
           </li>
         ))}
       </ul>
+      <JsonDebug value={{ lastAction, externalSelectedItems }} />
     </div>
   );
 };
 
-storiesOf("Custom Hooks/useSelectableItemListing", module)
-  
-  .add("React Table", TestTable)
-  .add("A List", TestList);
+storiesOf("Custom Hooks/useSelectableItemListing", module).add(
+  "A List",
+  TestList
+);

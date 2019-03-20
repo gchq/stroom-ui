@@ -14,17 +14,17 @@ let DocRefListingEntry = ({
   openDocRef,
   enterFolder,
   children,
-  selectionToggled,
+  toggleSelection,
   selectedDocRefs,
   focussedDocRef
 }: Props) => {
   const onSelect: React.MouseEventHandler<HTMLDivElement> = useCallback(
     e => {
-      selectionToggled(docRef.uuid);
+      toggleSelection(docRef.uuid);
       e.preventDefault();
       e.stopPropagation();
     },
-    [selectionToggled, docRef]
+    [toggleSelection, docRef]
   );
 
   const onOpenDocRef: React.MouseEventHandler<HTMLDivElement> = useCallback(

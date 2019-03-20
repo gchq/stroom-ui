@@ -128,7 +128,7 @@ const AppSearchBar = ({
 
   const {
     onKeyDownWithShortcuts,
-    selectionToggled,
+    toggleSelection,
     selectedItems: selectedDocRefs,
     focussedItem: focussedDocRef
   } = useSelectableItemListing({
@@ -224,7 +224,7 @@ const AppSearchBar = ({
               docRef={docRef}
               openDocRef={onThisChange}
               enterFolder={setNavFolder}
-              selectionToggled={selectionToggled}
+              toggleSelection={toggleSelection}
               selectedDocRefs={selectedDocRefs}
               focussedDocRef={focussedDocRef}
             >

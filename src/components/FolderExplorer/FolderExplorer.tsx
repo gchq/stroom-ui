@@ -105,7 +105,7 @@ const FolderExplorer = ({ folderUuid }: Props) => {
   const {
     onKeyDownWithShortcuts,
     selectedItems: selectedDocRefs,
-    selectionToggled,
+    toggleSelection,
     keyIsDown
   } = useSelectableItemListing({
     items: folder.node.children || [],
@@ -194,7 +194,7 @@ const FolderExplorer = ({ folderUuid }: Props) => {
               showCopyDialog={showCopyDialog}
               showMoveDialog={showMoveDialog}
               selectedDocRefs={selectedDocRefs}
-              selectionToggled={selectionToggled}
+              toggleSelection={toggleSelection}
             />
           ))}
       </div>

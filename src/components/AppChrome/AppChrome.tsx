@@ -144,7 +144,7 @@ const getMenuItems = (
 
 const AppChrome = ({ content }: Props) => {
   const { theme } = useTheme();
-  
+
   const {
     router: { location }
   } = useRouter();
@@ -306,7 +306,7 @@ const AppChrome = ({ content }: Props) => {
 
   const {
     onKeyDownWithShortcuts,
-    selectionToggled,
+    toggleSelection,
     selectedItems,
     focussedItem,
     keyIsDown
@@ -325,7 +325,7 @@ const AppChrome = ({ content }: Props) => {
             ({ key }: MenuItemType) => key === m.parentDocRef!.uuid
           );
           if (!!newSelection) {
-            selectionToggled(newSelection.key);
+            toggleSelection(newSelection.key);
           }
           menuItemOpened(m.parentDocRef.uuid, false);
         }
@@ -352,7 +352,7 @@ const AppChrome = ({ content }: Props) => {
         <CopyMoveDocRefDialog {...moveDialogComponentProps} />
         <div className={`app-chrome__sidebar raised-high ${sidebarClassName}`}>
           <React.Fragment>
-          <div
+            <div
               className="app-chrome__sidebar_header header"
               onClick={() => setIsExpanded(!isExpanded)}
             >

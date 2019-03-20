@@ -15,46 +15,25 @@
  */
 
 import * as React from "react";
-import { useEffect, useCallback } from "react";
-import * as Mousetrap from "mousetrap";
+import { useEffect, useCallback, useState } from "react";
 import PanelGroup from "react-panelgroup";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import Tooltip from "../../components/Tooltip";
 import IconHeader from "../../components/IconHeader";
 import { useStreamTasks } from "../../api/streamTasks";
-import ProcessingDetails from "./ProcessingDetails";
 import ProcessingList from "./ProcessingList";
+import { StreamTaskType } from "src/types";
+import ProcessingDetails from "./ProcessingDetails";
+import ProcessingSearchHelp from "./ProcessingSearchHelp";
 
 const ProcessingContainer = () => {
   const streamTasksApi = useStreamTasks();
   const {
     fetchTrackers,
-    updateTrackerSelection,
     resetPaging,
+    enableToggle,
     updateSearchCriteria,
-    selectedTrackerId,
     fetchParameters: { searchCriteria }
   } = streamTasksApi;
-
-  const onHandleTrackerSelection = useCallback(
-    (filterId: number) => {
-      updateTrackerSelection(filterId);
-    },
-    [updateTrackerSelection]
-  );
-
-  // let expression;
-  //     if (filterId !== undefined && trackers !== undefined) {
-  //       const tracker = trackers.find(t => t.filterId === filterId);
-  //       if (tracker && tracker.filter) {
-  //         expression = tracker.filter.expression;
-  //       }
-  //     }
-
-  //     if (expression) {
-  //       console.log("trackerDetailsExpression", expression);
-  //     }
 
   const onHandleSearchChange: React.ChangeEventHandler<
     HTMLInputElement
@@ -69,22 +48,33 @@ const ProcessingContainer = () => {
     [fetchTrackers, updateSearchCriteria, resetPaging]
   );
 
-  const showDetails = selectedTrackerId !== undefined;
+  const [selectedTracker, setSelectedTracker] = useState<
+    StreamTaskType | undefined
+  >(undefined);
+  const onSelectionChanged = useCallback(
+    (selectedItems: Array<StreamTaskType>) => {
+      if (selectedItems.length === 1) {
+        setSelectedTracker(selectedItems[0]);
+      } else {
+        setSelectedTracker(undefined);
+      }
+    },
+    [setSelectedTracker]
+  );
 
-  const resetTrackerSelection = useCallback(() => {
-    onHandleTrackerSelection(-1);
-  }, [onHandleTrackerSelection]);
-
-  const onResize = useCallback(() => {
-    // Resizing the window is another time when paging gets reset.
-    resetPaging();
-    fetchTrackers();
-  }, [resetPaging, fetchTrackers]);
+  const enableToggleSelected = useCallback(() => {
+    if (!!selectedTracker && !!selectedTracker.filterId) {
+      enableToggle(selectedTracker.filterId);
+    }
+  }, [enableToggle]);
 
   useEffect(() => {
     fetchTrackers();
 
-    Mousetrap.bind("esc", resetTrackerSelection);
+    const onResize = () => {
+      resetPaging();
+      fetchTrackers();
+    };
 
     // This component monitors window size. For every change it will fetch the
     // trackers. The fetch trackers function will only fetch trackers that fit
@@ -93,12 +83,11 @@ const ProcessingContainer = () => {
 
     return () => {
       window.removeEventListener("resize", onResize);
-      Mousetrap.unbind("esc");
     };
-  }, [fetchTrackers, resetTrackerSelection, onResize]);
+  }, [fetchTrackers, resetPaging]);
 
   return (
-    <React.Fragment>
+    <div className="processing__container">
       <div className="processing__header-container">
         <IconHeader icon="play" text="Processing" />
         <input
@@ -107,74 +96,19 @@ const ProcessingContainer = () => {
           value={searchCriteria}
           onChange={onHandleSearchChange}
         />
-
-        <div className="processing__search__help">
-          <Tooltip
-            trigger={<FontAwesomeIcon icon="question-circle" size="lg" />}
-            content={
-              <div>
-                <p>
-                  You may search for a tracker by part or all of a pipeline
-                  name.{" "}
-                </p>
-                <p>
-                  {" "}
-                  You may also use the following key words to filter the
-                  results:
-                </p>
-                <ul>
-                  <li>
-                    <code>is:enabled</code>
-                  </li>
-                  <li>
-                    <code>is:disabled</code>
-                  </li>
-                  <li>
-                    <code>is:complete</code>
-                  </li>
-                  <li>
-                    <code>is:incomplete</code>
-                  </li>
-                </ul>
-                <p>
-                  You may also sort the list to display the trackers that will
-                  next receive processing, using:
-                </p>
-                <ul>
-                  <li>
-                    <code>sort:next</code>
-                  </li>
-                </ul>
-              </div>
-            }
-          />
-        </div>
+        <ProcessingSearchHelp />
       </div>
-      <div className="tracker-container">
-        <div className="tracker">
-          <div className="processing__table__container table__container">
-            <div
-              id="table-container"
-              className={`table-container${
-                showDetails ? " showing-details" : ""
-              } table__reactTable__container`}
-            >
-              <PanelGroup direction="column">
-                <ProcessingList
-                  streamTasksApi={streamTasksApi}
-                  onSelection={(filterId: number) =>
-                    onHandleTrackerSelection(filterId)
-                  }
-                />
-                {!!selectedTrackerId === undefined && (
-                  <ProcessingDetails streamTasksApi={streamTasksApi} />
-                )}
-              </PanelGroup>
-            </div>
-          </div>
-        </div>
-      </div>
-    </React.Fragment>
+      <PanelGroup direction="column">
+        <ProcessingList
+          streamTasksApi={streamTasksApi}
+          onSelectionChanged={onSelectionChanged}
+        />
+        <ProcessingDetails
+          tracker={selectedTracker}
+          enableToggle={enableToggleSelected}
+        />
+      </PanelGroup>
+    </div>
   );
 };
 

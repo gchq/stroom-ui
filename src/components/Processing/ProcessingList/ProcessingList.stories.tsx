@@ -6,12 +6,13 @@ import ProcessingList from "./ProcessingList";
 import { addThemedStories } from "../../../testing/storybook/themedStoryGenerator";
 import { useStreamTasks } from "../../../api/streamTasks";
 import JsonDebug from "../../../testing/JsonDebug";
+import { StreamTaskType } from "src/types";
 
 const TestHarness = () => {
   const streamTasksApi = useStreamTasks();
-  const [selectedFilterId, setSelectedFilterId] = useState<number | undefined>(
-    undefined
-  );
+  const [selectedTrackers, setSelectedTrackers] = useState<
+    Array<StreamTaskType>
+  >([]);
   const { fetchTrackers } = streamTasksApi;
   useEffect(fetchTrackers, [fetchTrackers]);
 
@@ -19,9 +20,9 @@ const TestHarness = () => {
     <div>
       <ProcessingList
         streamTasksApi={streamTasksApi}
-        onSelection={setSelectedFilterId}
+        onSelectionChanged={setSelectedTrackers}
       />
-      <JsonDebug value={{ selectedFilterId }} />
+      <JsonDebug value={{ selectedTrackers }} />
     </div>
   );
 };

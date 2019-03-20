@@ -10,6 +10,7 @@ export interface InProps<TItem> {
   enterItem?: (i: TItem) => void;
   goBack?: (i: TItem) => void;
   selectionBehaviour?: SelectionBehaviour;
+  onSelectionChanged?: (selectedItems: Array<TItem>) => void;
 }
 
 export interface OutProps<TItem> {
@@ -19,7 +20,7 @@ export interface OutProps<TItem> {
   selectedItem?: TItem;
   selectedItems: Array<TItem>;
   selectedItemIndexes: Set<number>;
-  selectionToggled: (itemKey: string) => void;
+  toggleSelection: (itemKey: string) => void;
   clearSelection: () => void;
   onKeyDownWithShortcuts: React.KeyboardEventHandler<HTMLDivElement>;
   keyIsDown: KeyDownState;

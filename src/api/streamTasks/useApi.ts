@@ -9,10 +9,7 @@ import { useConfig } from "../../startup/config";
 interface Api {
   fetchTrackers: (params: FetchParameters) => Promise<StreamTasksResponseType>;
   fetchMore: (params: FetchParameters) => Promise<StreamTasksResponseType>;
-  enableToggle: (
-    filterId: number,
-    isCurrentlyEnabled: boolean
-  ) => Promise<void>;
+  setEnabled: (filterId: number, enabled: boolean) => Promise<void>;
 }
 
 export const useApi = (): Api => {
@@ -71,13 +68,13 @@ export const useApi = (): Api => {
     [stroomBaseServiceUrl, httpGetJson]
   );
 
-  const enableToggle = useCallback(
-    (filterId: number, isCurrentlyEnabled: boolean) => {
+  const setEnabled = useCallback(
+    (filterId: number, enabled: boolean) => {
       const url = `${stroomBaseServiceUrl}/streamtasks/v1/${filterId}`;
       const body = JSON.stringify({
         op: "replace",
         path: "enabled",
-        value: !isCurrentlyEnabled
+        value: enabled
       });
 
       return httpPatchEmptyResponse(url, { body });
@@ -86,7 +83,7 @@ export const useApi = (): Api => {
   );
 
   return {
-    enableToggle,
+    setEnabled,
     fetchMore,
     fetchTrackers
   };

@@ -61,7 +61,7 @@ let TestDocRefListingEntry = ({
 
   const {
     onKeyDownWithShortcuts,
-    selectionToggled,
+    toggleSelection,
     selectedItems: selectedDocRefs,
     focussedItem: focussedDocRef
   } = useSelectableItemListing<DocRefType>({
@@ -90,7 +90,7 @@ let TestDocRefListingEntry = ({
                 enterFolder,
                 dndCanDrop,
                 dndIsOver,
-                selectionToggled,
+                toggleSelection,
                 selectedDocRefs,
                 focussedDocRef
               }}

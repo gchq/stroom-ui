@@ -34,13 +34,12 @@ export interface PagedTrackerInfo {
 }
 
 export interface UseStreamTasks {
-  selectedTrackerId?: number;
   fetchParameters: FetchParameters;
   pagedTrackerInfo: PagedTrackerInfo;
   updateFetchParameters: (params: Partial<FetchParameters>) => void;
   fetchTrackers: () => void;
   fetchMore: () => void;
-  enableToggle: (filterId: number, isCurrentlyEnabled: boolean) => void;
+  enableToggle: (filterId: number) => void;
   addTrackers: (
     streamTasks: Array<StreamTaskType>,
     totalStreamTasks: number
@@ -50,16 +49,11 @@ export interface UseStreamTasks {
     streamTasks: Array<StreamTaskType>,
     totalStreamTasks: number
   ) => void;
-  moveSelection: (direction: Directions) => void;
   updateEnabled: (filterId: number, enabled: boolean) => void;
-  updateTrackerSelection: (filterId: number) => void;
   updateSearchCriteria: (searchCriteria: string) => void;
   changePage: (pageOffset: number) => void;
   updatePageSize: (pageSize: number) => void;
   resetPaging: () => void;
   pageRight: () => void;
   pageLeft: () => void;
-  selectFirst: () => void;
-  selectLast: () => void;
-  selectNone: () => void;
 }

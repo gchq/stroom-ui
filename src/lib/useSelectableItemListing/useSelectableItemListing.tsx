@@ -1,16 +1,20 @@
 import { useState, useCallback } from "react";
 import useKeyIsDown from "../useKeyIsDown";
-import { RowInfo, TableProps } from "react-table";
-import { TableOutProps, InProps, OutProps } from "./types";
-import { SelectionBehaviour } from ".";
+import { InProps, OutProps } from "./types";
+import { SelectionBehaviour } from "./enums";
 
-export function useSelectableItemListing<TItem>({
+const defaultOnSelectionChanged = <T extends {}>(selectedItems: Array<T>) => {
+  console.log("Selection Changed", selectedItems);
+};
+
+function useSelectableItemListing<TItem>({
   getKey,
   items,
   openItem,
   enterItem,
   goBack,
-  selectionBehaviour = SelectionBehaviour.NONE
+  selectionBehaviour = SelectionBehaviour.NONE,
+  onSelectionChanged = defaultOnSelectionChanged
 }: InProps<TItem>): OutProps<TItem> {
   const keyIsDown = useKeyIsDown();
 
@@ -24,9 +28,16 @@ export function useSelectableItemListing<TItem>({
   const [lastSelectedIndex, setLastSelectedIndex] = useState<
     number | undefined
   >(-1);
-  const [selectedItems, setSelectedItems] = useState<Array<TItem>>([]);
+  const [selectedItems, setSelectedItemsState] = useState<Array<TItem>>([]);
   const [selectedItemIndexes, setSelectedItemIndexes] = useState<Set<number>>(
     new Set()
+  );
+  const setSelectedItems = useCallback(
+    (items: Array<TItem>) => {
+      setSelectedItemsState(items);
+      onSelectionChanged(items);
+    },
+    [setSelectedItemsState, onSelectionChanged]
   );
 
   const focusChanged = (direction: number) => () => {
@@ -40,11 +51,13 @@ export function useSelectableItemListing<TItem>({
   };
   const focusUp = focusChanged(-1);
   const focusDown = focusChanged(+1);
+
   const clearSelection = useCallback(() => {
     setSelectedItems([]);
     setSelectedItemIndexes(new Set());
   }, [setSelectedItems, setSelectedItemIndexes]);
-  const selectionToggled = (itemKey?: string) => {
+
+  const toggleSelection = (itemKey?: string) => {
     const index = items.map(getKey).findIndex(k => k === itemKey);
     const indexToUse = index !== undefined && index >= 0 ? index : focusIndex;
     let newSelectedItemIndexes = new Set();
@@ -98,6 +111,44 @@ export function useSelectableItemListing<TItem>({
     setLastSelectedIndex(indexToUse);
   };
 
+  const onKeyDownWithShortcuts = (e: React.KeyboardEvent) => {
+    if (e.key === "ArrowUp" || e.key === "k") {
+      focusUp();
+      e.preventDefault();
+    } else if (e.key === "ArrowDown" || e.key === "j") {
+      focusDown();
+      e.preventDefault();
+    } else if (e.key === "Enter") {
+      if (focussedItem) {
+        if (!!openItem) {
+          openItem(focussedItem);
+        } else {
+          toggleSelection(getKey(focussedItem));
+        }
+      }
+      e.preventDefault();
+    } else if (e.key === "ArrowRight" || e.key === "l") {
+      if (!!focussedItem) {
+        if (!!enterItem) {
+          enterItem(focussedItem);
+        } else if (!!openItem) {
+          openItem(focussedItem);
+        } else {
+          toggleSelection(getKey(focussedItem));
+        }
+      }
+    } else if (e.key === "ArrowLeft" || e.key === "h") {
+      if (!!focussedItem && !!goBack) {
+        goBack(focussedItem);
+      }
+    } else if (e.key === " ") {
+      if (selectionBehaviour !== SelectionBehaviour.NONE) {
+        toggleSelection();
+        e.preventDefault();
+      }
+    }
+  };
+
   return {
     focusIndex,
     focussedItem,
@@ -108,101 +159,10 @@ export function useSelectableItemListing<TItem>({
         ? selectedItems[lastSelectedIndex]
         : undefined,
     selectedItemIndexes,
-    selectionToggled,
+    toggleSelection,
     clearSelection,
     keyIsDown,
-    onKeyDownWithShortcuts: (e: React.KeyboardEvent) => {
-      if (e.key === "ArrowUp" || e.key === "k") {
-        focusUp();
-        e.preventDefault();
-      } else if (e.key === "ArrowDown" || e.key === "j") {
-        focusDown();
-        e.preventDefault();
-      } else if (e.key === "Enter") {
-        if (focussedItem) {
-          if (!!openItem) {
-            openItem(focussedItem);
-          } else {
-            selectionToggled(getKey(focussedItem));
-          }
-        }
-        e.preventDefault();
-      } else if (e.key === "ArrowRight" || e.key === "l") {
-        if (!!focussedItem) {
-          if (!!enterItem) {
-            enterItem(focussedItem);
-          } else if (!!openItem) {
-            openItem(focussedItem);
-          } else {
-            selectionToggled(getKey(focussedItem));
-          }
-        }
-      } else if (e.key === "ArrowLeft" || e.key === "h") {
-        if (!!focussedItem && !!goBack) {
-          goBack(focussedItem);
-        }
-      } else if (e.key === " ") {
-        if (selectionBehaviour !== SelectionBehaviour.NONE) {
-          selectionToggled();
-          e.preventDefault();
-        }
-      }
-    }
-  };
-}
-
-export function useSelectableReactTable<TItem>(
-  props: InProps<TItem>,
-  customTableProps: Partial<TableProps>
-): TableOutProps<TItem> {
-  const selectableItemProps = useSelectableItemListing<TItem>(props);
-  const { getKey, items } = props;
-  const { selectionToggled, selectedItems, focussedItem } = selectableItemProps;
-
-  return {
-    ...selectableItemProps,
-    tableProps: {
-      data: items,
-      getTdProps: (state: any, rowInfo: RowInfo) => {
-        return {
-          onClick: (_: any, handleOriginal: () => void) => {
-            if (!!rowInfo && !!rowInfo.original) {
-              selectionToggled(getKey(rowInfo.original));
-            }
-
-            if (handleOriginal) {
-              handleOriginal();
-            }
-          }
-        };
-      },
-      getTrProps: (_: any, rowInfo: RowInfo) => {
-        // We don't want to see a hover on a row without data.
-        // If a row is selected we want to see the selected color.
-        let rowId =
-          !!rowInfo && !!rowInfo.original
-            ? getKey(rowInfo.original)
-            : undefined;
-        const isSelected =
-          selectedItems.findIndex(v => getKey(v) === rowId) !== -1;
-        const hasFocus = !!focussedItem && getKey(focussedItem) === rowId;
-        const hasData = rowId !== undefined;
-        let classNames = ["hoverable"];
-        if (hasData) {
-          classNames.push("hoverable");
-          if (isSelected) {
-            classNames.push("selected");
-          }
-          if (hasFocus) {
-            classNames.push("focussed");
-          }
-        }
-        return {
-          className: classNames.join(" ")
-        };
-      },
-      ...customTableProps
-    }
+    onKeyDownWithShortcuts
   };
 }
 
