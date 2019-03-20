@@ -10,9 +10,9 @@ import { StreamTaskType } from "src/types";
 
 const TestHarness = () => {
   const streamTasksApi = useStreamTasks();
-  const [selectedTrackers, setSelectedTrackers] = useState<
-    Array<StreamTaskType>
-  >([]);
+  const [selectedTracker, setSelectedTracker] = useState<
+    StreamTaskType | undefined
+  >(undefined);
   const { fetchTrackers } = streamTasksApi;
   useEffect(fetchTrackers, [fetchTrackers]);
 
@@ -20,9 +20,9 @@ const TestHarness = () => {
     <div>
       <ProcessingList
         streamTasksApi={streamTasksApi}
-        onSelectionChanged={setSelectedTrackers}
+        onSelectionChanged={setSelectedTracker}
       />
-      <JsonDebug value={{ selectedTrackers }} />
+      <JsonDebug value={{ selectedTracker }} />
     </div>
   );
 };

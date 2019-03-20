@@ -15,7 +15,7 @@
  */
 import * as React from "react";
 import * as uuidv4 from "uuid/v4";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { storiesOf } from "@storybook/react";
 
 import useSelectableItemListing from "./useSelectableItemListing";
@@ -53,22 +53,28 @@ let initialAnimals: Array<Animal> = [
 
 const TestList = () => {
   const [lastAction, setLastAction] = useState<string>("no action");
-  const [externalSelectedItems, setExternalSelectedItems] = useState<
-    Array<Animal>
-  >([]);
+  const [externalSelectedItem, setExternalSelectedItem] = useState<
+    Animal | undefined
+  >(undefined);
 
   const {
     onKeyDownWithShortcuts,
     selectedItemIndexes,
+    selectedItem,
     focusIndex,
     toggleSelection
   } = useSelectableItemListing<Animal>({
     getKey: a => a.name,
     openItem: a => setLastAction(`Opened Item ${a.name}`),
     items: initialAnimals,
-    selectionBehaviour: SelectionBehaviour.MULTIPLE,
-    onSelectionChanged: setExternalSelectedItems
+    selectionBehaviour: SelectionBehaviour.MULTIPLE
   });
+
+  // Demonstrates how to 'watch' for selection changes
+  useEffect(() => setExternalSelectedItem(selectedItem), [
+    selectedItem,
+    setExternalSelectedItem
+  ]);
 
   return (
     <div tabIndex={0} onKeyDown={onKeyDownWithShortcuts}>
@@ -89,7 +95,7 @@ const TestList = () => {
           </li>
         ))}
       </ul>
-      <JsonDebug value={{ lastAction, externalSelectedItems }} />
+      <JsonDebug value={{ lastAction, externalSelectedItem }} />
     </div>
   );
 };

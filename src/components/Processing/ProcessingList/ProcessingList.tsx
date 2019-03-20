@@ -15,7 +15,7 @@
  */
 
 import * as React from "react";
-import { useCallback, useMemo } from "react";
+import { useCallback, useMemo, useEffect } from "react";
 import { Progress } from "react-sweet-progress";
 import "react-sweet-progress/lib/style.css";
 import ReactTable, { RowInfo, SortingRule } from "react-table";
@@ -36,7 +36,7 @@ import {
 
 interface Props {
   streamTasksApi: UseStreamTasks;
-  onSelectionChanged: (selectedTasks: Array<StreamTaskType>) => void;
+  onSelectionChanged: (selectedTask: StreamTaskType | undefined) => void;
 }
 
 const ProcessingList = ({ streamTasksApi, onSelectionChanged }: Props) => {
@@ -98,17 +98,21 @@ const ProcessingList = ({ streamTasksApi, onSelectionChanged }: Props) => {
     [trackers]
   );
 
-  const { tableProps } = useSelectableReactTable<StreamTaskType>(
+  const { tableProps, selectedItem } = useSelectableReactTable<StreamTaskType>(
     {
       items: tableData,
       getKey: t => `${t.filterId}`,
-      selectionBehaviour: SelectionBehaviour.MULTIPLE,
-      onSelectionChanged
+      selectionBehaviour: SelectionBehaviour.SINGLE
     },
     {
       columns: tableColumns
     }
   );
+
+  useEffect(() => onSelectionChanged(selectedItem), [
+    selectedItem,
+    onSelectionChanged
+  ]);
 
   // TODO - Figure out how to replicate this continuous loading thing
   // const onMoveSelection = useCallback(

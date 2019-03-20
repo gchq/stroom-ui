@@ -3,18 +3,13 @@ import useKeyIsDown from "../useKeyIsDown";
 import { InProps, OutProps } from "./types";
 import { SelectionBehaviour } from "./enums";
 
-const defaultOnSelectionChanged = <T extends {}>(selectedItems: Array<T>) => {
-  console.log("Selection Changed", selectedItems);
-};
-
 function useSelectableItemListing<TItem>({
   getKey,
   items,
   openItem,
   enterItem,
   goBack,
-  selectionBehaviour = SelectionBehaviour.NONE,
-  onSelectionChanged = defaultOnSelectionChanged
+  selectionBehaviour = SelectionBehaviour.NONE
 }: InProps<TItem>): OutProps<TItem> {
   const keyIsDown = useKeyIsDown();
 
@@ -28,16 +23,9 @@ function useSelectableItemListing<TItem>({
   const [lastSelectedIndex, setLastSelectedIndex] = useState<
     number | undefined
   >(-1);
-  const [selectedItems, setSelectedItemsState] = useState<Array<TItem>>([]);
+  const [selectedItems, setSelectedItems] = useState<Array<TItem>>([]);
   const [selectedItemIndexes, setSelectedItemIndexes] = useState<Set<number>>(
     new Set()
-  );
-  const setSelectedItems = useCallback(
-    (items: Array<TItem>) => {
-      setSelectedItemsState(items);
-      onSelectionChanged(items);
-    },
-    [setSelectedItemsState, onSelectionChanged]
   );
 
   const focusChanged = (direction: number) => () => {
@@ -149,15 +137,17 @@ function useSelectableItemListing<TItem>({
     }
   };
 
+  const selectedItem: TItem | undefined =
+    selectedItems.length > 0 && !!lastSelectedIndex
+      ? selectedItems[lastSelectedIndex]
+      : undefined;
+
   return {
     focusIndex,
     focussedItem,
     lastSelectedIndex,
     selectedItems,
-    selectedItem:
-      selectedItems.length > 0 && !!lastSelectedIndex
-        ? selectedItems[lastSelectedIndex]
-        : undefined,
+    selectedItem: selectedItem,
     selectedItemIndexes,
     toggleSelection,
     clearSelection,

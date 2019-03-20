@@ -15,7 +15,7 @@
  */
 import * as React from "react";
 import * as uuidv4 from "uuid/v4";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { storiesOf } from "@storybook/react";
 
 import useSelectableReactTable from "./useSelectableReactTable";
@@ -83,9 +83,9 @@ const TestTable = () => {
     useTextInput
   } = useForm<NewItemFormValues>({ initialValues: defaultFormValues });
 
-  const [externalSelectedItems, setExternalSelectedItems] = useState<
-    Array<Animal>
-  >([]);
+  const [externalSelectedItem, setExternalSelectedItem] = useState<
+    Animal | undefined
+  >(undefined);
   const [animals, setAnimals] = useState<Array<Animal>>(initialAnimals);
   const speciesProps = useTextInput("species");
   const nameProps = useTextInput("name");
@@ -107,19 +107,25 @@ const TestTable = () => {
     [animals, name, species, setAnimals]
   );
 
-  const { onKeyDownWithShortcuts, tableProps } = useSelectableReactTable<
-    Animal
-  >(
+  const {
+    onKeyDownWithShortcuts,
+    selectedItem,
+    tableProps
+  } = useSelectableReactTable<Animal>(
     {
       getKey: a => a.uuid,
       items: animals,
-      selectionBehaviour: SelectionBehaviour.MULTIPLE,
-      onSelectionChanged: setExternalSelectedItems
+      selectionBehaviour: SelectionBehaviour.MULTIPLE
     },
     {
       columns: COLUMNS
     }
   );
+
+  useEffect(() => setExternalSelectedItem(selectedItem), [
+    selectedItem,
+    setExternalSelectedItem
+  ]);
 
   return (
     <div tabIndex={0} onKeyDown={onKeyDownWithShortcuts}>
@@ -137,7 +143,7 @@ const TestTable = () => {
         value={{
           species: speciesProps.value,
           name: nameProps.value,
-          externalSelectedItems
+          externalSelectedItem
         }}
       />
     </div>

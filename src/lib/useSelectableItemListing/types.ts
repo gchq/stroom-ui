@@ -10,7 +10,6 @@ export interface InProps<TItem> {
   enterItem?: (i: TItem) => void;
   goBack?: (i: TItem) => void;
   selectionBehaviour?: SelectionBehaviour;
-  onSelectionChanged?: (selectedItems: Array<TItem>) => void;
 }
 
 export interface OutProps<TItem> {

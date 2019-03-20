@@ -51,16 +51,6 @@ const ProcessingContainer = () => {
   const [selectedTracker, setSelectedTracker] = useState<
     StreamTaskType | undefined
   >(undefined);
-  const onSelectionChanged = useCallback(
-    (selectedItems: Array<StreamTaskType>) => {
-      if (selectedItems.length === 1) {
-        setSelectedTracker(selectedItems[0]);
-      } else {
-        setSelectedTracker(undefined);
-      }
-    },
-    [setSelectedTracker]
-  );
 
   const enableToggleSelected = useCallback(() => {
     if (!!selectedTracker && !!selectedTracker.filterId) {
@@ -101,7 +91,7 @@ const ProcessingContainer = () => {
       <PanelGroup direction="column">
         <ProcessingList
           streamTasksApi={streamTasksApi}
-          onSelectionChanged={onSelectionChanged}
+          onSelectionChanged={setSelectedTracker}
         />
         <ProcessingDetails
           tracker={selectedTracker}
