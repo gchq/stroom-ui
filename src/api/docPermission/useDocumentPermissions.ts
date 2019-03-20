@@ -19,7 +19,7 @@ interface UseDocumentPermissions {
   clearPermissions: () => void;
 }
 
-export default (docRefUuid: string | undefined): UseDocumentPermissions => {
+const useDocumentPermissions = (docRefUuid: string | undefined): UseDocumentPermissions => {
   const {
     getPermissionForDoc,
     clearDocPermissions,
@@ -90,3 +90,5 @@ export default (docRefUuid: string | undefined): UseDocumentPermissions => {
     clearPermissions
   };
 };
+
+export default useDocumentPermissions;

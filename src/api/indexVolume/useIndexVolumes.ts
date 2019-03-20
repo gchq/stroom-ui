@@ -16,7 +16,7 @@ interface UseIndexVolumes {
   addVolumeToGroup: (indexVolumeId: string, groupName: string) => void;
 }
 
-export default (): UseIndexVolumes => {
+const useIndexVolumes = (): UseIndexVolumes => {
   const indexVolumes = useReduxState(
     ({ indexVolumes: { indexVolumes } }) => indexVolumes
   );
@@ -59,3 +59,5 @@ export default (): UseIndexVolumes => {
     )
   };
 };
+
+export default useIndexVolumes;

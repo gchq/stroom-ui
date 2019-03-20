@@ -14,7 +14,7 @@ const defaultStreams: StreamAttributeMapResult = {
   }
 };
 
-export default (): UseStreamSearch => {
+const useStreamSearch = (): UseStreamSearch => {
   const [streams, setStreams] = useState<StreamAttributeMapResult>(
     defaultStreams
   );
@@ -32,3 +32,5 @@ export default (): UseStreamSearch => {
     ])
   };
 };
+
+export default useStreamSearch;

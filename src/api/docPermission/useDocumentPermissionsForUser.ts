@@ -10,7 +10,7 @@ interface UseDocumentPermissions {
   removePermission: (permissionName: string) => void;
 }
 
-export default (
+const useDocumentPermissionsForUser = (
   docRefUuid: string,
   userUuid: string
 ): UseDocumentPermissions => {
@@ -69,3 +69,5 @@ export default (
     removePermission
   };
 };
+
+export default useDocumentPermissionsForUser;

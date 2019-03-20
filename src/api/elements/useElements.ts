@@ -9,7 +9,7 @@ import { useActionCreators } from "./redux";
  * Convenience hook for using the Element Definitions and the Element Property Definitions
  * from the server. Handles the link between the REST API and the Redux state.
  */
-export default (): StoreState => {
+const useElements = (): StoreState => {
   const { fetchElements, fetchElementProperties } = useApi();
   const { elementsReceived, elementPropertiesReceived } = useActionCreators();
 
@@ -25,3 +25,5 @@ export default (): StoreState => {
 
   return useReduxState(({ elements }) => elements);
 };
+
+export default useElements;

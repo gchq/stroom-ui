@@ -55,15 +55,15 @@ export const CreateDocRefDialog = ({
 }: Props) => {
   const {
     value: { docRefType, docRefName, permissionInheritance },
-    generateControlledInputProps,
-    generateTextInput
+    useControlledInputProps,
+    useTextInput
   } = useForm<FormValues>({
     initialValues
   });
 
-  const docRefNameProps = generateTextInput("docRefName");
-  const docRefTypeProps = generateControlledInputProps<string>("docRefType");
-  const permissionInheritanceProps = generateControlledInputProps<
+  const docRefNameProps = useTextInput("docRefName");
+  const docRefTypeProps = useControlledInputProps<string>("docRefType");
+  const permissionInheritanceProps = useControlledInputProps<
     PermissionInheritance
   >("permissionInheritance");
 

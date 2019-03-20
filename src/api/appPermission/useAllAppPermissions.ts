@@ -11,7 +11,7 @@ import useReduxState from "../../lib/useReduxState";
  *
  * @param userUuid The UUID of the user or group
  */
-export default (): Array<string> => {
+const useAllAppPermissions = (): Array<string> => {
   const { allAppPermissionsReceived } = useActionCreators();
   const { getAllPermissionNames } = useApi();
 
@@ -24,3 +24,5 @@ export default (): Array<string> => {
   );
   return allAppPermissions;
 };
+
+export default useAllAppPermissions;

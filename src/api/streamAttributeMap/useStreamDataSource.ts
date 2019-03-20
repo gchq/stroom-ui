@@ -6,7 +6,7 @@ const defaultDataSource: DataSourceType = {
   fields: []
 };
 
-export default (): DataSourceType => {
+const useStreamDataSource = (): DataSourceType => {
   const [dataSource, setDataSource] = useState<DataSourceType | undefined>(
     undefined
   );
@@ -18,3 +18,5 @@ export default (): DataSourceType => {
 
   return dataSource || defaultDataSource;
 };
+
+export default useStreamDataSource;

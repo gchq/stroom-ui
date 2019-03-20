@@ -11,7 +11,7 @@ interface UseIndexVolumeGroups {
   deleteIndexVolumeGroup: (name: string) => void;
 }
 
-export default (): UseIndexVolumeGroups => {
+const useIndexVolumeGroups = (): UseIndexVolumeGroups => {
   const {
     indexVolumeGroupCreated,
     indexVolumeGroupDeleted,
@@ -46,3 +46,5 @@ export default (): UseIndexVolumeGroups => {
     )
   };
 };
+
+export default useIndexVolumeGroups;

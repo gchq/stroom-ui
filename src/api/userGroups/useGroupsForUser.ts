@@ -11,7 +11,7 @@ interface UseGroupsForUser {
   removeFromGroup: (groupUuid: string) => void;
 }
 
-export default (user: User): UseGroupsForUser => {
+const useGroupsForUser = (user: User): UseGroupsForUser => {
   const { findGroupsForUser, addUserToGroup, removeUserFromGroup } = useApi();
 
   const {
@@ -53,3 +53,5 @@ export default (user: User): UseGroupsForUser => {
     removeFromGroup
   };
 };
+
+export default useGroupsForUser;

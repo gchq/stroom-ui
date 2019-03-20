@@ -23,26 +23,24 @@ export const IndexFieldEditor = ({
 }: Props) => {
   const {
     value: indexUpdates,
-    generateControlledInputProps,
-    generateTextInput,
-    generateCheckboxInput
+    useControlledInputProps,
+    useTextInput,
+    useCheckboxInput
   } = useForm<IndexField>({
     initialValues: indexField
   });
 
-  const fieldNameProps = generateTextInput("fieldName");
-  const storedProps = generateCheckboxInput("stored");
-  const caseSensitiveProps = generateCheckboxInput("caseSensitive");
-  const termPositionsProps = generateCheckboxInput("termPositions");
+  const fieldNameProps = useTextInput("fieldName");
+  const storedProps = useCheckboxInput("stored");
+  const caseSensitiveProps = useCheckboxInput("caseSensitive");
+  const termPositionsProps = useCheckboxInput("termPositions");
   const onConfirm = () => {
     onUpdateField(id, indexUpdates);
     onCloseDialog();
   };
 
-  const fieldTypeProps = generateControlledInputProps<IndexFieldType>(
-    "fieldType"
-  );
-  const analyzerTypeProps = generateControlledInputProps<AnalyzerType>(
+  const fieldTypeProps = useControlledInputProps<IndexFieldType>("fieldType");
+  const analyzerTypeProps = useControlledInputProps<AnalyzerType>(
     "analyzerType"
   );
 

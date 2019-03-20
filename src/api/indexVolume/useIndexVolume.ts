@@ -12,7 +12,7 @@ interface UseIndexVolume {
   removeFromGroup: (groupName: string) => void;
 }
 
-export default (volumeId: string): UseIndexVolume => {
+const useIndexVolume = (volumeId: string): UseIndexVolume => {
   const {
     getIndexVolumeById,
     getGroupsForIndexVolume,
@@ -65,3 +65,5 @@ export default (volumeId: string): UseIndexVolume => {
 
   return { indexVolume, groups, addToGroup, removeFromGroup };
 };
+
+export default useIndexVolume;

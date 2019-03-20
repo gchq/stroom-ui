@@ -8,7 +8,7 @@ interface OutProps {
   docRefTypes: DocRefTypeList;
 }
 
-export default (): OutProps => {
+const useDocRefTypes = (): OutProps => {
   const docRefTypes = useReduxState(
     ({ folderExplorer: { docRefTypes } }) => docRefTypes
   );
@@ -20,3 +20,5 @@ export default (): OutProps => {
     docRefTypes
   };
 };
+
+export default useDocRefTypes;

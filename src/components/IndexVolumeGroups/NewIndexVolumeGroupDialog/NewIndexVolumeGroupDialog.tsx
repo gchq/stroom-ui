@@ -25,12 +25,12 @@ const NewIndexVolumeGroupDialog = ({
   onCloseDialog
 }: Props) => {
   const {
-    generateTextInput,
+    useTextInput,
     value: { name }
   } = useForm<FormValues>({
     initialValues
   });
-  const nameProps = generateTextInput("name");
+  const nameProps = useTextInput("name");
 
   const onConfirmLocal = useCallback(() => {
     if (!!name) {

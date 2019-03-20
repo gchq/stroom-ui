@@ -3,7 +3,7 @@ import useRouter from "../../lib/useRouter";
 import { useMemo } from "react";
 import { DocRefType } from "src/types";
 
-export default (): NavigateApp => {
+const useAppNavigation = (): NavigateApp => {
   const { history } = useRouter();
   return useMemo(
     () => ({
@@ -67,3 +67,5 @@ export default (): NavigateApp => {
     [history]
   );
 };
+
+export default useAppNavigation;

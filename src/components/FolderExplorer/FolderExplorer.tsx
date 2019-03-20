@@ -70,6 +70,14 @@ const FolderExplorer = ({ folderUuid }: Props) => {
     [createDocument, folder]
   );
 
+  const goBack = useCallback(() => {
+    if (!!folder) {
+      if (folder.lineage.length > 0) {
+        goToEditDocRef(lineage[lineage.length - 1]);
+      }
+    }
+  }, [folder, goToEditDocRef]);
+
   const {
     showDialog: showDeleteDialog,
     componentProps: deleteDialogComponentProps
@@ -104,23 +112,19 @@ const FolderExplorer = ({ folderUuid }: Props) => {
     selectionBehaviour: SelectionBehaviour.MULTIPLE,
     getKey: d => d.uuid,
     openItem: goToEditDocRef,
-    goBack: () => {
-      if (lineage.length > 0) {
-        goToEditDocRef(lineage[lineage.length - 1]);
-      }
-    }
+    goBack: goBack
   });
 
-  if (!folder) {
-    return <Loader message="Loading folder..." />;
-  }
-
-  const { node, lineage } = folder;
+  const onClickCreate = useCallback(() => {
+    if (!!folder) {
+      showCreateDialog(folder.node);
+    }
+  }, [showCreateDialog]);
 
   const additionalActionBarItems: Array<ButtonProps> = [
     {
       icon: "file",
-      onClick: () => showCreateDialog(node),
+      onClick: onClickCreate,
       title: "Create a Document",
       text: "Create"
     }
@@ -169,6 +173,12 @@ const FolderExplorer = ({ folderUuid }: Props) => {
     docRefUuid: folderUuid,
     additionalActionBarItems
   });
+
+  if (!folder) {
+    return <Loader message="Loading folder..." />;
+  }
+
+  const { node, lineage } = folder;
 
   return (
     <DocRefEditor {...folderEditorProps}>

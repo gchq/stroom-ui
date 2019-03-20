@@ -15,7 +15,7 @@ const defaultFetchParams: FetchDataParams = {
   pageSize: 20
 };
 
-export default (): UseData => {
+const useData = (): UseData => {
   const { getDataForSelectedRow } = useApi();
 
   const { value: pagedData, update: updatePagedData } = useUpdateableState<
@@ -42,3 +42,5 @@ export default (): UseData => {
     getDataForSelectedRow: getDataForSelectedRowWrapped
   };
 };
+
+export default useData;

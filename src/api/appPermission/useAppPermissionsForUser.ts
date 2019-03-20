@@ -19,7 +19,7 @@ interface UserAppPermissionApi {
  *
  * @param userUuid The UUID of the user or group
  */
-export default (userUuid: string): UserAppPermissionApi => {
+const useAppPermissionsForUser = (userUuid: string): UserAppPermissionApi => {
   const {
     userAppPermissionsReceived,
     userAppPermissionAdded,
@@ -66,3 +66,5 @@ export default (userUuid: string): UserAppPermissionApi => {
     removePermission
   };
 };
+
+export default useAppPermissionsForUser;

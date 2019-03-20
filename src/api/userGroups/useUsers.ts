@@ -10,7 +10,7 @@ import useReduxState from "../../lib/useReduxState";
  *
  * @param userUuids The list of user UUID's to retrieve
  */
-export default (userUuids: Array<string>): Array<User> => {
+const useUsers = (userUuids: Array<string>): Array<User> => {
   const { fetchUser } = useApi();
   const { userReceived } = useActionCreators();
 
@@ -33,3 +33,5 @@ export default (userUuids: Array<string>): Array<User> => {
 
   return users;
 };
+
+export default useUsers;

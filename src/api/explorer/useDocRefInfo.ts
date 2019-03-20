@@ -4,7 +4,7 @@ import { DocRefType, DocRefInfoType } from "../../types";
 import useReduxState from "../../lib/useReduxState";
 import useApi from "./useApi";
 
-export default (docRef?: DocRefType): DocRefInfoType | undefined => {
+const useDocRefInfo = (docRef?: DocRefType): DocRefInfoType | undefined => {
   const { fetchDocInfo } = useApi();
   useEffect(() => {
     if (!!docRef) {
@@ -18,3 +18,5 @@ export default (docRef?: DocRefType): DocRefInfoType | undefined => {
 
   return !!docRef ? docRefInfoByUuid[docRef.uuid] : undefined;
 };
+
+export default useDocRefInfo;

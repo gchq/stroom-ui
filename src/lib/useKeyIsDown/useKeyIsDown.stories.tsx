@@ -20,34 +20,35 @@ import useKeyIsDown, { DEFAULT_FILTERS } from "./useKeyIsDown";
 
 import { KeyDownState } from "./types";
 
+const TestHarness = () => {
+  const keyIsDown1: KeyDownState = useKeyIsDown();
+  const filters2: Array<string> = ["Control", "Alt"];
+  const keyIsDown2: KeyDownState = useKeyIsDown(filters2);
+  return (
+    <div>
+      <h3>Test Keys Down/Up (instance 1)</h3>
+
+      <form>
+        {DEFAULT_FILTERS.map(f => (
+          <div key={f}>
+            <label>{f}</label>
+            <input type="checkbox" checked={keyIsDown1[f]} />
+          </div>
+        ))}
+      </form>
+
+      <h3>Test Keys Down/Up (instance 2)</h3>
+      <form>
+        {filters2.map(f => (
+          <div key={f}>
+            <label>{f}</label>
+            <input type="checkbox" checked={keyIsDown2[f]} />
+          </div>
+        ))}
+      </form>
+    </div>
+  );
+};
+
 storiesOf("Custom Hooks/useKeyIsDown", module)
-  
-  .add("Test Component", () => {
-    const keyIsDown1: KeyDownState = useKeyIsDown();
-    const filters2: Array<string> = ["Control", "Alt"];
-    const keyIsDown2: KeyDownState = useKeyIsDown(filters2);
-    return (
-      <div>
-        <h3>Test Keys Down/Up (instance 1)</h3>
-
-        <form>
-          {DEFAULT_FILTERS.map(f => (
-            <div key={f}>
-              <label>{f}</label>
-              <input type="checkbox" checked={keyIsDown1[f]} />
-            </div>
-          ))}
-        </form>
-
-        <h3>Test Keys Down/Up (instance 2)</h3>
-        <form>
-          {filters2.map(f => (
-            <div key={f}>
-              <label>{f}</label>
-              <input type="checkbox" checked={keyIsDown2[f]} />
-            </div>
-          ))}
-        </form>
-      </div>
-    );
-  });
+  .add("Test Component", TestHarness);

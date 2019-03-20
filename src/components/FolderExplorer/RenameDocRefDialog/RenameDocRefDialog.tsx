@@ -49,12 +49,12 @@ export const RenameDocRefDialog = ({
 
   const {
     value: { docRefName },
-    generateTextInput
+    useTextInput
   } = useForm<FormValues>({
     initialValues
   });
 
-  const docRefNameProps = generateTextInput("docRefName");
+  const docRefNameProps = useTextInput("docRefName");
   const onConfirmLocal = useCallback(() => {
     if (!!docRef && !!docRefName) {
       onConfirm(docRef, docRefName);

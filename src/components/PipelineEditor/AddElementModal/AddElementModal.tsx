@@ -39,14 +39,14 @@ export const AddElementModal = ({
 
   const {
     value: { newName },
-    generateTextInput
+    useTextInput
   } = useForm<FormValues>({
     initialValues,
     onValidate: useCallback(v => {
       onUniqueNameCheck(v.newName);
     }, [])
   });
-  const newNameProps = generateTextInput("newName");
+  const newNameProps = useTextInput("newName");
 
   const onAddElementLocal = useCallback(() => {
     if (!!parentId && !!elementDefinition && !!newName) {

@@ -24,7 +24,7 @@ const defaultFetchParameters: FetchParameters = {
   searchCriteria: "is:incomplete "
 };
 
-export default (): UseStreamTasks => {
+const useStreamTasks = (): UseStreamTasks => {
   const { fetchTrackers, fetchMore, enableToggle } = useApi();
 
   const [fetchParameters, setFetchParameters] = useState<FetchParameters>(
@@ -283,3 +283,5 @@ export default (): UseStreamTasks => {
     updateTrackers
   };
 };
+
+export default useStreamTasks;

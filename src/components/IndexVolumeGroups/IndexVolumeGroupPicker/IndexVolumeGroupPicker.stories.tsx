@@ -22,8 +22,6 @@ import { storiesOf } from "@storybook/react";
 import IndexVolumeGroupPicker from "./IndexVolumeGroupPicker";
 import { addThemedStories } from "../../../testing/storybook/themedStoryGenerator";
 
-
-
 import useForm from "../../../lib/useForm";
 import JsonDebug from "../../../testing/JsonDebug";
 import fullTestData from "../../../testing/data";
@@ -35,7 +33,7 @@ interface FormValues {
 const initialValues: FormValues = {};
 
 const TestForm: React.FunctionComponent = () => {
-  const { value, generateControlledInputProps } = useForm({
+  const { value, useControlledInputProps } = useForm({
     initialValues
   });
 
@@ -44,7 +42,7 @@ const TestForm: React.FunctionComponent = () => {
       fullTestData.indexVolumesAndGroups.groups.slice(0, 1).map(g => g.name),
     []
   );
-  const groupPickerProps = generateControlledInputProps<string>("groupName");
+  const groupPickerProps = useControlledInputProps<string>("groupName");
 
   return (
     <form>

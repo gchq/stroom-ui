@@ -81,12 +81,12 @@ interface FormValues {
 const initialValues: FormValues = {};
 
 const TestForm = () => {
-  const { value, generateControlledInputProps } = useForm({
+  const { value, useControlledInputProps } = useForm({
     initialValues
   });
 
-  const colourPickerProps = generateControlledInputProps<string>("colour");
-  const weekdayPickerProps = generateControlledInputProps<string>("weekday");
+  const colourPickerProps = useControlledInputProps<string>("colour");
+  const weekdayPickerProps = useControlledInputProps<string>("weekday");
 
   return (
     <React.Fragment>

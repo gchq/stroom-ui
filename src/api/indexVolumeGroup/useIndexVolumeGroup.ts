@@ -14,7 +14,7 @@ interface UseIndexVolumeGroup {
   removeVolume: (volumeId: string) => void;
 }
 
-export default (groupName: string): UseIndexVolumeGroup => {
+const useIndexVolumeGroup = (groupName: string): UseIndexVolumeGroup => {
   const { getIndexVolumeGroup } = useApi();
   const { getIndexVolumesInGroup, removeVolumeFromGroup } = useIndexVolumeApi();
   const { indexVolumeGroupReceived } = useActionCreators();
@@ -61,3 +61,5 @@ export default (groupName: string): UseIndexVolumeGroup => {
     removeVolume
   };
 };
+
+export default useIndexVolumeGroup;

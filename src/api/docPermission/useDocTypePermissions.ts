@@ -9,7 +9,7 @@ import useReduxState from "../../lib/useReduxState";
  * for a single Doc Type and retrieve the value from the redux store.
  */
 
-export default (docType: string): Array<string> => {
+const useDocTypePermissions = (docType: string): Array<string> => {
   const { getPermissionForDocType } = useApi();
   const { permissionNamesForDocTypeReceived } = useActionCreators();
 
@@ -27,3 +27,5 @@ export default (docType: string): Array<string> => {
 
   return permissions;
 };
+
+export default useDocTypePermissions;

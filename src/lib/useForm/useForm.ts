@@ -42,7 +42,7 @@ export const useForm = function<T>({
     }
   }, [value, onValidate]);
 
-  const generateTextInput = (s: keyof T) => ({
+  const useTextInput = (s: keyof T) => ({
     type: "text",
     onChange: useCallback(
       ({ target: { value } }) => onUpdate({ [s]: value } as T),
@@ -51,7 +51,7 @@ export const useForm = function<T>({
     value: `${value[s]}`
   });
 
-  const generateCheckboxInput = (s: keyof T) => ({
+  const useCheckboxInput = (s: keyof T) => ({
     type: "checkbox",
     checked: value[s],
     onChange: useCallback(() => {
@@ -61,7 +61,7 @@ export const useForm = function<T>({
     }, [value[s], onUpdate])
   });
 
-  const generateControlledInputProps = <FIELD_TYPE>(
+  const useControlledInputProps = <FIELD_TYPE>(
     s: keyof T
   ): ControlledInput<FIELD_TYPE> => ({
     value: (value[s] as unknown) as FIELD_TYPE,
@@ -71,9 +71,9 @@ export const useForm = function<T>({
   return {
     onUpdate,
     value,
-    generateTextInput,
-    generateCheckboxInput,
-    generateControlledInputProps
+    useTextInput,
+    useCheckboxInput,
+    useControlledInputProps
   };
 };
 

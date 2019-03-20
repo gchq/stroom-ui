@@ -18,13 +18,13 @@ const defaultDocRefWithLineage: DocRefWithLineage = {
   }
 };
 
-export default (docRefUuid: string): DocRefWithLineage => {
+const useDocRefWithLineage = (docRefUuid: string): DocRefWithLineage => {
   const documentTree = useDocumentTree();
 
-  return (
-    useMemo(() => findItem(documentTree, docRefUuid), [
-      documentTree,
-      docRefUuid
-    ]) || defaultDocRefWithLineage
+  return useMemo(
+    () => findItem(documentTree, docRefUuid) || defaultDocRefWithLineage,
+    [documentTree, docRefUuid]
   );
 };
+
+export default useDocRefWithLineage;

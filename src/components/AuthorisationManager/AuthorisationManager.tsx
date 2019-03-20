@@ -59,17 +59,17 @@ const Authorisation = () => {
     }, [selectedUsers.map(v => v.uuid)])
   });
 
-  const { generateControlledInputProps, generateTextInput } = useForm({
+  const { useControlledInputProps, useTextInput } = useForm({
     initialValues: defaultValues,
     onValidate: useCallback(
       ({ name, isGroup, uuid }: Values) => findUsers(name, isGroup, uuid),
       [findUsers]
     )
   });
-  const nameProps = generateTextInput("name");
-  const uuidProps = generateTextInput("uuid");
+  const nameProps = useTextInput("name");
+  const uuidProps = useTextInput("uuid");
 
-  const isGroupProps = generateControlledInputProps<IsGroup>("isGroup");
+  const isGroupProps = useControlledInputProps<IsGroup>("isGroup");
 
   const {
     componentProps: userGroupPickerProps,

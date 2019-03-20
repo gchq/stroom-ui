@@ -21,7 +21,6 @@ import { storiesOf } from "@storybook/react";
 import { addThemedStories } from "../../testing/storybook/themedStoryGenerator";
 import AppSearchBar from "./AppSearchBar";
 
-
 import { DocRefType } from "../../types";
 import useForm from "../../lib/useForm";
 import JsonDebug from "../../testing/JsonDebug";
@@ -40,16 +39,12 @@ const defaultValues: FormValues = {
 };
 
 let AppSearchAsForm = ({ typeFilters }: Props) => {
-  const { value, generateControlledInputProps, generateTextInput } = useForm<
-    FormValues
-  >({
+  const { value, useControlledInputProps, useTextInput } = useForm<FormValues>({
     initialValues: defaultValues
   });
 
-  const someNameProps = generateTextInput("someName");
-  const chosenDocRefProps = generateControlledInputProps<DocRefType>(
-    "chosenDocRef"
-  );
+  const someNameProps = useTextInput("someName");
+  const chosenDocRefProps = useControlledInputProps<DocRefType>("chosenDocRef");
 
   return (
     <form>

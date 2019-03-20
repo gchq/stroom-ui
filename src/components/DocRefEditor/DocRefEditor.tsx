@@ -43,17 +43,19 @@ const DocRefEditor = function<T>({
     [docRefUuid]
   );
 
+  const onClickSave = useCallback(() => {
+    if (!!docRefContents && saveDocument) {
+      saveDocument((docRefContents as unknown) as T);
+    }
+  }, [saveDocument, docRefContents]);
+
   const actionBarItems: Array<ButtonProps> = [];
   if (!!saveDocument) {
     actionBarItems.push({
       icon: "save",
       disabled: !(isDirty || isSaving),
       title: isSaving ? "Saving..." : isDirty ? "Save" : "Saved",
-      onClick: useCallback(() => {
-        if (!!docRefContents && saveDocument) {
-          saveDocument((docRefContents as unknown) as T);
-        }
-      }, [saveDocument, docRefContents])
+      onClick: onClickSave
     });
   }
   actionBarItems.push({

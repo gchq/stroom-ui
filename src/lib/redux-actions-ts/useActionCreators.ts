@@ -25,7 +25,7 @@ export const wrapDispatch = function<T extends (...args: any[]) => Action>(
 export const genUseActionCreators = function<
   T extends { [k: string]: (...args: any[]) => Action }
 >(actionCreators: T): () => T {
-  return () => {
+  const useActionCreator = () => {
     const dispatch = useDispatch();
 
     // Memoizing this is crucial!
@@ -42,6 +42,8 @@ export const genUseActionCreators = function<
       [dispatch, actionCreators]
     );
   };
+
+  return useActionCreator;
 };
 
 export default genUseActionCreators;

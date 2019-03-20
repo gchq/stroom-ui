@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import useApi from "./useApi";
 import { DataRow } from "../../types";
 
-export default (metaId: number): DataRow | undefined => {
+const useStreamDataRow = (metaId: number): DataRow | undefined => {
   const [dataRow, setDataRow] = useState<DataRow | undefined>(undefined);
   const { getDetailsForSelectedStream } = useApi();
 
@@ -13,3 +13,5 @@ export default (metaId: number): DataRow | undefined => {
 
   return dataRow;
 };
+
+export default useStreamDataRow;

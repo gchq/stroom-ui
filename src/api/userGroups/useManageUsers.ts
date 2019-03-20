@@ -12,7 +12,7 @@ interface ManageUsers {
   deleteUser: (userUuid: string) => void;
 }
 
-export default (): ManageUsers => {
+const useManageUsers = (): ManageUsers => {
   const { userCreated, userDeleted, userAddedToGroup } = useActionCreators();
   const { createUser, deleteUser, addUserToGroup, findUsers } = useApi();
 
@@ -42,3 +42,5 @@ export default (): ManageUsers => {
     )
   };
 };
+
+export default useManageUsers;

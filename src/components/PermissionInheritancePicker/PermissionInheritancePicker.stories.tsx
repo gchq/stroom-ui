@@ -30,11 +30,11 @@ interface FormValues {
 const initialValues: FormValues = {};
 
 const TestForm = () => {
-  const { value, generateControlledInputProps } = useForm<FormValues>({
+  const { value, useControlledInputProps } = useForm<FormValues>({
     initialValues
   });
 
-  const permissionInheritanceProps = generateControlledInputProps<
+  const permissionInheritanceProps = useControlledInputProps<
     PermissionInheritance
   >("permissionInheritance");
 
@@ -49,9 +49,6 @@ const TestForm = () => {
   );
 };
 
-const stories = storiesOf(
-  "Pickers/Permission Inheritance",
-  module
-);
+const stories = storiesOf("Pickers/Permission Inheritance", module);
 
 addThemedStories(stories, () => <TestForm />);

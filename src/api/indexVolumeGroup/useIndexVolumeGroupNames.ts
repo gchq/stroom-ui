@@ -4,7 +4,7 @@ import { useActionCreators } from "./redux";
 import useApi from "./useApi";
 import useReduxState from "../../lib/useReduxState";
 
-export default (): Array<string> => {
+const useIndexVolumeGroupNames = (): Array<string> => {
   const { getIndexVolumeGroupNames } = useApi();
   const { indexVolumeGroupNamesReceived } = useActionCreators();
 
@@ -18,3 +18,5 @@ export default (): Array<string> => {
 
   return groupNames;
 };
+
+export default useIndexVolumeGroupNames;
