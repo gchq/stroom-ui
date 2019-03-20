@@ -14,48 +14,21 @@
  * limitations under the License.
  */
 import * as React from "react";
-import * as uuidv4 from "uuid/v4";
 import { useState, useEffect } from "react";
 import { storiesOf } from "@storybook/react";
 
 import useSelectableItemListing from "./useSelectableItemListing";
 import { SelectionBehaviour } from "./enums";
 import JsonDebug from "../../testing/JsonDebug";
-
-type Animal = {
-  uuid: string;
-  species: string;
-  name: string;
-};
-
-let initialAnimals: Array<Animal> = [
-  {
-    uuid: uuidv4(),
-    species: "Dog",
-    name: "Rover"
-  },
-  {
-    uuid: uuidv4(),
-    species: "Cat",
-    name: "Tiddles"
-  },
-  {
-    uuid: uuidv4(),
-    species: "Mouse",
-    name: "Pixie"
-  },
-  {
-    uuid: uuidv4(),
-    species: "Tyrannosaurus Rex",
-    name: "Fluffy"
-  }
-];
+import Button from "../../components/Button";
+import useTestAnimals, { Animal } from "./useTestAnimals";
 
 const TestList = () => {
   const [lastAction, setLastAction] = useState<string>("no action");
   const [externalSelectedItem, setExternalSelectedItem] = useState<
     Animal | undefined
   >(undefined);
+  const { animals, preFocusWrap, reset } = useTestAnimals();
 
   const {
     onKeyDownWithShortcuts,
@@ -63,11 +36,12 @@ const TestList = () => {
     selectedItem,
     focusIndex,
     toggleSelection
-  } = useSelectableItemListing<Animal>({
+  } = useSelectableItemListing({
     getKey: a => a.name,
     openItem: a => setLastAction(`Opened Item ${a.name}`),
-    items: initialAnimals,
-    selectionBehaviour: SelectionBehaviour.MULTIPLE
+    items: animals,
+    selectionBehaviour: SelectionBehaviour.MULTIPLE,
+    preFocusWrap
   });
 
   // Demonstrates how to 'watch' for selection changes
@@ -79,8 +53,9 @@ const TestList = () => {
   return (
     <div tabIndex={0} onKeyDown={onKeyDownWithShortcuts}>
       <h3>Test Selectable Item Listing</h3>
+      <Button text="Reset" onClick={reset} />
       <ul>
-        {initialAnimals.map((animal, i) => (
+        {animals.map((animal, i) => (
           <li
             key={i}
             onClick={() => toggleSelection(animal.name)}

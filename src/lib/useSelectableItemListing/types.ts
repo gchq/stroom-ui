@@ -10,6 +10,13 @@ export interface InProps<TItem> {
   enterItem?: (i: TItem) => void;
   goBack?: (i: TItem) => void;
   selectionBehaviour?: SelectionBehaviour;
+  /**
+   * This function allows the owner to be notified when the focus is about to wrap.
+   * It must return a boolean to indicate if the wrap should take place.
+   * If it should not take place, the assumption is that the owner will trigger a request
+   * for more data.
+   */
+  preFocusWrap?: () => boolean;
 }
 
 export interface OutProps<TItem> {

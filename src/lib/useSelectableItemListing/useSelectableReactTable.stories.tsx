@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 import * as React from "react";
-import * as uuidv4 from "uuid/v4";
 import { useState, useCallback, useEffect } from "react";
 import { storiesOf } from "@storybook/react";
 
@@ -24,35 +23,7 @@ import ReactTable from "react-table";
 import useForm from "../useForm";
 import Button from "../../components/Button";
 import JsonDebug from "../../testing/JsonDebug";
-
-type Animal = {
-  uuid: string;
-  species: string;
-  name: string;
-};
-
-let initialAnimals: Array<Animal> = [
-  {
-    uuid: uuidv4(),
-    species: "Dog",
-    name: "Rover"
-  },
-  {
-    uuid: uuidv4(),
-    species: "Cat",
-    name: "Tiddles"
-  },
-  {
-    uuid: uuidv4(),
-    species: "Mouse",
-    name: "Pixie"
-  },
-  {
-    uuid: uuidv4(),
-    species: "Tyrannosaurus Rex",
-    name: "Fluffy"
-  }
-];
+import useTestAnimals, { Animal } from "./useTestAnimals";
 
 const COLUMNS = [
   {
@@ -86,25 +57,18 @@ const TestTable = () => {
   const [externalSelectedItem, setExternalSelectedItem] = useState<
     Animal | undefined
   >(undefined);
-  const [animals, setAnimals] = useState<Array<Animal>>(initialAnimals);
+  const { animals, preFocusWrap, reset, addAnimal } = useTestAnimals();
+
   const speciesProps = useTextInput("species");
   const nameProps = useTextInput("name");
   const onClickAddItem = useCallback(
     e => {
       if (!!name && !!species) {
-        setAnimals(
-          animals.concat([
-            {
-              uuid: uuidv4(),
-              species,
-              name
-            }
-          ])
-        );
+        addAnimal(species, name);
       }
       e.preventDefault();
     },
-    [animals, name, species, setAnimals]
+    [animals, name, species, addAnimal]
   );
 
   const {
@@ -115,7 +79,8 @@ const TestTable = () => {
     {
       getKey: a => a.uuid,
       items: animals,
-      selectionBehaviour: SelectionBehaviour.MULTIPLE
+      selectionBehaviour: SelectionBehaviour.MULTIPLE,
+      preFocusWrap
     },
     {
       columns: COLUMNS
@@ -129,6 +94,7 @@ const TestTable = () => {
 
   return (
     <div tabIndex={0} onKeyDown={onKeyDownWithShortcuts}>
+      <Button text="Reset" onClick={reset} />
       <ReactTable {...tableProps} />
       <form>
         <label>Species</label>

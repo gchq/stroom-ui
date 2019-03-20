@@ -3,13 +3,16 @@ import useKeyIsDown from "../useKeyIsDown";
 import { InProps, OutProps } from "./types";
 import { SelectionBehaviour } from "./enums";
 
+const defaultPreFocusWrap = () => true;
+
 function useSelectableItemListing<TItem>({
   getKey,
   items,
   openItem,
   enterItem,
   goBack,
-  selectionBehaviour = SelectionBehaviour.NONE
+  selectionBehaviour = SelectionBehaviour.NONE,
+  preFocusWrap = defaultPreFocusWrap
 }: InProps<TItem>): OutProps<TItem> {
   const keyIsDown = useKeyIsDown();
 
@@ -34,8 +37,12 @@ function useSelectableItemListing<TItem>({
       nextIndex = (items.length + (focusIndex + direction)) % items.length;
     }
 
-    setFocusIndex(nextIndex);
-    setFocussedItem(items[nextIndex]);
+    let allowWrap = nextIndex > focusIndex || preFocusWrap();
+
+    if (allowWrap) {
+      setFocusIndex(nextIndex);
+      setFocussedItem(items[nextIndex]);
+    }
   };
   const focusUp = focusChanged(-1);
   const focusDown = focusChanged(+1);
