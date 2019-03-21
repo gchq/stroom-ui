@@ -15,11 +15,14 @@
  */
 
 import * as React from "react";
-import { useState, useCallback } from "react";
+import * as uuidv4 from "uuid/v4";
+import { useState, useCallback, useMemo } from "react";
 import * as loremIpsum from "lorem-ipsum";
 import { storiesOf } from "@storybook/react";
+import { Color } from "csstype";
 
 import HorizontalMainDetails from "./HorizontalMainDetails";
+import { addThemedStories } from "../../testing/storybook/themedStoryGenerator";
 
 const EnabledCheckbox = () => (
   <label>
@@ -101,3 +104,54 @@ storiesOf("General Purpose/Horizontal Main Details", module)
       //headerSize="h4"
     />
   ));
+
+interface PanelPartProps {
+  title: string;
+  backgroundColor: Color;
+}
+const PanelPart: React.FunctionComponent<PanelPartProps> = ({
+  title,
+  backgroundColor,
+  children
+}) => {
+  const uuid = useMemo(() => uuidv4(), []);
+
+  return (
+    <div style={{ backgroundColor }}>
+      <h1>{title}</h1>
+      <p>Generates a Random UUID When Mounted</p>
+      <p>
+        <strong>{uuid}</strong>
+      </p>
+      {children}
+    </div>
+  );
+};
+
+const PanelTest = () => {
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+
+  const onOpen = useCallback(() => setIsOpen(true), [setIsOpen]);
+  const onClose = useCallback(() => setIsOpen(false), [setIsOpen]);
+
+  return (
+    <HorizontalMainDetails
+      storageKey="dev-sandbox"
+      title="Dev Sandbox"
+      isOpen={isOpen}
+      onClose={onClose}
+      mainContent={
+        <PanelPart title="First" backgroundColor="pink">
+          <button onClick={onOpen}>Open Second</button>
+        </PanelPart>
+      }
+      detailContent={<PanelPart title="Second" backgroundColor="lightblue" />}
+    />
+  );
+};
+
+const stories = storiesOf(
+  "General Purpose/Horizontal Main Details/Mounting Issue",
+  module
+);
+addThemedStories(stories, () => <PanelTest />);

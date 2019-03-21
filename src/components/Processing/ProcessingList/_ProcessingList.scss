@@ -7,24 +7,24 @@
   width: 100%;
 }
 
-.tracker-table .td {
+.ReactTable.tracker-table .rt-td {
   padding: 0px;
 }
 
-.tracker-table .progress {
+.ReactTable.tracker-table .progress {
   margin: 0px;
   padding: 0px;
 }
 
-.tracker-table .progress-column .progress {
+.ReactTable.tracker-table .progress-column .progress {
   background-color: transparent;
 }
 
-.tracker-table .name-column .label {
+.ReactTable.tracker-table .name-column .label {
   width: 100%;
 }
 
-.tracker-row td {
+.ReactTable.rt-rt td {
   padding-top: 0.185714em;
   padding-right: 0.1785714em;
   padding-bottom: 0.1785714em;

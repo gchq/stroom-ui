@@ -78,7 +78,7 @@ const IndexVolumes = () => {
   }, [goToIndexVolume, selectedIndexVolumes]);
 
   return (
-    <div>
+    <div className="fill-space">
       <IconHeader text="Index Volumes" icon="database" />
 
       <Button text="Create" onClick={showCreateNewDialog} />

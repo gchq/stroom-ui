@@ -19,7 +19,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { splitAt } from "ramda";
 
 import ReactTable, { RowInfo } from "react-table";
-import "react-table/react-table.css";
 
 import { ErrorData } from "../types";
 

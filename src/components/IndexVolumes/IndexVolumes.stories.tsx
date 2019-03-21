@@ -17,14 +17,12 @@
 import * as React from "react";
 
 import { storiesOf } from "@storybook/react";
-
-
+import { Switch, Route, RouteComponentProps } from "react-router";
 
 import IndexVolumes from "./IndexVolumes";
 
-
-import { Switch, Route, RouteComponentProps } from "react-router";
 import IndexVolumeEditor from "./IndexVolumeEditor";
+import { addThemedStories } from "../../testing/storybook/themedStoryGenerator";
 
 const IndexVolumeGroupsWithRouter = () => (
   <Switch>
@@ -39,6 +37,6 @@ const IndexVolumeGroupsWithRouter = () => (
   </Switch>
 );
 
-storiesOf("Sections/Index Volumes", module)
-  
-  .add("Index Volumes", () => <IndexVolumeGroupsWithRouter />);
+const stories = storiesOf("Sections/Index Volumes", module);
+
+addThemedStories(stories, () => <IndexVolumeGroupsWithRouter />);

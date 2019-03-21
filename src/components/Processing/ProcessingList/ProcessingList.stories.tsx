@@ -17,7 +17,7 @@ const TestHarness = () => {
   useEffect(fetchTrackers, [fetchTrackers]);
 
   return (
-    <div>
+    <div className="fill-space">
       <ProcessingList
         streamTasksApi={streamTasksApi}
         onSelectionChanged={setSelectedTracker}

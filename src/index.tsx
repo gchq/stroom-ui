@@ -17,6 +17,7 @@ import createHistory from "history/createBrowserHistory";
 import { ConfigProvider } from "./startup/config";
 export const history = createHistory();
 
+import "react-table/react-table.css";
 import "./styles/main.css";
 
 const DndRoutes = compose(DragDropContext(HTML5Backend))(Routes);

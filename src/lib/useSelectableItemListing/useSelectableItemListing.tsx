@@ -5,7 +5,41 @@ import { SelectionBehaviour } from "./enums";
 
 const defaultPreFocusWrap = () => true;
 
-function useSelectableItemListing<TItem>({
+interface UseFocusChanged<T> {
+  items: Array<T>;
+  focusIndex: number;
+  direction: number;
+  setFocusIndex: (f: number) => void;
+  setFocussedItem: (i: T | undefined) => void;
+  preFocusWrap: () => boolean;
+}
+
+const useFocusChanged = <T extends {}>({
+  items,
+  focusIndex,
+  direction,
+  setFocusIndex,
+  setFocussedItem,
+  preFocusWrap
+}: UseFocusChanged<T>) =>
+  useCallback(() => {
+    let nextIndex = 0;
+    if (focusIndex !== -1) {
+      nextIndex = (items.length + (focusIndex + direction)) % items.length;
+    }
+
+    // If the next index is less than the current focus index, when we tried to
+    // go 'down' the listing, it means we are trying to wrap. We should check that
+    // wrapping will be permitted.
+    let allowWrap = nextIndex > focusIndex || direction < 0 || preFocusWrap();
+
+    if (allowWrap) {
+      setFocusIndex(nextIndex);
+      setFocussedItem(items[nextIndex]);
+    }
+  }, [items, focusIndex, direction, setFocussedItem, preFocusWrap]);
+
+const useSelectableItemListing = <TItem extends {}>({
   getKey,
   items,
   openItem,
@@ -13,7 +47,7 @@ function useSelectableItemListing<TItem>({
   goBack,
   selectionBehaviour = SelectionBehaviour.NONE,
   preFocusWrap = defaultPreFocusWrap
-}: InProps<TItem>): OutProps<TItem> {
+}: InProps<TItem>): OutProps<TItem> => {
   const keyIsDown = useKeyIsDown();
 
   // I think some of these state things should be recalculated in the event of
@@ -31,24 +65,22 @@ function useSelectableItemListing<TItem>({
     new Set()
   );
 
-  const focusChanged = (direction: number) => () => {
-    let nextIndex = 0;
-    if (focusIndex !== -1) {
-      nextIndex = (items.length + (focusIndex + direction)) % items.length;
-    }
-
-    // If the next index is less than the current focus index, when we tried to
-    // go 'down' the listing, it means we are trying to wrap. We should check that
-    // wrapping will be permitted.
-    let allowWrap = nextIndex > focusIndex || direction < 0 || preFocusWrap();
-
-    if (allowWrap) {
-      setFocusIndex(nextIndex);
-      setFocussedItem(items[nextIndex]);
-    }
-  };
-  const focusUp = focusChanged(-1);
-  const focusDown = focusChanged(+1);
+  const focusUp = useFocusChanged({
+    items,
+    focusIndex,
+    setFocusIndex,
+    preFocusWrap,
+    setFocussedItem,
+    direction: -1
+  });
+  const focusDown = useFocusChanged({
+    items,
+    focusIndex,
+    setFocusIndex,
+    preFocusWrap,
+    setFocussedItem,
+    direction: +1
+  });
 
   const clearSelection = useCallback(() => {
     setSelectedItems([]);
@@ -164,6 +196,6 @@ function useSelectableItemListing<TItem>({
     keyIsDown,
     onKeyDownWithShortcuts
   };
-}
+};
 
 export default useSelectableItemListing;

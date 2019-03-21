@@ -55,6 +55,8 @@ const ProcessingContainer = () => {
     setSelectedTracker(undefined);
   }, [setSelectedTracker]);
 
+  console.log("Selected Tracker", selectedTracker);
+
   const enableToggleSelected = useCallback(() => {
     if (!!selectedTracker && !!selectedTracker.filterId) {
       enableToggle(selectedTracker.filterId);
@@ -80,7 +82,7 @@ const ProcessingContainer = () => {
   }, [fetchTrackers, resetPaging]);
 
   return (
-    <div className="processing__container">
+    <div className="processing__container fill-space">
       <div className="processing__header-container">
         <IconHeader icon="play" text="Processing" />
         <input

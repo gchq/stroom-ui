@@ -44,7 +44,7 @@ const HorizontalMainDetails = ({
     };
   }, []);
 
-  return isOpen ? (
+  return (
     <PanelGroup
       direction="column"
       panelWidths={[
@@ -65,15 +65,15 @@ const HorizontalMainDetails = ({
       }}
     >
       {mainContent}
-      <HorizontalPanel
-        title={title}
-        headerMenuItems={headerMenuItems}
-        content={detailContent}
-        onClose={onClose}
-      />
+      {isOpen && (
+        <HorizontalPanel
+          title={title}
+          headerMenuItems={headerMenuItems}
+          content={detailContent}
+          onClose={onClose}
+        />
+      )}
     </PanelGroup>
-  ) : (
-    <React.Fragment>{mainContent}</React.Fragment>
   );
 };
 

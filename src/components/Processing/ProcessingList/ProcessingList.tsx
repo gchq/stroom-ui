@@ -19,7 +19,6 @@ import { useCallback, useMemo, useEffect } from "react";
 import { Progress } from "react-sweet-progress";
 import "react-sweet-progress/lib/style.css";
 import ReactTable, { RowInfo, SortingRule } from "react-table";
-import "react-table/react-table.css";
 
 import Button from "../../../components/Button";
 import {
@@ -128,6 +127,7 @@ const ProcessingList = ({ streamTasksApi, onSelectionChanged }: Props) => {
     }
   );
 
+  console.log("Re-rendering the list", selectedItem);
   useEffect(() => onSelectionChanged(selectedItem), [
     selectedItem,
     onSelectionChanged
@@ -150,8 +150,8 @@ const ProcessingList = ({ streamTasksApi, onSelectionChanged }: Props) => {
   return (
     <ReactTable
       manual
-      className="table__reactTable"
       sortable
+      className="tracker-table"
       showPagination={false}
       pageSize={pageSize + 1}
       {...tableProps}

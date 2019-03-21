@@ -57,7 +57,7 @@ const IndexVolumeGroups = () => {
   }, [selectedGroups, goToIndexVolumeGroup]);
 
   return (
-    <div>
+    <div className="fill-space">
       <IconHeader text="Index Volume Groups" icon="database" />
 
       <Button text="Create" onClick={showNewDialog} />
