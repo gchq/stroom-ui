@@ -16,7 +16,6 @@
 
 import * as React from "react";
 import { useEffect, useCallback, useState } from "react";
-import PanelGroup from "react-panelgroup";
 
 import IconHeader from "../../components/IconHeader";
 import { useStreamTasks } from "../../api/streamTasks";
@@ -24,6 +23,7 @@ import ProcessingList from "./ProcessingList";
 import { StreamTaskType } from "src/types";
 import ProcessingDetails from "./ProcessingDetails";
 import ProcessingSearchHelp from "./ProcessingSearchHelp";
+import HorizontalMainDetails from "../HorizontalMainDetails";
 
 const ProcessingContainer = () => {
   const streamTasksApi = useStreamTasks();
@@ -51,6 +51,9 @@ const ProcessingContainer = () => {
   const [selectedTracker, setSelectedTracker] = useState<
     StreamTaskType | undefined
   >(undefined);
+  const onClearSelection = useCallback(() => {
+    setSelectedTracker(undefined);
+  }, [setSelectedTracker]);
 
   const enableToggleSelected = useCallback(() => {
     if (!!selectedTracker && !!selectedTracker.filterId) {
@@ -88,16 +91,24 @@ const ProcessingContainer = () => {
         />
         <ProcessingSearchHelp />
       </div>
-      <PanelGroup direction="column">
-        <ProcessingList
-          streamTasksApi={streamTasksApi}
-          onSelectionChanged={setSelectedTracker}
-        />
-        <ProcessingDetails
-          tracker={selectedTracker}
-          enableToggle={enableToggleSelected}
-        />
-      </PanelGroup>
+      <HorizontalMainDetails
+        storageKey="processing"
+        title="Processing Details"
+        isOpen={!!selectedTracker}
+        onClose={onClearSelection}
+        mainContent={
+          <ProcessingList
+            streamTasksApi={streamTasksApi}
+            onSelectionChanged={setSelectedTracker}
+          />
+        }
+        detailContent={
+          <ProcessingDetails
+            tracker={selectedTracker}
+            enableToggle={enableToggleSelected}
+          />
+        }
+      />
     </div>
   );
 };

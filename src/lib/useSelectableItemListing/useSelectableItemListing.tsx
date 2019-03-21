@@ -37,7 +37,10 @@ function useSelectableItemListing<TItem>({
       nextIndex = (items.length + (focusIndex + direction)) % items.length;
     }
 
-    let allowWrap = nextIndex > focusIndex || preFocusWrap();
+    // If the next index is less than the current focus index, when we tried to
+    // go 'down' the listing, it means we are trying to wrap. We should check that
+    // wrapping will be permitted.
+    let allowWrap = nextIndex > focusIndex || direction < 0 || preFocusWrap();
 
     if (allowWrap) {
       setFocusIndex(nextIndex);
@@ -146,7 +149,7 @@ function useSelectableItemListing<TItem>({
 
   const selectedItem: TItem | undefined =
     selectedItems.length > 0 && !!lastSelectedIndex
-      ? selectedItems[lastSelectedIndex]
+      ? items[lastSelectedIndex]
       : undefined;
 
   return {
@@ -154,7 +157,7 @@ function useSelectableItemListing<TItem>({
     focussedItem,
     lastSelectedIndex,
     selectedItems,
-    selectedItem: selectedItem,
+    selectedItem,
     selectedItemIndexes,
     toggleSelection,
     clearSelection,

@@ -48,6 +48,13 @@ const ProcessingList = ({ streamTasksApi, onSelectionChanged }: Props) => {
     fetchParameters: { pageSize }
   } = streamTasksApi;
 
+  // We add an empty 'load more' row, but we need to make sure it's not there when we re-render.
+  const allRecordsRetrieved = totalTrackers === trackers.length;
+
+  const retrievalStave = allRecordsRetrieved
+    ? "All rows loaded"
+    : "Load more rows";
+
   const tableColumns = [
     {
       Header: "",
@@ -58,19 +65,21 @@ const ProcessingList = ({ streamTasksApi, onSelectionChanged }: Props) => {
       Header: "Pipeline name",
       accessor: "pipelineName",
       Cell: (row: RowInfo) =>
-        row.original.filterId ? row.original.pipelineName : "UNKNOWN"
+        row.original.filterId !== undefined
+          ? row.original.pipelineName
+          : "UNKNOWN"
     },
     {
       Header: "Priority",
       accessor: "priority",
       Cell: (row: RowInfo) =>
-        row.original.filterId ? (
+        row.original.filterId !== undefined ? (
           row.original.priority
         ) : (
           <Button
             disabled={allRecordsRetrieved}
             className="border hoverable processing-list__load-more-button"
-            onClick={() => onHandleLoadMoreRows()}
+            onClick={fetchMore}
             text={retrievalStave}
           />
         )
@@ -79,9 +88,9 @@ const ProcessingList = ({ streamTasksApi, onSelectionChanged }: Props) => {
       Header: "Progress",
       accessor: "progress",
       Cell: (row: RowInfo) =>
-        row.original.filterId ? (
+        row.original.filterId !== undefined ? (
           <Progress
-            percent={row.original.progress}
+            percent={row.original.trackerPercent}
             symbolClassName="flat-text"
           />
         ) : (
@@ -98,11 +107,21 @@ const ProcessingList = ({ streamTasksApi, onSelectionChanged }: Props) => {
     [trackers]
   );
 
+  const preFocusWrap = useCallback((): boolean => {
+    if (totalTrackers === trackers.length) {
+      return true;
+    } else {
+      fetchMore();
+      return false;
+    }
+  }, [totalTrackers, trackers]);
+
   const { tableProps, selectedItem } = useSelectableReactTable<StreamTaskType>(
     {
       items: tableData,
       getKey: t => `${t.filterId}`,
-      selectionBehaviour: SelectionBehaviour.SINGLE
+      selectionBehaviour: SelectionBehaviour.SINGLE,
+      preFocusWrap
     },
     {
       columns: tableColumns
@@ -113,23 +132,6 @@ const ProcessingList = ({ streamTasksApi, onSelectionChanged }: Props) => {
     selectedItem,
     onSelectionChanged
   ]);
-
-  // TODO - Figure out how to replicate this continuous loading thing
-  // const onMoveSelection = useCallback(
-  //   (direction: Directions) => {
-  //     const currentIndex = trackers.findIndex(
-  //       (tracker: StreamTaskType) => tracker.filterId === selectedTrackerId
-  //     );
-  //     const isAtEndOfList = currentIndex === trackers.length - 1;
-  //     const isAtEndOfEverything = currentIndex === totalTrackers - 1;
-  //     if (isAtEndOfList && !isAtEndOfEverything) {
-  //       fetchMore();
-  //     } else {
-  //       moveSelection(direction);
-  //     }
-  //   },
-  //   [fetchMore, moveSelection, selectedTrackerId]
-  // );
 
   const onHandleSort = useCallback(
     (sort: SortingRule) => {
@@ -144,14 +146,6 @@ const ProcessingList = ({ streamTasksApi, onSelectionChanged }: Props) => {
     },
     [fetchTrackers, updateSort]
   );
-  const onHandleLoadMoreRows = fetchMore;
-
-  // We add an empty 'load more' row, but we need to make sure it's not there when we re-render.
-  const allRecordsRetrieved = totalTrackers === trackers.length;
-
-  const retrievalStave = allRecordsRetrieved
-    ? "All rows loaded"
-    : "Load more rows";
 
   return (
     <ReactTable

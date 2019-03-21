@@ -262,8 +262,10 @@ const maximalTracker_withLongName = {
   updatedOn: 87934234234
 };
 
-export const generateGenericTracker = (filterId: number): StreamTaskType => ({
-  filterId,
+let nextFilterId = 0;
+
+export const generateGenericTracker = (): StreamTaskType => ({
+  filterId: nextFilterId++,
   enabled: true,
   pipelineId: 1,
   pipelineName: loremIpsum(LOREM_CONFIG as any),

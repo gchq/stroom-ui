@@ -275,13 +275,40 @@ const AppChrome = ({ content }: Props) => {
           isActive: !!location && location.pathname.includes("/s/me")
         },
         {
-          key: "admin-user-permissions",
-          title: "User Authorisation",
-          onClick: goToAuthorisationManager,
-          icon: "users",
+          key: "adminPermissions",
+          title: "Permissions",
+          icon: "key",
           style: "nav",
-          isActive:
-            !!location && location.pathname.includes("/s/authorisationManager")
+          onClick: useCallback(
+            () =>
+              menuItemOpened(
+                "adminPermissions",
+                !areMenuItemsOpen.adminPermissions
+              ),
+            [menuItemOpened, areMenuItemsOpen]
+          ),
+          children: [
+            {
+              key: "admin-user-permissions",
+              title: "Users",
+              onClick: goToAuthorisationManager,
+              icon: "user",
+              style: "nav",
+              isActive:
+                !!location &&
+                location.pathname.includes("/s/authorisationManager")
+            },
+            {
+              key: "admin-group-permissions",
+              title: "Groups",
+              onClick: goToAuthorisationManager,
+              icon: "users",
+              style: "nav",
+              isActive:
+                !!location &&
+                location.pathname.includes("/s/authorisationManager")
+            }
+          ]
         },
         {
           key: "admin-users",
