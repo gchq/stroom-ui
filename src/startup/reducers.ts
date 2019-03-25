@@ -32,29 +32,17 @@ import {
   reducer as folderExplorer,
   StoreState as FolderExplorerStoreState
 } from "../api/explorer";
-import {
-  reducer as debuggers,
-  StoreState as DebuggersStoreState
-} from "../components/PipelineDebugger";
-import {
-  reducer as docRefEditors,
-  StoreState as DocRefEditorStoreState
-} from "../components/DocRefEditor";
 
 export interface GlobalStoreState {
   errorPage: ErrorPageState;
   authentication: AuthenticationStoreState;
   authorisation: AuthorisationStoreState;
   folderExplorer: FolderExplorerStoreState;
-  debuggers: DebuggersStoreState;
-  docRefEditors: DocRefEditorStoreState;
 }
 
 export default combineReducers({
   errorPage,
   authentication,
   authorisation,
-  folderExplorer,
-  debuggers,
-  docRefEditors
+  folderExplorer
 });

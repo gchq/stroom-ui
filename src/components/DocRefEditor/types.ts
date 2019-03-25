@@ -1,28 +1,21 @@
-import { StateById } from "../../lib/redux-actions-ts";
 import { ButtonProps } from "../Button";
+import { DocumentApi } from "../../api/documentApi";
 
-export interface StoreStateById {
-  isDirty: boolean;
-  isSaving: boolean;
-  docRefContents?: object;
-}
-
-export type StoreState = StateById<StoreStateById>;
-
-export interface DocRefEditorBaseProps<T> {
-  saveDocument?: (docRefContents: T) => void;
+export interface DocRefEditorProps<T> {
   docRefUuid: string;
   additionalActionBarItems?: Array<ButtonProps>;
-}
-
-export interface DocRefEditorProps<T> extends DocRefEditorBaseProps<T> {
+  onClickSave?: () => void;
   isDirty: boolean;
-  isSaving: boolean;
+  docRefContents?: T;
   children?: React.ReactNode;
 }
 
+export interface UseDocRefEditorPropsIn<T extends object> {
+  docRefUuid: string;
+  documentApi?: DocumentApi<T>;
+}
+
 export interface UseDocRefEditorProps<T extends object> {
-  docRefContents?: T;
   editorProps: DocRefEditorProps<T>;
   onDocumentChange: (updates: Partial<T>) => void;
 }

@@ -1,5 +1,4 @@
 import * as React from "react";
-import { useEffect } from "react";
 
 import Loader from "../Loader";
 import DocRefEditor, { useDocRefEditor } from "../DocRefEditor";
@@ -14,18 +13,13 @@ const DictionaryEditor: React.FunctionComponent<Props> = ({
   dictionaryUuid
 }: Props) => {
   // Get data from and subscribe to the store
-  const { fetchDocument, saveDocument } = useApi();
+  const documentApi = useApi();
 
-  useEffect(() => {
-    fetchDocument(dictionaryUuid);
-  }, [fetchDocument, dictionaryUuid]);
-
-  const { docRefContents, onDocumentChange, editorProps } = useDocRefEditor<
-    Dictionary
-  >({
+  const { onDocumentChange, editorProps } = useDocRefEditor<Dictionary>({
     docRefUuid: dictionaryUuid,
-    saveDocument
+    documentApi
   });
+  const { docRefContents } = editorProps;
 
   if (!docRefContents) {
     return <Loader message={`Loading Dictionary ${dictionaryUuid}`} />;

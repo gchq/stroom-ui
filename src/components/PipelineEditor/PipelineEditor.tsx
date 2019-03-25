@@ -43,8 +43,9 @@ const PipelineEditor = ({ pipelineId }: Props) => {
   const piplineStateProps = usePipelineState(pipelineId);
   const {
     pipelineEditApi,
-    useEditorProps: { docRefContents: pipeline, editorProps }
+    useEditorProps: { editorProps }
   } = piplineStateProps;
+  const { docRefContents: pipeline } = editorProps;
 
   const {
     settingsUpdated,

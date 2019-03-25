@@ -14,20 +14,14 @@
  * limitations under the License.
  */
 import { useCallback } from "react";
-import { useActionCreators } from "../../components/DocRefEditor";
 import useHttpClient from "../useHttpClient";
 import { XsltDoc } from "../../types";
 import { useConfig } from "../../startup/config";
+import { DocumentApi } from "../documentApi";
 
-interface Api {
-  fetchDocument: (uuid: string) => void;
-  saveDocument: (document: XsltDoc) => void;
-}
-
-export const useApi = (): Api => {
+export const useApi = (): DocumentApi<XsltDoc> => {
   const { stroomBaseServiceUrl } = useConfig();
   const { httpGetJson, httpPostEmptyResponse } = useHttpClient();
-  const { documentReceived, documentSaved } = useActionCreators();
 
   const fetchDocument = useCallback(
     (uuid: string) =>
@@ -36,7 +30,7 @@ export const useApi = (): Api => {
           Accept: "application/xml",
           "Content-Type": "application/xml"
         }
-      }).then((document: XsltDoc) => documentReceived(uuid, document)),
+      }),
     [stroomBaseServiceUrl, httpGetJson]
   );
 
@@ -48,8 +42,8 @@ export const useApi = (): Api => {
           Accept: "application/xml",
           "Content-Type": "application/xml"
         }
-      }).then(() => documentSaved(xslt.uuid)),
-    [stroomBaseServiceUrl, httpPostEmptyResponse, documentSaved]
+      }),
+    [stroomBaseServiceUrl, httpPostEmptyResponse]
   );
 
   return {

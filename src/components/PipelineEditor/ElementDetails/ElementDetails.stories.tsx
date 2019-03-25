@@ -18,7 +18,6 @@ import { useEffect } from "react";
 
 import { storiesOf } from "@storybook/react";
 
-
 import ElementDetails from "./ElementDetails";
 
 import { fullTestData } from "../../../testing/data";
@@ -37,7 +36,9 @@ const TestElementDetails = ({
 }: Props) => {
   const {
     pipelineEditApi,
-    useEditorProps: { docRefContents }
+    useEditorProps: {
+      editorProps: { docRefContents }
+    }
   } = usePipelineState(pipelineId);
   useEffect(() => {
     pipelineEditApi.elementSelected(testElementId, testElementConfig);

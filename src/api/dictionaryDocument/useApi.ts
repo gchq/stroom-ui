@@ -15,39 +15,29 @@
  */
 import { useCallback } from "react";
 import { useConfig } from "../../startup/config";
-import { useActionCreators } from "../../components/DocRefEditor";
 import useHttpClient from "../useHttpClient";
 import { Dictionary } from "../../types";
+import { DocumentApi } from "../documentApi";
 
-interface Api {
-  fetchDocument: (dictionaryUuid: string) => void;
-  saveDocument: (document: Dictionary) => void;
-}
-
-export const useApi = (): Api => {
+export const useApi = (): DocumentApi<Dictionary> => {
   const { stroomBaseServiceUrl } = useConfig();
   const { httpGetJson, httpPostEmptyResponse } = useHttpClient();
-  const { documentReceived, documentSaved } = useActionCreators();
 
   return {
     fetchDocument: useCallback(
-      (dictionaryUuid: string) => {
-        httpGetJson(
-          `${stroomBaseServiceUrl}/dictionary/v1/${dictionaryUuid}`
-        ).then(d => documentReceived(dictionaryUuid, d));
-      },
-      [httpGetJson, documentReceived]
+      (dictionaryUuid: string) =>
+        httpGetJson(`${stroomBaseServiceUrl}/dictionary/v1/${dictionaryUuid}`),
+      [httpGetJson]
     ),
     saveDocument: useCallback(
-      (docRefContents: Dictionary) => {
+      (docRefContents: Dictionary) =>
         httpPostEmptyResponse(
           `${stroomBaseServiceUrl}/dictionary/v1/${docRefContents.uuid}`,
           {
             body: docRefContents
           }
-        ).then(() => documentSaved(docRefContents.uuid));
-      },
-      [httpPostEmptyResponse, documentSaved]
+        ),
+      [httpPostEmptyResponse]
     )
   };
 };

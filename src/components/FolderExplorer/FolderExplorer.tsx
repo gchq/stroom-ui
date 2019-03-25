@@ -170,8 +170,7 @@ const FolderExplorer = ({ folderUuid }: Props) => {
   }
 
   const { editorProps: folderEditorProps } = useDocRefEditor({
-    docRefUuid: folderUuid,
-    additionalActionBarItems
+    docRefUuid: folderUuid
   });
 
   if (!folder) {
@@ -181,7 +180,10 @@ const FolderExplorer = ({ folderUuid }: Props) => {
   const { node, lineage } = folder;
 
   return (
-    <DocRefEditor {...folderEditorProps}>
+    <DocRefEditor
+      {...folderEditorProps}
+      additionalActionBarItems={additionalActionBarItems}
+    >
       <div tabIndex={0} onKeyDown={onKeyDownWithShortcuts}>
         {node &&
           node.children &&

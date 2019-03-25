@@ -41,7 +41,9 @@ export const Pipeline = ({
   const {
     asTree,
     pipelineEditApi,
-    useEditorProps: { docRefContents: pipeline }
+    useEditorProps: {
+      editorProps: { docRefContents: pipeline }
+    }
   } = pipelineStateProps;
   const { elementDefinitions, elementProperties } = useElements();
 

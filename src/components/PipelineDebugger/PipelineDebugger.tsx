@@ -21,10 +21,8 @@ import Button from "../Button";
 import { Pipeline } from "../PipelineEditor";
 import Loader from "../Loader";
 
-import { useActionCreators } from "./redux";
 import DebuggerStep from "./DebuggerStep";
 import { getNext, getPrevious } from "./pipelineDebugger.utils";
-import useReduxState from "../../lib/useReduxState";
 import { useApi as usePipelineApi } from "../../api/pipelineDocument";
 import usePipelineState from "../PipelineEditor/usePipelineState";
 
@@ -34,21 +32,21 @@ interface Props {
 }
 
 const PipelineDebugger = ({ pipelineId, debuggerId }: Props) => {
-  const { startDebugging } = useActionCreators();
-  const { fetchPipeline } = usePipelineApi();
-  const debuggers = useReduxState(({ debuggers }) => debuggers);
+  const { fetchDocument: fetchPipeline } = usePipelineApi();
+  const debuggers = {};
   const debuggerState = debuggers[debuggerId];
   const pipelineStateProps = usePipelineState(pipelineId);
   const {
     pipelineEditApi: { selectedElementId, elementSelected },
-    useEditorProps: { docRefContents: pipeline },
+    useEditorProps: {
+      editorProps: { docRefContents: pipeline }
+    },
     asTree
   } = pipelineStateProps;
 
   useEffect(() => {
     fetchPipeline(pipelineId);
-    startDebugging(debuggerId, pipelineId);
-  }, [fetchPipeline, startDebugging, pipelineId, debuggerId]);
+  }, [fetchPipeline, pipelineId, debuggerId]);
 
   if (!debuggerState) {
     return <Loader message="Loading pipeline..." />;

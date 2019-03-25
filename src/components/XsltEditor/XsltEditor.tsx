@@ -15,7 +15,6 @@
  */
 
 import * as React from "react";
-import { useEffect } from "react";
 
 import DocRefEditor, { useDocRefEditor } from "../DocRefEditor";
 import Loader from "../Loader";
@@ -28,17 +27,14 @@ interface Props {
 }
 
 const XsltEditor = ({ xsltUuid }: Props) => {
-  const { fetchDocument, saveDocument } = useApi();
-  useEffect(() => {
-    fetchDocument(xsltUuid);
-  }, [xsltUuid, fetchDocument]);
+  const documentApi = useApi();
 
-  const { docRefContents, onDocumentChange, editorProps } = useDocRefEditor<
-    XsltDoc
-  >({
+  const { onDocumentChange, editorProps } = useDocRefEditor<XsltDoc>({
     docRefUuid: xsltUuid,
-    saveDocument
+    documentApi
   });
+
+  const { docRefContents } = editorProps;
 
   if (!docRefContents) {
     return <Loader message="Loading XSLT..." />;

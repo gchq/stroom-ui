@@ -15,7 +15,7 @@
  */
 
 import * as React from "react";
-import { useEffect, useCallback } from "react";
+import { useCallback } from "react";
 
 import DocRefEditor, { useDocRefEditor } from "../DocRefEditor";
 import Loader from "../Loader";
@@ -35,18 +35,14 @@ interface Props {
 }
 
 const IndexEditor = ({ indexUuid }: Props) => {
-  const { fetchDocument, saveDocument } = useIndexApi();
+  const documentApi = useIndexApi();
 
-  useEffect(() => {
-    fetchDocument(indexUuid);
-  }, [fetchDocument, indexUuid]);
-
-  const { docRefContents, editorProps, onDocumentChange } = useDocRefEditor<
-    IndexDoc
-  >({
+  const { editorProps, onDocumentChange } = useDocRefEditor<IndexDoc>({
     docRefUuid: indexUuid,
-    saveDocument
+    documentApi
   });
+
+  const { docRefContents } = editorProps;
 
   const { componentProps } = useFieldsTable(
     docRefContents && docRefContents.data ? docRefContents.data.fields : []

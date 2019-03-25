@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState, useCallback } from "react";
+import { useMemo, useState, useCallback } from "react";
 
 import { useApi as usePipelineApi } from "../../api/pipelineDocument";
 import { useDocRefEditor } from "../DocRefEditor";
@@ -15,11 +15,7 @@ import {
 import { PipelineEditApi, PipelineProps } from "./types";
 
 export const usePipelineState = (pipelineId: string): PipelineProps => {
-  const { fetchPipeline, savePipeline } = usePipelineApi();
-
-  useEffect(() => {
-    fetchPipeline(pipelineId);
-  }, [pipelineId]);
+  const documentApi = usePipelineApi();
 
   const [selectedElementId, setSelectedElementId] = useState<
     string | undefined
@@ -28,10 +24,13 @@ export const usePipelineState = (pipelineId: string): PipelineProps => {
 
   const useEditorProps = useDocRefEditor({
     docRefUuid: pipelineId,
-    saveDocument: savePipeline
+    documentApi
   });
 
-  const { docRefContents, onDocumentChange } = useEditorProps;
+  const {
+    editorProps: { docRefContents },
+    onDocumentChange
+  } = useEditorProps;
   const asTree = useMemo(() => getPipelineAsTree(docRefContents), [
     docRefContents
   ]);

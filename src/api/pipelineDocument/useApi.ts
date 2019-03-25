@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { useActionCreators as useDocRefActionCreators } from "../../components/DocRefEditor";
 import useHttpClient from "../useHttpClient";
 import {
   PipelineModelType,
@@ -22,10 +21,9 @@ import {
 } from "../../types";
 import { useCallback } from "react";
 import { useConfig } from "../../startup/config";
+import { DocumentApi } from "../documentApi";
 
-interface Api {
-  fetchPipeline: (pipelineId: string) => void;
-  savePipeline: (document: PipelineModelType) => void;
+interface Api extends DocumentApi<PipelineModelType> {
   searchPipelines: (
     fetchParams: PipelineSearchCriteriaType
   ) => Promise<PipelineSearchResultType>;
@@ -34,31 +32,20 @@ interface Api {
 export const useApi = (): Api => {
   const { stroomBaseServiceUrl } = useConfig();
   const { httpGetJson, httpPostEmptyResponse } = useHttpClient();
-  const {
-    documentReceived,
-    documentSaveRequested,
-    documentSaved
-  } = useDocRefActionCreators();
 
   return {
-    fetchPipeline: useCallback(
-      (pipelineId: string) => {
-        httpGetJson(`${stroomBaseServiceUrl}/pipelines/v1/${pipelineId}`).then(
-          (pipeline: PipelineModelType) =>
-            documentReceived(pipelineId, pipeline)
-        );
-      },
+    fetchDocument: useCallback(
+      (pipelineId: string) =>
+        httpGetJson(`${stroomBaseServiceUrl}/pipelines/v1/${pipelineId}`),
       [stroomBaseServiceUrl, httpGetJson]
     ),
-    savePipeline: useCallback(
-      (document: PipelineModelType) => {
-        documentSaveRequested(document.docRef.uuid);
+    saveDocument: useCallback(
+      (document: PipelineModelType) =>
         httpPostEmptyResponse(
           `${stroomBaseServiceUrl}/pipelines/v1/${document.docRef.uuid}`,
           { body: JSON.stringify(document) }
-        ).then(() => documentSaved(document.docRef.uuid));
-      },
-      [stroomBaseServiceUrl, httpPostEmptyResponse, documentSaveRequested]
+        ),
+      [stroomBaseServiceUrl, httpPostEmptyResponse]
     ),
     searchPipelines: useCallback(
       ({ filter, pageSize, pageOffset }: PipelineSearchCriteriaType) => {

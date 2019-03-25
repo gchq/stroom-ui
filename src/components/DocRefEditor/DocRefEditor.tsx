@@ -1,16 +1,12 @@
 import * as React from "react";
-import { useCallback } from "react";
+import { useCallback, useEffect, useState } from "react";
 
-import useReduxState from "../../lib/useReduxState";
-import { defaultStatePerId } from "./redux";
 import {
-  StoreStateById,
   UseDocRefEditorProps,
   DocRefEditorProps,
-  DocRefEditorBaseProps
+  UseDocRefEditorPropsIn
 } from "./types";
 
-import { useActionCreators } from "./redux";
 import AppSearchBar from "../AppSearchBar";
 import DocRefIconHeader from "../DocRefIconHeader";
 import DocRefBreadcrumb from "../DocRefBreadcrumb";
@@ -18,13 +14,15 @@ import Button, { ButtonProps } from "../Button";
 import { DocRefConsumer } from "../../types";
 import { useDocRefWithLineage } from "../../api/explorer";
 import useRouter from "../../lib/useRouter";
+import { DocumentApi } from "../../api/documentApi";
 
-const DocRefEditor = function<T>({
-  saveDocument,
+const DocRefEditor = <T extends {}>({
+  onClickSave,
   children,
   docRefUuid,
-  additionalActionBarItems
-}: DocRefEditorProps<T>) {
+  additionalActionBarItems,
+  isDirty
+}: DocRefEditorProps<T>) => {
   const router = useRouter();
   const { node: docRef } = useDocRefWithLineage(docRefUuid);
 
@@ -38,23 +36,12 @@ const DocRefEditor = function<T>({
     [router, docRef]
   );
 
-  const { isDirty, isSaving, docRefContents }: StoreStateById = useReduxState(
-    ({ docRefEditors }) => docRefEditors[docRefUuid] || defaultStatePerId,
-    [docRefUuid]
-  );
-
-  const onClickSave = useCallback(() => {
-    if (!!docRefContents && saveDocument) {
-      saveDocument((docRefContents as unknown) as T);
-    }
-  }, [saveDocument, docRefContents]);
-
   const actionBarItems: Array<ButtonProps> = [];
-  if (!!saveDocument) {
+  if (!!onClickSave) {
     actionBarItems.push({
       icon: "save",
-      disabled: !(isDirty || isSaving),
-      title: isSaving ? "Saving..." : isDirty ? "Save" : "Saved",
+      disabled: !isDirty,
+      title: isDirty ? "Save" : "Saved",
       onClick: onClickSave
     });
   }
@@ -94,27 +81,52 @@ const DocRefEditor = function<T>({
 
 export function useDocRefEditor<T extends object>({
   docRefUuid,
-  saveDocument
-}: DocRefEditorBaseProps<T>): UseDocRefEditorProps<T> {
-  const { documentChangesMade } = useActionCreators();
-
-  const { isDirty, isSaving, docRefContents }: StoreStateById = useReduxState(
-    ({ docRefEditors }) => docRefEditors[docRefUuid] || defaultStatePerId,
-    [docRefUuid]
+  documentApi
+}: UseDocRefEditorPropsIn<T>): UseDocRefEditorProps<T> {
+  const [isDirty, setIsDirty] = useState<boolean>(false);
+  const [docRefContents, setDocRefContents] = useState<T | undefined>(
+    undefined
   );
 
+  const fetchDocument:
+    | DocumentApi<T>["fetchDocument"]
+    | undefined = !!documentApi ? documentApi.fetchDocument : undefined;
+
+  useEffect(() => {
+    if (!!fetchDocument) {
+      fetchDocument(docRefUuid).then(d => {
+        setDocRefContents(d);
+        setIsDirty(false);
+      });
+    }
+  }, [fetchDocument, setDocRefContents, setIsDirty, docRefUuid]);
+
+  const onClickSave = useCallback(() => {
+    if (!!docRefContents && documentApi && !!documentApi.saveDocument) {
+      documentApi.saveDocument((docRefContents as unknown) as T).then(() => {
+        setIsDirty(false);
+      });
+    }
+  }, [documentApi ? documentApi.saveDocument : undefined, docRefContents]);
+
   return {
-    docRefContents: !!docRefContents
-      ? ((docRefContents as unknown) as T)
-      : undefined,
     onDocumentChange: useCallback(
-      (updates: Partial<T>) => documentChangesMade(docRefUuid, updates),
-      [documentChangesMade, docRefUuid]
+      (updates: Partial<T>) => {
+        if (!!docRefContents) {
+          setDocRefContents({ ...docRefContents, ...updates });
+          setIsDirty(true);
+        } else {
+          console.error("No existing doc ref contents to merge in");
+        }
+      },
+      [docRefContents, setIsDirty, setDocRefContents]
     ),
     editorProps: {
       isDirty,
-      isSaving,
-      saveDocument,
+      docRefContents: !!docRefContents
+        ? ((docRefContents as unknown) as T)
+        : undefined,
+      onClickSave: !!documentApi ? onClickSave : undefined,
       docRefUuid
     }
   };
