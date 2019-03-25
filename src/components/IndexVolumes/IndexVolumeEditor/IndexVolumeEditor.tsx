@@ -6,9 +6,9 @@ import Button from "../../../components/Button";
 import useRouter from "../../../lib/useRouter";
 import { useIndexVolume } from "../../../api/indexVolume";
 import {
-  useTable as useIndexVolumeGroupsTable,
-  IndexVolumeGroupsTable
-} from "../../IndexVolumeGroups/IndexVolumeGroupsTable";
+  useTable as useIndexVolumeGroupNamesTable,
+  IndexVolumeGroupNamesTable
+} from "../../IndexVolumeGroups/IndexVolumeGroupNamesTable";
 import {
   useIndexVolumeGroupModalPicker,
   IndexVolumeGroupModalPicker
@@ -25,11 +25,16 @@ interface Props {
 const IndexVolumeEditor = ({ volumeId }: Props) => {
   const { history } = useRouter();
 
-  const { indexVolume, groups, addToGroup, removeFromGroup } = useIndexVolume(
-    volumeId
-  );
+  const {
+    indexVolume,
+    groupNames,
+    addToGroup,
+    removeFromGroup
+  } = useIndexVolume(volumeId);
 
-  const { componentProps: tableProps } = useIndexVolumeGroupsTable(groups);
+  const { componentProps: tableProps } = useIndexVolumeGroupNamesTable(
+    groupNames
+  );
 
   const {
     selectableTableProps: { selectedItems }
@@ -39,14 +44,12 @@ const IndexVolumeEditor = ({ volumeId }: Props) => {
     showDialog: showRemoveDialog,
     componentProps: removeDialogProps
   } = useConfirmDialog({
-    onConfirm: useCallback(
-      () => selectedItems.forEach(g => removeFromGroup(g.name)),
-      [selectedItems, removeFromGroup]
-    ),
+    onConfirm: useCallback(() => selectedItems.forEach(removeFromGroup), [
+      selectedItems,
+      removeFromGroup
+    ]),
     getQuestion: useCallback(() => "Remove volume from selected groups?", []),
-    getDetails: useCallback(() => selectedItems.map(s => s.name).join(", "), [
-      selectedItems.map(s => s.name)
-    ])
+    getDetails: useCallback(() => selectedItems.join(", "), [selectedItems])
   });
 
   const {
@@ -79,7 +82,7 @@ const IndexVolumeEditor = ({ volumeId }: Props) => {
 
       <h2>Group Memberships</h2>
       <IndexVolumeGroupModalPicker {...indexVolumeGroupPickerProps} />
-      <IndexVolumeGroupsTable {...tableProps} />
+      <IndexVolumeGroupNamesTable {...tableProps} />
     </div>
   );
 };

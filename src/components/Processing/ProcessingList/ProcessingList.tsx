@@ -127,7 +127,6 @@ const ProcessingList = ({ streamTasksApi, onSelectionChanged }: Props) => {
     }
   );
 
-  console.log("Re-rendering the list", selectedItem);
   useEffect(() => onSelectionChanged(selectedItem), [
     selectedItem,
     onSelectionChanged

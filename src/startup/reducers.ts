@@ -57,14 +57,6 @@ import {
   StoreState as DebuggersStoreState
 } from "../components/PipelineDebugger";
 import {
-  reducer as indexVolumeGroups,
-  StoreState as IndexVolumeGroupStoreState
-} from "../api/indexVolumeGroup";
-import {
-  reducer as indexVolumes,
-  StoreState as IndexVolumeStoreState
-} from "../api/indexVolume";
-import {
   reducer as docRefEditors,
   StoreState as DocRefEditorStoreState
 } from "../components/DocRefEditor";
@@ -79,8 +71,6 @@ export interface GlobalStoreState {
   pipelineEditor: PipelineEditorStoreState;
   debuggers: DebuggersStoreState;
   userGroups: UserGroupStoreState;
-  indexVolumeGroups: IndexVolumeGroupStoreState;
-  indexVolumes: IndexVolumeStoreState;
   docRefEditors: DocRefEditorStoreState;
   elements: ElementStoreState;
 }
@@ -95,8 +85,6 @@ export default combineReducers({
   pipelineEditor,
   debuggers,
   userGroups,
-  indexVolumeGroups,
-  indexVolumes,
   docRefEditors,
   elements
 });

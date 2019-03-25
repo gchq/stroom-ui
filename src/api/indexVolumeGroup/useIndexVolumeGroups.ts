@@ -1,8 +1,6 @@
-import { useEffect, useCallback } from "react";
+import { useEffect, useCallback, useReducer } from "react";
 
-import { useActionCreators } from "./redux";
 import useApi from "./useApi";
-import useReduxState from "../../lib/useReduxState";
 import { IndexVolumeGroup } from "../../types";
 
 interface UseIndexVolumeGroups {
@@ -11,13 +9,38 @@ interface UseIndexVolumeGroups {
   deleteIndexVolumeGroup: (name: string) => void;
 }
 
+type Received = {
+  type: "received";
+  groups: Array<IndexVolumeGroup>;
+};
+type Created = {
+  type: "created";
+  group: IndexVolumeGroup;
+};
+type Deleted = {
+  type: "deleted";
+  groupName: string;
+};
+
+const reducer = (
+  state: Array<IndexVolumeGroup>,
+  action: Received | Created | Deleted
+): Array<IndexVolumeGroup> => {
+  switch (action.type) {
+    case "received":
+      return action.groups;
+    case "created":
+      return state.concat([action.group]);
+    case "deleted":
+      return state.filter(g => g.name !== action.groupName);
+  }
+
+  return state;
+};
+
 const useIndexVolumeGroups = (): UseIndexVolumeGroups => {
-  const {
-    indexVolumeGroupCreated,
-    indexVolumeGroupDeleted,
-    indexVolumeGroupsReceived
-  } = useActionCreators();
-  const groups = useReduxState(({ indexVolumeGroups: { groups } }) => groups);
+  const [groups, dispatch] = useReducer(reducer, []);
+
   const {
     createIndexVolumeGroup,
     deleteIndexVolumeGroup,
@@ -25,24 +48,26 @@ const useIndexVolumeGroups = (): UseIndexVolumeGroups => {
   } = useApi();
 
   useEffect(() => {
-    getIndexVolumeGroups().then(indexVolumeGroupsReceived);
+    getIndexVolumeGroups().then(groups =>
+      dispatch({ type: "received", groups })
+    );
   }, [getIndexVolumeGroups]);
 
   return {
     groups,
     createIndexVolumeGroup: useCallback(
-      (groupName: string) => {
-        createIndexVolumeGroup(groupName).then(indexVolumeGroupCreated);
-      },
-      [createIndexVolumeGroup]
+      (groupName: string) =>
+        createIndexVolumeGroup(groupName).then(group =>
+          dispatch({ type: "created", group })
+        ),
+      [groups, createIndexVolumeGroup]
     ),
     deleteIndexVolumeGroup: useCallback(
-      (groupName: string) => {
+      (groupName: string) =>
         deleteIndexVolumeGroup(groupName).then(() =>
-          indexVolumeGroupDeleted(groupName)
-        );
-      },
-      [deleteIndexVolumeGroup, indexVolumeGroupDeleted]
+          dispatch({ type: "deleted", groupName })
+        ),
+      [groups, deleteIndexVolumeGroup]
     )
   };
 };

@@ -1,20 +1,14 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
-import { useActionCreators } from "./redux";
 import useApi from "./useApi";
-import useReduxState from "../../lib/useReduxState";
 
 const useIndexVolumeGroupNames = (): Array<string> => {
+  const [groupNames, setGroupNames] = useState<Array<string>>([]);
   const { getIndexVolumeGroupNames } = useApi();
-  const { indexVolumeGroupNamesReceived } = useActionCreators();
 
   useEffect(() => {
-    getIndexVolumeGroupNames().then(indexVolumeGroupNamesReceived);
-  }, [getIndexVolumeGroupNames]);
-
-  const groupNames = useReduxState(
-    ({ indexVolumeGroups: { groupNames } }) => groupNames
-  );
+    getIndexVolumeGroupNames().then(setGroupNames);
+  }, [getIndexVolumeGroupNames, setGroupNames]);
 
   return groupNames;
 };

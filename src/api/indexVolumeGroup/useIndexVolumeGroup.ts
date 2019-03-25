@@ -1,12 +1,9 @@
-import { useEffect, useCallback } from "react";
+import { useEffect, useCallback, useState } from "react";
 
 import useApi from "./useApi";
-import { useActionCreators } from "./redux";
 import { useApi as useIndexVolumeApi } from "../indexVolume/useApi";
-import { useActionCreators as useVolumeActionCreators } from "../indexVolume/redux";
 
-import useReduxState from "../../lib/useReduxState";
-import { IndexVolume, IndexVolumeGroup } from "src/types";
+import { IndexVolume, IndexVolumeGroup } from "../../types";
 
 interface UseIndexVolumeGroup {
   indexVolumes: Array<IndexVolume>;
@@ -15,43 +12,27 @@ interface UseIndexVolumeGroup {
 }
 
 const useIndexVolumeGroup = (groupName: string): UseIndexVolumeGroup => {
+  const [indexVolumes, setIndexVolumes] = useState<Array<IndexVolume>>([]);
+  const [indexVolumeGroup, setIndexVolumeGroup] = useState<
+    IndexVolumeGroup | undefined
+  >(undefined);
+
   const { getIndexVolumeGroup } = useApi();
   const { getIndexVolumesInGroup, removeVolumeFromGroup } = useIndexVolumeApi();
-  const { indexVolumeGroupReceived } = useActionCreators();
-  const { indexVolumesInGroupReceived } = useVolumeActionCreators();
-  const { indexVolumesByGroup, groups } = useReduxState(
-    ({
-      indexVolumeGroups: { groups },
-      indexVolumes: { indexVolumesByGroup }
-    }) => ({
-      groups,
-      indexVolumesByGroup
-    })
-  );
 
   useEffect(() => {
-    getIndexVolumeGroup(groupName).then(indexVolumeGroupReceived);
-    getIndexVolumesInGroup(groupName).then(v =>
-      indexVolumesInGroupReceived(groupName, v)
-    );
+    getIndexVolumeGroup(groupName).then(setIndexVolumeGroup);
+    getIndexVolumesInGroup(groupName).then(setIndexVolumes);
   }, [
     groupName,
     getIndexVolumeGroup,
-    indexVolumeGroupReceived,
+    setIndexVolumeGroup,
     getIndexVolumesInGroup,
-    indexVolumesInGroupReceived
+    setIndexVolumes
   ]);
 
-  const indexVolumes = indexVolumesByGroup[groupName] || [];
-
-  const indexVolumeGroup: IndexVolumeGroup | undefined = groups.find(
-    g => g.name === groupName
-  );
-
   const removeVolume = useCallback(
-    (volumeId: string) => {
-      removeVolumeFromGroup(volumeId, groupName);
-    },
+    (volumeId: string) => removeVolumeFromGroup(volumeId, groupName),
     [groupName, removeVolumeFromGroup]
   );
 

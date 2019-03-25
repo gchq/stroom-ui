@@ -1,69 +1,82 @@
-import { useEffect, useCallback } from "react";
+import { useEffect, useCallback, useState, useReducer } from "react";
 
 import useApi from "./useApi";
 import { IndexVolumeGroup, IndexVolume } from "../../types";
-import { useActionCreators } from "./redux";
-import useReduxState from "../../lib/useReduxState";
 
 interface UseIndexVolume {
   indexVolume: IndexVolume | undefined;
-  groups: Array<IndexVolumeGroup>;
+  groupNames: Array<string>;
   addToGroup: (groupName: string) => void;
   removeFromGroup: (groupName: string) => void;
 }
 
+type GroupsReceived = {
+  type: "received";
+  groups: Array<IndexVolumeGroup>;
+};
+type GroupAdded = {
+  type: "added";
+  groupName: string;
+};
+type GroupRemoved = {
+  type: "removed";
+  groupName: string;
+};
+
+const groupNamesReducer = (
+  state: Array<string>,
+  action: GroupsReceived | GroupAdded | GroupRemoved
+): Array<string> => {
+  switch (action.type) {
+    case "received":
+      return action.groups.map(g => g.name);
+    case "added":
+      return state.concat([action.groupName]);
+    case "removed":
+      return state.filter(g => g !== action.groupName);
+  }
+
+  return state;
+};
+
 const useIndexVolume = (volumeId: string): UseIndexVolume => {
+  const [indexVolume, setIndexVolume] = useState<IndexVolume | undefined>(
+    undefined
+  );
+  const [groupNames, dispatchGroupNames] = useReducer(groupNamesReducer, []);
+
   const {
     getIndexVolumeById,
     getGroupsForIndexVolume,
     addVolumeToGroup,
     removeVolumeFromGroup
   } = useApi();
-  const { indexVolumes, groupsByIndexVolume } = useReduxState(
-    ({ indexVolumes: { indexVolumes, groupsByIndexVolume } }) => ({
-      indexVolumes,
-      groupsByIndexVolume
-    })
-  );
-
-  const {
-    indexVolumeReceived,
-    indexGroupsForVolumeReceived,
-    indexVolumeAddedToGroup,
-    indexVolumeRemovedFromGroup
-  } = useActionCreators();
 
   useEffect(() => {
-    getIndexVolumeById(volumeId).then(indexVolumeReceived);
+    getIndexVolumeById(volumeId).then(setIndexVolume);
     getGroupsForIndexVolume(volumeId).then(groups =>
-      indexGroupsForVolumeReceived(volumeId, groups)
+      dispatchGroupNames({ type: "received", groups })
     );
-  }, [volumeId, getGroupsForIndexVolume, indexGroupsForVolumeReceived]);
-
-  const indexVolume: IndexVolume | undefined = indexVolumes.find(
-    v => v.id === volumeId
-  );
-
-  const groups = groupsByIndexVolume[volumeId] || [];
+  }, [volumeId, getIndexVolumeById, setIndexVolume, getGroupsForIndexVolume]);
 
   const addToGroup = useCallback(
     (groupName: string) => {
-      addVolumeToGroup(volumeId, groupName).then(() => {
-        indexVolumeAddedToGroup(volumeId, groupName);
-      });
+      addVolumeToGroup(volumeId, groupName).then(() =>
+        dispatchGroupNames({ type: "added", groupName })
+      );
     },
-    [volumeId, addVolumeToGroup, indexVolumeAddedToGroup]
+    [volumeId, addVolumeToGroup]
   );
   const removeFromGroup = useCallback(
     (groupName: string) => {
-      removeVolumeFromGroup(volumeId, groupName).then(() => {
-        indexVolumeRemovedFromGroup(volumeId, groupName);
-      });
+      removeVolumeFromGroup(volumeId, groupName).then(() =>
+        dispatchGroupNames({ type: "removed", groupName })
+      );
     },
-    [volumeId, removeVolumeFromGroup, indexVolumeRemovedFromGroup]
+    [volumeId, removeVolumeFromGroup]
   );
 
-  return { indexVolume, groups, addToGroup, removeFromGroup };
+  return { indexVolume, groupNames, addToGroup, removeFromGroup };
 };
 
 export default useIndexVolume;

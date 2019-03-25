@@ -1,9 +1,7 @@
-import { useEffect, useCallback } from "react";
+import { useEffect, useCallback, useReducer } from "react";
 
 import useApi from "./useApi";
-import { useActionCreators } from "./redux";
 import { IndexVolume } from "../../types";
-import useReduxState from "../../lib/useReduxState";
 
 /**
  * Convenience function for using Index Volume.
@@ -16,10 +14,38 @@ interface UseIndexVolumes {
   addVolumeToGroup: (indexVolumeId: string, groupName: string) => void;
 }
 
+type ReceiveAction = {
+  type: "received";
+  indexVolumes: Array<IndexVolume>;
+};
+type DeleteAction = {
+  type: "deleted";
+  id: string;
+};
+type CreateAction = {
+  type: "created";
+  indexVolume: IndexVolume;
+};
+
+const reducer = (
+  state: Array<IndexVolume>,
+  action: ReceiveAction | DeleteAction | CreateAction
+): Array<IndexVolume> => {
+  switch (action.type) {
+    case "received":
+      return action.indexVolumes;
+    case "created":
+      return state.concat([action.indexVolume]);
+    case "deleted":
+      return state.filter(v => v.id !== action.id);
+  }
+
+  return state;
+};
+
 const useIndexVolumes = (): UseIndexVolumes => {
-  const indexVolumes = useReduxState(
-    ({ indexVolumes: { indexVolumes } }) => indexVolumes
-  );
+  const [indexVolumes, dispatch] = useReducer(reducer, []);
+
   const {
     getIndexVolumes,
     deleteIndexVolume,
@@ -27,35 +53,41 @@ const useIndexVolumes = (): UseIndexVolumes => {
     createIndexVolume
   } = useApi();
 
-  const {
-    indexVolumesReceived,
-    indexVolumeDeleted,
-    indexVolumeCreated,
-    indexVolumeAddedToGroup
-  } = useActionCreators();
-
   useEffect(() => {
-    getIndexVolumes().then(indexVolumesReceived);
-  }, [indexVolumesReceived, getIndexVolumes]);
+    getIndexVolumes().then(v =>
+      dispatch({
+        type: "received",
+        indexVolumes: v
+      })
+    );
+  }, [dispatch, getIndexVolumes]);
 
   return {
     indexVolumes,
-    createIndexVolume: useCallback((nodeName: string, path: string) => {
-      createIndexVolume(nodeName, path).then(indexVolumeCreated);
-    }, []),
+    createIndexVolume: useCallback(
+      (nodeName: string, path: string) =>
+        createIndexVolume(nodeName, path).then(indexVolume =>
+          dispatch({
+            type: "created",
+            indexVolume
+          })
+        ),
+      [createIndexVolume]
+    ),
     deleteIndexVolume: useCallback(
-      (id: string) => {
-        deleteIndexVolume(id).then(() => indexVolumeDeleted(id));
-      },
+      (id: string) =>
+        deleteIndexVolume(id).then(() =>
+          dispatch({
+            type: "deleted",
+            id
+          })
+        ),
       [deleteIndexVolume]
     ),
     addVolumeToGroup: useCallback(
-      (volumeId: string, groupName: string) => {
-        addVolumeToGroup(volumeId, groupName).then(() =>
-          indexVolumeAddedToGroup(volumeId, groupName)
-        );
-      },
-      [addVolumeToGroup, indexVolumeAddedToGroup]
+      (volumeId: string, groupName: string) =>
+        addVolumeToGroup(volumeId, groupName),
+      [addVolumeToGroup]
     )
   };
 };
