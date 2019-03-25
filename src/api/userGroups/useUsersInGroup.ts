@@ -1,50 +1,46 @@
 import { useEffect, useCallback } from "react";
 
 import useApi from "./useApi";
-import { useActionCreators } from "./redux";
 import { User } from "../../types";
-import useReduxState from "../../lib/useReduxState";
+import useListReducer from "../../lib/useListReducer/useListReducer";
 
-interface UseUsersInGroup {
+interface UseGroupsForUser {
   users: Array<User>;
   addToGroup: (userUuid: string) => void;
-  removeFromGroup: (groupUuid: string) => void;
+  removeFromGroup: (userUuid: string) => void;
 }
 
-const useUsersInGroup = (group: User): UseUsersInGroup => {
-  const { findUsersInGroup, addUserToGroup, removeUserFromGroup } = useApi();
+const useGroupsForUser = (group: User): UseGroupsForUser => {
+  const {
+    items: users,
+    itemsReceived,
+    itemAdded,
+    itemRemoved
+  } = useListReducer<User>(u => u.uuid);
 
   const {
-    usersInGroupReceived,
-    userAddedToGroup,
-    userRemovedFromGroup
-  } = useActionCreators();
-  useEffect(() => {
-    findUsersInGroup(group.uuid).then((users: Array<User>) =>
-      usersInGroupReceived(group.uuid, users)
-    );
-  }, [group]);
+    findUsersInGroup,
+    addUserToGroup,
+    removeUserFromGroup,
+    fetchUser
+  } = useApi();
 
-  const { usersInGroup } = useReduxState(
-    ({ userGroups: { usersInGroup } }) => ({
-      usersInGroup
-    })
-  );
-  const users = usersInGroup[group.uuid] || [];
+  useEffect(() => {
+    findUsersInGroup(group.uuid).then(itemsReceived);
+  }, [group]);
 
   const addToGroup = useCallback(
     (userUuid: string) => {
-      addUserToGroup(userUuid, group.uuid).then(() =>
-        userAddedToGroup(userUuid, group.uuid)
-      );
+      addUserToGroup(userUuid, group.uuid)
+        .then(() => fetchUser(userUuid))
+        .then(itemAdded);
     },
-    [group, addUserToGroup]
+    [group, fetchUser, addUserToGroup]
   );
-
   const removeFromGroup = useCallback(
     (userUuid: string) => {
       removeUserFromGroup(userUuid, group.uuid).then(() =>
-        userRemovedFromGroup(userUuid, group.uuid)
+        itemRemoved(userUuid)
       );
     },
     [group, removeUserFromGroup]
@@ -57,4 +53,4 @@ const useUsersInGroup = (group: User): UseUsersInGroup => {
   };
 };
 
-export default useUsersInGroup;
+export default useGroupsForUser;

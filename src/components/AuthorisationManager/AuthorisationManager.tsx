@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useCallback } from "react";
 
-import { useManageUsers, useFindUsers } from "../../api/userGroups";
+import { useManageUsers } from "../../api/userGroups";
 import { IsGroup } from "../../api/userGroups";
 import IconHeader from "../../components/IconHeader";
 import UsersTable, { useTable } from "./UsersTable";
@@ -34,8 +34,13 @@ const defaultValues: Values = {
 
 const Authorisation = () => {
   const { goToAuthorisationsForUser } = useAppNavigation();
-  const { findUsers, users } = useFindUsers();
-  const { createUser, deleteUser, addUserToGroup } = useManageUsers();
+  const {
+    findUsers,
+    users,
+    createUser,
+    deleteUser,
+    addUserToGroup
+  } = useManageUsers();
 
   const { componentProps: tableProps } = useTable(users);
   const {

@@ -22,13 +22,9 @@ import { storiesOf } from "@storybook/react";
 
 import useManageUsers from "./useManageUsers";
 import Button from "../../components/Button";
-import useFindUsers from "./useFindUsers";
-
-
 
 const TestHarness = () => {
-  const { users } = useFindUsers();
-  const { createUser, deleteUser } = useManageUsers();
+  const { users, createUser, deleteUser } = useManageUsers();
 
   const onClickCreateUser = useCallback(() => {
     createUser(loremIpsum({ count: 1, units: "words" }), false);

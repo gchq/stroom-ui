@@ -29,10 +29,6 @@ import {
 } from "./Authentication";
 
 import {
-  reducer as userGroups,
-  StoreState as UserGroupStoreState
-} from "../api/userGroups";
-import {
   reducer as folderExplorer,
   StoreState as FolderExplorerStoreState
 } from "../api/explorer";
@@ -51,7 +47,6 @@ export interface GlobalStoreState {
   authorisation: AuthorisationStoreState;
   folderExplorer: FolderExplorerStoreState;
   debuggers: DebuggersStoreState;
-  userGroups: UserGroupStoreState;
   docRefEditors: DocRefEditorStoreState;
 }
 
@@ -61,6 +56,5 @@ export default combineReducers({
   authorisation,
   folderExplorer,
   debuggers,
-  userGroups,
   docRefEditors
 });

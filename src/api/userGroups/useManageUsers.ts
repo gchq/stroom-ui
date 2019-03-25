@@ -1,11 +1,12 @@
 import { useCallback } from "react";
 
 import useApi from "./useApi";
-import { useActionCreators } from "./redux";
 import { User } from "../../types";
 import { IsGroup } from "./types";
+import useListReducer from "../../lib/useListReducer";
 
 interface ManageUsers {
+  users: Array<User>;
   findUsers: (name?: string, isGroup?: IsGroup, uuid?: string) => void;
   addUserToGroup: (userUuid: string, groupUuid: string) => void;
   createUser: (name: string, isGroup: boolean) => Promise<User>;
@@ -13,32 +14,42 @@ interface ManageUsers {
 }
 
 const useManageUsers = (): ManageUsers => {
-  const { userCreated, userDeleted, userAddedToGroup } = useActionCreators();
+  const {
+    items: users,
+    itemAdded,
+    itemRemoved,
+    itemsReceived
+  } = useListReducer<User>(u => u.uuid);
+
   const { createUser, deleteUser, addUserToGroup, findUsers } = useApi();
 
   return {
-    findUsers,
+    users,
+    findUsers: useCallback(
+      (name, isGroup, uuid) => {
+        findUsers(name, isGroup, uuid).then(itemsReceived);
+      },
+      [findUsers, itemsReceived]
+    ),
     addUserToGroup: useCallback(
       (userUuid: string, groupUuid: string) => {
-        addUserToGroup(userUuid, groupUuid).then(() =>
-          userAddedToGroup(userUuid, groupUuid)
-        );
+        addUserToGroup(userUuid, groupUuid); // no immediate feedback here...
       },
-      [addUserToGroup, userAddedToGroup]
+      [addUserToGroup]
     ),
     createUser: useCallback(
       (name: string, isGroup: boolean) => {
         let p = createUser(name, isGroup);
-        p.then(userCreated);
+        p.then(itemAdded);
         return p;
       },
-      [createUser, userCreated]
+      [createUser, itemAdded]
     ),
     deleteUser: useCallback(
       (userUuid: string) => {
-        deleteUser(userUuid).then(() => userDeleted(userUuid));
+        deleteUser(userUuid).then(() => itemRemoved(userUuid));
       },
-      [userDeleted, deleteUser]
+      [itemRemoved, deleteUser]
     )
   };
 };

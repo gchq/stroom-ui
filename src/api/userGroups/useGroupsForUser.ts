@@ -1,9 +1,8 @@
 import { useEffect, useCallback } from "react";
 
 import useApi from "./useApi";
-import { useActionCreators } from "./redux";
 import { User } from "../../types";
-import useReduxState from "../../lib/useReduxState";
+import useListReducer from "../../lib/useListReducer/useListReducer";
 
 interface UseGroupsForUser {
   groups: Array<User>;
@@ -12,36 +11,36 @@ interface UseGroupsForUser {
 }
 
 const useGroupsForUser = (user: User): UseGroupsForUser => {
-  const { findGroupsForUser, addUserToGroup, removeUserFromGroup } = useApi();
+  const {
+    items: groups,
+    itemsReceived,
+    itemAdded,
+    itemRemoved
+  } = useListReducer<User>(g => g.uuid);
 
   const {
-    groupsForUserReceived,
-    userAddedToGroup,
-    userRemovedFromGroup
-  } = useActionCreators();
-  useEffect(() => {
-    findGroupsForUser(user.uuid).then((users: Array<User>) =>
-      groupsForUserReceived(user.uuid, users)
-    );
-  }, [user]);
+    findGroupsForUser,
+    addUserToGroup,
+    removeUserFromGroup,
+    fetchUser
+  } = useApi();
 
-  const groupsForUser = useReduxState(
-    ({ userGroups: { groupsForUser } }) => groupsForUser
-  );
-  const groups = groupsForUser[user.uuid] || [];
+  useEffect(() => {
+    findGroupsForUser(user.uuid).then(itemsReceived);
+  }, [user]);
 
   const addToGroup = useCallback(
     (groupUuid: string) => {
-      addUserToGroup(user.uuid, groupUuid).then(() =>
-        userAddedToGroup(user.uuid, groupUuid)
-      );
+      addUserToGroup(user.uuid, groupUuid)
+        .then(() => fetchUser(groupUuid))
+        .then(itemAdded);
     },
-    [user, addUserToGroup]
+    [user, fetchUser, addUserToGroup]
   );
   const removeFromGroup = useCallback(
     (groupUuid: string) => {
       removeUserFromGroup(user.uuid, groupUuid).then(() =>
-        userRemovedFromGroup(user.uuid, groupUuid)
+        itemRemoved(groupUuid)
       );
     },
     [user, removeUserFromGroup]

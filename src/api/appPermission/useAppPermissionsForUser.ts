@@ -1,6 +1,7 @@
-import { useEffect, useCallback, useReducer } from "react";
+import { useEffect, useCallback } from "react";
 
 import useApi from "./useApi";
+import useListReducer from "../../lib/useListReducer/useListReducer";
 
 /**
  * An API for managing the application permissions for a single user.
@@ -11,35 +12,6 @@ interface UserAppPermissionApi {
   removePermission: (permissionName: string) => void;
 }
 
-type Received = {
-  type: "received";
-  permissions: Array<string>;
-};
-type Added = {
-  type: "added";
-  permissionName: string;
-};
-type Removed = {
-  type: "removed";
-  permissionName: string;
-};
-
-const reducer = (
-  state: Array<string>,
-  action: Received | Added | Removed
-): Array<string> => {
-  switch (action.type) {
-    case "received":
-      return action.permissions;
-    case "added":
-      return state.concat([action.permissionName]);
-    case "removed":
-      return state.filter(p => p !== action.permissionName);
-  }
-
-  return state;
-};
-
 /**
  * Encapsulates the management of application permissions for a single user.
  * Presenting a simpler API that is hooked into the REST API and Redux.
@@ -47,7 +19,12 @@ const reducer = (
  * @param userUuid The UUID of the user or group
  */
 const useAppPermissionsForUser = (userUuid: string): UserAppPermissionApi => {
-  const [userAppPermissions, dispatch] = useReducer(reducer, []);
+  const {
+    items: userAppPermissions,
+    itemsReceived,
+    itemAdded,
+    itemRemoved
+  } = useListReducer<string>(g => g);
 
   const {
     getPermissionsForUser,
@@ -56,18 +33,13 @@ const useAppPermissionsForUser = (userUuid: string): UserAppPermissionApi => {
   } = useApi();
 
   useEffect(() => {
-    getPermissionsForUser(userUuid).then(permissions =>
-      dispatch({ type: "received", permissions })
-    );
+    getPermissionsForUser(userUuid).then(itemsReceived);
   }, [userUuid, getPermissionsForUser]);
 
   const addPermission = useCallback(
     (permissionName: string) =>
       addAppPermission(userUuid, permissionName).then(() =>
-        dispatch({
-          type: "added",
-          permissionName
-        })
+        itemAdded(permissionName)
       ),
     [userUuid, addAppPermission]
   );
@@ -75,10 +47,7 @@ const useAppPermissionsForUser = (userUuid: string): UserAppPermissionApi => {
   const removePermission = useCallback(
     (permissionName: string) =>
       removeAppPermission(userUuid, permissionName).then(() =>
-        dispatch({
-          type: "removed",
-          permissionName
-        })
+        itemRemoved(permissionName)
       ),
     [userUuid, removeAppPermission]
   );

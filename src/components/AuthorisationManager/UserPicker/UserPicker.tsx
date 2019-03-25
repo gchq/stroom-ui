@@ -3,7 +3,7 @@ import { useEffect, useState, useMemo } from "react";
 
 import Select from "react-select";
 
-import { useFindUsers } from "../../../api/userGroups";
+import { useManageUsers } from "../../../api/userGroups";
 import { SelectOptionType } from "../../../types";
 import { Props, BaseProps, UseProps } from "./types";
 
@@ -15,7 +15,7 @@ const UserPicker = ({
   isGroup,
   valuesToFilterOut = DEFAULT_USER_UUIDS_TO_FILTER_OUT
 }: Props) => {
-  const { findUsers, users } = useFindUsers();
+  const { findUsers, users } = useManageUsers();
   useEffect(() => {
     findUsers(undefined, isGroup, undefined);
   }, [findUsers]);

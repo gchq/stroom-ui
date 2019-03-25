@@ -1,7 +1,8 @@
-import { useEffect, useCallback, useState, useReducer } from "react";
+import { useEffect, useCallback, useState } from "react";
 
 import useApi from "./useApi";
-import { IndexVolumeGroup, IndexVolume } from "../../types";
+import { IndexVolume } from "../../types";
+import useListReducer from "../../lib/useListReducer/useListReducer";
 
 interface UseIndexVolume {
   indexVolume: IndexVolume | undefined;
@@ -10,40 +11,16 @@ interface UseIndexVolume {
   removeFromGroup: (groupName: string) => void;
 }
 
-type GroupsReceived = {
-  type: "received";
-  groups: Array<IndexVolumeGroup>;
-};
-type GroupAdded = {
-  type: "added";
-  groupName: string;
-};
-type GroupRemoved = {
-  type: "removed";
-  groupName: string;
-};
-
-const groupNamesReducer = (
-  state: Array<string>,
-  action: GroupsReceived | GroupAdded | GroupRemoved
-): Array<string> => {
-  switch (action.type) {
-    case "received":
-      return action.groups.map(g => g.name);
-    case "added":
-      return state.concat([action.groupName]);
-    case "removed":
-      return state.filter(g => g !== action.groupName);
-  }
-
-  return state;
-};
-
 const useIndexVolume = (volumeId: string): UseIndexVolume => {
   const [indexVolume, setIndexVolume] = useState<IndexVolume | undefined>(
     undefined
   );
-  const [groupNames, dispatchGroupNames] = useReducer(groupNamesReducer, []);
+  const {
+    items: groupNames,
+    itemAdded,
+    itemRemoved,
+    itemsReceived
+  } = useListReducer<string>(g => g);
 
   const {
     getIndexVolumeById,
@@ -55,22 +32,20 @@ const useIndexVolume = (volumeId: string): UseIndexVolume => {
   useEffect(() => {
     getIndexVolumeById(volumeId).then(setIndexVolume);
     getGroupsForIndexVolume(volumeId).then(groups =>
-      dispatchGroupNames({ type: "received", groups })
+      itemsReceived(groups.map(g => g.name))
     );
   }, [volumeId, getIndexVolumeById, setIndexVolume, getGroupsForIndexVolume]);
 
   const addToGroup = useCallback(
     (groupName: string) => {
-      addVolumeToGroup(volumeId, groupName).then(() =>
-        dispatchGroupNames({ type: "added", groupName })
-      );
+      addVolumeToGroup(volumeId, groupName).then(() => itemAdded(groupName));
     },
     [volumeId, addVolumeToGroup]
   );
   const removeFromGroup = useCallback(
     (groupName: string) => {
       removeVolumeFromGroup(volumeId, groupName).then(() =>
-        dispatchGroupNames({ type: "removed", groupName })
+        itemRemoved(groupName)
       );
     },
     [volumeId, removeVolumeFromGroup]

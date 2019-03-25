@@ -1,9 +1,8 @@
 import { useEffect, useMemo } from "react";
 
-import { useActionCreators } from "./redux";
 import useApi from "./useApi";
 import { User } from "../../types";
-import useReduxState from "../../lib/useReduxState";
+import useListReducer from "../../lib/useListReducer";
 
 /**
  * Use this to convert a list of users UUID's into a list of user objects.
@@ -12,9 +11,7 @@ import useReduxState from "../../lib/useReduxState";
  */
 const useUsers = (userUuids: Array<string>): Array<User> => {
   const { fetchUser } = useApi();
-  const { userReceived } = useActionCreators();
-
-  const allUsers = useReduxState(({ userGroups: { allUsers } }) => allUsers);
+  const { items: allUsers, itemAdded } = useListReducer<User>(u => u.uuid);
 
   const users = useMemo(
     () => allUsers.filter(u => userUuids.includes(u.uuid)),
@@ -27,9 +24,9 @@ const useUsers = (userUuids: Array<string>): Array<User> => {
     userUuids
       .filter(userUuid => !userUuidsFound.includes(userUuid))
       .forEach(userUuid => {
-        fetchUser(userUuid).then(userReceived);
+        fetchUser(userUuid).then(itemAdded);
       });
-  }, [userUuids, fetchUser, userReceived]);
+  }, [userUuids, fetchUser, itemAdded]);
 
   return users;
 };
