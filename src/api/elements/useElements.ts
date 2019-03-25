@@ -1,29 +1,43 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
-import { StoreState } from "./types";
 import useApi from "./useApi";
-import useReduxState from "../../lib/useReduxState";
-import { useActionCreators } from "./redux";
+import {
+  ElementDefinitions,
+  ElementPropertiesByElementIdType
+} from "../../types";
+
+interface UseElements {
+  elementDefinitions: ElementDefinitions;
+  elementProperties: ElementPropertiesByElementIdType;
+}
 
 /**
  * Convenience hook for using the Element Definitions and the Element Property Definitions
  * from the server. Handles the link between the REST API and the Redux state.
  */
-const useElements = (): StoreState => {
+const useElements = (): UseElements => {
   const { fetchElements, fetchElementProperties } = useApi();
-  const { elementsReceived, elementPropertiesReceived } = useActionCreators();
+  const [elementDefinitions, setElementDefinitions] = useState<
+    ElementDefinitions
+  >([]);
+  const [elementProperties, setElementProperties] = useState<
+    ElementPropertiesByElementIdType
+  >({});
 
   useEffect(() => {
-    fetchElements().then(elementsReceived);
-    fetchElementProperties().then(elementPropertiesReceived);
+    fetchElements().then(setElementDefinitions);
+    fetchElementProperties().then(setElementProperties);
   }, [
     fetchElements,
     fetchElementProperties,
-    elementsReceived,
-    elementPropertiesReceived
+    setElementDefinitions,
+    setElementProperties
   ]);
 
-  return useReduxState(({ elements }) => elements);
+  return {
+    elementDefinitions,
+    elementProperties
+  };
 };
 
 export default useElements;

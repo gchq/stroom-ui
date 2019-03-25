@@ -15,21 +15,20 @@
  */
 import { useActionCreators as useDocRefActionCreators } from "../../components/DocRefEditor";
 import useHttpClient from "../useHttpClient";
-import { PipelineModelType } from "../../types";
+import {
+  PipelineModelType,
+  PipelineSearchCriteriaType,
+  PipelineSearchResultType
+} from "../../types";
 import { useCallback } from "react";
-import { useActionCreators as useSearchActionCreators } from "./redux";
 import { useConfig } from "../../startup/config";
-
-interface FetchParams {
-  filter: string;
-  pageSize: number;
-  pageOffset: number;
-}
 
 interface Api {
   fetchPipeline: (pipelineId: string) => void;
   savePipeline: (document: PipelineModelType) => void;
-  searchPipelines: (fetchParams: FetchParams) => void;
+  searchPipelines: (
+    fetchParams: PipelineSearchCriteriaType
+  ) => Promise<PipelineSearchResultType>;
 }
 
 export const useApi = (): Api => {
@@ -40,7 +39,6 @@ export const useApi = (): Api => {
     documentSaveRequested,
     documentSaved
   } = useDocRefActionCreators();
-  const { pipelinesReceived } = useSearchActionCreators();
 
   return {
     fetchPipeline: useCallback(
@@ -63,7 +61,7 @@ export const useApi = (): Api => {
       [stroomBaseServiceUrl, httpPostEmptyResponse, documentSaveRequested]
     ),
     searchPipelines: useCallback(
-      ({ filter, pageSize, pageOffset }: FetchParams) => {
+      ({ filter, pageSize, pageOffset }: PipelineSearchCriteriaType) => {
         let url = `${stroomBaseServiceUrl}/pipelines/v1/?`;
 
         if (filter !== undefined && filter !== "") {
@@ -75,9 +73,9 @@ export const useApi = (): Api => {
         }
 
         const forceGet = true;
-        httpGetJson(url, {}, forceGet).then(pipelinesReceived);
+        return httpGetJson(url, {}, forceGet);
       },
-      [stroomBaseServiceUrl, httpGetJson, pipelinesReceived]
+      [stroomBaseServiceUrl, httpGetJson]
     )
   };
 };

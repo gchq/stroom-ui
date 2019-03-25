@@ -37,14 +37,6 @@ import {
   StoreState as FolderExplorerStoreState
 } from "../api/explorer";
 import {
-  reducer as pipelineEditor,
-  StoreState as PipelineEditorStoreState
-} from "../api/pipelineDocument";
-import {
-  reducer as elements,
-  StoreState as ElementStoreState
-} from "../api/elements";
-import {
   reducer as debuggers,
   StoreState as DebuggersStoreState
 } from "../components/PipelineDebugger";
@@ -58,11 +50,9 @@ export interface GlobalStoreState {
   authentication: AuthenticationStoreState;
   authorisation: AuthorisationStoreState;
   folderExplorer: FolderExplorerStoreState;
-  pipelineEditor: PipelineEditorStoreState;
   debuggers: DebuggersStoreState;
   userGroups: UserGroupStoreState;
   docRefEditors: DocRefEditorStoreState;
-  elements: ElementStoreState;
 }
 
 export default combineReducers({
@@ -70,9 +60,7 @@ export default combineReducers({
   authentication,
   authorisation,
   folderExplorer,
-  pipelineEditor,
   debuggers,
   userGroups,
-  docRefEditors,
-  elements
+  docRefEditors
 });
