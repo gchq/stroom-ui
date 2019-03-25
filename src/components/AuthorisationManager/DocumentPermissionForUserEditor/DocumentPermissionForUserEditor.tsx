@@ -24,7 +24,7 @@ export const DocumentPermissionForUserEditor = ({
   const user = useUser(userUuid);
   const permissionsForType = useDocTypePermissions(docRef.type);
   const {
-    permissions,
+    permissionNames,
     addPermission,
     removePermission
   } = useDocumentPermissionsForUser(docRefUuid, userUuid);
@@ -38,7 +38,7 @@ export const DocumentPermissionForUserEditor = ({
 
       <CheckboxSeries
         allValues={permissionsForType}
-        includedValues={permissions}
+        includedValues={permissionNames}
         addValue={addPermission}
         removeValue={removePermission}
       />

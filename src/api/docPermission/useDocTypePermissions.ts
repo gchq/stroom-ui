@@ -1,8 +1,6 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import useApi from "./useApi";
-import { useActionCreators } from "./redux";
-import useReduxState from "../../lib/useReduxState";
 
 /**
  * Encapsulates the behaviour required to fetch the list of valid permissions
@@ -11,21 +9,13 @@ import useReduxState from "../../lib/useReduxState";
 
 const useDocTypePermissions = (docType: string): Array<string> => {
   const { getPermissionForDocType } = useApi();
-  const { permissionNamesForDocTypeReceived } = useActionCreators();
-
-  const permissions = useReduxState(
-    ({ docPermissions: { permissionsByDocType } }) =>
-      permissionsByDocType[docType] || [],
-    [docType]
-  );
+  const [permissionNames, setPermissionNames] = useState<Array<string>>([]);
 
   useEffect(() => {
-    getPermissionForDocType(docType).then(permissions =>
-      permissionNamesForDocTypeReceived(docType, permissions)
-    );
-  }, [docType, getPermissionForDocType, permissionNamesForDocTypeReceived]);
+    getPermissionForDocType(docType).then(setPermissionNames);
+  }, [docType, getPermissionForDocType]);
 
-  return permissions;
+  return permissionNames;
 };
 
 export default useDocTypePermissions;

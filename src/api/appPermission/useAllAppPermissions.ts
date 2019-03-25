@@ -1,8 +1,6 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import useApi from "./useApi";
-import { useActionCreators } from "./redux";
-import useReduxState from "../../lib/useReduxState";
 
 /**
  * Encapsulates the retrieval of all application permissions.
@@ -12,16 +10,13 @@ import useReduxState from "../../lib/useReduxState";
  * @param userUuid The UUID of the user or group
  */
 const useAllAppPermissions = (): Array<string> => {
-  const { allAppPermissionsReceived } = useActionCreators();
+  const [allAppPermissions, setAllAppPermissions] = useState<Array<string>>([]);
   const { getAllPermissionNames } = useApi();
 
   useEffect(() => {
-    getAllPermissionNames().then(allAppPermissionsReceived);
-  }, [getAllPermissionNames, allAppPermissionsReceived]);
+    getAllPermissionNames().then(setAllAppPermissions);
+  }, [getAllPermissionNames, setAllAppPermissions]);
 
-  const allAppPermissions = useReduxState(
-    ({ appPermissions: { allAppPermissions } }) => allAppPermissions
-  );
   return allAppPermissions;
 };
 

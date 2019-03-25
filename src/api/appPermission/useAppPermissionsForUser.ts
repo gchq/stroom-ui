@@ -1,8 +1,6 @@
-import { useEffect, useCallback } from "react";
+import { useEffect, useCallback, useReducer } from "react";
 
 import useApi from "./useApi";
-import { useActionCreators } from "./redux";
-import useReduxState from "../../lib/useReduxState";
 
 /**
  * An API for managing the application permissions for a single user.
@@ -13,6 +11,35 @@ interface UserAppPermissionApi {
   removePermission: (permissionName: string) => void;
 }
 
+type Received = {
+  type: "received";
+  permissions: Array<string>;
+};
+type Added = {
+  type: "added";
+  permissionName: string;
+};
+type Removed = {
+  type: "removed";
+  permissionName: string;
+};
+
+const reducer = (
+  state: Array<string>,
+  action: Received | Added | Removed
+): Array<string> => {
+  switch (action.type) {
+    case "received":
+      return action.permissions;
+    case "added":
+      return state.concat([action.permissionName]);
+    case "removed":
+      return state.filter(p => p !== action.permissionName);
+  }
+
+  return state;
+};
+
 /**
  * Encapsulates the management of application permissions for a single user.
  * Presenting a simpler API that is hooked into the REST API and Redux.
@@ -20,11 +47,8 @@ interface UserAppPermissionApi {
  * @param userUuid The UUID of the user or group
  */
 const useAppPermissionsForUser = (userUuid: string): UserAppPermissionApi => {
-  const {
-    userAppPermissionsReceived,
-    userAppPermissionAdded,
-    userAppPermissionRemoved
-  } = useActionCreators();
+  const [userAppPermissions, dispatch] = useReducer(reducer, []);
+
   const {
     getPermissionsForUser,
     addAppPermission,
@@ -32,32 +56,31 @@ const useAppPermissionsForUser = (userUuid: string): UserAppPermissionApi => {
   } = useApi();
 
   useEffect(() => {
-    getPermissionsForUser(userUuid).then(p =>
-      userAppPermissionsReceived(userUuid, p)
+    getPermissionsForUser(userUuid).then(permissions =>
+      dispatch({ type: "received", permissions })
     );
-  }, [userUuid, getPermissionsForUser, userAppPermissionsReceived]);
-
-  const userAppPermissions = useReduxState(
-    ({ appPermissions: { userAppPermissions } }) =>
-      userAppPermissions[userUuid] || []
-  );
+  }, [userUuid, getPermissionsForUser]);
 
   const addPermission = useCallback(
-    (permissionName: string) => {
+    (permissionName: string) =>
       addAppPermission(userUuid, permissionName).then(() =>
-        userAppPermissionAdded(userUuid, permissionName)
-      );
-    },
-    [userUuid, userAppPermissionAdded, addAppPermission]
+        dispatch({
+          type: "added",
+          permissionName
+        })
+      ),
+    [userUuid, addAppPermission]
   );
 
   const removePermission = useCallback(
-    (permissionName: string) => {
+    (permissionName: string) =>
       removeAppPermission(userUuid, permissionName).then(() =>
-        userAppPermissionRemoved(userUuid, permissionName)
-      );
-    },
-    [userUuid, userAppPermissionRemoved, removeAppPermission]
+        dispatch({
+          type: "removed",
+          permissionName
+        })
+      ),
+    [userUuid, removeAppPermission]
   );
 
   return {
