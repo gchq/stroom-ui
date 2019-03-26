@@ -11,10 +11,9 @@ import AppSearchBar from "../AppSearchBar";
 import DocRefIconHeader from "../DocRefIconHeader";
 import DocRefBreadcrumb from "../DocRefBreadcrumb";
 import Button, { ButtonProps } from "../Button";
-import { DocRefConsumer } from "../../types";
-import useRouter from "../../lib/useRouter";
 import { DocumentApi } from "../../api/documentApi";
 import { useDocumentTree } from "../../api/explorer";
+import useAppNavigation from "../AppChrome/useAppNavigation";
 
 const DocRefEditor = <T extends {}>({
   onClickSave,
@@ -23,21 +22,16 @@ const DocRefEditor = <T extends {}>({
   additionalActionBarItems,
   isDirty
 }: DocRefEditorProps<T>) => {
-  const router = useRouter();
+  const { goToAuthorisationsForDocument, goToEditDocRef } = useAppNavigation();
   const { findDocRefWithLineage } = useDocumentTree();
   const { node: docRef } = useMemo(() => findDocRefWithLineage(docRefUuid), [
     findDocRefWithLineage,
     docRefUuid
   ]);
 
-  const openDocRef: DocRefConsumer = useCallback(
-    d => router.history!.push(`/s/doc/${d.uuid}`),
-    [router]
-  );
   const openDocRefPermissions = useCallback(
-    () =>
-      router.history!.push(`/s/authorisationManager/document/${docRefUuid}`),
-    [router, docRef]
+    () => goToAuthorisationsForDocument(docRefUuid),
+    [goToAuthorisationsForDocument, docRefUuid]
   );
 
   const actionBarItems: Array<ButtonProps> = [];
@@ -57,7 +51,10 @@ const DocRefEditor = <T extends {}>({
 
   return (
     <div className="DocRefEditor">
-      <AppSearchBar className="DocRefEditor__searchBar" onChange={openDocRef} />
+      <AppSearchBar
+        className="DocRefEditor__searchBar"
+        onChange={goToEditDocRef}
+      />
 
       <DocRefIconHeader
         docRefType={docRef.type}
@@ -68,7 +65,7 @@ const DocRefEditor = <T extends {}>({
       <DocRefBreadcrumb
         className="DocRefEditor__breadcrumb"
         docRefUuid={docRef.uuid}
-        openDocRef={openDocRef}
+        openDocRef={goToEditDocRef}
       />
 
       <div className="DocRefEditor__actionButtons">
