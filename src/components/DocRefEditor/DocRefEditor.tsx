@@ -31,7 +31,7 @@ const DocRefEditor = <T extends {}>({
   ]);
 
   const openDocRef: DocRefConsumer = useCallback(
-    d => router.history!.push(`/s/doc/${d.type}/${d.uuid}`),
+    d => router.history!.push(`/s/doc/${d.uuid}`),
     [router]
   );
   const openDocRefPermissions = useCallback(
