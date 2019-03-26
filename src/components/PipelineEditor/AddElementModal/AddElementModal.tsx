@@ -4,7 +4,7 @@ import { useState, useMemo, useCallback } from "react";
 import IconHeader from "../../IconHeader";
 import Button from "../../Button";
 import ThemedModal from "../../ThemedModal";
-// import { required, minLength2 } from "../../lib/reduxUtils";
+// import { required, minLength2 } from "../../lib/formUtils";
 import { ElementDefinition } from "../../../types";
 import useForm from "../../../lib/useForm";
 import { Props, OnAddElement, UseDialog } from "./types";

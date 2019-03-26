@@ -19,7 +19,7 @@ import { useState, useMemo, useCallback } from "react";
 import DialogActionButtons from "../../DialogActionButtons";
 import IconHeader from "../../IconHeader";
 import ThemedModal from "../../ThemedModal";
-// import { required, minLength2 } from "../../lib/reduxUtils";
+// import { required, minLength2 } from "../../lib/formUtils";
 import { DocRefType } from "../../../types";
 import useForm from "../../../lib/useForm";
 

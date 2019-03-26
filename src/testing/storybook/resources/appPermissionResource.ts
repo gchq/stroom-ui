@@ -3,7 +3,7 @@ import { HttpRequest, HttpResponse } from "@pollyjs/adapter-fetch";
 import { TestCache } from "../PollyDecorator";
 import { Config } from "../../../startup/config";
 import { ResourceBuilder } from "./types";
-import { onlyUnique } from "../../../lib/reduxUtils";
+import { onlyUnique } from "../../../lib/formUtils";
 
 const resourceBuilder: ResourceBuilder = (
   server: any,

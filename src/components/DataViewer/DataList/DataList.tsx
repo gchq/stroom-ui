@@ -26,7 +26,6 @@ import * as React from "react";
 
 // import useStreamAttributeMapApi from "../../../api/streamAttributeMap/useApi";
 // import useDataApi from "../../../api/data/useApi";
-// import { useActionCreators, defaultStatePerId } from "../../../api/data/redux";
 
 // import Loader from "../../../components/Loader";
 // import Button from "../../../components/Button";

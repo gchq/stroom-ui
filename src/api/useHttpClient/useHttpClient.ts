@@ -1,20 +1,14 @@
 import { useCallback } from "react";
 
-import { useActionCreators as useErrorActionCreators } from "../../components/ErrorPage";
+import { useErrorReporting } from "../../components/ErrorPage";
 
 import handleStatus from "./handleStatus";
 import useAppNavigation from "../../components/AppChrome/useAppNavigation";
 import { useAuthenticationContext } from "../../startup/Authentication";
 
 /**
- * A wrapper around fetch that can be used to de-duplicate GET calls to the same resources.
- * It also allows us to track all the URL's which are being requested from remote servers so that we can
- * add a status bar to the UI to indicate how the requests are going.
- *
- * @param {function} dispatch The redux dispatch funciton
- * @param {object} state The current redux state
- * @param {string} url The URL to fetch
- * @param {function} successCallback The function to call with the response if successful. Failures will be handled generically
+ * A wrapper around HTTP fetch that allows us to plop in idTokens, CORS specifications,
+ * and general common stuff like that.
  */
 
 type HttpCall = (
@@ -48,12 +42,20 @@ let cache = {};
 
 export const useHttpClient = (): HttpClient => {
   const { idToken } = useAuthenticationContext();
-  const {
-    setErrorMessage,
-    setHttpErrorCode,
-    setStackTrace
-  } = useErrorActionCreators();
+  const { reportError } = useErrorReporting();
   const { goToError } = useAppNavigation();
+
+  const catchImpl = useCallback(
+    (error: any) => {
+      reportError({
+        errorMessage: error.message,
+        stackTrace: error.stack,
+        httpErrorCode: error.status
+      });
+      goToError();
+    },
+    [reportError, goToError]
+  );
 
   const httpGetJson = useCallback(
     <T>(
@@ -78,19 +80,14 @@ export const useHttpClient = (): HttpClient => {
         })
           .then(handleStatus)
           .then(r => r.json())
-          .catch(error => {
-            setErrorMessage(error.message);
-            setStackTrace(error.stack);
-            setHttpErrorCode(error.status);
-            goToError();
-          });
+          .catch(catchImpl);
       }
 
       return cache[url];
 
       // console.groupEnd();
     },
-    [setErrorMessage, setHttpErrorCode, setStackTrace]
+    [catchImpl]
   );
 
   const useFetchWithBodyAndJsonResponse = (method: string) =>
@@ -116,14 +113,9 @@ export const useHttpClient = (): HttpClient => {
         })
           .then(handleStatus)
           .then(r => r.json())
-          .catch(error => {
-            setErrorMessage(error.message);
-            setStackTrace(error.stack);
-            setHttpErrorCode(error.status);
-            goToError();
-          });
+          .catch(catchImpl);
       },
-      [setErrorMessage, setStackTrace, setHttpErrorCode]
+      [catchImpl]
     );
 
   const useFetchWithBodyAndEmptyResponse = (method: string) =>
@@ -148,14 +140,9 @@ export const useHttpClient = (): HttpClient => {
         })
           .then(handleStatus)
           .then(r => r.text())
-          .catch(error => {
-            setErrorMessage(error.message);
-            setStackTrace(error.stack);
-            setHttpErrorCode(error.status);
-            goToError();
-          });
+          .catch(catchImpl);
       },
-      [setErrorMessage, setStackTrace, setHttpErrorCode]
+      [catchImpl]
     );
 
   return {

@@ -1,27 +1,4 @@
 {
-  "React/recompose component": {
-    "prefix": "repose",
-    "body": [
-      "import * as React from 'react';",
-      "import PropTypes from 'prop-types';",
-      "import { compose } from 'recompose';",
-      "import { connect } from 'react-redux';",
-      "",
-      "const enhance = compose(",
-      "\tconnect(",
-      "\t\t({/* state desctructuring */ }) => ({/*mapStateToProps */ }),",
-      "\t\t{ /* mapDispatchToProps */ },",
-      "\t),",
-      ");",
-      "",
-      "const $1 = ({ }) => (<div>content</div>);",
-      "",
-      "$1.propTypes = {};",
-      "",
-      "export default enhance($1);"
-    ],
-    "description": "Create a new react/recompose component "
-  },
   "Copyright": {
     "prefix": "copy",
     "body": [

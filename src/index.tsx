@@ -1,13 +1,10 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 
-import { compose } from "redux";
-import { StoreContext } from "redux-react-hook";
 import { DragDropContext } from "react-dnd";
 import HTML5Backend from "react-dnd-html5-backend";
 
 import Routes from "./startup/Routes";
-import createStore from "./startup/store";
 import useFontAwesome from "./startup/useFontAwesome";
 
 import { ThemeContextProvider } from "./lib/theme";
@@ -22,15 +19,14 @@ import "./styles/main.css";
 import { AuthorisationContextProvider } from "./startup/Authorisation";
 import { AuthenticationContextProvider } from "./startup/Authentication";
 import { DocumentTreeContextProvider } from "./api/explorer";
+import { ErrorReportingContextProvider } from "./components/ErrorPage";
 
-const DndRoutes = compose(DragDropContext(HTML5Backend))(Routes);
-
-const store = createStore();
+const DndRoutes = DragDropContext(HTML5Backend)(Routes);
 
 const App: React.FunctionComponent = () => {
   useFontAwesome();
   return (
-    <StoreContext.Provider value={store}>
+    <ErrorReportingContextProvider>
       <ConfigProvider>
         <AuthenticationContextProvider>
           <AuthorisationContextProvider>
@@ -44,7 +40,7 @@ const App: React.FunctionComponent = () => {
           </AuthorisationContextProvider>
         </AuthenticationContextProvider>
       </ConfigProvider>
-    </StoreContext.Provider>
+    </ErrorReportingContextProvider>
   );
 };
 

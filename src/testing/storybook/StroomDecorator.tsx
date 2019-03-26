@@ -1,13 +1,10 @@
 import * as React from "react";
 import { compose } from "redux";
 import { RenderFunction } from "@storybook/react";
-import { StoreContext } from "redux-react-hook";
 import { DragDropContext } from "react-dnd";
 import HTML5Backend from "react-dnd-html5-backend";
 import StoryRouter from "storybook-react-router";
 import * as ReactModal from "react-modal";
-
-import createStore from "../../startup/store";
 
 import { useTestServer } from "./PollyDecorator";
 
@@ -20,6 +17,7 @@ import { ConfigProvider } from "../../startup/config";
 import { AuthorisationContextProvider } from "../../startup/Authorisation";
 import { AuthenticationContext } from "../../startup/Authentication";
 import { DocumentTreeContextProvider } from "../../api/explorer";
+import { ErrorReportingContextProvider } from "../../components/ErrorPage";
 
 interface Props extends RouteComponentProps {}
 
@@ -42,10 +40,9 @@ const ThemedComponent: React.StatelessComponent<{}> = ({ children }) => {
 
 ReactModal.setAppElement("#root");
 
-const store = createStore();
 export default (storyFn: RenderFunction) =>
   StoryRouter()(() => (
-    <StoreContext.Provider value={store}>
+    <ErrorReportingContextProvider>
       <ConfigProvider>
         <AuthenticationContext.Provider
           value={{
@@ -68,5 +65,5 @@ export default (storyFn: RenderFunction) =>
           </AuthorisationContextProvider>
         </AuthenticationContext.Provider>
       </ConfigProvider>
-    </StoreContext.Provider>
+    </ErrorReportingContextProvider>
   ));

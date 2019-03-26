@@ -12,7 +12,7 @@ import { addThemedStories } from "../../../testing/storybook/themedStoryGenerato
 import { Step1 } from "./Step1";
 
 // Stories can be organised into folders, so all these ones will be under 'New Developer'.
-// All stories will be wrapped by the Stroom Decorator, which gives you the in browser dev server, CSS, redux etc.
+// All stories will be wrapped by the Stroom Decorator, which gives you the in browser dev server, CSS, hooks etc.
 // Note: I have no idea where that 'module' thing comes from, sometimes it's best not to ask too many questions...
 const stories = storiesOf("New Developer/Step 1", module);
 

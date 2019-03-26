@@ -184,8 +184,7 @@ const PipelineElement = ({
   pipeline
 }: EnhancedProps) => {
   const onElementClick = useCallback(() => {
-    // We need to get the initial values for this element and make sure they go into the state,
-    // ready for redux-form to populate the new form.
+    // We need to get the initial values for this element and make sure they go into the state
     // TODO THIS MUST SURELY BE FIXED
     const thisElementProperties = pipeline.merged.properties.add!.filter(
       (property: PipelinePropertyType) => property.element === elementId
