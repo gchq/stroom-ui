@@ -15,12 +15,10 @@
  */
 
 import * as React from "react";
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 
 import DocRefEditor, { useDocRefEditor } from "../DocRefEditor";
 import Loader from "../Loader";
-import { findItem } from "../../lib/treeUtils";
-import useExplorerApi from "../../api/explorer/useApi";
 import DndDocRefListingEntry from "./DndDocRefListingEntry";
 import CreateDocRefDialog, {
   useDialog as useCreateDialog
@@ -49,22 +47,30 @@ interface Props {
 }
 
 const FolderExplorer = ({ folderUuid }: Props) => {
-  const documentTree = useDocumentTree();
-
-  const { goToEditDocRef } = useAppNavigation();
-  const folder = findItem(documentTree, folderUuid)!;
   const {
+    findDocRefWithLineage,
     createDocument,
     copyDocuments,
     moveDocuments,
     renameDocument,
     deleteDocuments
-  } = useExplorerApi();
+  } = useDocumentTree();
+
+  const { goToEditDocRef } = useAppNavigation();
+  const folder = useMemo(() => findDocRefWithLineage(folderUuid), [
+    findDocRefWithLineage,
+    folderUuid
+  ]);
 
   const onCreateDocument = useCallback(
     (docRefType: string, docRefName: string, permissionInheritance: string) => {
       if (!!folder) {
-        createDocument(docRefType, docRefName, node, permissionInheritance);
+        createDocument(
+          docRefType,
+          docRefName,
+          folder.node,
+          permissionInheritance
+        );
       }
     },
     [createDocument, folder]
@@ -73,7 +79,7 @@ const FolderExplorer = ({ folderUuid }: Props) => {
   const goBack = useCallback(() => {
     if (!!folder) {
       if (folder.lineage.length > 0) {
-        goToEditDocRef(lineage[lineage.length - 1]);
+        goToEditDocRef(folder.lineage[folder.lineage.length - 1]);
       }
     }
   }, [folder, goToEditDocRef]);
@@ -177,17 +183,16 @@ const FolderExplorer = ({ folderUuid }: Props) => {
     return <Loader message="Loading folder..." />;
   }
 
-  const { node, lineage } = folder;
-
   return (
     <DocRefEditor
       {...folderEditorProps}
       additionalActionBarItems={additionalActionBarItems}
     >
       <div tabIndex={0} onKeyDown={onKeyDownWithShortcuts}>
-        {node &&
-          node.children &&
-          node.children.map(docRef => (
+        {folder &&
+          folder.node &&
+          folder.node.children &&
+          folder.node.children.map(docRef => (
             <DndDocRefListingEntry
               key={docRef.uuid}
               docRef={docRef}

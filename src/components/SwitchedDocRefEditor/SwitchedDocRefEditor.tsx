@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 
 import FolderExplorer from "../FolderExplorer";
 import DictionaryEditor from "../DictionaryEditor";
@@ -8,7 +8,7 @@ import XsltEditor from "../XsltEditor";
 import PathNotFound from "../PathNotFound";
 import useRecentItems from "../../lib/useRecentItems";
 import IndexEditor from "../IndexEditor";
-import { useDocRefWithLineage } from "../../api/explorer";
+import { useDocumentTree } from "../../api/explorer";
 
 interface Props {
   docRefUuid: string;
@@ -16,7 +16,11 @@ interface Props {
 
 let SwitchedDocRefEditor = ({ docRefUuid }: Props) => {
   const { addRecentItem } = useRecentItems();
-  const { node: docRef } = useDocRefWithLineage(docRefUuid);
+  const { findDocRefWithLineage } = useDocumentTree();
+  const { node: docRef } = useMemo(() => findDocRefWithLineage(docRefUuid), [
+    findDocRefWithLineage,
+    docRefUuid
+  ]);
 
   useEffect(() => {
     addRecentItem(docRef);

@@ -28,21 +28,14 @@ import {
   AuthorisationStoreState
 } from "./Authentication";
 
-import {
-  StoreState as DocTreeStoreState,
-  reducer as documentTree
-} from "../api/explorer";
-
 export interface GlobalStoreState {
   errorPage: ErrorPageState;
   authentication: AuthenticationStoreState;
   authorisation: AuthorisationStoreState;
-  documentTree: DocTreeStoreState;
 }
 
 export default combineReducers({
   errorPage,
   authentication,
-  authorisation,
-  documentTree
+  authorisation
 });

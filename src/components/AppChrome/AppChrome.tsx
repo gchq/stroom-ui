@@ -23,7 +23,6 @@ import "simplebar/dist/simplebar.css";
 import MenuItem from "./MenuItem";
 import { MenuItemOpened, MenuItemType, MenuItemsOpenState } from "./types";
 
-import useExplorerApi from "../../api/explorer/useApi";
 import useSelectableItemListing from "../../lib/useSelectableItemListing";
 import { DocRefType, DocRefConsumer, DocRefTree } from "../../types";
 import { KeyDownState } from "../../lib/useKeyIsDown";
@@ -148,8 +147,7 @@ const AppChrome = ({ content }: Props) => {
   const {
     router: { location }
   } = useRouter();
-  const documentTree = useDocumentTree();
-  const explorerApi = useExplorerApi();
+  const { documentTree, copyDocuments, moveDocuments } = useDocumentTree();
 
   const {
     value: areMenuItemsOpen,
@@ -363,11 +361,11 @@ const AppChrome = ({ content }: Props) => {
   const {
     showDialog: showCopyDialog,
     componentProps: copyDialogComponentProps
-  } = useCopyMoveDocRefDialog(explorerApi.copyDocuments);
+  } = useCopyMoveDocRefDialog(copyDocuments);
   const {
     showDialog: showMoveDialog,
     componentProps: moveDialogComponentProps
-  } = useCopyMoveDocRefDialog(explorerApi.moveDocuments);
+  } = useCopyMoveDocRefDialog(moveDocuments);
 
   const sidebarClassName = isExpanded
     ? "app-chrome__sidebar--expanded"

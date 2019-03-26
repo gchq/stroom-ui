@@ -6,7 +6,6 @@ import { findItem, filterTree } from "../../lib/treeUtils";
 import { DocRefType, DocRefTree, DocRefWithLineage } from "../../types";
 import { DocRefBreadcrumb } from "../DocRefBreadcrumb";
 import DocRefListingEntry from "../DocRefListingEntry";
-import useExplorerApi from "../../api/explorer/useApi";
 
 import ModeOptionButtons, { SearchMode } from "./ModeOptionButton";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
@@ -30,15 +29,13 @@ const AppSearchBar = ({
   // Get data from and subscribe to the store
   const [searchResults, setSearchResults] = useState<Array<DocRefType>>([]);
 
-  const { searchApp } = useExplorerApi();
+  const { documentTree, searchApp } = useDocumentTree();
+  const { recentItems } = useRecentItems();
 
   const onSearch = useCallback(p => searchApp(p).then(setSearchResults), [
     searchApp,
     setSearchResults
   ]);
-
-  const documentTree = useDocumentTree();
-  const { recentItems } = useRecentItems();
 
   let [textFocus, setTextFocus] = useState<boolean>(false);
   let [searchTerm, setSearchTerm] = useState<string>("");

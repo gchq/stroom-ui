@@ -10,9 +10,9 @@ import ThemedConfirm, {
 } from "../../../components/ThemedConfirm";
 import { useUsers } from "../../../api/userGroups";
 import UsersTable, { useTable as useUsersTable } from "../UsersTable";
-import { useDocRefWithLineage } from "../../../api/explorer";
 import useAppNavigation from "../../AppChrome/useAppNavigation";
 import useRouter from "../../../lib/useRouter";
+import { useDocumentTree } from "../../../api/explorer";
 import UserModalPicker, {
   useDialog as useUserModalPicker
 } from "../UserModalPicker";
@@ -37,7 +37,11 @@ export const DocumentPermissionEditor = ({ docRefUuid }: Props) => {
   const users = useUsers(userUuids);
   const { componentProps: usersTableProps } = useUsersTable(users);
 
-  const { node: docRef } = useDocRefWithLineage(docRefUuid);
+  const { findDocRefWithLineage } = useDocumentTree();
+  const { node: docRef } = useMemo(() => findDocRefWithLineage(docRefUuid), [
+    findDocRefWithLineage,
+    docRefUuid
+  ]);
   const {
     selectableTableProps: { selectedItems: selectedUsers, clearSelection }
   } = usersTableProps;

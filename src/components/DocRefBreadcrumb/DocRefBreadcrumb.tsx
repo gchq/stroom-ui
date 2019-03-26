@@ -1,7 +1,8 @@
 import * as React from "react";
+import { useMemo } from "react";
 
 import { DocRefConsumer } from "../../types";
-import { useDocRefWithLineage } from "../../api/explorer";
+import { useDocumentTree } from "../../api/explorer";
 
 interface Props {
   docRefUuid: string;
@@ -16,10 +17,11 @@ const DocRefBreadcrumb = ({
   openDocRef,
   className = ""
 }: Props) => {
-  const {
-    lineage,
-    node: { name }
-  } = useDocRefWithLineage(docRefUuid);
+  const { findDocRefWithLineage } = useDocumentTree();
+  const { lineage } = useMemo(() => findDocRefWithLineage(docRefUuid), [
+    findDocRefWithLineage,
+    docRefUuid
+  ]);
 
   return (
     <div className={`DocRefBreadcrumb ${className || ""}`}>

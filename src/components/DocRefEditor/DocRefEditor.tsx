@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, useMemo } from "react";
 
 import {
   UseDocRefEditorProps,
@@ -12,9 +12,9 @@ import DocRefIconHeader from "../DocRefIconHeader";
 import DocRefBreadcrumb from "../DocRefBreadcrumb";
 import Button, { ButtonProps } from "../Button";
 import { DocRefConsumer } from "../../types";
-import { useDocRefWithLineage } from "../../api/explorer";
 import useRouter from "../../lib/useRouter";
 import { DocumentApi } from "../../api/documentApi";
+import { useDocumentTree } from "../../api/explorer";
 
 const DocRefEditor = <T extends {}>({
   onClickSave,
@@ -24,7 +24,11 @@ const DocRefEditor = <T extends {}>({
   isDirty
 }: DocRefEditorProps<T>) => {
   const router = useRouter();
-  const { node: docRef } = useDocRefWithLineage(docRefUuid);
+  const { findDocRefWithLineage } = useDocumentTree();
+  const { node: docRef } = useMemo(() => findDocRefWithLineage(docRefUuid), [
+    findDocRefWithLineage,
+    docRefUuid
+  ]);
 
   const openDocRef: DocRefConsumer = useCallback(
     d => router.history!.push(`/s/doc/${d.type}/${d.uuid}`),

@@ -7,8 +7,8 @@ import {} from "../../../api/docPermission";
 import CheckboxSeries from "../../../components/CheckboxSeries";
 import Button from "../../../components/Button";
 import useRouter from "../../../lib/useRouter";
-import { useDocRefWithLineage } from "../../../api/explorer";
 import { useUser } from "../../../api/userGroups";
+import { useDocumentTree } from "../../../api/explorer";
 
 interface Props {
   docRefUuid: string;
@@ -20,7 +20,10 @@ export const DocumentPermissionForUserEditor = ({
   userUuid
 }: Props) => {
   const { history } = useRouter();
-  const { node: docRef } = useDocRefWithLineage(docRefUuid);
+  const { findDocRefWithLineage } = useDocumentTree();
+
+  const { node: docRef } = findDocRefWithLineage(docRefUuid);
+
   const user = useUser(userUuid);
   const permissionsForType = useDocTypePermissions(docRef.type);
   const {
