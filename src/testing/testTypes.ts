@@ -1,6 +1,5 @@
 import {
   DocRefTree,
-  DocRefTypeList,
   PipelineModelType,
   ElementDefinitions,
   ElementPropertiesByElementIdType,
@@ -28,7 +27,7 @@ export interface UserDocPermission {
 }
 
 export interface TestData {
-  docRefTypes: DocRefTypeList;
+  docRefTypes: Array<string>;
   documentTree: DocRefTree;
   pipelines: Array<PipelineModelType>;
   elements: ElementDefinitions;

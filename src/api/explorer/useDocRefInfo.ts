@@ -1,22 +1,18 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import { DocRefType, DocRefInfoType } from "../../types";
-import useReduxState from "../../lib/useReduxState";
 import useApi from "./useApi";
 
 const useDocRefInfo = (docRef?: DocRefType): DocRefInfoType | undefined => {
+  const [docRefInfo, setDocRefInfo] = useState<DocRefInfoType | undefined>(undefined);
   const { fetchDocInfo } = useApi();
   useEffect(() => {
     if (!!docRef) {
-      fetchDocInfo(docRef);
+      fetchDocInfo(docRef).then(setDocRefInfo);
     }
-  }, [docRef, fetchDocInfo]);
+  }, [docRef, fetchDocInfo, setDocRefInfo]);
 
-  let docRefInfoByUuid = useReduxState(
-    ({ folderExplorer: { docRefInfoByUuid } }) => docRefInfoByUuid
-  );
-
-  return !!docRef ? docRefInfoByUuid[docRef.uuid] : undefined;
+  return docRefInfo;
 };
 
 export default useDocRefInfo;

@@ -29,8 +29,6 @@ export interface IndexVolume extends HasAuditInfo {
   statusMs: number;
 }
 
-export type DocRefTypeList = Array<string>;
-
 export interface IndexVolumeGroupMembership {
   volumeId: string;
   groupName: string;

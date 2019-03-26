@@ -4,7 +4,7 @@ import { StoreContext } from "redux-react-hook";
 import { useActionCreators as useFolderExplorerActionCreators } from "./redux";
 import useHttpClient from "../useHttpClient";
 import { findByUuids } from "../../lib/treeUtils";
-import { DocRefType, DocRefTree } from "../../types";
+import { DocRefType, DocRefTree, DocRefInfoType } from "../../types";
 import { SearchProps } from "./types";
 import { useConfig } from "../../startup/config";
 
@@ -16,8 +16,8 @@ const stripDocRef = (docRef: DocRefType) => ({
 
 interface Api {
   fetchDocTree: () => void;
-  fetchDocRefTypes: () => void;
-  fetchDocInfo: (docRef: DocRefType) => void;
+  fetchDocRefTypes: () => Promise<Array<string>>;
+  fetchDocInfo: (docRef: DocRefType) => Promise<DocRefInfoType>;
   searchApp: (args: SearchProps) => Promise<Array<DocRefType>>;
   createDocument: (
     docRefType: string,
@@ -56,13 +56,11 @@ export const useApi = (): Api => {
 
   const {
     docTreeReceived,
-    docRefInfoReceived,
     docRefCreated,
     docRefRenamed,
     docRefsCopied,
     docRefsMoved,
-    docRefsDeleted,
-    docRefTypesReceived
+    docRefsDeleted
   } = useFolderExplorerActionCreators();
 
   return {
@@ -72,20 +70,18 @@ export const useApi = (): Api => {
       );
     }, [stroomBaseServiceUrl, httpGetJson, docTreeReceived]),
 
-    fetchDocRefTypes: useCallback(() => {
-      httpGetJson(`${stroomBaseServiceUrl}/explorer/v1/docRefTypes`).then(
-        docRefTypesReceived
-      );
-    }, [stroomBaseServiceUrl, httpGetJson]),
+    fetchDocRefTypes: useCallback(
+      () => httpGetJson(`${stroomBaseServiceUrl}/explorer/v1/docRefTypes`),
+      [stroomBaseServiceUrl, httpGetJson]
+    ),
     fetchDocInfo: useCallback(
-      (docRef: DocRefType) => {
+      (docRef: DocRefType) =>
         httpGetJson(
           `${stroomBaseServiceUrl}/explorer/v1/info/${docRef.type}/${
             docRef.uuid
           }`
-        ).then(docRefInfoReceived);
-      },
-      [stroomBaseServiceUrl, httpGetJson, docRefInfoReceived]
+        ),
+      [stroomBaseServiceUrl, httpGetJson]
     ),
     searchApp: useCallback(
       ({ term = "", docRefType = "", pageOffset = 0, pageSize = 10 }) => {

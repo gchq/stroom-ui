@@ -6,15 +6,15 @@ import { useReducer, useCallback } from "react";
  * that were common to a number of components.
  */
 
-type Received<T> = {
+type ReceivedAction<T> = {
   type: "itemsReceived";
   items: Array<T>;
 };
-type AddedToList<T> = {
+type AddedToListAction<T> = {
   type: "itemAdded";
   item: T;
 };
-type RemovedFromList = {
+type RemovedFromListAction = {
   type: "itemRemoved";
   itemKey: string;
 };
@@ -22,7 +22,7 @@ type RemovedFromList = {
 const createListReducer = <T extends {}>(getKey: (item: T) => string) => {
   return (
     state: Array<T>,
-    action: Received<T> | AddedToList<T> | RemovedFromList
+    action: ReceivedAction<T> | AddedToListAction<T> | RemovedFromListAction
   ): Array<T> => {
     switch (action.type) {
       case "itemsReceived":

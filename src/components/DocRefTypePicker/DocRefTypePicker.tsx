@@ -18,7 +18,7 @@ const DocRefTypeOption = ({
 );
 
 let DocRefTypePicker = (props: ControlledInput<string>) => {
-  const { docRefTypes } = useDocRefTypes();
+  const docRefTypes: Array<string> = useDocRefTypes();
 
   let options: Array<OptionType> = useMemo(
     () =>
