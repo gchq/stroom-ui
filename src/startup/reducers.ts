@@ -21,21 +21,10 @@ import {
   StoreState as ErrorPageState
 } from "../components/ErrorPage";
 
-import {
-  authenticationReducer as authentication,
-  authorisationReducer as authorisation,
-  AuthenticationStoreState,
-  AuthorisationStoreState
-} from "./Authentication";
-
 export interface GlobalStoreState {
   errorPage: ErrorPageState;
-  authentication: AuthenticationStoreState;
-  authorisation: AuthorisationStoreState;
 }
 
 export default combineReducers({
-  errorPage,
-  authentication,
-  authorisation
+  errorPage
 });

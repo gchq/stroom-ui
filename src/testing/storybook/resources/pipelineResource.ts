@@ -7,10 +7,10 @@ import { PipelineModelType } from "src/types";
 
 const resourceBuilder: ResourceBuilder = (
   server: any,
-  testConfig: Config,
+  { stroomBaseServiceUrl }: Config,
   testCache: TestCache
 ) => {
-  const resource = `${testConfig.stroomBaseServiceUrl}/pipelines/v1`;
+  const resource = `${stroomBaseServiceUrl}/pipelines/v1`;
 
   server
     .get(`${resource}/:pipelineId`)

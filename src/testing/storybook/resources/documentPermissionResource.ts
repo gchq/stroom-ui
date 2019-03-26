@@ -7,10 +7,10 @@ import { DocumentPermissions } from "src/types";
 
 const resourceBuilder: ResourceBuilder = (
   server: any,
-  testConfig: Config,
+  { stroomBaseServiceUrl }: Config,
   testCache: TestCache
 ) => {
-  const resource = `${testConfig.stroomBaseServiceUrl}/docPermissions/v1`;
+  const resource = `${stroomBaseServiceUrl}/docPermissions/v1`;
 
   // Get Permissions for Doc Type
   server

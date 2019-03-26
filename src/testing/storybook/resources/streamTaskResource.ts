@@ -6,10 +6,10 @@ import { ResourceBuilder } from "./types";
 
 const resourceBuilder: ResourceBuilder = (
   server: any,
-  testConfig: Config,
+  { stroomBaseServiceUrl }: Config,
   testCache: TestCache
 ) => {
-  const resource = `${testConfig.stroomBaseServiceUrl}/streamtasks/v1/`;
+  const resource = `${stroomBaseServiceUrl}/streamtasks/v1/`;
 
   server.get(resource).intercept((req: HttpRequest, res: HttpResponse) =>
     res.json({

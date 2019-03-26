@@ -6,20 +6,18 @@ import { ResourceBuilder } from "./types";
 
 const resourceBuilder: ResourceBuilder = (
   server: any,
-  { stroomBaseServiceUrl }: Config,
+  { authorisationServiceUrl }: Config,
   testCache: TestCache
 ) => {
-  const resource = `${stroomBaseServiceUrl}/elements/v1/`;
-
   server
-    .get(`${resource}/elements`)
+    .post(`${authorisationServiceUrl}/hasAppPermission`)
     .intercept((req: HttpRequest, res: HttpResponse) => {
-      res.json(testCache.data!.elements);
-    });
-  server
-    .get(`${resource}/elementProperties`)
-    .intercept((req: HttpRequest, res: HttpResponse) => {
-      res.json(testCache.data!.elementProperties);
+      const { permissionName } = JSON.parse(req.body);
+      if (testCache.data!.allAppPermissions.includes(permissionName)) {
+        res.sendStatus(200);
+      } else {
+        res.sendStatus(401);
+      }
     });
 };
 

@@ -3,9 +3,8 @@ import { useCallback } from "react";
 import { useActionCreators as useErrorActionCreators } from "../../components/ErrorPage";
 
 import handleStatus from "./handleStatus";
-import { useContext } from "react";
-import { StoreContext } from "redux-react-hook";
 import useAppNavigation from "../../components/AppChrome/useAppNavigation";
+import { useAuthenticationContext } from "../../startup/Authentication";
 
 /**
  * A wrapper around fetch that can be used to de-duplicate GET calls to the same resources.
@@ -48,17 +47,13 @@ interface HttpClient {
 let cache = {};
 
 export const useHttpClient = (): HttpClient => {
-  const store = useContext(StoreContext);
+  const { idToken } = useAuthenticationContext();
   const {
     setErrorMessage,
     setHttpErrorCode,
     setStackTrace
   } = useErrorActionCreators();
   const { goToError } = useAppNavigation();
-
-  if (!store) {
-    throw new Error("Could not get Redux Store for making HTTP calls");
-  }
 
   const httpGetJson = useCallback(
     <T>(
@@ -68,9 +63,6 @@ export const useHttpClient = (): HttpClient => {
       } = {},
       forceGet: boolean = true // default to true, take care with settings this to false, old promises can override the updated picture with old information if this is mis-used
     ): Promise<T | void> => {
-      const state = store.getState();
-      const jwsToken = state.authentication.idToken;
-
       // If we do not have an entry in the cache or we are forcing GET, create a new call
       if (!cache[url] || forceGet) {
         cache[url] = fetch(url, {
@@ -80,7 +72,7 @@ export const useHttpClient = (): HttpClient => {
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
-            Authorization: `Bearer ${jwsToken}`,
+            Authorization: `Bearer ${idToken}`,
             ...(options ? options.headers : {})
           }
         })
@@ -109,13 +101,10 @@ export const useHttpClient = (): HttpClient => {
           [s: string]: any;
         }
       ): Promise<T | void> => {
-        const state = store.getState();
-        const jwsToken = state.authentication.idToken;
-
         const headers = {
           Accept: "application/json",
           "Content-Type": "application/json",
-          Authorization: `Bearer ${jwsToken}`,
+          Authorization: `Bearer ${idToken}`,
           ...(options ? options.headers : {})
         };
 
@@ -145,12 +134,9 @@ export const useHttpClient = (): HttpClient => {
           [s: string]: any;
         }
       ): Promise<string | void> => {
-        const state = store.getState();
-        const jwsToken = state.authentication.idToken;
-
         const headers = {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${jwsToken}`,
+          Authorization: `Bearer ${idToken}`,
           ...(options ? options.headers : {})
         };
 

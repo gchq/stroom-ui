@@ -9,10 +9,10 @@ let nextIdToCreate = 100000;
 
 const resourceBuilder: ResourceBuilder = (
   server: any,
-  testConfig: Config,
+  { stroomBaseServiceUrl }: Config,
   testCache: TestCache
 ) => {
-  const resource = `${testConfig.stroomBaseServiceUrl}/stroom-index/volume/v1`;
+  const resource = `${stroomBaseServiceUrl}/stroom-index/volume/v1`;
 
   // Get All
   server.get(resource).intercept((req: HttpRequest, res: HttpResponse) => {

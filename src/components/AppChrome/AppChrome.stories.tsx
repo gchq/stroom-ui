@@ -17,24 +17,15 @@
 import * as React from "react";
 
 import { storiesOf } from "@storybook/react";
-import { Switch, Route } from "react-router-dom";
 
-import AppChrome, { appChromeRoutes } from ".";
+import AppChrome from ".";
+import Routes from "../../startup/Routes";
 import { addThemedStories } from "../../testing/storybook/themedStoryGenerator";
-
-// This basically replicates the 'Routes' implementation, but for test
-const AppChromeWithRouter = () => (
-  <Switch>
-    {appChromeRoutes.map((p, i) => (
-      <Route key={i} {...p} />
-    ))}
-  </Switch>
-);
 
 const storiesNoRouting = storiesOf("App Chrome/No Routing", module);
 addThemedStories(storiesNoRouting, () => (
   <AppChrome activeMenuItem="welcome" content={<div>Stuff goes here</div>} />
 ));
 
-const storiesWithRouting = storiesOf("App Chrome/With Routing", module);
-addThemedStories(storiesWithRouting, () => <AppChromeWithRouter />);
+const storiesWithAuth = storiesOf("App Chrome/With Authentication", module);
+addThemedStories(storiesWithAuth, () => <Routes />);

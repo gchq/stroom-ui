@@ -6,20 +6,16 @@ import { ResourceBuilder } from "./types";
 
 const resourceBuilder: ResourceBuilder = (
   server: any,
-  { stroomBaseServiceUrl }: Config,
+  { authenticationServiceUrl }: Config,
   testCache: TestCache
 ) => {
-  const resource = `${stroomBaseServiceUrl}/elements/v1/`;
+  server
+    .get(`${authenticationServiceUrl}/idToken`)
+    .intercept((req: HttpRequest, res: HttpResponse) => {
+      const accessCode = req.params.accessCode;
+      console.log("Trying access code", accessCode);
 
-  server
-    .get(`${resource}/elements`)
-    .intercept((req: HttpRequest, res: HttpResponse) => {
-      res.json(testCache.data!.elements);
-    });
-  server
-    .get(`${resource}/elementProperties`)
-    .intercept((req: HttpRequest, res: HttpResponse) => {
-      res.json(testCache.data!.elementProperties);
+      res.sendStatus(200);
     });
 };
 

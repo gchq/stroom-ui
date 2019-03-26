@@ -6,12 +6,10 @@ import { ResourceBuilder } from "./types";
 
 const resourceBuilder: ResourceBuilder = (
   server: any,
-  testConfig: Config,
+  { stroomBaseServiceUrl }: Config,
   testCache: TestCache
 ) => {
-  const resource = `${
-    testConfig.stroomBaseServiceUrl
-  }/stroom-index/volumeGroup/v1`;
+  const resource = `${stroomBaseServiceUrl}/stroom-index/volumeGroup/v1`;
 
   // Get All
   server.get(resource).intercept((req: HttpRequest, res: HttpResponse) => {
@@ -64,9 +62,7 @@ const resourceBuilder: ResourceBuilder = (
 
   // Delete
   server
-    .delete(
-      `${testConfig.stroomBaseServiceUrl}/stroom-index/volumeGroup/v1/:name`
-    )
+    .delete(`${stroomBaseServiceUrl}/stroom-index/volumeGroup/v1/:name`)
     .intercept((req: HttpRequest, res: HttpResponse) => {
       let oldName = req.params.name;
       testCache.data!.indexVolumesAndGroups = {

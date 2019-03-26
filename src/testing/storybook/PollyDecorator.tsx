@@ -30,9 +30,9 @@ import { useEffect } from "react";
 Polly.register(FetchAdapter);
 
 const testConfig: Config = {
-  authenticationServiceUrl: "/authService/authentication/v1",
-  authorisationServiceUrl: "/api/authorisation/v1",
-  stroomBaseServiceUrl: "http://localhost:9001/api",
+  authenticationServiceUrl: "",
+  authorisationServiceUrl: "",
+  stroomBaseServiceUrl: "",
   authUsersUiUrl:
     "auth/users/because/they/are/loaded/in/an/iframe/which/is/beyond/scope/of/these/tests",
   authTokensUiUrl:

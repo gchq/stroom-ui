@@ -16,26 +16,18 @@
 import * as queryString from "qs";
 import { useEffect, useMemo } from "react";
 
-import {
-  handleAuthenticationResponse,
-  useActionCreators
-} from "./authentication";
+import { handleAuthenticationResponse } from "./authentication";
 import useRouter from "../../lib/useRouter";
+import useAuthenticationContext from "./useAuthenticationContext";
+import { useConfig } from "../config";
 
-interface Props {
-  authenticationServiceUrl: string;
-  authorisationServiceUrl: string;
-}
-
-export const HandleAuthenticationResponse: React.FunctionComponent<Props> = ({
-  authenticationServiceUrl,
-  authorisationServiceUrl
-}: Props) => {
+export const HandleAuthenticationResponse: React.FunctionComponent<{}> = () => {
+  const { authenticationServiceUrl, authorisationServiceUrl } = useConfig();
   const {
     router: { location },
     history
   } = useRouter();
-  const { tokenIdChange } = useActionCreators();
+  const { setIdToken } = useAuthenticationContext();
 
   const accessCode = useMemo(() => {
     let query = location!.search;
@@ -47,15 +39,15 @@ export const HandleAuthenticationResponse: React.FunctionComponent<Props> = ({
 
   useEffect(() => {
     handleAuthenticationResponse(
-      tokenIdChange,
+      setIdToken,
       history,
       accessCode,
-      authenticationServiceUrl,
-      authorisationServiceUrl
+      authenticationServiceUrl!,
+      authorisationServiceUrl!
     );
   }, [
     accessCode,
-    tokenIdChange,
+    setIdToken,
     history,
     authenticationServiceUrl,
     authorisationServiceUrl

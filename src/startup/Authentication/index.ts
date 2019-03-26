@@ -1,18 +1,16 @@
-import { reducer as authenticationReducer } from "./authentication";
-import { AuthenticationStoreState, AuthorisationStoreState } from "./types";
-import { reducer as authorisationReducer } from "./authorisation";
-
 import AuthenticationRequest from "./AuthenticationRequest";
 import HandleAuthenticationResponse from "./HandleAuthenticationResponse";
+import AuthenticationContext from "./AuthenticationContext";
+import AuthenticationContextProvider from "./AuthenticationContextProvider";
+import useAuthenticationContext from "./useAuthenticationContext";
 
 import PrivateRoute from "./PrivateRoute";
 
 export {
-  authenticationReducer,
-  authorisationReducer,
-  AuthenticationStoreState,
-  AuthorisationStoreState,
   AuthenticationRequest,
   HandleAuthenticationResponse,
-  PrivateRoute
+  PrivateRoute,
+  AuthenticationContext,
+  AuthenticationContextProvider,
+  useAuthenticationContext
 };

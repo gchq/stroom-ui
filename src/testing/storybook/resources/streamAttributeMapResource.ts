@@ -6,10 +6,10 @@ import { ResourceBuilder } from "./types";
 
 const resourceBuilder: ResourceBuilder = (
   server: any,
-  testConfig: Config,
+  { stroomBaseServiceUrl }: Config,
   testCache: TestCache
 ) => {
-  const resource = `${testConfig.stroomBaseServiceUrl}/streamattributemap/v1`;
+  const resource = `${stroomBaseServiceUrl}/streamattributemap/v1`;
 
   /**
    * The StreamAttributeMap resource supports expression-based search.

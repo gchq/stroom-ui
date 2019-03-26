@@ -16,44 +16,238 @@
 
 import * as React from "react";
 
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, RouteComponentProps } from "react-router-dom";
 
-// TODO
 import ErrorPage from "../components/ErrorPage";
-import { appChromeRoutes } from "../components/AppChrome";
-// import { Processing } from "../sections/Processing";
 import { HandleAuthenticationResponse } from "./Authentication";
-
-import useConfig from "./config/useConfig";
 
 import { PrivateRoute } from "./Authentication";
 import PathNotFound from "../components/PathNotFound";
 import Welcome from "../components/Welcome";
 
-const Routes: React.FunctionComponent = () => {
-  const { authenticationServiceUrl, authorisationServiceUrl } = useConfig();
+import AppChrome from "../components/AppChrome";
+import { Processing } from "../components/Processing";
+import SwitchedDocRefEditor from "../components/SwitchedDocRefEditor";
+import IconHeader from "../components/IconHeader";
+import DataViewer from "../components/DataViewer";
+import UserSettings from "../components/UserSettings";
+import IFrame from "../components/IFrame";
 
+import AuthorisationManager, {
+  UserAuthorisationEditor
+} from "../components/AuthorisationManager";
+import IndexVolumes from "../components/IndexVolumes";
+import IndexVolumeGroups from "../components/IndexVolumeGroups";
+import IndexVolumeGroupEditor from "../components/IndexVolumeGroups/IndexVolumeGroupEditor";
+import { useConfig } from "./config";
+import DocumentPermissionEditor from "../components/AuthorisationManager/DocumentPermissionEditor";
+import DocumentPermissionForUserEditor from "../components/AuthorisationManager/DocumentPermissionForUserEditor";
+import IndexVolumeEditor from "../components/IndexVolumes/IndexVolumeEditor";
+
+const renderWelcome = () => (
+  <AppChrome activeMenuItem="Welcome" content={<Welcome />} />
+);
+
+const UsersIFrame = () => {
+  const { authUsersUiUrl } = useConfig();
+
+  return (
+    <React.Fragment>
+      <IconHeader icon="users" text="Users" />
+      {authUsersUiUrl ? (
+        <IFrame key="users" url={authUsersUiUrl} />
+      ) : (
+        <div>No Users URL in Config</div>
+      )}
+    </React.Fragment>
+  );
+};
+
+const ApiTokensIFrame = () => {
+  const { authTokensUiUrl } = useConfig();
+
+  return (
+    <React.Fragment>
+      <IconHeader icon="key" text="API keys" />
+      {authTokensUiUrl ? (
+        <IFrame key="apikeys" url={authTokensUiUrl} />
+      ) : (
+        <div>No Api Keys URL in Config</div>
+      )}
+    </React.Fragment>
+  );
+};
+
+const Routes: React.FunctionComponent = () => {
   return (
     <Switch>
       <Route
         exact
         path="/handleAuthenticationResponse"
+        render={() => <HandleAuthenticationResponse />}
+      />
+      <Route exact path="/error" component={ErrorPage} />
+      <Route exact path="/openWelcome" component={Welcome} />
+      <PrivateRoute exact path="/" render={renderWelcome} />
+      <PrivateRoute exact path="/s/welcome" render={renderWelcome} />
+      <PrivateRoute
+        exact
+        path="/s/data"
         render={() => (
-          <HandleAuthenticationResponse
-            authenticationServiceUrl={authenticationServiceUrl!}
-            authorisationServiceUrl={authorisationServiceUrl!}
+          <AppChrome activeMenuItem="Data" content={<DataViewer />} />
+        )}
+      />
+      <PrivateRoute
+        exact
+        path="/s/processing"
+        render={() => (
+          <AppChrome activeMenuItem="Processing" content={<Processing />} />
+        )}
+      />
+      <PrivateRoute
+        exact
+        path="/s/me"
+        render={() => (
+          <AppChrome activeMenuItem="Me" content={<UserSettings />} />
+        )}
+      />
+      <PrivateRoute
+        exact
+        path="/s/authorisationManager"
+        render={() => (
+          <AppChrome
+            activeMenuItem="User Authorisation"
+            content={<AuthorisationManager />}
           />
         )}
       />
-
-      <Route exact path="/error" component={ErrorPage} />
-
-      <Route exact path="/openWelcome" component={Welcome} />
-
-      {appChromeRoutes.map((p, i) => (
-        <PrivateRoute key={i} {...p} />
-      ))}
-
+      <PrivateRoute
+        exact
+        path="/s/authorisationManager/:userUuid"
+        render={(props: RouteComponentProps<any>) => (
+          <AppChrome
+            activeMenuItem="User Authorisation"
+            content={
+              <UserAuthorisationEditor userUuid={props.match.params.userUuid} />
+            }
+          />
+        )}
+      />
+      <PrivateRoute
+        exact
+        path="/s/authorisationManager/document/:docRefUuid"
+        render={(props: RouteComponentProps<any>) => (
+          <AppChrome
+            activeMenuItem="User Authorisation"
+            content={
+              <DocumentPermissionEditor
+                docRefUuid={props.match.params.docRefUuid}
+              />
+            }
+          />
+        )}
+      />
+      <PrivateRoute
+        exact
+        path="/s/authorisationManager/document/:docRefUuid/:userUuid"
+        render={(props: RouteComponentProps<any>) => (
+          <AppChrome
+            activeMenuItem="User Authorisation"
+            content={
+              <DocumentPermissionForUserEditor
+                userUuid={props.match.params.userUuid}
+                docRefUuid={props.match.params.docRefUuid}
+              />
+            }
+          />
+        )}
+      />
+      <PrivateRoute
+        exact
+        path="/s/indexing/volumes"
+        render={() => (
+          <AppChrome
+            activeMenuItem="Index Volumes"
+            content={<IndexVolumes />}
+          />
+        )}
+      />
+      <PrivateRoute
+        exact
+        path="/s/indexing/volumes/:volumeId"
+        render={(props: RouteComponentProps<any>) => (
+          <AppChrome
+            activeMenuItem="Index Volumes"
+            content={
+              <IndexVolumeEditor volumeId={props.match.params.volumeId} />
+            }
+          />
+        )}
+      />
+      <PrivateRoute
+        exact
+        path="/s/indexing/groups"
+        render={() => (
+          <AppChrome
+            activeMenuItem="Index Groups"
+            content={<IndexVolumeGroups />}
+          />
+        )}
+      />
+      <PrivateRoute
+        exact
+        path="/s/indexing/groups/:groupName"
+        render={(props: RouteComponentProps<any>) => (
+          <AppChrome
+            activeMenuItem="Index Groups"
+            content={
+              <IndexVolumeGroupEditor
+                groupName={props.match.params.groupName}
+              />
+            }
+          />
+        )}
+      />
+      <PrivateRoute
+        exact
+        path="/s/users"
+        render={() => (
+          <AppChrome activeMenuItem="Users" content={<UsersIFrame />} />
+        )}
+      />
+      <PrivateRoute
+        exact
+        path="/s/apikeys"
+        render={() => (
+          <AppChrome activeMenuItem="API Keys" content={<ApiTokensIFrame />} />
+        )}
+      />
+      <PrivateRoute
+        exact
+        path="/s/error"
+        render={() => (
+          <AppChrome activeMenuItem="Error" content={<ErrorPage />} />
+        )}
+      />
+      <PrivateRoute
+        exact
+        path="/s/doc/:docRefUuid"
+        render={(props: RouteComponentProps<any>) => (
+          <AppChrome
+            activeMenuItem="Explorer"
+            content={
+              <SwitchedDocRefEditor
+                docRefUuid={props.match.params.docRefUuid}
+              />
+            }
+          />
+        )}
+      />
+      <PrivateRoute
+        render={() => (
+          <AppChrome activeMenuItem="Welcome" content={<PathNotFound />} />
+        )}
+      />
       {/* Default route */}
       <Route render={() => <PathNotFound message="Invalid path" />} />
     </Switch>

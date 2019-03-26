@@ -6,10 +6,10 @@ import { ResourceBuilder } from "./types";
 
 const resourceBuilder: ResourceBuilder = (
   server: any,
-  testConfig: Config,
+  { stroomBaseServiceUrl }: Config,
   testCache: TestCache
 ) => {
-  const resource = `${testConfig.stroomBaseServiceUrl}/dictionary/v1`;
+  const resource = `${stroomBaseServiceUrl}/dictionary/v1`;
 
   server
     .get(`${resource}/:dictionaryUuid`)

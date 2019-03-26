@@ -3,6 +3,6 @@ import { TestCache } from "../PollyDecorator";
 
 export type ResourceBuilder = (
   server: any,
-  testConfig: Config,
+  { stroomBaseServiceUrl }: Config,
   testCache: TestCache
 ) => any;

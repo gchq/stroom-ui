@@ -16,11 +16,11 @@ import { ResourceBuilder } from "./types";
 
 const resourceBuilder: ResourceBuilder = (
   server: any,
-  testConfig: Config,
+  { stroomBaseServiceUrl }: Config,
   testCache: TestCache
 ) => {
   const startTime = Date.now();
-  const resource = `${testConfig.stroomBaseServiceUrl}/explorer/v1`;
+  const resource = `${stroomBaseServiceUrl}/explorer/v1`;
 
   server
     .get(`${resource}/all`)
@@ -81,11 +81,7 @@ const resourceBuilder: ResourceBuilder = (
     });
   // // Get Info
   server
-    .get(
-      `${
-        testConfig.stroomBaseServiceUrl
-      }/explorer/v1/info/:docRefType/:docRefUuid`
-    )
+    .get(`${stroomBaseServiceUrl}/explorer/v1/info/:docRefType/:docRefUuid`)
     .intercept((req: HttpRequest, res: HttpResponse) => {
       const { node: docRef } = findItem(
         testCache.data!.documentTree,

@@ -7,10 +7,10 @@ import { onlyUnique } from "../../../lib/reduxUtils";
 
 const resourceBuilder: ResourceBuilder = (
   server: any,
-  testConfig: Config,
+  { stroomBaseServiceUrl }: Config,
   testCache: TestCache
 ) => {
-  const resource = `${testConfig.stroomBaseServiceUrl}/appPermissions/v1`;
+  const resource = `${stroomBaseServiceUrl}/appPermissions/v1`;
 
   // Get All App Permission Names
   server.get(resource).intercept((req: HttpRequest, res: HttpResponse) => {

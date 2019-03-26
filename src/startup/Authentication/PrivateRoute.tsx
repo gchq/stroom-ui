@@ -18,16 +18,27 @@ import * as React from "react";
 import { Route, RouteProps } from "react-router-dom";
 
 import AuthenticationRequest from "./AuthenticationRequest";
-import useReduxState from "../../lib/useReduxState";
-import Loader from "../../components/Loader";
 import useConfig from "../config/useConfig";
+import useAuthenticationContext from "./useAuthenticationContext";
 
 const PrivateRoute = ({ render, ...rest }: RouteProps) => {
   const { advertisedUrl, appClientId, authenticationServiceUrl } = useConfig();
-  const idToken = useReduxState(({ authentication: { idToken } }) => idToken);
+  const { idToken } = useAuthenticationContext();
 
-  if (!(!!advertisedUrl && !!appClientId && !!authenticationServiceUrl)) {
-    return <Loader message="Waiting for config" />;
+  if (
+    !(
+      advertisedUrl !== undefined &&
+      appClientId !== undefined &&
+      authenticationServiceUrl !== undefined
+    )
+  ) {
+    throw new Error(
+      `Config Not Correct for Private Routes ${JSON.stringify({
+        advertisedUrl,
+        appClientId,
+        authenticationServiceUrl
+      })}`
+    );
   }
 
   return (

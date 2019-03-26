@@ -6,10 +6,10 @@ import { ResourceBuilder } from "./types";
 
 const resourceBuilder: ResourceBuilder = (
   server: any,
-  testConfig: Config,
+  { stroomBaseServiceUrl }: Config,
   testCache: TestCache
 ) => {
-  const resource = `${testConfig.stroomBaseServiceUrl}/xslt/v1/`;
+  const resource = `${stroomBaseServiceUrl}/xslt/v1/`;
   server
     .get(`${resource}/:xsltUuid`)
     .intercept((req: HttpRequest, res: HttpResponse) => {

@@ -17,6 +17,8 @@ import { ThemeContextProvider, useTheme } from "../../lib/theme";
 import { withRouter, RouteComponentProps } from "react-router";
 import { CustomRouter } from "../../lib/useRouter";
 import { ConfigProvider } from "../../startup/config";
+import { AuthorisationContextProvider } from "../../startup/Authorisation";
+import { AuthenticationContext } from "../../startup/Authentication";
 
 interface Props extends RouteComponentProps {}
 
@@ -44,11 +46,24 @@ export default (storyFn: RenderFunction) =>
   StoryRouter()(() => (
     <StoreContext.Provider value={store}>
       <ConfigProvider>
-        <ThemeContextProvider>
-          <DragDropRouted>
-            <ThemedComponent>{storyFn()}</ThemedComponent>
-          </DragDropRouted>
-        </ThemeContextProvider>
+        <AuthenticationContext.Provider
+          value={{
+            idToken: "PollyWannaCracker",
+            setIdToken: () => {
+              console.log(
+                "Setting the idToken in storybook? This is most unexpected!"
+              );
+            }
+          }}
+        >
+          <AuthorisationContextProvider>
+            <ThemeContextProvider>
+              <DragDropRouted>
+                <ThemedComponent>{storyFn()}</ThemedComponent>
+              </DragDropRouted>
+            </ThemeContextProvider>
+          </AuthorisationContextProvider>
+        </AuthenticationContext.Provider>
       </ConfigProvider>
     </StoreContext.Provider>
   ));

@@ -1,5 +1,7 @@
 import { ResourceBuilder } from "./types";
 
+import authenticationResource from "./authenticationResource";
+import authorisationResource from "./authorisationResource";
 import appPermissionResource from "./appPermissionResource";
 import documentPermissionResource from "./documentPermissionResource";
 import dictionaryResource from "./dictionaryResource";
@@ -16,6 +18,8 @@ import xsltResource from "./xsltResource";
 
 const resourceBuilders: Array<ResourceBuilder> = [
   appPermissionResource,
+  authenticationResource,
+  authorisationResource,
   documentPermissionResource,
   dictionaryResource,
   elementsResource,

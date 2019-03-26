@@ -7,10 +7,10 @@ import { ResourceBuilder } from "./types";
 
 const resourceBuilder: ResourceBuilder = (
   server: any,
-  testConfig: Config,
+  { stroomBaseServiceUrl }: Config,
   testCache: TestCache
 ) => {
-  const resource = `${testConfig.stroomBaseServiceUrl}/users/v1`;
+  const resource = `${stroomBaseServiceUrl}/users/v1`;
 
   // Get User by UUID
   server

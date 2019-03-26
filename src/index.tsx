@@ -19,6 +19,8 @@ export const history = createHistory();
 
 import "react-table/react-table.css";
 import "./styles/main.css";
+import { AuthorisationContextProvider } from "./startup/Authorisation";
+import { AuthenticationContextProvider } from "./startup/Authentication";
 
 const DndRoutes = compose(DragDropContext(HTML5Backend))(Routes);
 
@@ -29,11 +31,15 @@ const App: React.FunctionComponent = () => {
   return (
     <StoreContext.Provider value={store}>
       <ConfigProvider>
-        <ThemeContextProvider>
-          <CustomRouter history={history}>
-            <DndRoutes />
-          </CustomRouter>
-        </ThemeContextProvider>
+        <AuthenticationContextProvider>
+          <AuthorisationContextProvider>
+            <ThemeContextProvider>
+              <CustomRouter history={history}>
+                <DndRoutes />
+              </CustomRouter>
+            </ThemeContextProvider>
+          </AuthorisationContextProvider>
+        </AuthenticationContextProvider>
       </ConfigProvider>
     </StoreContext.Provider>
   );
