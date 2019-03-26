@@ -15,7 +15,7 @@
  */
 import * as React from "react";
 import { useMemo, useCallback } from "react";
-import { compose } from "redux";
+import { pipe } from "ramda";
 import {
   DragSource,
   DropTarget,
@@ -160,7 +160,7 @@ const dropCollect: DropTargetCollector<DropCollectedProps> = (
   draggingItemType: monitor.getItemType()
 });
 
-const enhance = compose(
+const enhance = pipe(
   DragSource(DragDropTypes.ELEMENT, dragSource, dragCollect),
   DropTarget(
     [DragDropTypes.ELEMENT, DragDropTypes.PALLETE_ELEMENT],

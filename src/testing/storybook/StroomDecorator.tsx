@@ -1,5 +1,5 @@
 import * as React from "react";
-import { compose } from "redux";
+import { pipe } from "ramda";
 import { RenderFunction } from "@storybook/react";
 import { DragDropContext } from "react-dnd";
 import HTML5Backend from "react-dnd-html5-backend";
@@ -25,7 +25,7 @@ const RouteWrapper: React.StatelessComponent<Props> = ({
   children,
   history
 }) => <CustomRouter history={history}>{children}</CustomRouter>;
-const DragDropRouted = compose(
+const DragDropRouted = pipe(
   DragDropContext(HTML5Backend),
   withRouter
 )(RouteWrapper);

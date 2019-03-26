@@ -1,5 +1,5 @@
 import * as React from "react";
-import { compose } from "redux";
+import { pipe } from "ramda";
 import {
   DropTarget,
   DropTargetSpec,
@@ -94,7 +94,7 @@ const dragCollect: DragSourceCollector<
   };
 };
 
-const enhance = compose(
+const enhance = pipe(
   DropTarget([DragDropTypes.DOC_REF_UUIDS], dropTarget, dropCollect),
   DragSource(DragDropTypes.DOC_REF_UUIDS, dragSource, dragCollect)
 );

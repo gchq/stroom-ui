@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import * as React from "react";
-import { compose } from "redux";
+import { pipe } from "ramda";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   DragSource,
@@ -92,7 +92,7 @@ let dropCollect: DropTargetCollector<DropCollectedProps> = function dropCollect(
   };
 };
 
-const enhance = compose(
+const enhance = pipe(
   DragSource(DragDropTypes.OPERATOR, dragSource, dragCollect),
   DropTarget(
     [DragDropTypes.OPERATOR, DragDropTypes.TERM],
