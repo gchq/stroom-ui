@@ -9,9 +9,9 @@ import useDocRefWithLineage from "./useDocRefWithLineage";
 export {
   useApi,
   reducer,
-  StoreState,
   useDocRefInfo,
   useDocRefTypes,
   useDocumentTree,
-  useDocRefWithLineage
+  useDocRefWithLineage,
+  StoreState
 };

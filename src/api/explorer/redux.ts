@@ -113,40 +113,24 @@ export const actionCreators = {
 };
 export const useActionCreators = genUseActionCreators(actionCreators);
 
-const defaultState: StoreState = {
-  waitingForTree: true,
-  documentTree: {
-    uuid: "none",
-    type: "System",
-    name: "None"
-  }
+export const defaultState: StoreState = {
+  uuid: "none",
+  type: "System",
+  name: "None"
 };
 
 export const reducer = prepareReducer(defaultState)
   .handleAction<DocTreeReceived>(
     DOC_TREE_RECEIVED,
-    (state: StoreState, { documentTree }) => ({
-      waitingForTree: false,
-      documentTree,
-      docRefInfoByUuid: {}
-    })
+    (_, { documentTree }) => documentTree
   )
   .handleAction<DocRefRenamedAction>(
     DOC_REF_RENAMED,
-    (state = defaultState, { docRef, resultDocRef }) => ({
-      ...state,
-      documentTree: updateItemInTree(
-        state.documentTree,
-        docRef.uuid,
-        resultDocRef
-      )
-    })
+    (state = defaultState, { docRef, resultDocRef }) =>
+      updateItemInTree(state, docRef.uuid, resultDocRef)
   )
   .handleActions<UpdateTreeAction>(
     [DOC_REFS_MOVED, DOC_REFS_COPIED, DOC_REFS_DELETED, DOC_REF_CREATED],
-    (state = defaultState, { updatedTree }) => ({
-      ...state,
-      documentTree: updatedTree
-    })
+    (_, { updatedTree }) => updatedTree
   )
   .getReducer();

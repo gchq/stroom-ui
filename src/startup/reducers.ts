@@ -29,20 +29,20 @@ import {
 } from "./Authentication";
 
 import {
-  reducer as folderExplorer,
-  StoreState as FolderExplorerStoreState
+  StoreState as DocTreeStoreState,
+  reducer as documentTree
 } from "../api/explorer";
 
 export interface GlobalStoreState {
   errorPage: ErrorPageState;
   authentication: AuthenticationStoreState;
   authorisation: AuthorisationStoreState;
-  folderExplorer: FolderExplorerStoreState;
+  documentTree: DocTreeStoreState;
 }
 
 export default combineReducers({
   errorPage,
   authentication,
   authorisation,
-  folderExplorer
+  documentTree
 });

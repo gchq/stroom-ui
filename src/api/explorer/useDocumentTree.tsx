@@ -4,20 +4,19 @@ import useReduxState from "../../lib/useReduxState";
 import { GlobalStoreState } from "../../startup/reducers";
 import useApi from "./useApi";
 import { DocRefTree } from "../../types";
+import { defaultState } from "./redux";
 
 export const useDocumentTree = (): DocRefTree => {
-  const { documentTree, waitingForTree } = useReduxState(
-    ({
-      folderExplorer: { waitingForTree, documentTree }
-    }: GlobalStoreState) => ({ documentTree, waitingForTree })
+  const documentTree = useReduxState(
+    ({ documentTree }: GlobalStoreState) => documentTree
   );
   const { fetchDocTree } = useApi();
 
   useEffect(() => {
-    if (waitingForTree) {
+    if (documentTree === defaultState) {
       fetchDocTree();
     }
-  }, [waitingForTree, fetchDocTree]);
+  }, [documentTree, fetchDocTree]);
 
   return documentTree;
 };

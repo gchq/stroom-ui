@@ -129,9 +129,7 @@ export const useApi = (): Api => {
         destination: DocRefType,
         permissionInheritance: string
       ) => {
-        const {
-          folderExplorer: { documentTree }
-        } = store.getState();
+        const { documentTree } = store.getState();
         const docRefs = findByUuids(documentTree, uuids);
 
         httpPostJsonResponse(`${stroomBaseServiceUrl}/explorer/v1/copy`, {
@@ -152,9 +150,7 @@ export const useApi = (): Api => {
         destination: DocRefType,
         permissionInheritance: string
       ) => {
-        const {
-          folderExplorer: { documentTree }
-        } = store.getState();
+        const { documentTree } = store.getState();
         const docRefs = findByUuids(documentTree, uuids);
         httpPutJsonResponse(`${stroomBaseServiceUrl}/explorer/v1/move`, {
           body: JSON.stringify({
@@ -170,9 +166,7 @@ export const useApi = (): Api => {
     ),
     deleteDocuments: useCallback(
       (uuids: Array<string>) => {
-        const {
-          folderExplorer: { documentTree }
-        } = store.getState();
+        const { documentTree } = store.getState();
         const docRefs = findByUuids(documentTree, uuids);
         httpDeleteJsonResponse(`${stroomBaseServiceUrl}/explorer/v1/delete`, {
           body: JSON.stringify(docRefs.map(stripDocRef))
