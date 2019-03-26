@@ -3,8 +3,7 @@ import { useEffect, useState } from "react";
 import useApi from "./useApi";
 
 /**
- * Encapsulates the behaviour required to fetch the list of valid permissions
- * for a single Doc Type and retrieve the value from the redux store.
+ * Encapsulates the behaviour required to fetch the list of valid permissions.
  */
 
 const useDocTypePermissions = (docType: string): Array<string> => {

@@ -1,8 +1,6 @@
-import { useCallback, useContext } from "react";
-import { StoreContext } from "redux-react-hook";
+import { useCallback } from "react";
 
 import useHttpClient from "../useHttpClient";
-import { findByUuids } from "../../lib/treeUtils";
 import { DocRefType, DocRefTree, DocRefInfoType } from "../../types";
 import { SearchProps } from "./types";
 import { useConfig } from "../../startup/config";
@@ -26,25 +24,20 @@ interface Api {
   ) => Promise<DocRefTree>;
   renameDocument: (docRef: DocRefType, name: string) => Promise<DocRefType>;
   copyDocuments: (
-    uuids: Array<string>,
+    docRefs: Array<DocRefType>,
     destination: DocRefType,
     permissionInheritance: string
   ) => Promise<DocRefTree>;
   moveDocuments: (
-    uuids: Array<string>,
+    docRefs: Array<DocRefType>,
     destination: DocRefType,
     permissionInheritance: string
   ) => Promise<DocRefTree>;
-  deleteDocuments: (uuids: Array<string>) => Promise<DocRefTree>;
+  deleteDocuments: (docRefs: Array<DocRefType>) => Promise<DocRefTree>;
 }
 
 export const useApi = (): Api => {
-  const store = useContext(StoreContext);
   const { stroomBaseServiceUrl } = useConfig();
-
-  if (!store) {
-    throw new Error("Could not connect to redux store");
-  }
 
   const {
     httpGetJson,
@@ -110,55 +103,39 @@ export const useApi = (): Api => {
     ),
     copyDocuments: useCallback(
       (
-        uuids: Array<string>,
+        docRefs: Array<DocRefType>,
         destination: DocRefType,
         permissionInheritance: string
-      ) => {
-        const { documentTree } = store.getState();
-        const docRefs = findByUuids(documentTree, uuids);
-
-        return httpPostJsonResponse(
-          `${stroomBaseServiceUrl}/explorer/v1/copy`,
-          {
-            body: JSON.stringify({
-              docRefs: docRefs.map(stripDocRef),
-              destinationFolderRef: stripDocRef(destination),
-              permissionInheritance
-            })
-          }
-        );
-      },
-      [stroomBaseServiceUrl, httpPostJsonResponse]
-    ),
-    moveDocuments: useCallback(
-      (
-        uuids: Array<string>,
-        destination: DocRefType,
-        permissionInheritance: string
-      ) => {
-        const { documentTree } = store.getState();
-        const docRefs = findByUuids(documentTree, uuids);
-        return httpPutJsonResponse(`${stroomBaseServiceUrl}/explorer/v1/move`, {
+      ) =>
+        httpPostJsonResponse(`${stroomBaseServiceUrl}/explorer/v1/copy`, {
           body: JSON.stringify({
             docRefs: docRefs.map(stripDocRef),
             destinationFolderRef: stripDocRef(destination),
             permissionInheritance
           })
-        });
-      },
+        }),
+      [stroomBaseServiceUrl, httpPostJsonResponse]
+    ),
+    moveDocuments: useCallback(
+      (
+        docRefs: Array<DocRefType>,
+        destination: DocRefType,
+        permissionInheritance: string
+      ) =>
+        httpPutJsonResponse(`${stroomBaseServiceUrl}/explorer/v1/move`, {
+          body: JSON.stringify({
+            docRefs: docRefs.map(stripDocRef),
+            destinationFolderRef: stripDocRef(destination),
+            permissionInheritance
+          })
+        }),
       [stroomBaseServiceUrl, httpPutJsonResponse]
     ),
     deleteDocuments: useCallback(
-      (uuids: Array<string>) => {
-        const { documentTree } = store.getState();
-        const docRefs = findByUuids(documentTree, uuids);
-        return httpDeleteJsonResponse(
-          `${stroomBaseServiceUrl}/explorer/v1/delete`,
-          {
-            body: JSON.stringify(docRefs.map(stripDocRef))
-          }
-        );
-      },
+      (docRefs: Array<DocRefType>) =>
+        httpDeleteJsonResponse(`${stroomBaseServiceUrl}/explorer/v1/delete`, {
+          body: JSON.stringify(docRefs.map(stripDocRef))
+        }),
       [stroomBaseServiceUrl, httpDeleteJsonResponse]
     )
   };

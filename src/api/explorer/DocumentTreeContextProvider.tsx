@@ -1,46 +1,15 @@
-import { useEffect, useCallback, useState } from "react";
+import * as React from "react";
+import { useEffect, useCallback, useState, FunctionComponent } from "react";
 
 import useApi from "./useApi";
-import { DocRefTree, DocRefType, DocRefWithLineage } from "../../types";
-import { updateItemInTree, findItem } from "../../lib/treeUtils";
-import { SearchProps } from "./types";
+import { DocRefTree, DocRefType } from "../../types";
+import { updateItemInTree, findItem, findByUuids } from "../../lib/treeUtils";
+import DocumentTreeContext, {
+  DocumentTreeContextValue
+} from "./DocumentTreeContext";
+import { DEFAULT_TREE, DEFAULT_DOC_REF_WITH_LINEAGE } from "./values";
 
-interface UseDocumentTree {
-  documentTree: DocRefTree;
-  searchApp: (args: SearchProps) => Promise<Array<DocRefType>>;
-  createDocument: (
-    docRefType: string,
-    docRefName: string,
-    destinationFolderRef: DocRefType,
-    permissionInheritance: string
-  ) => void;
-  renameDocument: (docRef: DocRefType, name: string) => void;
-  copyDocuments: (
-    uuids: Array<string>,
-    destination: DocRefType,
-    permissionInheritance: string
-  ) => void;
-  moveDocuments: (
-    uuids: Array<string>,
-    destination: DocRefType,
-    permissionInheritance: string
-  ) => void;
-  deleteDocuments: (uuids: Array<string>) => void;
-  findDocRefWithLineage: (docRefUuid: string) => DocRefWithLineage;
-}
-
-export const DEFAULT_TREE: DocRefTree = {
-  uuid: "none",
-  type: "System",
-  name: "None"
-};
-
-const DEFAULT_DOC_REF_WITH_LINEAGE: DocRefWithLineage = {
-  lineage: [],
-  node: DEFAULT_TREE
-};
-
-export const useDocumentTree = (): UseDocumentTree => {
+const DocumentTreeContextProvider: FunctionComponent<{}> = ({ children }) => {
   const [documentTree, setDocumentTree] = useState<DocRefTree>(DEFAULT_TREE);
 
   const {
@@ -59,7 +28,7 @@ export const useDocumentTree = (): UseDocumentTree => {
     }
   }, [documentTree, fetchDocTree]);
 
-  return {
+  const contextValue: DocumentTreeContextValue = {
     documentTree,
     searchApp,
     createDocument: useCallback(
@@ -97,30 +66,32 @@ export const useDocumentTree = (): UseDocumentTree => {
         destination: DocRefType,
         permissionInheritance: string
       ) => {
-        copyDocuments(uuids, destination, permissionInheritance).then(
+        const docRefs = findByUuids(documentTree, uuids);
+        copyDocuments(docRefs, destination, permissionInheritance).then(
           setDocumentTree
         );
       },
-      [copyDocuments, setDocumentTree]
+      [documentTree, copyDocuments, setDocumentTree]
     ),
-
     moveDocuments: useCallback(
       (
         uuids: Array<string>,
         destination: DocRefType,
         permissionInheritance: string
       ) => {
-        moveDocuments(uuids, destination, permissionInheritance).then(
+        const docRefs = findByUuids(documentTree, uuids);
+        moveDocuments(docRefs, destination, permissionInheritance).then(
           setDocumentTree
         );
       },
-      [moveDocuments, setDocumentTree]
+      [documentTree, moveDocuments, setDocumentTree]
     ),
     deleteDocuments: useCallback(
       (uuids: Array<string>) => {
-        deleteDocuments(uuids).then(setDocumentTree);
+        const docRefs = findByUuids(documentTree, uuids);
+        deleteDocuments(docRefs).then(setDocumentTree);
       },
-      [deleteDocuments, setDocumentTree]
+      [documentTree, deleteDocuments, setDocumentTree]
     ),
     findDocRefWithLineage: useCallback(
       (docRefUuid: string) =>
@@ -128,6 +99,12 @@ export const useDocumentTree = (): UseDocumentTree => {
       [documentTree]
     )
   };
+
+  return (
+    <DocumentTreeContext.Provider value={contextValue}>
+      {children}
+    </DocumentTreeContext.Provider>
+  );
 };
 
-export default useDocumentTree;
+export default DocumentTreeContextProvider;

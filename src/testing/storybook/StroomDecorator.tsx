@@ -19,6 +19,7 @@ import { CustomRouter } from "../../lib/useRouter";
 import { ConfigProvider } from "../../startup/config";
 import { AuthorisationContextProvider } from "../../startup/Authorisation";
 import { AuthenticationContext } from "../../startup/Authentication";
+import { DocumentTreeContextProvider } from "../../api/explorer";
 
 interface Props extends RouteComponentProps {}
 
@@ -50,7 +51,7 @@ export default (storyFn: RenderFunction) =>
           value={{
             idToken: "PollyWannaCracker",
             setIdToken: () => {
-              console.log(
+              console.error(
                 "Setting the idToken in storybook? This is most unexpected!"
               );
             }
@@ -59,7 +60,9 @@ export default (storyFn: RenderFunction) =>
           <AuthorisationContextProvider>
             <ThemeContextProvider>
               <DragDropRouted>
-                <ThemedComponent>{storyFn()}</ThemedComponent>
+                <DocumentTreeContextProvider>
+                  <ThemedComponent>{storyFn()}</ThemedComponent>
+                </DocumentTreeContextProvider>
               </DragDropRouted>
             </ThemeContextProvider>
           </AuthorisationContextProvider>

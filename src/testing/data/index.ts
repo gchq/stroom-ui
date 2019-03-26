@@ -147,36 +147,50 @@ const docTree = {
   children: [
     {
       uuid: uuidv4(),
-      name: "Pipelines",
+      name: "Raw Materials",
       type: "Folder",
-      children: Object.entries(testPipelines)
-        .map(k => k[1])
-        .map(k => k.docRef)
-        .map(copyDocRef)
+      children: [
+        {
+          uuid: uuidv4(),
+          name: "Dictionaries",
+          type: "Folder",
+          children: Object.entries(dictionaries)
+            .map(k => k[1])
+            .map(copyDocRef)
+        },
+        {
+          uuid: uuidv4(),
+          name: "XSLT",
+          type: "Folder",
+          children: Object.entries(xslt)
+            .map(k => k[1])
+            .map(copyDocRef)
+        }
+      ]
     },
     {
       uuid: uuidv4(),
-      name: "Dictionaries",
+      name: "Compound Stuff",
       type: "Folder",
-      children: Object.entries(dictionaries)
-        .map(k => k[1])
-        .map(copyDocRef)
-    },
-    {
-      uuid: uuidv4(),
-      name: "Indexes",
-      type: "Folder",
-      children: Object.entries(indexes)
-        .map(k => k[1])
-        .map(copyDocRef)
-    },
-    {
-      uuid: uuidv4(),
-      name: "XSLT",
-      type: "Folder",
-      children: Object.entries(xslt)
-        .map(k => k[1])
-        .map(copyDocRef)
+      children: [
+        {
+          uuid: uuidv4(),
+          name: "Pipelines",
+          type: "Folder",
+          children: Object.entries(testPipelines)
+            .map(k => k[1])
+            .map(k => k.docRef)
+            .map(copyDocRef)
+        },
+        {
+          uuid: uuidv4(),
+          name: "Indexes",
+          type: "Folder",
+          children: Object.entries(indexes)
+            .map(k => k[1])
+            .map(copyDocRef)
+        }
+      ]
     },
     {
       uuid: uuidv4(),

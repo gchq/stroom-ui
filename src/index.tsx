@@ -21,6 +21,7 @@ import "react-table/react-table.css";
 import "./styles/main.css";
 import { AuthorisationContextProvider } from "./startup/Authorisation";
 import { AuthenticationContextProvider } from "./startup/Authentication";
+import { DocumentTreeContextProvider } from "./api/explorer";
 
 const DndRoutes = compose(DragDropContext(HTML5Backend))(Routes);
 
@@ -35,7 +36,9 @@ const App: React.FunctionComponent = () => {
           <AuthorisationContextProvider>
             <ThemeContextProvider>
               <CustomRouter history={history}>
-                <DndRoutes />
+                <DocumentTreeContextProvider>
+                  <DndRoutes />
+                </DocumentTreeContextProvider>
               </CustomRouter>
             </ThemeContextProvider>
           </AuthorisationContextProvider>
