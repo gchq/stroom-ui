@@ -24,8 +24,10 @@
     "@types/react-tooltip": "^3.3.6",
     "@types/sjcl": "^1.0.28",
     "@types/uuid": "^3.4.4",
+    "eslint": "^5.15.3",
     "js-search": "^1.4.2",
     "jwt-decode": "^2.2.0",
+    "lint-staged": "^8.1.5",
     "lorem-ipsum": "^1.0.6",
     "moment": "^2.22.2",
     "mousetrap": "^1.6.2",
@@ -50,6 +52,22 @@
     "sjcl": "^1.0.7",
     "uuid": "^3.3.2"
   },
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx}": [
+      "pretty-quick --staged",
+      "eslint src/ --fix",
+      "git add"
+    ],
+    "*.{json,md,scss,yaml,yml}": [
+      "pretty-quick --staged",
+      "git add"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
   "scripts": {
     "build-css": "node-sass-chokidar src/ -o src/",
     "watch-css": "node-sass-chokidar src/ -o src/ --watch --recursive",
@@ -63,8 +81,8 @@
     "storybook": "npm-run-all -p storybook-js watch-css"
   },
   "devDependencies": {
-    "tslint-react-hooks": "^2.0.0",
     "@babel/core": "^7.3.4",
+    "@storybook/addon-actions": "^5.0.5",
     "@storybook/addon-info": "^5.0.5",
     "@storybook/react": "^5.0.5",
     "@types/jest": "^24.0.9",
@@ -73,18 +91,21 @@
     "@types/react-dom": "^16.8.0",
     "@types/storybook__addon-info": "^4.1.0",
     "@types/storybook__react": "^4.0.1",
-    "@storybook/addon-actions": "^5.0.5",
     "awesome-typescript-loader": "^5.2.1",
     "babel-core": "^6.26.3",
     "babel-loader": "^8.0.5",
     "css-loader": "^2.1.1",
+    "husky": "^1.3.1",
     "node-sass-chokidar": "^1.3.3",
     "npm-run-all": "^4.1.3",
     "postcss-loader": "^3.0.0",
+    "prettier": "1.16.4",
+    "pretty-quick": "^1.10.0",
     "react-docgen-typescript": "^1.8.1",
     "react-docgen-typescript-loader": "^3.0.0",
     "react-docgen-typescript-webpack-plugin": "^1.1.0",
     "storybook-react-router": "^1.0.1",
+    "tslint-react-hooks": "^2.0.0",
     "typescript": "^3.3.3333"
   },
   "browserslist": [
