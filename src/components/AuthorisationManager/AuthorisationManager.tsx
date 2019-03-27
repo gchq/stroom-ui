@@ -13,26 +13,27 @@ import ThemedConfirm, {
   useDialog as useThemedConfim
 } from "../../components/ThemedConfirm";
 import useForm from "../../lib/useForm";
-import IsGroupFilterPicker from "./IsGroupFilterPicker";
 import {
   UserGroupPickOrCreateDialog,
   useDialog as useGroupModalDialog
 } from "./UserGroupPickOrCreateDialog";
 import useAppNavigation from "../AppChrome/useAppNavigation";
 
+interface Props {
+  isGroup: IsGroup;
+}
+
 interface Values {
   name: string;
-  isGroup?: IsGroup;
   uuid: string;
 }
 
 const defaultValues: Values = {
   name: "",
-  uuid: "",
-  isGroup: ""
+  uuid: ""
 };
 
-const Authorisation = () => {
+const Authorisation = ({ isGroup }: Props) => {
   const { goToAuthorisationsForUser } = useAppNavigation();
   const {
     findUsers,
@@ -64,17 +65,15 @@ const Authorisation = () => {
     }, [selectedUsers.map(v => v.uuid)])
   });
 
-  const { useControlledInputProps, useTextInput } = useForm({
+  const { useTextInput } = useForm({
     initialValues: defaultValues,
     onValidate: useCallback(
-      ({ name, isGroup, uuid }: Values) => findUsers(name, isGroup, uuid),
+      ({ name, uuid }: Values) => findUsers(name, isGroup, uuid),
       [findUsers]
     )
   });
   const nameProps = useTextInput("name");
   const uuidProps = useTextInput("uuid");
-
-  const isGroupProps = useControlledInputProps<IsGroup>("isGroup");
 
   const {
     componentProps: userGroupPickerProps,
@@ -97,15 +96,13 @@ const Authorisation = () => {
 
   return (
     <div className="Authorisation">
-      <IconHeader icon="users" text="User Permissions" />
+      <IconHeader icon="users" text={`${isGroup} Permissions`} />
 
       <form>
         <label htmlFor="name">Name</label>
         <input {...nameProps} />
         <label htmlFor="uuid">UUID</label>
         <input {...uuidProps} />
-        <label htmlFor="isGroup">Is Group</label>
-        <IsGroupFilterPicker {...isGroupProps} />
       </form>
 
       <div className="UserTable__container">

@@ -16,6 +16,7 @@
 import * as React from "react";
 import { useCallback } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { IconProp } from "@fortawesome/fontawesome-svg-core";
 
 import "simplebar";
 import "simplebar/dist/simplebar.css";
@@ -39,6 +40,7 @@ import useRouter from "../../lib/useRouter";
 import { useDocumentTree } from "../../api/explorer";
 import useAppNavigation from "./useAppNavigation";
 import { useTheme } from "../../lib/theme";
+import { IsGroup } from "../../api/userGroups";
 
 const PATH_PREFIX = "/s";
 
@@ -285,28 +287,16 @@ const AppChrome = ({ content }: Props) => {
               ),
             [menuItemOpened, areMenuItemsOpen]
           ),
-          children: [
-            {
-              key: "admin-user-permissions",
-              title: "Users",
-              onClick: goToAuthorisationManager,
-              icon: "user",
-              style: "nav",
-              isActive:
-                !!location &&
-                location.pathname.includes("/s/authorisationManager")
-            },
-            {
-              key: "admin-group-permissions",
-              title: "Groups",
-              onClick: goToAuthorisationManager,
-              icon: "users",
-              style: "nav",
-              isActive:
-                !!location &&
-                location.pathname.includes("/s/authorisationManager")
-            }
-          ]
+          children: (["User", "Group"] as Array<IsGroup>).map(isGroup => ({
+            key: `admin-permissions-${isGroup}`,
+            title: isGroup,
+            onClick: () => goToAuthorisationManager(isGroup),
+            icon: "user" as IconProp,
+            style: "nav",
+            isActive:
+              !!location &&
+              location.pathname.includes(`/s/authorisationManager/${isGroup}`)
+          })) as Array<MenuItemType>
         },
         {
           key: "admin-users",
