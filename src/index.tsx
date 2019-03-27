@@ -1,4 +1,4 @@
-// a comment
+// a comment xxxx
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
