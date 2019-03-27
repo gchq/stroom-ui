@@ -83,16 +83,10 @@ export interface OptionType {
   value: string;
 }
 
-export interface DictionaryUpdates {
+export interface Dictionary extends DocRefType {
   description?: string;
   data?: string;
   imports?: Array<DocRefType>;
-}
-
-export interface Dictionary extends DocRefType, DictionaryUpdates {}
-
-export interface IndexUpdates {
-  description?: string;
 }
 
 export type IndexFieldType = "FIELD" | "NUMERIC_FIELD" | "DATE_FIELD" | "ID";
@@ -134,18 +128,18 @@ export interface IndexField {
   conditions: Array<ConditionType>;
 }
 
-export interface IndexDoc extends DocRefType, IndexUpdates {
+export interface IndexDoc extends DocRefType {
+  description?: string;
+  volumeGroupName?: string;
   data: {
     fields: Array<IndexField>;
   };
 }
 
-export interface XsltUpdates {
+export interface XsltDoc extends DocRefType {
   description?: string;
   data?: string;
 }
-
-export interface XsltDoc extends DocRefType, XsltUpdates {}
 
 export type ConditionType =
   | "EQUALS"

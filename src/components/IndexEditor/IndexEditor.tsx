@@ -29,6 +29,7 @@ import Button from "../Button";
 import IndexFieldEditor, {
   useEditor as useFieldEditor
 } from "./IndexFieldEditor";
+import { IndexVolumeGroupPicker } from "../IndexVolumeGroups/IndexVolumeGroupPicker";
 
 interface Props {
   indexUuid: string;
@@ -43,6 +44,13 @@ const IndexEditor = ({ indexUuid }: Props) => {
   });
 
   const { docRefContents } = editorProps;
+
+  const onVolumeGroupChange = useCallback(
+    volumeGroupName => {
+      onDocumentChange({ volumeGroupName });
+    },
+    [onDocumentChange]
+  );
 
   const { componentProps } = useFieldsTable(
     docRefContents && docRefContents.data ? docRefContents.data.fields : []
@@ -194,6 +202,14 @@ const IndexEditor = ({ indexUuid }: Props) => {
 
   return (
     <DocRefEditor {...editorProps}>
+      <form>
+        <label>Volume Group</label>
+        <IndexVolumeGroupPicker
+          value={docRefContents.volumeGroupName}
+          onChange={onVolumeGroupChange}
+        />
+      </form>
+
       <h2>Fields</h2>
       <Button text="Create" onClick={onCreateClick} />
       <Button
