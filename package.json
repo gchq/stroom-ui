@@ -26,6 +26,7 @@
     "@types/uuid": "^3.4.4",
     "@typescript-eslint/eslint-plugin": "^1.5.0",
     "@typescript-eslint/parser": "^1.5.0",
+    "eslint-config-prettier": "^4.1.0",
     "js-search": "^1.4.2",
     "jwt-decode": "^2.2.0",
     "lorem-ipsum": "^1.0.6",

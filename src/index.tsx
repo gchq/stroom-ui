@@ -1,3 +1,4 @@
+// a comment
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
@@ -24,24 +25,24 @@ import { ErrorReportingContextProvider } from './components/ErrorPage';
 const DndRoutes = DragDropContext(HTML5Backend)(Routes);
 
 const App: React.FunctionComponent = () => {
-    useFontAwesome();
-    return (
-        <ErrorReportingContextProvider>
-            <ConfigProvider>
-                <AuthenticationContextProvider>
-                    <AuthorisationContextProvider>
-                        <ThemeContextProvider>
-                            <CustomRouter history={history}>
-                                <DocumentTreeContextProvider>
-                                    <DndRoutes />
-                                </DocumentTreeContextProvider>
-                            </CustomRouter>
-                        </ThemeContextProvider>
-                    </AuthorisationContextProvider>
-                </AuthenticationContextProvider>
-            </ConfigProvider>
-        </ErrorReportingContextProvider>
-    );
+  useFontAwesome();
+  return (
+    <ErrorReportingContextProvider>
+      <ConfigProvider>
+        <AuthenticationContextProvider>
+          <AuthorisationContextProvider>
+            <ThemeContextProvider>
+              <CustomRouter history={history}>
+                <DocumentTreeContextProvider>
+                  <DndRoutes />
+                </DocumentTreeContextProvider>
+              </CustomRouter>
+            </ThemeContextProvider>
+          </AuthorisationContextProvider>
+        </AuthenticationContextProvider>
+      </ConfigProvider>
+    </ErrorReportingContextProvider>
+  );
 };
 
 ReactDOM.render(<App />, document.getElementById('root') as HTMLElement);

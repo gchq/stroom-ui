@@ -4,7 +4,8 @@ module.exports = {
     es6: true,
   },
   parser: '@typescript-eslint/parser',
-  extends: 'plugin:@typescript-eslint/recommended',
+  //extends: 'plugin:@typescript-eslint/recommended',
+  extends: 'prettier',
   globals: {
     Atomics: 'readonly',
     SharedArrayBuffer: 'readonly',
@@ -18,7 +19,12 @@ module.exports = {
   },
   plugins: ['react', '@typescript-eslint'],
   rules: {
-    indent: ['error', 4],
+    // Indent with 2 spaces
+    indent: ['error', 2],
+    // Indent JSX with 2 spaces
+    'react/jsx-indent': ['error', 2],
+    // Indent props with 2 spaces
+    'react/jsx-indent-props': ['error', 2],
     'linebreak-style': ['error', 'unix'],
     quotes: ['error', 'single'],
     semi: ['error', 'always'],
