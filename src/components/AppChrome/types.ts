@@ -1,5 +1,6 @@
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { DocRefType } from "../../types";
+import { IsGroup } from "../../api/userGroups";
 
 export type MenuItemOpened = (name: string, isOpen: boolean) => void;
 
@@ -25,7 +26,7 @@ export interface NavigateApp {
   goToDataViewer: () => void; // /s/data
   goToProcessing: () => void; // /s/processing
   goToUserSettings: () => void; // /s/me
-  goToAuthorisationManager: () => void; // /s/authorisationManager
+  goToAuthorisationManager: (isGroup: IsGroup) => void; // /s/authorisationManager/{isGroup}
   goToAuthorisationsForUser: (userUuid: string) => void; // /s/authorisationManager/:userUuid
   goToAuthorisationsForDocument: (docRefUuid: string) => void; // /s/authorisationManager/document/:docRefUuid
   goToAuthorisationsForDocumentForUser: (

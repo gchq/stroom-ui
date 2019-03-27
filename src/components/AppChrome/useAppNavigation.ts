@@ -1,7 +1,8 @@
 import { NavigateApp } from "./types";
 import useRouter from "../../lib/useRouter";
 import { useMemo } from "react";
-import { DocRefType } from "src/types";
+import { DocRefType } from "../../types";
+import { IsGroup } from "../../api/userGroups";
 
 const useAppNavigation = (): NavigateApp => {
   const { history } = useRouter();
@@ -19,8 +20,8 @@ const useAppNavigation = (): NavigateApp => {
       goToUserSettings: () => {
         history.push(`/s/me`);
       },
-      goToAuthorisationManager: () => {
-        history.push(`/s/authorisationManager`);
+      goToAuthorisationManager: (isGroup: IsGroup) => {
+        history.push(`/s/authorisationManager/${isGroup}`);
       },
       goToAuthorisationsForUser: (userUuid: string) => {
         history.push(`/s/authorisationManager/${userUuid}`);
