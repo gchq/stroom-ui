@@ -21,25 +21,25 @@ export interface MenuItemType {
   isActive?: boolean;
 }
 
-export interface NavigateApp {
-  goToWelcome: () => void; // /s/welcome
-  goToDataViewer: () => void; // /s/data
-  goToProcessing: () => void; // /s/processing
-  goToUserSettings: () => void; // /s/me
-  goToAuthorisationManager: (isGroup: IsGroup) => void; // /s/authorisationManager/{isGroup}
-  goToAuthorisationsForUser: (userUuid: string) => void; // /s/authorisationManager/:userUuid
-  goToAuthorisationsForDocument: (docRefUuid: string) => void; // /s/authorisationManager/document/:docRefUuid
+export interface NavigateApp<T> {
+  goToWelcome: () => T;
+  goToDataViewer: () => T;
+  goToProcessing: () => T;
+  goToUserSettings: () => T;
+  goToAuthorisationManager: (isGroup: IsGroup) => T;
+  goToAuthorisationsForUser: (userUuid: string) => T;
+  goToAuthorisationsForDocument: (docRefUuid: string) => T;
   goToAuthorisationsForDocumentForUser: (
     docRefUuid: string,
     userUuid: string
-  ) => void; // /s/authorisationManager/document/:docRefUuid/:userUuid
-  goToIndexVolumes: () => void; // /s/indexing/volumes
-  goToIndexVolume: (volumeId: string) => void;
-  goToIndexVolumeGroups: () => void; // /s/indexing/groups
-  goToIndexVolumeGroup: (groupName: string) => void; // /s/indexing/groups/:groupName
-  goToUsers: () => void; // /s/users
-  goToApiKeys: () => void; // /s/apikeys
-  goToError: () => void; // /s/error
-  goToEditDocRefByUuid: (docRefUuid: string) => void; // /s/doc/:docRefUuid
-  goToEditDocRef: (docRef: DocRefType) => void;
+  ) => T;
+  goToIndexVolumes: () => T;
+  goToIndexVolume: (volumeId: T) => T;
+  goToIndexVolumeGroups: () => T;
+  goToIndexVolumeGroup: (groupName: string) => T;
+  goToUsers: () => T;
+  goToApiKeys: () => T;
+  goToError: () => T;
+  goToEditDocRefByUuid: (docRefUuid: string) => T;
+  goToEditDocRef: (docRef: DocRefType) => T;
 }

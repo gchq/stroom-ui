@@ -44,6 +44,7 @@ import DocumentPermissionEditor from "../components/AuthorisationManager/Documen
 import DocumentPermissionForUserEditor from "../components/AuthorisationManager/DocumentPermissionForUserEditor";
 import IndexVolumeEditor from "../components/IndexVolumes/IndexVolumeEditor";
 import { IsGroup } from "../api/userGroups";
+import { urlGenerator } from "../components/AppChrome/useAppNavigation";
 
 const renderWelcome = () => (
   <AppChrome activeMenuItem="Welcome" content={<Welcome />} />
@@ -93,21 +94,21 @@ const Routes: React.FunctionComponent = () => {
       <PrivateRoute exact path="/s/welcome" render={renderWelcome} />
       <PrivateRoute
         exact
-        path="/s/data"
+        path={urlGenerator.goToDataViewer()}
         render={() => (
           <AppChrome activeMenuItem="Data" content={<DataViewer />} />
         )}
       />
       <PrivateRoute
         exact
-        path="/s/processing"
+        path={urlGenerator.goToProcessing()}
         render={() => (
           <AppChrome activeMenuItem="Processing" content={<Processing />} />
         )}
       />
       <PrivateRoute
         exact
-        path="/s/me"
+        path={urlGenerator.goToUserSettings()}
         render={() => (
           <AppChrome activeMenuItem="Me" content={<UserSettings />} />
         )}
@@ -116,7 +117,7 @@ const Routes: React.FunctionComponent = () => {
         <PrivateRoute
           key={isGroup}
           exact
-          path={`/s/authorisationManager/${isGroup}`}
+          path={urlGenerator.goToAuthorisationManager(isGroup)}
           render={() => (
             <AppChrome
               activeMenuItem={isGroup as string}
@@ -128,40 +129,49 @@ const Routes: React.FunctionComponent = () => {
 
       <PrivateRoute
         exact
-        path="/s/authorisationManager/:userUuid"
-        render={(props: RouteComponentProps<any>) => (
+        path={urlGenerator.goToAuthorisationsForUser(":userUuid")}
+        render={({
+          match: {
+            params: { userUuid }
+          }
+        }: RouteComponentProps<any>) => (
           <AppChrome
             activeMenuItem="User Authorisation"
-            content={
-              <UserAuthorisationEditor userUuid={props.match.params.userUuid} />
-            }
+            content={<UserAuthorisationEditor userUuid={userUuid} />}
           />
         )}
       />
       <PrivateRoute
         exact
-        path="/s/authorisationManager/document/:docRefUuid"
-        render={(props: RouteComponentProps<any>) => (
+        path={urlGenerator.goToAuthorisationsForDocument(":docRefUuid")}
+        render={({
+          match: {
+            params: { docRefUuid }
+          }
+        }: RouteComponentProps<any>) => (
           <AppChrome
             activeMenuItem="User Authorisation"
-            content={
-              <DocumentPermissionEditor
-                docRefUuid={props.match.params.docRefUuid}
-              />
-            }
+            content={<DocumentPermissionEditor docRefUuid={docRefUuid} />}
           />
         )}
       />
       <PrivateRoute
         exact
-        path="/s/authorisationManager/document/:docRefUuid/:userUuid"
-        render={(props: RouteComponentProps<any>) => (
+        path={urlGenerator.goToAuthorisationsForDocumentForUser(
+          ":docRefUuid",
+          ":userUuid"
+        )}
+        render={({
+          match: {
+            params: { userUuid, docRefUuid }
+          }
+        }: RouteComponentProps<any>) => (
           <AppChrome
             activeMenuItem="User Authorisation"
             content={
               <DocumentPermissionForUserEditor
-                userUuid={props.match.params.userUuid}
-                docRefUuid={props.match.params.docRefUuid}
+                userUuid={userUuid}
+                docRefUuid={docRefUuid}
               />
             }
           />
@@ -169,7 +179,7 @@ const Routes: React.FunctionComponent = () => {
       />
       <PrivateRoute
         exact
-        path="/s/indexing/volumes"
+        path={urlGenerator.goToIndexVolumes()}
         render={() => (
           <AppChrome
             activeMenuItem="Index Volumes"
@@ -179,19 +189,21 @@ const Routes: React.FunctionComponent = () => {
       />
       <PrivateRoute
         exact
-        path="/s/indexing/volumes/:volumeId"
-        render={(props: RouteComponentProps<any>) => (
+        path={urlGenerator.goToIndexVolume(":volumeId")}
+        render={({
+          match: {
+            params: { volumeId }
+          }
+        }: RouteComponentProps<any>) => (
           <AppChrome
             activeMenuItem="Index Volumes"
-            content={
-              <IndexVolumeEditor volumeId={props.match.params.volumeId} />
-            }
+            content={<IndexVolumeEditor volumeId={volumeId} />}
           />
         )}
       />
       <PrivateRoute
         exact
-        path="/s/indexing/groups"
+        path={urlGenerator.goToIndexVolumeGroups()}
         render={() => (
           <AppChrome
             activeMenuItem="Index Groups"
@@ -201,42 +213,42 @@ const Routes: React.FunctionComponent = () => {
       />
       <PrivateRoute
         exact
-        path="/s/indexing/groups/:groupName"
-        render={(props: RouteComponentProps<any>) => (
+        path={urlGenerator.goToIndexVolumeGroup(":groupName")}
+        render={({
+          match: {
+            params: { groupName }
+          }
+        }: RouteComponentProps<any>) => (
           <AppChrome
             activeMenuItem="Index Groups"
-            content={
-              <IndexVolumeGroupEditor
-                groupName={props.match.params.groupName}
-              />
-            }
+            content={<IndexVolumeGroupEditor groupName={groupName} />}
           />
         )}
       />
       <PrivateRoute
         exact
-        path="/s/users"
+        path={urlGenerator.goToUsers()}
         render={() => (
           <AppChrome activeMenuItem="Users" content={<UsersIFrame />} />
         )}
       />
       <PrivateRoute
         exact
-        path="/s/apikeys"
+        path={urlGenerator.goToApiKeys()}
         render={() => (
           <AppChrome activeMenuItem="API Keys" content={<ApiTokensIFrame />} />
         )}
       />
       <PrivateRoute
         exact
-        path="/s/error"
+        path={urlGenerator.goToError()}
         render={() => (
           <AppChrome activeMenuItem="Error" content={<ErrorPage />} />
         )}
       />
       <PrivateRoute
         exact
-        path="/s/doc/:docRefUuid"
+        path={urlGenerator.goToEditDocRefByUuid(":docRefUuid")}
         render={(props: RouteComponentProps<any>) => (
           <AppChrome
             activeMenuItem="Explorer"
