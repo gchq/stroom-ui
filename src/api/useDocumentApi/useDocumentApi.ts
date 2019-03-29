@@ -5,7 +5,15 @@ import { DocumentType } from "../../types";
 import { useConfig } from "../../startup/config";
 import useHttpClient from "../useHttpClient";
 
-const useCommonDocumentApi = <
+/**
+ * This returns an API that can fetch/save a particular document type.
+ * The specific types supported and their respective resource URL's can be found under ./types.
+ * This class is based on a certain common appearance for document resources.
+ * Any documents which do not expose an interface like this will require a bespoke API + useHook combination.
+ *
+ * @param docRefType The doc ref type to retrieve/save
+ */
+const useDocumentApi = <
   T extends keyof ResourcesByDocType,
   D extends DocumentType<T>
 >(
@@ -23,8 +31,8 @@ const useCommonDocumentApi = <
 
   return {
     fetchDocument: useCallback(
-      (indexUuid: string) =>
-        httpGetJson(`${stroomBaseServiceUrl}${resourcePath}${indexUuid}`),
+      (docRefUuid: string) =>
+        httpGetJson(`${stroomBaseServiceUrl}${resourcePath}${docRefUuid}`),
       [stroomBaseServiceUrl, httpGetJson]
     ),
     saveDocument: useCallback(
@@ -40,4 +48,4 @@ const useCommonDocumentApi = <
   };
 };
 
-export default useCommonDocumentApi;
+export default useDocumentApi;
