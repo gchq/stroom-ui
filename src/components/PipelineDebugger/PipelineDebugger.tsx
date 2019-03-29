@@ -23,7 +23,7 @@ import Loader from "../Loader";
 
 import DebuggerStep from "./DebuggerStep";
 import { getNext, getPrevious } from "./pipelineDebugger.utils";
-import { useApi as usePipelineApi } from "../../api/pipelineDocument";
+import { useApi as usePipelineApi } from "../../api/documents/pipelineDocument";
 import usePipelineState from "../PipelineEditor/usePipelineState";
 
 interface Props {

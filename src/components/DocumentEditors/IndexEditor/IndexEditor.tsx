@@ -17,14 +17,19 @@
 import * as React from "react";
 import { useCallback } from "react";
 
-import DocRefEditor, { useDocRefEditor, SwitchedDocRefEditorProps } from "../DocRefEditor";
+import DocRefEditor, {
+  useDocRefEditor,
+  SwitchedDocRefEditorProps
+} from "../DocRefEditor";
 import Loader from "../../Loader";
-import { useApi as useIndexApi } from "../../../api/indexDocument";
+import { useApi as useIndexApi } from "../../../api/documents/indexDocument";
 import { IndexDoc, IndexField } from "../../../types";
 import IndexFieldsTable, {
   useTable as useFieldsTable
 } from "./IndexFieldsTable";
-import ThemedConfirm, { useDialog as useThemedConfirm } from "../../ThemedConfirm";
+import ThemedConfirm, {
+  useDialog as useThemedConfirm
+} from "../../ThemedConfirm";
 import Button from "../../Button";
 import IndexFieldEditor, {
   useEditor as useFieldEditor

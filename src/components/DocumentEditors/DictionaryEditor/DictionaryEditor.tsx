@@ -1,21 +1,24 @@
-import * as React from 'react';
+import * as React from "react";
 
-import Loader from '../../Loader';
-import DocRefEditor, {useDocRefEditor, SwitchedDocRefEditorProps} from '../DocRefEditor';
-import {useApi} from '../../../api/dictionaryDocument';
-import {Dictionary} from '../../../types';
+import Loader from "../../Loader";
+import DocRefEditor, {
+  useDocRefEditor,
+  SwitchedDocRefEditorProps
+} from "../DocRefEditor";
+import { useApi } from "../../../api/documents/dictionaryDocument";
+import { Dictionary } from "../../../types";
 
 const DictionaryEditor: React.FunctionComponent<SwitchedDocRefEditorProps> = ({
-  docRefUuid,
+  docRefUuid
 }) => {
   // Get data from and subscribe to the store
   const documentApi = useApi();
 
-  const {onDocumentChange, editorProps} = useDocRefEditor<Dictionary>({
+  const { onDocumentChange, editorProps } = useDocRefEditor<Dictionary>({
     docRefUuid,
-    documentApi,
+    documentApi
   });
-  const {docRefContents} = editorProps;
+  const { docRefContents } = editorProps;
 
   if (!docRefContents) {
     return <Loader message={`Loading Dictionary ${docRefUuid}`} />;
@@ -25,7 +28,7 @@ const DictionaryEditor: React.FunctionComponent<SwitchedDocRefEditorProps> = ({
     <DocRefEditor {...editorProps}>
       <textarea
         value={docRefContents.data}
-        onChange={({target: {value}}) => onDocumentChange({data: value})}
+        onChange={({ target: { value } }) => onDocumentChange({ data: value })}
       />
     </DocRefEditor>
   );

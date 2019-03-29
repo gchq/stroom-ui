@@ -1,7 +1,7 @@
-import {useMemo, useState, useCallback} from 'react';
+import { useMemo, useState, useCallback } from "react";
 
-import {useApi as usePipelineApi} from '../../api/pipelineDocument';
-import {useDocRefEditor} from '../DocumentEditors/DocRefEditor';
+import { useApi as usePipelineApi } from "../../api/documents/pipelineDocument";
+import { useDocRefEditor } from "../DocumentEditors/DocRefEditor";
 import {
   getPipelineAsTree,
   moveElementInPipeline,
@@ -10,9 +10,9 @@ import {
   reinstateElementToPipeline,
   setElementPropertyValueInPipeline,
   revertPropertyToParent,
-  revertPropertyToDefault,
-} from './pipelineUtils';
-import {PipelineEditApi, PipelineProps} from './types';
+  revertPropertyToDefault
+} from "./pipelineUtils";
+import { PipelineEditApi, PipelineProps } from "./types";
 
 export const usePipelineState = (pipelineId: string): PipelineProps => {
   const documentApi = usePipelineApi();
@@ -24,15 +24,15 @@ export const usePipelineState = (pipelineId: string): PipelineProps => {
 
   const useEditorProps = useDocRefEditor({
     docRefUuid: pipelineId,
-    documentApi,
+    documentApi
   });
 
   const {
-    editorProps: {docRefContents},
-    onDocumentChange,
+    editorProps: { docRefContents },
+    onDocumentChange
   } = useEditorProps;
   const asTree = useMemo(() => getPipelineAsTree(docRefContents), [
-    docRefContents,
+    docRefContents
   ]);
 
   return {
@@ -41,46 +41,46 @@ export const usePipelineState = (pipelineId: string): PipelineProps => {
     pipelineEditApi: {
       elementInitialValues,
       selectedElementId,
-      settingsUpdated: useCallback<PipelineEditApi['settingsUpdated']>(
-        ({description}) => {
-          onDocumentChange({description});
+      settingsUpdated: useCallback<PipelineEditApi["settingsUpdated"]>(
+        ({ description }) => {
+          onDocumentChange({ description });
         },
-        [onDocumentChange],
+        [onDocumentChange]
       ),
-      elementSelected: useCallback<PipelineEditApi['elementReinstated']>(
+      elementSelected: useCallback<PipelineEditApi["elementReinstated"]>(
         (elementId, initialValues) => {
           setSelectedElementId(elementId);
           setInitialValues(initialValues);
         },
-        [setSelectedElementId, setInitialValues],
+        [setSelectedElementId, setInitialValues]
       ),
       elementSelectionCleared: useCallback<
-        PipelineEditApi['elementSelectionCleared']
+        PipelineEditApi["elementSelectionCleared"]
       >(() => {
         setSelectedElementId(undefined);
         setInitialValues({});
       }, [setSelectedElementId, setInitialValues]),
-      elementDeleted: useCallback<PipelineEditApi['elementDeleted']>(
+      elementDeleted: useCallback<PipelineEditApi["elementDeleted"]>(
         elementId => {
           if (!!docRefContents) {
             onDocumentChange(
-              removeElementFromPipeline(docRefContents, elementId),
+              removeElementFromPipeline(docRefContents, elementId)
             );
           }
         },
-        [docRefContents],
+        [docRefContents]
       ),
-      elementReinstated: useCallback<PipelineEditApi['elementReinstated']>(
+      elementReinstated: useCallback<PipelineEditApi["elementReinstated"]>(
         (parentId, recycleData) => {
           if (!!docRefContents) {
             onDocumentChange(
-              reinstateElementToPipeline(docRefContents, parentId, recycleData),
+              reinstateElementToPipeline(docRefContents, parentId, recycleData)
             );
           }
         },
-        [docRefContents],
+        [docRefContents]
       ),
-      elementAdded: useCallback<PipelineEditApi['elementAdded']>(
+      elementAdded: useCallback<PipelineEditApi["elementAdded"]>(
         (parentId, elementDefinition, name) => {
           if (!!docRefContents) {
             onDocumentChange(
@@ -88,25 +88,25 @@ export const usePipelineState = (pipelineId: string): PipelineProps => {
                 docRefContents,
                 parentId,
                 elementDefinition,
-                name,
-              ),
+                name
+              )
             );
           }
         },
-        [docRefContents, onDocumentChange],
+        [docRefContents, onDocumentChange]
       ),
-      elementMoved: useCallback<PipelineEditApi['elementMoved']>(
+      elementMoved: useCallback<PipelineEditApi["elementMoved"]>(
         (itemToMove, destination) => {
           if (!!docRefContents) {
             onDocumentChange(
-              moveElementInPipeline(docRefContents, itemToMove, destination),
+              moveElementInPipeline(docRefContents, itemToMove, destination)
             );
           }
         },
-        [],
+        []
       ),
       elementPropertyUpdated: useCallback<
-        PipelineEditApi['elementPropertyUpdated']
+        PipelineEditApi["elementPropertyUpdated"]
       >((element, name, propertyType, propertyValue) => {
         if (!!docRefContents) {
           onDocumentChange(
@@ -115,30 +115,30 @@ export const usePipelineState = (pipelineId: string): PipelineProps => {
               element,
               name,
               propertyType,
-              propertyValue,
-            ),
+              propertyValue
+            )
           );
         }
       }, []),
       elementPropertyRevertToDefault: useCallback<
-        PipelineEditApi['elementPropertyRevertToDefault']
+        PipelineEditApi["elementPropertyRevertToDefault"]
       >((elementId, name) => {
         if (!!docRefContents) {
           onDocumentChange(
-            revertPropertyToDefault(docRefContents, elementId, name),
+            revertPropertyToDefault(docRefContents, elementId, name)
           );
         }
       }, []),
       elementPropertyRevertToParent: useCallback<
-        PipelineEditApi['elementPropertyRevertToParent']
+        PipelineEditApi["elementPropertyRevertToParent"]
       >((elementId, name) => {
         if (!!docRefContents) {
           onDocumentChange(
-            revertPropertyToParent(docRefContents, elementId, name),
+            revertPropertyToParent(docRefContents, elementId, name)
           );
         }
-      }, []),
-    },
+      }, [])
+    }
   };
 };
 

@@ -1,29 +1,30 @@
 import { HttpRequest, HttpResponse } from "@pollyjs/adapter-fetch";
 
-import { TestCache } from "../PollyDecorator";
-import { Config } from "../../../startup/config";
-import { ResourceBuilder } from "./types";
+import { TestCache } from "../../PollyDecorator";
+import { Config } from "../../../../startup/config";
+import { ResourceBuilder } from "../types";
 
 const resourceBuilder: ResourceBuilder = (
   server: any,
   { stroomBaseServiceUrl }: Config,
   testCache: TestCache
 ) => {
-  const resource = `${stroomBaseServiceUrl}/index/v1`;
+  const resource = `${stroomBaseServiceUrl}/dictionary/v1`;
+
   server
-    .get(`${resource}/:indexUuid`)
+    .get(`${resource}/:dictionaryUuid`)
     .intercept((req: HttpRequest, res: HttpResponse) => {
-      const index = testCache.data!.indexes.find(
-        index => index.uuid === req.params.indexUuid
+      const dict = testCache.data!.dictionaries.find(
+        d => d.uuid === req.params.dictionaryUuid
       );
-      if (index) {
-        res.json(index);
+      if (dict) {
+        res.json(dict);
       } else {
         res.sendStatus(404);
       }
     });
   server
-    .post(`${resource}/:indexUuid`)
+    .post(`${resource}/:dictionaryUuid`)
     .intercept((req: HttpRequest, res: HttpResponse) => res.sendStatus(200));
 };
 

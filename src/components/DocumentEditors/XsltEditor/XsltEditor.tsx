@@ -16,13 +16,18 @@
 
 import * as React from "react";
 
-import DocRefEditor, { useDocRefEditor, SwitchedDocRefEditorProps } from "../DocRefEditor";
+import DocRefEditor, {
+  useDocRefEditor,
+  SwitchedDocRefEditorProps
+} from "../DocRefEditor";
 import Loader from "../../Loader";
-import { useApi } from "../../../api/xsltDocument";
+import { useApi } from "../../../api/documents/xsltDocument";
 import ThemedAceEditor from "../../ThemedAceEditor";
 import { XsltDoc } from "../../../types";
 
-const XsltEditor : React.FunctionComponent<SwitchedDocRefEditorProps> = ({ docRefUuid }) => {
+const XsltEditor: React.FunctionComponent<SwitchedDocRefEditorProps> = ({
+  docRefUuid
+}) => {
   const documentApi = useApi();
 
   const { onDocumentChange, editorProps } = useDocRefEditor<XsltDoc>({
