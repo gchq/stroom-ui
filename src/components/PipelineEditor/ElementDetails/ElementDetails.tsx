@@ -27,7 +27,7 @@ import {
   PipelineDocumentType
 } from "../../../types";
 import Loader from "../../../components/Loader";
-import { useElements } from "../../../api/elements";
+import useElements from "../../../api/useElements";
 import { PipelineEditApi } from "../types";
 
 interface Props {

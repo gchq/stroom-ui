@@ -25,7 +25,7 @@ import { PipelineElementType } from "../../types";
 import { getAllElementNames } from "./pipelineUtils";
 import { ShowDialog as ShowAddElementDialog } from "./AddElementModal";
 import { PipelineProps } from "./types";
-import { useElements } from "../../api/elements";
+import useElements from "../../api/useElements";
 
 interface Props {
   pipelineId: string;
