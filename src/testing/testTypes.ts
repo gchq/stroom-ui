@@ -12,7 +12,16 @@ import {
   IndexVolumeGroupMembership,
   IndexDoc,
   XsltDoc,
-  StreamAttributeMapResult
+  StreamAttributeMapResult,
+  AnnotationsIndexDoc,
+  DashboardDoc,
+  ElasticIndexDoc,
+  FeedDoc,
+  ScriptDoc,
+  StatisticsStoreDoc,
+  StroomStatsStoreDoc,
+  VisualisationDoc,
+  XMLSchemaDoc
 } from "../types";
 
 export interface UserGroupMembership {
@@ -35,6 +44,15 @@ export interface TestData {
   xslt: Array<XsltDoc>;
   dictionaries: Array<Dictionary>;
   indexes: Array<IndexDoc>;
+  annotationIndexes: Array<AnnotationsIndexDoc>;
+  dashboards: Array<DashboardDoc>;
+  elasticIndexes: Array<ElasticIndexDoc>;
+  feeds: Array<FeedDoc>;
+  scripts: Array<ScriptDoc>;
+  statisticsStores: Array<StatisticsStoreDoc>;
+  stroomStatsStores: Array<StroomStatsStoreDoc>;
+  visualisations: Array<VisualisationDoc>;
+  xmlSchemas: Array<XMLSchemaDoc>;
   trackers: Array<StreamTaskType>;
   dataList: StreamAttributeMapResult;
   dataSource: DataSourceType;

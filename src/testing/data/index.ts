@@ -21,13 +21,32 @@ import {
   Dictionary,
   StreamTaskType,
   IndexDoc,
-  XsltDoc
+  XsltDoc,
+  DocumentType,
+  XMLSchemaDoc,
+  VisualisationDoc,
+  StatisticsStoreDoc,
+  StroomStatsStoreDoc,
+  ScriptDoc,
+  ElasticIndexDoc,
+  DashboardDoc,
+  AnnotationsIndexDoc,
+  FeedDoc
 } from "../../types";
 import { testPipelines, elements, elementProperties } from "./pipelines";
 import testDocRefsTypes from "./docRefTypes";
-import { generateTestXslt } from "./xslt";
-import { generateTestIndex } from "./indexDocs";
-import { generateTestDictionary } from "./dictionary";
+import { generate as generateAnnotationsIndex } from "./annotationsIndex";
+import { generate as generateDashboard } from "./dashboard";
+import { generate as generateDictionary } from "./dictionary";
+import { generate as generateElasticIndex } from "./elasticIndex";
+import { generate as generateFeed } from "./feed";
+import { generate as generateIndex } from "./indexDocs";
+import { generate as generateScript } from "./script";
+import { generate as generateStatisticsStore } from "./statisticsStore";
+import { generate as generateStroomStatsStore } from "./stroomStatsStore";
+import { generate as generateVisualisation } from "./visualisation";
+import { generate as generateXmlSchema } from "./xmlSchema";
+import { generate as generateXslt } from "./xslt";
 import { generateGenericTracker } from "./trackers";
 import { dataList, dataSource } from "./data";
 import { generateTestUser, generateTestGroup } from "./usersAndGroups";
@@ -89,6 +108,34 @@ let indexVolumes: Array<IndexVolume> = Array(30)
   .fill(1)
   .map(generateTestIndexVolume);
 
+let annotationIndexes: Array<AnnotationsIndexDoc> = Array(3)
+  .fill(1)
+  .map(generateAnnotationsIndex);
+let dashboards: Array<DashboardDoc> = Array(3)
+  .fill(1)
+  .map(generateDashboard);
+let elasticIndexes: Array<ElasticIndexDoc> = Array(3)
+  .fill(1)
+  .map(generateElasticIndex);
+let feeds: Array<FeedDoc> = Array(3)
+  .fill(1)
+  .map(generateFeed);
+let scripts: Array<ScriptDoc> = Array(3)
+  .fill(1)
+  .map(generateScript);
+let statisticsStores: Array<StatisticsStoreDoc> = Array(3)
+  .fill(1)
+  .map(generateStatisticsStore);
+let stroomStatsStores: Array<StroomStatsStoreDoc> = Array(3)
+  .fill(1)
+  .map(generateStroomStatsStore);
+let visualisations: Array<VisualisationDoc> = Array(3)
+  .fill(1)
+  .map(generateVisualisation);
+let xmlSchemas: Array<XMLSchemaDoc> = Array(3)
+  .fill(1)
+  .map(generateXmlSchema);
+
 let indexVolumeGroupMemberships: Array<IndexVolumeGroupMembership> = [];
 let indexVolumeIndex = 0; // Best variable name ever
 indexVolumeGroups.forEach(group => {
@@ -103,27 +150,23 @@ indexVolumeGroups.forEach(group => {
   }
 });
 
+let reduceByUuid = <T extends string, D extends DocumentType<T>>(
+  acc: { [uuid: string]: D },
+  i: D
+) => ({
+  ...acc,
+  [i.uuid]: i
+});
+
 let dictionaries: { [uuid: string]: Dictionary } = Array(5)
   .fill(null)
-  .map(generateTestDictionary)
-  .reduce(
-    (acc, i) => ({
-      ...acc,
-      [i.uuid]: i
-    }),
-    {}
-  );
+  .map(generateDictionary)
+  .reduce(reduceByUuid, {});
 
 let xslt: { [uuid: string]: XsltDoc } = Array(5)
   .fill(null)
-  .map(generateTestXslt)
-  .reduce(
-    (acc, i) => ({
-      ...acc,
-      [i.uuid]: i
-    }),
-    {}
-  );
+  .map(generateXslt)
+  .reduce(reduceByUuid, {});
 
 let trackers: Array<StreamTaskType> = Array(10)
   .fill(null)
@@ -131,14 +174,8 @@ let trackers: Array<StreamTaskType> = Array(10)
 
 let indexes: { [uuid: string]: IndexDoc } = Array(5)
   .fill(null)
-  .map(generateTestIndex)
-  .reduce(
-    (acc, i) => ({
-      ...acc,
-      [i.uuid]: i
-    }),
-    {}
-  );
+  .map(generateIndex)
+  .reduce(reduceByUuid, {});
 
 const docTree = {
   uuid: "0",
@@ -242,7 +279,16 @@ export const fullTestData: TestData = {
   allAppPermissions,
   userAppPermissions,
   docPermissionByType,
-  userDocPermission
+  userDocPermission,
+  annotationIndexes,
+  dashboards,
+  elasticIndexes,
+  feeds,
+  scripts,
+  statisticsStores,
+  stroomStatsStores,
+  visualisations,
+  xmlSchemas
 };
 
 export default fullTestData;

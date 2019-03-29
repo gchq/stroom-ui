@@ -13,7 +13,7 @@ export const generateTestField = (): IndexField => ({
   conditions: []
 });
 
-export const generateTestIndex = (): IndexDoc => ({
+export const generate = (): IndexDoc => ({
   type: "Index",
   uuid: uuidv4(),
   name: loremIpsum({ count: 2, units: "words" }),

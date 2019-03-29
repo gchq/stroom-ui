@@ -83,7 +83,12 @@ export interface OptionType {
   value: string;
 }
 
-export interface Dictionary extends DocRefType {
+export interface DocumentType<T extends string> extends HasUuid {
+  type: T;
+  name?: string;
+}
+
+export interface Dictionary extends DocumentType<"Dictionary"> {
   description?: string;
   data?: string;
   imports?: Array<DocRefType>;
@@ -117,6 +122,91 @@ export const AnalyzerDisplayValues = {
   STANDARD: "Standard"
 };
 
+export type FeedStatus = "Receive" | "Reject" | "Drop";
+
+export interface FeedDoc extends DocumentType<"Feed"> {
+  description?: string;
+  classification?: string;
+  encoding?: string;
+  contextEncoding?: string;
+  retentionDayAge?: number;
+  reference?: boolean;
+  streamType?: string;
+  feedStatus?: FeedStatus;
+}
+export interface AnnotationsIndexDoc extends DocumentType<"AnnotationsIndex"> {}
+export interface ElasticIndexDoc extends DocumentType<"ElasticIndex"> {
+  indexName?: string;
+  indexedType?: string;
+}
+export interface DashboardDoc extends DocumentType<"Dashboard"> {}
+export interface ScriptDoc extends DocumentType<"Script"> {
+  description?: string;
+  dependencies?: Array<DocRefType>;
+  data?: string;
+}
+
+export type StatisticType = "Count" | "Value";
+export type StatisticRollupType = "None" | "All" | "Custom";
+export interface StatisticField {
+  fieldName: string;
+}
+export interface CustomRollupMask {
+  rolledUpTagPositions: Array<number>;
+}
+export interface StatisticsDataSourceData {
+  statisticFields: Array<StatisticField>;
+  customRollUpMasks: Array<CustomRollupMask>;
+  fieldPositionMap: {
+    [fieldName: string]: number;
+  };
+}
+export interface StatisticsStoreDoc extends DocumentType<"StatisticsStore"> {
+  description?: string;
+  statisticType?: StatisticType;
+  rollUpType?: StatisticRollupType;
+  precision?: number;
+  enabled?: boolean;
+  config?: StatisticsDataSourceData;
+}
+export interface StroomStatsStoreEntityData {
+  statisticFields: Array<StatisticField>;
+  customRollUpMasks: Array<CustomRollupMask>;
+  fieldPositionMap: {
+    [fieldName: string]: number;
+  };
+}
+export interface StroomStatsStoreDoc extends DocumentType<"StroomStatsStore"> {
+  description?: string;
+  statisticType?: StatisticType;
+  rollUpType?: StatisticRollupType;
+  precision?: number;
+  enabled?: boolean;
+  config?: StroomStatsStoreEntityData;
+}
+export interface SystemDoc extends DocumentType<"System"> {}
+
+export type TextConverterType = "None" | "Data Splitter" | "XML Fragment";
+export interface TextConverterDoc extends DocumentType<"TextConverter"> {
+  description?: string;
+  data?: string;
+  converterType?: TextConverterType;
+}
+export interface VisualisationDoc extends DocumentType<"Visualisation"> {
+  description?: string;
+  functionName?: string;
+  scriptRef?: DocRefType;
+  settings?: string;
+}
+export interface XMLSchemaDoc extends DocumentType<"XMLSchema"> {
+  description?: string;
+  namespaceURI?: string;
+  systemId?: string;
+  data?: string;
+  deprecated?: boolean;
+  schemaGroup?: string;
+}
+
 export interface IndexField {
   fieldType: IndexFieldType;
   fieldName: string;
@@ -128,7 +218,7 @@ export interface IndexField {
   conditions: Array<ConditionType>;
 }
 
-export interface IndexDoc extends DocRefType {
+export interface IndexDoc extends DocumentType<"Index"> {
   description?: string;
   volumeGroupName?: string;
   data: {
@@ -136,7 +226,7 @@ export interface IndexDoc extends DocRefType {
   };
 }
 
-export interface XsltDoc extends DocRefType {
+export interface XsltDoc extends DocumentType<"XSLT"> {
   description?: string;
   data?: string;
 }
