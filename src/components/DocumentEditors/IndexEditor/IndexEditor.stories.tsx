@@ -13,19 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import * as React from "react";
+import { storiesOf } from "@storybook/react";
 
-import * as React from 'react';
+import IndexEditor from "./IndexEditor";
 
-import {storiesOf} from '@storybook/react';
 
-import AppChrome from '.';
-import Routes from '../../startup/Routes';
-import {addThemedStories} from '../../testing/storybook/themedStoryGenerator';
 
-const storiesNoRouting = storiesOf('App Chrome/No Routing', module);
-addThemedStories(storiesNoRouting, () => (
-  <AppChrome activeMenuItem="welcome" content={<div>Stuff goes here</div>} />
-));
+import fullTestData from "../../../testing/data";
 
-const storiesWithAuth = storiesOf('App Chrome/With Authentication', module);
-addThemedStories(storiesWithAuth, () => <Routes />);
+const stories = storiesOf("Document Editors/Index", module);
+
+let uuid: string = fullTestData.indexes[0].uuid;
+
+stories.add("editor", () => <IndexEditor indexUuid={uuid} />);

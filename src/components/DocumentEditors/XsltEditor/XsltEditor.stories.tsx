@@ -13,19 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import * as React from "react";
+import { storiesOf } from "@storybook/react";
 
-import * as React from 'react';
+import fullTestData from "../../../testing/data";
+import XsltEditor from "./XsltEditor";
 
-import {storiesOf} from '@storybook/react';
 
-import AppChrome from '.';
-import Routes from '../../startup/Routes';
-import {addThemedStories} from '../../testing/storybook/themedStoryGenerator';
 
-const storiesNoRouting = storiesOf('App Chrome/No Routing', module);
-addThemedStories(storiesNoRouting, () => (
-  <AppChrome activeMenuItem="welcome" content={<div>Stuff goes here</div>} />
-));
+const stories = storiesOf("Document Editors/XSLT", module);
 
-const storiesWithAuth = storiesOf('App Chrome/With Authentication', module);
-addThemedStories(storiesWithAuth, () => <Routes />);
+let uuid: string = fullTestData.xslt[0].uuid;
+
+stories.add("editor", () => <XsltEditor xsltUuid={uuid} />);

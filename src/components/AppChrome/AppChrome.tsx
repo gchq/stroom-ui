@@ -13,57 +13,57 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import * as React from "react";
-import { useCallback } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { IconProp } from "@fortawesome/fontawesome-svg-core";
+import * as React from 'react';
+import {useCallback} from 'react';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {IconProp} from '@fortawesome/fontawesome-svg-core';
 
-import "simplebar";
-import "simplebar/dist/simplebar.css";
+import 'simplebar';
+import 'simplebar/dist/simplebar.css';
 
-import MenuItem from "./MenuItem";
-import { MenuItemOpened, MenuItemType, MenuItemsOpenState } from "./types";
+import MenuItem from './MenuItem';
+import {MenuItemOpened, MenuItemType, MenuItemsOpenState} from './types';
 
-import useSelectableItemListing from "../../lib/useSelectableItemListing";
-import { DocRefType, DocRefConsumer, DocRefTree } from "../../types";
-import { KeyDownState } from "../../lib/useKeyIsDown";
+import useSelectableItemListing from '../../lib/useSelectableItemListing';
+import {DocRefType, DocRefConsumer, DocRefTree} from '../../types';
+import {KeyDownState} from '../../lib/useKeyIsDown';
 import {
   CopyMoveDocRefDialog,
   useDialog as useCopyMoveDocRefDialog,
-  ShowDialog as ShowCopyDocRefDialog
-} from "../FolderExplorer/CopyMoveDocRefDialog";
+  ShowDialog as ShowCopyDocRefDialog,
+} from '../DocumentEditors/FolderExplorer/CopyMoveDocRefDialog';
 import useLocalStorage, {
   storeBoolean,
-  storeObjectFactory
-} from "../../lib/useLocalStorage";
-import useRouter from "../../lib/useRouter";
-import { useDocumentTree } from "../../api/explorer";
-import useAppNavigation from "./useAppNavigation";
-import { useTheme } from "../../lib/theme";
-import { IsGroup } from "../../api/userGroups";
+  storeObjectFactory,
+} from '../../lib/useLocalStorage';
+import useRouter from '../../lib/useRouter';
+import {useDocumentTree} from '../../api/explorer';
+import useAppNavigation from './useAppNavigation';
+import {useTheme} from '../../lib/theme';
+import {IsGroup} from '../../api/userGroups';
 
-const PATH_PREFIX = "/s";
+const PATH_PREFIX = '/s';
 
 const getDocumentTreeMenuItems = (
   openDocRef: DocRefConsumer,
   parentDocRef: DocRefType | undefined,
   treeNode: DocRefTree,
-  skipInContractedMenu = false
+  skipInContractedMenu = false,
 ): MenuItemType => ({
   key: treeNode.uuid,
   title: treeNode.name,
   onClick: () => openDocRef(treeNode),
-  icon: "folder",
-  style: skipInContractedMenu ? "doc" : "nav",
+  icon: 'folder',
+  style: skipInContractedMenu ? 'doc' : 'nav',
   skipInContractedMenu,
   docRef: treeNode,
   parentDocRef,
   children:
     treeNode.children && treeNode.children.length > 0
       ? treeNode.children
-          .filter(t => t.type === "Folder")
+          .filter(t => t.type === 'Folder')
           .map(t => getDocumentTreeMenuItems(openDocRef, treeNode, t, true))
-      : undefined
+      : undefined,
 });
 
 const getOpenMenuItems = function<
@@ -74,7 +74,7 @@ const getOpenMenuItems = function<
 >(
   menuItems: Array<T>,
   areMenuItemsOpen: MenuItemsOpenState,
-  openMenuItems: Array<T> = []
+  openMenuItems: Array<T> = [],
 ): Array<T> {
   menuItems.forEach(menuItem => {
     openMenuItems.push(menuItem);
@@ -101,7 +101,7 @@ const getMenuItems = (
   showMoveDialog: ShowCopyDocRefDialog,
   selectedItems: Array<MenuItemType>,
   focussedItem?: MenuItemType,
-  depth: number = 0
+  depth: number = 0,
 ) =>
   menuItems.map(menuItem => (
     <React.Fragment key={menuItem.key}>
@@ -109,8 +109,8 @@ const getMenuItems = (
         keyIsDown={keyIsDown}
         selectedItems={selectedItems}
         focussedItem={focussedItem}
-        className={`sidebar__text-color ${isCollapsed ? "collapsed" : ""} ${
-          depth > 0 ? "child" : ""
+        className={`sidebar__text-color ${isCollapsed ? 'collapsed' : ''} ${
+          depth > 0 ? 'child' : ''
         }`}
         key={menuItem.key}
         menuItem={menuItem}
@@ -123,7 +123,7 @@ const getMenuItems = (
       />
       {/* TODO: we only want the 'children' class on the first set of children. We're using it to pad the bottom. Any better ideas? */}
       {menuItem.children && areMenuItemsOpen[menuItem.key] ? (
-        <div className={`${depth === 0 ? "sidebar__children" : ""}`}>
+        <div className={`${depth === 0 ? 'sidebar__children' : ''}`}>
           {getMenuItems(
             isCollapsed,
             menuItem.children,
@@ -134,7 +134,7 @@ const getMenuItems = (
             showMoveDialog,
             selectedItems,
             focussedItem,
-            depth + 1
+            depth + 1,
           )}
         </div>
       ) : (
@@ -143,33 +143,28 @@ const getMenuItems = (
     </React.Fragment>
   ));
 
-const AppChrome = ({ content }: Props) => {
-  const { theme } = useTheme();
+const AppChrome = ({content}: Props) => {
+  const {theme} = useTheme();
 
   const {
-    router: { location }
+    router: {location},
   } = useRouter();
-  const { documentTree, copyDocuments, moveDocuments } = useDocumentTree();
+  const {documentTree, copyDocuments, moveDocuments} = useDocumentTree();
 
-  const {
-    value: areMenuItemsOpen,
-    setValue: setOpenMenuItems
-  } = useLocalStorage<MenuItemsOpenState>(
-    "app-chrome-menu-items-open",
-    {},
-    storeObjectFactory<MenuItemsOpenState>()
-  );
+  const {value: areMenuItemsOpen, setValue: setOpenMenuItems} = useLocalStorage<
+    MenuItemsOpenState
+  >('app-chrome-menu-items-open', {}, storeObjectFactory<MenuItemsOpenState>());
   const menuItemOpened: MenuItemOpened = (name: string, isOpen: boolean) => {
     setOpenMenuItems({
       ...areMenuItemsOpen,
-      [name]: isOpen
+      [name]: isOpen,
     });
   };
 
-  const { value: isExpanded, setValue: setIsExpanded } = useLocalStorage(
-    "isExpanded",
+  const {value: isExpanded, setValue: setIsExpanded} = useLocalStorage(
+    'isExpanded',
     true,
-    storeBoolean
+    storeBoolean,
   );
 
   const {
@@ -182,46 +177,46 @@ const AppChrome = ({ content }: Props) => {
     goToIndexVolumeGroups,
     goToUserSettings,
     goToUsers,
-    goToEditDocRef
+    goToEditDocRef,
   } = useAppNavigation();
 
   const menuItems: Array<MenuItemType> = [
     {
-      key: "welcome",
-      title: "Welcome",
+      key: 'welcome',
+      title: 'Welcome',
       onClick: goToWelcome,
-      icon: "home",
-      style: "nav",
+      icon: 'home',
+      style: 'nav',
       isActive:
-        !!location && location.pathname.includes(`${PATH_PREFIX}/welcome/`)
+        !!location && location.pathname.includes(`${PATH_PREFIX}/welcome/`),
     },
     getDocumentTreeMenuItems(goToEditDocRef, undefined, documentTree),
     {
-      key: "data",
-      title: "Data",
+      key: 'data',
+      title: 'Data',
       onClick: goToDataViewer,
-      icon: "database",
-      style: "nav",
-      isActive: !!location && location.pathname.includes(`${PATH_PREFIX}/data`)
+      icon: 'database',
+      style: 'nav',
+      isActive: !!location && location.pathname.includes(`${PATH_PREFIX}/data`),
     },
     {
-      key: "processing",
-      title: "Processing",
+      key: 'processing',
+      title: 'Processing',
       onClick: goToProcessing,
-      icon: "play",
-      style: "nav",
+      icon: 'play',
+      style: 'nav',
       isActive:
-        !!location && location.pathname.includes(`${PATH_PREFIX}/processing`)
+        !!location && location.pathname.includes(`${PATH_PREFIX}/processing`),
     },
     {
-      key: "indexing",
-      title: "Indexing",
+      key: 'indexing',
+      title: 'Indexing',
       onClick: useCallback(
-        () => menuItemOpened("indexing", !areMenuItemsOpen.indexing),
-        [menuItemOpened, areMenuItemsOpen]
+        () => menuItemOpened('indexing', !areMenuItemsOpen.indexing),
+        [menuItemOpened, areMenuItemsOpen],
       ),
-      icon: "database",
-      style: "nav",
+      icon: 'database',
+      style: 'nav',
       skipInContractedMenu: true,
       isActive:
         !!location &&
@@ -229,93 +224,93 @@ const AppChrome = ({ content }: Props) => {
           location.pathname.includes(`${PATH_PREFIX}/indexing/groups`)),
       children: [
         {
-          key: "indexing-volumes",
-          title: "Index Volumes",
+          key: 'indexing-volumes',
+          title: 'Index Volumes',
           onClick: goToIndexVolumes,
-          icon: "database",
-          style: "nav",
+          icon: 'database',
+          style: 'nav',
           isActive:
             !!location &&
-            location.pathname.includes(`${PATH_PREFIX}/indexing/volumes`)
+            location.pathname.includes(`${PATH_PREFIX}/indexing/volumes`),
         },
         {
-          key: "indexing-groups",
-          title: "Index Groups",
+          key: 'indexing-groups',
+          title: 'Index Groups',
           onClick: goToIndexVolumeGroups,
-          icon: "database",
-          style: "nav",
+          icon: 'database',
+          style: 'nav',
           isActive:
             !!location &&
-            location.pathname.includes(`${PATH_PREFIX}/indexing/groups`)
-        }
-      ]
+            location.pathname.includes(`${PATH_PREFIX}/indexing/groups`),
+        },
+      ],
     },
     {
-      key: "admin",
-      title: "Admin",
+      key: 'admin',
+      title: 'Admin',
       onClick: useCallback(
-        () => menuItemOpened("admin", !areMenuItemsOpen.admin),
-        [menuItemOpened, areMenuItemsOpen]
+        () => menuItemOpened('admin', !areMenuItemsOpen.admin),
+        [menuItemOpened, areMenuItemsOpen],
       ),
-      icon: "cogs",
-      style: "nav",
+      icon: 'cogs',
+      style: 'nav',
       skipInContractedMenu: true,
       isActive:
         !!location &&
-        (location.pathname.includes("/s/me") ||
-          location.pathname.includes("/s/users") ||
-          location.pathname.includes("/s/apikeys")),
+        (location.pathname.includes('/s/me') ||
+          location.pathname.includes('/s/users') ||
+          location.pathname.includes('/s/apikeys')),
       children: [
         {
-          key: "admin-me",
-          title: "Me",
+          key: 'admin-me',
+          title: 'Me',
           onClick: goToUserSettings,
-          icon: "user",
-          style: "nav",
-          isActive: !!location && location.pathname.includes("/s/me")
+          icon: 'user',
+          style: 'nav',
+          isActive: !!location && location.pathname.includes('/s/me'),
         },
         {
-          key: "adminPermissions",
-          title: "Permissions",
-          icon: "key",
-          style: "nav",
+          key: 'adminPermissions',
+          title: 'Permissions',
+          icon: 'key',
+          style: 'nav',
           onClick: useCallback(
             () =>
               menuItemOpened(
-                "adminPermissions",
-                !areMenuItemsOpen.adminPermissions
+                'adminPermissions',
+                !areMenuItemsOpen.adminPermissions,
               ),
-            [menuItemOpened, areMenuItemsOpen]
+            [menuItemOpened, areMenuItemsOpen],
           ),
-          children: (["User", "Group"] as Array<IsGroup>).map(isGroup => ({
+          children: (['User', 'Group'] as Array<IsGroup>).map(isGroup => ({
             key: `admin-permissions-${isGroup}`,
             title: isGroup,
             onClick: () => goToAuthorisationManager(isGroup),
-            icon: "user" as IconProp,
-            style: "nav",
+            icon: 'user' as IconProp,
+            style: 'nav',
             isActive:
               !!location &&
-              location.pathname.includes(`/s/authorisationManager/${isGroup}`)
-          })) as Array<MenuItemType>
+              location.pathname.includes(`/s/authorisationManager/${isGroup}`),
+          })) as Array<MenuItemType>,
         },
         {
-          key: "admin-users",
-          title: "Users",
+          key: 'admin-users',
+          title: 'Users',
           onClick: goToUsers,
-          icon: "users",
-          style: "nav",
-          isActive: !!location && location.pathname.includes("/s/users")
+          icon: 'users',
+          style: 'nav',
+          isActive: !!location && location.pathname.includes('/s/users'),
         },
         {
-          key: "admin-apikeys",
-          title: "API Keys",
+          key: 'admin-apikeys',
+          title: 'API Keys',
           onClick: goToApiKeys,
-          icon: "key",
-          style: "nav",
-          isActive: !!location && location.pathname.includes("/s/apikeys")
-        }
-      ]
-    }
+          icon: 'key',
+          style: 'nav',
+          isActive: !!location && location.pathname.includes('/s/apikeys'),
+        },
+      ],
+    },
   ];
   const openMenuItems = getOpenMenuItems(menuItems, areMenuItemsOpen);
 
@@ -324,7 +319,7 @@ const AppChrome = ({ content }: Props) => {
     toggleSelection,
     selectedItems,
     focussedItem,
-    keyIsDown
+    keyIsDown,
   } = useSelectableItemListing<MenuItemType>({
     items: openMenuItems,
     getKey: m => m.key,
@@ -337,7 +332,7 @@ const AppChrome = ({ content }: Props) => {
         } else if (m.parentDocRef) {
           // Can we bubble back up to the parent folder of the current selection?
           let newSelection = openMenuItems.find(
-            ({ key }: MenuItemType) => key === m.parentDocRef!.uuid
+            ({key}: MenuItemType) => key === m.parentDocRef!.uuid,
           );
           if (!!newSelection) {
             toggleSelection(newSelection.key);
@@ -345,21 +340,21 @@ const AppChrome = ({ content }: Props) => {
           menuItemOpened(m.parentDocRef.uuid, false);
         }
       }
-    }
+    },
   });
 
   const {
     showDialog: showCopyDialog,
-    componentProps: copyDialogComponentProps
+    componentProps: copyDialogComponentProps,
   } = useCopyMoveDocRefDialog(copyDocuments);
   const {
     showDialog: showMoveDialog,
-    componentProps: moveDialogComponentProps
+    componentProps: moveDialogComponentProps,
   } = useCopyMoveDocRefDialog(moveDocuments);
 
   const sidebarClassName = isExpanded
-    ? "app-chrome__sidebar--expanded"
-    : "app-chrome__sidebar--collapsed";
+    ? 'app-chrome__sidebar--expanded'
+    : 'app-chrome__sidebar--collapsed';
   return (
     <div className={`app-container ${theme}`}>
       <div className="app-chrome flat">
@@ -381,7 +376,7 @@ const AppChrome = ({ content }: Props) => {
                 <img
                   className="sidebar__logo"
                   alt="Stroom logo"
-                  src={require("../../images/logo.svg")}
+                  src={require('../../images/logo.svg')}
                 />
               ) : (
                 undefined
@@ -403,7 +398,7 @@ const AppChrome = ({ content }: Props) => {
                   showCopyDialog,
                   showMoveDialog,
                   selectedItems,
-                  focussedItem
+                  focussedItem,
                 )}
               </div>
             </div>

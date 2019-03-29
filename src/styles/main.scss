@@ -5,19 +5,20 @@
 
 @import "../components/AppChrome/AppChrome";
 
+@import "../components/DocumentEditors/DocRefEditor/DocRefEditor";
+@import "../components/DocumentEditors/DictionaryEditor/DictionaryEditor";
+@import "../components/DocumentEditors/XsltEditor/XsltEditor";
+
 @import "../components/AppSearchBar/AppSearchBar";
 @import "../components/Button/Button";
 @import "../components/ErrorPage/ErrorPage";
 @import "../components/IconHeader/IconHeader";
 @import "../components/Loader/Loader";
-@import "../components/DocRefEditor/DocRefEditor";
-@import "../components/DictionaryEditor/DictionaryEditor";
 @import "../components/PipelineEditor/ElbowLine/ElbowLine";
 @import "../components/PipelineEditor/PipelineEditor";
 @import "../components/ExpressionSearchBar/ExpressionSearchBar";
 @import "../components/DocRefBreadcrumb/DocRefBreadcrumb";
 @import "../components/DocRefListingEntry/DocRefListingEntry";
-@import "../components/XsltEditor/XsltEditor";
 @import "../components/ExpressionBuilder/ExpressionBuilder";
 @import "../components/IFrame/IFrame";
 @import "../components/HorizontalPanel/HorizontalPanel";

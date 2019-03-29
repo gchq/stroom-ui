@@ -13,25 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { useCallback } from "react";
-import useHttpClient from "../useHttpClient";
-import { XsltDoc } from "../../types";
-import { useConfig } from "../../startup/config";
-import { DocumentApi } from "../documentApi";
+import {useCallback} from 'react';
+import useHttpClient from '../useHttpClient';
+import {XsltDoc} from '../../types';
+import {useConfig} from '../../startup/config';
+import {DocumentApi} from '../documentApi';
 
 export const useApi = (): DocumentApi<XsltDoc> => {
-  const { stroomBaseServiceUrl } = useConfig();
-  const { httpGetJson, httpPostEmptyResponse } = useHttpClient();
+  const {stroomBaseServiceUrl} = useConfig();
+  const {httpGetJson, httpPostEmptyResponse} = useHttpClient();
 
   const fetchDocument = useCallback(
     (uuid: string) =>
       httpGetJson(`${stroomBaseServiceUrl}/xslt/v1/${uuid}`, {
         headers: {
-          Accept: "application/xml",
-          "Content-Type": "application/xml"
-        }
+          Accept: 'application/xml',
+          'Content-Type': 'application/xml',
+        },
       }),
-    [stroomBaseServiceUrl, httpGetJson]
+    [stroomBaseServiceUrl, httpGetJson],
   );
 
   const saveDocument = useCallback(
@@ -39,16 +39,16 @@ export const useApi = (): DocumentApi<XsltDoc> => {
       httpPostEmptyResponse(`${stroomBaseServiceUrl}/xslt/v1/${xslt.uuid}`, {
         body: xslt.data,
         headers: {
-          Accept: "application/xml",
-          "Content-Type": "application/xml"
-        }
+          Accept: 'application/xml',
+          'Content-Type': 'application/xml',
+        },
       }),
-    [stroomBaseServiceUrl, httpPostEmptyResponse]
+    [stroomBaseServiceUrl, httpPostEmptyResponse],
   );
 
   return {
     fetchDocument,
-    saveDocument
+    saveDocument,
   };
 };
 

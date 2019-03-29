@@ -13,33 +13,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { useCallback } from "react";
+import {useCallback} from 'react';
 
-import useHttpClient from "../useHttpClient";
-import { IndexDoc } from "../../types";
-import { useConfig } from "../../startup/config";
-import { DocumentApi } from "../documentApi";
+import useHttpClient from '../useHttpClient';
+import {IndexDoc} from '../../types';
+import {useConfig} from '../../startup/config';
+import {DocumentApi} from '../documentApi';
 
 export const useApi = (): DocumentApi<IndexDoc> => {
-  const { stroomBaseServiceUrl } = useConfig();
-  const { httpGetJson, httpPostEmptyResponse } = useHttpClient();
+  const {stroomBaseServiceUrl} = useConfig();
+  const {httpGetJson, httpPostEmptyResponse} = useHttpClient();
 
   return {
     fetchDocument: useCallback(
       (indexUuid: string) =>
         httpGetJson(`${stroomBaseServiceUrl}/index/v1/${indexUuid}`),
-      [stroomBaseServiceUrl, httpGetJson]
+      [stroomBaseServiceUrl, httpGetJson],
     ),
     saveDocument: useCallback(
       (docRefContents: IndexDoc) =>
         httpPostEmptyResponse(
           `${stroomBaseServiceUrl}/index/v1/${docRefContents.uuid}`,
           {
-            body: docRefContents
-          }
+            body: docRefContents,
+          },
         ),
-      [stroomBaseServiceUrl, httpPostEmptyResponse]
-    )
+      [stroomBaseServiceUrl, httpPostEmptyResponse],
+    ),
   };
 };
 

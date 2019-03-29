@@ -13,19 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 import * as React from 'react';
-
 import {storiesOf} from '@storybook/react';
 
-import AppChrome from '.';
-import Routes from '../../startup/Routes';
-import {addThemedStories} from '../../testing/storybook/themedStoryGenerator';
+import fullTestData from '../../../testing/data';
+import DictionaryEditor from './DictionaryEditor';
 
-const storiesNoRouting = storiesOf('App Chrome/No Routing', module);
-addThemedStories(storiesNoRouting, () => (
-  <AppChrome activeMenuItem="welcome" content={<div>Stuff goes here</div>} />
-));
+const stories = storiesOf('Document Editors/Dictionary', module);
 
-const storiesWithAuth = storiesOf('App Chrome/With Authentication', module);
-addThemedStories(storiesWithAuth, () => <Routes />);
+let uuid: string = fullTestData.dictionaries[0].uuid;
+
+stories.add('editor', () => <DictionaryEditor dictionaryUuid={uuid} />);

@@ -13,32 +13,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { useCallback } from "react";
-import { useConfig } from "../../startup/config";
-import useHttpClient from "../useHttpClient";
-import { Dictionary } from "../../types";
-import { DocumentApi } from "../documentApi";
+import {useCallback} from 'react';
+import {useConfig} from '../../startup/config';
+import useHttpClient from '../useHttpClient';
+import {Dictionary} from '../../types';
+import {DocumentApi} from '../documentApi';
 
 export const useApi = (): DocumentApi<Dictionary> => {
-  const { stroomBaseServiceUrl } = useConfig();
-  const { httpGetJson, httpPostEmptyResponse } = useHttpClient();
+  const {stroomBaseServiceUrl} = useConfig();
+  const {httpGetJson, httpPostEmptyResponse} = useHttpClient();
 
   return {
     fetchDocument: useCallback(
       (dictionaryUuid: string) =>
         httpGetJson(`${stroomBaseServiceUrl}/dictionary/v1/${dictionaryUuid}`),
-      [httpGetJson]
+      [httpGetJson],
     ),
     saveDocument: useCallback(
       (docRefContents: Dictionary) =>
         httpPostEmptyResponse(
           `${stroomBaseServiceUrl}/dictionary/v1/${docRefContents.uuid}`,
           {
-            body: docRefContents
-          }
+            body: docRefContents,
+          },
         ),
-      [httpPostEmptyResponse]
-    )
+      [httpPostEmptyResponse],
+    ),
   };
 };
 

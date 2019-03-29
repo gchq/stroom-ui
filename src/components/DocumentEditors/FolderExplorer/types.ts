@@ -13,19 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import {ConnectDropTarget, ConnectDragSource} from 'react-dnd';
+import {DocRefType} from '../../../types';
 
-import * as React from 'react';
+export enum DragDropTypes {
+  DOC_REF_UUIDS = 'docRef',
+}
+export interface DropCollectedProps {
+  connectDropTarget: ConnectDropTarget;
+  isOver: boolean;
+  canDrop: boolean;
+}
 
-import {storiesOf} from '@storybook/react';
+export interface DragCollectedProps {
+  connectDragSource: ConnectDragSource;
+  isDragging: boolean;
+}
 
-import AppChrome from '.';
-import Routes from '../../startup/Routes';
-import {addThemedStories} from '../../testing/storybook/themedStoryGenerator';
-
-const storiesNoRouting = storiesOf('App Chrome/No Routing', module);
-addThemedStories(storiesNoRouting, () => (
-  <AppChrome activeMenuItem="welcome" content={<div>Stuff goes here</div>} />
-));
-
-const storiesWithAuth = storiesOf('App Chrome/With Authentication', module);
-addThemedStories(storiesWithAuth, () => <Routes />);
+export interface DragObject {
+  docRefs: Array<DocRefType>;
+  isCopy: boolean;
+}

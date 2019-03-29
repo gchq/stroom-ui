@@ -13,19 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import * as React from "react";
+import { useState } from "react";
+import { storiesOf } from "@storybook/react";
 
-import * as React from 'react';
+import { addThemedStories } from "../../../../testing/storybook/themedStoryGenerator";
 
-import {storiesOf} from '@storybook/react';
+import AnalyzerPicker from "./AnalyzerPicker";
+import { AnalyzerType } from "../../../../types";
 
-import AppChrome from '.';
-import Routes from '../../startup/Routes';
-import {addThemedStories} from '../../testing/storybook/themedStoryGenerator';
+const stories = storiesOf("Pickers/Index Analyzer", module);
 
-const storiesNoRouting = storiesOf('App Chrome/No Routing', module);
-addThemedStories(storiesNoRouting, () => (
-  <AppChrome activeMenuItem="welcome" content={<div>Stuff goes here</div>} />
-));
+const B: React.FunctionComponent = () => {
+  const [value, onChange] = useState<AnalyzerType | undefined>(undefined);
 
-const storiesWithAuth = storiesOf('App Chrome/With Authentication', module);
-addThemedStories(storiesWithAuth, () => <Routes />);
+  return <AnalyzerPicker value={value} onChange={onChange} />;
+};
+
+addThemedStories(stories, () => <B />);

@@ -1,16 +1,16 @@
-import { ConnectDropTarget, ConnectDragSource } from "react-dnd";
+import {ConnectDropTarget, ConnectDragSource} from 'react-dnd';
 
 import {
   PipelineElementType,
   ElementDefinition,
   PipelineModelType,
-  PipelineAsTreeType
-} from "../../types";
-import { UseDocRefEditorProps } from "../DocRefEditor";
+  PipelineAsTreeType,
+} from '../../types';
+import {UseDocRefEditorProps} from '../DocumentEditors/DocRefEditor';
 
 export enum DragDropTypes {
-  ELEMENT = "element",
-  PALLETE_ELEMENT = "paletteElement"
+  ELEMENT = 'element',
+  PALLETE_ELEMENT = 'paletteElement',
 }
 export interface DragObject {
   element: ElementDefinition;
@@ -36,25 +36,25 @@ export interface PipelineProps {
 export interface PipelineEditApi {
   selectedElementId?: string;
   elementInitialValues: object;
-  settingsUpdated: (p: { description: string }) => void;
+  settingsUpdated: (p: {description: string}) => void;
   elementSelected: (elementId: string, initialValues?: object) => void;
   elementSelectionCleared: () => void;
   elementMoved: (itemToMove: string, destination: string) => void;
   elementAdded: (
     parentId: string,
     elementDefinition: ElementDefinition,
-    name: string
+    name: string,
   ) => void;
   elementDeleted: (elementId: string) => void;
   elementReinstated: (
     parentId: string,
-    recycleData: PipelineElementType
+    recycleData: PipelineElementType,
   ) => void;
   elementPropertyUpdated: (
     element: string,
     name: string,
     propertyType: string,
-    propertyValue: any
+    propertyValue: any,
   ) => void;
   elementPropertyRevertToParent: (elementId: string, name: string) => void;
   elementPropertyRevertToDefault: (elementId: string, name: string) => void;
@@ -63,7 +63,7 @@ export interface PipelineEditApi {
 export enum CellType {
   EMPTY,
   ELBOW,
-  ELEMENT
+  ELEMENT,
 }
 
 export interface RecycleBinItem {

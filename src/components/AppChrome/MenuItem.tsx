@@ -1,26 +1,26 @@
-import * as React from "react";
-import { pipe } from "ramda";
+import * as React from 'react';
+import {pipe} from 'ramda';
 import {
   DropTarget,
   DropTargetSpec,
   DropTargetCollector,
   DragSourceSpec,
-  DragSourceCollector
-} from "react-dnd";
-import { DragSource } from "react-dnd";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+  DragSourceCollector,
+} from 'react-dnd';
+import {DragSource} from 'react-dnd';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
-import { canMove } from "../../lib/treeUtils";
+import {canMove} from '../../lib/treeUtils';
 import {
   DragDropTypes,
   DragObject,
   DragCollectedProps,
-  DropCollectedProps
-} from "../FolderExplorer/types";
-import { IconProp } from "@fortawesome/fontawesome-svg-core";
-import { DocRefType, StyledComponentProps } from "../../types";
-import { KeyDownState } from "../../lib/useKeyIsDown";
-import { MenuItemOpened, MenuItemType, MenuItemsOpenState } from "./types";
+  DropCollectedProps,
+} from '../DocumentEditors/FolderExplorer/types';
+import {IconProp} from '@fortawesome/fontawesome-svg-core';
+import {DocRefType, StyledComponentProps} from '../../types';
+import {KeyDownState} from '../../lib/useKeyIsDown';
+import {MenuItemOpened, MenuItemType, MenuItemsOpenState} from './types';
 
 interface Props extends StyledComponentProps {
   menuItem: MenuItemType;
@@ -38,19 +38,19 @@ interface Props extends StyledComponentProps {
 interface EnhancedProps extends Props, DragCollectedProps, DropCollectedProps {}
 
 const dropTarget: DropTargetSpec<Props> = {
-  canDrop({ menuItem: { docRef } }, monitor) {
-    const { docRefs } = monitor.getItem();
+  canDrop({menuItem: {docRef}}, monitor) {
+    const {docRefs} = monitor.getItem();
 
     return (
       !!docRef &&
       docRefs.reduce(
         (acc: boolean, curr: DocRefType) => acc && canMove(curr, docRef),
-        true
+        true,
       )
     );
   },
-  drop({ menuItem: { docRef }, showCopyDialog, showMoveDialog }, monitor) {
-    const { docRefs, isCopy } = monitor.getItem();
+  drop({menuItem: {docRef}, showCopyDialog, showMoveDialog}, monitor) {
+    const {docRefs, isCopy} = monitor.getItem();
     const docRefUuids = docRefs.map((d: DocRefType) => d.uuid);
 
     if (docRef) {
@@ -60,7 +60,7 @@ const dropTarget: DropTargetSpec<Props> = {
         showMoveDialog(docRefUuids, docRef);
       }
     }
-  }
+  },
 };
 
 const dropCollect: DropTargetCollector<
@@ -69,20 +69,20 @@ const dropCollect: DropTargetCollector<
   return {
     connectDropTarget: connect.dropTarget(),
     isOver: monitor.isOver(),
-    canDrop: monitor.canDrop()
+    canDrop: monitor.canDrop(),
   };
 };
 
 const dragSource: DragSourceSpec<Props, DragObject> = {
-  canDrag({ menuItem: { docRef } }) {
+  canDrag({menuItem: {docRef}}) {
     return !!docRef;
   },
-  beginDrag({ menuItem: { docRef }, keyIsDown: { Control, Meta } }) {
+  beginDrag({menuItem: {docRef}, keyIsDown: {Control, Meta}}) {
     return {
       docRefs: [docRef!],
-      isCopy: !!(Control || Meta)
+      isCopy: !!(Control || Meta),
     };
-  }
+  },
 };
 
 const dragCollect: DragSourceCollector<
@@ -90,13 +90,13 @@ const dragCollect: DragSourceCollector<
 > = function dragCollect(connect, monitor) {
   return {
     connectDragSource: connect.dragSource(),
-    isDragging: monitor.isDragging()
+    isDragging: monitor.isDragging(),
   };
 };
 
 const enhance = pipe(
   DropTarget([DragDropTypes.DOC_REF_UUIDS], dropTarget, dropCollect),
-  DragSource(DragDropTypes.DOC_REF_UUIDS, dragSource, dragCollect)
+  DragSource(DragDropTypes.DOC_REF_UUIDS, dragSource, dragCollect),
 );
 
 let MenuItem = ({
@@ -111,7 +111,7 @@ let MenuItem = ({
   isCollapsed,
   selectedItems,
   menuItemOpened,
-  focussedItem
+  focussedItem,
 }: EnhancedProps) => {
   const isSelected: boolean = selectedItems
     .map((d: MenuItemType) => d.key)
@@ -119,13 +119,13 @@ let MenuItem = ({
   const inFocus: boolean = !!focussedItem && focussedItem.key === menuItem.key;
 
   const onExpand: React.MouseEventHandler<HTMLDivElement> = (
-    e: React.MouseEvent
+    e: React.MouseEvent,
   ) => {
     menuItemOpened(menuItem.key, !areMenuItemsOpen[menuItem.key]);
     e.preventDefault();
   };
   const onTitleClick: React.MouseEventHandler<HTMLDivElement> = (
-    e: React.MouseEvent
+    e: React.MouseEvent,
   ) => {
     menuItem.onClick();
     e.preventDefault();
@@ -137,41 +137,41 @@ let MenuItem = ({
     classNames.push(rawClassName);
   }
 
-  classNames.push("sidebar__menu-item");
+  classNames.push('sidebar__menu-item');
   classNames.push(menuItem.style);
 
   if (isOver) {
-    classNames.push("dnd-over");
+    classNames.push('dnd-over');
   }
   if (isOver) {
     if (canDrop) {
-      classNames.push("can-drop");
+      classNames.push('can-drop');
     } else {
-      classNames.push("cannot-drop");
+      classNames.push('cannot-drop');
     }
   }
   if (inFocus) {
-    classNames.push("inFocus");
+    classNames.push('inFocus');
   }
   if (isSelected) {
-    classNames.push("selected");
+    classNames.push('selected');
   }
 
   const hasChildren = menuItem.children && menuItem.children.length > 0;
   const isShowingChildren = areMenuItemsOpen[menuItem.key];
   if (hasChildren && isShowingChildren) {
-    classNames.push("has-children--open");
+    classNames.push('has-children--open');
   }
 
   if (menuItem.isActive) {
-    classNames.push("is-active");
+    classNames.push('is-active');
   }
 
-  const style = { paddingLeft: `${depth * 0.7}rem` };
-  const className = classNames.join(" ");
+  const style = {paddingLeft: `${depth * 0.7}rem`};
+  const className = classNames.join(' ');
 
   const hasChildrenIcon = `folder${
-    isShowingChildren ? "-open" : "-plus"
+    isShowingChildren ? '-open' : '-plus'
   }` as IconProp;
   //const isHeader = menuItem.key !== "stroom";
 
@@ -194,8 +194,8 @@ let MenuItem = ({
             {menuItem.title}
           </span>
         )}
-      </div>
-    )
+      </div>,
+    ),
   );
 };
 
