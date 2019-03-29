@@ -47,7 +47,7 @@ import {IsGroup} from '../api/userGroups';
 import {urlGenerator} from '../components/AppChrome/useAppNavigation';
 
 const renderWelcome = () => (
-  <AppChrome activeMenuItem="Welcome" content={<Welcome />} />
+  <AppChrome activeMenuItem="welcome" content={<Welcome />} />
 );
 
 const UsersIFrame = () => {
@@ -96,21 +96,21 @@ const Routes: React.FunctionComponent = () => {
         exact
         path={urlGenerator.goToDataViewer()}
         render={() => (
-          <AppChrome activeMenuItem="Data" content={<DataViewer />} />
+          <AppChrome activeMenuItem="data" content={<DataViewer />} />
         )}
       />
       <PrivateRoute
         exact
         path={urlGenerator.goToProcessing()}
         render={() => (
-          <AppChrome activeMenuItem="Processing" content={<Processing />} />
+          <AppChrome activeMenuItem="processing" content={<Processing />} />
         )}
       />
       <PrivateRoute
         exact
         path={urlGenerator.goToUserSettings()}
         render={() => (
-          <AppChrome activeMenuItem="Me" content={<UserSettings />} />
+          <AppChrome activeMenuItem="userSettings" content={<UserSettings />} />
         )}
       />
       {(['Group', 'User'] as Array<IsGroup>).map(isGroup => (
@@ -120,7 +120,9 @@ const Routes: React.FunctionComponent = () => {
           path={urlGenerator.goToAuthorisationManager(isGroup)}
           render={() => (
             <AppChrome
-              activeMenuItem={isGroup as string}
+              activeMenuItem={
+                isGroup === 'Group' ? 'groupPermissions' : 'userPermissions'
+              }
               content={<AuthorisationManager isGroup={isGroup} />}
             />
           )}
@@ -136,7 +138,7 @@ const Routes: React.FunctionComponent = () => {
           },
         }: RouteComponentProps<any>) => (
           <AppChrome
-            activeMenuItem="User Authorisation"
+            activeMenuItem="userPermissions"
             content={<UserAuthorisationEditor userUuid={userUuid} />}
           />
         )}
@@ -150,7 +152,7 @@ const Routes: React.FunctionComponent = () => {
           },
         }: RouteComponentProps<any>) => (
           <AppChrome
-            activeMenuItem="User Authorisation"
+            activeMenuItem="userPermissions"
             content={<DocumentPermissionEditor docRefUuid={docRefUuid} />}
           />
         )}
@@ -167,7 +169,7 @@ const Routes: React.FunctionComponent = () => {
           },
         }: RouteComponentProps<any>) => (
           <AppChrome
-            activeMenuItem="User Authorisation"
+            activeMenuItem="userPermissions"
             content={
               <DocumentPermissionForUserEditor
                 userUuid={userUuid}
@@ -181,10 +183,7 @@ const Routes: React.FunctionComponent = () => {
         exact
         path={urlGenerator.goToIndexVolumes()}
         render={() => (
-          <AppChrome
-            activeMenuItem="Index Volumes"
-            content={<IndexVolumes />}
-          />
+          <AppChrome activeMenuItem="indexVolumes" content={<IndexVolumes />} />
         )}
       />
       <PrivateRoute
@@ -196,7 +195,7 @@ const Routes: React.FunctionComponent = () => {
           },
         }: RouteComponentProps<any>) => (
           <AppChrome
-            activeMenuItem="Index Volumes"
+            activeMenuItem="indexVolumes"
             content={<IndexVolumeEditor volumeId={volumeId} />}
           />
         )}
@@ -206,7 +205,7 @@ const Routes: React.FunctionComponent = () => {
         path={urlGenerator.goToIndexVolumeGroups()}
         render={() => (
           <AppChrome
-            activeMenuItem="Index Groups"
+            activeMenuItem="indexVolumeGroups"
             content={<IndexVolumeGroups />}
           />
         )}
@@ -220,7 +219,7 @@ const Routes: React.FunctionComponent = () => {
           },
         }: RouteComponentProps<any>) => (
           <AppChrome
-            activeMenuItem="Index Groups"
+            activeMenuItem="indexVolumeGroups"
             content={<IndexVolumeGroupEditor groupName={groupName} />}
           />
         )}
@@ -229,21 +228,24 @@ const Routes: React.FunctionComponent = () => {
         exact
         path={urlGenerator.goToUsers()}
         render={() => (
-          <AppChrome activeMenuItem="Users" content={<UsersIFrame />} />
+          <AppChrome
+            activeMenuItem="userIdentities"
+            content={<UsersIFrame />}
+          />
         )}
       />
       <PrivateRoute
         exact
         path={urlGenerator.goToApiKeys()}
         render={() => (
-          <AppChrome activeMenuItem="API Keys" content={<ApiTokensIFrame />} />
+          <AppChrome activeMenuItem="apiKeys" content={<ApiTokensIFrame />} />
         )}
       />
       <PrivateRoute
         exact
         path={urlGenerator.goToError()}
         render={() => (
-          <AppChrome activeMenuItem="Error" content={<ErrorPage />} />
+          <AppChrome activeMenuItem="welcome" content={<ErrorPage />} />
         )}
       />
       <PrivateRoute
@@ -251,7 +253,7 @@ const Routes: React.FunctionComponent = () => {
         path={urlGenerator.goToEditDocRefByUuid(':docRefUuid')}
         render={(props: RouteComponentProps<any>) => (
           <AppChrome
-            activeMenuItem="Explorer"
+            activeMenuItem="explorer"
             content={
               <SwitchedDocRefEditor
                 docRefUuid={props.match.params.docRefUuid}
@@ -262,7 +264,7 @@ const Routes: React.FunctionComponent = () => {
       />
       <PrivateRoute
         render={() => (
-          <AppChrome activeMenuItem="Welcome" content={<PathNotFound />} />
+          <AppChrome activeMenuItem="welcome" content={<PathNotFound />} />
         )}
       />
       {/* Default route */}

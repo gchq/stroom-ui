@@ -1,6 +1,19 @@
-import { IconProp } from "@fortawesome/fontawesome-svg-core";
-import { DocRefType } from "../../types";
-import { IsGroup } from "../../api/userGroups";
+import {IconProp} from '@fortawesome/fontawesome-svg-core';
+import {DocRefType} from '../../types';
+import {IsGroup} from '../../api/userGroups';
+
+export type ActiveMenuItem =
+  | 'welcome'
+  | 'userSettings'
+  | 'data'
+  | 'processing'
+  | 'groupPermissions'
+  | 'userPermissions'
+  | 'indexVolumes'
+  | 'indexVolumeGroups'
+  | 'userIdentities'
+  | 'apiKeys'
+  | 'explorer';
 
 export type MenuItemOpened = (name: string, isOpen: boolean) => void;
 
@@ -13,7 +26,7 @@ export interface MenuItemType {
   title?: string;
   onClick: () => void;
   icon: IconProp;
-  style: "doc" | "nav";
+  style: 'doc' | 'nav';
   skipInContractedMenu?: boolean;
   children?: Array<MenuItemType>;
   docRef?: DocRefType;
@@ -31,7 +44,7 @@ export interface NavigateApp<T> {
   goToAuthorisationsForDocument: (docRefUuid: string) => T;
   goToAuthorisationsForDocumentForUser: (
     docRefUuid: string,
-    userUuid: string
+    userUuid: string,
   ) => T;
   goToIndexVolumes: () => T;
   goToIndexVolume: (volumeId: T) => T;

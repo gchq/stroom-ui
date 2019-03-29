@@ -22,7 +22,12 @@ import 'simplebar';
 import 'simplebar/dist/simplebar.css';
 
 import MenuItem from './MenuItem';
-import {MenuItemOpened, MenuItemType, MenuItemsOpenState} from './types';
+import {
+  MenuItemOpened,
+  MenuItemType,
+  MenuItemsOpenState,
+  ActiveMenuItem,
+} from './types';
 
 import useSelectableItemListing from '../../lib/useSelectableItemListing';
 import {DocRefType, DocRefConsumer, DocRefTree} from '../../types';
@@ -88,7 +93,7 @@ const getOpenMenuItems = function<
 
 interface Props {
   content: React.ReactNode;
-  activeMenuItem: string;
+  activeMenuItem: ActiveMenuItem;
 }
 
 const getMenuItems = (
