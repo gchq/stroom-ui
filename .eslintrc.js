@@ -50,5 +50,12 @@ module.exports = {
     "linebreak-style": ["error", "unix"],
     //quotes: ["error", "single"],
     semi: ["error", "always"],
+
+    // This rule seems to force the use of ReactElement in this example
+    //
+    // export const DisplayPillChoice: React.FunctionComponent<Props> = ({
+    //   pill,
+    // }: Props): React.ReactElement => (
+    "@typescript-eslint/explicit-function-return-type": "off",
   },
 };

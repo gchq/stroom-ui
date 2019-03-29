@@ -24,7 +24,9 @@ interface Props {
  *
  * @param param0 The props
  */
-export const PillChoice = ({ onChoice }: Props) => (
+export const PillChoice: React.FunctionComponent<Props> = ({
+  onChoice,
+}: Props) => (
   <React.Fragment>
     <button onClick={() => onChoice("blue")}>Blue</button>
     <button onClick={() => onChoice("red")}>Red</button>
