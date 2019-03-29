@@ -2,7 +2,8 @@
 import * as React from "react";
 
 // Imports must be relative
-// Notice that I can import the 'directory' and it will look for the index.ts file and import stuff from there.
+// Notice that I can import the 'directory' and it will look for the index.ts
+// file and import stuff from there.
 import { CustomHeader } from "./CustomHeader";
 
 /**
@@ -10,9 +11,9 @@ import { CustomHeader } from "./CustomHeader";
  */
 export const Step1 = () => {
   /**
-   * In this function, I have declared a full function body, and included a return statement.
-   * Have a look at CustomHeader for an example of simply returning the value of the function in
-   * one go.
+   * In this function, I have declared a full function body, and included a
+   * return statement. Have a look at CustomHeader for an example of simply
+   * returning the value of the function in one go.
    */
   return (
     <div>
@@ -39,6 +40,7 @@ export const Step1 = () => {
 };
 
 /**
- * If there is a function/class that is named the same as the file, then I will usually export that as a default export.
+ * If there is a function/class that is named the same as the file, then I will
+ * usually export that as a default export.
  */
 export default Step1;
