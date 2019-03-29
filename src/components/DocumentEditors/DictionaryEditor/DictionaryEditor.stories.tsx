@@ -23,4 +23,4 @@ const stories = storiesOf('Document Editors/Dictionary', module);
 
 let uuid: string = fullTestData.dictionaries[0].uuid;
 
-stories.add('editor', () => <DictionaryEditor dictionaryUuid={uuid} />);
+stories.add('editor', () => <DictionaryEditor docRefUuid={uuid} />);

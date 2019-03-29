@@ -25,4 +25,4 @@ const stories = storiesOf("Document Editors/XSLT", module);
 
 let uuid: string = fullTestData.xslt[0].uuid;
 
-stories.add("editor", () => <XsltEditor xsltUuid={uuid} />);
+stories.add("editor", () => <XsltEditor docRefUuid={uuid} />);

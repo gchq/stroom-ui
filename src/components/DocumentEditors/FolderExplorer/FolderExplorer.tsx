@@ -17,7 +17,7 @@
 import * as React from 'react';
 import {useCallback, useMemo} from 'react';
 
-import DocRefEditor, {useDocRefEditor} from '../DocRefEditor';
+import DocRefEditor, {useDocRefEditor, SwitchedDocRefEditorProps} from '../DocRefEditor';
 import Loader from '../../Loader';
 import DndDocRefListingEntry from './DndDocRefListingEntry';
 import CreateDocRefDialog, {
@@ -42,11 +42,7 @@ import {useDocRefInfoDialog} from '../../DocRefInfoModal/DocRefInfoModal';
 import {useDocumentTree} from '../../../api/explorer';
 import useAppNavigation from '../../AppChrome/useAppNavigation';
 
-interface Props {
-  folderUuid: string;
-}
-
-const FolderExplorer = ({folderUuid}: Props) => {
+const FolderExplorer: React.FunctionComponent<SwitchedDocRefEditorProps> = ({docRefUuid}) => {
   const {
     findDocRefWithLineage,
     createDocument,
@@ -57,9 +53,9 @@ const FolderExplorer = ({folderUuid}: Props) => {
   } = useDocumentTree();
 
   const {goToEditDocRef} = useAppNavigation();
-  const folder = useMemo(() => findDocRefWithLineage(folderUuid), [
+  const folder = useMemo(() => findDocRefWithLineage(docRefUuid), [
     findDocRefWithLineage,
-    folderUuid,
+    docRefUuid,
   ]);
 
   const onCreateDocument = useCallback(
@@ -176,7 +172,7 @@ const FolderExplorer = ({folderUuid}: Props) => {
   }
 
   const {editorProps: folderEditorProps} = useDocRefEditor({
-    docRefUuid: folderUuid,
+    docRefUuid,
   });
 
   if (!folder) {

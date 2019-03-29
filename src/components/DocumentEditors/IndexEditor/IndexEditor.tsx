@@ -17,7 +17,7 @@
 import * as React from "react";
 import { useCallback } from "react";
 
-import DocRefEditor, { useDocRefEditor } from "../DocRefEditor";
+import DocRefEditor, { useDocRefEditor, SwitchedDocRefEditorProps } from "../DocRefEditor";
 import Loader from "../../Loader";
 import { useApi as useIndexApi } from "../../../api/indexDocument";
 import { IndexDoc, IndexField } from "../../../types";
@@ -31,15 +31,11 @@ import IndexFieldEditor, {
 } from "./IndexFieldEditor";
 import { IndexVolumeGroupPicker } from "../../IndexVolumeGroups/IndexVolumeGroupPicker";
 
-interface Props {
-  indexUuid: string;
-}
-
-const IndexEditor = ({ indexUuid }: Props) => {
+const IndexEditor = ({ docRefUuid }: SwitchedDocRefEditorProps) => {
   const documentApi = useIndexApi();
 
   const { editorProps, onDocumentChange } = useDocRefEditor<IndexDoc>({
-    docRefUuid: indexUuid,
+    docRefUuid,
     documentApi
   });
 

@@ -8,7 +8,7 @@ import * as ReactModal from "react-modal";
 
 import { useTestServer } from "./PollyDecorator";
 
-import useFontAwesome from "../../startup/useFontAwesome";
+import useFontAwesome from "../../lib/useFontAwesome/useFontAwesome";
 import testData from "../data";
 import { ThemeContextProvider, useTheme } from "../../lib/theme";
 import { withRouter, RouteComponentProps } from "react-router";

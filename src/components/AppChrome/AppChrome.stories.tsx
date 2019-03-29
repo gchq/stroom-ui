@@ -14,18 +14,18 @@
  * limitations under the License.
  */
 
-import * as React from 'react';
+import * as React from "react";
 
-import {storiesOf} from '@storybook/react';
+import { storiesOf } from "@storybook/react";
 
-import AppChrome from '.';
-import Routes from '../../startup/Routes';
-import {addThemedStories} from '../../testing/storybook/themedStoryGenerator';
+import AppChrome from ".";
+import Routes from "./Routes";
+import { addThemedStories } from "../../testing/storybook/themedStoryGenerator";
 
-const storiesNoRouting = storiesOf('App Chrome/No Routing', module);
+const storiesNoRouting = storiesOf("App Chrome/No Routing", module);
 addThemedStories(storiesNoRouting, () => (
   <AppChrome activeMenuItem="welcome" content={<div>Stuff goes here</div>} />
 ));
 
-const storiesWithAuth = storiesOf('App Chrome/With Authentication', module);
+const storiesWithAuth = storiesOf("App Chrome/With Authentication", module);
 addThemedStories(storiesWithAuth, () => <Routes />);

@@ -14,5 +14,8 @@
  * limitations under the License.
  */
 import AppChrome from "./AppChrome";
+import Routes from "./Routes";
+
+export { Routes, AppChrome };
 
 export default AppChrome;

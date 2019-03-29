@@ -1,28 +1,24 @@
 import * as React from 'react';
 
 import Loader from '../../Loader';
-import DocRefEditor, {useDocRefEditor} from '../DocRefEditor';
+import DocRefEditor, {useDocRefEditor, SwitchedDocRefEditorProps} from '../DocRefEditor';
 import {useApi} from '../../../api/dictionaryDocument';
 import {Dictionary} from '../../../types';
 
-interface Props {
-  dictionaryUuid: string;
-}
-
-const DictionaryEditor: React.FunctionComponent<Props> = ({
-  dictionaryUuid,
-}: Props) => {
+const DictionaryEditor: React.FunctionComponent<SwitchedDocRefEditorProps> = ({
+  docRefUuid,
+}) => {
   // Get data from and subscribe to the store
   const documentApi = useApi();
 
   const {onDocumentChange, editorProps} = useDocRefEditor<Dictionary>({
-    docRefUuid: dictionaryUuid,
+    docRefUuid,
     documentApi,
   });
   const {docRefContents} = editorProps;
 
   if (!docRefContents) {
-    return <Loader message={`Loading Dictionary ${dictionaryUuid}`} />;
+    return <Loader message={`Loading Dictionary ${docRefUuid}`} />;
   }
 
   return (

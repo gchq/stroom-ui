@@ -32,15 +32,11 @@ import DeletePipelineElement, {
 } from './DeletePipelineElement';
 import {ElementDetails} from './ElementDetails';
 import Pipeline from './Pipeline';
-import DocRefEditor from '../DocumentEditors/DocRefEditor';
+import DocRefEditor, { SwitchedDocRefEditorProps } from '../DocumentEditors/DocRefEditor';
 import usePipelineState from './usePipelineState';
 
-interface Props {
-  pipelineId: string;
-}
-
-const PipelineEditor = ({pipelineId}: Props) => {
-  const piplineStateProps = usePipelineState(pipelineId);
+const PipelineEditor = ({docRefUuid}: SwitchedDocRefEditorProps) => {
+  const piplineStateProps = usePipelineState(docRefUuid);
   const {
     pipelineEditApi,
     useEditorProps: {editorProps},
@@ -126,7 +122,7 @@ const PipelineEditor = ({pipelineId}: Props) => {
         >
           <div className="Pipeline-editor__topPanel">
             <Pipeline
-              pipelineId={pipelineId}
+              pipelineId={docRefUuid}
               pipelineStateProps={piplineStateProps}
               showAddElementDialog={showAddElementDialog}
             />

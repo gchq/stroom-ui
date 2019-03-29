@@ -16,21 +16,17 @@
 
 import * as React from "react";
 
-import DocRefEditor, { useDocRefEditor } from "../DocRefEditor";
+import DocRefEditor, { useDocRefEditor, SwitchedDocRefEditorProps } from "../DocRefEditor";
 import Loader from "../../Loader";
 import { useApi } from "../../../api/xsltDocument";
 import ThemedAceEditor from "../../ThemedAceEditor";
 import { XsltDoc } from "../../../types";
 
-interface Props {
-  xsltUuid: string;
-}
-
-const XsltEditor = ({ xsltUuid }: Props) => {
+const XsltEditor : React.FunctionComponent<SwitchedDocRefEditorProps> = ({ docRefUuid }) => {
   const documentApi = useApi();
 
   const { onDocumentChange, editorProps } = useDocRefEditor<XsltDoc>({
-    docRefUuid: xsltUuid,
+    docRefUuid,
     documentApi
   });
 
@@ -44,7 +40,7 @@ const XsltEditor = ({ xsltUuid }: Props) => {
     <DocRefEditor {...editorProps}>
       <ThemedAceEditor
         style={{ width: "100%", height: "100%", minHeight: "25rem" }}
-        name={`${xsltUuid}-ace-editor`}
+        name={`${docRefUuid}-ace-editor`}
         mode="xml"
         value={docRefContents.data}
         onChange={newValue => {

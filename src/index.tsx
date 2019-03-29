@@ -4,8 +4,8 @@ import * as ReactDOM from "react-dom";
 import { DragDropContext } from "react-dnd";
 import HTML5Backend from "react-dnd-html5-backend";
 
-import Routes from "./startup/Routes";
-import useFontAwesome from "./startup/useFontAwesome";
+import { Routes } from "./components/AppChrome";
+import useFontAwesome from "./lib/useFontAwesome/useFontAwesome";
 
 import { ThemeContextProvider } from "./lib/theme";
 import { CustomRouter } from "./lib/useRouter";

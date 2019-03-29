@@ -19,3 +19,7 @@ export interface UseDocRefEditorProps<T extends object> {
   editorProps: DocRefEditorProps<T>;
   onDocumentChange: (updates: Partial<T>) => void;
 }
+
+export interface SwitchedDocRefEditorProps {
+  docRefUuid: string;
+}

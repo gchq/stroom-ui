@@ -18,12 +18,10 @@ import { storiesOf } from "@storybook/react";
 
 import IndexEditor from "./IndexEditor";
 
-
-
 import fullTestData from "../../../testing/data";
 
 const stories = storiesOf("Document Editors/Index", module);
 
 let uuid: string = fullTestData.indexes[0].uuid;
 
-stories.add("editor", () => <IndexEditor indexUuid={uuid} />);
+stories.add("editor", () => <IndexEditor docRefUuid={uuid} />);
