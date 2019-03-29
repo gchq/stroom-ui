@@ -4,8 +4,22 @@ module.exports = {
     es6: true,
   },
   parser: "@typescript-eslint/parser",
+  parserOptions: {
+    project: "./tsconfig.json",
+  },
   //extends: 'plugin:@typescript-eslint/recommended',
-  extends: ["airbnb", "prettier"],
+  extends: [
+    //"airbnb",
+    "plugin:@typescript-eslint/recommended",
+    "prettier",
+    "prettier/react",
+    "prettier/@typescript-eslint",
+  ],
+  settings: {
+    react: {
+      version: "detect",
+    },
+  },
   globals: {
     Atomics: "readonly",
     SharedArrayBuffer: "readonly",
@@ -17,16 +31,24 @@ module.exports = {
     ecmaVersion: 2018,
     sourceType: "module",
   },
-  plugins: ["react", "@typescript-eslint"],
+  plugins: ["react", "@typescript-eslint", "prettier"],
   rules: {
+    "prettier/prettier": "error",
     // Indent with 2 spaces
-    indent: ["error", 2],
+    //indent: ["error", 2],
     // Indent JSX with 2 spaces
-    "react/jsx-indent": ["error", 2],
+    //"react/jsx-indent": ["error", 2],
     // Indent props with 2 spaces
-    "react/jsx-indent-props": ["error", 2],
+    //"react/jsx-indent-props": ["error", 2],
+    //"react/jsx-wrap-multilines": [
+    //"error",
+    //{
+    //declaration: false,
+    //assignment: false,
+    //},
+    //],
     "linebreak-style": ["error", "unix"],
-    quotes: ["error", "single"],
+    //quotes: ["error", "single"],
     semi: ["error", "always"],
   },
 };
