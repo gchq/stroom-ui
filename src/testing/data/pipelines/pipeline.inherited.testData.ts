@@ -1,5 +1,5 @@
-import * as uuidv4 from 'uuid/v4';
-import { PipelineModelType } from "../../../types";
+import * as uuidv4 from "uuid/v4";
+import { PipelineDocumentType } from "../../../types";
 
 /*
  * Copyright 2018 Crown Copyright
@@ -21,13 +21,11 @@ export default {
   parentPipeline: {
     uuid: uuidv4(),
     type: "Pipeline",
-    name: "Simple"
+    name: "Simple",
   },
-  docRef: {
-    uuid: uuidv4(),
-    name: "Inherited",
-    type: "Pipeline"
-  },
+  uuid: uuidv4(),
+  name: "Inherited",
+  type: "Pipeline",
   description: "This demonstrates an inherited pipeline",
   configStack: [
     {
@@ -35,74 +33,74 @@ export default {
         add: [
           {
             id: "pDsParser",
-            type: "DSParser"
+            type: "DSParser",
           },
           {
             id: "pXsltFilter",
-            type: "XSLTFilter"
+            type: "XSLTFilter",
           },
           {
             id: "pXmlWriter",
-            type: "XMLWriter"
+            type: "XMLWriter",
           },
           {
             id: "pStreamAppender",
-            type: "StreamAppender"
+            type: "StreamAppender",
           },
           {
             id: "Source",
-            type: "Source"
-          }
+            type: "Source",
+          },
         ],
-        remove: []
+        remove: [],
       },
       properties: {
         add: [],
-        remove: []
+        remove: [],
       },
       pipelineReferences: {
         add: [],
-        remove: []
+        remove: [],
       },
       links: {
         add: [
           {
             from: "Source",
-            to: "pDsParser"
+            to: "pDsParser",
           },
           {
             from: "pDsParser",
-            to: "pXsltFilter"
+            to: "pXsltFilter",
           },
           {
             from: "pXsltFilter",
-            to: "pXmlWriter"
+            to: "pXmlWriter",
           },
           {
             from: "pXmlWriter",
-            to: "pStreamAppender"
-          }
+            to: "pStreamAppender",
+          },
         ],
-        remove: []
-      }
+        remove: [],
+      },
     },
     {
       elements: {
         add: [
           {
             id: "cXsltFilter",
-            type: "XSLTFilter"
+            type: "XSLTFilter",
           },
           {
             id: "cXmlWriter",
-            type: "XMLWriter"
+            type: "XMLWriter",
           },
           {
             id: "cStreamAppender",
-            type: "StreamAppender"
-          }
+            type: "StreamAppender",
+          },
         ],
-        remove: []
+        remove: [],
       },
       properties: {
         add: [
@@ -115,11 +113,11 @@ export default {
               entity: {
                 type: "TextConverter",
                 uuid: "4fde9c79-796c-4069-bbdb-e707ff558376",
-                name: "My CSV Splitter"
+                name: "My CSV Splitter",
               },
               long: null,
-              boolean: null
-            }
+              boolean: null,
+            },
           },
           {
             element: "pXsltFilter",
@@ -130,11 +128,11 @@ export default {
               entity: {
                 type: "XSLT",
                 uuid: "5871080f-b5bb-49d2-9483-5a54f7fb4e7c",
-                name: "MyXSLT"
+                name: "MyXSLT",
               },
               long: null,
-              boolean: null
-            }
+              boolean: null,
+            },
           },
           {
             element: "pStreamAppender",
@@ -145,11 +143,11 @@ export default {
               entity: {
                 type: "Feed",
                 uuid: "c65aa827-d10b-4aea-8bf0-3e361e0ee4dd",
-                name: "MY_FEED"
+                name: "MY_FEED",
               },
               long: null,
-              boolean: null
-            }
+              boolean: null,
+            },
           },
           {
             element: "pStreamAppender",
@@ -159,60 +157,60 @@ export default {
               integer: null,
               entity: null,
               long: null,
-              boolean: null
-            }
-          }
+              boolean: null,
+            },
+          },
         ],
-        remove: []
+        remove: [],
       },
       pipelineReferences: {
         add: [],
-        remove: []
+        remove: [],
       },
       links: {
         add: [
           {
             from: "pDsParser",
-            to: "cXsltFilter"
+            to: "cXsltFilter",
           },
           {
             from: "cXsltFilter",
-            to: "cXmlWriter"
+            to: "cXmlWriter",
           },
           {
             from: "cXmlWriter",
-            to: "cStreamAppender"
-          }
+            to: "cStreamAppender",
+          },
         ],
-        remove: []
-      }
-    }
+        remove: [],
+      },
+    },
   ],
   merged: {
     elements: {
       add: [
         {
           id: "pXsltFilter",
-          type: "XSLTFilter"
+          type: "XSLTFilter",
         },
         {
           id: "pStreamAppender",
-          type: "StreamAppender"
+          type: "StreamAppender",
         },
         {
           id: "pXmlWriter",
-          type: "XMLWriter"
+          type: "XMLWriter",
         },
         {
           id: "pDsParser",
-          type: "DSParser"
+          type: "DSParser",
         },
         {
           id: "Source",
-          type: "Source"
-        }
+          type: "Source",
+        },
       ],
-      remove: []
+      remove: [],
     },
     properties: {
       add: [
@@ -225,11 +223,11 @@ export default {
             entity: {
               type: "XSLT",
               uuid: "5871080f-b5bb-49d2-9483-5a54f7fb4e7c",
-              name: "MyXSLT"
+              name: "MyXSLT",
             },
             long: null,
-            boolean: null
-          }
+            boolean: null,
+          },
         },
         {
           element: "pStreamAppender",
@@ -240,11 +238,11 @@ export default {
             entity: {
               type: "Feed",
               uuid: "c65aa827-d10b-4aea-8bf0-3e361e0ee4dd",
-              name: "MY_FEED"
+              name: "MY_FEED",
             },
             long: null,
-            boolean: null
-          }
+            boolean: null,
+          },
         },
         {
           element: "pStreamAppender",
@@ -254,8 +252,8 @@ export default {
             integer: null,
             entity: null,
             long: null,
-            boolean: null
-          }
+            boolean: null,
+          },
         },
         {
           element: "pDsParser",
@@ -266,39 +264,39 @@ export default {
             entity: {
               type: "TextConverter",
               uuid: "4fde9c79-796c-4069-bbdb-e707ff558376",
-              name: "My CSV Splitter"
+              name: "My CSV Splitter",
             },
             long: null,
-            boolean: null
-          }
-        }
+            boolean: null,
+          },
+        },
       ],
-      remove: []
+      remove: [],
     },
     pipelineReferences: {
       add: [],
-      remove: []
+      remove: [],
     },
     links: {
       add: [
         {
           from: "pXsltFilter",
-          to: "pXmlWriter"
+          to: "pXmlWriter",
         },
         {
           from: "pXmlWriter",
-          to: "pStreamAppender"
+          to: "pStreamAppender",
         },
         {
           from: "pDsParser",
-          to: "pXsltFilter"
+          to: "pXsltFilter",
         },
         {
           from: "Source",
-          to: "pDsParser"
-        }
+          to: "pDsParser",
+        },
       ],
-      remove: []
-    }
-  }
-} as PipelineModelType;
+      remove: [],
+    },
+  },
+} as PipelineDocumentType;

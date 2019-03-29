@@ -1,19 +1,17 @@
 import {
   DocRefTree,
-  PipelineModelType,
   ElementDefinitions,
   ElementPropertiesByElementIdType,
-  Dictionary,
   DataSourceType,
   StreamTaskType,
   User,
   IndexVolume,
   IndexVolumeGroup,
   IndexVolumeGroupMembership,
-  IndexDoc,
-  XsltDoc,
-  StreamAttributeMapResult
+  StreamAttributeMapResult,
+  DocumentType,
 } from "../types";
+import { ResourcesByDocType } from "../api/useDocumentApi/types";
 
 export interface UserGroupMembership {
   userUuid: string;
@@ -27,32 +25,31 @@ export interface UserDocPermission {
 }
 
 export interface TestData {
-  docRefTypes: Array<string>;
+  docRefTypes: string[];
   documentTree: DocRefTree;
-  pipelines: Array<PipelineModelType>;
   elements: ElementDefinitions;
   elementProperties: ElementPropertiesByElementIdType;
-  xslt: Array<XsltDoc>;
-  dictionaries: Array<Dictionary>;
-  indexes: Array<IndexDoc>;
-  trackers: Array<StreamTaskType>;
+  documents: {
+    [docRefType in keyof ResourcesByDocType]: DocumentType<docRefType>[]
+  };
+  trackers: StreamTaskType[];
   dataList: StreamAttributeMapResult;
   dataSource: DataSourceType;
   usersAndGroups: {
-    users: Array<User>;
-    userGroupMemberships: Array<UserGroupMembership>;
+    users: User[];
+    userGroupMemberships: UserGroupMembership[];
   };
   indexVolumesAndGroups: {
-    volumes: Array<IndexVolume>;
-    groups: Array<IndexVolumeGroup>;
-    groupMemberships: Array<IndexVolumeGroupMembership>;
+    volumes: IndexVolume[];
+    groups: IndexVolumeGroup[];
+    groupMemberships: IndexVolumeGroupMembership[];
   };
-  allAppPermissions: Array<string>;
+  allAppPermissions: string[];
   userAppPermissions: {
-    [userUuid: string]: Array<string>;
+    [userUuid: string]: string[];
   };
   docPermissionByType: {
-    [docType: string]: Array<string>;
+    [docType: string]: string[];
   };
-  userDocPermission: Array<UserDocPermission>;
+  userDocPermission: UserDocPermission[];
 }

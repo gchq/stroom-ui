@@ -1,7 +1,7 @@
 import { useMemo, useState, useCallback } from "react";
 
-import { useApi as usePipelineApi } from "../../api/pipelineDocument";
-import { useDocRefEditor } from "../DocRefEditor";
+import useDocumentApi from "../../api/useDocumentApi";
+import { useDocRefEditor } from "../DocumentEditors/DocRefEditor";
 import {
   getPipelineAsTree,
   moveElementInPipeline,
@@ -10,12 +10,15 @@ import {
   reinstateElementToPipeline,
   setElementPropertyValueInPipeline,
   revertPropertyToParent,
-  revertPropertyToDefault
+  revertPropertyToDefault,
 } from "./pipelineUtils";
 import { PipelineEditApi, PipelineProps } from "./types";
+import { PipelineDocumentType } from "src/types";
 
 export const usePipelineState = (pipelineId: string): PipelineProps => {
-  const documentApi = usePipelineApi();
+  const documentApi = useDocumentApi<"Pipeline", PipelineDocumentType>(
+    "Pipeline",
+  );
 
   const [selectedElementId, setSelectedElementId] = useState<
     string | undefined
@@ -24,15 +27,15 @@ export const usePipelineState = (pipelineId: string): PipelineProps => {
 
   const useEditorProps = useDocRefEditor({
     docRefUuid: pipelineId,
-    documentApi
+    documentApi,
   });
 
   const {
     editorProps: { docRefContents },
-    onDocumentChange
+    onDocumentChange,
   } = useEditorProps;
   const asTree = useMemo(() => getPipelineAsTree(docRefContents), [
-    docRefContents
+    docRefContents,
   ]);
 
   return {
@@ -45,14 +48,14 @@ export const usePipelineState = (pipelineId: string): PipelineProps => {
         ({ description }) => {
           onDocumentChange({ description });
         },
-        [onDocumentChange]
+        [onDocumentChange],
       ),
       elementSelected: useCallback<PipelineEditApi["elementReinstated"]>(
         (elementId, initialValues) => {
           setSelectedElementId(elementId);
           setInitialValues(initialValues);
         },
-        [setSelectedElementId, setInitialValues]
+        [setSelectedElementId, setInitialValues],
       ),
       elementSelectionCleared: useCallback<
         PipelineEditApi["elementSelectionCleared"]
@@ -64,21 +67,21 @@ export const usePipelineState = (pipelineId: string): PipelineProps => {
         elementId => {
           if (!!docRefContents) {
             onDocumentChange(
-              removeElementFromPipeline(docRefContents, elementId)
+              removeElementFromPipeline(docRefContents, elementId),
             );
           }
         },
-        [docRefContents]
+        [docRefContents],
       ),
       elementReinstated: useCallback<PipelineEditApi["elementReinstated"]>(
         (parentId, recycleData) => {
           if (!!docRefContents) {
             onDocumentChange(
-              reinstateElementToPipeline(docRefContents, parentId, recycleData)
+              reinstateElementToPipeline(docRefContents, parentId, recycleData),
             );
           }
         },
-        [docRefContents]
+        [docRefContents],
       ),
       elementAdded: useCallback<PipelineEditApi["elementAdded"]>(
         (parentId, elementDefinition, name) => {
@@ -88,22 +91,22 @@ export const usePipelineState = (pipelineId: string): PipelineProps => {
                 docRefContents,
                 parentId,
                 elementDefinition,
-                name
-              )
+                name,
+              ),
             );
           }
         },
-        [docRefContents, onDocumentChange]
+        [docRefContents, onDocumentChange],
       ),
       elementMoved: useCallback<PipelineEditApi["elementMoved"]>(
         (itemToMove, destination) => {
           if (!!docRefContents) {
             onDocumentChange(
-              moveElementInPipeline(docRefContents, itemToMove, destination)
+              moveElementInPipeline(docRefContents, itemToMove, destination),
             );
           }
         },
-        []
+        [],
       ),
       elementPropertyUpdated: useCallback<
         PipelineEditApi["elementPropertyUpdated"]
@@ -115,8 +118,8 @@ export const usePipelineState = (pipelineId: string): PipelineProps => {
               element,
               name,
               propertyType,
-              propertyValue
-            )
+              propertyValue,
+            ),
           );
         }
       }, []),
@@ -125,7 +128,7 @@ export const usePipelineState = (pipelineId: string): PipelineProps => {
       >((elementId, name) => {
         if (!!docRefContents) {
           onDocumentChange(
-            revertPropertyToDefault(docRefContents, elementId, name)
+            revertPropertyToDefault(docRefContents, elementId, name),
           );
         }
       }, []),
@@ -134,11 +137,11 @@ export const usePipelineState = (pipelineId: string): PipelineProps => {
       >((elementId, name) => {
         if (!!docRefContents) {
           onDocumentChange(
-            revertPropertyToParent(docRefContents, elementId, name)
+            revertPropertyToParent(docRefContents, elementId, name),
           );
         }
-      }, [])
-    }
+      }, []),
+    },
   };
 };
 

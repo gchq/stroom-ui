@@ -4,12 +4,12 @@ import * as loremIpsum from "lorem-ipsum";
 import { XsltDoc } from "../../../types";
 import bitmapReference from "./bitmap-reference";
 
-export const generateTestXslt = (): XsltDoc => ({
+export const generate = (): XsltDoc => ({
   type: "XSLT",
   uuid: uuidv4(),
   name: loremIpsum({ count: 2, units: "words" }),
   description: loremIpsum({ count: 6, units: "words" }),
-  data: bitmapReference
+  data: bitmapReference,
 });
 
-export default generateTestXslt;
+export default generate;

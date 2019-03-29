@@ -43,7 +43,7 @@ export const copyDocRef = (input: DocRefType): DocRefType => {
   return {
     uuid: input.uuid,
     type: input.type,
-    name: input.name
+    name: input.name,
   };
 };
 
@@ -57,14 +57,14 @@ export interface DocRefInfoType {
 }
 
 export interface Tree<T> {
-  children?: Array<T & Tree<T>>;
+  children?: (T & Tree<T>)[];
 }
 
 export interface DocRefTree extends DocRefType, Tree<DocRefType> {}
 
 export interface TWithLineage<T extends HasUuid> {
   node: Tree<T> & T;
-  lineage: Array<T>;
+  lineage: T[];
 }
 
 export interface DocRefWithLineage extends TWithLineage<DocRefType> {}
@@ -76,17 +76,22 @@ export interface SelectOptionType {
   label: string;
 }
 
-export type SelectOptionsType = Array<SelectOptionType>;
+export type SelectOptionsType = SelectOptionType[];
 
 export interface OptionType {
   text: string;
   value: string;
 }
 
-export interface Dictionary extends DocRefType {
+export interface DocumentType<T extends string> extends HasUuid {
+  type: T;
+  name?: string;
+}
+
+export interface Dictionary extends DocumentType<"Dictionary"> {
   description?: string;
   data?: string;
-  imports?: Array<DocRefType>;
+  imports?: DocRefType[];
 }
 
 export type IndexFieldType = "FIELD" | "NUMERIC_FIELD" | "DATE_FIELD" | "ID";
@@ -95,7 +100,7 @@ export const IndexFieldTypeDisplayValues = {
   FIELD: "Text",
   NUMERIC_FIELD: "Number",
   DATE_FIELD: "Date",
-  ID: "Id"
+  ID: "Id",
 };
 
 export type AnalyzerType =
@@ -114,8 +119,93 @@ export const AnalyzerDisplayValues = {
   ALPHA_NUMERIC: "Alpha numeric",
   WHITESPACE: "Whitespace",
   STOP: "Stop words",
-  STANDARD: "Standard"
+  STANDARD: "Standard",
 };
+
+export type FeedStatus = "Receive" | "Reject" | "Drop";
+
+export interface FeedDoc extends DocumentType<"Feed"> {
+  description?: string;
+  classification?: string;
+  encoding?: string;
+  contextEncoding?: string;
+  retentionDayAge?: number;
+  reference?: boolean;
+  streamType?: string;
+  feedStatus?: FeedStatus;
+}
+export interface AnnotationsIndexDoc extends DocumentType<"AnnotationsIndex"> {}
+export interface ElasticIndexDoc extends DocumentType<"ElasticIndex"> {
+  indexName?: string;
+  indexedType?: string;
+}
+export interface DashboardDoc extends DocumentType<"Dashboard"> {}
+export interface ScriptDoc extends DocumentType<"Script"> {
+  description?: string;
+  dependencies?: DocRefType[];
+  data?: string;
+}
+
+export type StatisticType = "Count" | "Value";
+export type StatisticRollupType = "None" | "All" | "Custom";
+export interface StatisticField {
+  fieldName: string;
+}
+export interface CustomRollupMask {
+  rolledUpTagPositions: number[];
+}
+export interface StatisticsDataSourceData {
+  statisticFields: StatisticField[];
+  customRollUpMasks: CustomRollupMask[];
+  fieldPositionMap: {
+    [fieldName: string]: number;
+  };
+}
+export interface StatisticsStoreDoc extends DocumentType<"StatisticsStore"> {
+  description?: string;
+  statisticType?: StatisticType;
+  rollUpType?: StatisticRollupType;
+  precision?: number;
+  enabled?: boolean;
+  config?: StatisticsDataSourceData;
+}
+export interface StroomStatsStoreEntityData {
+  statisticFields: StatisticField[];
+  customRollUpMasks: CustomRollupMask[];
+  fieldPositionMap: {
+    [fieldName: string]: number;
+  };
+}
+export interface StroomStatsStoreDoc extends DocumentType<"StroomStatsStore"> {
+  description?: string;
+  statisticType?: StatisticType;
+  rollUpType?: StatisticRollupType;
+  precision?: number;
+  enabled?: boolean;
+  config?: StroomStatsStoreEntityData;
+}
+export interface SystemDoc extends DocumentType<"System"> {}
+
+export type TextConverterType = "None" | "Data Splitter" | "XML Fragment";
+export interface TextConverterDoc extends DocumentType<"TextConverter"> {
+  description?: string;
+  data?: string;
+  converterType?: TextConverterType;
+}
+export interface VisualisationDoc extends DocumentType<"Visualisation"> {
+  description?: string;
+  functionName?: string;
+  scriptRef?: DocRefType;
+  settings?: string;
+}
+export interface XMLSchemaDoc extends DocumentType<"XMLSchema"> {
+  description?: string;
+  namespaceURI?: string;
+  systemId?: string;
+  data?: string;
+  deprecated?: boolean;
+  schemaGroup?: string;
+}
 
 export interface IndexField {
   fieldType: IndexFieldType;
@@ -125,18 +215,18 @@ export interface IndexField {
   termPositions: boolean;
   analyzerType: AnalyzerType;
   caseSensitive: boolean;
-  conditions: Array<ConditionType>;
+  conditions: ConditionType[];
 }
 
-export interface IndexDoc extends DocRefType {
+export interface IndexDoc extends DocumentType<"Index"> {
   description?: string;
   volumeGroupName?: string;
   data: {
-    fields: Array<IndexField>;
+    fields: IndexField[];
   };
 }
 
-export interface XsltDoc extends DocRefType {
+export interface XsltDoc extends DocumentType<"XSLT"> {
   description?: string;
   data?: string;
 }
@@ -162,18 +252,18 @@ export const ConditionDisplayValues = {
   LESS_THAN_OR_EQUAL_TO: "<=",
   BETWEEN: "between",
   IN: "in",
-  IN_DICTIONARY: "in dictionary"
+  IN_DICTIONARY: "in dictionary",
 };
 
 export interface DataSourceFieldType {
   type: "ID" | "FIELD" | "NUMERIC_FIELD" | "DATE_FIELD";
   name: string;
   queryable: boolean;
-  conditions: Array<ConditionType>;
+  conditions: ConditionType[];
 }
 
 export interface DataSourceType {
-  fields: Array<DataSourceFieldType>;
+  fields: DataSourceFieldType[];
 }
 
 export interface ExpressionItem {
@@ -182,12 +272,12 @@ export interface ExpressionItem {
 }
 
 export type OperatorType = "AND" | "OR" | "NOT";
-export const OperatorTypeValues: Array<OperatorType> = ["AND", "OR", "NOT"];
+export const OperatorTypeValues: OperatorType[] = ["AND", "OR", "NOT"];
 
 export interface ExpressionOperatorType extends ExpressionItem {
   type: "operator";
   op: OperatorType;
-  children: Array<ExpressionTermType | ExpressionOperatorType>;
+  children: (ExpressionTermType | ExpressionOperatorType)[];
 }
 
 export interface ExpressionTermType extends ExpressionItem {
@@ -204,7 +294,7 @@ export interface ExpressionOperatorWithUuid
   extends ExpressionOperatorType,
     HasUuid {
   enabled: boolean;
-  children: Array<ExpressionOperatorWithUuid | ExpressionTermWithUuid>;
+  children: (ExpressionOperatorWithUuid | ExpressionTermWithUuid)[];
 }
 
 export interface ExpressionTermWithUuid extends ExpressionTermType, HasUuid {}
@@ -212,15 +302,17 @@ export interface ExpressionTermWithUuid extends ExpressionTermType, HasUuid {}
 export interface ElementDefinition {
   type: string;
   category: string;
-  roles: Array<string>;
+  roles: string[];
   icon: string;
 }
 
-export type ElementDefinitions = Array<ElementDefinition>;
-export type ElementDefinitionsByCategory = {
-  [category: string]: Array<ElementDefinition>;
-};
-export type ElementDefinitionsByType = { [type: string]: ElementDefinition };
+export type ElementDefinitions = ElementDefinition[];
+export interface ElementDefinitionsByCategory {
+  [category: string]: ElementDefinition[];
+}
+export interface ElementDefinitionsByType {
+  [type: string]: ElementDefinition;
+}
 
 export interface ElementPropertyType {
   elementType: ElementDefinition;
@@ -229,7 +321,7 @@ export interface ElementPropertyType {
   description: string;
   defaultValue: string;
   pipelineReference: boolean;
-  docRefTypes: Array<string> | undefined;
+  docRefTypes: string[] | undefined;
   displayPriority: number;
 }
 
@@ -245,8 +337,8 @@ export interface ControlledInput<T> {
   value: T;
 }
 export interface AddRemove<T> {
-  add?: Array<T>;
-  remove?: Array<T>;
+  add?: T[];
+  remove?: T[];
 }
 
 export interface SourcePipeline {
@@ -290,7 +382,7 @@ export interface PipelineSearchCriteriaType {
 
 export interface PipelineSearchResultType {
   total: number;
-  pipelines: Array<DocRefType>;
+  pipelines: DocRefType[];
 }
 
 export interface PipelineElementType {
@@ -310,18 +402,17 @@ export interface PageRequest {
   pageSize?: number;
 }
 
-export interface PipelineModelType {
-  docRef: DocRefType;
+export interface PipelineDocumentType extends DocumentType<"Pipeline"> {
   description?: string;
   parentPipeline?: DocRefType;
-  configStack: Array<PipelineDataType>;
+  configStack: PipelineDataType[];
   merged: PipelineDataType;
 }
 
 export interface PipelineAsTreeType {
   uuid: string;
   type: string;
-  children: Array<PipelineAsTreeType>;
+  children: PipelineAsTreeType[];
 }
 
 export interface PageResponse {
@@ -356,18 +447,18 @@ export interface DataRow {
 
 export interface StreamAttributeMapResult {
   pageResponse: PageResponse;
-  streamAttributeMaps: Array<DataRow>;
+  streamAttributeMaps: DataRow[];
 }
 
 export enum PermissionInheritance {
   NONE = "None",
   SOURCE = "Source",
   DESTINATION = "Destination",
-  COMBINED = "Combined"
+  COMBINED = "Combined",
 }
 
 export interface PermissionsByUuid {
-  [userUuid: string]: Array<string>;
+  [userUuid: string]: string[];
 }
 
 export interface DocumentPermissions {
@@ -391,7 +482,7 @@ export interface AbstractFetchDataResult {
   streamRowCount: RowCount;
   pageRange: OffsetRange;
   pageRowCount: RowCount;
-  availableChildStreamType: Array<string>;
+  availableChildStreamType: string[];
 }
 
 export type Severity = "INFO" | "WARN" | "ERROR" | "FATAL";
@@ -400,7 +491,7 @@ export interface Marker {
   severity: Severity;
 }
 export interface FetchMarkerResult extends AbstractFetchDataResult {
-  markers: Array<Marker>;
+  markers: Marker[];
 }
 
 export interface FetchDataResult extends AbstractFetchDataResult {
@@ -447,7 +538,7 @@ export interface StreamTaskType {
 }
 
 export interface StreamTasksResponseType {
-  streamTasks: Array<StreamTaskType>;
+  streamTasks: StreamTaskType[];
   totalStreamTasks: number;
 }
 
@@ -457,5 +548,5 @@ export interface StyledComponentProps {
 
 export enum Direction {
   UP = "up",
-  DOWN = "down"
+  DOWN = "down",
 }

@@ -1,9 +1,9 @@
-import { PipelineAsTreeType, PipelineModelType } from "../../types";
+import { PipelineAsTreeType, PipelineDocumentType } from "../../types";
 
 export function getNext(
   selectedElementId?: string,
-  pipeline?: PipelineModelType,
-  asTree?: PipelineAsTreeType
+  pipeline?: PipelineDocumentType,
+  asTree?: PipelineAsTreeType,
 ): string | undefined {
   if (selectedElementId && pipeline) {
     const nextLink =
@@ -18,8 +18,8 @@ export function getNext(
 
 export function getPrevious(
   selectedElementId?: string,
-  pipeline?: PipelineModelType,
-  asTree?: PipelineAsTreeType
+  pipeline?: PipelineDocumentType,
+  asTree?: PipelineAsTreeType,
 ): string | undefined {
   if (selectedElementId && pipeline) {
     const previousLink =

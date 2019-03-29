@@ -19,7 +19,7 @@ import * as React from "react";
 import { storiesOf } from "@storybook/react";
 
 import AppChrome from ".";
-import Routes from "../../startup/Routes";
+import Routes from "./Routes";
 import { addThemedStories } from "../../testing/storybook/themedStoryGenerator";
 
 const storiesNoRouting = storiesOf("App Chrome/No Routing", module);

@@ -10,10 +10,10 @@ export const generateTestField = (): IndexField => ({
   termPositions: false,
   analyzerType: "KEYWORD",
   caseSensitive: false,
-  conditions: []
+  conditions: [],
 });
 
-export const generateTestIndex = (): IndexDoc => ({
+export const generate = (): IndexDoc => ({
   type: "Index",
   uuid: uuidv4(),
   name: loremIpsum({ count: 2, units: "words" }),
@@ -27,7 +27,7 @@ export const generateTestIndex = (): IndexDoc => ({
         termPositions: false,
         analyzerType: "KEYWORD",
         caseSensitive: false,
-        conditions: []
+        conditions: [],
       },
       {
         fieldName: loremIpsum({ count: 2, units: "words" }),
@@ -37,7 +37,7 @@ export const generateTestIndex = (): IndexDoc => ({
         termPositions: false,
         analyzerType: "KEYWORD",
         caseSensitive: false,
-        conditions: []
+        conditions: [],
       },
       {
         fieldName: loremIpsum({ count: 2, units: "words" }),
@@ -47,7 +47,7 @@ export const generateTestIndex = (): IndexDoc => ({
         termPositions: false,
         analyzerType: "KEYWORD",
         caseSensitive: false,
-        conditions: []
+        conditions: [],
       },
       {
         fieldName: loremIpsum({ count: 2, units: "words" }),
@@ -57,7 +57,7 @@ export const generateTestIndex = (): IndexDoc => ({
         termPositions: false,
         analyzerType: "KEYWORD",
         caseSensitive: false,
-        conditions: []
+        conditions: [],
       },
       {
         fieldName: loremIpsum({ count: 2, units: "words" }),
@@ -67,7 +67,7 @@ export const generateTestIndex = (): IndexDoc => ({
         termPositions: true,
         analyzerType: "ALPHA_NUMERIC",
         caseSensitive: false,
-        conditions: []
+        conditions: [],
       },
       {
         fieldName: loremIpsum({ count: 2, units: "words" }),
@@ -77,8 +77,8 @@ export const generateTestIndex = (): IndexDoc => ({
         termPositions: true,
         analyzerType: "ALPHA_NUMERIC",
         caseSensitive: true,
-        conditions: []
-      }
-    ]
-  }
+        conditions: [],
+      },
+    ],
+  },
 });

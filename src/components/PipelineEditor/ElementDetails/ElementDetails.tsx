@@ -24,14 +24,14 @@ import {
   ElementPropertiesType,
   ElementDefinition,
   ElementPropertyType,
-  PipelineModelType
+  PipelineDocumentType,
 } from "../../../types";
 import Loader from "../../../components/Loader";
-import { useElements } from "../../../api/elements";
+import useElements from "../../../api/useElements";
 import { PipelineEditApi } from "../types";
 
 interface Props {
-  pipeline: PipelineModelType;
+  pipeline: PipelineDocumentType;
   pipelineEditApi: PipelineEditApi;
 }
 
@@ -53,7 +53,7 @@ const ElementDetails = ({ pipeline, pipelineEditApi }: Props) => {
       pipeline.merged.elements.add &&
       pipeline.merged.elements.add.find(
         (element: PipelineElementType) =>
-          element.id === pipelineEditApi.selectedElementId
+          element.id === pipelineEditApi.selectedElementId,
       )!.type) ||
     "";
   const allElementTypeProperties: ElementPropertiesType =
@@ -62,14 +62,14 @@ const ElementDetails = ({ pipeline, pipelineEditApi }: Props) => {
     return <Loader message={`Element Properties Unknown for ${elementType}`} />;
   }
 
-  const sortedElementTypeProperties: Array<ElementPropertyType> = Object.values(
-    allElementTypeProperties
+  const sortedElementTypeProperties: ElementPropertyType[] = Object.values(
+    allElementTypeProperties,
   ).sort((a: ElementPropertyType, b: ElementPropertyType) =>
-    a.displayPriority > b.displayPriority ? 1 : -1
+    a.displayPriority > b.displayPriority ? 1 : -1,
   );
 
   let elementDefinition = elementDefinitions.find(
-    (e: ElementDefinition) => e.type === elementType
+    (e: ElementDefinition) => e.type === elementType,
   );
 
   if (!elementDefinition) {
@@ -82,9 +82,7 @@ const ElementDetails = ({ pipeline, pipelineEditApi }: Props) => {
 
   let icon: string = elementDefinition.icon;
   let typeName: string = elementType;
-  let elementTypeProperties: Array<
-    ElementPropertyType
-  > = sortedElementTypeProperties;
+  let elementTypeProperties: ElementPropertyType[] = sortedElementTypeProperties;
 
   const title = (
     <div className="element-details__title">
@@ -114,7 +112,7 @@ const ElementDetails = ({ pipeline, pipelineEditApi }: Props) => {
                 elementId={pipelineEditApi.selectedElementId!}
                 elementPropertyType={elementTypeProperty}
               />
-            )
+            ),
           )
         )}
       </form>

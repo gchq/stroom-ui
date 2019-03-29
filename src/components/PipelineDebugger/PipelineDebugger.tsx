@@ -23,8 +23,9 @@ import Loader from "../Loader";
 
 import DebuggerStep from "./DebuggerStep";
 import { getNext, getPrevious } from "./pipelineDebugger.utils";
-import { useApi as usePipelineApi } from "../../api/pipelineDocument";
+import useDocumentApi from "../../api/useDocumentApi";
 import usePipelineState from "../PipelineEditor/usePipelineState";
+import { PipelineDocumentType } from "../../types";
 
 interface Props {
   debuggerId: string;
@@ -32,16 +33,19 @@ interface Props {
 }
 
 const PipelineDebugger = ({ pipelineId, debuggerId }: Props) => {
-  const { fetchDocument: fetchPipeline } = usePipelineApi();
+  const { fetchDocument: fetchPipeline } = useDocumentApi<
+    "Pipeline",
+    PipelineDocumentType
+  >("Pipeline");
   const debuggers = {};
   const debuggerState = debuggers[debuggerId];
   const pipelineStateProps = usePipelineState(pipelineId);
   const {
     pipelineEditApi: { selectedElementId, elementSelected },
     useEditorProps: {
-      editorProps: { docRefContents: pipeline }
+      editorProps: { docRefContents: pipeline },
     },
-    asTree
+    asTree,
   } = pipelineStateProps;
 
   useEffect(() => {
@@ -76,7 +80,7 @@ const PipelineDebugger = ({ pipelineId, debuggerId }: Props) => {
         pipelineStateProps={pipelineStateProps}
         showAddElementDialog={() =>
           console.error(
-            "Adding Elements from Palette not supported in debugger"
+            "Adding Elements from Palette not supported in debugger",
           )
         }
       />

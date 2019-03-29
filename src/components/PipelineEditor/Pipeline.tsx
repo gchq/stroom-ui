@@ -25,7 +25,7 @@ import { PipelineElementType } from "../../types";
 import { getAllElementNames } from "./pipelineUtils";
 import { ShowDialog as ShowAddElementDialog } from "./AddElementModal";
 import { PipelineProps } from "./types";
-import { useElements } from "../../api/elements";
+import useElements from "../../api/useElements";
 
 interface Props {
   pipelineId: string;
@@ -36,14 +36,14 @@ interface Props {
 export const Pipeline = ({
   pipelineId,
   pipelineStateProps,
-  showAddElementDialog
+  showAddElementDialog,
 }: Props) => {
   const {
     asTree,
     pipelineEditApi,
     useEditorProps: {
-      editorProps: { docRefContents: pipeline }
-    }
+      editorProps: { docRefContents: pipeline },
+    },
   } = pipelineStateProps;
   const { elementDefinitions, elementProperties } = useElements();
 
@@ -76,7 +76,7 @@ export const Pipeline = ({
                   .filter((e: PipelineElementType) => e.id === column.uuid)
                   .map(element => {
                     let elementDefinition = Object.values(
-                      elementDefinitions
+                      elementDefinitions,
                     ).find(e => e.type === element.type)!;
                     let elementPropertiesThis = elementProperties[element.type];
 

@@ -22,6 +22,7 @@ import ElementDetails from "./ElementDetails";
 
 import { fullTestData } from "../../../testing/data";
 import usePipelineState from "../usePipelineState";
+import { PipelineDocumentType } from "src/types";
 
 interface Props {
   pipelineId: string;
@@ -32,13 +33,13 @@ interface Props {
 const TestElementDetails = ({
   pipelineId,
   testElementId,
-  testElementConfig
+  testElementConfig,
 }: Props) => {
   const {
     pipelineEditApi,
     useEditorProps: {
-      editorProps: { docRefContents }
-    }
+      editorProps: { docRefContents },
+    },
   } = usePipelineState(pipelineId);
   useEffect(() => {
     pipelineEditApi.elementSelected(testElementId, testElementConfig);
@@ -58,14 +59,16 @@ const TestElementDetails = ({
 
 const stories = storiesOf("Pipeline/Element Details", module);
 
-Object.values(fullTestData.pipelines).map(pipeline => {
-  pipeline.merged.elements.add!.map(element => {
-    stories.add(`${pipeline.docRef.uuid} - ${element.id}`, () => (
-      <TestElementDetails
-        pipelineId={pipeline.docRef.uuid}
-        testElementId={element.id}
-        testElementConfig={{ splitDepth: 10, splitCount: 10 }}
-      />
-    ));
+Object.values(fullTestData.documents.Pipeline)
+  .map(p => p as PipelineDocumentType)
+  .map(pipeline => {
+    pipeline.merged.elements.add!.map(element => {
+      stories.add(`${pipeline.uuid} - ${element.id}`, () => (
+        <TestElementDetails
+          pipelineId={pipeline.uuid}
+          testElementId={element.id}
+          testElementConfig={{ splitDepth: 10, splitCount: 10 }}
+        />
+      ));
+    });
   });
-});

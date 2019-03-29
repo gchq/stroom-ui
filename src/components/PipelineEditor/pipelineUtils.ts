@@ -16,7 +16,7 @@
 
 import { findItem, itemIsInSubtree, iterateNodes } from "../../lib/treeUtils";
 import {
-  PipelineModelType,
+  PipelineDocumentType,
   PipelineAsTreeType,
   PipelineElementType,
   ElementDefinitionsByType,
@@ -25,26 +25,26 @@ import {
   PipelinePropertyType,
   AddRemove,
   PipelineLinkType,
-  ElementPropertiesType
+  ElementPropertiesType,
 } from "../../types";
 import {
   RecycleBinItem,
   PipelineLayoutGrid,
   PipelineLayoutInfoById,
   PipelineLayoutRow,
-  CellType
+  CellType,
 } from "./types";
 
 export function getBinItems(
-  pipeline: PipelineModelType,
-  elementsByType: ElementDefinitionsByType
-): Array<RecycleBinItem> {
+  pipeline: PipelineDocumentType,
+  elementsByType: ElementDefinitionsByType,
+): RecycleBinItem[] {
   const thisConfigStack = pipeline.configStack[pipeline.configStack.length - 1];
 
   return thisConfigStack.elements.remove
     ? thisConfigStack.elements.remove.map(e => ({
         recycleData: e,
-        element: elementsByType[e.type]
+        element: elementsByType[e.type],
       }))
     : [];
 }
@@ -58,7 +58,7 @@ export function getBinItems(
  * @return {object} Tree like structure
  */
 export function getPipelineAsTree(
-  pipeline?: PipelineModelType
+  pipeline?: PipelineDocumentType,
 ): PipelineAsTreeType | undefined {
   if (!pipeline) return undefined;
 
@@ -72,7 +72,7 @@ export function getPipelineAsTree(
       elements[e.id] = {
         uuid: e.id,
         type: e.type,
-        children: []
+        children: [],
       };
     });
   }
@@ -97,7 +97,7 @@ export function getPipelineAsTree(
     const rootLinks = pipeline.merged.links.add
       ? pipeline.merged.links.add.filter(fromLink => {
           const toLinks = pipeline.merged.links.add!.filter(
-            l => fromLink.from === l.to
+            l => fromLink.from === l.to,
           );
           return toLinks.length === 0;
         })
@@ -136,7 +136,7 @@ export function getPipelineAsTree(
  * 1-up integer values that can then bo converted to specific layout information (pixel position, position in grid etc)
  */
 export function getPipelineLayoutGrid(
-  asTree: PipelineAsTreeType
+  asTree: PipelineAsTreeType,
 ): PipelineLayoutGrid {
   const layoutInformation: PipelineLayoutInfoById = {};
 
@@ -155,20 +155,20 @@ export function getPipelineLayoutGrid(
 
     layoutInformation[node.uuid] = {
       row: highestRow,
-      column
+      column,
     };
   });
 
   const layoutGrid: PipelineLayoutGrid = {
-    rows: []
+    rows: [],
   };
   for (let row = 0; row <= highestRow; row++) {
     let rowData: PipelineLayoutRow = {
-      columns: []
+      columns: [],
     };
     for (let column = 0; column <= highestColumn; column++) {
       rowData.columns.push({
-        cellType: CellType.EMPTY
+        cellType: CellType.EMPTY,
       });
     }
     layoutGrid.rows.push(rowData);
@@ -177,7 +177,7 @@ export function getPipelineLayoutGrid(
   Object.entries(layoutInformation)
     .map(k => ({
       uuid: k[0],
-      layoutInfo: k[1]
+      layoutInfo: k[1],
     }))
     .forEach(({ uuid, layoutInfo: { row, column } }) => {
       if (column > 0) {
@@ -199,8 +199,8 @@ export function getPipelineLayoutGrid(
  *
  * @param {pipeline} pipeline The pipeline from with to extract names
  */
-export function getAllElementNames(pipeline: PipelineModelType): Array<string> {
-  const names: Array<string> = [];
+export function getAllElementNames(pipeline: PipelineDocumentType): string[] {
+  const names: string[] = [];
 
   pipeline.merged.elements.add &&
     pipeline.merged.elements.add
@@ -223,8 +223,8 @@ export function getAllElementNames(pipeline: PipelineModelType): Array<string> {
  * All the other items are left as they are.
  */
 function mapLastItemInArray(input: any, mapFunc: (input: any) => any) {
-  return input.map((item: any, i: number, arr: Array<any>) =>
-    i === arr.length - 1 ? mapFunc(item) : item
+  return input.map((item: any, i: number, arr: any[]) =>
+    i === arr.length - 1 ? mapFunc(item) : item,
   );
 }
 
@@ -239,18 +239,18 @@ function mapLastItemInArray(input: any, mapFunc: (input: any) => any) {
  * @param {string} name The name to give to the new element.
  */
 export function createNewElementInPipeline(
-  pipeline: PipelineModelType,
+  pipeline: PipelineDocumentType,
   parentId: string,
   childDefinition: ElementDefinition,
-  name: string
-): PipelineModelType {
+  name: string,
+): PipelineDocumentType {
   const newElement = {
     id: name,
-    type: childDefinition.type
+    type: childDefinition.type,
   };
   const newLink = {
     from: parentId,
-    to: name
+    to: name,
   };
 
   return {
@@ -259,12 +259,12 @@ export function createNewElementInPipeline(
       properties: stackItem.properties,
       elements: {
         ...stackItem.elements,
-        add: stackItem.elements.add.concat([newElement])
+        add: stackItem.elements.add.concat([newElement]),
       },
       links: {
         ...stackItem.links,
-        add: stackItem.links.add.concat([newLink])
-      }
+        add: stackItem.links.add.concat([newLink]),
+      },
     })),
     merged: {
       ...pipeline.merged,
@@ -273,15 +273,15 @@ export function createNewElementInPipeline(
         add: (pipeline.merged.elements.add
           ? pipeline.merged.elements.add
           : []
-        ).concat([newElement])
+        ).concat([newElement]),
       },
       links: {
         ...pipeline.merged.links,
         add: (pipeline.merged.links.add ? pipeline.merged.links.add : [])
           // add the new link
-          .concat([newLink])
-      }
-    }
+          .concat([newLink]),
+      },
+    },
   };
 }
 
@@ -295,40 +295,40 @@ export function createNewElementInPipeline(
  * @param {boolean|entity|integer|long|string} propertyValue The value to add or update
  */
 export function setElementPropertyValueInPipeline(
-  pipeline: PipelineModelType,
+  pipeline: PipelineDocumentType,
   element: string,
   name: string,
   propertyType: string,
-  propertyValue: any
-): PipelineModelType {
+  propertyValue: any,
+): PipelineDocumentType {
   // Create the 'value' property.
   const value = {
     boolean: null,
     entity: null,
     integer: null,
     long: null,
-    string: null
+    string: null,
   };
   value[propertyType.toLowerCase()] = propertyValue;
 
   const property = {
     element,
     name,
-    value
+    value,
   };
 
   return {
     ...pipeline,
     configStack: mapLastItemInArray(pipeline.configStack, stackItem =>
-      addPropertyToStackItem(stackItem, property)
+      addPropertyToStackItem(stackItem, property),
     ),
-    merged: addPropertyToStackItem(pipeline.merged, property)
+    merged: addPropertyToStackItem(pipeline.merged, property),
   };
 }
 
 function addPropertyToStackItem(
   stackItem: PipelineDataType,
-  property: PipelinePropertyType
+  property: PipelinePropertyType,
 ): PipelineDataType {
   const result = {
     ...stackItem,
@@ -337,21 +337,22 @@ function addPropertyToStackItem(
       add: stackItem.properties.add
         ? stackItem.properties.add
             .filter(
-              p => !(p.element === property.element && p.name === property.name)
+              p =>
+                !(p.element === property.element && p.name === property.name),
             )
             .concat([property])
-        : []
-    }
+        : [],
+    },
   };
 
   return result;
 }
 
 export function revertPropertyToParent(
-  pipeline: PipelineModelType,
+  pipeline: PipelineDocumentType,
   element: string,
-  name: string
-): PipelineModelType {
+  name: string,
+): PipelineDocumentType {
   if (pipeline.configStack.length < 2) {
     throw new Error("This function requires a configStack with a parent");
   }
@@ -360,17 +361,17 @@ export function revertPropertyToParent(
   if (name === undefined)
     throw new Error("This function requires a property name");
 
-  const childAdd: Array<PipelinePropertyType> =
+  const childAdd: PipelinePropertyType[] =
     pipeline.configStack[pipeline.configStack.length - 1].properties.add || [];
-  const parentAdd: Array<PipelinePropertyType> =
+  const parentAdd: PipelinePropertyType[] =
     pipeline.configStack[pipeline.configStack.length - 2].properties.add || [];
-  const mergedAdd: Array<PipelinePropertyType> =
+  const mergedAdd: PipelinePropertyType[] =
     pipeline.merged.properties.add || [];
 
   const indexToRemove = childAdd.findIndex(addItem => addItem.name === name);
   const parentProperty = parentAdd.find(addItem => addItem.name === name)!;
   const indexToRemoveFromMerged = mergedAdd.findIndex(
-    addItem => addItem.name === name
+    addItem => addItem.name === name,
   );
 
   return {
@@ -382,9 +383,9 @@ export function revertPropertyToParent(
         add: [
           // We want to remove the property from the child
           ...stackItem.properties.add.slice(0, indexToRemove),
-          ...stackItem.properties.add.slice(indexToRemove + 1)
-        ]
-      }
+          ...stackItem.properties.add.slice(indexToRemove + 1),
+        ],
+      },
     })),
     merged: {
       ...pipeline.merged,
@@ -399,18 +400,18 @@ export function revertPropertyToParent(
             ? pipeline.merged.properties.add.slice(indexToRemoveFromMerged + 1)
             : []),
           // ... and replace it with the paren'ts property
-          parentProperty
-        ]
-      }
-    }
+          parentProperty,
+        ],
+      },
+    },
   };
 }
 
 export function revertPropertyToDefault(
-  pipeline: PipelineModelType,
+  pipeline: PipelineDocumentType,
   element: string,
-  name: string
-): PipelineModelType {
+  name: string,
+): PipelineDocumentType {
   if (pipeline.configStack.length < 2) {
     throw new Error("This function requires a configStack with a parent");
   }
@@ -419,12 +420,12 @@ export function revertPropertyToDefault(
   if (name === undefined)
     throw new Error("This function requires a property name");
 
-  const childAdd: Array<PipelinePropertyType> =
+  const childAdd: PipelinePropertyType[] =
     pipeline.configStack[pipeline.configStack.length - 1].properties.add || [];
-  const mergedAdd: Array<PipelinePropertyType> =
+  const mergedAdd: PipelinePropertyType[] =
     pipeline.merged.properties.add || [];
   const indexToRemoveFromMerged = mergedAdd.findIndex(
-    addItem => addItem.name === name
+    addItem => addItem.name === name,
   );
 
   // We might be removing something that has an override on a child, in which case we
@@ -441,13 +442,13 @@ export function revertPropertyToDefault(
           add: [
             // We want to remove the property from the child
             ...stackItem.properties.add.slice(0, indexToRemove),
-            ...stackItem.properties.add.slice(indexToRemove + 1)
+            ...stackItem.properties.add.slice(indexToRemove + 1),
           ],
           remove: [
             ...stackItem.properties.remove,
-            propertyForRemove // We add the property we found on the parent
-          ]
-        }
+            propertyForRemove, // We add the property we found on the parent
+          ],
+        },
       })),
       merged: {
         ...pipeline.merged,
@@ -460,19 +461,19 @@ export function revertPropertyToDefault(
               : []),
             ...(pipeline.merged.properties.add
               ? pipeline.merged.properties.add.slice(
-                  indexToRemoveFromMerged + 1
+                  indexToRemoveFromMerged + 1,
                 )
-              : [])
-          ]
-        }
-      }
+              : []),
+          ],
+        },
+      },
     };
   }
   // If we don't have this property in the child then we need to get it from the parent:
   const propertyForRemove = getParentProperty(
     pipeline.configStack,
     element,
-    name
+    name,
   );
   return {
     ...pipeline,
@@ -483,9 +484,9 @@ export function revertPropertyToDefault(
         add: stackItem.properties.add, // We don't have anything to change here
         remove: [
           ...stackItem.properties.remove,
-          propertyForRemove // We add the property we found on the parent
-        ]
-      }
+          propertyForRemove, // We add the property we found on the parent
+        ],
+      },
     })),
     // Just copy them over
     merged: {
@@ -499,10 +500,10 @@ export function revertPropertyToDefault(
             : []),
           ...(pipeline.merged.properties.add
             ? pipeline.merged.properties.add.slice(indexToRemoveFromMerged + 1)
-            : [])
-        ]
-      }
-    }
+            : []),
+        ],
+      },
+    },
   };
 }
 
@@ -514,13 +515,13 @@ export function revertPropertyToDefault(
  * @param {object} recycleData {id, type} The identifying information for the element being re-instated
  */
 export function reinstateElementToPipeline(
-  pipeline: PipelineModelType,
+  pipeline: PipelineDocumentType,
   parentId: string,
-  recycleData: PipelineElementType
-): PipelineModelType {
+  recycleData: PipelineElementType,
+): PipelineDocumentType {
   const newLink = {
     from: parentId,
-    to: recycleData.id
+    to: recycleData.id,
   };
 
   return {
@@ -530,13 +531,13 @@ export function reinstateElementToPipeline(
       elements: {
         add: stackItem.elements.add.concat([recycleData]),
         remove: stackItem.elements.remove.filter(
-          (e: PipelineElementType) => e.id !== recycleData.id
-        )
+          (e: PipelineElementType) => e.id !== recycleData.id,
+        ),
       },
       links: {
         ...stackItem.links,
-        add: stackItem.links.add.concat([newLink])
-      }
+        add: stackItem.links.add.concat([newLink]),
+      },
     })),
     merged: {
       ...pipeline.merged,
@@ -547,15 +548,15 @@ export function reinstateElementToPipeline(
         ).concat([recycleData]),
         remove: pipeline.merged.elements.remove
           ? pipeline.merged.elements.remove.filter(e => e.id !== recycleData.id)
-          : []
+          : [],
       },
       links: {
         ...pipeline.merged.links,
         add: (pipeline.merged.links.add ? pipeline.merged.links.add : [])
           // add the new link
-          .concat([newLink])
-      }
-    }
+          .concat([newLink]),
+      },
+    },
   };
 }
 
@@ -567,9 +568,9 @@ export function reinstateElementToPipeline(
  * @return The updated pipeline definition.
  */
 export function removeElementFromPipeline(
-  pipeline: PipelineModelType,
-  itemToDelete: string
-): PipelineModelType {
+  pipeline: PipelineDocumentType,
+  itemToDelete: string,
+): PipelineDocumentType {
   // Get hold of our entry in the config stack
   const configStackThis = pipeline.configStack[pipeline.configStack.length - 1];
 
@@ -588,7 +589,7 @@ export function removeElementFromPipeline(
 
   // Determine the behaviour for removing the link, based on if it was ours or not
   let calcNewLinks: (
-    links: AddRemove<PipelineLinkType>
+    links: AddRemove<PipelineLinkType>,
   ) => AddRemove<PipelineLinkType>;
   if (linkIsOurs) {
     // we can simply filter out the add
@@ -596,7 +597,7 @@ export function removeElementFromPipeline(
       add: ourStackLinks.add
         ? ourStackLinks.add.filter(l => l.to !== itemToDelete)
         : undefined,
-      remove: ourStackLinks.remove
+      remove: ourStackLinks.remove,
     });
   } else {
     // we will need to shadow the link we inherited
@@ -605,7 +606,7 @@ export function removeElementFromPipeline(
       remove:
         ourStackLinks.remove && linkFromMerged
           ? ourStackLinks.remove.concat([linkFromMerged])
-          : undefined
+          : undefined,
     });
   }
 
@@ -615,11 +616,11 @@ export function removeElementFromPipeline(
       properties: stackItem.properties,
       elements: {
         add: stackItem.elements.add.filter(
-          (e: PipelineElementType) => e.id !== itemToDelete
+          (e: PipelineElementType) => e.id !== itemToDelete,
         ),
-        remove: stackItem.elements.remove.concat([elementFromMerged])
+        remove: stackItem.elements.remove.concat([elementFromMerged]),
       },
-      links: calcNewLinks(stackItem.links)
+      links: calcNewLinks(stackItem.links),
     })),
     merged: {
       ...pipeline.merged,
@@ -627,15 +628,15 @@ export function removeElementFromPipeline(
         ...pipeline.merged.elements,
         add:
           pipeline.merged.elements.add &&
-          pipeline.merged.elements.add.filter(e => e.id !== itemToDelete) // simply remove itemToDelete
+          pipeline.merged.elements.add.filter(e => e.id !== itemToDelete), // simply remove itemToDelete
       },
       links: {
         ...pipeline.merged.links,
         add:
           pipeline.merged.links.add &&
-          pipeline.merged.links.add.filter(l => l.to !== itemToDelete) // simply remove the link where to=itemToDelete
-      }
-    }
+          pipeline.merged.links.add.filter(l => l.to !== itemToDelete), // simply remove the link where to=itemToDelete
+      },
+    },
   };
 }
 
@@ -650,10 +651,10 @@ export function removeElementFromPipeline(
  */
 
 export function canMovePipelineElement(
-  pipeline: PipelineModelType,
+  pipeline: PipelineDocumentType,
   pipelineAsTree: PipelineAsTreeType,
   itemToMove: string,
-  destination: string
+  destination: string,
 ): boolean {
   const { node: itemToMoveNode } = findItem(pipelineAsTree, itemToMove)!;
   const { node: destinationNode } = findItem(pipelineAsTree, destination)!;
@@ -691,10 +692,10 @@ export function canMovePipelineElement(
  * @return The updated pipeline definition.
  */
 export function moveElementInPipeline(
-  pipeline: PipelineModelType,
+  pipeline: PipelineDocumentType,
   itemToMove: string,
-  destination: string
-): PipelineModelType {
+  destination: string,
+): PipelineDocumentType {
   return {
     ...pipeline,
     configStack: pipeline.configStack,
@@ -713,11 +714,11 @@ export function moveElementInPipeline(
             .concat([
               {
                 from: destination,
-                to: itemToMove
-              }
-            ])
-      }
-    }
+                to: itemToMove,
+              },
+            ]),
+      },
+    },
   };
 }
 
@@ -728,12 +729,12 @@ export function moveElementInPipeline(
  * @param {string} parent The id of the parent
  */
 export function getAllChildren(
-  pipeline: PipelineModelType,
-  parent: string
-): Array<string> {
-  let allChildren: Array<string> = [];
+  pipeline: PipelineDocumentType,
+  parent: string,
+): string[] {
+  let allChildren: string[] = [];
 
-  const getAllChildren = (pipeline: PipelineModelType, element: string) => {
+  const getAllChildren = (pipeline: PipelineDocumentType, element: string) => {
     const thisElementsChildren =
       pipeline.merged.links.add &&
       pipeline.merged.links.add.filter(p => p.from === element).map(p => p.to);
@@ -760,9 +761,9 @@ export function getAllChildren(
  * @param {string} propertyName The name of the property to search for
  */
 export function getParentProperty(
-  stack: Array<PipelineDataType>,
+  stack: PipelineDataType[],
   elementId: string,
-  propertyName: string
+  propertyName: string,
 ) {
   const getFromParent = (index: number): PipelinePropertyType | undefined => {
     const thisStack: PipelineDataType = stack[index];
@@ -770,13 +771,13 @@ export function getParentProperty(
       thisStack.properties.add &&
       thisStack.properties.add.find(
         (element: PipelinePropertyType) =>
-          element.element === elementId && element.name === propertyName
+          element.element === elementId && element.name === propertyName,
       );
     const removeProperty =
       thisStack.properties.remove &&
       thisStack.properties.remove.find(
         (element: PipelinePropertyType) =>
-          element.element === elementId && element.name === propertyName
+          element.element === elementId && element.name === propertyName,
       );
     if (property !== undefined) {
       // We return the first matching property we find.
@@ -802,16 +803,16 @@ export function getParentProperty(
  * @param {string} elementTypeName The name of the element type
  */
 export function getChildValue(
-  pipeline: PipelineModelType,
+  pipeline: PipelineDocumentType,
   elementId: string,
-  elementTypeName: string
+  elementTypeName: string,
 ): PipelinePropertyType | undefined {
   const lastStackItem: PipelineDataType =
     pipeline.configStack[pipeline.configStack.length - 1];
   const elementPropertiesInChild =
     lastStackItem.properties.add &&
     lastStackItem.properties.add.filter(
-      property => property.element === elementId
+      property => property.element === elementId,
     );
   const childValue =
     elementPropertiesInChild &&
@@ -827,14 +828,14 @@ export function getChildValue(
  * @param {string} elementTypeName The name of the element type
  */
 export function getElementValue(
-  pipeline: PipelineModelType,
+  pipeline: PipelineDocumentType,
   elementId: string,
-  elementTypeName: string
+  elementTypeName: string,
 ) {
   const elementProperties =
     pipeline.merged.properties.add &&
     pipeline.merged.properties.add.filter(
-      property => property.element === elementId
+      property => property.element === elementId,
     );
   const value =
     elementProperties &&
@@ -857,7 +858,7 @@ export const getCurrentValue = (
   value: any,
   parentValue: any,
   defaultValue: any,
-  type: string
+  type: string,
 ) => {
   // Parse the value if it's a boolean.
   if (type === "boolean") {
@@ -940,16 +941,16 @@ const getActualValue = (value: PipelinePropertyType, type: string) => {
 
 export const getInitialValues = (
   elementTypeProperties: ElementPropertiesType,
-  elementProperties: Array<PipelinePropertyType>
+  elementProperties: PipelinePropertyType[],
 ) => {
   const initialValues = {};
   Object.keys(elementTypeProperties).map(key => {
     const elementsProperty: PipelinePropertyType = elementProperties.find(
-      element => element.name === key
+      element => element.name === key,
     )!;
     initialValues[key] = getActualValue(
       elementsProperty!,
-      elementTypeProperties[key].type
+      elementTypeProperties[key].type,
     );
     return null;
   });

@@ -1,12 +1,10 @@
-import * as uuidv4 from 'uuid/v4';
-import { PipelineModelType } from "../../../types";
+import * as uuidv4 from "uuid/v4";
+import { PipelineDocumentType } from "../../../types";
 
 export default {
-  docRef: {
-    uuid: uuidv4(),
-    name: "Fork Removed",
-    type: "Pipeline"
-  },
+  uuid: uuidv4(),
+  name: "Fork Removed",
+  type: "Pipeline",
   description:
     "This demonstrates a pipeline with a link that can be restored, that used to be a forked path",
   configStack: [
@@ -15,39 +13,39 @@ export default {
         add: [
           {
             id: "dsParser",
-            type: "DSParser"
+            type: "DSParser",
           },
           {
             id: "xsltFilter",
-            type: "XSLTFilter"
+            type: "XSLTFilter",
           },
           {
             id: "xmlWriter1",
-            type: "XMLWriter"
+            type: "XMLWriter",
           },
           {
             id: "streamAppender1",
-            type: "StreamAppender"
+            type: "StreamAppender",
           },
           {
             id: "xmlWriter2",
-            type: "XMLWriter"
+            type: "XMLWriter",
           },
           {
             id: "streamAppender2",
-            type: "StreamAppender"
+            type: "StreamAppender",
           },
           {
             id: "Source",
-            type: "Source"
-          }
+            type: "Source",
+          },
         ],
         remove: [
           {
             id: "xmlWriter2",
-            type: "XMLWriter"
-          }
-        ]
+            type: "XMLWriter",
+          },
+        ],
       },
       properties: {
         add: [
@@ -60,11 +58,11 @@ export default {
               entity: {
                 type: "TextConverter",
                 uuid: "4fde9c79-796c-4069-bbdb-e707ff558376",
-                name: "My CSV Splitter"
+                name: "My CSV Splitter",
               },
               long: null,
-              boolean: null
-            }
+              boolean: null,
+            },
           },
           {
             element: "xsltFilter",
@@ -75,79 +73,79 @@ export default {
               entity: {
                 type: "XSLT",
                 uuid: "5871080f-b5bb-49d2-9483-5a54f7fb4e7c",
-                name: "MyXSLT"
+                name: "MyXSLT",
               },
               long: null,
-              boolean: null
-            }
-          }
+              boolean: null,
+            },
+          },
         ],
-        remove: []
+        remove: [],
       },
       pipelineReferences: {
         add: [],
-        remove: []
+        remove: [],
       },
       links: {
         add: [
           {
             from: "Source",
-            to: "dsParser"
+            to: "dsParser",
           },
           {
             from: "dsParser",
-            to: "xsltFilter"
+            to: "xsltFilter",
           },
           {
             from: "xsltFilter",
-            to: "xmlWriter1"
+            to: "xmlWriter1",
           },
           {
             from: "xmlWriter1",
-            to: "streamAppender1"
+            to: "streamAppender1",
           },
           {
             from: "xmlWriter2",
-            to: "streamAppender2"
-          }
+            to: "streamAppender2",
+          },
         ],
-        remove: []
-      }
-    }
+        remove: [],
+      },
+    },
   ],
   merged: {
     elements: {
       add: [
         {
           id: "xsltFilter",
-          type: "XSLTFilter"
+          type: "XSLTFilter",
         },
         {
           id: "streamAppender1",
-          type: "StreamAppender"
+          type: "StreamAppender",
         },
         {
           id: "xmlWriter1",
-          type: "XMLWriter"
+          type: "XMLWriter",
         },
         {
           id: "streamAppender2",
-          type: "StreamAppender"
+          type: "StreamAppender",
         },
         {
           id: "xmlWriter2",
-          type: "XMLWriter"
+          type: "XMLWriter",
         },
         {
           id: "dsParser",
-          type: "DSParser"
+          type: "DSParser",
         },
         {
           id: "Source",
-          type: "Source"
-        }
+          type: "Source",
+        },
       ],
-      remove: []
+      remove: [],
     },
     properties: {
       add: [
@@ -160,11 +158,11 @@ export default {
             entity: {
               type: "XSLT",
               uuid: "5871080f-b5bb-49d2-9483-5a54f7fb4e7c",
-              name: "MyXSLT"
+              name: "MyXSLT",
             },
             long: null,
-            boolean: null
-          }
+            boolean: null,
+          },
         },
         {
           element: "dsParser",
@@ -175,43 +173,43 @@ export default {
             entity: {
               type: "TextConverter",
               uuid: "4fde9c79-796c-4069-bbdb-e707ff558376",
-              name: "My CSV Splitter"
+              name: "My CSV Splitter",
             },
             long: null,
-            boolean: null
-          }
-        }
+            boolean: null,
+          },
+        },
       ],
-      remove: []
+      remove: [],
     },
     pipelineReferences: {
       add: [],
-      remove: []
+      remove: [],
     },
     links: {
       add: [
         {
           from: "xsltFilter",
-          to: "xmlWriter1"
+          to: "xmlWriter1",
         },
         {
           from: "xmlWriter1",
-          to: "streamAppender1"
+          to: "streamAppender1",
         },
         {
           from: "xmlWriter2",
-          to: "streamAppender2"
+          to: "streamAppender2",
         },
         {
           from: "dsParser",
-          to: "xsltFilter"
+          to: "xsltFilter",
         },
         {
           from: "Source",
-          to: "dsParser"
-        }
+          to: "dsParser",
+        },
       ],
-      remove: []
-    }
-  }
-} as PipelineModelType;
+      remove: [],
+    },
+  },
+} as PipelineDocumentType;

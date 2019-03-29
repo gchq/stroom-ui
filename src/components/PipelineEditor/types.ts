@@ -3,14 +3,14 @@ import { ConnectDropTarget, ConnectDragSource } from "react-dnd";
 import {
   PipelineElementType,
   ElementDefinition,
-  PipelineModelType,
-  PipelineAsTreeType
+  PipelineDocumentType,
+  PipelineAsTreeType,
 } from "../../types";
-import { UseDocRefEditorProps } from "../DocRefEditor";
+import { UseDocRefEditorProps } from "../DocumentEditors/DocRefEditor";
 
 export enum DragDropTypes {
   ELEMENT = "element",
-  PALLETE_ELEMENT = "paletteElement"
+  PALLETE_ELEMENT = "paletteElement",
 }
 export interface DragObject {
   element: ElementDefinition;
@@ -30,7 +30,7 @@ export interface DragCollectedProps {
 export interface PipelineProps {
   asTree?: PipelineAsTreeType;
   pipelineEditApi: PipelineEditApi;
-  useEditorProps: UseDocRefEditorProps<PipelineModelType>;
+  useEditorProps: UseDocRefEditorProps<PipelineDocumentType>;
 }
 
 export interface PipelineEditApi {
@@ -43,18 +43,18 @@ export interface PipelineEditApi {
   elementAdded: (
     parentId: string,
     elementDefinition: ElementDefinition,
-    name: string
+    name: string,
   ) => void;
   elementDeleted: (elementId: string) => void;
   elementReinstated: (
     parentId: string,
-    recycleData: PipelineElementType
+    recycleData: PipelineElementType,
   ) => void;
   elementPropertyUpdated: (
     element: string,
     name: string,
     propertyType: string,
-    propertyValue: any
+    propertyValue: any,
   ) => void;
   elementPropertyRevertToParent: (elementId: string, name: string) => void;
   elementPropertyRevertToDefault: (elementId: string, name: string) => void;
@@ -63,7 +63,7 @@ export interface PipelineEditApi {
 export enum CellType {
   EMPTY,
   ELBOW,
-  ELEMENT
+  ELEMENT,
 }
 
 export interface RecycleBinItem {
@@ -85,9 +85,9 @@ export interface PipelineLayoutCell {
 }
 
 export interface PipelineLayoutRow {
-  columns: Array<PipelineLayoutCell>;
+  columns: PipelineLayoutCell[];
 }
 
 export interface PipelineLayoutGrid {
-  rows: Array<PipelineLayoutRow>;
+  rows: PipelineLayoutRow[];
 }

@@ -1,12 +1,10 @@
-import * as uuidv4 from 'uuid/v4';
-import { PipelineModelType } from "../../../types";
+import * as uuidv4 from "uuid/v4";
+import { PipelineDocumentType } from "../../../types";
 
 export const noParent = {
-  docRef: {
-    uuid: uuidv4(),
-    name: "No Parent",
-    type: "Pipeline"
-  },
+  uuid: uuidv4(),
+  name: "No Parent",
+  type: "Pipeline",
   description: "Demonstrates properties with no parent pipeline",
   configStack: [
     {
@@ -14,18 +12,18 @@ export const noParent = {
         add: [
           {
             id: "combinedParser",
-            type: "CombinedParser"
+            type: "CombinedParser",
           },
           {
             id: "xsltFilter",
-            type: "XSLTFilter"
+            type: "XSLTFilter",
           },
           {
             id: "Source",
-            type: "Source"
-          }
+            type: "Source",
+          },
         ],
-        remove: []
+        remove: [],
       },
       properties: {
         add: [
@@ -37,48 +35,48 @@ export const noParent = {
               integer: null,
               entity: null,
               boolean: null,
-              long: null
-            }
-          }
+              long: null,
+            },
+          },
         ],
-        remove: []
+        remove: [],
       },
       pipelineReferences: {
         add: [],
-        remove: []
+        remove: [],
       },
       links: {
         add: [
           {
             from: "Source",
-            to: "combinedParser"
+            to: "combinedParser",
           },
           {
             from: "combinedParser",
-            to: "xsltFilter"
-          }
+            to: "xsltFilter",
+          },
         ],
-        remove: []
-      }
-    }
+        remove: [],
+      },
+    },
   ],
   merged: {
     elements: {
       add: [
         {
           id: "xsltFilter",
-          type: "XSLTFilter"
+          type: "XSLTFilter",
         },
         {
           id: "combinedParser",
-          type: "CombinedParser"
+          type: "CombinedParser",
         },
         {
           id: "Source",
-          type: "Source"
-        }
+          type: "Source",
+        },
       ],
-      remove: []
+      remove: [],
     },
     properties: {
       add: [
@@ -90,38 +88,36 @@ export const noParent = {
             integer: null,
             entity: null,
             boolean: null,
-            long: null
-          }
-        }
+            long: null,
+          },
+        },
       ],
-      remove: []
+      remove: [],
     },
     pipelineReferences: {
       add: [],
-      remove: []
+      remove: [],
     },
     links: {
       add: [
         {
           from: "combinedParser",
-          to: "xsltFilter"
+          to: "xsltFilter",
         },
         {
           from: "Source",
-          to: "combinedParser"
-        }
+          to: "combinedParser",
+        },
       ],
-      remove: []
-    }
-  }
-};
+      remove: [],
+    },
+  },
+} as PipelineDocumentType;
 
 export const childNoProperty = {
-  docRef: {
-    uuid: "childNoProperty",
-    name: "Parent No Property",
-    type: "Pipeline"
-  },
+  uuid: "childNoProperty",
+  name: "Parent No Property",
+  type: "Pipeline",
   description: "Demonstrates properties when parent has no property",
   configStack: [
     {
@@ -129,9 +125,9 @@ export const childNoProperty = {
         add: [
           { id: "combinedParser", type: "CombinedParser" },
           { id: "xsltFilter", type: "XSLTFilter" },
-          { id: "Source", type: "Source" }
+          { id: "Source", type: "Source" },
         ],
-        remove: []
+        remove: [],
       },
       properties: {
         add: [
@@ -143,20 +139,20 @@ export const childNoProperty = {
               integer: null,
               entity: null,
               boolean: null,
-              long: null
-            }
-          }
+              long: null,
+            },
+          },
         ],
-        remove: []
+        remove: [],
       },
       pipelineReferences: { add: [], remove: [] },
       links: {
         add: [
           { from: "Source", to: "combinedParser" },
-          { from: "combinedParser", to: "xsltFilter" }
+          { from: "combinedParser", to: "xsltFilter" },
         ],
-        remove: []
-      }
+        remove: [],
+      },
     },
     {
       elements: { add: [], remove: [] },
@@ -170,8 +166,8 @@ export const childNoProperty = {
               integer: null,
               entity: null,
               boolean: null,
-              long: null
-            }
+              long: null,
+            },
           },
           {
             element: "xsltFilter",
@@ -181,24 +177,24 @@ export const childNoProperty = {
               integer: null,
               entity: null,
               boolean: null,
-              long: null
-            }
-          }
+              long: null,
+            },
+          },
         ],
-        remove: []
+        remove: [],
       },
       pipelineReferences: { add: [], remove: [] },
-      links: { add: [], remove: [] }
-    }
+      links: { add: [], remove: [] },
+    },
   ],
   merged: {
     elements: {
       add: [
         { id: "xsltFilter", type: "XSLTFilter" },
         { id: "combinedParser", type: "CombinedParser" },
-        { id: "Source", type: "Source" }
+        { id: "Source", type: "Source" },
       ],
-      remove: []
+      remove: [],
     },
     properties: {
       add: [
@@ -210,8 +206,8 @@ export const childNoProperty = {
             integer: null,
             entity: null,
             boolean: null,
-            long: null
-          }
+            long: null,
+          },
         },
         {
           element: "combinedParser",
@@ -221,29 +217,27 @@ export const childNoProperty = {
             integer: null,
             entity: null,
             boolean: null,
-            long: null
-          }
-        }
+            long: null,
+          },
+        },
       ],
-      remove: []
+      remove: [],
     },
     pipelineReferences: { add: [], remove: [] },
     links: {
       add: [
         { from: "combinedParser", to: "xsltFilter" },
-        { from: "Source", to: "combinedParser" }
+        { from: "Source", to: "combinedParser" },
       ],
-      remove: []
-    }
-  }
-};
+      remove: [],
+    },
+  },
+} as PipelineDocumentType;
 
 export const childWithProperty = {
-  docRef: {
-    uuid: "childWithProperty",
-    name: "Parent With Property",
-    type: "Pipeline"
-  },
+  uuid: "childWithProperty",
+  name: "Parent With Property",
+  type: "Pipeline",
   description: "Demonstrates properties with parent that has properties",
   configStack: [
     {
@@ -251,9 +245,9 @@ export const childWithProperty = {
         add: [
           { id: "combinedParser", type: "CombinedParser" },
           { id: "xsltFilter", type: "XSLTFilter" },
-          { id: "Source", type: "Source" }
+          { id: "Source", type: "Source" },
         ],
-        remove: []
+        remove: [],
       },
       properties: {
         add: [
@@ -265,8 +259,8 @@ export const childWithProperty = {
               integer: null,
               entity: null,
               boolean: null,
-              long: null
-            }
+              long: null,
+            },
           },
           {
             element: "xsltFilter",
@@ -276,20 +270,20 @@ export const childWithProperty = {
               integer: null,
               entity: null,
               boolean: null,
-              long: null
-            }
-          }
+              long: null,
+            },
+          },
         ],
-        remove: []
+        remove: [],
       },
       pipelineReferences: { add: [], remove: [] },
       links: {
         add: [
           { from: "Source", to: "combinedParser" },
-          { from: "combinedParser", to: "xsltFilter" }
+          { from: "combinedParser", to: "xsltFilter" },
         ],
-        remove: []
-      }
+        remove: [],
+      },
     },
     {
       elements: { add: [], remove: [] },
@@ -303,8 +297,8 @@ export const childWithProperty = {
               integer: null,
               entity: null,
               boolean: null,
-              long: null
-            }
+              long: null,
+            },
           },
           {
             element: "xsltFilter",
@@ -314,24 +308,24 @@ export const childWithProperty = {
               integer: null,
               entity: null,
               boolean: null,
-              long: null
-            }
-          }
+              long: null,
+            },
+          },
         ],
-        remove: []
+        remove: [],
       },
       pipelineReferences: { add: [], remove: [] },
-      links: { add: [], remove: [] }
-    }
+      links: { add: [], remove: [] },
+    },
   ],
   merged: {
     elements: {
       add: [
         { id: "xsltFilter", type: "XSLTFilter" },
         { id: "combinedParser", type: "CombinedParser" },
-        { id: "Source", type: "Source" }
+        { id: "Source", type: "Source" },
       ],
-      remove: []
+      remove: [],
     },
     properties: {
       add: [
@@ -343,8 +337,8 @@ export const childWithProperty = {
             integer: null,
             entity: null,
             boolean: null,
-            long: null
-          }
+            long: null,
+          },
         },
         {
           element: "combinedParser",
@@ -354,29 +348,27 @@ export const childWithProperty = {
             integer: null,
             entity: null,
             boolean: null,
-            long: null
-          }
-        }
+            long: null,
+          },
+        },
       ],
-      remove: []
+      remove: [],
     },
     pipelineReferences: { add: [], remove: [] },
     links: {
       add: [
         { from: "combinedParser", to: "xsltFilter" },
-        { from: "Source", to: "combinedParser" }
+        { from: "Source", to: "combinedParser" },
       ],
-      remove: []
-    }
-  }
-};
+      remove: [],
+    },
+  },
+} as PipelineDocumentType;
 
 export const childNoPropertyParentNoProperty = {
-  docRef: {
-    uuid: "childNoPropertyParentNoProperty",
-    name: "This No Property, Parent No Property",
-    type: "Pipeline"
-  },
+  uuid: "childNoPropertyParentNoProperty",
+  name: "This No Property, Parent No Property",
+  type: "Pipeline",
   description:
     "Demonstrates properties with no property, parent has no property either",
   configStack: [
@@ -385,9 +377,9 @@ export const childNoPropertyParentNoProperty = {
         add: [
           { id: "combinedParser", type: "CombinedParser" },
           { id: "xsltFilter", type: "XSLTFilter" },
-          { id: "Source", type: "Source" }
+          { id: "Source", type: "Source" },
         ],
-        remove: []
+        remove: [],
       },
       properties: {
         add: [
@@ -399,29 +391,29 @@ export const childNoPropertyParentNoProperty = {
               integer: null,
               entity: null,
               boolean: null,
-              long: null
-            }
-          }
+              long: null,
+            },
+          },
         ],
-        remove: []
+        remove: [],
       },
       pipelineReferences: { add: [], remove: [] },
       links: {
         add: [
           { from: "Source", to: "combinedParser" },
-          { from: "combinedParser", to: "xsltFilter" }
+          { from: "combinedParser", to: "xsltFilter" },
         ],
-        remove: []
-      }
+        remove: [],
+      },
     },
     {
       elements: {
         add: [
           { id: "combinedParser", type: "CombinedParser" },
           { id: "xsltFilter", type: "XSLTFilter" },
-          { id: "Source", type: "Source" }
+          { id: "Source", type: "Source" },
         ],
-        remove: []
+        remove: [],
       },
       properties: {
         add: [
@@ -433,20 +425,20 @@ export const childNoPropertyParentNoProperty = {
               integer: null,
               entity: null,
               boolean: null,
-              long: null
-            }
-          }
+              long: null,
+            },
+          },
         ],
-        remove: []
+        remove: [],
       },
       pipelineReferences: { add: [], remove: [] },
       links: {
         add: [
           { from: "Source", to: "combinedParser" },
-          { from: "combinedParser", to: "xsltFilter" }
+          { from: "combinedParser", to: "xsltFilter" },
         ],
-        remove: []
-      }
+        remove: [],
+      },
     },
     {
       elements: { add: [], remove: [] },
@@ -460,8 +452,8 @@ export const childNoPropertyParentNoProperty = {
               integer: null,
               entity: null,
               boolean: null,
-              long: null
-            }
+              long: null,
+            },
           },
           {
             element: "xsltFilter",
@@ -471,24 +463,24 @@ export const childNoPropertyParentNoProperty = {
               integer: null,
               entity: null,
               boolean: null,
-              long: null
-            }
-          }
+              long: null,
+            },
+          },
         ],
-        remove: []
+        remove: [],
       },
       pipelineReferences: { add: [], remove: [] },
-      links: { add: [], remove: [] }
-    }
+      links: { add: [], remove: [] },
+    },
   ],
   merged: {
     elements: {
       add: [
         { id: "xsltFilter", type: "XSLTFilter" },
         { id: "combinedParser", type: "CombinedParser" },
-        { id: "Source", type: "Source" }
+        { id: "Source", type: "Source" },
       ],
-      remove: []
+      remove: [],
     },
     properties: {
       add: [
@@ -500,8 +492,8 @@ export const childNoPropertyParentNoProperty = {
             integer: null,
             entity: null,
             boolean: null,
-            long: null
-          }
+            long: null,
+          },
         },
         {
           element: "combinedParser",
@@ -511,29 +503,27 @@ export const childNoPropertyParentNoProperty = {
             integer: null,
             entity: null,
             boolean: null,
-            long: null
-          }
-        }
+            long: null,
+          },
+        },
       ],
-      remove: []
+      remove: [],
     },
     pipelineReferences: { add: [], remove: [] },
     links: {
       add: [
         { from: "combinedParser", to: "xsltFilter" },
-        { from: "Source", to: "combinedParser" }
+        { from: "Source", to: "combinedParser" },
       ],
-      remove: []
-    }
-  }
-};
+      remove: [],
+    },
+  },
+} as PipelineDocumentType;
 
 export const childNoPropertyParentWithProperty = {
-  docRef: {
-    uuid: "childNoPropertyParentWithProperty",
-    name: "This No Property, Parent Has Property",
-    type: "Pipeline"
-  },
+  uuid: "childNoPropertyParentWithProperty",
+  name: "This No Property, Parent Has Property",
+  type: "Pipeline",
   description:
     "Demonstrates properties with no property, parent has the property either",
   configStack: [
@@ -542,9 +532,9 @@ export const childNoPropertyParentWithProperty = {
         add: [
           { id: "combinedParser", type: "CombinedParser" },
           { id: "xsltFilter", type: "XSLTFilter" },
-          { id: "Source", type: "Source" }
+          { id: "Source", type: "Source" },
         ],
-        remove: []
+        remove: [],
       },
       properties: {
         add: [
@@ -556,8 +546,8 @@ export const childNoPropertyParentWithProperty = {
               integer: null,
               entity: null,
               boolean: null,
-              long: null
-            }
+              long: null,
+            },
           },
           {
             element: "xsltFilter",
@@ -567,29 +557,29 @@ export const childNoPropertyParentWithProperty = {
               integer: null,
               entity: null,
               boolean: false,
-              long: null
-            }
-          }
+              long: null,
+            },
+          },
         ],
-        remove: []
+        remove: [],
       },
       pipelineReferences: { add: [], remove: [] },
       links: {
         add: [
           { from: "Source", to: "combinedParser" },
-          { from: "combinedParser", to: "xsltFilter" }
+          { from: "combinedParser", to: "xsltFilter" },
         ],
-        remove: []
-      }
+        remove: [],
+      },
     },
     {
       elements: {
         add: [
           { id: "combinedParser", type: "CombinedParser" },
           { id: "xsltFilter", type: "XSLTFilter" },
-          { id: "Source", type: "Source" }
+          { id: "Source", type: "Source" },
         ],
-        remove: []
+        remove: [],
       },
       properties: {
         add: [
@@ -601,20 +591,20 @@ export const childNoPropertyParentWithProperty = {
               integer: null,
               entity: null,
               boolean: null,
-              long: null
-            }
-          }
+              long: null,
+            },
+          },
         ],
-        remove: []
+        remove: [],
       },
       pipelineReferences: { add: [], remove: [] },
       links: {
         add: [
           { from: "Source", to: "combinedParser" },
-          { from: "combinedParser", to: "xsltFilter" }
+          { from: "combinedParser", to: "xsltFilter" },
         ],
-        remove: []
-      }
+        remove: [],
+      },
     },
     {
       elements: { add: [], remove: [] },
@@ -628,8 +618,8 @@ export const childNoPropertyParentWithProperty = {
               integer: null,
               entity: null,
               boolean: null,
-              long: null
-            }
+              long: null,
+            },
           },
           {
             element: "xsltFilter",
@@ -639,24 +629,24 @@ export const childNoPropertyParentWithProperty = {
               integer: null,
               entity: null,
               boolean: null,
-              long: null
-            }
-          }
+              long: null,
+            },
+          },
         ],
-        remove: []
+        remove: [],
       },
       pipelineReferences: { add: [], remove: [] },
-      links: { add: [], remove: [] }
-    }
+      links: { add: [], remove: [] },
+    },
   ],
   merged: {
     elements: {
       add: [
         { id: "xsltFilter", type: "XSLTFilter" },
         { id: "combinedParser", type: "CombinedParser" },
-        { id: "Source", type: "Source" }
+        { id: "Source", type: "Source" },
       ],
-      remove: []
+      remove: [],
     },
     properties: {
       add: [
@@ -668,8 +658,8 @@ export const childNoPropertyParentWithProperty = {
             integer: null,
             entity: null,
             boolean: null,
-            long: null
-          }
+            long: null,
+          },
         },
         {
           element: "combinedParser",
@@ -679,29 +669,27 @@ export const childNoPropertyParentWithProperty = {
             integer: null,
             entity: null,
             boolean: null,
-            long: null
-          }
-        }
+            long: null,
+          },
+        },
       ],
-      remove: []
+      remove: [],
     },
     pipelineReferences: { add: [], remove: [] },
     links: {
       add: [
         { from: "combinedParser", to: "xsltFilter" },
-        { from: "Source", to: "combinedParser" }
+        { from: "Source", to: "combinedParser" },
       ],
-      remove: []
-    }
-  }
-};
+      remove: [],
+    },
+  },
+} as PipelineDocumentType;
 
 export const childWithPropertyParentNoProperty = {
-  docRef: {
-    uuid: "childWithPropertyParentNoProperty",
-    name: "This With Property, Parent No Property",
-    type: "Pipeline"
-  },
+  uuid: "childWithPropertyParentNoProperty",
+  name: "This With Property, Parent No Property",
+  type: "Pipeline",
   description:
     "Demonstrates properties with a property, parent has no property either",
   configStack: [
@@ -710,9 +698,9 @@ export const childWithPropertyParentNoProperty = {
         add: [
           { id: "combinedParser", type: "CombinedParser" },
           { id: "xsltFilter", type: "XSLTFilter" },
-          { id: "Source", type: "Source" }
+          { id: "Source", type: "Source" },
         ],
-        remove: []
+        remove: [],
       },
       properties: {
         add: [
@@ -724,8 +712,8 @@ export const childWithPropertyParentNoProperty = {
               integer: null,
               entity: null,
               boolean: null,
-              long: null
-            }
+              long: null,
+            },
           },
           {
             element: "xsltFilter",
@@ -735,29 +723,29 @@ export const childWithPropertyParentNoProperty = {
               integer: null,
               entity: null,
               boolean: false,
-              long: null
-            }
-          }
+              long: null,
+            },
+          },
         ],
-        remove: []
+        remove: [],
       },
       pipelineReferences: { add: [], remove: [] },
       links: {
         add: [
           { from: "Source", to: "combinedParser" },
-          { from: "combinedParser", to: "xsltFilter" }
+          { from: "combinedParser", to: "xsltFilter" },
         ],
-        remove: []
-      }
+        remove: [],
+      },
     },
     {
       elements: {
         add: [
           { id: "combinedParser", type: "CombinedParser" },
           { id: "xsltFilter", type: "XSLTFilter" },
-          { id: "Source", type: "Source" }
+          { id: "Source", type: "Source" },
         ],
-        remove: []
+        remove: [],
       },
       properties: {
         add: [
@@ -769,8 +757,8 @@ export const childWithPropertyParentNoProperty = {
               integer: null,
               entity: null,
               boolean: null,
-              long: null
-            }
+              long: null,
+            },
           },
           {
             element: "xsltFilter",
@@ -780,20 +768,20 @@ export const childWithPropertyParentNoProperty = {
               integer: null,
               entity: null,
               boolean: false,
-              long: null
-            }
-          }
+              long: null,
+            },
+          },
         ],
-        remove: []
+        remove: [],
       },
       pipelineReferences: { add: [], remove: [] },
       links: {
         add: [
           { from: "Source", to: "combinedParser" },
-          { from: "combinedParser", to: "xsltFilter" }
+          { from: "combinedParser", to: "xsltFilter" },
         ],
-        remove: []
-      }
+        remove: [],
+      },
     },
     {
       elements: { add: [], remove: [] },
@@ -807,8 +795,8 @@ export const childWithPropertyParentNoProperty = {
               integer: null,
               entity: null,
               boolean: null,
-              long: null
-            }
+              long: null,
+            },
           },
           {
             element: "xsltFilter",
@@ -818,24 +806,24 @@ export const childWithPropertyParentNoProperty = {
               integer: null,
               entity: null,
               boolean: null,
-              long: null
-            }
-          }
+              long: null,
+            },
+          },
         ],
-        remove: []
+        remove: [],
       },
       pipelineReferences: { add: [], remove: [] },
-      links: { add: [], remove: [] }
-    }
+      links: { add: [], remove: [] },
+    },
   ],
   merged: {
     elements: {
       add: [
         { id: "xsltFilter", type: "XSLTFilter" },
         { id: "combinedParser", type: "CombinedParser" },
-        { id: "Source", type: "Source" }
+        { id: "Source", type: "Source" },
       ],
-      remove: []
+      remove: [],
     },
     properties: {
       add: [
@@ -847,8 +835,8 @@ export const childWithPropertyParentNoProperty = {
             integer: null,
             entity: null,
             boolean: null,
-            long: null
-          }
+            long: null,
+          },
         },
         {
           element: "combinedParser",
@@ -858,29 +846,27 @@ export const childWithPropertyParentNoProperty = {
             integer: null,
             entity: null,
             boolean: null,
-            long: null
-          }
-        }
+            long: null,
+          },
+        },
       ],
-      remove: []
+      remove: [],
     },
     pipelineReferences: { add: [], remove: [] },
     links: {
       add: [
         { from: "combinedParser", to: "xsltFilter" },
-        { from: "Source", to: "combinedParser" }
+        { from: "Source", to: "combinedParser" },
       ],
-      remove: []
-    }
-  }
-};
+      remove: [],
+    },
+  },
+} as PipelineDocumentType;
 
 export const childWithPropertyParentWithProperty = {
-  docRef: {
-    uuid: "childWithPropertyParentWithProperty",
-    name: "This With Property, Parent With Property",
-    type: "Pipeline"
-  },
+  uuid: "childWithPropertyParentWithProperty",
+  name: "This With Property, Parent With Property",
+  type: "Pipeline",
   description:
     "Demonstrates properties with a property, parent also has property",
   configStack: [
@@ -889,9 +875,9 @@ export const childWithPropertyParentWithProperty = {
         add: [
           { id: "combinedParser", type: "CombinedParser" },
           { id: "xsltFilter", type: "XSLTFilter" },
-          { id: "Source", type: "Source" }
+          { id: "Source", type: "Source" },
         ],
-        remove: []
+        remove: [],
       },
       properties: {
         add: [
@@ -903,8 +889,8 @@ export const childWithPropertyParentWithProperty = {
               integer: null,
               entity: null,
               boolean: null,
-              long: null
-            }
+              long: null,
+            },
           },
           {
             element: "xsltFilter",
@@ -914,29 +900,29 @@ export const childWithPropertyParentWithProperty = {
               integer: null,
               entity: null,
               boolean: false,
-              long: null
-            }
-          }
+              long: null,
+            },
+          },
         ],
-        remove: []
+        remove: [],
       },
       pipelineReferences: { add: [], remove: [] },
       links: {
         add: [
           { from: "Source", to: "combinedParser" },
-          { from: "combinedParser", to: "xsltFilter" }
+          { from: "combinedParser", to: "xsltFilter" },
         ],
-        remove: []
-      }
+        remove: [],
+      },
     },
     {
       elements: {
         add: [
           { id: "combinedParser", type: "CombinedParser" },
           { id: "xsltFilter", type: "XSLTFilter" },
-          { id: "Source", type: "Source" }
+          { id: "Source", type: "Source" },
         ],
-        remove: []
+        remove: [],
       },
       properties: {
         add: [
@@ -948,8 +934,8 @@ export const childWithPropertyParentWithProperty = {
               integer: null,
               entity: null,
               boolean: null,
-              long: null
-            }
+              long: null,
+            },
           },
           {
             element: "xsltFilter",
@@ -959,20 +945,20 @@ export const childWithPropertyParentWithProperty = {
               integer: null,
               entity: null,
               boolean: false,
-              long: null
-            }
-          }
+              long: null,
+            },
+          },
         ],
-        remove: []
+        remove: [],
       },
       pipelineReferences: { add: [], remove: [] },
       links: {
         add: [
           { from: "Source", to: "combinedParser" },
-          { from: "combinedParser", to: "xsltFilter" }
+          { from: "combinedParser", to: "xsltFilter" },
         ],
-        remove: []
-      }
+        remove: [],
+      },
     },
     {
       elements: { add: [], remove: [] },
@@ -986,8 +972,8 @@ export const childWithPropertyParentWithProperty = {
               integer: null,
               entity: null,
               boolean: null,
-              long: null
-            }
+              long: null,
+            },
           },
           {
             element: "xsltFilter",
@@ -997,24 +983,24 @@ export const childWithPropertyParentWithProperty = {
               integer: null,
               entity: null,
               boolean: null,
-              long: null
-            }
-          }
+              long: null,
+            },
+          },
         ],
-        remove: []
+        remove: [],
       },
       pipelineReferences: { add: [], remove: [] },
-      links: { add: [], remove: [] }
-    }
+      links: { add: [], remove: [] },
+    },
   ],
   merged: {
     elements: {
       add: [
         { id: "xsltFilter", type: "XSLTFilter" },
         { id: "combinedParser", type: "CombinedParser" },
-        { id: "Source", type: "Source" }
+        { id: "Source", type: "Source" },
       ],
-      remove: []
+      remove: [],
     },
     properties: {
       add: [
@@ -1026,8 +1012,8 @@ export const childWithPropertyParentWithProperty = {
             integer: null,
             entity: null,
             boolean: null,
-            long: null
-          }
+            long: null,
+          },
         },
         {
           element: "combinedParser",
@@ -1037,29 +1023,27 @@ export const childWithPropertyParentWithProperty = {
             integer: null,
             entity: null,
             boolean: null,
-            long: null
-          }
-        }
+            long: null,
+          },
+        },
       ],
-      remove: []
+      remove: [],
     },
     pipelineReferences: { add: [], remove: [] },
     links: {
       add: [
         { from: "combinedParser", to: "xsltFilter" },
-        { from: "Source", to: "combinedParser" }
+        { from: "Source", to: "combinedParser" },
       ],
-      remove: []
-    }
-  }
-};
+      remove: [],
+    },
+  },
+} as PipelineDocumentType;
 
 export const childWithRemoveForItsParentsAdd = {
-  docRef: {
-    uuid: "childWithRemoveForItsParentsAdd",
-    name: "This Removing Property from parent",
-    type: "Pipeline"
-  },
+  uuid: "childWithRemoveForItsParentsAdd",
+  name: "This Removing Property from parent",
+  type: "Pipeline",
   description: "Demonstrates property removal from a parent",
   configStack: [
     {
@@ -1067,9 +1051,9 @@ export const childWithRemoveForItsParentsAdd = {
         add: [
           { id: "combinedParser", type: "CombinedParser" },
           { id: "xsltFilter", type: "XSLTFilter" },
-          { id: "Source", type: "Source" }
+          { id: "Source", type: "Source" },
         ],
-        remove: []
+        remove: [],
       },
       properties: {
         add: [
@@ -1081,8 +1065,8 @@ export const childWithRemoveForItsParentsAdd = {
               integer: null,
               entity: null,
               boolean: null,
-              long: null
-            }
+              long: null,
+            },
           },
           {
             element: "xsltFilter",
@@ -1092,29 +1076,29 @@ export const childWithRemoveForItsParentsAdd = {
               integer: null,
               entity: null,
               boolean: false,
-              long: null
-            }
-          }
+              long: null,
+            },
+          },
         ],
-        remove: []
+        remove: [],
       },
       pipelineReferences: { add: [], remove: [] },
       links: {
         add: [
           { from: "Source", to: "combinedParser" },
-          { from: "combinedParser", to: "xsltFilter" }
+          { from: "combinedParser", to: "xsltFilter" },
         ],
-        remove: []
-      }
+        remove: [],
+      },
     },
     {
       elements: {
         add: [
           { id: "combinedParser", type: "CombinedParser" },
           { id: "xsltFilter", type: "XSLTFilter" },
-          { id: "Source", type: "Source" }
+          { id: "Source", type: "Source" },
         ],
-        remove: []
+        remove: [],
       },
       properties: {
         add: [
@@ -1126,8 +1110,8 @@ export const childWithRemoveForItsParentsAdd = {
               integer: null,
               entity: null,
               boolean: null,
-              long: null
-            }
+              long: null,
+            },
           },
           {
             element: "xsltFilter",
@@ -1137,9 +1121,9 @@ export const childWithRemoveForItsParentsAdd = {
               integer: null,
               entity: null,
               boolean: false,
-              long: null
-            }
-          }
+              long: null,
+            },
+          },
         ],
         remove: [
           {
@@ -1150,19 +1134,19 @@ export const childWithRemoveForItsParentsAdd = {
               integer: null,
               entity: null,
               boolean: false,
-              long: null
-            }
-          }
-        ]
+              long: null,
+            },
+          },
+        ],
       },
       pipelineReferences: { add: [], remove: [] },
       links: {
         add: [
           { from: "Source", to: "combinedParser" },
-          { from: "combinedParser", to: "xsltFilter" }
+          { from: "combinedParser", to: "xsltFilter" },
         ],
-        remove: []
-      }
+        remove: [],
+      },
     },
     {
       elements: { add: [], remove: [] },
@@ -1176,8 +1160,8 @@ export const childWithRemoveForItsParentsAdd = {
               integer: null,
               entity: null,
               boolean: null,
-              long: null
-            }
+              long: null,
+            },
           },
           {
             element: "xsltFilter",
@@ -1187,24 +1171,24 @@ export const childWithRemoveForItsParentsAdd = {
               integer: null,
               entity: null,
               boolean: null,
-              long: null
-            }
-          }
+              long: null,
+            },
+          },
         ],
-        remove: []
+        remove: [],
       },
       pipelineReferences: { add: [], remove: [] },
-      links: { add: [], remove: [] }
-    }
+      links: { add: [], remove: [] },
+    },
   ],
   merged: {
     elements: {
       add: [
         { id: "xsltFilter", type: "XSLTFilter" },
         { id: "combinedParser", type: "CombinedParser" },
-        { id: "Source", type: "Source" }
+        { id: "Source", type: "Source" },
       ],
-      remove: []
+      remove: [],
     },
     properties: {
       add: [
@@ -1216,8 +1200,8 @@ export const childWithRemoveForItsParentsAdd = {
             integer: null,
             entity: null,
             boolean: null,
-            long: null
-          }
+            long: null,
+          },
         },
         {
           element: "combinedParser",
@@ -1227,29 +1211,27 @@ export const childWithRemoveForItsParentsAdd = {
             integer: null,
             entity: null,
             boolean: null,
-            long: null
-          }
-        }
+            long: null,
+          },
+        },
       ],
-      remove: []
+      remove: [],
     },
     pipelineReferences: { add: [], remove: [] },
     links: {
       add: [
         { from: "combinedParser", to: "xsltFilter" },
-        { from: "Source", to: "combinedParser" }
+        { from: "Source", to: "combinedParser" },
       ],
-      remove: []
-    }
-  }
-};
+      remove: [],
+    },
+  },
+} as PipelineDocumentType;
 
 export const emptyChildParentWithProperty = {
-  docRef: {
-    uuid: "emptyChildParentWithProperty",
-    name: "Empty Child, Parent With Property",
-    type: "Pipeline"
-  },
+  uuid: "emptyChildParentWithProperty",
+  name: "Empty Child, Parent With Property",
+  type: "Pipeline",
   description: "Demonstrates properties",
   configStack: [
     {
@@ -1257,9 +1239,9 @@ export const emptyChildParentWithProperty = {
         add: [
           { id: "combinedParser", type: "CombinedParser" },
           { id: "xsltFilter", type: "XSLTFilter" },
-          { id: "Source", type: "Source" }
+          { id: "Source", type: "Source" },
         ],
-        remove: []
+        remove: [],
       },
       properties: {
         add: [
@@ -1271,8 +1253,8 @@ export const emptyChildParentWithProperty = {
               integer: null,
               entity: null,
               boolean: null,
-              long: null
-            }
+              long: null,
+            },
           },
           {
             element: "xsltFilter",
@@ -1282,39 +1264,39 @@ export const emptyChildParentWithProperty = {
               integer: null,
               entity: null,
               boolean: null,
-              long: null
-            }
-          }
+              long: null,
+            },
+          },
         ],
-        remove: []
+        remove: [],
       },
       pipelineReferences: { add: [], remove: [] },
       links: {
         add: [
           { from: "Source", to: "combinedParser" },
-          { from: "combinedParser", to: "xsltFilter" }
+          { from: "combinedParser", to: "xsltFilter" },
         ],
-        remove: []
-      }
+        remove: [],
+      },
     },
     {
       elements: { add: [], remove: [] },
       properties: {
         add: [],
-        remove: []
+        remove: [],
       },
       pipelineReferences: { add: [], remove: [] },
-      links: { add: [], remove: [] }
-    }
+      links: { add: [], remove: [] },
+    },
   ],
   merged: {
     elements: {
       add: [
         { id: "xsltFilter", type: "XSLTFilter" },
         { id: "combinedParser", type: "CombinedParser" },
-        { id: "Source", type: "Source" }
+        { id: "Source", type: "Source" },
       ],
-      remove: []
+      remove: [],
     },
     properties: {
       add: [
@@ -1326,8 +1308,8 @@ export const emptyChildParentWithProperty = {
             integer: null,
             entity: null,
             boolean: null,
-            long: null
-          }
+            long: null,
+          },
         },
         {
           element: "combinedParser",
@@ -1337,19 +1319,19 @@ export const emptyChildParentWithProperty = {
             integer: null,
             entity: null,
             boolean: null,
-            long: null
-          }
-        }
+            long: null,
+          },
+        },
       ],
-      remove: []
+      remove: [],
     },
     pipelineReferences: { add: [], remove: [] },
     links: {
       add: [
         { from: "combinedParser", to: "xsltFilter" },
-        { from: "Source", to: "combinedParser" }
+        { from: "Source", to: "combinedParser" },
       ],
-      remove: []
-    }
-  }
-} as PipelineModelType;
+      remove: [],
+    },
+  },
+} as PipelineDocumentType;

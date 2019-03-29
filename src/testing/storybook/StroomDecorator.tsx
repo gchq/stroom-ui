@@ -8,7 +8,7 @@ import * as ReactModal from "react-modal";
 
 import { useTestServer } from "./PollyDecorator";
 
-import useFontAwesome from "../../startup/useFontAwesome";
+import useFontAwesome from "../../lib/useFontAwesome/useFontAwesome";
 import testData from "../data";
 import { ThemeContextProvider, useTheme } from "../../lib/theme";
 import { withRouter, RouteComponentProps } from "react-router";
@@ -23,11 +23,11 @@ interface Props extends RouteComponentProps {}
 
 const RouteWrapper: React.StatelessComponent<Props> = ({
   children,
-  history
+  history,
 }) => <CustomRouter history={history}>{children}</CustomRouter>;
 const DragDropRouted = pipe(
   DragDropContext(HTML5Backend),
-  withRouter
+  withRouter,
 )(RouteWrapper);
 
 const ThemedComponent: React.StatelessComponent<{}> = ({ children }) => {
@@ -49,9 +49,9 @@ export default (storyFn: RenderFunction) =>
             idToken: "PollyWannaCracker",
             setIdToken: () => {
               console.error(
-                "Setting the idToken in storybook? This is most unexpected!"
+                "Setting the idToken in storybook? This is most unexpected!",
               );
-            }
+            },
           }}
         >
           <AuthorisationContextProvider>

@@ -9,7 +9,7 @@ import { RecycleBinItem } from "../types";
 
 interface Props {
   category: string;
-  elementsWithData: Array<RecycleBinItem>;
+  elementsWithData: RecycleBinItem[];
 }
 
 const ElementCategory = ({ category, elementsWithData }: Props) => {
@@ -23,6 +23,10 @@ const ElementCategory = ({ category, elementsWithData }: Props) => {
     ? ElementCategories[category].displayName
     : category;
 
+  console.log("Fubar", {
+    category,
+    elementsWithData,
+  });
   return (
     <div className="element-palette-category">
       <div onClick={() => setIsOpen(!isOpen)}>

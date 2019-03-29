@@ -21,25 +21,43 @@ import {
   Dictionary,
   StreamTaskType,
   IndexDoc,
-  XsltDoc
+  XsltDoc,
+  XMLSchemaDoc,
+  VisualisationDoc,
+  StatisticsStoreDoc,
+  StroomStatsStoreDoc,
+  ScriptDoc,
+  ElasticIndexDoc,
+  DashboardDoc,
+  AnnotationsIndexDoc,
+  FeedDoc,
 } from "../../types";
 import { testPipelines, elements, elementProperties } from "./pipelines";
 import testDocRefsTypes from "./docRefTypes";
-import { generateTestXslt } from "./xslt";
-import { generateTestIndex } from "./indexDocs";
-import { generateTestDictionary } from "./dictionary";
+import { generate as generateAnnotationsIndex } from "./annotationsIndex";
+import { generate as generateDashboard } from "./dashboard";
+import { generate as generateDictionary } from "./dictionary";
+import { generate as generateElasticIndex } from "./elasticIndex";
+import { generate as generateFeed } from "./feed";
+import { generate as generateIndex } from "./indexDocs";
+import { generate as generateScript } from "./script";
+import { generate as generateStatisticsStore } from "./statisticsStore";
+import { generate as generateStroomStatsStore } from "./stroomStatsStore";
+import { generate as generateVisualisation } from "./visualisation";
+import { generate as generateXmlSchema } from "./xmlSchema";
+import { generate as generateXslt } from "./xslt";
 import { generateGenericTracker } from "./trackers";
 import { dataList, dataSource } from "./data";
 import { generateTestUser, generateTestGroup } from "./usersAndGroups";
 import {
   generateTestIndexVolumeGroup,
-  generateTestIndexVolume
+  generateTestIndexVolume,
 } from "./indexVolumes";
 import {
   IndexVolumeGroupMembership,
   User,
   IndexVolumeGroup,
-  IndexVolume
+  IndexVolume,
 } from "../../types";
 import allAppPermissions from "./appPermissions";
 import { UserGroupMembership, TestData, UserDocPermission } from "../testTypes";
@@ -48,16 +66,16 @@ import { iterateNodes } from "../../lib/treeUtils";
 
 let docPermissionByType = testDocRefsTypes.reduce(
   (acc, curr) => ({ ...acc, [curr]: documentPermissionNames }),
-  {}
+  {},
 );
 
-let groups: Array<User> = Array(5)
+let groups: User[] = Array(5)
   .fill(1)
   .map(generateTestGroup);
-let users: Array<User> = Array(30)
+let users: User[] = Array(30)
   .fill(1)
   .map(generateTestUser);
-let userGroupMemberships: Array<UserGroupMembership> = [];
+let userGroupMemberships: UserGroupMembership[] = [];
 let userIndex = 0;
 groups.forEach(group => {
   for (let x = 0; x < 10; x++) {
@@ -65,7 +83,7 @@ groups.forEach(group => {
     userIndex %= users.length; // wrap
     userGroupMemberships.push({
       userUuid: user.uuid,
-      groupUuid: group.uuid
+      groupUuid: group.uuid,
     });
   }
 });
@@ -81,64 +99,71 @@ allUsers.forEach(u => {
   userAppPermissions[u.uuid] = permissions;
 });
 
-let indexVolumeGroups: Array<IndexVolumeGroup> = Array(5)
+let indexVolumeGroups: IndexVolumeGroup[] = Array(5)
   .fill(1)
   .map(generateTestIndexVolumeGroup);
 
-let indexVolumes: Array<IndexVolume> = Array(30)
+let indexVolumes: IndexVolume[] = Array(30)
   .fill(1)
   .map(generateTestIndexVolume);
 
-let indexVolumeGroupMemberships: Array<IndexVolumeGroupMembership> = [];
+let annotationIndexes: AnnotationsIndexDoc[] = Array(3)
+  .fill(1)
+  .map(generateAnnotationsIndex);
+let dashboards: DashboardDoc[] = Array(3)
+  .fill(1)
+  .map(generateDashboard);
+let elasticIndexes: ElasticIndexDoc[] = Array(3)
+  .fill(1)
+  .map(generateElasticIndex);
+let feeds: FeedDoc[] = Array(3)
+  .fill(1)
+  .map(generateFeed);
+let scripts: ScriptDoc[] = Array(3)
+  .fill(1)
+  .map(generateScript);
+let statisticsStores: StatisticsStoreDoc[] = Array(3)
+  .fill(1)
+  .map(generateStatisticsStore);
+let stroomStatsStores: StroomStatsStoreDoc[] = Array(3)
+  .fill(1)
+  .map(generateStroomStatsStore);
+let visualisations: VisualisationDoc[] = Array(3)
+  .fill(1)
+  .map(generateVisualisation);
+let xmlSchemas: XMLSchemaDoc[] = Array(3)
+  .fill(1)
+  .map(generateXmlSchema);
+
+let indexVolumeGroupMemberships: IndexVolumeGroupMembership[] = [];
 let indexVolumeIndex = 0; // Best variable name ever
 indexVolumeGroups.forEach(group => {
   for (let x = 0; x < 10; x++) {
     let indexVolume: IndexVolume = indexVolumes[indexVolumeIndex];
     indexVolumeGroupMemberships.push({
       groupName: group.name,
-      volumeId: indexVolume.id
+      volumeId: indexVolume.id,
     });
 
     indexVolumeIndex = (indexVolumeIndex + 1) % indexVolumes.length;
   }
 });
 
-let dictionaries: { [uuid: string]: Dictionary } = Array(5)
+let dictionaries: Dictionary[] = Array(5)
   .fill(null)
-  .map(generateTestDictionary)
-  .reduce(
-    (acc, i) => ({
-      ...acc,
-      [i.uuid]: i
-    }),
-    {}
-  );
+  .map(generateDictionary);
 
-let xslt: { [uuid: string]: XsltDoc } = Array(5)
+let xslt: XsltDoc[] = Array(5)
   .fill(null)
-  .map(generateTestXslt)
-  .reduce(
-    (acc, i) => ({
-      ...acc,
-      [i.uuid]: i
-    }),
-    {}
-  );
+  .map(generateXslt);
 
-let trackers: Array<StreamTaskType> = Array(10)
+let trackers: StreamTaskType[] = Array(10)
   .fill(null)
   .map(generateGenericTracker);
 
-let indexes: { [uuid: string]: IndexDoc } = Array(5)
+let indexes: IndexDoc[] = Array(5)
   .fill(null)
-  .map(generateTestIndex)
-  .reduce(
-    (acc, i) => ({
-      ...acc,
-      [i.uuid]: i
-    }),
-    {}
-  );
+  .map(generateIndex);
 
 const docTree = {
   uuid: "0",
@@ -154,19 +179,15 @@ const docTree = {
           uuid: uuidv4(),
           name: "Dictionaries",
           type: "Folder",
-          children: Object.entries(dictionaries)
-            .map(k => k[1])
-            .map(copyDocRef)
+          children: dictionaries.map(copyDocRef),
         },
         {
           uuid: uuidv4(),
           name: "XSLT",
           type: "Folder",
-          children: Object.entries(xslt)
-            .map(k => k[1])
-            .map(copyDocRef)
-        }
-      ]
+          children: xslt.map(copyDocRef),
+        },
+      ],
     },
     {
       uuid: uuidv4(),
@@ -177,31 +198,26 @@ const docTree = {
           uuid: uuidv4(),
           name: "Pipelines",
           type: "Folder",
-          children: Object.entries(testPipelines)
-            .map(k => k[1])
-            .map(k => k.docRef)
-            .map(copyDocRef)
+          children: Object.values(testPipelines).map(copyDocRef),
         },
         {
           uuid: uuidv4(),
           name: "Indexes",
           type: "Folder",
-          children: Object.entries(indexes)
-            .map(k => k[1])
-            .map(copyDocRef)
-        }
-      ]
+          children: indexes.map(copyDocRef),
+        },
+      ],
     },
     {
       uuid: uuidv4(),
       name: "Empty Directory with a Long Name",
       type: "Folder",
-      children: []
-    }
-  ]
+      children: [],
+    },
+  ],
 } as DocRefTree;
 
-const userDocPermission: Array<UserDocPermission> = [];
+const userDocPermission: UserDocPermission[] = [];
 
 // give first two users permissions to all documents
 iterateNodes(docTree, (_, { uuid: docRefUuid }) => {
@@ -212,7 +228,7 @@ iterateNodes(docTree, (_, { uuid: docRefUuid }) => {
         userDocPermission.push({
           userUuid,
           docRefUuid,
-          permissionName
+          permissionName,
         });
       });
   });
@@ -223,26 +239,37 @@ export const fullTestData: TestData = {
   docRefTypes: testDocRefsTypes,
   elements,
   elementProperties,
-  pipelines: Object.values(testPipelines),
-  xslt: Object.values(xslt),
-  dictionaries: Object.values(dictionaries),
+  documents: {
+    XSLT: Object.values(xslt),
+    Dictionary: Object.values(dictionaries),
+    Feed: feeds,
+    Index: indexes,
+    Pipeline: Object.values(testPipelines),
+    AnnotationsIndex: annotationIndexes,
+    Dashboard: dashboards,
+    ElasticIndex: elasticIndexes,
+    Script: scripts,
+    StatisticsStore: statisticsStores,
+    StroomStatsStore: stroomStatsStores,
+    Visualisation: visualisations,
+    XMLSchema: xmlSchemas,
+  },
   dataList,
   dataSource,
   trackers,
   usersAndGroups: {
     users: allUsers,
-    userGroupMemberships
+    userGroupMemberships,
   },
   indexVolumesAndGroups: {
     volumes: indexVolumes,
     groups: indexVolumeGroups,
-    groupMemberships: indexVolumeGroupMemberships
+    groupMemberships: indexVolumeGroupMemberships,
   },
-  indexes: Object.values(indexes),
   allAppPermissions,
   userAppPermissions,
   docPermissionByType,
-  userDocPermission
+  userDocPermission,
 };
 
 export default fullTestData;

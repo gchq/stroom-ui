@@ -18,11 +18,11 @@ import * as React from "react";
 
 import Button from "../../Button";
 
-import { PipelineModelType } from "../../../types";
+import { PipelineDocumentType } from "../../../types";
 import { PipelineEditApi } from "../types";
 
 interface Props {
-  pipeline: PipelineModelType;
+  pipeline: PipelineDocumentType;
   pipelineEditApi: PipelineEditApi;
   elementId: string;
   name: string;
@@ -70,7 +70,7 @@ const ElementPropertyFieldDetails = ({
   parentValue,
   childValue,
   defaultValue,
-  type
+  type,
 }: Props) => {
   const RevertToDefaultButton = (
     <Button
