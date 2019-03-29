@@ -1,5 +1,5 @@
-import * as uuidv4 from 'uuid/v4';
-import { PipelineModelType } from "../../../types";
+import * as uuidv4 from "uuid/v4";
+import { PipelineDocumentType } from "../../../types";
 
 /*
  * Copyright 2018 Crown Copyright
@@ -23,11 +23,9 @@ export default {
     type: "Pipeline",
     name: "Simple"
   },
-  docRef: {
-    uuid: uuidv4(),
-    name: "Inherited",
-    type: "Pipeline"
-  },
+  uuid: uuidv4(),
+  name: "Inherited",
+  type: "Pipeline",
   description: "This demonstrates an inherited pipeline",
   configStack: [
     {
@@ -301,4 +299,4 @@ export default {
       remove: []
     }
   }
-} as PipelineModelType;
+} as PipelineDocumentType;

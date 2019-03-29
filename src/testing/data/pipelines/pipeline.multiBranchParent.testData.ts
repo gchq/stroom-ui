@@ -1,12 +1,10 @@
-import * as uuidv4 from 'uuid/v4';
-import { PipelineModelType } from "../../../types";
+import * as uuidv4 from "uuid/v4";
+import { PipelineDocumentType } from "../../../types";
 
 export default {
-  docRef: {
-    uuid: uuidv4(),
-    name: "Multi Branch Parent",
-    type: "Pipeline"
-  },
+  uuid: uuidv4(),
+  name: "Multi Branch Parent",
+  type: "Pipeline",
   description: "Another multi branching pipeline",
   configStack: [
     {
@@ -250,4 +248,4 @@ export default {
       remove: []
     }
   }
-} as PipelineModelType;
+} as PipelineDocumentType;

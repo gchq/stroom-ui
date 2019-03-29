@@ -1,12 +1,10 @@
-import * as uuidv4 from 'uuid/v4';
-import { PipelineModelType } from "../../../types";
+import * as uuidv4 from "uuid/v4";
+import { PipelineDocumentType } from "../../../types";
 
 export const noParent = {
-  docRef: {
-    uuid: uuidv4(),
-    name: "No Parent",
-    type: "Pipeline"
-  },
+  uuid: uuidv4(),
+  name: "No Parent",
+  type: "Pipeline",
   description: "Demonstrates properties with no parent pipeline",
   configStack: [
     {
@@ -114,14 +112,12 @@ export const noParent = {
       remove: []
     }
   }
-};
+} as PipelineDocumentType;
 
 export const childNoProperty = {
-  docRef: {
-    uuid: "childNoProperty",
-    name: "Parent No Property",
-    type: "Pipeline"
-  },
+  uuid: "childNoProperty",
+  name: "Parent No Property",
+  type: "Pipeline",
   description: "Demonstrates properties when parent has no property",
   configStack: [
     {
@@ -236,14 +232,12 @@ export const childNoProperty = {
       remove: []
     }
   }
-};
+} as PipelineDocumentType;
 
 export const childWithProperty = {
-  docRef: {
-    uuid: "childWithProperty",
-    name: "Parent With Property",
-    type: "Pipeline"
-  },
+  uuid: "childWithProperty",
+  name: "Parent With Property",
+  type: "Pipeline",
   description: "Demonstrates properties with parent that has properties",
   configStack: [
     {
@@ -369,14 +363,12 @@ export const childWithProperty = {
       remove: []
     }
   }
-};
+} as PipelineDocumentType;
 
 export const childNoPropertyParentNoProperty = {
-  docRef: {
-    uuid: "childNoPropertyParentNoProperty",
-    name: "This No Property, Parent No Property",
-    type: "Pipeline"
-  },
+  uuid: "childNoPropertyParentNoProperty",
+  name: "This No Property, Parent No Property",
+  type: "Pipeline",
   description:
     "Demonstrates properties with no property, parent has no property either",
   configStack: [
@@ -526,14 +518,12 @@ export const childNoPropertyParentNoProperty = {
       remove: []
     }
   }
-};
+} as PipelineDocumentType;
 
 export const childNoPropertyParentWithProperty = {
-  docRef: {
-    uuid: "childNoPropertyParentWithProperty",
-    name: "This No Property, Parent Has Property",
-    type: "Pipeline"
-  },
+  uuid: "childNoPropertyParentWithProperty",
+  name: "This No Property, Parent Has Property",
+  type: "Pipeline",
   description:
     "Demonstrates properties with no property, parent has the property either",
   configStack: [
@@ -694,14 +684,12 @@ export const childNoPropertyParentWithProperty = {
       remove: []
     }
   }
-};
+} as PipelineDocumentType;
 
 export const childWithPropertyParentNoProperty = {
-  docRef: {
-    uuid: "childWithPropertyParentNoProperty",
-    name: "This With Property, Parent No Property",
-    type: "Pipeline"
-  },
+  uuid: "childWithPropertyParentNoProperty",
+  name: "This With Property, Parent No Property",
+  type: "Pipeline",
   description:
     "Demonstrates properties with a property, parent has no property either",
   configStack: [
@@ -873,14 +861,12 @@ export const childWithPropertyParentNoProperty = {
       remove: []
     }
   }
-};
+} as PipelineDocumentType;
 
 export const childWithPropertyParentWithProperty = {
-  docRef: {
-    uuid: "childWithPropertyParentWithProperty",
-    name: "This With Property, Parent With Property",
-    type: "Pipeline"
-  },
+  uuid: "childWithPropertyParentWithProperty",
+  name: "This With Property, Parent With Property",
+  type: "Pipeline",
   description:
     "Demonstrates properties with a property, parent also has property",
   configStack: [
@@ -1052,14 +1038,12 @@ export const childWithPropertyParentWithProperty = {
       remove: []
     }
   }
-};
+} as PipelineDocumentType;
 
 export const childWithRemoveForItsParentsAdd = {
-  docRef: {
-    uuid: "childWithRemoveForItsParentsAdd",
-    name: "This Removing Property from parent",
-    type: "Pipeline"
-  },
+  uuid: "childWithRemoveForItsParentsAdd",
+  name: "This Removing Property from parent",
+  type: "Pipeline",
   description: "Demonstrates property removal from a parent",
   configStack: [
     {
@@ -1242,14 +1226,12 @@ export const childWithRemoveForItsParentsAdd = {
       remove: []
     }
   }
-};
+} as PipelineDocumentType;
 
 export const emptyChildParentWithProperty = {
-  docRef: {
-    uuid: "emptyChildParentWithProperty",
-    name: "Empty Child, Parent With Property",
-    type: "Pipeline"
-  },
+  uuid: "emptyChildParentWithProperty",
+  name: "Empty Child, Parent With Property",
+  type: "Pipeline",
   description: "Demonstrates properties",
   configStack: [
     {
@@ -1352,4 +1334,4 @@ export const emptyChildParentWithProperty = {
       remove: []
     }
   }
-} as PipelineModelType;
+} as PipelineDocumentType;

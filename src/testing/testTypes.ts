@@ -1,28 +1,17 @@
 import {
   DocRefTree,
-  PipelineModelType,
   ElementDefinitions,
   ElementPropertiesByElementIdType,
-  Dictionary,
   DataSourceType,
   StreamTaskType,
   User,
   IndexVolume,
   IndexVolumeGroup,
   IndexVolumeGroupMembership,
-  IndexDoc,
-  XsltDoc,
   StreamAttributeMapResult,
-  AnnotationsIndexDoc,
-  DashboardDoc,
-  ElasticIndexDoc,
-  FeedDoc,
-  ScriptDoc,
-  StatisticsStoreDoc,
-  StroomStatsStoreDoc,
-  VisualisationDoc,
-  XMLSchemaDoc
+  DocumentType
 } from "../types";
+import { ResourcesByDocType } from "../api/useDocumentApi/types";
 
 export interface UserGroupMembership {
   userUuid: string;
@@ -38,21 +27,11 @@ export interface UserDocPermission {
 export interface TestData {
   docRefTypes: Array<string>;
   documentTree: DocRefTree;
-  pipelines: Array<PipelineModelType>;
   elements: ElementDefinitions;
   elementProperties: ElementPropertiesByElementIdType;
-  xslt: Array<XsltDoc>;
-  dictionaries: Array<Dictionary>;
-  indexes: Array<IndexDoc>;
-  annotationIndexes: Array<AnnotationsIndexDoc>;
-  dashboards: Array<DashboardDoc>;
-  elasticIndexes: Array<ElasticIndexDoc>;
-  feeds: Array<FeedDoc>;
-  scripts: Array<ScriptDoc>;
-  statisticsStores: Array<StatisticsStoreDoc>;
-  stroomStatsStores: Array<StroomStatsStoreDoc>;
-  visualisations: Array<VisualisationDoc>;
-  xmlSchemas: Array<XMLSchemaDoc>;
+  documents: {
+    [docRefType in keyof ResourcesByDocType]: Array<DocumentType<docRefType>>
+  };
   trackers: Array<StreamTaskType>;
   dataList: StreamAttributeMapResult;
   dataSource: DataSourceType;

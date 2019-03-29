@@ -19,19 +19,20 @@ import { storiesOf } from "@storybook/react";
 import ElementPalette from "./ElementPalette";
 
 import { fullTestData } from "../../../testing/data";
-
-
+import { PipelineDocumentType } from "src/types";
 
 const showDeleteElementDialog = () =>
   console.error("Deleting Elements Not Supported in this Story");
 
-storiesOf("Pipeline/Element Palette", module)
-  
-  .add("Element Palette", () => {
-    return (
-      <ElementPalette
-        pipeline={Object.values(fullTestData.pipelines)[0]}
-        showDeleteElementDialog={showDeleteElementDialog}
-      />
-    );
-  });
+storiesOf("Pipeline/Element Palette", module).add("Element Palette", () => {
+  return (
+    <ElementPalette
+      pipeline={
+        Object.values(
+          fullTestData.documents.Pipeline
+        )[0] as PipelineDocumentType
+      }
+      showDeleteElementDialog={showDeleteElementDialog}
+    />
+  );
+});

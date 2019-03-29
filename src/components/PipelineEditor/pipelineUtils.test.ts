@@ -32,7 +32,7 @@ import { keyByType } from "./elementUtils";
 
 import { testPipelines, elements } from "../../testing/data/pipelines";
 import {
-  PipelineModelType,
+  PipelineDocumentType,
   PipelinePropertyType,
   DocRefType,
   PipelinePropertyValue,
@@ -64,12 +64,10 @@ describe("Pipeline Utils", () => {
     test("should convert a pipeline to a tree and detect the correct root", () => {
       // Given
       // Swap some entities over -- it shouldn't matter if they're not in the correct order
-      const testPipeline: PipelineModelType = {
-        docRef: {
-          type: "Pipeline",
-          uuid: uuidv4(),
-          name: "Test Pipeline"
-        },
+      const testPipeline: PipelineDocumentType = {
+        type: "Pipeline",
+        uuid: uuidv4(),
+        name: "Test Pipeline",
         configStack: testPipelines.simple.configStack,
         merged: {
           ...testPipelines.simple.merged,
@@ -182,7 +180,7 @@ describe("Pipeline Utils", () => {
   describe("#setElementPropertyValueInPipeline", () => {
     test("should update a property on an element in the config stack", () => {
       // Given
-      const testPipeline: PipelineModelType = Object.assign(
+      const testPipeline: PipelineDocumentType = Object.assign(
         testPipelines.simple,
         {}
       );
@@ -196,7 +194,7 @@ describe("Pipeline Utils", () => {
       };
 
       // When
-      const updatedPipeline: PipelineModelType = setElementPropertyValueInPipeline(
+      const updatedPipeline: PipelineDocumentType = setElementPropertyValueInPipeline(
         testPipeline,
         elementName,
         propertyName,
@@ -288,15 +286,15 @@ describe("Pipeline Utils", () => {
         addItem.element === elementName && addItem.name === propertyName;
 
       // Verify that the test data is as we expect
-      const parentTestConfirmation = testPipeline.configStack[0].properties.add.find(
+      const parentTestConfirmation = testPipeline.configStack[0].properties.add!.find(
         matchingProp
       )!;
       expect(parentTestConfirmation.value.string).toBe("DSD");
-      const childTestConfirmation = testPipeline.configStack[1].properties.add.find(
+      const childTestConfirmation = testPipeline.configStack[1].properties.add!.find(
         matchingProp
       )!;
       expect(childTestConfirmation.value.string).toBe("D");
-      const mergedTestConfirmation = testPipeline.merged.properties.add.find(
+      const mergedTestConfirmation = testPipeline.merged.properties.add!.find(
         matchingProp
       )!;
       expect(mergedTestConfirmation.value.string).toBe("D");
@@ -349,16 +347,16 @@ describe("Pipeline Utils", () => {
         addItem.element === elementName && addItem.name === propertyName;
 
       // Verify that the test data is as we expect
-      const parentTestConfirmation = testPipeline.configStack[0].properties.add.find(
+      const parentTestConfirmation = testPipeline.configStack[0].properties.add!.find(
         matchingProp
       );
       expect(parentTestConfirmation).toBeDefined();
       expect(parentTestConfirmation!.value.string).toBe("DSD");
-      const childTestConfirmation = testPipeline.configStack[1].properties.add.find(
+      const childTestConfirmation = testPipeline.configStack[1].properties.add!.find(
         matchingProp
       );
       expect(childTestConfirmation!.value.string).toBe("D");
-      const mergedTestConfirmation = testPipeline.merged.properties.add.find(
+      const mergedTestConfirmation = testPipeline.merged.properties.add!.find(
         matchingProp
       );
       expect(mergedTestConfirmation!.value.string).toBe("D");

@@ -19,10 +19,8 @@ import { storiesOf } from "@storybook/react";
 import fullTestData from "../../../testing/data";
 import XsltEditor from "./XsltEditor";
 
-
-
 const stories = storiesOf("Document Editors/XSLT", module);
 
-let uuid: string = fullTestData.xslt[0].uuid;
+let uuid: string = fullTestData.documents.XSLT[0].uuid;
 
 stories.add("editor", () => <XsltEditor docRefUuid={uuid} />);

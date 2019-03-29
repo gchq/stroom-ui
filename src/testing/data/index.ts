@@ -22,7 +22,6 @@ import {
   StreamTaskType,
   IndexDoc,
   XsltDoc,
-  DocumentType,
   XMLSchemaDoc,
   VisualisationDoc,
   StatisticsStoreDoc,
@@ -150,32 +149,21 @@ indexVolumeGroups.forEach(group => {
   }
 });
 
-let reduceByUuid = <T extends string, D extends DocumentType<T>>(
-  acc: { [uuid: string]: D },
-  i: D
-) => ({
-  ...acc,
-  [i.uuid]: i
-});
-
-let dictionaries: { [uuid: string]: Dictionary } = Array(5)
+let dictionaries: Array<Dictionary> = Array(5)
   .fill(null)
-  .map(generateDictionary)
-  .reduce(reduceByUuid, {});
+  .map(generateDictionary);
 
-let xslt: { [uuid: string]: XsltDoc } = Array(5)
+let xslt: Array<XsltDoc> = Array(5)
   .fill(null)
-  .map(generateXslt)
-  .reduce(reduceByUuid, {});
+  .map(generateXslt);
 
 let trackers: Array<StreamTaskType> = Array(10)
   .fill(null)
   .map(generateGenericTracker);
 
-let indexes: { [uuid: string]: IndexDoc } = Array(5)
+let indexes: Array<IndexDoc> = Array(5)
   .fill(null)
-  .map(generateIndex)
-  .reduce(reduceByUuid, {});
+  .map(generateIndex);
 
 const docTree = {
   uuid: "0",
@@ -191,17 +179,13 @@ const docTree = {
           uuid: uuidv4(),
           name: "Dictionaries",
           type: "Folder",
-          children: Object.entries(dictionaries)
-            .map(k => k[1])
-            .map(copyDocRef)
+          children: dictionaries.map(copyDocRef)
         },
         {
           uuid: uuidv4(),
           name: "XSLT",
           type: "Folder",
-          children: Object.entries(xslt)
-            .map(k => k[1])
-            .map(copyDocRef)
+          children: xslt.map(copyDocRef)
         }
       ]
     },
@@ -214,18 +198,13 @@ const docTree = {
           uuid: uuidv4(),
           name: "Pipelines",
           type: "Folder",
-          children: Object.entries(testPipelines)
-            .map(k => k[1])
-            .map(k => k.docRef)
-            .map(copyDocRef)
+          children: Object.values(testPipelines).map(copyDocRef)
         },
         {
           uuid: uuidv4(),
           name: "Indexes",
           type: "Folder",
-          children: Object.entries(indexes)
-            .map(k => k[1])
-            .map(copyDocRef)
+          children: indexes.map(copyDocRef)
         }
       ]
     },
@@ -260,9 +239,21 @@ export const fullTestData: TestData = {
   docRefTypes: testDocRefsTypes,
   elements,
   elementProperties,
-  pipelines: Object.values(testPipelines),
-  xslt: Object.values(xslt),
-  dictionaries: Object.values(dictionaries),
+  documents: {
+    XSLT: Object.values(xslt),
+    Dictionary: Object.values(dictionaries),
+    Feed: feeds,
+    Index: indexes,
+    Pipeline: Object.values(testPipelines),
+    AnnotationsIndex: annotationIndexes,
+    Dashboard: dashboards,
+    ElasticIndex: elasticIndexes,
+    Script: scripts,
+    StatisticsStore: statisticsStores,
+    StroomStatsStore: stroomStatsStores,
+    Visualisation: visualisations,
+    XMLSchema: xmlSchemas
+  },
   dataList,
   dataSource,
   trackers,
@@ -275,20 +266,10 @@ export const fullTestData: TestData = {
     groups: indexVolumeGroups,
     groupMemberships: indexVolumeGroupMemberships
   },
-  indexes: Object.values(indexes),
   allAppPermissions,
   userAppPermissions,
   docPermissionByType,
-  userDocPermission,
-  annotationIndexes,
-  dashboards,
-  elasticIndexes,
-  feeds,
-  scripts,
-  statisticsStores,
-  stroomStatsStores,
-  visualisations,
-  xmlSchemas
+  userDocPermission
 };
 
 export default fullTestData;

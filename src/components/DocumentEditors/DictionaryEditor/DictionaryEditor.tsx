@@ -5,14 +5,14 @@ import DocRefEditor, {
   useDocRefEditor,
   SwitchedDocRefEditorProps
 } from "../DocRefEditor";
-import { useApi } from "../../../api/documents/dictionaryDocument";
+import useDocumentApi from "../../../api/useDocumentApi";
 import { Dictionary } from "../../../types";
 
 const DictionaryEditor: React.FunctionComponent<SwitchedDocRefEditorProps> = ({
   docRefUuid
 }) => {
   // Get data from and subscribe to the store
-  const documentApi = useApi();
+  const documentApi = useDocumentApi<"Dictionary", Dictionary>("Dictionary");
 
   const { onDocumentChange, editorProps } = useDocRefEditor<Dictionary>({
     docRefUuid,

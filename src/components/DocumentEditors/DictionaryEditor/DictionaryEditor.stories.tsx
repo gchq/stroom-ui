@@ -13,14 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import * as React from 'react';
-import {storiesOf} from '@storybook/react';
+import * as React from "react";
+import { storiesOf } from "@storybook/react";
 
-import fullTestData from '../../../testing/data';
-import DictionaryEditor from './DictionaryEditor';
+import fullTestData from "../../../testing/data";
+import DictionaryEditor from "./DictionaryEditor";
 
-const stories = storiesOf('Document Editors/Dictionary', module);
+const stories = storiesOf("Document Editors/Dictionary", module);
 
-let uuid: string = fullTestData.dictionaries[0].uuid;
+let uuid: string = fullTestData.documents.Dictionary[0].uuid;
 
-stories.add('editor', () => <DictionaryEditor docRefUuid={uuid} />);
+stories.add("editor", () => <DictionaryEditor docRefUuid={uuid} />);

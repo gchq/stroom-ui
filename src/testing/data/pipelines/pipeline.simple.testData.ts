@@ -1,12 +1,10 @@
-import * as uuidv4 from 'uuid/v4';
-import { PipelineModelType } from "../../../types";
+import * as uuidv4 from "uuid/v4";
+import { PipelineDocumentType } from "../../../types";
 
 export default {
-  docRef: {
-    uuid: uuidv4(),
-    name: "Simple Pipeline",
-    type: "Pipeline"
-  },
+  uuid: uuidv4(),
+  name: "Simple Pipeline",
+  type: "Pipeline",
   description: "just a simple pipeline",
   configStack: [
     {
@@ -184,4 +182,4 @@ export default {
       remove: []
     }
   }
-} as PipelineModelType;
+} as PipelineDocumentType;

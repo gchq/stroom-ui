@@ -11,13 +11,13 @@ import {
   ElementDefinition,
   ElementDefinitionsByCategory,
   ElementDefinitionsByType,
-  PipelineModelType
+  PipelineDocumentType
 } from "../../../types";
 import { useElements } from "../../../api/elements";
 import { groupByCategory, keyByType } from "../elementUtils";
 
 interface Props {
-  pipeline: PipelineModelType;
+  pipeline: PipelineDocumentType;
   showDeleteElementDialog: (elementId: string) => void;
 }
 

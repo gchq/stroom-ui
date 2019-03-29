@@ -24,14 +24,14 @@ import {
   ElementPropertiesType,
   ElementDefinition,
   ElementPropertyType,
-  PipelineModelType
+  PipelineDocumentType
 } from "../../../types";
 import Loader from "../../../components/Loader";
 import { useElements } from "../../../api/elements";
 import { PipelineEditApi } from "../types";
 
 interface Props {
-  pipeline: PipelineModelType;
+  pipeline: PipelineDocumentType;
   pipelineEditApi: PipelineEditApi;
 }
 

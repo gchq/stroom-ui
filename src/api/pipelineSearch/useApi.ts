@@ -13,17 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import useHttpClient from "../../useHttpClient";
+import { useCallback } from "react";
+
+import useHttpClient from "../useHttpClient";
 import {
-  PipelineModelType,
   PipelineSearchCriteriaType,
   PipelineSearchResultType
-} from "../../../types";
-import { useCallback } from "react";
-import { useConfig } from "../../../startup/config";
-import { DocumentApi } from "../documentApi";
+} from "../../types";
+import { useConfig } from "../../startup/config";
 
-interface Api extends DocumentApi<PipelineModelType> {
+interface Api {
   searchPipelines: (
     fetchParams: PipelineSearchCriteriaType
   ) => Promise<PipelineSearchResultType>;
@@ -31,22 +30,9 @@ interface Api extends DocumentApi<PipelineModelType> {
 
 export const useApi = (): Api => {
   const { stroomBaseServiceUrl } = useConfig();
-  const { httpGetJson, httpPostEmptyResponse } = useHttpClient();
+  const { httpGetJson } = useHttpClient();
 
   return {
-    fetchDocument: useCallback(
-      (pipelineId: string) =>
-        httpGetJson(`${stroomBaseServiceUrl}/pipelines/v1/${pipelineId}`),
-      [stroomBaseServiceUrl, httpGetJson]
-    ),
-    saveDocument: useCallback(
-      (document: PipelineModelType) =>
-        httpPostEmptyResponse(
-          `${stroomBaseServiceUrl}/pipelines/v1/${document.docRef.uuid}`,
-          { body: JSON.stringify(document) }
-        ),
-      [stroomBaseServiceUrl, httpPostEmptyResponse]
-    ),
     searchPipelines: useCallback(
       ({ filter, pageSize, pageOffset }: PipelineSearchCriteriaType) => {
         let url = `${stroomBaseServiceUrl}/pipelines/v1/?`;

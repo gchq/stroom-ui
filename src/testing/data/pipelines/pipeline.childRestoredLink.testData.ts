@@ -1,12 +1,10 @@
-import * as uuidv4 from 'uuid/v4';
-import { PipelineModelType } from "../../../types";
+import * as uuidv4 from "uuid/v4";
+import { PipelineDocumentType } from "../../../types";
 
 export default {
-  docRef: {
-    uuid: uuidv4(),
-    name: "Child Restored Link",
-    type: "Pipeline"
-  },
+  uuid: uuidv4(),
+  name: "Child Restored Link",
+  type: "Pipeline",
   description: "This demonstrates a pipeline with a link that can be restored",
   configStack: [
     {
@@ -167,4 +165,4 @@ export default {
       remove: []
     }
   }
-} as PipelineModelType;
+} as PipelineDocumentType;

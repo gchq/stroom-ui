@@ -22,7 +22,7 @@ import DocRefEditor, {
   SwitchedDocRefEditorProps
 } from "../DocRefEditor";
 import Loader from "../../Loader";
-import { useApi as useIndexApi } from "../../../api/documents/indexDocument";
+import useDocumentApi from "../../../api/useDocumentApi";
 import { IndexDoc, IndexField } from "../../../types";
 import IndexFieldsTable, {
   useTable as useFieldsTable
@@ -37,7 +37,7 @@ import IndexFieldEditor, {
 import { IndexVolumeGroupPicker } from "../../IndexVolumeGroups/IndexVolumeGroupPicker";
 
 const IndexEditor = ({ docRefUuid }: SwitchedDocRefEditorProps) => {
-  const documentApi = useIndexApi();
+  const documentApi = useDocumentApi<"Index", IndexDoc>("Index");
 
   const { editorProps, onDocumentChange } = useDocRefEditor<IndexDoc>({
     docRefUuid,

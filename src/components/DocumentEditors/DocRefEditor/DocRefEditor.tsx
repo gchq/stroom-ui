@@ -11,7 +11,7 @@ import AppSearchBar from "../../AppSearchBar";
 import DocRefIconHeader from "../../DocRefIconHeader";
 import DocRefBreadcrumb from "../../DocRefBreadcrumb";
 import Button, { ButtonProps } from "../../Button";
-import { DocumentApi } from "../../../api/documents/documentApi";
+import { DocumentApi } from "../../../api/useDocumentApi";
 import { useDocumentTree } from "../../../api/explorer";
 import useAppNavigation from "../../AppChrome/useAppNavigation";
 

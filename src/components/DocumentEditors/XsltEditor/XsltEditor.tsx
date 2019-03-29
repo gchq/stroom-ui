@@ -21,14 +21,14 @@ import DocRefEditor, {
   SwitchedDocRefEditorProps
 } from "../DocRefEditor";
 import Loader from "../../Loader";
-import { useApi } from "../../../api/documents/xsltDocument";
+import useDocumentApi from "../../../api/useDocumentApi";
 import ThemedAceEditor from "../../ThemedAceEditor";
 import { XsltDoc } from "../../../types";
 
 const XsltEditor: React.FunctionComponent<SwitchedDocRefEditorProps> = ({
   docRefUuid
 }) => {
-  const documentApi = useApi();
+  const documentApi = useDocumentApi<"XSLT", XsltDoc>("XSLT");
 
   const { onDocumentChange, editorProps } = useDocRefEditor<XsltDoc>({
     docRefUuid,

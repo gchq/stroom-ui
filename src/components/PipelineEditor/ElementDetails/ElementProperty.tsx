@@ -24,11 +24,11 @@ import {
 } from "../pipelineUtils";
 import ElementPropertyFieldDetails from "./ElementPropertyInheritanceInfo";
 import ElementPropertyField from "./ElementPropertyField";
-import { ElementPropertyType, PipelineModelType } from "../../../types";
+import { ElementPropertyType, PipelineDocumentType } from "../../../types";
 import { PipelineEditApi } from "../types";
 
 interface Props {
-  pipeline: PipelineModelType;
+  pipeline: PipelineDocumentType;
   pipelineEditApi: PipelineEditApi;
   elementId: string;
   elementPropertyType: ElementPropertyType;

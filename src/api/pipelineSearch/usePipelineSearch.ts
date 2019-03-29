@@ -2,7 +2,7 @@ import { useState, useCallback } from "react";
 import {
   PipelineSearchResultType,
   PipelineSearchCriteriaType
-} from "../../../types";
+} from "../../types";
 import useApi from "./useApi";
 
 interface UsePipelineSearch {

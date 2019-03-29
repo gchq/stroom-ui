@@ -22,6 +22,6 @@ import fullTestData from "../../../testing/data";
 
 const stories = storiesOf("Document Editors/Index", module);
 
-let uuid: string = fullTestData.indexes[0].uuid;
+let uuid: string = fullTestData.documents.Index[0].uuid;
 
 stories.add("editor", () => <IndexEditor docRefUuid={uuid} />);

@@ -400,8 +400,7 @@ export interface PageRequest {
   pageSize?: number;
 }
 
-export interface PipelineModelType {
-  docRef: DocRefType;
+export interface PipelineDocumentType extends DocumentType<"Pipeline"> {
   description?: string;
   parentPipeline?: DocRefType;
   configStack: Array<PipelineDataType>;

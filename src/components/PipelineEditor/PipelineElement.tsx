@@ -33,7 +33,7 @@ import Button from "../Button";
 import {
   ElementDefinition,
   PipelinePropertyType,
-  PipelineModelType,
+  PipelineDocumentType,
   PipelineAsTreeType,
   ElementPropertiesType
 } from "../../types";
@@ -47,7 +47,7 @@ interface Props {
   showAddElementDialog: ShowDialog;
   existingNames: Array<string>;
   pipelineEditApi: PipelineEditApi;
-  pipeline: PipelineModelType;
+  pipeline: PipelineDocumentType;
   asTree: PipelineAsTreeType;
   elementDefinition: ElementDefinition;
   elementProperties: ElementPropertiesType;

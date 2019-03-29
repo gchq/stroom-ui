@@ -23,8 +23,9 @@ import Loader from "../Loader";
 
 import DebuggerStep from "./DebuggerStep";
 import { getNext, getPrevious } from "./pipelineDebugger.utils";
-import { useApi as usePipelineApi } from "../../api/documents/pipelineDocument";
+import useDocumentApi from "../../api/useDocumentApi";
 import usePipelineState from "../PipelineEditor/usePipelineState";
+import { PipelineDocumentType } from "../../types";
 
 interface Props {
   debuggerId: string;
@@ -32,7 +33,10 @@ interface Props {
 }
 
 const PipelineDebugger = ({ pipelineId, debuggerId }: Props) => {
-  const { fetchDocument: fetchPipeline } = usePipelineApi();
+  const { fetchDocument: fetchPipeline } = useDocumentApi<
+    "Pipeline",
+    PipelineDocumentType
+  >("Pipeline");
   const debuggers = {};
   const debuggerState = debuggers[debuggerId];
   const pipelineStateProps = usePipelineState(pipelineId);

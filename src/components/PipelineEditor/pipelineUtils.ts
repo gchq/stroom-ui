@@ -16,7 +16,7 @@
 
 import { findItem, itemIsInSubtree, iterateNodes } from "../../lib/treeUtils";
 import {
-  PipelineModelType,
+  PipelineDocumentType,
   PipelineAsTreeType,
   PipelineElementType,
   ElementDefinitionsByType,
@@ -36,7 +36,7 @@ import {
 } from "./types";
 
 export function getBinItems(
-  pipeline: PipelineModelType,
+  pipeline: PipelineDocumentType,
   elementsByType: ElementDefinitionsByType
 ): Array<RecycleBinItem> {
   const thisConfigStack = pipeline.configStack[pipeline.configStack.length - 1];
@@ -58,7 +58,7 @@ export function getBinItems(
  * @return {object} Tree like structure
  */
 export function getPipelineAsTree(
-  pipeline?: PipelineModelType
+  pipeline?: PipelineDocumentType
 ): PipelineAsTreeType | undefined {
   if (!pipeline) return undefined;
 
@@ -199,7 +199,7 @@ export function getPipelineLayoutGrid(
  *
  * @param {pipeline} pipeline The pipeline from with to extract names
  */
-export function getAllElementNames(pipeline: PipelineModelType): Array<string> {
+export function getAllElementNames(pipeline: PipelineDocumentType): Array<string> {
   const names: Array<string> = [];
 
   pipeline.merged.elements.add &&
@@ -239,11 +239,11 @@ function mapLastItemInArray(input: any, mapFunc: (input: any) => any) {
  * @param {string} name The name to give to the new element.
  */
 export function createNewElementInPipeline(
-  pipeline: PipelineModelType,
+  pipeline: PipelineDocumentType,
   parentId: string,
   childDefinition: ElementDefinition,
   name: string
-): PipelineModelType {
+): PipelineDocumentType {
   const newElement = {
     id: name,
     type: childDefinition.type
@@ -295,12 +295,12 @@ export function createNewElementInPipeline(
  * @param {boolean|entity|integer|long|string} propertyValue The value to add or update
  */
 export function setElementPropertyValueInPipeline(
-  pipeline: PipelineModelType,
+  pipeline: PipelineDocumentType,
   element: string,
   name: string,
   propertyType: string,
   propertyValue: any
-): PipelineModelType {
+): PipelineDocumentType {
   // Create the 'value' property.
   const value = {
     boolean: null,
@@ -348,10 +348,10 @@ function addPropertyToStackItem(
 }
 
 export function revertPropertyToParent(
-  pipeline: PipelineModelType,
+  pipeline: PipelineDocumentType,
   element: string,
   name: string
-): PipelineModelType {
+): PipelineDocumentType {
   if (pipeline.configStack.length < 2) {
     throw new Error("This function requires a configStack with a parent");
   }
@@ -407,10 +407,10 @@ export function revertPropertyToParent(
 }
 
 export function revertPropertyToDefault(
-  pipeline: PipelineModelType,
+  pipeline: PipelineDocumentType,
   element: string,
   name: string
-): PipelineModelType {
+): PipelineDocumentType {
   if (pipeline.configStack.length < 2) {
     throw new Error("This function requires a configStack with a parent");
   }
@@ -514,10 +514,10 @@ export function revertPropertyToDefault(
  * @param {object} recycleData {id, type} The identifying information for the element being re-instated
  */
 export function reinstateElementToPipeline(
-  pipeline: PipelineModelType,
+  pipeline: PipelineDocumentType,
   parentId: string,
   recycleData: PipelineElementType
-): PipelineModelType {
+): PipelineDocumentType {
   const newLink = {
     from: parentId,
     to: recycleData.id
@@ -567,9 +567,9 @@ export function reinstateElementToPipeline(
  * @return The updated pipeline definition.
  */
 export function removeElementFromPipeline(
-  pipeline: PipelineModelType,
+  pipeline: PipelineDocumentType,
   itemToDelete: string
-): PipelineModelType {
+): PipelineDocumentType {
   // Get hold of our entry in the config stack
   const configStackThis = pipeline.configStack[pipeline.configStack.length - 1];
 
@@ -650,7 +650,7 @@ export function removeElementFromPipeline(
  */
 
 export function canMovePipelineElement(
-  pipeline: PipelineModelType,
+  pipeline: PipelineDocumentType,
   pipelineAsTree: PipelineAsTreeType,
   itemToMove: string,
   destination: string
@@ -691,10 +691,10 @@ export function canMovePipelineElement(
  * @return The updated pipeline definition.
  */
 export function moveElementInPipeline(
-  pipeline: PipelineModelType,
+  pipeline: PipelineDocumentType,
   itemToMove: string,
   destination: string
-): PipelineModelType {
+): PipelineDocumentType {
   return {
     ...pipeline,
     configStack: pipeline.configStack,
@@ -728,12 +728,12 @@ export function moveElementInPipeline(
  * @param {string} parent The id of the parent
  */
 export function getAllChildren(
-  pipeline: PipelineModelType,
+  pipeline: PipelineDocumentType,
   parent: string
 ): Array<string> {
   let allChildren: Array<string> = [];
 
-  const getAllChildren = (pipeline: PipelineModelType, element: string) => {
+  const getAllChildren = (pipeline: PipelineDocumentType, element: string) => {
     const thisElementsChildren =
       pipeline.merged.links.add &&
       pipeline.merged.links.add.filter(p => p.from === element).map(p => p.to);
@@ -802,7 +802,7 @@ export function getParentProperty(
  * @param {string} elementTypeName The name of the element type
  */
 export function getChildValue(
-  pipeline: PipelineModelType,
+  pipeline: PipelineDocumentType,
   elementId: string,
   elementTypeName: string
 ): PipelinePropertyType | undefined {
@@ -827,7 +827,7 @@ export function getChildValue(
  * @param {string} elementTypeName The name of the element type
  */
 export function getElementValue(
-  pipeline: PipelineModelType,
+  pipeline: PipelineDocumentType,
   elementId: string,
   elementTypeName: string
 ) {

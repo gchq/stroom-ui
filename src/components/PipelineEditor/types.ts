@@ -3,7 +3,7 @@ import {ConnectDropTarget, ConnectDragSource} from 'react-dnd';
 import {
   PipelineElementType,
   ElementDefinition,
-  PipelineModelType,
+  PipelineDocumentType,
   PipelineAsTreeType,
 } from '../../types';
 import {UseDocRefEditorProps} from '../DocumentEditors/DocRefEditor';
@@ -30,7 +30,7 @@ export interface DragCollectedProps {
 export interface PipelineProps {
   asTree?: PipelineAsTreeType;
   pipelineEditApi: PipelineEditApi;
-  useEditorProps: UseDocRefEditorProps<PipelineModelType>;
+  useEditorProps: UseDocRefEditorProps<PipelineDocumentType>;
 }
 
 export interface PipelineEditApi {

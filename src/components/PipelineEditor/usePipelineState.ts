@@ -1,6 +1,6 @@
 import { useMemo, useState, useCallback } from "react";
 
-import { useApi as usePipelineApi } from "../../api/documents/pipelineDocument";
+import useDocumentApi from "../../api/useDocumentApi";
 import { useDocRefEditor } from "../DocumentEditors/DocRefEditor";
 import {
   getPipelineAsTree,
@@ -13,9 +13,12 @@ import {
   revertPropertyToDefault
 } from "./pipelineUtils";
 import { PipelineEditApi, PipelineProps } from "./types";
+import { PipelineDocumentType } from "src/types";
 
 export const usePipelineState = (pipelineId: string): PipelineProps => {
-  const documentApi = usePipelineApi();
+  const documentApi = useDocumentApi<"Pipeline", PipelineDocumentType>(
+    "Pipeline"
+  );
 
   const [selectedElementId, setSelectedElementId] = useState<
     string | undefined
