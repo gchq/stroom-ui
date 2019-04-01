@@ -183,6 +183,24 @@ const docTree = {
         },
         {
           uuid: uuidv4(),
+          name: "XML_Schemas",
+          type: "Folder",
+          children: xmlSchemas.map(copyDocRef)
+        },
+        {
+          uuid: uuidv4(),
+          name: "Feeds",
+          type: "Folder",
+          children: feeds.map(copyDocRef)
+        },
+        {
+          uuid: uuidv4(),
+          name: "Scripts",
+          type: "Folder",
+          children: scripts.map(copyDocRef)
+        },
+        {
+          uuid: uuidv4(),
           name: "XSLT",
           type: "Folder",
           children: xslt.map(copyDocRef)
@@ -202,9 +220,45 @@ const docTree = {
         },
         {
           uuid: uuidv4(),
+          name: "Dashboards",
+          type: "Folder",
+          children: dashboards.map(copyDocRef)
+        },
+        {
+          uuid: uuidv4(),
           name: "Indexes",
           type: "Folder",
           children: indexes.map(copyDocRef)
+        },
+        {
+          uuid: uuidv4(),
+          name: "Annotation Indexes",
+          type: "Folder",
+          children: annotationIndexes.map(copyDocRef)
+        },
+        {
+          uuid: uuidv4(),
+          name: "Elastic Indexes",
+          type: "Folder",
+          children: elasticIndexes.map(copyDocRef)
+        },
+        {
+          uuid: uuidv4(),
+          name: "Visualisations",
+          type: "Folder",
+          children: visualisations.map(copyDocRef)
+        },
+        {
+          uuid: uuidv4(),
+          name: "StatisticsStore",
+          type: "Folder",
+          children: statisticsStores.map(copyDocRef)
+        },
+        {
+          uuid: uuidv4(),
+          name: "StroomStatsStore",
+          type: "Folder",
+          children: stroomStatsStores.map(copyDocRef)
         }
       ]
     },

@@ -3,7 +3,7 @@ export interface DocumentApi<T> {
   saveDocument: (document: T) => Promise<void>;
 }
 
-export type ResourcesByDocType = {
+export interface ResourcesByDocType {
   XSLT: string;
   Pipeline: string;
   Index: string;
@@ -17,7 +17,7 @@ export type ResourcesByDocType = {
   StroomStatsStore: string;
   Visualisation: string;
   XMLSchema: string;
-};
+}
 
 export const DOCUMENT_RESOURCES: ResourcesByDocType = {
   XSLT: "/xslt/v1/",
