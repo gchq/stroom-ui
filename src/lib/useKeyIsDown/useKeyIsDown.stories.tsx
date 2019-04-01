@@ -32,7 +32,7 @@ storiesOf("Custom Hooks/useKeyIsDown", module).add("test", () => {
         {DEFAULT_FILTERS.map(f => (
           <div key={f}>
             <label>{f}</label>
-            <input type="checkbox" checked={keyIsDown1[f]} />
+            <input type="checkbox" readOnly checked={keyIsDown1[f]} />
           </div>
         ))}
       </form>
@@ -42,7 +42,7 @@ storiesOf("Custom Hooks/useKeyIsDown", module).add("test", () => {
         {filters2.map(f => (
           <div key={f}>
             <label>{f}</label>
-            <input type="checkbox" checked={keyIsDown2[f]} />
+            <input type="checkbox" readOnly checked={keyIsDown2[f]} />
           </div>
         ))}
       </form>

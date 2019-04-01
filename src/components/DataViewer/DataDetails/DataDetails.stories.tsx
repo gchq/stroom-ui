@@ -17,12 +17,11 @@ import * as React from "react";
 import { storiesOf } from "@storybook/react";
 
 import DataDetails from "./DataDetails";
-import { errorData, eventData } from "./DataDetails.testData";
-
-
-
+import {
+  errorData,
+  eventData
+} from "src/testing/data/data/DataDetails.testData";
 
 storiesOf("Sections/Data/Details", module)
-  
   .add("Showing errors", () => <DataDetails data={errorData} />)
   .add("Showing events", () => <DataDetails data={eventData} />);

@@ -26,22 +26,28 @@ import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
 import UserAuthorisationEditor from "./UserAuthorisationEditor";
 import { IsGroup } from "src/api/userGroups";
 
+interface Props {
+  isGroup: IsGroup;
+}
+
+const TestHarness: React.FunctionComponent<Props> = ({ isGroup }) => (
+  <Switch>
+    <Route
+      exact
+      path="/s/authorisationManager/:userUuid"
+      render={(props: RouteComponentProps<any>) => (
+        <UserAuthorisationEditor userUuid={props.match.params.userUuid} />
+      )}
+    />
+    <Route render={() => <AuthorisationManager isGroup={isGroup} />} />
+  </Switch>
+);
+
 (["User", "Group"] as Array<IsGroup>).forEach(isGroup => {
   const stories = storiesOf(
     `Sections/Authorisation Manager/${isGroup}`,
     module
   );
 
-  addThemedStories(stories, () => (
-    <Switch>
-      <Route
-        exact
-        path="/s/authorisationManager/:userUuid"
-        render={(props: RouteComponentProps<any>) => (
-          <UserAuthorisationEditor userUuid={props.match.params.userUuid} />
-        )}
-      />
-      <Route render={() => <AuthorisationManager isGroup={isGroup} />} />
-    </Switch>
-  ));
+  addThemedStories(stories, () => <TestHarness isGroup={isGroup} />);
 });

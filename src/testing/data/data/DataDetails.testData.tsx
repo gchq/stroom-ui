@@ -1,4 +1,4 @@
-import { StroomData } from "./types";
+import { StroomData } from "../../../components/DataViewer/DataDetails/types";
 
 export const errorData = {
   streamType: {
