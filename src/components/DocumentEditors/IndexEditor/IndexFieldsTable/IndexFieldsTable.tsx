@@ -5,7 +5,7 @@ import { IndexField } from "../../../../types";
 import {
   useSelectableReactTable,
   SelectionBehaviour
-} from "../../../../lib/useSelectableItemListing";
+} from "src/lib/useSelectableItemListing";
 import { Props, UseTable } from "./types";
 
 const COLUMNS = [

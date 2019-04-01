@@ -1,4 +1,4 @@
-import { IsGroup } from "../../../api/userGroups";
+import { IsGroup } from "src/api/userGroups";
 
 export interface BaseProps {
   isGroup: IsGroup;

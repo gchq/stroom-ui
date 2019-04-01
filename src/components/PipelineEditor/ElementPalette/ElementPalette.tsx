@@ -13,7 +13,7 @@ import {
   ElementDefinitionsByType,
   PipelineDocumentType
 } from "../../../types";
-import useElements from "../../../api/useElements";
+import useElements from "src/api/useElements";
 import { groupByCategory, keyByType } from "../elementUtils";
 
 interface Props {

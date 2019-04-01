@@ -8,15 +8,15 @@ import * as ReactModal from "react-modal";
 
 import { useTestServer } from "./PollyDecorator";
 
-import useFontAwesome from "../../lib/useFontAwesome/useFontAwesome";
+import useFontAwesome from "src/lib/useFontAwesome/useFontAwesome";
 import testData from "../data";
-import { ThemeContextProvider, useTheme } from "../../lib/theme";
+import { ThemeContextProvider, useTheme } from "src/lib/theme";
 import { withRouter, RouteComponentProps } from "react-router";
-import { CustomRouter } from "../../lib/useRouter";
+import { CustomRouter } from "src/lib/useRouter";
 import { ConfigProvider } from "../../startup/config";
 import { AuthorisationContextProvider } from "../../startup/Authorisation";
 import { AuthenticationContext } from "../../startup/Authentication";
-import { DocumentTreeContextProvider } from "../../api/explorer";
+import { DocumentTreeContextProvider } from "src/api/explorer";
 import { ErrorReportingContextProvider } from "../../components/ErrorPage";
 
 interface Props extends RouteComponentProps {}

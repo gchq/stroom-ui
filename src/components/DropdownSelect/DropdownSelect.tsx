@@ -3,7 +3,7 @@ import { useState } from "react";
 
 import DefaultDropdownOption from "./DefaultDropdownOption";
 import { OptionType, ControlledInput } from "../../types";
-import useSelectableItemListing from "../../lib/useSelectableItemListing";
+import useSelectableItemListing from "src/lib/useSelectableItemListing";
 import { DropdownOptionProps } from "./types";
 
 interface Props extends ControlledInput<string> {

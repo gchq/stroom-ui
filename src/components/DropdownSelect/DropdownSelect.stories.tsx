@@ -19,7 +19,7 @@ import { storiesOf } from "@storybook/react";
 
 import DropdownSelect from "./DropdownSelect";
 import { DropdownOptionProps } from "./types";
-import useForm from "../../lib/useForm";
+import useForm from "src/lib/useForm";
 import JsonDebug from "../../testing/JsonDebug";
 
 import { ControlledInput } from "../../types";

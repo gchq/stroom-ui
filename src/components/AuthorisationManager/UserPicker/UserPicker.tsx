@@ -3,7 +3,7 @@ import { useEffect, useState, useMemo } from "react";
 
 import Select from "react-select";
 
-import { useManageUsers } from "../../../api/userGroups";
+import { useManageUsers } from "src/api/userGroups";
 import { SelectOptionType } from "../../../types";
 import { Props, BaseProps, UseProps } from "./types";
 

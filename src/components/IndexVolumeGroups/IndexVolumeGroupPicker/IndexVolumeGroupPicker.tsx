@@ -3,7 +3,7 @@ import { useState, useMemo } from "react";
 
 import Select from "react-select";
 
-import { useIndexVolumeGroupNames } from "../../../api/indexVolumeGroup";
+import { useIndexVolumeGroupNames } from "src/api/indexVolumeGroup";
 import { SelectOptionType } from "../../../types";
 import { PickerProps, UsePickerProps, PickerBaseProps } from "./types";
 

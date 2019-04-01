@@ -8,7 +8,7 @@ import {
   findByUuids,
   deleteItemsFromTree,
   iterateNodes
-} from "../../../lib/treeUtils";
+} from "src/lib/treeUtils";
 import { DocRefType, DocRefTree, DocRefWithLineage } from "../../../types";
 import { TestCache } from "../PollyDecorator";
 import { Config } from "../../../startup/config";

@@ -2,17 +2,17 @@ import * as React from "react";
 import { useCallback, useMemo } from "react";
 
 import IconHeader from "../../../components/IconHeader";
-import useDocumentPermissions from "../../../api/docPermission/useDocumentPermissions";
+import useDocumentPermissions from "src/api/docPermission/useDocumentPermissions";
 import { User } from "../../../types";
 import Button from "../../../components/Button";
 import ThemedConfirm, {
   useDialog as useThemedConfirm
 } from "../../../components/ThemedConfirm";
-import { useUsers } from "../../../api/userGroups";
+import { useUsers } from "src/api/userGroups";
 import UsersTable, { useTable as useUsersTable } from "../UsersTable";
 import useAppNavigation from "../../AppChrome/useAppNavigation";
-import useRouter from "../../../lib/useRouter";
-import { useDocumentTree } from "../../../api/explorer";
+import useRouter from "src/lib/useRouter";
+import { useDocumentTree } from "src/api/explorer";
 import UserModalPicker, {
   useDialog as useUserModalPicker
 } from "../UserModalPicker";

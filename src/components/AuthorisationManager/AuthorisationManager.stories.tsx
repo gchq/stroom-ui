@@ -24,7 +24,7 @@ import AuthorisationManager from ".";
 import { addThemedStories } from "../../testing/storybook/themedStoryGenerator";
 
 import UserAuthorisationEditor from "./UserAuthorisationEditor";
-import { IsGroup } from "../../api/userGroups";
+import { IsGroup } from "src/api/userGroups";
 
 interface Props {
   isGroup: IsGroup;

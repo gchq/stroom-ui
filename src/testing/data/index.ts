@@ -62,7 +62,7 @@ import {
 import allAppPermissions from "./appPermissions";
 import { UserGroupMembership, TestData, UserDocPermission } from "../testTypes";
 import { documentPermissionNames } from "./docPermissions";
-import { iterateNodes } from "../../lib/treeUtils";
+import { iterateNodes } from "src/lib/treeUtils";
 
 let docPermissionByType = testDocRefsTypes.reduce(
   (acc, curr) => ({ ...acc, [curr]: documentPermissionNames }),

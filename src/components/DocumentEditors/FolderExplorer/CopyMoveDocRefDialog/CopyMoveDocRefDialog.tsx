@@ -13,17 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import * as React from 'react';
-import {useState, useCallback, useMemo} from 'react';
+import * as React from "react";
+import { useState, useCallback, useMemo } from "react";
 
-import IconHeader from '../../../IconHeader';
-import DialogActionButtons from '../../../DialogActionButtons';
-import ThemedModal from '../../../ThemedModal';
-import AppSearchBar from '../../../AppSearchBar';
-import PermissionInheritancePicker from '../../../PermissionInheritancePicker';
-import {PermissionInheritance, DocRefType} from '../../../../types';
-import useForm from '../../../../lib/useForm';
-import {UseDialog, Props} from './types';
+import IconHeader from "../../../IconHeader";
+import DialogActionButtons from "../../../DialogActionButtons";
+import ThemedModal from "../../../ThemedModal";
+import AppSearchBar from "../../../AppSearchBar";
+import PermissionInheritancePicker from "../../../PermissionInheritancePicker";
+import { PermissionInheritance, DocRefType } from "../../../../types";
+import useForm from "src/lib/useForm";
+import { UseDialog, Props } from "./types";
 
 interface FormValues {
   destination?: DocRefType;
@@ -35,36 +35,36 @@ export const CopyMoveDocRefDialog = ({
   initialDestination,
   isOpen,
   onConfirm,
-  onCloseDialog,
+  onCloseDialog
 }: Props) => {
   const initialValues = useMemo<FormValues>(
     () => ({
       permissionInheritance: PermissionInheritance.NONE,
-      destination: initialDestination,
+      destination: initialDestination
     }),
-    [initialDestination, uuids],
+    [initialDestination, uuids]
   );
 
   const {
-    value: {destination, permissionInheritance},
-    useControlledInputProps,
+    value: { destination, permissionInheritance },
+    useControlledInputProps
   } = useForm<FormValues>({
-    initialValues,
+    initialValues
   });
 
-  const destinationProps = useControlledInputProps<DocRefType>('destination');
+  const destinationProps = useControlledInputProps<DocRefType>("destination");
   const permissionInheritanceProps = useControlledInputProps<
     PermissionInheritance
-  >('permissionInheritance');
+  >("permissionInheritance");
 
   const onConfirmLocal = useCallback(() => {
     if (!!destination && !!permissionInheritance) {
       onConfirm(uuids, destination, permissionInheritance);
       onCloseDialog();
     } else {
-      console.error('Destination or Permission Inheritance Missing', {
+      console.error("Destination or Permission Inheritance Missing", {
         destination,
-        permissionInheritance,
+        permissionInheritance
       });
     }
   }, [destination, permissionInheritance, uuids, onConfirm, onCloseDialog]);
@@ -104,8 +104,8 @@ export const useDialog = (
   onConfirm: (
     uuids: Array<string>,
     destination: DocRefType,
-    permissionInheritance: PermissionInheritance,
-  ) => void,
+    permissionInheritance: PermissionInheritance
+  ) => void
 ): UseDialog => {
   const [initialDestination, setInitialDestination] = useState<
     DocRefType | undefined
@@ -123,12 +123,12 @@ export const useDialog = (
         setIsOpen(false);
         setUuidToCopy([]);
         setInitialDestination(undefined);
-      },
+      }
     },
     showDialog: (_uuids, _destination) => {
       setIsOpen(true);
       setUuidToCopy(_uuids);
       setInitialDestination(_destination);
-    },
+    }
   };
 };

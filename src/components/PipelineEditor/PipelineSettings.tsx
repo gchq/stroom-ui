@@ -4,7 +4,7 @@ import { useState, useMemo, useCallback } from "react";
 import Button from "../Button";
 import IconHeader from "../IconHeader";
 import ThemedModal from "../ThemedModal";
-import useForm from "../../lib/useForm";
+import useForm from "src/lib/useForm";
 
 interface Props {
   isOpen: boolean;

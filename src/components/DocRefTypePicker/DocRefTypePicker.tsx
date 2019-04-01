@@ -4,7 +4,7 @@ import { useMemo } from "react";
 import DocRefImage from "../DocRefImage";
 import { OptionType, ControlledInput } from "../../types";
 import DropdownSelect, { DropdownOptionProps } from "../DropdownSelect";
-import useDocRefTypes from "../../api/explorer/useDocRefTypes";
+import useDocRefTypes from "src/api/explorer/useDocRefTypes";
 
 const DocRefTypeOption = ({
   inFocus,

@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { storiesOf } from "@storybook/react";
 import ProcessingList from "./ProcessingList";
 import { addThemedStories } from "../../../testing/storybook/themedStoryGenerator";
-import useStreamTasks from "../../../api/useStreamTasks";
+import useStreamTasks from "src/api/useStreamTasks";
 import JsonDebug from "../../../testing/JsonDebug";
 import { StreamTaskType } from "src/types";
 

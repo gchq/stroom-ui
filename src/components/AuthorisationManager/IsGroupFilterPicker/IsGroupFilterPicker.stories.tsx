@@ -21,7 +21,7 @@ import { storiesOf } from "@storybook/react";
 
 import { addThemedStories } from "../../../testing/storybook/themedStoryGenerator";
 import IsGroupFilterPicker from "./IsGroupFilterPicker";
-import { IsGroup } from "../../../api/userGroups";
+import { IsGroup } from "src/api/userGroups";
 
 const IsGroupFilterPickerInForm = () => {
   const [isGroup, setIsGroup] = useState<IsGroup>("");

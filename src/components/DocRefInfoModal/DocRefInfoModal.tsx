@@ -20,7 +20,7 @@ import Loader from "../Loader";
 import ThemedModal from "../ThemedModal";
 import IconHeader from "../IconHeader";
 import Button from "../Button";
-import { useDocRefInfo } from "../../api/explorer";
+import { useDocRefInfo } from "src/api/explorer";
 import { DocRefType } from "../../types";
 
 interface Props {

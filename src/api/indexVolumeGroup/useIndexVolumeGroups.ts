@@ -2,7 +2,7 @@ import { useEffect, useCallback } from "react";
 
 import useApi from "./useApi";
 import { IndexVolumeGroup } from "../../types";
-import useListReducer from "../../lib/useListReducer/useListReducer";
+import useListReducer from "src/lib/useListReducer/useListReducer";
 
 interface UseIndexVolumeGroups {
   groups: Array<IndexVolumeGroup>;

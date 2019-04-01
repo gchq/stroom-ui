@@ -4,10 +4,10 @@ import IconHeader from "../../../components/IconHeader";
 import Button from "../../../components/Button";
 import UsersInGroup from "../UsersInGroup";
 import GroupsForUser from "../GroupsForUser";
-import { useUser } from "../../../api/userGroups";
+import { useUser } from "src/api/userGroups";
 import Loader from "../../../components/Loader";
-import useRouter from "../../../lib/useRouter";
-import { useAppPermissionsForUser } from "../../../api/appPermission";
+import useRouter from "src/lib/useRouter";
+import { useAppPermissionsForUser } from "src/api/appPermission";
 import { AppPermissionPicker } from "../AppPermissionPicker";
 
 interface Props {

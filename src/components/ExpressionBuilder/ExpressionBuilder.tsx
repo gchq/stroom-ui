@@ -32,7 +32,7 @@ import {
   addItemsToTree,
   deleteItemFromTree,
   moveItemsInTree
-} from "../../lib/treeUtils";
+} from "src/lib/treeUtils";
 
 import { getNewTerm, getNewOperator } from "./expressionBuilderUtils";
 

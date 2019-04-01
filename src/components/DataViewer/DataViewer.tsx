@@ -21,11 +21,11 @@ import ReactTable, { Column } from "react-table";
 import {
   useStreamSearch,
   useStreamDataSource
-} from "../../api/streamAttributeMap";
+} from "src/api/streamAttributeMap";
 import {
   useSelectableReactTable,
   SelectionBehaviour
-} from "../../lib/useSelectableItemListing";
+} from "src/lib/useSelectableItemListing";
 import { DataRow, PageRequest, ExpressionOperatorWithUuid } from "../../types";
 import IconHeader from "../IconHeader";
 import ExpressionSearchBar from "../ExpressionSearchBar";

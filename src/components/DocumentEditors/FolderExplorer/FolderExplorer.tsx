@@ -14,48 +14,53 @@
  * limitations under the License.
  */
 
-import * as React from 'react';
-import {useCallback, useMemo} from 'react';
+import * as React from "react";
+import { useCallback, useMemo } from "react";
 
-import DocRefEditor, {useDocRefEditor, SwitchedDocRefEditorProps} from '../DocRefEditor';
-import Loader from '../../Loader';
-import DndDocRefListingEntry from './DndDocRefListingEntry';
+import DocRefEditor, {
+  useDocRefEditor,
+  SwitchedDocRefEditorProps
+} from "../DocRefEditor";
+import Loader from "../../Loader";
+import DndDocRefListingEntry from "./DndDocRefListingEntry";
 import CreateDocRefDialog, {
-  useDialog as useCreateDialog,
-} from './CreateDocRefDialog/CreateDocRefDialog';
+  useDialog as useCreateDialog
+} from "./CreateDocRefDialog/CreateDocRefDialog";
 import {
   CopyMoveDocRefDialog,
-  useDialog as useCopyMoveDialog,
-} from './CopyMoveDocRefDialog/CopyMoveDocRefDialog';
+  useDialog as useCopyMoveDialog
+} from "./CopyMoveDocRefDialog/CopyMoveDocRefDialog";
 import RenameDocRefDialog, {
-  useDialog as useRenameDialog,
-} from './RenameDocRefDialog/RenameDocRefDialog';
+  useDialog as useRenameDialog
+} from "./RenameDocRefDialog/RenameDocRefDialog";
 import DeleteDocRefDialog, {
-  useDialog as useDeleteDialog,
-} from './DeleteDocRefDialog/DeleteDocRefDialog';
-import DocRefInfoModal from '../../DocRefInfoModal';
-import {ButtonProps} from '../../Button';
+  useDialog as useDeleteDialog
+} from "./DeleteDocRefDialog/DeleteDocRefDialog";
+import DocRefInfoModal from "../../DocRefInfoModal";
+import { ButtonProps } from "../../Button";
 import useSelectableItemListing, {
-  SelectionBehaviour,
-} from '../../../lib/useSelectableItemListing';
-import {useDocRefInfoDialog} from '../../DocRefInfoModal/DocRefInfoModal';
-import {useDocumentTree} from '../../../api/explorer';
-import useAppNavigation from '../../AppChrome/useAppNavigation';
+  SelectionBehaviour
+} from "src/lib/useSelectableItemListing";
+import { useDocRefInfoDialog } from "../../DocRefInfoModal/DocRefInfoModal";
+import { useDocumentTree } from "src/api/explorer";
+import useAppNavigation from "../../AppChrome/useAppNavigation";
 
-const FolderExplorer: React.FunctionComponent<SwitchedDocRefEditorProps> = ({docRefUuid}) => {
+const FolderExplorer: React.FunctionComponent<SwitchedDocRefEditorProps> = ({
+  docRefUuid
+}) => {
   const {
     findDocRefWithLineage,
     createDocument,
     copyDocuments,
     moveDocuments,
     renameDocument,
-    deleteDocuments,
+    deleteDocuments
   } = useDocumentTree();
 
-  const {goToEditDocRef} = useAppNavigation();
+  const { goToEditDocRef } = useAppNavigation();
   const folder = useMemo(() => findDocRefWithLineage(docRefUuid), [
     findDocRefWithLineage,
-    docRefUuid,
+    docRefUuid
   ]);
 
   const onCreateDocument = useCallback(
@@ -65,11 +70,11 @@ const FolderExplorer: React.FunctionComponent<SwitchedDocRefEditorProps> = ({doc
           docRefType,
           docRefName,
           folder.node,
-          permissionInheritance,
+          permissionInheritance
         );
       }
     },
-    [createDocument, folder],
+    [createDocument, folder]
   );
 
   const goBack = useCallback(() => {
@@ -82,39 +87,39 @@ const FolderExplorer: React.FunctionComponent<SwitchedDocRefEditorProps> = ({doc
 
   const {
     showDialog: showDeleteDialog,
-    componentProps: deleteDialogComponentProps,
+    componentProps: deleteDialogComponentProps
   } = useDeleteDialog(deleteDocuments);
   const {
     showDialog: showCopyDialog,
-    componentProps: copyDialogComponentProps,
+    componentProps: copyDialogComponentProps
   } = useCopyMoveDialog(copyDocuments);
   const {
     showDialog: showMoveDialog,
-    componentProps: moveDialogComponentProps,
+    componentProps: moveDialogComponentProps
   } = useCopyMoveDialog(moveDocuments);
   const {
     showDialog: showRenameDialog,
-    componentProps: renameDialogComponentProps,
+    componentProps: renameDialogComponentProps
   } = useRenameDialog(renameDocument);
   const {
     showDialog: showDocRefInfoDialog,
-    componentProps: docRefInfoDialogComponentProps,
+    componentProps: docRefInfoDialogComponentProps
   } = useDocRefInfoDialog();
   const {
     showDialog: showCreateDialog,
-    componentProps: createDialogComponentProps,
+    componentProps: createDialogComponentProps
   } = useCreateDialog(onCreateDocument);
   const {
     onKeyDownWithShortcuts,
     selectedItems: selectedDocRefs,
     toggleSelection,
-    keyIsDown,
+    keyIsDown
   } = useSelectableItemListing({
     items: folder.node.children || [],
     selectionBehaviour: SelectionBehaviour.MULTIPLE,
     getKey: d => d.uuid,
     openItem: goToEditDocRef,
-    goBack: goBack,
+    goBack: goBack
   });
 
   const onClickCreate = useCallback(() => {
@@ -125,11 +130,11 @@ const FolderExplorer: React.FunctionComponent<SwitchedDocRefEditorProps> = ({doc
 
   const additionalActionBarItems: Array<ButtonProps> = [
     {
-      icon: 'file',
+      icon: "file",
       onClick: onClickCreate,
-      title: 'Create a Document',
-      text: 'Create',
-    },
+      title: "Create a Document",
+      text: "Create"
+    }
   ];
 
   const singleSelectedDocRef =
@@ -139,40 +144,40 @@ const FolderExplorer: React.FunctionComponent<SwitchedDocRefEditorProps> = ({doc
   if (selectedDocRefs.length > 0) {
     if (singleSelectedDocRef) {
       additionalActionBarItems.push({
-        icon: 'info',
-        text: 'Info',
+        icon: "info",
+        text: "Info",
         onClick: () => showDocRefInfoDialog(singleSelectedDocRef),
-        title: 'View Information about this document',
+        title: "View Information about this document"
       });
       additionalActionBarItems.push({
-        icon: 'edit',
-        text: 'Rename',
+        icon: "edit",
+        text: "Rename",
         onClick: () => showRenameDialog(singleSelectedDocRef),
-        title: 'Rename this document',
+        title: "Rename this document"
       });
     }
     additionalActionBarItems.push({
-      icon: 'copy',
-      text: 'Copy',
+      icon: "copy",
+      text: "Copy",
       onClick: () => showCopyDialog(selectedDocRefUuids),
-      title: 'Copy selected documents',
+      title: "Copy selected documents"
     });
     additionalActionBarItems.push({
-      icon: 'arrows-alt',
-      text: 'Move',
+      icon: "arrows-alt",
+      text: "Move",
       onClick: () => showMoveDialog(selectedDocRefUuids),
-      title: 'Move selected documents',
+      title: "Move selected documents"
     });
     additionalActionBarItems.push({
-      icon: 'trash',
-      text: 'Delete',
+      icon: "trash",
+      text: "Delete",
       onClick: () => showDeleteDialog(selectedDocRefUuids),
-      title: 'Delete selected documents',
+      title: "Delete selected documents"
     });
   }
 
-  const {editorProps: folderEditorProps} = useDocRefEditor({
-    docRefUuid,
+  const { editorProps: folderEditorProps } = useDocRefEditor({
+    docRefUuid
   });
 
   if (!folder) {

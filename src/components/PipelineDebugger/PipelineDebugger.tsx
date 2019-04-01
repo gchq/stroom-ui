@@ -23,7 +23,7 @@ import Loader from "../Loader";
 
 import DebuggerStep from "./DebuggerStep";
 import { getNext, getPrevious } from "./pipelineDebugger.utils";
-import useDocumentApi from "../../api/useDocumentApi";
+import useDocumentApi from "src/api/useDocumentApi";
 import usePipelineState from "../PipelineEditor/usePipelineState";
 import { PipelineDocumentType } from "../../types";
 

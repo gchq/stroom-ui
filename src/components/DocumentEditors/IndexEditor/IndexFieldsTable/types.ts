@@ -1,5 +1,5 @@
-import {TableOutProps} from '../../../../lib/useSelectableItemListing';
-import {IndexField} from '../../../../types';
+import { TableOutProps } from "src/lib/useSelectableItemListing";
+import { IndexField } from "../../../../types";
 
 export interface Props {
   fields: Array<IndexField>;

@@ -17,7 +17,7 @@ import * as queryString from "qs";
 import { useEffect, useMemo } from "react";
 
 import { handleAuthenticationResponse } from "./authentication";
-import useRouter from "../../lib/useRouter";
+import useRouter from "src/lib/useRouter";
 import useAuthenticationContext from "./useAuthenticationContext";
 import { useConfig } from "../config";
 

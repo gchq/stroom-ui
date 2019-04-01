@@ -2,16 +2,16 @@ import * as React from "react";
 import { useState, useCallback } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import { findItem, filterTree } from "../../lib/treeUtils";
+import { findItem, filterTree } from "src/lib/treeUtils";
 import { DocRefType, DocRefTree, DocRefWithLineage } from "../../types";
 import { DocRefBreadcrumb } from "../DocRefBreadcrumb";
 import DocRefListingEntry from "../DocRefListingEntry";
 
 import ModeOptionButtons, { SearchMode } from "./ModeOptionButton";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
-import useSelectableItemListing from "../../lib/useSelectableItemListing";
-import useRecentItems from "../../lib/useRecentItems";
-import { useDocumentTree } from "../../api/explorer";
+import useSelectableItemListing from "src/lib/useSelectableItemListing";
+import useRecentItems from "src/lib/useRecentItems";
+import { useDocumentTree } from "src/api/explorer";
 
 interface Props {
   typeFilters?: Array<string>;

@@ -18,7 +18,7 @@ import {
   canMove,
   findItem,
   assignRandomUuids
-} from "../lib/treeUtils";
+} from "src/lib/treeUtils";
 import {
   Tree,
   ExpressionOperatorType,

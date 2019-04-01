@@ -6,7 +6,7 @@ import ThemedModal from "../../../ThemedModal";
 import { DialogActionButtons } from "../../../DialogActionButtons";
 import IndexFieldTypePicker from "../IndexFieldTypePicker/IndexFieldTypePicker";
 import AnalyzerPicker from "../AnalyzerPicker";
-import useForm from "../../../../lib/useForm";
+import useForm from "src/lib/useForm";
 
 interface Props {
   id: number;

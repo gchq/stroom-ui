@@ -8,7 +8,7 @@ import ThemedModal from "../../../components/ThemedModal";
 import IconHeader from "../../../components/IconHeader";
 import Button from "../../../components/Button";
 import DialogActionButtons from "../../../components/DialogActionButtons";
-import { useIndexVolumeGroups } from "../../../api/indexVolumeGroup";
+import { useIndexVolumeGroups } from "src/api/indexVolumeGroup";
 import { PickerBaseProps } from "../IndexVolumeGroupPicker/types";
 
 interface BaseProps extends PickerBaseProps {

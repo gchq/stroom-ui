@@ -20,7 +20,7 @@ import PermissionInheritancePicker from "./PermissionInheritancePicker";
 
 import { addThemedStories } from "../../testing/storybook/themedStoryGenerator";
 
-import useForm from "../../lib/useForm";
+import useForm from "src/lib/useForm";
 import { PermissionInheritance } from "src/types";
 import JsonDebug from "../../testing/JsonDebug";
 

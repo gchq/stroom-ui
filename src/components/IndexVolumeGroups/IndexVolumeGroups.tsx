@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useCallback } from "react";
 
-import { useIndexVolumeGroups } from "../../api/indexVolumeGroup";
+import { useIndexVolumeGroups } from "src/api/indexVolumeGroup";
 import IndexVolumeGroupsTable, {
   useTable
 } from "./IndexVolumeGroupsTable/IndexVolumeGroupsTable";

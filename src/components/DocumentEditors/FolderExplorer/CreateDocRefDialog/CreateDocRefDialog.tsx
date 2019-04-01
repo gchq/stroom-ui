@@ -14,17 +14,17 @@
  * limitations under the License.
  */
 
-import * as React from 'react';
-import {useState, useCallback} from 'react';
+import * as React from "react";
+import { useState, useCallback } from "react";
 
-import IconHeader from '../../../IconHeader';
-import ThemedModal from '../../../ThemedModal';
-import DialogActionButtons from '../../../DialogActionButtons';
-import {DocRefTypePicker} from '../../../DocRefTypePicker';
-import PermissionInheritancePicker from '../../../PermissionInheritancePicker';
-import {PermissionInheritance, DocRefType} from '../../../../types';
-import useForm from '../../../../lib/useForm';
-// import { required, minLength2 } from "../../lib/formUtils";
+import IconHeader from "../../../IconHeader";
+import ThemedModal from "../../../ThemedModal";
+import DialogActionButtons from "../../../DialogActionButtons";
+import { DocRefTypePicker } from "../../../DocRefTypePicker";
+import PermissionInheritancePicker from "../../../PermissionInheritancePicker";
+import { PermissionInheritance, DocRefType } from "../../../../types";
+import useForm from "src/lib/useForm";
+// import { required, minLength2 } from "src/lib/formUtils";
 
 interface Props {
   destination?: DocRefType;
@@ -32,7 +32,7 @@ interface Props {
   onConfirm: (
     docRefType: string,
     docRefName: string,
-    permissionInheritance: string,
+    permissionInheritance: string
   ) => void;
   onCloseDialog: () => void;
 }
@@ -44,38 +44,38 @@ interface FormValues {
 }
 
 const initialValues: FormValues = {
-  docRefName: 'New Document',
-  permissionInheritance: PermissionInheritance.NONE,
+  docRefName: "New Document",
+  permissionInheritance: PermissionInheritance.NONE
 };
 
 export const CreateDocRefDialog = ({
   isOpen,
   onConfirm,
-  onCloseDialog,
+  onCloseDialog
 }: Props) => {
   const {
-    value: {docRefType, docRefName, permissionInheritance},
+    value: { docRefType, docRefName, permissionInheritance },
     useControlledInputProps,
-    useTextInput,
+    useTextInput
   } = useForm<FormValues>({
-    initialValues,
+    initialValues
   });
 
-  const docRefNameProps = useTextInput('docRefName');
-  const docRefTypeProps = useControlledInputProps<string>('docRefType');
+  const docRefNameProps = useTextInput("docRefName");
+  const docRefTypeProps = useControlledInputProps<string>("docRefType");
   const permissionInheritanceProps = useControlledInputProps<
     PermissionInheritance
-  >('permissionInheritance');
+  >("permissionInheritance");
 
   const onConfirmLocal = useCallback(() => {
     if (!!docRefType && !!docRefName && !!permissionInheritance) {
       onConfirm(docRefType, docRefName, permissionInheritance);
       onCloseDialog();
     } else {
-      console.error('Form Invalid', {
+      console.error("Form Invalid", {
         docRefType,
         docRefName,
-        permissionInheritance,
+        permissionInheritance
       });
     }
   }, [docRefType, docRefName, permissionInheritance, onConfirm, onCloseDialog]);
@@ -135,11 +135,11 @@ export const useDialog = (
   onConfirm: (
     docRefType: string,
     docRefName: string,
-    permissionInheritance: string,
-  ) => void,
+    permissionInheritance: string
+  ) => void
 ): UseDialog => {
   const [destination, setDestination] = useState<DocRefType | undefined>(
-    undefined,
+    undefined
   );
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
@@ -151,12 +151,12 @@ export const useDialog = (
       onCloseDialog: () => {
         setIsOpen(false);
         setDestination(undefined);
-      },
+      }
     },
     showDialog: _destination => {
       setIsOpen(true);
       setDestination(_destination);
-    },
+    }
   };
 };
 

@@ -3,7 +3,7 @@ import { useCallback } from "react";
 import useApi from "./useApi";
 import { User } from "../../types";
 import { IsGroup } from "./types";
-import useListReducer from "../../lib/useListReducer";
+import useListReducer from "src/lib/useListReducer";
 
 interface ManageUsers {
   users: Array<User>;

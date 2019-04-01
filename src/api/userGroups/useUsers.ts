@@ -2,7 +2,7 @@ import { useEffect, useMemo } from "react";
 
 import useApi from "./useApi";
 import { User } from "../../types";
-import useListReducer from "../../lib/useListReducer";
+import useListReducer from "src/lib/useListReducer";
 
 /**
  * Use this to convert a list of users UUID's into a list of user objects.

@@ -16,7 +16,7 @@ import {
   IndexVolumeGroupModalPicker,
   useIndexVolumeGroupModalPicker
 } from "../IndexVolumeGroups/IndexVolumeGroupPickerDialog";
-import { useIndexVolumes } from "../../api/indexVolume";
+import { useIndexVolumes } from "src/api/indexVolume";
 import useAppNavigation from "../AppChrome/useAppNavigation";
 
 const IndexVolumes = () => {

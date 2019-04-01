@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { findItem, itemIsInSubtree, iterateNodes } from "../../lib/treeUtils";
+import { findItem, itemIsInSubtree, iterateNodes } from "src/lib/treeUtils";
 import {
   PipelineDocumentType,
   PipelineAsTreeType,

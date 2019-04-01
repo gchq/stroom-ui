@@ -1,8 +1,8 @@
 import * as React from "react";
 import { useCallback } from "react";
 
-import { useManageUsers } from "../../api/userGroups";
-import { IsGroup } from "../../api/userGroups";
+import { useManageUsers } from "src/api/userGroups";
+import { IsGroup } from "src/api/userGroups";
 import IconHeader from "../../components/IconHeader";
 import UsersTable, { useTable } from "./UsersTable";
 import Button from "../../components/Button";
@@ -12,7 +12,7 @@ import NewUserDialog, {
 import ThemedConfirm, {
   useDialog as useThemedConfim
 } from "../../components/ThemedConfirm";
-import useForm from "../../lib/useForm";
+import useForm from "src/lib/useForm";
 import {
   UserGroupPickOrCreateDialog,
   useDialog as useGroupModalDialog

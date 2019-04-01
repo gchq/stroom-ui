@@ -43,7 +43,7 @@ import { useConfig } from "../../startup/config";
 import DocumentPermissionEditor from "../AuthorisationManager/DocumentPermissionEditor";
 import DocumentPermissionForUserEditor from "../AuthorisationManager/DocumentPermissionForUserEditor";
 import IndexVolumeEditor from "../IndexVolumes/IndexVolumeEditor";
-import { IsGroup } from "../../api/userGroups";
+import { IsGroup } from "src/api/userGroups";
 import { urlGenerator } from "./useAppNavigation";
 
 const renderWelcome = () => (

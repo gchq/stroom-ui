@@ -4,7 +4,7 @@ import { TestCache } from "../PollyDecorator";
 import { Config } from "../../../startup/config";
 import { ResourceBuilder } from "./types";
 import { DocumentType } from "../../../types";
-import { DOCUMENT_RESOURCES } from "../../../api/useDocumentApi/types";
+import { DOCUMENT_RESOURCES } from "src/api/useDocumentApi/types";
 
 const resourceBuilder: ResourceBuilder = (
   server: any,

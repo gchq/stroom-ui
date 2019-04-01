@@ -5,7 +5,7 @@ import DocRefEditor, {
   useDocRefEditor,
   SwitchedDocRefEditorProps
 } from "../DocRefEditor";
-import useDocumentApi from "../../../api/useDocumentApi";
+import useDocumentApi from "src/api/useDocumentApi";
 import { Dictionary } from "../../../types";
 
 const DictionaryEditor: React.FunctionComponent<SwitchedDocRefEditorProps> = ({

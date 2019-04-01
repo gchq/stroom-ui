@@ -2,7 +2,7 @@ import * as React from "react";
 import { useMemo } from "react";
 
 import { DocRefConsumer } from "../../types";
-import { useDocumentTree } from "../../api/explorer";
+import { useDocumentTree } from "src/api/explorer";
 
 interface Props {
   docRefUuid: string;

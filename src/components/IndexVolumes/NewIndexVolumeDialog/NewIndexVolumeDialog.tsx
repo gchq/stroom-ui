@@ -3,7 +3,7 @@ import { useState, useCallback } from "react";
 
 import ThemedModal from "../../../components/ThemedModal";
 import DialogActionButtons from "../../../components/DialogActionButtons";
-import useForm from "../../../lib/useForm";
+import useForm from "src/lib/useForm";
 
 interface Props {
   isOpen: boolean;

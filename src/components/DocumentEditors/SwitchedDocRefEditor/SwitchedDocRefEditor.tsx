@@ -6,9 +6,9 @@ import DictionaryEditor from "../DictionaryEditor";
 import PipelineEditor from "../../PipelineEditor";
 import XsltEditor from "../XsltEditor";
 import PathNotFound from "../../PathNotFound";
-import useRecentItems from "../../../lib/useRecentItems";
+import useRecentItems from "src/lib/useRecentItems";
 import IndexEditor from "../IndexEditor";
-import { useDocumentTree } from "../../../api/explorer";
+import { useDocumentTree } from "src/api/explorer";
 import { SwitchedDocRefEditorProps } from "../DocRefEditor";
 
 interface DocRefEditorClasses {

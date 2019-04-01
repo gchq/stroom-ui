@@ -26,7 +26,7 @@ import "brace/keybinding/vim";
 
 import AceEditor, { AceEditorProps } from "react-ace";
 
-import { useTheme } from "../../lib/theme";
+import { useTheme } from "src/lib/theme";
 
 // The things I do to shut the compiler up...lol
 if (brace) console.log("Brace found");

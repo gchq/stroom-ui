@@ -8,7 +8,7 @@ import Button from "../../../components/Button";
 import ThemedConfirm, {
   useDialog as useThemedConfirm
 } from "../../../components/ThemedConfirm";
-import { useUsersInGroup } from "../../../api/userGroups";
+import { useUsersInGroup } from "src/api/userGroups";
 import UserModalPicker, {
   useDialog as useUserModalPicker
 } from "../UserModalPicker";

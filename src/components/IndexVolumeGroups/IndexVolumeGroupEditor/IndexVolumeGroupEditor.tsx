@@ -3,8 +3,8 @@ import { useCallback } from "react";
 
 import IconHeader from "../../../components/IconHeader";
 import Button from "../../../components/Button";
-import useRouter from "../../../lib/useRouter";
-import { useIndexVolumeGroup } from "../../../api/indexVolumeGroup";
+import useRouter from "src/lib/useRouter";
+import { useIndexVolumeGroup } from "src/api/indexVolumeGroup";
 import {
   useTable as useIndexVolumesTable,
   IndexVolumesTable

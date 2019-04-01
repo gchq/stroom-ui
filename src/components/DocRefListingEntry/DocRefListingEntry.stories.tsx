@@ -20,7 +20,7 @@ import { storiesOf } from "@storybook/react";
 import fullTestData from "../../testing/data";
 import useSelectableItemListing, {
   SelectionBehaviour
-} from "../../lib/useSelectableItemListing";
+} from "src/lib/useSelectableItemListing";
 import DocRefListingEntry from "./DocRefListingEntry";
 import { DocRefType } from "../../types";
 

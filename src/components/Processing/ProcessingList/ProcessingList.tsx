@@ -26,12 +26,12 @@ import {
   SortByOptions,
   sortByFromString,
   UseStreamTasks
-} from "../../../api/useStreamTasks/types";
+} from "src/api/useStreamTasks/types";
 import { StreamTaskType } from "../../../types";
 import {
   useSelectableReactTable,
   SelectionBehaviour
-} from "../../../lib/useSelectableItemListing";
+} from "src/lib/useSelectableItemListing";
 
 interface Props {
   streamTasksApi: UseStreamTasks;

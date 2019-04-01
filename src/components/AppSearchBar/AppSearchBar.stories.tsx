@@ -22,7 +22,7 @@ import { addThemedStories } from "../../testing/storybook/themedStoryGenerator";
 import AppSearchBar from "./AppSearchBar";
 
 import { DocRefType } from "../../types";
-import useForm from "../../lib/useForm";
+import useForm from "src/lib/useForm";
 import JsonDebug from "../../testing/JsonDebug";
 
 interface Props {

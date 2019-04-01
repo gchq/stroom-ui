@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import * as Mousetrap from "mousetrap";
 
 import PanelGroup from "react-panelgroup";
-import useLocalStorage, { storeNumber } from "../../lib/useLocalStorage";
+import useLocalStorage, { storeNumber } from "src/lib/useLocalStorage";
 import HorizontalPanel from "../HorizontalPanel";
 
 interface Props {

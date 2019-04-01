@@ -11,7 +11,7 @@ import {
   StreamAttributeMapResult,
   DocumentType
 } from "../types";
-import { ResourcesByDocType } from "../api/useDocumentApi/types";
+import { ResourcesByDocType } from "src/api/useDocumentApi/types";
 
 export interface UserGroupMembership {
   userUuid: string;
