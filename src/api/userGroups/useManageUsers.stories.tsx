@@ -23,11 +23,11 @@ import { storiesOf } from "@storybook/react";
 import useManageUsers from "./useManageUsers";
 import Button from "src/components/Button";
 
-const TestHarness = () => {
+const TestHarness: React.FunctionComponent = () => {
   const { users, createUser, deleteUser } = useManageUsers();
 
   const onClickCreateUser = useCallback(() => {
-    createUser(loremIpsum({ count: 1, units: "words" }), false);
+    createUser(loremIpsum({ count: 2, units: "words" }), false);
   }, [createUser]);
 
   return (
@@ -36,7 +36,7 @@ const TestHarness = () => {
       <h2>Users</h2>
       <ul>
         {users.map(user => (
-          <div>
+          <div key={user.uuid}>
             <Button onClick={() => deleteUser(user.uuid)} text="Delete" />
             {JSON.stringify(user)}
           </div>

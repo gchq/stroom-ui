@@ -10,7 +10,9 @@ import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
 
 const EXPRESSION_ITEM_ID = "SomeItemID";
 
-const TestHarness = () => {
+const stories = storiesOf("Expression/Delete Expression Item", module);
+
+addThemedStories(stories, () => {
   const [itemDeleted, setItemDeleted] = useState<string | undefined>(undefined);
   const { showDialog, componentProps } = useDialog(setItemDeleted);
 
@@ -30,8 +32,4 @@ const TestHarness = () => {
       <JsonDebug value={{ itemDeleted }} />
     </div>
   );
-};
-
-const stories = storiesOf("Expression/Delete Expression Item", module);
-
-addThemedStories(stories, () => <TestHarness />);
+});

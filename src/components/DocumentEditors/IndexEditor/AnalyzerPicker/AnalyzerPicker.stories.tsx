@@ -27,7 +27,12 @@ const stories = storiesOf("Pickers/Index Analyzer", module);
 const B: React.FunctionComponent = () => {
   const [value, onChange] = useState<AnalyzerType | undefined>(undefined);
 
-  return <AnalyzerPicker value={value} onChange={onChange} />;
+  return (
+    <form>
+      <label>Analyzer</label>
+      <AnalyzerPicker value={value} onChange={onChange} />
+    </form>
+  );
 };
 
 addThemedStories(stories, () => <B />);

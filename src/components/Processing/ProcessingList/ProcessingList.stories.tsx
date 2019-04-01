@@ -8,7 +8,9 @@ import useStreamTasks from "src/api/useStreamTasks";
 import JsonDebug from "src/testing/JsonDebug";
 import { StreamTaskType } from "src/types";
 
-const TestHarness = () => {
+const stories = storiesOf("Sections/Processing/List", module);
+
+addThemedStories(stories, () => {
   const streamTasksApi = useStreamTasks();
   const [selectedTracker, setSelectedTracker] = useState<
     StreamTaskType | undefined
@@ -25,8 +27,4 @@ const TestHarness = () => {
       <JsonDebug value={{ selectedTracker }} />
     </div>
   );
-};
-
-const stories = storiesOf("Sections/Processing/List", module);
-
-addThemedStories(stories, TestHarness);
+});

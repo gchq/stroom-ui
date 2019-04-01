@@ -22,18 +22,19 @@ import { storiesOf } from "@storybook/react";
 import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
 import IsGroupFilterPicker from "./IsGroupFilterPicker";
 import { IsGroup } from "src/api/userGroups";
+import JsonDebug from "src/testing/JsonDebug";
 
 const IsGroupFilterPickerInForm = () => {
   const [isGroup, setIsGroup] = useState<IsGroup>("");
 
   return (
     <div>
-      <IsGroupFilterPicker value={isGroup} onChange={setIsGroup} />
+      <form>
+        <label>Is Group</label>
+        <IsGroupFilterPicker value={isGroup} onChange={setIsGroup} />
+      </form>
 
-      <fieldset>
-        <label>Current Value</label>
-        <div>{isGroup}</div>
-      </fieldset>
+      <JsonDebug value={{ isGroup }} />
     </div>
   );
 };

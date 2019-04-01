@@ -28,7 +28,7 @@ import fullTestData from "src/testing/data";
 
 const stories = storiesOf("Pickers/User Picker", module);
 
-const TestHarness = () => {
+addThemedStories(stories, () => {
   const { userNamesToFilterOut, valuesToFilterOut } = useMemo(() => {
     let usersToFilterOut = fullTestData.usersAndGroups.users.slice(0, 3);
     let valuesToFilterOut = usersToFilterOut.map(u => u.uuid);
@@ -52,6 +52,4 @@ const TestHarness = () => {
       <JsonDebug value={{ value, userNamesToFilterOut }} />
     </div>
   );
-};
-
-addThemedStories(stories, () => <TestHarness />);
+});

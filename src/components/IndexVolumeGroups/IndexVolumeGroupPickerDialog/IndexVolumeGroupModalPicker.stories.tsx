@@ -43,10 +43,6 @@ const TestModal: React.FunctionComponent = () => {
 
   return (
     <div>
-      <fieldset>
-        <label>Picked Group Name</label>
-        <p>{picked}</p>
-      </fieldset>
       <Button text="Pick" onClick={showDialog} />
       <IndexVolumeGroupModalPicker {...componentProps} />
       <JsonDebug value={{ picked }} />

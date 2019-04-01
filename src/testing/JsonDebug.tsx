@@ -27,7 +27,7 @@ export default ({ value }: Props) => (
         letterSpacing: "1px"
       }}
     >
-      Form State
+      Debug Information
     </div>
     <pre
       style={{

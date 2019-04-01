@@ -8,7 +8,9 @@ import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
 import { SearchMode } from "./types";
 import JsonDebug from "src/testing/JsonDebug";
 
-const TestHarness = () => {
+const stories = storiesOf("Doc Ref/App Search Bar/Mode Option", module);
+
+addThemedStories(stories, () => {
   const [mode, setMode] = useState<SearchMode>(SearchMode.GLOBAL_SEARCH);
 
   return (
@@ -17,8 +19,4 @@ const TestHarness = () => {
       <JsonDebug value={{ mode }} />
     </div>
   );
-};
-
-const stories = storiesOf("Doc Ref/App Search Bar/Mode Option", module);
-
-addThemedStories(stories, () => <TestHarness />);
+});

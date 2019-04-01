@@ -28,7 +28,7 @@ import fullTestData from "src/testing/data";
 
 const stories = storiesOf("Pickers/User Picker (Modal)", module);
 
-const TestHarness = () => {
+addThemedStories(stories, () => {
   const [pickedUser, setPickedUser] = useState<string | undefined>(undefined);
 
   const { userNamesToFilterOut, valuesToFilterOut } = useMemo(() => {
@@ -53,6 +53,4 @@ const TestHarness = () => {
       <UserModalPicker {...componentProps} />
     </div>
   );
-};
-
-addThemedStories(stories, () => <TestHarness />);
+});

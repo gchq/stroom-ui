@@ -16,7 +16,7 @@ const AVAILABLE_VALUES: Array<string> = [
   "hash browns"
 ];
 
-const TestHarness: React.FunctionComponent = () => {
+addThemedStories(stories, () => {
   const [breakfast, setBreakfast] = useState<Array<string>>([]);
 
   const addBreakfast = useCallback(t => setBreakfast(breakfast.concat([t])), [
@@ -41,6 +41,4 @@ const TestHarness: React.FunctionComponent = () => {
       <JsonDebug value={breakfast} />
     </div>
   );
-};
-
-addThemedStories(stories, () => <TestHarness />);
+});

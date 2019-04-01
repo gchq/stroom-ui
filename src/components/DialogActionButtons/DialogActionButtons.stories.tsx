@@ -4,9 +4,7 @@ import { storiesOf } from "@storybook/react";
 
 import DialogActionButtons from "./DialogActionButtons";
 
-
-
-let TestHarness = () => {
+storiesOf("General Purpose/Dialog Action Buttons", module).add("simple", () => {
   const [hasConfirmed, setHasConfirmed] = useState<boolean>(false);
   const [hasCancelled, setHasCancelled] = useState<boolean>(false);
 
@@ -37,8 +35,4 @@ let TestHarness = () => {
       <button onClick={onReset}>Reset</button>
     </div>
   );
-};
-
-storiesOf("General Purpose/Dialog Action Buttons", module).add("simple", () => (
-  <TestHarness />
-));
+});

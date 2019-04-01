@@ -29,7 +29,7 @@ import JsonDebug from "src/testing/JsonDebug";
 
 const stories = storiesOf("Pickers/User (or Create) Modal", module);
 
-const TestHarness = () => {
+addThemedStories(stories, () => {
   const [pickedUser, setPickedUser] = useState<string | undefined>(undefined);
 
   const { componentProps, showDialog } = useDialog({
@@ -43,6 +43,4 @@ const TestHarness = () => {
       <UserGroupPickOrCreateDialog {...componentProps} />
     </div>
   );
-};
-
-addThemedStories(stories, () => <TestHarness />);
+});

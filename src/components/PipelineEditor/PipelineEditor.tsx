@@ -14,79 +14,83 @@
  * limitations under the License.
  */
 
-import * as React from 'react';
-import {useCallback} from 'react';
-import PanelGroup from 'react-panelgroup';
+import * as React from "react";
+import { useCallback } from "react";
+import PanelGroup from "react-panelgroup";
 
-import Loader from '../Loader';
+import Loader from "../Loader";
 import AddElementModal, {
-  useDialog as useAddElementDialog,
-} from './AddElementModal/AddElementModal';
-import {ButtonProps} from '../Button';
+  useDialog as useAddElementDialog
+} from "./AddElementModal/AddElementModal";
+import { ButtonProps } from "../Button";
 import PipelineSettings, {
-  useDialog as usePipelineSettingsDialog,
-} from './PipelineSettings';
-import ElementPalette from './ElementPalette';
+  useDialog as usePipelineSettingsDialog
+} from "./PipelineSettings";
+import ElementPalette from "./ElementPalette";
 import DeletePipelineElement, {
-  useDialog as useDeleteElementDialog,
-} from './DeletePipelineElement';
-import {ElementDetails} from './ElementDetails';
-import Pipeline from './Pipeline';
-import DocRefEditor, { SwitchedDocRefEditorProps } from '../DocumentEditors/DocRefEditor';
-import usePipelineState from './usePipelineState';
+  useDialog as useDeleteElementDialog
+} from "./DeletePipelineElement/DeletePipelineElement";
+import { ElementDetails } from "./ElementDetails";
+import Pipeline from "./PipelineDisplay";
+import DocRefEditor, {
+  SwitchedDocRefEditorProps
+} from "../DocumentEditors/DocRefEditor";
+import usePipelineState from "./usePipelineState";
 
-const PipelineEditor = ({docRefUuid}: SwitchedDocRefEditorProps) => {
+const PipelineEditor = ({ docRefUuid }: SwitchedDocRefEditorProps) => {
   const piplineStateProps = usePipelineState(docRefUuid);
   const {
     pipelineEditApi,
-    useEditorProps: {editorProps},
+    useEditorProps: { editorProps }
   } = piplineStateProps;
-  const {docRefContents: pipeline} = editorProps;
+  const { docRefContents: pipeline } = editorProps;
 
   const {
     settingsUpdated,
     elementAdded,
     elementDeleted,
-    selectedElementId,
+    selectedElementId
   } = pipelineEditApi;
 
   const {
     showDialog: showSettingsDialog,
-    componentProps: settingsComponentProps,
-  } = usePipelineSettingsDialog(description => settingsUpdated({description}));
+    componentProps: settingsComponentProps
+  } = usePipelineSettingsDialog(description =>
+    settingsUpdated({ description })
+  );
 
   const {
     showDialog: showAddElementDialog,
-    componentProps: addElementComponentProps,
+    componentProps: addElementComponentProps
   } = useAddElementDialog(elementAdded);
 
   const {
     showDialog: showDeleteElementDialog,
-    componentProps: deleteElementComponentProps,
+    componentProps: deleteElementComponentProps
   } = useDeleteElementDialog(elementIdToDelete => {
     elementDeleted(elementIdToDelete);
   });
 
   const onClickOpenSettings = useCallback(() => {
     if (!!pipeline) {
-      showSettingsDialog(pipeline.description || 'something');
+      showSettingsDialog(pipeline.description || "something");
     } else {
-      console.error('No pipeline set');
+      console.error("No pipeline set");
     }
   }, [showSettingsDialog, pipeline]);
 
   const additionalActionBarItems: Array<ButtonProps> = [
     {
-      icon: 'cogs',
-      title: 'Open Settings',
-      onClick: onClickOpenSettings,
+      icon: "cogs",
+      title: "Open Settings",
+      onClick: onClickOpenSettings
     },
     {
-      icon: 'recycle',
-      title: 'Create Child Pipeline',
+      icon: "recycle",
+      title: "Create Child Pipeline",
       onClick: () =>
-        console.log('TODO - Implement Selection of Parent Pipeline'),
-    },
+        console.log("TODO - Implement Selection of Parent Pipeline")
+    }
   ];
 
   if (!pipeline) {
@@ -115,9 +119,9 @@ const PipelineEditor = ({docRefUuid}: SwitchedDocRefEditorProps) => {
           panelWidths={[
             {},
             {
-              resize: 'dynamic',
-              size: selectedElementId !== undefined ? '50%' : 0,
-            },
+              resize: "dynamic",
+              size: selectedElementId !== undefined ? "50%" : 0
+            }
           ]}
         >
           <div className="Pipeline-editor__topPanel">

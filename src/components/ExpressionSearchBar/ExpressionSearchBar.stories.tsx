@@ -22,12 +22,13 @@ import { testDataSource as dataSource } from "../ExpressionBuilder/test";
 import ExpressionSearchBar from "./ExpressionSearchBar";
 import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
 
-
 import JsonDebug from "src/testing/JsonDebug";
 import Button from "../Button";
 import { ExpressionOperatorWithUuid } from "src/types";
 
-const TestHarness = () => {
+const stories = storiesOf("Expression/Search Bar", module);
+
+addThemedStories(stories, () => {
   const [lastSearch, setLastSearch] = useState<
     ExpressionOperatorWithUuid | undefined
   >(undefined);
@@ -48,8 +49,4 @@ const TestHarness = () => {
       <JsonDebug value={{ lastSearch, dataSource }} />
     </div>
   );
-};
-
-const stories = storiesOf("Expression/Search Bar", module);
-
-addThemedStories(stories, () => <TestHarness />);
+});
