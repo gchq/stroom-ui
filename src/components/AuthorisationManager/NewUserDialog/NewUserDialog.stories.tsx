@@ -20,7 +20,7 @@ import { storiesOf } from "@storybook/react";
 import { addThemedStories } from "../../../testing/storybook/themedStoryGenerator";
 
 import NewUserDialog, { useDialog } from "./NewUserDialog";
-import Button from "../../../components/Button";
+import Button from "src/components/Button";
 
 import JsonDebug from "../../../testing/JsonDebug";
 

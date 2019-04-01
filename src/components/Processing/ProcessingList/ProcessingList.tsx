@@ -20,7 +20,7 @@ import { Progress } from "react-sweet-progress";
 import "react-sweet-progress/lib/style.css";
 import ReactTable, { RowInfo, SortingRule } from "react-table";
 
-import Button from "../../../components/Button";
+import Button from "src/components/Button";
 import {
   Directions,
   SortByOptions,

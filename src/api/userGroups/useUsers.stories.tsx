@@ -21,9 +21,7 @@ import { storiesOf } from "@storybook/react";
 
 import fullTestData from "../../testing/data";
 import useUsers from "./useUsers";
-import Button from "../../components/Button";
-
-
+import Button from "src/components/Button";
 
 const testUserLists = [
   fullTestData.usersAndGroups.users.slice(0, 3).map(u => u.uuid),

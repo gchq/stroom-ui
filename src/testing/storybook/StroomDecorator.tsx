@@ -17,7 +17,7 @@ import { ConfigProvider } from "../../startup/config";
 import { AuthorisationContextProvider } from "../../startup/Authorisation";
 import { AuthenticationContext } from "../../startup/Authentication";
 import { DocumentTreeContextProvider } from "src/api/explorer";
-import { ErrorReportingContextProvider } from "../../components/ErrorPage";
+import { ErrorReportingContextProvider } from "src/components/ErrorPage";
 
 interface Props extends RouteComponentProps {}
 

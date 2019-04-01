@@ -3,15 +3,15 @@ import { useCallback } from "react";
 
 import { useManageUsers } from "src/api/userGroups";
 import { IsGroup } from "src/api/userGroups";
-import IconHeader from "../../components/IconHeader";
+import IconHeader from "src/components/IconHeader";
 import UsersTable, { useTable } from "./UsersTable";
-import Button from "../../components/Button";
+import Button from "src/components/Button";
 import NewUserDialog, {
   useDialog as useNewUserDialog
 } from "./NewUserDialog/NewUserDialog";
 import ThemedConfirm, {
   useDialog as useThemedConfim
-} from "../../components/ThemedConfirm";
+} from "src/components/ThemedConfirm";
 import useForm from "src/lib/useForm";
 import {
   UserGroupPickOrCreateDialog,

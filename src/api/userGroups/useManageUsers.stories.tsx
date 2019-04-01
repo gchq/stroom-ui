@@ -21,7 +21,7 @@ import * as loremIpsum from "lorem-ipsum";
 import { storiesOf } from "@storybook/react";
 
 import useManageUsers from "./useManageUsers";
-import Button from "../../components/Button";
+import Button from "src/components/Button";
 
 const TestHarness = () => {
   const { users, createUser, deleteUser } = useManageUsers();

@@ -26,7 +26,7 @@ import { addThemedStories } from "../../../testing/storybook/themedStoryGenerato
 import UserGroupPickOrCreateDialog, {
   useDialog
 } from "./UserGroupPickOrCreateDialog";
-import Button from "../../../components/Button";
+import Button from "src/components/Button";
 import JsonDebug from "../../../testing/JsonDebug";
 
 const stories = storiesOf(

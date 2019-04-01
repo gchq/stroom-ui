@@ -23,7 +23,7 @@ import { addThemedStories } from "../../../testing/storybook/themedStoryGenerato
 
 
 import UserModalPicker, { useDialog } from "./UserModalPicker";
-import Button from "../../../components/Button";
+import Button from "src/components/Button";
 import JsonDebug from "../../../testing/JsonDebug";
 import fullTestData from "../../../testing/data";
 

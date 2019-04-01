@@ -1,11 +1,11 @@
 import * as React from "react";
 import { useCallback, useState } from "react";
 
-import ThemedModal from "../../../components/ThemedModal";
-import IconHeader from "../../../components/IconHeader";
+import ThemedModal from "src/components/ThemedModal";
+import IconHeader from "src/components/IconHeader";
 import UserPicker, { usePicker } from "../UserPicker";
 import { BaseProps as PickerBaseProps } from "../UserPicker/types";
-import DialogActionButtons from "../../../components/DialogActionButtons";
+import DialogActionButtons from "src/components/DialogActionButtons";
 
 interface BaseProps extends PickerBaseProps {
   onConfirm: (userUuid: string) => void;

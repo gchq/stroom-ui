@@ -23,7 +23,7 @@ import IndexVolumeGroupModalPicker from "./IndexVolumeGroupModalPicker";
 import { addThemedStories } from "../../../testing/storybook/themedStoryGenerator";
 
 import { useDialog } from "./IndexVolumeGroupModalPicker";
-import Button from "../../../components/Button";
+import Button from "src/components/Button";
 import JsonDebug from "../../../testing/JsonDebug";
 import fullTestData from "../../../testing/data";
 

@@ -5,14 +5,14 @@ import { User } from "../../../types";
 
 import { useGroupsForUser } from "src/api/userGroups";
 import UsersTable, { useTable as useUsersTable } from "../UsersTable";
-import Button from "../../../components/Button";
+import Button from "src/components/Button";
 import {
   UserGroupPickOrCreateDialog,
   useDialog as useUserGroupModalPicker
 } from "../UserGroupPickOrCreateDialog";
 import ThemedConfirm, {
   useDialog as useThemedConfirm
-} from "../../../components/ThemedConfirm";
+} from "src/components/ThemedConfirm";
 
 interface Props {
   user: User;

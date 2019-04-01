@@ -22,7 +22,7 @@ import ReactTable, { RowInfo } from "react-table";
 
 import { ErrorData } from "../types";
 
-import Tooltip from "../../../../components/Tooltip";
+import Tooltip from "src/components/Tooltip";
 
 interface Props {
   errors: ErrorData[];

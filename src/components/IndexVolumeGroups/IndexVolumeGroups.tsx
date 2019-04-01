@@ -5,14 +5,14 @@ import { useIndexVolumeGroups } from "src/api/indexVolumeGroup";
 import IndexVolumeGroupsTable, {
   useTable
 } from "./IndexVolumeGroupsTable/IndexVolumeGroupsTable";
-import Button from "../../components/Button";
+import Button from "src/components/Button";
 import NewIndexVolumeGroupDialog, {
   useDialog as useNewDialog
 } from "./NewIndexVolumeGroupDialog";
 import ThemedConfirm, {
   useDialog as useConfirmDialog
-} from "../../components/ThemedConfirm";
-import IconHeader from "../../components/IconHeader";
+} from "src/components/ThemedConfirm";
+import IconHeader from "src/components/IconHeader";
 import useAppNavigation from "../AppChrome/useAppNavigation";
 
 const IndexVolumeGroups = () => {

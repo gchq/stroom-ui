@@ -27,8 +27,8 @@ import * as React from "react";
 // import useStreamAttributeMapApi from "src/api/streamAttributeMap/useApi";
 // import useDataApi from "src/api/data/useApi";
 
-// import Loader from "../../../components/Loader";
-// import Button from "../../../components/Button";
+// import Loader from "src/components/Loader";
+// import Button from "src/components/Button";
 // import { Direction, ExpressionOperatorWithUuid, DataRow } from "../../../types";
 import { ExpressionOperatorWithUuid } from "../../../types";
 

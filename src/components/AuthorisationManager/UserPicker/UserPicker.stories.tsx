@@ -23,7 +23,7 @@ import { addThemedStories } from "../../../testing/storybook/themedStoryGenerato
 
 
 import UserPicker, { usePicker } from "./UserPicker";
-import Button from "../../../components/Button";
+import Button from "src/components/Button";
 import JsonDebug from "../../../testing/JsonDebug";
 import fullTestData from "../../../testing/data";
 

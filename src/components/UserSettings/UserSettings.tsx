@@ -16,7 +16,7 @@
 
 import * as React from "react";
 
-import IconHeader from "../../components/IconHeader";
+import IconHeader from "src/components/IconHeader";
 import { themeOptions, useTheme } from "src/lib/theme";
 
 const UserSettings = () => {

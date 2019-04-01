@@ -4,10 +4,10 @@ import { useCallback } from "react";
 import { User } from "../../../types";
 
 import UsersTable, { useTable as useUsersTable } from "../UsersTable";
-import Button from "../../../components/Button";
+import Button from "src/components/Button";
 import ThemedConfirm, {
   useDialog as useThemedConfirm
-} from "../../../components/ThemedConfirm";
+} from "src/components/ThemedConfirm";
 import { useUsersInGroup } from "src/api/userGroups";
 import UserModalPicker, {
   useDialog as useUserModalPicker

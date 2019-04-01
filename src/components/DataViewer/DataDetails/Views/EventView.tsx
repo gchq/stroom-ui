@@ -16,7 +16,7 @@
 
 import * as React from "react";
 
-import ThemedAceEditor from "../../../../components/ThemedAceEditor";
+import ThemedAceEditor from "src/components/ThemedAceEditor";
 
 interface Props {
   events: string;

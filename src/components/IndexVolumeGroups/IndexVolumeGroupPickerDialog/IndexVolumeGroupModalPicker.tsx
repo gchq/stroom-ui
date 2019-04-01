@@ -4,10 +4,10 @@ import { useState, useCallback } from "react";
 import IndexVolumeGroupPicker, {
   usePicker
 } from "../IndexVolumeGroupPicker/IndexVolumeGroupPicker";
-import ThemedModal from "../../../components/ThemedModal";
-import IconHeader from "../../../components/IconHeader";
-import Button from "../../../components/Button";
-import DialogActionButtons from "../../../components/DialogActionButtons";
+import ThemedModal from "src/components/ThemedModal";
+import IconHeader from "src/components/IconHeader";
+import Button from "src/components/Button";
+import DialogActionButtons from "src/components/DialogActionButtons";
 import { useIndexVolumeGroups } from "src/api/indexVolumeGroup";
 import { PickerBaseProps } from "../IndexVolumeGroupPicker/types";
 

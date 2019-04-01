@@ -2,10 +2,10 @@ import * as React from "react";
 import { useState, useCallback } from "react";
 
 import UserPicker, { usePicker } from "../UserPicker";
-import ThemedModal from "../../../components/ThemedModal";
-import IconHeader from "../../../components/IconHeader";
-import Button from "../../../components/Button";
-import DialogActionButtons from "../../../components/DialogActionButtons";
+import ThemedModal from "src/components/ThemedModal";
+import IconHeader from "src/components/IconHeader";
+import Button from "src/components/Button";
+import DialogActionButtons from "src/components/DialogActionButtons";
 import { useManageUsers } from "src/api/userGroups";
 
 interface BaseProps {

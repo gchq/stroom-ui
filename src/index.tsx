@@ -4,7 +4,7 @@ import * as ReactDOM from "react-dom";
 import { DragDropContext } from "react-dnd";
 import HTML5Backend from "react-dnd-html5-backend";
 
-import { Routes } from "./components/AppChrome";
+import { Routes } from "src/components/AppChrome";
 import useFontAwesome from "./lib/useFontAwesome/useFontAwesome";
 
 import { ThemeContextProvider } from "./lib/theme";
@@ -19,7 +19,7 @@ import "./styles/main.css";
 import { AuthorisationContextProvider } from "./startup/Authorisation";
 import { AuthenticationContextProvider } from "./startup/Authentication";
 import { DocumentTreeContextProvider } from "src/api/explorer";
-import { ErrorReportingContextProvider } from "./components/ErrorPage";
+import { ErrorReportingContextProvider } from "src/components/ErrorPage";
 
 const DndRoutes = DragDropContext(HTML5Backend)(Routes);
 

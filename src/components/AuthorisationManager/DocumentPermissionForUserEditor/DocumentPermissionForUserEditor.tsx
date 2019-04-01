@@ -4,8 +4,8 @@ import {
   useDocumentPermissionsForUser
 } from "src/api/docPermission";
 import {} from "src/api/docPermission";
-import CheckboxSeries from "../../../components/CheckboxSeries";
-import Button from "../../../components/Button";
+import CheckboxSeries from "src/components/CheckboxSeries";
+import Button from "src/components/Button";
 import useRouter from "src/lib/useRouter";
 import { useUser } from "src/api/userGroups";
 import { useDocumentTree } from "src/api/explorer";

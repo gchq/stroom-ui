@@ -1,13 +1,13 @@
 import * as React from "react";
 import { useCallback, useMemo } from "react";
 
-import IconHeader from "../../../components/IconHeader";
+import IconHeader from "src/components/IconHeader";
 import useDocumentPermissions from "src/api/docPermission/useDocumentPermissions";
 import { User } from "../../../types";
-import Button from "../../../components/Button";
+import Button from "src/components/Button";
 import ThemedConfirm, {
   useDialog as useThemedConfirm
-} from "../../../components/ThemedConfirm";
+} from "src/components/ThemedConfirm";
 import { useUsers } from "src/api/userGroups";
 import UsersTable, { useTable as useUsersTable } from "../UsersTable";
 import useAppNavigation from "../../AppChrome/useAppNavigation";

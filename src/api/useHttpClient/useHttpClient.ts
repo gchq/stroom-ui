@@ -1,9 +1,9 @@
 import { useCallback } from "react";
 
-import { useErrorReporting } from "../../components/ErrorPage";
+import { useErrorReporting } from "src/components/ErrorPage";
 
 import handleStatus from "./handleStatus";
-import useAppNavigation from "../../components/AppChrome/useAppNavigation";
+import useAppNavigation from "src/components/AppChrome/useAppNavigation";
 import { useAuthenticationContext } from "../../startup/Authentication";
 
 /**

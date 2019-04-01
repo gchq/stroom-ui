@@ -1,8 +1,8 @@
 import * as React from "react";
 import { useCallback } from "react";
 
-import IconHeader from "../../../components/IconHeader";
-import Button from "../../../components/Button";
+import IconHeader from "src/components/IconHeader";
+import Button from "src/components/Button";
 import useRouter from "src/lib/useRouter";
 import { useIndexVolume } from "src/api/indexVolume";
 import {
@@ -15,8 +15,8 @@ import {
 } from "../../IndexVolumeGroups/IndexVolumeGroupPickerDialog";
 import ThemedConfirm, {
   useDialog as useConfirmDialog
-} from "../../../components/ThemedConfirm";
-import Loader from "../../../components/Loader";
+} from "src/components/ThemedConfirm";
+import Loader from "src/components/Loader";
 
 interface Props {
   volumeId: string;
