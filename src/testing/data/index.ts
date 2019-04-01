@@ -24,7 +24,7 @@ import {
   XsltDoc,
   XMLSchemaDoc,
   VisualisationDoc,
-  StatisticsStoreDoc,
+  StatisticStoreDoc,
   StroomStatsStoreDoc,
   ScriptDoc,
   ElasticIndexDoc,
@@ -41,7 +41,7 @@ import { generate as generateElasticIndex } from "./elasticIndex";
 import { generate as generateFeed } from "./feed";
 import { generate as generateIndex } from "./indexDocs";
 import { generate as generateScript } from "./script";
-import { generate as generateStatisticsStore } from "./statisticsStore";
+import { generate as generateStatisticStore } from "./statisticStore";
 import { generate as generateStroomStatsStore } from "./stroomStatsStore";
 import { generate as generateVisualisation } from "./visualisation";
 import { generate as generateXmlSchema } from "./xmlSchema";
@@ -122,9 +122,9 @@ let feeds: Array<FeedDoc> = Array(3)
 let scripts: Array<ScriptDoc> = Array(3)
   .fill(1)
   .map(generateScript);
-let statisticsStores: Array<StatisticsStoreDoc> = Array(3)
+let StatisticStores: Array<StatisticStoreDoc> = Array(3)
   .fill(1)
-  .map(generateStatisticsStore);
+  .map(generateStatisticStore);
 let stroomStatsStores: Array<StroomStatsStoreDoc> = Array(3)
   .fill(1)
   .map(generateStroomStatsStore);
@@ -250,9 +250,9 @@ const docTree = {
         },
         {
           uuid: uuidv4(),
-          name: "StatisticsStore",
+          name: "StatisticStore",
           type: "Folder",
-          children: statisticsStores.map(copyDocRef)
+          children: StatisticStores.map(copyDocRef)
         },
         {
           uuid: uuidv4(),
@@ -303,7 +303,7 @@ export const fullTestData: TestData = {
     Dashboard: dashboards,
     ElasticIndex: elasticIndexes,
     Script: scripts,
-    StatisticsStore: statisticsStores,
+    StatisticStore: StatisticStores,
     StroomStatsStore: stroomStatsStores,
     Visualisation: visualisations,
     XMLSchema: xmlSchemas

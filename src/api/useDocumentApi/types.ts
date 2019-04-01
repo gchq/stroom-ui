@@ -13,7 +13,7 @@ export interface ResourcesByDocType {
   ElasticIndex: string;
   Dashboard: string;
   Script: string;
-  StatisticsStore: string;
+  StatisticStore: string;
   StroomStatsStore: string;
   Visualisation: string;
   XMLSchema: string;
@@ -29,7 +29,7 @@ export const DOCUMENT_RESOURCES: ResourcesByDocType = {
   ElasticIndex: "/elasticIndex/v1/",
   Dashboard: "/dashboard/v1/",
   Script: "/script/v1/",
-  StatisticsStore: "/statistics/v1/",
+  StatisticStore: "/statistics/v1/",
   StroomStatsStore: "/stroomStats/v1/",
   Visualisation: "/visualisation/v1/",
   XMLSchema: "/xmlSchema/v1/"
