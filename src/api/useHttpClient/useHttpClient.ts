@@ -4,7 +4,7 @@ import { useErrorReporting } from "src/components/ErrorPage";
 
 import handleStatus from "./handleStatus";
 import useAppNavigation from "src/components/AppChrome/useAppNavigation";
-import { useAuthenticationContext } from "../../startup/Authentication";
+import { useAuthenticationContext } from "src/startup/Authentication";
 
 /**
  * A wrapper around HTTP fetch that allows us to plop in idTokens, CORS specifications,

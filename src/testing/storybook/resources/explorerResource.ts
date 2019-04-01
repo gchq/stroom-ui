@@ -9,9 +9,9 @@ import {
   deleteItemsFromTree,
   iterateNodes
 } from "src/lib/treeUtils";
-import { DocRefType, DocRefTree, DocRefWithLineage } from "../../../types";
+import { DocRefType, DocRefTree, DocRefWithLineage } from "src/types";
 import { TestCache } from "../PollyDecorator";
-import { Config } from "../../../startup/config";
+import { Config } from "src/startup/config";
 import { ResourceBuilder } from "./types";
 
 const resourceBuilder: ResourceBuilder = (

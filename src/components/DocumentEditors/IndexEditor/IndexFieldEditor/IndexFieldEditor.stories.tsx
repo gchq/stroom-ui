@@ -17,13 +17,13 @@ import * as React from "react";
 import { useState, useMemo, useCallback } from "react";
 import { storiesOf } from "@storybook/react";
 
-import { addThemedStories } from "../../../../testing/storybook/themedStoryGenerator";
+import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
 
 import IndexFieldEditor, { useEditor } from "./IndexFieldEditor";
-import { generateTestField } from "../../../../testing/data/indexDocs";
-import { IndexField } from "../../../../types";
+import { generateTestField } from "src/testing/data/indexDocs";
+import { IndexField } from "src/types";
 import Button from "../../../Button";
-import JsonDebug from "../../../../testing/JsonDebug";
+import JsonDebug from "src/testing/JsonDebug";
 
 const stories = storiesOf("Document Editors/Index/Field Editor", module);
 

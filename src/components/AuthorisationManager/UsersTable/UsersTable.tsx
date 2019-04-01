@@ -2,7 +2,7 @@ import * as React from "react";
 
 import ReactTable from "react-table";
 
-import { User } from "../../../types";
+import { User } from "src/types";
 import {
   useSelectableReactTable,
   SelectionBehaviour,

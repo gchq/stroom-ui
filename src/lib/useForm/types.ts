@@ -1,4 +1,4 @@
-import { ControlledInput } from "../../types";
+import { ControlledInput } from "src/types";
 
 interface InputProps {
   onChange: React.ChangeEventHandler<HTMLElement>;

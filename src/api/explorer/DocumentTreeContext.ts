@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import { DocRefTree, DocRefType, DocRefWithLineage } from "../../types";
+import { DocRefTree, DocRefType, DocRefWithLineage } from "src/types";
 import { SearchProps } from "./types";
 import { DEFAULT_TREE, DEFAULT_DOC_REF_WITH_LINEAGE } from "./values";
 

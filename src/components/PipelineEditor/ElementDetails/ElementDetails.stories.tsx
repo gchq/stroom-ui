@@ -20,7 +20,7 @@ import { storiesOf } from "@storybook/react";
 
 import ElementDetails from "./ElementDetails";
 
-import { fullTestData } from "../../../testing/data";
+import { fullTestData } from "src/testing/data";
 import usePipelineState from "../usePipelineState";
 import { PipelineDocumentType } from "src/types";
 

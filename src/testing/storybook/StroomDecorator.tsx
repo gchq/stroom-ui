@@ -13,9 +13,9 @@ import testData from "../data";
 import { ThemeContextProvider, useTheme } from "src/lib/theme";
 import { withRouter, RouteComponentProps } from "react-router";
 import { CustomRouter } from "src/lib/useRouter";
-import { ConfigProvider } from "../../startup/config";
-import { AuthorisationContextProvider } from "../../startup/Authorisation";
-import { AuthenticationContext } from "../../startup/Authentication";
+import { ConfigProvider } from "src/startup/config";
+import { AuthorisationContextProvider } from "src/startup/Authorisation";
+import { AuthenticationContext } from "src/startup/Authentication";
 import { DocumentTreeContextProvider } from "src/api/explorer";
 import { ErrorReportingContextProvider } from "src/components/ErrorPage";
 

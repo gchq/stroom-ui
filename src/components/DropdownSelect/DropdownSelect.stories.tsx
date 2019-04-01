@@ -20,9 +20,9 @@ import { storiesOf } from "@storybook/react";
 import DropdownSelect from "./DropdownSelect";
 import { DropdownOptionProps } from "./types";
 import useForm from "src/lib/useForm";
-import JsonDebug from "../../testing/JsonDebug";
+import JsonDebug from "src/testing/JsonDebug";
 
-import { ControlledInput } from "../../types";
+import { ControlledInput } from "src/types";
 
 const toSimpleOption = (c: string) => ({
   value: c.toLowerCase(),

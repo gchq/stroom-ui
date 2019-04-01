@@ -6,7 +6,7 @@ import * as React from "react";
 import { storiesOf } from "@storybook/react";
 
 // This is a function we have written. It will generate a copy of the story for each theme in the system.
-import { addThemedStories } from "../../../testing/storybook/themedStoryGenerator";
+import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
 
 // Import the component under test
 import { Step1 } from "./Step1";

@@ -20,12 +20,12 @@ import { storiesOf } from "@storybook/react";
 
 import { testDataSource as dataSource } from "../ExpressionBuilder/test";
 import ExpressionSearchBar from "./ExpressionSearchBar";
-import { addThemedStories } from "../../testing/storybook/themedStoryGenerator";
+import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
 
 
-import JsonDebug from "../../testing/JsonDebug";
+import JsonDebug from "src/testing/JsonDebug";
 import Button from "../Button";
-import { ExpressionOperatorWithUuid } from "../../types";
+import { ExpressionOperatorWithUuid } from "src/types";
 
 const TestHarness = () => {
   const [lastSearch, setLastSearch] = useState<

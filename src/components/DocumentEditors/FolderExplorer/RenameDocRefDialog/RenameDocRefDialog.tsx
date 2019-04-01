@@ -20,7 +20,7 @@ import DialogActionButtons from "../../../DialogActionButtons";
 import IconHeader from "../../../IconHeader";
 import ThemedModal from "../../../ThemedModal";
 // import { required, minLength2 } from "src/lib/formUtils";
-import { DocRefType } from "../../../../types";
+import { DocRefType } from "src/types";
 import useForm from "src/lib/useForm";
 
 interface Props {

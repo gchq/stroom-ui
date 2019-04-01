@@ -1,4 +1,4 @@
-import { DataRow } from "../../types";
+import { DataRow } from "src/types";
 
 export interface FetchDataParams {
   metaId?: number;

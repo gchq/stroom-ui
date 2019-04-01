@@ -18,7 +18,7 @@ import { storiesOf } from "@storybook/react";
 
 import IndexEditor from "./IndexEditor";
 
-import fullTestData from "../../../testing/data";
+import fullTestData from "src/testing/data";
 
 const stories = storiesOf("Document Editors/Index", module);
 

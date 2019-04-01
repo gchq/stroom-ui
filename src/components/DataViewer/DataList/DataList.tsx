@@ -29,8 +29,8 @@ import * as React from "react";
 
 // import Loader from "src/components/Loader";
 // import Button from "src/components/Button";
-// import { Direction, ExpressionOperatorWithUuid, DataRow } from "../../../types";
-import { ExpressionOperatorWithUuid } from "../../../types";
+// import { Direction, ExpressionOperatorWithUuid, DataRow } from "src/types";
+import { ExpressionOperatorWithUuid } from "src/types";
 
 // import useReduxState from "src/lib/useReduxState";
 

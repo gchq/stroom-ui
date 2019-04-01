@@ -19,7 +19,7 @@ import {
   ElementDefinitionsByCategory,
   ElementDefinitionsByType,
   ElementDefinition
-} from "../../types";
+} from "src/types";
 
 /**
  * This will take in the map of element types and return a new map

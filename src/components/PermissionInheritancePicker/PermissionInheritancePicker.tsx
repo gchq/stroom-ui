@@ -7,7 +7,7 @@ import {
   SelectOptionType,
   SelectOptionsType,
   ControlledInput
-} from "../../types";
+} from "src/types";
 
 const options: SelectOptionsType = Object.values(PermissionInheritance).map(
   o => ({

@@ -3,7 +3,7 @@ import { useCallback, useMemo } from "react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import { DocRefType } from "../../types";
+import { DocRefType } from "src/types";
 import DocRefImage from "../DocRefImage";
 import { Props } from "./types";
 

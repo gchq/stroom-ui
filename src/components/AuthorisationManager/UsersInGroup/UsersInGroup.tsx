@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useCallback } from "react";
 
-import { User } from "../../../types";
+import { User } from "src/types";
 
 import UsersTable, { useTable as useUsersTable } from "../UsersTable";
 import Button from "src/components/Button";

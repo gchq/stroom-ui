@@ -21,7 +21,7 @@ import DialogActionButtons from "../../../DialogActionButtons";
 import ThemedModal from "../../../ThemedModal";
 import AppSearchBar from "../../../AppSearchBar";
 import PermissionInheritancePicker from "../../../PermissionInheritancePicker";
-import { PermissionInheritance, DocRefType } from "../../../../types";
+import { PermissionInheritance, DocRefType } from "src/types";
 import useForm from "src/lib/useForm";
 import { UseDialog, Props } from "./types";
 

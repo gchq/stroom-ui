@@ -19,8 +19,8 @@ import useHttpClient from "../useHttpClient";
 import {
   PipelineSearchCriteriaType,
   PipelineSearchResultType
-} from "../../types";
-import { useConfig } from "../../startup/config";
+} from "src/types";
+import { useConfig } from "src/startup/config";
 
 interface Api {
   searchPipelines: (

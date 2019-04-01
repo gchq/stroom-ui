@@ -3,7 +3,7 @@ import { useCallback, useMemo } from "react";
 
 import IconHeader from "src/components/IconHeader";
 import useDocumentPermissions from "src/api/docPermission/useDocumentPermissions";
-import { User } from "../../../types";
+import { User } from "src/types";
 import Button from "src/components/Button";
 import ThemedConfirm, {
   useDialog as useThemedConfirm

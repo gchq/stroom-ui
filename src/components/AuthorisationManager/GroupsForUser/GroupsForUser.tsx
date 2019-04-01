@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useCallback, useMemo } from "react";
 
-import { User } from "../../../types";
+import { User } from "src/types";
 
 import { useGroupsForUser } from "src/api/userGroups";
 import UsersTable, { useTable as useUsersTable } from "../UsersTable";

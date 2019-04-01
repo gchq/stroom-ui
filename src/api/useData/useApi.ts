@@ -1,8 +1,8 @@
 import { useCallback } from "react";
 import useHttpClient from "../useHttpClient";
-import { AbstractFetchDataResult } from "../../types";
+import { AbstractFetchDataResult } from "src/types";
 import { FetchDataParams } from "./types";
-import { useConfig } from "../../startup/config";
+import { useConfig } from "src/startup/config";
 
 interface Api {
   getDataForSelectedRow: (

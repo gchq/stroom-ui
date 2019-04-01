@@ -19,9 +19,9 @@ import * as React from "react";
 import { Route, Switch, RouteComponentProps } from "react-router-dom";
 
 import ErrorPage from "../ErrorPage";
-import { HandleAuthenticationResponse } from "../../startup/Authentication";
+import { HandleAuthenticationResponse } from "src/startup/Authentication";
 
-import { PrivateRoute } from "../../startup/Authentication";
+import { PrivateRoute } from "src/startup/Authentication";
 import PathNotFound from "../PathNotFound";
 import Welcome from "../Welcome";
 
@@ -39,7 +39,7 @@ import AuthorisationManager, {
 import IndexVolumes from "../IndexVolumes";
 import IndexVolumeGroups from "../IndexVolumeGroups";
 import IndexVolumeGroupEditor from "../IndexVolumeGroups/IndexVolumeGroupEditor";
-import { useConfig } from "../../startup/config";
+import { useConfig } from "src/startup/config";
 import DocumentPermissionEditor from "../AuthorisationManager/DocumentPermissionEditor";
 import DocumentPermissionForUserEditor from "../AuthorisationManager/DocumentPermissionForUserEditor";
 import IndexVolumeEditor from "../IndexVolumes/IndexVolumeEditor";

@@ -19,7 +19,7 @@ import { useState, useCallback, useMemo } from "react";
 
 import { storiesOf } from "@storybook/react";
 
-import fullTestData from "../../testing/data";
+import fullTestData from "src/testing/data";
 import useUsers from "./useUsers";
 import Button from "src/components/Button";
 

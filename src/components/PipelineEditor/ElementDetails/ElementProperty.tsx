@@ -24,7 +24,7 @@ import {
 } from "../pipelineUtils";
 import ElementPropertyFieldDetails from "./ElementPropertyInheritanceInfo";
 import ElementPropertyField from "./ElementPropertyField";
-import { ElementPropertyType, PipelineDocumentType } from "../../../types";
+import { ElementPropertyType, PipelineDocumentType } from "src/types";
 import { PipelineEditApi } from "../types";
 
 interface Props {

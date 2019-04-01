@@ -12,7 +12,7 @@ import {
   ElementDefinitionsByCategory,
   ElementDefinitionsByType,
   PipelineDocumentType
-} from "../../../types";
+} from "src/types";
 import useElements from "src/api/useElements";
 import { groupByCategory, keyByType } from "../elementUtils";
 

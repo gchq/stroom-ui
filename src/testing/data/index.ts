@@ -31,7 +31,7 @@ import {
   DashboardDoc,
   AnnotationsIndexDoc,
   FeedDoc
-} from "../../types";
+} from "src/types";
 import { testPipelines, elements, elementProperties } from "./pipelines";
 import testDocRefsTypes from "./docRefTypes";
 import { generate as generateAnnotationsIndex } from "./annotationsIndex";
@@ -58,7 +58,7 @@ import {
   User,
   IndexVolumeGroup,
   IndexVolume
-} from "../../types";
+} from "src/types";
 import allAppPermissions from "./appPermissions";
 import { UserGroupMembership, TestData, UserDocPermission } from "../testTypes";
 import { documentPermissionNames } from "./docPermissions";

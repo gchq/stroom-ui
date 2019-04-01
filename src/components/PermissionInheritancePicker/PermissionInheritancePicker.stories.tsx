@@ -18,11 +18,11 @@ import { storiesOf } from "@storybook/react";
 
 import PermissionInheritancePicker from "./PermissionInheritancePicker";
 
-import { addThemedStories } from "../../testing/storybook/themedStoryGenerator";
+import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
 
 import useForm from "src/lib/useForm";
 import { PermissionInheritance } from "src/types";
-import JsonDebug from "../../testing/JsonDebug";
+import JsonDebug from "src/testing/JsonDebug";
 
 interface FormValues {
   permissionInheritance?: PermissionInheritance;

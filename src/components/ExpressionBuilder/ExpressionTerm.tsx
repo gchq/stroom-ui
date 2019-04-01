@@ -36,7 +36,7 @@ import {
   ConditionDisplayValues,
   ExpressionTermWithUuid,
   SelectOptionsType
-} from "../../types";
+} from "src/types";
 import withValueType from "./withValueType";
 
 interface Props {

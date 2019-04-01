@@ -21,7 +21,7 @@ import {
   ConditionType,
   ExpressionTermType,
   ExpressionOperatorType
-} from "../../types";
+} from "src/types";
 
 describe("ExpressionSearchBarUtils", () => {
   describe("#processSearchString", () => {

@@ -18,11 +18,11 @@ import * as React from "react";
 
 import { storiesOf } from "@storybook/react";
 
-import fullTestData from "../../../testing/data";
-import { addThemedStories } from "../../../testing/storybook/themedStoryGenerator";
+import fullTestData from "src/testing/data";
+import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
 
 import DocumentPermissionForUserEditor from "./DocumentPermissionForUserEditor";
-import { DocRefType, User } from "../../../types";
+import { DocRefType, User } from "src/types";
 
 const testUser: User = fullTestData.usersAndGroups.users[0];
 const testDocRef: DocRefType = fullTestData.documentTree.children![0];

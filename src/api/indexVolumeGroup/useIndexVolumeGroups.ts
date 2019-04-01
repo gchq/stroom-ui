@@ -1,7 +1,7 @@
 import { useEffect, useCallback } from "react";
 
 import useApi from "./useApi";
-import { IndexVolumeGroup } from "../../types";
+import { IndexVolumeGroup } from "src/types";
 import useListReducer from "src/lib/useListReducer/useListReducer";
 
 interface UseIndexVolumeGroups {

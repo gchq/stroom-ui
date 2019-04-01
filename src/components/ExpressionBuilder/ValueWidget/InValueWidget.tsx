@@ -18,7 +18,7 @@ import * as React from "react";
 import { useState } from "react";
 
 import Button from "../../Button";
-import { ControlledInput } from "../../../types";
+import { ControlledInput } from "src/types";
 
 interface Props extends ControlledInput<any> {}
 

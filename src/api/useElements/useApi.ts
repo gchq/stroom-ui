@@ -4,8 +4,8 @@ import useHttpClient from "../useHttpClient";
 import {
   ElementDefinitions,
   ElementPropertiesByElementIdType
-} from "../../types";
-import { useConfig } from "../../startup/config";
+} from "src/types";
+import { useConfig } from "src/startup/config";
 
 interface Api {
   fetchElements: () => Promise<ElementDefinitions>;

@@ -17,11 +17,9 @@ import * as React from "react";
 import { useState } from "react";
 import { storiesOf } from "@storybook/react";
 
-import { addThemedStories } from "../../../testing/storybook/themedStoryGenerator";
+import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
 import ConditionPicker from "./ConditionPicker";
-import { ConditionType } from "../../../types";
-
-
+import { ConditionType } from "src/types";
 
 const stories = storiesOf("Pickers/Condition", module);
 

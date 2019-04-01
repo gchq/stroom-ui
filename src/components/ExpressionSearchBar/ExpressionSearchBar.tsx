@@ -24,7 +24,7 @@ import {
   DataSourceType,
   StyledComponentProps,
   ExpressionOperatorWithUuid
-} from "../../types";
+} from "src/types";
 import { assignRandomUuids } from "src/lib/treeUtils";
 import { toString } from "../ExpressionBuilder/expressionBuilderUtils";
 import { ExpressionBuilder } from "../ExpressionBuilder";

@@ -3,7 +3,7 @@ import { useEffect, useCallback, useState } from "react";
 import useApi from "./useApi";
 import { useApi as useIndexVolumeApi } from "../indexVolume/useApi";
 
-import { IndexVolume, IndexVolumeGroup } from "../../types";
+import { IndexVolume, IndexVolumeGroup } from "src/types";
 
 interface UseIndexVolumeGroup {
   indexVolumes: Array<IndexVolume>;

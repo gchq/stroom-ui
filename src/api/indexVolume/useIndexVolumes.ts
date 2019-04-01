@@ -1,7 +1,7 @@
 import { useEffect, useCallback, useReducer } from "react";
 
 import useApi from "./useApi";
-import { IndexVolume } from "../../types";
+import { IndexVolume } from "src/types";
 
 /**
  * Convenience function for using Index Volume.

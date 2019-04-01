@@ -17,15 +17,15 @@ import * as React from "react";
 import { useState } from "react";
 import { storiesOf } from "@storybook/react";
 
-import fullTestData from "../../testing/data";
+import fullTestData from "src/testing/data";
 import useSelectableItemListing, {
   SelectionBehaviour
 } from "src/lib/useSelectableItemListing";
 import DocRefListingEntry from "./DocRefListingEntry";
-import { DocRefType } from "../../types";
+import { DocRefType } from "src/types";
 
 import { DocRefBreadcrumb } from "../DocRefBreadcrumb";
-import JsonDebug from "../../testing/JsonDebug";
+import JsonDebug from "src/testing/JsonDebug";
 import Button from "../Button";
 
 const testFolder = fullTestData.documentTree;

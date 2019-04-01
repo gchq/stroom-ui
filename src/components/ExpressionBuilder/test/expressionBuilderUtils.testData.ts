@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { ExpressionOperatorType } from "../../../types";
+import { ExpressionOperatorType } from "src/types";
 
 const emptyExpression: ExpressionOperatorType = {
   type: "operator",

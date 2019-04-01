@@ -1,7 +1,7 @@
 import { useEffect, useCallback, useState } from "react";
 
 import useApi from "./useApi";
-import { IndexVolume } from "../../types";
+import { IndexVolume } from "src/types";
 import useListReducer from "src/lib/useListReducer/useListReducer";
 
 interface UseIndexVolume {

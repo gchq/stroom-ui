@@ -1,4 +1,4 @@
-import { PipelineAsTreeType, PipelineDocumentType } from "../../types";
+import { PipelineAsTreeType, PipelineDocumentType } from "src/types";
 
 export function getNext(
   selectedElementId?: string,

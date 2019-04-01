@@ -15,7 +15,7 @@
  */
 import * as uuidv4 from "uuid/v4";
 
-import { Dictionary, ExpressionOperatorWithUuid } from "../../../types";
+import { Dictionary, ExpressionOperatorWithUuid } from "src/types";
 
 const colourDictionary: Dictionary = {
   type: "Dictionary",

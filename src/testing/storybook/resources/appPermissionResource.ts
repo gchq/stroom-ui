@@ -1,7 +1,7 @@
 import { HttpRequest, HttpResponse } from "@pollyjs/adapter-fetch";
 
 import { TestCache } from "../PollyDecorator";
-import { Config } from "../../../startup/config";
+import { Config } from "src/startup/config";
 import { ResourceBuilder } from "./types";
 import { onlyUnique } from "src/lib/formUtils";
 

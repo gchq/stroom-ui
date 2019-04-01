@@ -5,7 +5,7 @@ import IconHeader from "../../IconHeader";
 import Button from "../../Button";
 import ThemedModal from "../../ThemedModal";
 // import { required, minLength2 } from "src/lib/formUtils";
-import { ElementDefinition } from "../../../types";
+import { ElementDefinition } from "src/types";
 import useForm from "src/lib/useForm";
 import { Props, OnAddElement, UseDialog } from "./types";
 

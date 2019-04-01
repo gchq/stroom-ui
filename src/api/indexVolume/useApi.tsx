@@ -1,8 +1,8 @@
 import { useCallback } from "react";
 
 import useHttpClient from "../useHttpClient";
-import { IndexVolume, IndexVolumeGroup } from "../../types";
-import { useConfig } from "../../startup/config";
+import { IndexVolume, IndexVolumeGroup } from "src/types";
+import { useConfig } from "src/startup/config";
 
 interface Api {
   getIndexVolumes: () => Promise<Array<IndexVolume>>;

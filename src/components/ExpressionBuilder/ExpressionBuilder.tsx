@@ -25,7 +25,7 @@ import {
   StyledComponentProps,
   ExpressionOperatorWithUuid,
   ExpressionHasUuid
-} from "../../types";
+} from "src/types";
 import ROExpressionBuilder from "./ROExpressionBuilder";
 import {
   updateItemInTree,

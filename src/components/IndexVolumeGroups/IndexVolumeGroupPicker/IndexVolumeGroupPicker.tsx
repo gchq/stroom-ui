@@ -4,7 +4,7 @@ import { useState, useMemo } from "react";
 import Select from "react-select";
 
 import { useIndexVolumeGroupNames } from "src/api/indexVolumeGroup";
-import { SelectOptionType } from "../../../types";
+import { SelectOptionType } from "src/types";
 import { PickerProps, UsePickerProps, PickerBaseProps } from "./types";
 
 const IndexVolumeGroupPicker = ({

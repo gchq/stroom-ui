@@ -1,7 +1,7 @@
 import { useEffect, useCallback, useReducer } from "react";
 
 import useApi from "./useApi";
-import { DocumentPermissions } from "../../types";
+import { DocumentPermissions } from "src/types";
 
 type PermissionsByUser = {
   [userUuid: string]: Array<string>;

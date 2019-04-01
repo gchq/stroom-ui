@@ -19,20 +19,15 @@ import { useState } from "react";
 
 import { storiesOf } from "@storybook/react";
 
-
-import { addThemedStories } from "../../../testing/storybook/themedStoryGenerator";
-
+import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
 
 import UserGroupPickOrCreateDialog, {
   useDialog
 } from "./UserGroupPickOrCreateDialog";
 import Button from "src/components/Button";
-import JsonDebug from "../../../testing/JsonDebug";
+import JsonDebug from "src/testing/JsonDebug";
 
-const stories = storiesOf(
-  "Pickers/User (or Create) Modal",
-  module
-);
+const stories = storiesOf("Pickers/User (or Create) Modal", module);
 
 const TestHarness = () => {
   const [pickedUser, setPickedUser] = useState<string | undefined>(undefined);

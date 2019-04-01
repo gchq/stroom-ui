@@ -1,12 +1,12 @@
-import * as React from 'react';
-import {useState} from 'react';
-import {storiesOf} from '@storybook/react';
+import * as React from "react";
+import { useState } from "react";
+import { storiesOf } from "@storybook/react";
 
-import CreateDocRefDialog, {useDialog} from './CreateDocRefDialog';
-import {fromSetupSampleData} from '../test';
-import {DocRefType} from '../../../../types';
+import CreateDocRefDialog, { useDialog } from "./CreateDocRefDialog";
+import { fromSetupSampleData } from "../test";
+import { DocRefType } from "src/types";
 
-import JsonDebug from '../../../../testing/JsonDebug';
+import JsonDebug from "src/testing/JsonDebug";
 
 const testFolder2 = fromSetupSampleData.children![1];
 
@@ -15,12 +15,12 @@ interface Props {
 }
 
 // New Doc
-const TestNewDocRefDialog = ({testDestination}: Props) => {
+const TestNewDocRefDialog = ({ testDestination }: Props) => {
   const [lastConfirmed, setLastConfirmed] = useState<object>({});
-  const {showDialog, componentProps} = useDialog(
+  const { showDialog, componentProps } = useDialog(
     (docRefType: string, docRefName: string, permissionInheritance: string) => {
-      setLastConfirmed({docRefType, docRefName, permissionInheritance});
-    },
+      setLastConfirmed({ docRefType, docRefName, permissionInheritance });
+    }
   );
 
   return (
@@ -33,6 +33,6 @@ const TestNewDocRefDialog = ({testDestination}: Props) => {
   );
 };
 
-storiesOf('Explorer/Create Doc Ref Dialog', module).add('simple', () => (
+storiesOf("Explorer/Create Doc Ref Dialog", module).add("simple", () => (
   <TestNewDocRefDialog testDestination={testFolder2} />
 ));

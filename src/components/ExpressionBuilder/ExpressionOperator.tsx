@@ -41,7 +41,7 @@ import {
   OperatorTypeValues,
   ExpressionHasUuid,
   ExpressionTermWithUuid
-} from "../../types";
+} from "src/types";
 import ElbowLine from "../PipelineEditor/ElbowLine/ElbowLine";
 
 interface Props {

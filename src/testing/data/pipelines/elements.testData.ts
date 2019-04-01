@@ -1,4 +1,4 @@
-import { ElementDefinitions } from "../../../types";
+import { ElementDefinitions } from "src/types";
 
 export default [
   {

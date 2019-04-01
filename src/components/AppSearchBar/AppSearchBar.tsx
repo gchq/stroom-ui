@@ -3,7 +3,7 @@ import { useState, useCallback } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { findItem, filterTree } from "src/lib/treeUtils";
-import { DocRefType, DocRefTree, DocRefWithLineage } from "../../types";
+import { DocRefType, DocRefTree, DocRefWithLineage } from "src/types";
 import { DocRefBreadcrumb } from "../DocRefBreadcrumb";
 import DocRefListingEntry from "../DocRefListingEntry";
 

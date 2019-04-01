@@ -1,4 +1,4 @@
-import { DataSourceType } from "../../../types";
+import { DataSourceType } from "src/types";
 
 const testDataSource: DataSourceType = {
   fields: [

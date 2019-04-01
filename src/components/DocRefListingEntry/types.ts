@@ -1,4 +1,4 @@
-import { DocRefType, DocRefConsumer } from "../../types";
+import { DocRefType, DocRefConsumer } from "src/types";
 
 export interface Props {
   docRef: DocRefType;

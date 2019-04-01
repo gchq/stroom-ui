@@ -1,4 +1,4 @@
-import {DocRefType, PermissionInheritance} from '../../../../types';
+import { DocRefType, PermissionInheritance } from "src/types";
 
 export interface Props {
   uuids: Array<string>;
@@ -7,14 +7,14 @@ export interface Props {
   onConfirm: (
     uuids: Array<string>,
     destination: DocRefType,
-    permissionInheritance: PermissionInheritance,
+    permissionInheritance: PermissionInheritance
   ) => void;
   onCloseDialog: () => void;
 }
 
 export type ShowDialog = (
   uuids: Array<string>,
-  destination?: DocRefType,
+  destination?: DocRefType
 ) => void;
 
 export type UseDialog = {

@@ -18,12 +18,12 @@ import { useState } from "react";
 
 import { storiesOf } from "@storybook/react";
 
-import { addThemedStories } from "../../testing/storybook/themedStoryGenerator";
+import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
 import AppSearchBar from "./AppSearchBar";
 
-import { DocRefType } from "../../types";
+import { DocRefType } from "src/types";
 import useForm from "src/lib/useForm";
-import JsonDebug from "../../testing/JsonDebug";
+import JsonDebug from "src/testing/JsonDebug";
 
 interface Props {
   typeFilters?: Array<string>;

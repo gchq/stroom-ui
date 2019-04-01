@@ -26,7 +26,7 @@ import {
   useSelectableReactTable,
   SelectionBehaviour
 } from "src/lib/useSelectableItemListing";
-import { DataRow, PageRequest, ExpressionOperatorWithUuid } from "../../types";
+import { DataRow, PageRequest, ExpressionOperatorWithUuid } from "src/types";
 import IconHeader from "../IconHeader";
 import ExpressionSearchBar from "../ExpressionSearchBar";
 import HorizontalMainDetails from "../HorizontalMainDetails";

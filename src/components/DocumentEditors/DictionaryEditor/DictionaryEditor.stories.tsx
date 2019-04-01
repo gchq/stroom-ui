@@ -16,7 +16,7 @@
 import * as React from "react";
 import { storiesOf } from "@storybook/react";
 
-import fullTestData from "../../../testing/data";
+import fullTestData from "src/testing/data";
 import DictionaryEditor from "./DictionaryEditor";
 
 const stories = storiesOf("Document Editors/Dictionary", module);

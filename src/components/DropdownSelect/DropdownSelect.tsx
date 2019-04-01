@@ -2,7 +2,7 @@ import * as React from "react";
 import { useState } from "react";
 
 import DefaultDropdownOption from "./DefaultDropdownOption";
-import { OptionType, ControlledInput } from "../../types";
+import { OptionType, ControlledInput } from "src/types";
 import useSelectableItemListing from "src/lib/useSelectableItemListing";
 import { DropdownOptionProps } from "./types";
 

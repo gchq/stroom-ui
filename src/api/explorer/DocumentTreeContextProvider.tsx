@@ -2,7 +2,7 @@ import * as React from "react";
 import { useEffect, useCallback, useState, FunctionComponent } from "react";
 
 import useApi from "./useApi";
-import { DocRefTree, DocRefType } from "../../types";
+import { DocRefTree, DocRefType } from "src/types";
 import { updateItemInTree, findItem, findByUuids } from "src/lib/treeUtils";
 import DocumentTreeContext, {
   DocumentTreeContextValue

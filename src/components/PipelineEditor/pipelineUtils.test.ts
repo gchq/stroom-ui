@@ -30,14 +30,14 @@ import {
 
 import { keyByType } from "./elementUtils";
 
-import { testPipelines, elements } from "../../testing/data/pipelines";
+import { testPipelines, elements } from "src/testing/data/pipelines";
 import {
   PipelineDocumentType,
   PipelinePropertyType,
   DocRefType,
   PipelinePropertyValue,
   PipelineAsTreeType
-} from "../../types";
+} from "src/types";
 
 const elementsByType = keyByType(elements);
 

@@ -17,12 +17,12 @@ import * as React from "react";
 import { useState } from "react";
 import { storiesOf } from "@storybook/react";
 
-import { addThemedStories } from "../../../testing/storybook/themedStoryGenerator";
+import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
 
 import NewUserDialog, { useDialog } from "./NewUserDialog";
 import Button from "src/components/Button";
 
-import JsonDebug from "../../../testing/JsonDebug";
+import JsonDebug from "src/testing/JsonDebug";
 
 const stories = storiesOf(
   "Sections/Authorisation Manager/New User Dialog",

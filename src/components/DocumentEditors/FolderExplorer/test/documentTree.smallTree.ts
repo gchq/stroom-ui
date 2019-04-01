@@ -16,7 +16,7 @@
 import * as loremIpsum from "lorem-ipsum";
 import * as uuidv4 from "uuid/v4";
 
-import { DocRefTree, DocRefType } from "../../../../types";
+import { DocRefTree, DocRefType } from "src/types";
 
 function createRandomItem(docRefType: string): DocRefType {
   return {

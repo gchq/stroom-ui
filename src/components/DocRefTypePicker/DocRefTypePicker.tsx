@@ -2,7 +2,7 @@ import * as React from "react";
 import { useMemo } from "react";
 
 import DocRefImage from "../DocRefImage";
-import { OptionType, ControlledInput } from "../../types";
+import { OptionType, ControlledInput } from "src/types";
 import DropdownSelect, { DropdownOptionProps } from "../DropdownSelect";
 import useDocRefTypes from "src/api/explorer/useDocRefTypes";
 

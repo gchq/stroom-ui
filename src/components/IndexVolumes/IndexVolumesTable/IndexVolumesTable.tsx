@@ -2,7 +2,7 @@ import * as React from "react";
 
 import ReactTable from "react-table";
 
-import { IndexVolume } from "../../../types";
+import { IndexVolume } from "src/types";
 import {
   useSelectableReactTable,
   SelectionBehaviour,

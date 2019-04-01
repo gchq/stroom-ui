@@ -1,7 +1,7 @@
 import { useState, useCallback } from "react";
 
 import useApi from "./useApi";
-import { StreamTaskType } from "../../types";
+import { StreamTaskType } from "src/types";
 import {
   SortByOptions,
   Directions,

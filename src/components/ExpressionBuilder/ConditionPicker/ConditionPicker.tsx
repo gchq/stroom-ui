@@ -5,7 +5,7 @@ import {
   ConditionType,
   ConditionDisplayValues,
   SelectOptionsType
-} from "../../../types";
+} from "src/types";
 
 interface Props {
   className?: string;

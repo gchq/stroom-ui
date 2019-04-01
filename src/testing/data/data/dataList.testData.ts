@@ -1,4 +1,4 @@
-import { StreamAttributeMapResult } from "../../../types";
+import { StreamAttributeMapResult } from "src/types";
 
 export default {
   pageResponse: {

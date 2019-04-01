@@ -27,7 +27,7 @@ import {
   sortByFromString,
   UseStreamTasks
 } from "src/api/useStreamTasks/types";
-import { StreamTaskType } from "../../../types";
+import { StreamTaskType } from "src/types";
 import {
   useSelectableReactTable,
   SelectionBehaviour

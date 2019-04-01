@@ -11,13 +11,13 @@ import { ThemeContextProvider } from "./lib/theme";
 import { CustomRouter } from "./lib/useRouter";
 
 import createHistory from "history/createBrowserHistory";
-import { ConfigProvider } from "./startup/config";
+import { ConfigProvider } from "src/startup/config";
 export const history = createHistory();
 
 import "react-table/react-table.css";
 import "./styles/main.css";
-import { AuthorisationContextProvider } from "./startup/Authorisation";
-import { AuthenticationContextProvider } from "./startup/Authentication";
+import { AuthorisationContextProvider } from "src/startup/Authorisation";
+import { AuthenticationContextProvider } from "src/startup/Authentication";
 import { DocumentTreeContextProvider } from "src/api/explorer";
 import { ErrorReportingContextProvider } from "src/components/ErrorPage";
 

@@ -1,7 +1,7 @@
 import { NavigateApp } from "./types";
 import useRouter from "src/lib/useRouter";
 import { useMemo } from "react";
-import { DocRefType } from "../../types";
+import { DocRefType } from "src/types";
 import { IsGroup } from "src/api/userGroups";
 
 export const urlGenerator: NavigateApp<string> = {

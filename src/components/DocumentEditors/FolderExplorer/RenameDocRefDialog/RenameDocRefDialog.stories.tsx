@@ -1,12 +1,12 @@
-import * as React from 'react';
-import {useState} from 'react';
-import {storiesOf} from '@storybook/react';
-import {DocRefType} from '../../../../types';
+import * as React from "react";
+import { useState } from "react";
+import { storiesOf } from "@storybook/react";
+import { DocRefType } from "src/types";
 
-import RenameDocRefDialog, {useDialog} from './RenameDocRefDialog';
-import {fromSetupSampleData} from '../test';
+import RenameDocRefDialog, { useDialog } from "./RenameDocRefDialog";
+import { fromSetupSampleData } from "../test";
 
-import JsonDebug from '../../../../testing/JsonDebug';
+import JsonDebug from "src/testing/JsonDebug";
 
 const testDocRef = fromSetupSampleData.children![0].children![0].children![0];
 
@@ -15,10 +15,10 @@ interface Props {
 }
 
 // Rename
-const TestRenameDialog = ({testDocRef}: Props) => {
+const TestRenameDialog = ({ testDocRef }: Props) => {
   const [lastConfirmed, setLastConfirmed] = useState<object>({});
-  const {showDialog, componentProps} = useDialog((docRef, newName) =>
-    setLastConfirmed({docRef, newName}),
+  const { showDialog, componentProps } = useDialog((docRef, newName) =>
+    setLastConfirmed({ docRef, newName })
   );
 
   return (
@@ -31,6 +31,6 @@ const TestRenameDialog = ({testDocRef}: Props) => {
   );
 };
 
-storiesOf('Explorer/Rename Doc Ref Dialog', module).add('simple', () => (
+storiesOf("Explorer/Rename Doc Ref Dialog", module).add("simple", () => (
   <TestRenameDialog testDocRef={testDocRef} />
 ));

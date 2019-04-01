@@ -1,4 +1,4 @@
-import { DocRefTree, DocRefWithLineage } from "../../types";
+import { DocRefTree, DocRefWithLineage } from "src/types";
 
 export const DEFAULT_TREE: DocRefTree = {
   uuid: "none",

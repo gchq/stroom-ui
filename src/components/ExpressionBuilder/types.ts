@@ -16,7 +16,7 @@
 import {
   ExpressionOperatorWithUuid,
   ExpressionTermWithUuid
-} from "../../types";
+} from "src/types";
 import {
   DragSourceCollector,
   ConnectDragSource,

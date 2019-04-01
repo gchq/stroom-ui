@@ -20,7 +20,7 @@ import {
   ExpressionOperatorType,
   ExpressionTermType,
   ConditionType
-} from "../../types";
+} from "src/types";
 
 interface ValidationResult {
   original: string;

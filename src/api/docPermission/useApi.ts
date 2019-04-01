@@ -2,7 +2,7 @@ import { useCallback } from "react";
 
 import useHttpClient from "../useHttpClient";
 import { DocumentPermissions } from "src/types";
-import { useConfig } from "../../startup/config";
+import { useConfig } from "src/startup/config";
 
 interface Api {
   // Server Side Constant

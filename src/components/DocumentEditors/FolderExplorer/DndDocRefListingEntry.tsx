@@ -19,7 +19,7 @@ import {
   DropCollectedProps,
   DragObject
 } from "./types";
-import { DocRefType } from "../../../types";
+import { DocRefType } from "src/types";
 import { KeyDownState } from "src/lib/useKeyIsDown";
 
 interface Props extends DocRefListingEntryProps {

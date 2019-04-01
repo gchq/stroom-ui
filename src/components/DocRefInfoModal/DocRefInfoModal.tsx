@@ -21,7 +21,7 @@ import ThemedModal from "../ThemedModal";
 import IconHeader from "../IconHeader";
 import Button from "../Button";
 import { useDocRefInfo } from "src/api/explorer";
-import { DocRefType } from "../../types";
+import { DocRefType } from "src/types";
 
 interface Props {
   docRef?: DocRefType;

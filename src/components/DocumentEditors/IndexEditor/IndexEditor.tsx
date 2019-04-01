@@ -23,7 +23,7 @@ import DocRefEditor, {
 } from "../DocRefEditor";
 import Loader from "../../Loader";
 import useDocumentApi from "src/api/useDocumentApi";
-import { IndexDoc, IndexField } from "../../../types";
+import { IndexDoc, IndexField } from "src/types";
 import IndexFieldsTable, {
   useTable as useFieldsTable
 } from "./IndexFieldsTable";

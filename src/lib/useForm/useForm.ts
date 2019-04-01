@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { ControlledInput } from "../../types";
+import { ControlledInput } from "src/types";
 import { Form } from "./types";
 
 /**
@@ -16,9 +16,7 @@ export const useForm = function<T>({
   initialValues,
   onValidate
 }: UseForm<T>): Form<T> {
-  const [value, setCurrentValues] = useState<Partial<T>>(
-    initialValues || {}
-  );
+  const [value, setCurrentValues] = useState<Partial<T>>(initialValues || {});
 
   // Memo-ized function to combine updates with existing state
   const onUpdate = useCallback(

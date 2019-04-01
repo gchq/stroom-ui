@@ -22,7 +22,7 @@ import { storiesOf } from "@storybook/react";
 import { Color } from "csstype";
 
 import HorizontalMainDetails from "./HorizontalMainDetails";
-import { addThemedStories } from "../../testing/storybook/themedStoryGenerator";
+import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
 
 const EnabledCheckbox = () => (
   <label>

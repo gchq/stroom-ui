@@ -1,4 +1,4 @@
-import { User } from "../../types";
+import { User } from "src/types";
 
 export type IsGroup = "User" | "Group" | "" | undefined;
 

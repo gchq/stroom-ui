@@ -1,9 +1,9 @@
 import { useCallback } from "react";
 
 import useHttpClient from "../useHttpClient";
-import { User } from "../../types";
+import { User } from "src/types";
 import { IsGroup } from "./types";
-import { useConfig } from "../../startup/config";
+import { useConfig } from "src/startup/config";
 
 interface Api {
   fetchUser: (uuid: string) => Promise<User>;

@@ -18,7 +18,7 @@ import {
   DropCollectedProps,
 } from '../DocumentEditors/FolderExplorer/types';
 import {IconProp} from '@fortawesome/fontawesome-svg-core';
-import {DocRefType, StyledComponentProps} from '../../types';
+import {DocRefType, StyledComponentProps} from 'src/types';
 import {KeyDownState} from 'src/lib/useKeyIsDown';
 import {MenuItemOpened, MenuItemType, MenuItemsOpenState} from './types';
 

@@ -21,7 +21,7 @@ import { storiesOf } from "@storybook/react";
 import Button from "../Button";
 import ThemedModal from "./ThemedModal";
 
-import { addThemedStories } from "../../testing/storybook/themedStoryGenerator";
+import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
 
 const TestModal = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);

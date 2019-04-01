@@ -21,7 +21,7 @@ import { storiesOf } from "@storybook/react";
 import Button from "../Button";
 import ThemedConfirm, { useDialog } from "./ThemedConfirm";
 
-import { addThemedStories } from "../../testing/storybook/themedStoryGenerator";
+import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
 
 let TestConfirm = () => {
   const [confirmCount, setConfirmCount] = useState<number>(0);

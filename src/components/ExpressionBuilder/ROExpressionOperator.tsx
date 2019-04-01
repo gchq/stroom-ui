@@ -8,7 +8,7 @@ import {
   ExpressionOperatorWithUuid,
   ExpressionHasUuid,
   ExpressionTermWithUuid
-} from "../../types";
+} from "src/types";
 
 interface Props {
   operator: ExpressionOperatorWithUuid;

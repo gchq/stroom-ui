@@ -1,15 +1,15 @@
-import * as React from 'react';
-import {storiesOf} from '@storybook/react';
-import {useState} from 'react';
+import * as React from "react";
+import { storiesOf } from "@storybook/react";
+import { useState } from "react";
 
-import {fromSetupSampleData} from '../test';
+import { fromSetupSampleData } from "../test";
 import {
   CopyMoveDocRefDialog,
-  useDialog as useCopyMoveDocRefDialog,
-} from './CopyMoveDocRefDialog';
+  useDialog as useCopyMoveDocRefDialog
+} from "./CopyMoveDocRefDialog";
 
-import {PermissionInheritance, DocRefType} from '../../../../types';
-import JsonDebug from '../../../../testing/JsonDebug';
+import { PermissionInheritance, DocRefType } from "src/types";
+import JsonDebug from "src/testing/JsonDebug";
 
 const testFolder2 = fromSetupSampleData.children![1];
 
@@ -19,15 +19,15 @@ interface Props {
 }
 
 // Copy
-const TestCopyDialog = ({testUuids, testDestination}: Props) => {
+const TestCopyDialog = ({ testUuids, testDestination }: Props) => {
   const [lastConfirmed, setLastConfirmed] = useState<object>({});
 
-  const {showDialog, componentProps} = useCopyMoveDocRefDialog(
+  const { showDialog, componentProps } = useCopyMoveDocRefDialog(
     (
       uuids: Array<string>,
       destination: DocRefType,
-      permissionInheritance: PermissionInheritance,
-    ) => setLastConfirmed({uuids, destination, permissionInheritance}),
+      permissionInheritance: PermissionInheritance
+    ) => setLastConfirmed({ uuids, destination, permissionInheritance })
   );
 
   return (
@@ -42,7 +42,7 @@ const TestCopyDialog = ({testUuids, testDestination}: Props) => {
   );
 };
 
-storiesOf('Explorer/Copy Doc Ref Dialog', module).add('simple', () => (
+storiesOf("Explorer/Copy Doc Ref Dialog", module).add("simple", () => (
   <TestCopyDialog
     testUuids={testFolder2.children!.map(d => d.uuid)}
     testDestination={testFolder2}

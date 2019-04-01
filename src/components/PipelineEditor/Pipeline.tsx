@@ -21,7 +21,7 @@ import PipelineElement from "./PipelineElement";
 import ElbowLine from "./ElbowLine/ElbowLine";
 import { getPipelineLayoutGrid } from "./pipelineUtils";
 import { PipelineLayoutGrid, CellType } from "./types";
-import { PipelineElementType } from "../../types";
+import { PipelineElementType } from "src/types";
 import { getAllElementNames } from "./pipelineUtils";
 import { ShowDialog as ShowAddElementDialog } from "./AddElementModal";
 import { PipelineProps } from "./types";

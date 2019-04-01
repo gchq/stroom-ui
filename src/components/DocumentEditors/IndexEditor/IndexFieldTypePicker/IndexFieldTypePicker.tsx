@@ -5,7 +5,7 @@ import {
   IndexFieldType,
   SelectOptionsType,
   IndexFieldTypeDisplayValues
-} from "../../../../types";
+} from "src/types";
 
 interface Props {
   className?: string;

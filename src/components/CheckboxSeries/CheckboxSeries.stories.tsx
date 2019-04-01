@@ -1,10 +1,10 @@
 import * as React from "react";
 import { useState, useCallback } from "react";
 import { storiesOf } from "@storybook/react";
-import { addThemedStories } from "../../testing/storybook/themedStoryGenerator";
+import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
 
 import CheckboxSeries from "./CheckboxSeries";
-import JsonDebug from "../../testing/JsonDebug";
+import JsonDebug from "src/testing/JsonDebug";
 
 const stories = storiesOf("General Purpose/Checkbox Series", module);
 

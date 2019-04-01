@@ -1,4 +1,4 @@
-import { ElementDefinition } from "../../../types";
+import { ElementDefinition } from "src/types";
 
 export type OnAddElement = (
   parentId: string,

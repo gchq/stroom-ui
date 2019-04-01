@@ -2,7 +2,7 @@ import { useCallback, useState } from "react";
 
 import { UseStreamSearch, PageProps, SearchWithExpressionProps } from "./types";
 import useApi from "./useApi";
-import { StreamAttributeMapResult } from "../../types";
+import { StreamAttributeMapResult } from "src/types";
 
 const defaultStreams: StreamAttributeMapResult = {
   streamAttributeMaps: [],

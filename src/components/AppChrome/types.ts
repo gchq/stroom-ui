@@ -1,5 +1,5 @@
 import {IconProp} from '@fortawesome/fontawesome-svg-core';
-import {DocRefType} from '../../types';
+import {DocRefType} from 'src/types';
 import {IsGroup} from 'src/api/userGroups';
 
 export type ActiveMenuItem =

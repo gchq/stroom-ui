@@ -7,8 +7,8 @@ import {
   ExpressionHasUuid,
   DataRow,
   StreamAttributeMapResult
-} from "../../types";
-import { useConfig } from "../../startup/config";
+} from "src/types";
+import { useConfig } from "src/startup/config";
 import { SearchWithExpressionProps, PageProps } from "./types";
 
 interface Api {

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import {ConnectDropTarget, ConnectDragSource} from 'react-dnd';
-import {DocRefType} from '../../../types';
+import {DocRefType} from 'src/types';
 
 export enum DragDropTypes {
   DOC_REF_UUIDS = 'docRef',

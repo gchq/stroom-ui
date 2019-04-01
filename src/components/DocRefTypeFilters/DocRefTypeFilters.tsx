@@ -16,7 +16,7 @@
 import * as React from "react";
 
 import DocRefImage from "../DocRefImage";
-import { ControlledInput } from "../../types";
+import { ControlledInput } from "src/types";
 import useDocRefTypes from "src/api/explorer/useDocRefTypes";
 
 enum AllSelectState {

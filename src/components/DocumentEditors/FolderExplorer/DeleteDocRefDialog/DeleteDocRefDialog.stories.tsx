@@ -1,13 +1,13 @@
-import * as React from 'react';
-import {useState} from 'react';
-import {storiesOf} from '@storybook/react';
+import * as React from "react";
+import { useState } from "react";
+import { storiesOf } from "@storybook/react";
 
-import DeleteDocRefDialog, {useDialog} from './DeleteDocRefDialog';
+import DeleteDocRefDialog, { useDialog } from "./DeleteDocRefDialog";
 
-import {fromSetupSampleData} from '../test';
-import {DocRefType} from '../../../../types';
+import { fromSetupSampleData } from "../test";
+import { DocRefType } from "src/types";
 
-import JsonDebug from '../../../../testing/JsonDebug';
+import JsonDebug from "src/testing/JsonDebug";
 
 const testFolder2 = fromSetupSampleData.children![1];
 
@@ -16,9 +16,9 @@ interface Props {
 }
 
 // Delete
-const TestDeleteDialog = ({testUuids}: Props) => {
+const TestDeleteDialog = ({ testUuids }: Props) => {
   const [lastConfirmed, setLastConfirmed] = useState<object>({});
-  const {showDialog, componentProps} = useDialog(setLastConfirmed);
+  const { showDialog, componentProps } = useDialog(setLastConfirmed);
 
   return (
     <div>
@@ -29,7 +29,7 @@ const TestDeleteDialog = ({testUuids}: Props) => {
   );
 };
 
-storiesOf('Explorer/Delete Doc Ref Dialog', module).add('simple', () => (
+storiesOf("Explorer/Delete Doc Ref Dialog", module).add("simple", () => (
   <TestDeleteDialog
     testUuids={testFolder2.children!.map((d: DocRefType) => d.uuid)}
   />

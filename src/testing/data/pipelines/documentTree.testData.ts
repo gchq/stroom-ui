@@ -15,7 +15,7 @@
  */
 
 import testPipelines from "./testPipelines";
-import { DocRefTree } from "../../../types";
+import { DocRefTree } from "src/types";
 
 export default {
   uuid: "root1234567890",

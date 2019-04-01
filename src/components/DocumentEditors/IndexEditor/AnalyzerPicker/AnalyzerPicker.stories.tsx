@@ -17,10 +17,10 @@ import * as React from "react";
 import { useState } from "react";
 import { storiesOf } from "@storybook/react";
 
-import { addThemedStories } from "../../../../testing/storybook/themedStoryGenerator";
+import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
 
 import AnalyzerPicker from "./AnalyzerPicker";
-import { AnalyzerType } from "../../../../types";
+import { AnalyzerType } from "src/types";
 
 const stories = storiesOf("Pickers/Index Analyzer", module);
 

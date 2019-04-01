@@ -4,7 +4,7 @@ import { useEffect, useState, useMemo } from "react";
 import Select from "react-select";
 
 import { useManageUsers } from "src/api/userGroups";
-import { SelectOptionType } from "../../../types";
+import { SelectOptionType } from "src/types";
 import { Props, BaseProps, UseProps } from "./types";
 
 const DEFAULT_USER_UUIDS_TO_FILTER_OUT: Array<string> = [];

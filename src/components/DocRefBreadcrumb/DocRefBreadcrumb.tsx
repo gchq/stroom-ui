@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useMemo } from "react";
 
-import { DocRefConsumer } from "../../types";
+import { DocRefConsumer } from "src/types";
 import { useDocumentTree } from "src/api/explorer";
 
 interface Props {

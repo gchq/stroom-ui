@@ -1,6 +1,6 @@
 import useApi from "./useApi";
 import { useEffect, useState } from "react";
-import { DataSourceType } from "../../types";
+import { DataSourceType } from "src/types";
 
 const defaultDataSource: DataSourceType = {
   fields: []

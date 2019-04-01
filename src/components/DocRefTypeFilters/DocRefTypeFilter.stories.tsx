@@ -21,8 +21,8 @@ import { storiesOf } from "@storybook/react";
 import DocRefTypeFilters from "./DocRefTypeFilters";
 
 
-import JsonDebug from "../../testing/JsonDebug";
-import { addThemedStories } from "../../testing/storybook/themedStoryGenerator";
+import JsonDebug from "src/testing/JsonDebug";
+import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
 
 const TestForm = () => {
   const [chosenTypes, setChosenTypes] = useState<Array<string>>([]);

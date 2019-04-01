@@ -16,7 +16,7 @@
 import * as React from "react";
 import { storiesOf } from "@storybook/react";
 
-import fullTestData from "../../../testing/data";
+import fullTestData from "src/testing/data";
 import XsltEditor from "./XsltEditor";
 
 const stories = storiesOf("Document Editors/XSLT", module);

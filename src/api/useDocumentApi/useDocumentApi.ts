@@ -1,8 +1,8 @@
 import { useCallback } from "react";
 
 import { DocumentApi, ResourcesByDocType, DOCUMENT_RESOURCES } from "./types";
-import { DocumentType } from "../../types";
-import { useConfig } from "../../startup/config";
+import { DocumentType } from "src/types";
+import { useConfig } from "src/startup/config";
 import useHttpClient from "../useHttpClient";
 
 /**

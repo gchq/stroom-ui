@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useState, useCallback } from "react";
 
-import { IndexField, IndexFieldType, AnalyzerType } from "../../../../types";
+import { IndexField, IndexFieldType, AnalyzerType } from "src/types";
 import ThemedModal from "../../../ThemedModal";
 import { DialogActionButtons } from "../../../DialogActionButtons";
 import IndexFieldTypePicker from "../IndexFieldTypePicker/IndexFieldTypePicker";

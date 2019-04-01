@@ -19,13 +19,12 @@ import { useState, useMemo } from "react";
 
 import { storiesOf } from "@storybook/react";
 
-import { addThemedStories } from "../../../testing/storybook/themedStoryGenerator";
-
+import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
 
 import UserModalPicker, { useDialog } from "./UserModalPicker";
 import Button from "src/components/Button";
-import JsonDebug from "../../../testing/JsonDebug";
-import fullTestData from "../../../testing/data";
+import JsonDebug from "src/testing/JsonDebug";
+import fullTestData from "src/testing/data";
 
 const stories = storiesOf("Pickers/User Picker (Modal)", module);
 

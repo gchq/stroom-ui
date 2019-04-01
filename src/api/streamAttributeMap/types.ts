@@ -2,7 +2,7 @@ import {
   ExpressionOperatorWithUuid,
   PageRequest,
   StreamAttributeMapResult
-} from "../../types";
+} from "src/types";
 
 export interface UseStreamSearch {
   page: (p: PageProps) => void;

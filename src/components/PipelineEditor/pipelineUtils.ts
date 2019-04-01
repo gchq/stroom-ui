@@ -26,7 +26,7 @@ import {
   AddRemove,
   PipelineLinkType,
   ElementPropertiesType
-} from "../../types";
+} from "src/types";
 import {
   RecycleBinItem,
   PipelineLayoutGrid,

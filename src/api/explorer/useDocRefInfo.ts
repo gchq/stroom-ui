@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { DocRefType, DocRefInfoType } from "../../types";
+import { DocRefType, DocRefInfoType } from "src/types";
 import useApi from "./useApi";
 
 const useDocRefInfo = (docRef?: DocRefType): DocRefInfoType | undefined => {
