@@ -63,7 +63,9 @@ export const useForm = function<T>({
     s: keyof T
   ): ControlledInput<FIELD_TYPE> => ({
     value: (value[s] as unknown) as FIELD_TYPE,
-    onChange: useCallback(v => onUpdate({ [s]: v } as T), [onUpdate])
+    onChange: useCallback(v => onUpdate(({ [s]: v } as unknown) as T), [
+      onUpdate
+    ])
   });
 
   return {
