@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 
-import useHttpClient from "../useHttpClient";
+import useHttpClient from "src/lib/useHttpClient";
 import { StreamTasksResponseType } from "src/types";
 
 import { FetchParameters } from "./types";
