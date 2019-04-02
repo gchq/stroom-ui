@@ -42,41 +42,41 @@ const ErrorTable: React.FunctionComponent<Props> = ({ errors }) => {
           </React.Fragment>
         );
 
-        //TODO TS upgrade: row.value => row.rowValues. Is this really a RowInfo?
-        if (row.rowValues === "INFO") {
-          return (
-            <Tooltip
-              trigger={<FontAwesomeIcon color="blue" icon="info-circle" />}
-              content={location}
-            />
-          );
-        } else if (row.rowValues === "WARNING") {
-          return (
-            <Tooltip
-              trigger={
-                <FontAwesomeIcon color="orange" icon="exclamation-circle" />
-              }
-              content={location}
-            />
-          );
-        } else if (row.rowValues === "ERROR") {
-          return (
-            <Tooltip
-              trigger={
-                <FontAwesomeIcon color="red" icon="exclamation-circle" />
-              }
-              content={location}
-            />
-          );
-        } else if (row.rowValues === "FATAL") {
-          return (
-            <Tooltip
-              trigger={<FontAwesomeIcon color="red" icon="bomb" />}
-              content={location}
-            />
-          );
-        } else {
-          return undefined;
+        switch (row.original.severity) {
+          case "INFO":
+            return (
+              <Tooltip
+                trigger={<FontAwesomeIcon color="blue" icon="info-circle" />}
+                content={location}
+              />
+            );
+          case "WARNING":
+            return (
+              <Tooltip
+                trigger={
+                  <FontAwesomeIcon color="orange" icon="exclamation-circle" />
+                }
+                content={location}
+              />
+            );
+          case "ERROR":
+            return (
+              <Tooltip
+                trigger={
+                  <FontAwesomeIcon color="red" icon="exclamation-circle" />
+                }
+                content={location}
+              />
+            );
+          case "FATAL":
+            return (
+              <Tooltip
+                trigger={<FontAwesomeIcon color="red" icon="bomb" />}
+                content={location}
+              />
+            );
+          default:
+            return <div>{`Unknown ${row.rowValues}`}</div>;
         }
       },
       width: 35,
@@ -91,29 +91,34 @@ const ErrorTable: React.FunctionComponent<Props> = ({ errors }) => {
       accessor: "message",
     },
   ];
-  const metaAndErrors = splitAt(1, errors);
-  const tableData = metaAndErrors[1].map((error: ErrorData) => ({
-    elementId: error.elementId,
-    stream: error.location.streamNo,
-    line: error.location.lineNo,
-    col: error.location.colNo,
-    message: error.message,
-    severity: error.severity,
-  }));
-
-  return (
-    <div className="ErrorTable__container">
-      <div className="ErrorTable__reactTable__container">
-        <ReactTable
-          sortable={false}
-          showPagination={false}
-          className="ErrorTable__reactTable"
-          data={tableData}
-          columns={tableColumns}
-        />
-      </div>
-    </div>
+  const tableData = React.useMemo(
+    () =>
+      splitAt(1, errors)[1].map((error: ErrorData) => ({
+        elementId: error.elementId,
+        stream: error.location.streamNo,
+        line: error.location.lineNo,
+        col: error.location.colNo,
+        message: error.message,
+        severity: error.severity,
+      })),
+    [errors],
   );
+
+  console.log("Table Data", tableData);
+
+  // <div className="ErrorTable__container">
+  //   <div className="ErrorTable__reactTable__container">
+  return (
+    <ReactTable
+      sortable={false}
+      showPagination={false}
+      className="ErrorTable__reactTable"
+      data={tableData}
+      columns={tableColumns}
+    />
+  );
+  //   </div>
+  // </div>
 };
 
 export default ErrorTable;

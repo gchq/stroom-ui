@@ -22,6 +22,6 @@ import {
   eventData,
 } from "src/testing/data/data/DataDetails.testData";
 
-storiesOf("Sections/Data/Details", module)
+storiesOf("Sections/Data Viewer/Details", module)
   .add("Showing errors", () => <DataDetails data={errorData} />)
   .add("Showing events", () => <DataDetails data={eventData} />);
