@@ -17,7 +17,7 @@ export const urlGenerator: NavigateApp<string> = {
     `/s/authorisationManager/document/${docRefUuid}`,
   goToAuthorisationsForDocumentForUser: (
     docRefUuid: string,
-    userUuid: string
+    userUuid: string,
   ) => `/s/authorisationManager/document/${docRefUuid}/${userUuid}`,
   goToIndexVolumes: () => `/s/indexing/volumes`,
   goToIndexVolume: (volumeId: string) => `/s/indexing/volumes/${volumeId}`,
@@ -28,7 +28,7 @@ export const urlGenerator: NavigateApp<string> = {
   goToApiKeys: () => `/s/apikeys`,
   goToError: () => `/s/error`,
   goToEditDocRefByUuid: (docRefUuid: string) => `/s/doc/${docRefUuid}`,
-  goToEditDocRef: (docRef: DocRefType) => `/s/doc/${docRef.uuid}`
+  goToEditDocRef: (docRef: DocRefType) => `/s/doc/${docRef.uuid}`,
 };
 
 const useAppNavigation = (): NavigateApp<any> => {
@@ -48,7 +48,7 @@ const useAppNavigation = (): NavigateApp<any> => {
         h.push(u.goToAuthorisationsForDocument(docRefUuid)),
       goToAuthorisationsForDocumentForUser: (
         docRefUuid: string,
-        userUuid: string
+        userUuid: string,
       ) => h.push(u.goToAuthorisationsForDocumentForUser(docRefUuid, userUuid)),
       goToIndexVolumes: () => h.push(u.goToIndexVolumes()),
       goToIndexVolume: (volumeId: string) =>
@@ -61,9 +61,9 @@ const useAppNavigation = (): NavigateApp<any> => {
       goToError: () => h.push(u.goToError()),
       goToEditDocRefByUuid: (docRefUuid: string) =>
         h.push(u.goToEditDocRefByUuid(docRefUuid)),
-      goToEditDocRef: (docRef: DocRefType) => h.push(u.goToEditDocRef(docRef))
+      goToEditDocRef: (docRef: DocRefType) => h.push(u.goToEditDocRef(docRef)),
     }),
-    [h]
+    [h],
   );
 };
 

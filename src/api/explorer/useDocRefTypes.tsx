@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 
 import useApi from "./useApi";
 
-const useDocRefTypes = (): Array<string> => {
-  const [docRefTypes, setDocRefTypes] = useState<Array<string>>([]);
+const useDocRefTypes = (): string[] => {
+  const [docRefTypes, setDocRefTypes] = useState<string[]>([]);
 
   const { fetchDocRefTypes } = useApi();
 

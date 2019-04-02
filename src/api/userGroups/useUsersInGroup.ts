@@ -5,7 +5,7 @@ import { User } from "src/types";
 import useListReducer from "src/lib/useListReducer/useListReducer";
 
 interface UseGroupsForUser {
-  users: Array<User>;
+  users: User[];
   addToGroup: (userUuid: string) => void;
   removeFromGroup: (userUuid: string) => void;
 }
@@ -15,14 +15,14 @@ const useGroupsForUser = (group: User): UseGroupsForUser => {
     items: users,
     itemsReceived,
     itemAdded,
-    itemRemoved
+    itemRemoved,
   } = useListReducer<User>(u => u.uuid);
 
   const {
     findUsersInGroup,
     addUserToGroup,
     removeUserFromGroup,
-    fetchUser
+    fetchUser,
   } = useApi();
 
   useEffect(() => {
@@ -35,21 +35,21 @@ const useGroupsForUser = (group: User): UseGroupsForUser => {
         .then(() => fetchUser(userUuid))
         .then(itemAdded);
     },
-    [group, fetchUser, addUserToGroup]
+    [group, fetchUser, addUserToGroup],
   );
   const removeFromGroup = useCallback(
     (userUuid: string) => {
       removeUserFromGroup(userUuid, group.uuid).then(() =>
-        itemRemoved(userUuid)
+        itemRemoved(userUuid),
       );
     },
-    [group, removeUserFromGroup]
+    [group, removeUserFromGroup],
   );
 
   return {
     users,
     addToGroup,
-    removeFromGroup
+    removeFromGroup,
   };
 };
 

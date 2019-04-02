@@ -10,13 +10,13 @@ const defaultStreams: StreamAttributeMapResult = {
     offset: 0,
     total: 0,
     length: 0,
-    exact: true
-  }
+    exact: true,
+  },
 };
 
 const useStreamSearch = (): UseStreamSearch => {
   const [streams, setStreams] = useState<StreamAttributeMapResult>(
-    defaultStreams
+    defaultStreams,
   );
   const { page, search } = useApi();
 
@@ -24,12 +24,12 @@ const useStreamSearch = (): UseStreamSearch => {
     streams,
     search: useCallback(
       (s: SearchWithExpressionProps) => search(s).then(setStreams),
-      [search, setStreams]
+      [search, setStreams],
     ),
     page: useCallback((s: PageProps) => page(s).then(setStreams), [
       page,
-      setStreams
-    ])
+      setStreams,
+    ]),
   };
 };
 

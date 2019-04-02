@@ -5,7 +5,7 @@ import useApi from "./useApi";
 import { DocRefTree, DocRefType } from "src/types";
 import { updateItemInTree, findItem, findByUuids } from "src/lib/treeUtils";
 import DocumentTreeContext, {
-  DocumentTreeContextValue
+  DocumentTreeContextValue,
 } from "./DocumentTreeContext";
 import { DEFAULT_TREE, DEFAULT_DOC_REF_WITH_LINEAGE } from "./values";
 
@@ -19,7 +19,7 @@ const DocumentTreeContextProvider: FunctionComponent<{}> = ({ children }) => {
     deleteDocuments,
     renameDocument,
     moveDocuments,
-    searchApp
+    searchApp,
   } = useApi();
 
   useEffect(() => {
@@ -36,16 +36,16 @@ const DocumentTreeContextProvider: FunctionComponent<{}> = ({ children }) => {
         docRefType: string,
         docRefName: string,
         destinationFolderRef: DocRefType,
-        permissionInheritance: string
+        permissionInheritance: string,
       ) => {
         createDocument(
           docRefType,
           docRefName,
           destinationFolderRef,
-          permissionInheritance
+          permissionInheritance,
         ).then(setDocumentTree);
       },
-      [createDocument, setDocumentTree]
+      [createDocument, setDocumentTree],
     ),
     renameDocument: useCallback(
       (docRef: DocRefType, name: string) => {
@@ -53,51 +53,51 @@ const DocumentTreeContextProvider: FunctionComponent<{}> = ({ children }) => {
           const newTree = updateItemInTree(
             documentTree,
             docRef.uuid,
-            resultDocRef
+            resultDocRef,
           );
           setDocumentTree(newTree);
         });
       },
-      [renameDocument, setDocumentTree, documentTree]
+      [renameDocument, setDocumentTree, documentTree],
     ),
     copyDocuments: useCallback(
       (
-        uuids: Array<string>,
+        uuids: string[],
         destination: DocRefType,
-        permissionInheritance: string
+        permissionInheritance: string,
       ) => {
         const docRefs = findByUuids(documentTree, uuids);
         copyDocuments(docRefs, destination, permissionInheritance).then(
-          setDocumentTree
+          setDocumentTree,
         );
       },
-      [documentTree, copyDocuments, setDocumentTree]
+      [documentTree, copyDocuments, setDocumentTree],
     ),
     moveDocuments: useCallback(
       (
-        uuids: Array<string>,
+        uuids: string[],
         destination: DocRefType,
-        permissionInheritance: string
+        permissionInheritance: string,
       ) => {
         const docRefs = findByUuids(documentTree, uuids);
         moveDocuments(docRefs, destination, permissionInheritance).then(
-          setDocumentTree
+          setDocumentTree,
         );
       },
-      [documentTree, moveDocuments, setDocumentTree]
+      [documentTree, moveDocuments, setDocumentTree],
     ),
     deleteDocuments: useCallback(
-      (uuids: Array<string>) => {
+      (uuids: string[]) => {
         const docRefs = findByUuids(documentTree, uuids);
         deleteDocuments(docRefs).then(setDocumentTree);
       },
-      [documentTree, deleteDocuments, setDocumentTree]
+      [documentTree, deleteDocuments, setDocumentTree],
     ),
     findDocRefWithLineage: useCallback(
       (docRefUuid: string) =>
         findItem(documentTree, docRefUuid) || DEFAULT_DOC_REF_WITH_LINEAGE,
-      [documentTree]
-    )
+      [documentTree],
+    ),
   };
 
   return (

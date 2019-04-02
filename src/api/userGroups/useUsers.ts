@@ -9,13 +9,13 @@ import useListReducer from "src/lib/useListReducer";
  *
  * @param userUuids The list of user UUID's to retrieve
  */
-const useUsers = (userUuids: Array<string>): Array<User> => {
+const useUsers = (userUuids: string[]): User[] => {
   const { fetchUser } = useApi();
   const { items: allUsers, itemAdded } = useListReducer<User>(u => u.uuid);
 
   const users = useMemo(
     () => allUsers.filter(u => userUuids.includes(u.uuid)),
-    [allUsers, userUuids]
+    [allUsers, userUuids],
   );
 
   // Don't feed 'users' into the [], otherwise it will re-run this as users come in

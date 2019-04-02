@@ -15,7 +15,7 @@ type HttpCall = (
   url: string,
   options?: {
     [s: string]: any;
-  }
+  },
 ) => Promise<any>;
 
 interface HttpClient {
@@ -24,7 +24,7 @@ interface HttpClient {
     options?: {
       [s: string]: any;
     },
-    forceGet?: boolean
+    forceGet?: boolean,
   ) => Promise<any>;
   httpPostJsonResponse: HttpCall;
   httpPutJsonResponse: HttpCall;
@@ -50,11 +50,11 @@ export const useHttpClient = (): HttpClient => {
       reportError({
         errorMessage: error.message,
         stackTrace: error.stack,
-        httpErrorCode: error.status
+        httpErrorCode: error.status,
       });
       goToError();
     },
-    [reportError, goToError]
+    [reportError, goToError],
   );
 
   const httpGetJson = useCallback(
@@ -63,7 +63,7 @@ export const useHttpClient = (): HttpClient => {
       options: {
         [s: string]: any;
       } = {},
-      forceGet: boolean = true // default to true, take care with settings this to false, old promises can override the updated picture with old information if this is mis-used
+      forceGet: boolean = true, // default to true, take care with settings this to false, old promises can override the updated picture with old information if this is mis-used
     ): Promise<T | void> => {
       // console.group("HTTP GET");
       // console.log("Fetching", { url, cacheKeys: Object.keys(cache) });
@@ -79,8 +79,8 @@ export const useHttpClient = (): HttpClient => {
             Accept: "application/json",
             "Content-Type": "application/json",
             Authorization: `Bearer ${idToken}`,
-            ...(options ? options.headers : {})
-          }
+            ...(options ? options.headers : {}),
+          },
         })
           .then(handleStatus)
           .then(r => r.json())
@@ -90,7 +90,7 @@ export const useHttpClient = (): HttpClient => {
 
       return cache[url];
     },
-    [catchImpl]
+    [catchImpl],
   );
 
   const useFetchWithBodyAndJsonResponse = (method: string) =>
@@ -99,26 +99,26 @@ export const useHttpClient = (): HttpClient => {
         url: string,
         options?: {
           [s: string]: any;
-        }
+        },
       ): Promise<T | void> => {
         const headers = {
           Accept: "application/json",
           "Content-Type": "application/json",
           Authorization: `Bearer ${idToken}`,
-          ...(options ? options.headers : {})
+          ...(options ? options.headers : {}),
         };
 
         return fetch(url, {
           mode: "cors",
           ...options,
           method,
-          headers
+          headers,
         })
           .then(handleStatus)
           .then(r => r.json())
           .catch(catchImpl);
       },
-      [catchImpl]
+      [catchImpl],
     );
 
   const useFetchWithBodyAndEmptyResponse = (method: string) =>
@@ -127,25 +127,25 @@ export const useHttpClient = (): HttpClient => {
         url: string,
         options?: {
           [s: string]: any;
-        }
+        },
       ): Promise<string | void> => {
         const headers = {
           "Content-Type": "application/json",
           Authorization: `Bearer ${idToken}`,
-          ...(options ? options.headers : {})
+          ...(options ? options.headers : {}),
         };
 
         return fetch(url, {
           mode: "cors",
           ...options,
           method,
-          headers
+          headers,
         })
           .then(handleStatus)
           .then(r => r.text())
           .catch(catchImpl);
       },
-      [catchImpl]
+      [catchImpl],
     );
 
   return {
@@ -160,7 +160,7 @@ export const useHttpClient = (): HttpClient => {
     httpPatchEmptyResponse: useFetchWithBodyAndEmptyResponse("patch"),
     clearCache: () => {
       cache = {};
-    }
+    },
   };
 };
 

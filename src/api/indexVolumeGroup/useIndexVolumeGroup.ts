@@ -6,13 +6,13 @@ import { useApi as useIndexVolumeApi } from "../indexVolume/useApi";
 import { IndexVolume, IndexVolumeGroup } from "src/types";
 
 interface UseIndexVolumeGroup {
-  indexVolumes: Array<IndexVolume>;
+  indexVolumes: IndexVolume[];
   indexVolumeGroup: IndexVolumeGroup | undefined;
   removeVolume: (volumeId: string) => void;
 }
 
 const useIndexVolumeGroup = (groupName: string): UseIndexVolumeGroup => {
-  const [indexVolumes, setIndexVolumes] = useState<Array<IndexVolume>>([]);
+  const [indexVolumes, setIndexVolumes] = useState<IndexVolume[]>([]);
   const [indexVolumeGroup, setIndexVolumeGroup] = useState<
     IndexVolumeGroup | undefined
   >(undefined);
@@ -28,18 +28,18 @@ const useIndexVolumeGroup = (groupName: string): UseIndexVolumeGroup => {
     getIndexVolumeGroup,
     setIndexVolumeGroup,
     getIndexVolumesInGroup,
-    setIndexVolumes
+    setIndexVolumes,
   ]);
 
   const removeVolume = useCallback(
     (volumeId: string) => removeVolumeFromGroup(volumeId, groupName),
-    [groupName, removeVolumeFromGroup]
+    [groupName, removeVolumeFromGroup],
   );
 
   return {
     indexVolumes,
     indexVolumeGroup,
-    removeVolume
+    removeVolume,
   };
 };
 

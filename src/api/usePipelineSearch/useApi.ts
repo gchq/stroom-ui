@@ -18,13 +18,13 @@ import { useCallback } from "react";
 import useHttpClient from "../useHttpClient";
 import {
   PipelineSearchCriteriaType,
-  PipelineSearchResultType
+  PipelineSearchResultType,
 } from "src/types";
 import { useConfig } from "src/startup/config";
 
 interface Api {
   searchPipelines: (
-    fetchParams: PipelineSearchCriteriaType
+    fetchParams: PipelineSearchCriteriaType,
   ) => Promise<PipelineSearchResultType>;
 }
 
@@ -48,8 +48,8 @@ export const useApi = (): Api => {
         const forceGet = true;
         return httpGetJson(url, {}, forceGet);
       },
-      [stroomBaseServiceUrl, httpGetJson]
-    )
+      [stroomBaseServiceUrl, httpGetJson],
+    ),
   };
 };
 

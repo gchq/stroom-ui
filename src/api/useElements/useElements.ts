@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import useApi from "./useApi";
 import {
   ElementDefinitions,
-  ElementPropertiesByElementIdType
+  ElementPropertiesByElementIdType,
 } from "src/types";
 
 interface UseElements {
@@ -31,12 +31,12 @@ const useElements = (): UseElements => {
     fetchElements,
     fetchElementProperties,
     setElementDefinitions,
-    setElementProperties
+    setElementProperties,
   ]);
 
   return {
     elementDefinitions,
-    elementProperties
+    elementProperties,
   };
 };
 

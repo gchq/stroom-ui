@@ -3,12 +3,12 @@ import { useEffect, useState } from "react";
 import { DataSourceType } from "src/types";
 
 const defaultDataSource: DataSourceType = {
-  fields: []
+  fields: [],
 };
 
 const useStreamDataSource = (): DataSourceType => {
   const [dataSource, setDataSource] = useState<DataSourceType | undefined>(
-    undefined
+    undefined,
   );
   const { fetchDataSource } = useApi();
 

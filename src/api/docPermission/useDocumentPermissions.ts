@@ -3,9 +3,9 @@ import { useEffect, useCallback, useReducer } from "react";
 import useApi from "./useApi";
 import { DocumentPermissions } from "src/types";
 
-type PermissionsByUser = {
-  [userUuid: string]: Array<string>;
-};
+interface PermissionsByUser {
+  [userUuid: string]: string[];
+}
 const DEFAULT_PERMISSIONS_BY_USER: PermissionsByUser = {};
 
 /**
@@ -21,25 +21,25 @@ interface UseDocumentPermissions {
   clearPermissions: () => void;
 }
 
-type Received = {
+interface Received {
   type: "received";
   documentPermissions: DocumentPermissions;
-};
-type Cleared = {
+}
+interface Cleared {
   type: "cleared";
-};
-type ClearedForUser = {
+}
+interface ClearedForUser {
   type: "clearedForUser";
   userUuid: string;
-};
-type ReceivedForUser = {
+}
+interface ReceivedForUser {
   type: "prepareForUser";
   userUuid: string;
-};
+}
 
 const reducer = (
   state: PermissionsByUser,
-  action: Received | Cleared | ReceivedForUser | ClearedForUser
+  action: Received | Cleared | ReceivedForUser | ClearedForUser,
 ): PermissionsByUser => {
   switch (action.type) {
     case "received":
@@ -49,7 +49,7 @@ const reducer = (
     case "prepareForUser":
       return {
         ...state,
-        [action.userUuid]: []
+        [action.userUuid]: [],
       };
     case "clearedForUser":
       let { [action.userUuid]: omit, ...newState } = state;
@@ -60,14 +60,14 @@ const reducer = (
 };
 
 const useDocumentPermissions = (
-  docRefUuid: string | undefined
+  docRefUuid: string | undefined,
 ): UseDocumentPermissions => {
   const [permissionsByUser, dispatch] = useReducer(reducer, {});
 
   const {
     getPermissionForDoc,
     clearDocPermissions,
-    clearDocPermissionsForUser
+    clearDocPermissionsForUser,
   } = useApi();
 
   useEffect(() => {
@@ -75,8 +75,8 @@ const useDocumentPermissions = (
       getPermissionForDoc(docRefUuid).then(documentPermissions =>
         dispatch({
           type: "received",
-          documentPermissions
-        })
+          documentPermissions,
+        }),
       );
     }
   }, [docRefUuid, getPermissionForDoc]);
@@ -86,11 +86,11 @@ const useDocumentPermissions = (
       if (!!docRefUuid) {
         dispatch({
           type: "prepareForUser",
-          userUuid
+          userUuid,
         });
       }
     },
-    [docRefUuid]
+    [docRefUuid],
   );
 
   const clearPermissions = useCallback(() => {
@@ -105,19 +105,19 @@ const useDocumentPermissions = (
         clearDocPermissionsForUser(docRefUuid, userUuid).then(() =>
           dispatch({
             type: "clearedForUser",
-            userUuid
-          })
+            userUuid,
+          }),
         );
       }
     },
-    [docRefUuid, clearDocPermissionsForUser]
+    [docRefUuid, clearDocPermissionsForUser],
   );
 
   return {
     permissionsByUser,
     preparePermissionsForUser,
     clearPermissionForUser,
-    clearPermissions
+    clearPermissions,
   };
 };
 

@@ -17,7 +17,7 @@ const useDocumentApi = <
   T extends keyof ResourcesByDocType,
   D extends DocumentType<T>
 >(
-  docRefType: T
+  docRefType: T,
 ): DocumentApi<D> => {
   const { stroomBaseServiceUrl } = useConfig();
   const { httpGetJson, httpPostEmptyResponse } = useHttpClient();
@@ -25,7 +25,7 @@ const useDocumentApi = <
 
   if (!resourcePath) {
     throw new Error(
-      `API for Doc Ref requested, no generic implementation ${docRefType}`
+      `API for Doc Ref requested, no generic implementation ${docRefType}`,
     );
   }
 
@@ -33,18 +33,18 @@ const useDocumentApi = <
     fetchDocument: useCallback(
       (docRefUuid: string) =>
         httpGetJson(`${stroomBaseServiceUrl}${resourcePath}${docRefUuid}`),
-      [stroomBaseServiceUrl, httpGetJson]
+      [stroomBaseServiceUrl, httpGetJson],
     ),
     saveDocument: useCallback(
       (docRefContents: D) =>
         httpPostEmptyResponse(
           `${stroomBaseServiceUrl}${resourcePath}${docRefContents.uuid}`,
           {
-            body: docRefContents
-          }
+            body: docRefContents,
+          },
         ),
-      [stroomBaseServiceUrl, httpPostEmptyResponse]
-    )
+      [stroomBaseServiceUrl, httpPostEmptyResponse],
+    ),
   };
 };
 

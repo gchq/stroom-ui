@@ -22,7 +22,7 @@ export const useApi = (): Api => {
       pageOffset,
       sortBy,
       sortDirection,
-      searchCriteria
+      searchCriteria,
     }: FetchParameters): Promise<StreamTasksResponseType> => {
       let url = `${stroomBaseServiceUrl}/streamtasks/v1/?`;
       url += `pageSize=${pageSize}`;
@@ -38,7 +38,7 @@ export const useApi = (): Api => {
 
       return httpGetJson(url);
     },
-    [stroomBaseServiceUrl, httpGetJson]
+    [stroomBaseServiceUrl, httpGetJson],
   );
 
   const fetchMore = useCallback(
@@ -47,7 +47,7 @@ export const useApi = (): Api => {
       pageOffset,
       sortBy,
       sortDirection,
-      searchCriteria
+      searchCriteria,
     }: FetchParameters): Promise<StreamTasksResponseType> => {
       const nextPageOffset = pageOffset + 1;
 
@@ -65,7 +65,7 @@ export const useApi = (): Api => {
 
       return httpGetJson(url);
     },
-    [stroomBaseServiceUrl, httpGetJson]
+    [stroomBaseServiceUrl, httpGetJson],
   );
 
   const setEnabled = useCallback(
@@ -74,18 +74,18 @@ export const useApi = (): Api => {
       const body = JSON.stringify({
         op: "replace",
         path: "enabled",
-        value: enabled
+        value: enabled,
       });
 
       return httpPatchEmptyResponse(url, { body });
     },
-    [stroomBaseServiceUrl, httpPatchEmptyResponse]
+    [stroomBaseServiceUrl, httpPatchEmptyResponse],
   );
 
   return {
     setEnabled,
     fetchMore,
-    fetchTrackers
+    fetchTrackers,
   };
 };
 

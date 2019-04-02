@@ -3,11 +3,11 @@ import { User } from "src/types";
 export type IsGroup = "User" | "Group" | "" | undefined;
 
 export interface StoreState {
-  allUsers: Array<User>;
+  allUsers: User[];
   usersInGroup: {
-    [s: string]: Array<User>;
+    [s: string]: User[];
   };
   groupsForUser: {
-    [s: string]: Array<User>;
+    [s: string]: User[];
   };
 }

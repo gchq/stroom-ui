@@ -12,5 +12,5 @@ export {
   useUsers,
   useGroupsForUser,
   useUsersInGroup,
-  useManageUsers
+  useManageUsers,
 };

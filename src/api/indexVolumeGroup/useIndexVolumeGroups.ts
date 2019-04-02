@@ -5,7 +5,7 @@ import { IndexVolumeGroup } from "src/types";
 import useListReducer from "src/lib/useListReducer/useListReducer";
 
 interface UseIndexVolumeGroups {
-  groups: Array<IndexVolumeGroup>;
+  groups: IndexVolumeGroup[];
   createIndexVolumeGroup: (name: string) => void;
   deleteIndexVolumeGroup: (name: string) => void;
 }
@@ -15,13 +15,13 @@ const useIndexVolumeGroups = (): UseIndexVolumeGroups => {
     items: groups,
     itemsReceived,
     itemAdded,
-    itemRemoved
+    itemRemoved,
   } = useListReducer<IndexVolumeGroup>(g => g.name);
 
   const {
     createIndexVolumeGroup,
     deleteIndexVolumeGroup,
-    getIndexVolumeGroups
+    getIndexVolumeGroups,
   } = useApi();
 
   useEffect(() => {
@@ -32,13 +32,13 @@ const useIndexVolumeGroups = (): UseIndexVolumeGroups => {
     groups,
     createIndexVolumeGroup: useCallback(
       (groupName: string) => createIndexVolumeGroup(groupName).then(itemAdded),
-      [groups, createIndexVolumeGroup]
+      [groups, createIndexVolumeGroup],
     ),
     deleteIndexVolumeGroup: useCallback(
       (groupName: string) =>
         deleteIndexVolumeGroup(groupName).then(() => itemRemoved(groupName)),
-      [groups, deleteIndexVolumeGroup]
-    )
+      [groups, deleteIndexVolumeGroup],
+    ),
   };
 };
 

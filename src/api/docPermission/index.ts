@@ -5,5 +5,5 @@ import useDocumentPermissionsForUser from "./useDocumentPermissionsForUser";
 export {
   useDocTypePermissions,
   useDocumentPermissions,
-  useDocumentPermissionsForUser
+  useDocumentPermissionsForUser,
 };

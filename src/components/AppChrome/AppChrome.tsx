@@ -26,7 +26,7 @@ import {
   MenuItemOpened,
   MenuItemType,
   MenuItemsOpenState,
-  ActiveMenuItem
+  ActiveMenuItem,
 } from "./types";
 
 import useSelectableItemListing from "src/lib/useSelectableItemListing";
@@ -35,11 +35,11 @@ import { KeyDownState } from "src/lib/useKeyIsDown";
 import {
   CopyMoveDocRefDialog,
   useDialog as useCopyMoveDocRefDialog,
-  ShowDialog as ShowCopyDocRefDialog
+  ShowDialog as ShowCopyDocRefDialog,
 } from "src/components/DocumentEditors/FolderExplorer/CopyMoveDocRefDialog";
 import useLocalStorage, {
   storeBoolean,
-  storeObjectFactory
+  storeObjectFactory,
 } from "src/lib/useLocalStorage";
 import useRouter from "src/lib/useRouter";
 import { useDocumentTree } from "src/api/explorer";
@@ -53,7 +53,7 @@ const getDocumentTreeMenuItems = (
   openDocRef: DocRefConsumer,
   parentDocRef: DocRefType | undefined,
   treeNode: DocRefTree,
-  skipInContractedMenu = false
+  skipInContractedMenu = false,
 ): MenuItemType => ({
   key: treeNode.uuid,
   title: treeNode.name,
@@ -68,19 +68,19 @@ const getDocumentTreeMenuItems = (
       ? treeNode.children
           .filter(t => t.type === "Folder")
           .map(t => getDocumentTreeMenuItems(openDocRef, treeNode, t, true))
-      : undefined
+      : undefined,
 });
 
 const getOpenMenuItems = function<
   T extends {
     key: string;
-    children?: Array<T>;
+    children?: T[];
   }
 >(
-  menuItems: Array<T>,
+  menuItems: T[],
   areMenuItemsOpen: MenuItemsOpenState,
-  openMenuItems: Array<T> = []
-): Array<T> {
+  openMenuItems: T[] = [],
+): T[] {
   menuItems.forEach(menuItem => {
     openMenuItems.push(menuItem);
     if (menuItem.children && areMenuItemsOpen[menuItem.key]) {
@@ -98,15 +98,15 @@ interface Props {
 
 const getMenuItems = (
   isCollapsed: boolean = false,
-  menuItems: Array<MenuItemType>,
+  menuItems: MenuItemType[],
   areMenuItemsOpen: MenuItemsOpenState,
   menuItemOpened: MenuItemOpened,
   keyIsDown: KeyDownState,
   showCopyDialog: ShowCopyDocRefDialog,
   showMoveDialog: ShowCopyDocRefDialog,
-  selectedItems: Array<MenuItemType>,
+  selectedItems: MenuItemType[],
   focussedItem?: MenuItemType,
-  depth: number = 0
+  depth: number = 0,
 ) =>
   menuItems.map(menuItem => (
     <React.Fragment key={menuItem.key}>
@@ -139,7 +139,7 @@ const getMenuItems = (
             showMoveDialog,
             selectedItems,
             focussedItem,
-            depth + 1
+            depth + 1,
           )}
         </div>
       ) : (
@@ -152,29 +152,29 @@ const AppChrome = ({ content }: Props) => {
   const { theme } = useTheme();
 
   const {
-    router: { location }
+    router: { location },
   } = useRouter();
   const { documentTree, copyDocuments, moveDocuments } = useDocumentTree();
 
   const {
     value: areMenuItemsOpen,
-    setValue: setOpenMenuItems
+    setValue: setOpenMenuItems,
   } = useLocalStorage<MenuItemsOpenState>(
     "app-chrome-menu-items-open",
     {},
-    storeObjectFactory<MenuItemsOpenState>()
+    storeObjectFactory<MenuItemsOpenState>(),
   );
   const menuItemOpened: MenuItemOpened = (name: string, isOpen: boolean) => {
     setOpenMenuItems({
       ...areMenuItemsOpen,
-      [name]: isOpen
+      [name]: isOpen,
     });
   };
 
   const { value: isExpanded, setValue: setIsExpanded } = useLocalStorage(
     "isExpanded",
     true,
-    storeBoolean
+    storeBoolean,
   );
 
   const {
@@ -187,10 +187,10 @@ const AppChrome = ({ content }: Props) => {
     goToIndexVolumeGroups,
     goToUserSettings,
     goToUsers,
-    goToEditDocRef
+    goToEditDocRef,
   } = useAppNavigation();
 
-  const menuItems: Array<MenuItemType> = [
+  const menuItems: MenuItemType[] = [
     {
       key: "welcome",
       title: "Welcome",
@@ -198,7 +198,7 @@ const AppChrome = ({ content }: Props) => {
       icon: "home",
       style: "nav",
       isActive:
-        !!location && location.pathname.includes(`${PATH_PREFIX}/welcome/`)
+        !!location && location.pathname.includes(`${PATH_PREFIX}/welcome/`),
     },
     getDocumentTreeMenuItems(goToEditDocRef, undefined, documentTree),
     {
@@ -207,7 +207,7 @@ const AppChrome = ({ content }: Props) => {
       onClick: goToDataViewer,
       icon: "database",
       style: "nav",
-      isActive: !!location && location.pathname.includes(`${PATH_PREFIX}/data`)
+      isActive: !!location && location.pathname.includes(`${PATH_PREFIX}/data`),
     },
     {
       key: "processing",
@@ -216,14 +216,14 @@ const AppChrome = ({ content }: Props) => {
       icon: "play",
       style: "nav",
       isActive:
-        !!location && location.pathname.includes(`${PATH_PREFIX}/processing`)
+        !!location && location.pathname.includes(`${PATH_PREFIX}/processing`),
     },
     {
       key: "indexing",
       title: "Indexing",
       onClick: useCallback(
         () => menuItemOpened("indexing", !areMenuItemsOpen.indexing),
-        [menuItemOpened, areMenuItemsOpen]
+        [menuItemOpened, areMenuItemsOpen],
       ),
       icon: "database",
       style: "nav",
@@ -241,7 +241,7 @@ const AppChrome = ({ content }: Props) => {
           style: "nav",
           isActive:
             !!location &&
-            location.pathname.includes(`${PATH_PREFIX}/indexing/volumes`)
+            location.pathname.includes(`${PATH_PREFIX}/indexing/volumes`),
         },
         {
           key: "indexing-groups",
@@ -251,16 +251,16 @@ const AppChrome = ({ content }: Props) => {
           style: "nav",
           isActive:
             !!location &&
-            location.pathname.includes(`${PATH_PREFIX}/indexing/groups`)
-        }
-      ]
+            location.pathname.includes(`${PATH_PREFIX}/indexing/groups`),
+        },
+      ],
     },
     {
       key: "admin",
       title: "Admin",
       onClick: useCallback(
         () => menuItemOpened("admin", !areMenuItemsOpen.admin),
-        [menuItemOpened, areMenuItemsOpen]
+        [menuItemOpened, areMenuItemsOpen],
       ),
       icon: "cogs",
       style: "nav",
@@ -277,7 +277,7 @@ const AppChrome = ({ content }: Props) => {
           onClick: goToUserSettings,
           icon: "user",
           style: "nav",
-          isActive: !!location && location.pathname.includes("/s/me")
+          isActive: !!location && location.pathname.includes("/s/me"),
         },
         {
           key: "adminPermissions",
@@ -288,11 +288,11 @@ const AppChrome = ({ content }: Props) => {
             () =>
               menuItemOpened(
                 "adminPermissions",
-                !areMenuItemsOpen.adminPermissions
+                !areMenuItemsOpen.adminPermissions,
               ),
-            [menuItemOpened, areMenuItemsOpen]
+            [menuItemOpened, areMenuItemsOpen],
           ),
-          children: (["User", "Group"] as Array<IsGroup>).map(isGroup => ({
+          children: (["User", "Group"] as IsGroup[]).map(isGroup => ({
             key: `admin-permissions-${isGroup}`,
             title: isGroup,
             onClick: () => goToAuthorisationManager(isGroup),
@@ -300,8 +300,8 @@ const AppChrome = ({ content }: Props) => {
             style: "nav",
             isActive:
               !!location &&
-              location.pathname.includes(`/s/authorisationManager/${isGroup}`)
-          })) as Array<MenuItemType>
+              location.pathname.includes(`/s/authorisationManager/${isGroup}`),
+          })) as MenuItemType[],
         },
         {
           key: "admin-users",
@@ -309,7 +309,7 @@ const AppChrome = ({ content }: Props) => {
           onClick: goToUsers,
           icon: "users",
           style: "nav",
-          isActive: !!location && location.pathname.includes("/s/users")
+          isActive: !!location && location.pathname.includes("/s/users"),
         },
         {
           key: "admin-apikeys",
@@ -317,10 +317,10 @@ const AppChrome = ({ content }: Props) => {
           onClick: goToApiKeys,
           icon: "key",
           style: "nav",
-          isActive: !!location && location.pathname.includes("/s/apikeys")
-        }
-      ]
-    }
+          isActive: !!location && location.pathname.includes("/s/apikeys"),
+        },
+      ],
+    },
   ];
   const openMenuItems = getOpenMenuItems(menuItems, areMenuItemsOpen);
 
@@ -329,7 +329,7 @@ const AppChrome = ({ content }: Props) => {
     toggleSelection,
     selectedItems,
     focussedItem,
-    keyIsDown
+    keyIsDown,
   } = useSelectableItemListing<MenuItemType>({
     items: openMenuItems,
     getKey: m => m.key,
@@ -339,10 +339,11 @@ const AppChrome = ({ content }: Props) => {
       if (m) {
         if (areMenuItemsOpen[m.key]) {
           menuItemOpened(m.key, false);
-        } else if (m.parentDocRef) {
+        } else if (!!m.parentDocRef) {
           // Can we bubble back up to the parent folder of the current selection?
           let newSelection = openMenuItems.find(
-            ({ key }: MenuItemType) => key === m.parentDocRef!.uuid
+            ({ key }: MenuItemType) =>
+              !!m.parentDocRef && key === m.parentDocRef.uuid,
           );
           if (!!newSelection) {
             toggleSelection(newSelection.key);
@@ -350,16 +351,16 @@ const AppChrome = ({ content }: Props) => {
           menuItemOpened(m.parentDocRef.uuid, false);
         }
       }
-    }
+    },
   });
 
   const {
     showDialog: showCopyDialog,
-    componentProps: copyDialogComponentProps
+    componentProps: copyDialogComponentProps,
   } = useCopyMoveDocRefDialog(copyDocuments);
   const {
     showDialog: showMoveDialog,
-    componentProps: moveDialogComponentProps
+    componentProps: moveDialogComponentProps,
   } = useCopyMoveDocRefDialog(moveDocuments);
 
   const sidebarClassName = isExpanded
@@ -408,7 +409,7 @@ const AppChrome = ({ content }: Props) => {
                   showCopyDialog,
                   showMoveDialog,
                   selectedItems,
-                  focussedItem
+                  focussedItem,
                 )}
               </div>
             </div>

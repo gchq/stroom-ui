@@ -5,8 +5,8 @@ import { IndexVolumeGroup } from "src/types";
 import { useConfig } from "src/startup/config";
 
 interface Api {
-  getIndexVolumeGroupNames: () => Promise<Array<string>>;
-  getIndexVolumeGroups: () => Promise<Array<IndexVolumeGroup>>;
+  getIndexVolumeGroupNames: () => Promise<string[]>;
+  getIndexVolumeGroups: () => Promise<IndexVolumeGroup[]>;
   getIndexVolumeGroup: (name: string) => Promise<IndexVolumeGroup>;
   createIndexVolumeGroup: (name: string) => Promise<IndexVolumeGroup>;
   deleteIndexVolumeGroup: (name: string) => Promise<void>;
@@ -17,42 +17,42 @@ export const useApi = (): Api => {
   const {
     httpGetJson,
     httpPostJsonResponse,
-    httpDeleteEmptyResponse
+    httpDeleteEmptyResponse,
   } = useHttpClient();
 
   return {
     getIndexVolumeGroupNames: useCallback(
       () =>
         httpGetJson(
-          `${stroomBaseServiceUrl}/stroom-index/volumeGroup/v1/names`
+          `${stroomBaseServiceUrl}/stroom-index/volumeGroup/v1/names`,
         ),
-      [stroomBaseServiceUrl, httpGetJson]
+      [stroomBaseServiceUrl, httpGetJson],
     ),
     getIndexVolumeGroups: useCallback(
       () => httpGetJson(`${stroomBaseServiceUrl}/stroom-index/volumeGroup/v1`),
-      [stroomBaseServiceUrl, httpGetJson]
+      [stroomBaseServiceUrl, httpGetJson],
     ),
     getIndexVolumeGroup: useCallback(
       (name: string) =>
         httpGetJson(
-          `${stroomBaseServiceUrl}/stroom-index/volumeGroup/v1/${name}`
+          `${stroomBaseServiceUrl}/stroom-index/volumeGroup/v1/${name}`,
         ),
-      [stroomBaseServiceUrl, httpGetJson]
+      [stroomBaseServiceUrl, httpGetJson],
     ),
     createIndexVolumeGroup: useCallback(
       (name: string) =>
         httpPostJsonResponse(
-          `${stroomBaseServiceUrl}/stroom-index/volumeGroup/v1/${name}`
+          `${stroomBaseServiceUrl}/stroom-index/volumeGroup/v1/${name}`,
         ),
-      [stroomBaseServiceUrl, httpPostJsonResponse]
+      [stroomBaseServiceUrl, httpPostJsonResponse],
     ),
     deleteIndexVolumeGroup: useCallback(
       (name: string) =>
         httpDeleteEmptyResponse(
-          `${stroomBaseServiceUrl}/stroom-index/volumeGroup/v1/${name}`
+          `${stroomBaseServiceUrl}/stroom-index/volumeGroup/v1/${name}`,
         ),
-      [stroomBaseServiceUrl, httpDeleteEmptyResponse]
-    )
+      [stroomBaseServiceUrl, httpDeleteEmptyResponse],
+    ),
   };
 };
 

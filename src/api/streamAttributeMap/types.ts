@@ -1,7 +1,7 @@
 import {
   ExpressionOperatorWithUuid,
   PageRequest,
-  StreamAttributeMapResult
+  StreamAttributeMapResult,
 } from "src/types";
 
 export interface UseStreamSearch {

@@ -6,13 +6,13 @@ import useUpdateableState from "src/lib/useUpdateableState";
 
 const defaultPagedData: PagedData = {
   streamAttributeMaps: [],
-  total: 0
+  total: 0,
 };
 
 const defaultFetchParams: FetchDataParams = {
   metaId: undefined,
   pageOffset: 0,
-  pageSize: 20
+  pageSize: 20,
 };
 
 const useData = (): UseData => {
@@ -39,7 +39,7 @@ const useData = (): UseData => {
     updatePagedData,
     fetchParams,
     updateFetchParams,
-    getDataForSelectedRow: getDataForSelectedRowWrapped
+    getDataForSelectedRow: getDataForSelectedRowWrapped,
   };
 };
 

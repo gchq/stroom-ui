@@ -1,7 +1,7 @@
 import { useState, useCallback } from "react";
 import {
   PipelineSearchResultType,
-  PipelineSearchCriteriaType
+  PipelineSearchCriteriaType,
 } from "src/types";
 import useApi from "./useApi";
 
@@ -14,20 +14,20 @@ interface UsePipelineSearch {
 
 const DEFAULT_SEARCH_RESULT: PipelineSearchResultType = {
   total: 0,
-  pipelines: []
+  pipelines: [],
 };
 const DEFAULT_CRITERIA: PipelineSearchCriteriaType = {
   filter: "",
   pageOffset: 0,
-  pageSize: 10
+  pageSize: 10,
 };
 
 const usePipelineSearch = (): UsePipelineSearch => {
   const [results, setResults] = useState<PipelineSearchResultType>(
-    DEFAULT_SEARCH_RESULT
+    DEFAULT_SEARCH_RESULT,
   );
   const [criteria, setCriteria] = useState<PipelineSearchCriteriaType>(
-    DEFAULT_CRITERIA
+    DEFAULT_CRITERIA,
   );
   const { searchPipelines } = useApi();
 
@@ -36,11 +36,11 @@ const usePipelineSearch = (): UsePipelineSearch => {
     criteria,
     updateCriteria: useCallback(
       updates => setCriteria({ ...criteria, ...updates }),
-      [criteria, setCriteria]
+      [criteria, setCriteria],
     ),
     searchPipelines: useCallback(() => {
       searchPipelines(criteria).then(s => setResults);
-    }, [searchPipelines, setResults])
+    }, [searchPipelines, setResults]),
   };
 };
 

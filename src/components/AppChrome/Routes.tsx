@@ -34,7 +34,7 @@ import UserSettings from "../UserSettings";
 import IFrame from "../IFrame";
 
 import AuthorisationManager, {
-  UserAuthorisationEditor
+  UserAuthorisationEditor,
 } from "../AuthorisationManager";
 import IndexVolumes from "../IndexVolumes";
 import IndexVolumeGroups from "../IndexVolumeGroups";
@@ -113,7 +113,7 @@ const Routes: React.FunctionComponent = () => {
           <AppChrome activeMenuItem="userSettings" content={<UserSettings />} />
         )}
       />
-      {(["Group", "User"] as Array<IsGroup>).map(isGroup => (
+      {(["Group", "User"] as IsGroup[]).map(isGroup => (
         <PrivateRoute
           key={isGroup}
           exact
@@ -134,8 +134,8 @@ const Routes: React.FunctionComponent = () => {
         path={urlGenerator.goToAuthorisationsForUser(":userUuid")}
         render={({
           match: {
-            params: { userUuid }
-          }
+            params: { userUuid },
+          },
         }: RouteComponentProps<any>) => (
           <AppChrome
             activeMenuItem="userPermissions"
@@ -148,8 +148,8 @@ const Routes: React.FunctionComponent = () => {
         path={urlGenerator.goToAuthorisationsForDocument(":docRefUuid")}
         render={({
           match: {
-            params: { docRefUuid }
-          }
+            params: { docRefUuid },
+          },
         }: RouteComponentProps<any>) => (
           <AppChrome
             activeMenuItem="userPermissions"
@@ -161,12 +161,12 @@ const Routes: React.FunctionComponent = () => {
         exact
         path={urlGenerator.goToAuthorisationsForDocumentForUser(
           ":docRefUuid",
-          ":userUuid"
+          ":userUuid",
         )}
         render={({
           match: {
-            params: { userUuid, docRefUuid }
-          }
+            params: { userUuid, docRefUuid },
+          },
         }: RouteComponentProps<any>) => (
           <AppChrome
             activeMenuItem="userPermissions"
@@ -191,8 +191,8 @@ const Routes: React.FunctionComponent = () => {
         path={urlGenerator.goToIndexVolume(":volumeId")}
         render={({
           match: {
-            params: { volumeId }
-          }
+            params: { volumeId },
+          },
         }: RouteComponentProps<any>) => (
           <AppChrome
             activeMenuItem="indexVolumes"
@@ -215,8 +215,8 @@ const Routes: React.FunctionComponent = () => {
         path={urlGenerator.goToIndexVolumeGroup(":groupName")}
         render={({
           match: {
-            params: { groupName }
-          }
+            params: { groupName },
+          },
         }: RouteComponentProps<any>) => (
           <AppChrome
             activeMenuItem="indexVolumeGroups"

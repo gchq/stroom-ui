@@ -9,8 +9,8 @@ import useApi from "./useApi";
  *
  * @param userUuid The UUID of the user or group
  */
-const useAllAppPermissions = (): Array<string> => {
-  const [allAppPermissions, setAllAppPermissions] = useState<Array<string>>([]);
+const useAllAppPermissions = (): string[] => {
+  const [allAppPermissions, setAllAppPermissions] = useState<string[]>([]);
   const { getAllPermissionNames } = useApi();
 
   useEffect(() => {

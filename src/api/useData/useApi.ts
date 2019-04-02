@@ -6,7 +6,7 @@ import { useConfig } from "src/startup/config";
 
 interface Api {
   getDataForSelectedRow: (
-    fetchParams: FetchDataParams
+    fetchParams: FetchDataParams,
   ) => Promise<AbstractFetchDataResult>;
 }
 
@@ -25,11 +25,11 @@ export const useApi = (): Api => {
 
       return httpGetJson(url.href);
     },
-    [httpGetJson]
+    [httpGetJson],
   );
 
   return {
-    getDataForSelectedRow
+    getDataForSelectedRow,
   };
 };
 

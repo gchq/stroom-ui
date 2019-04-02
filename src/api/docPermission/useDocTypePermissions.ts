@@ -6,9 +6,9 @@ import useApi from "./useApi";
  * Encapsulates the behaviour required to fetch the list of valid permissions.
  */
 
-const useDocTypePermissions = (docType: string): Array<string> => {
+const useDocTypePermissions = (docType: string): string[] => {
   const { getPermissionForDocType } = useApi();
-  const [permissionNames, setPermissionNames] = useState<Array<string>>([]);
+  const [permissionNames, setPermissionNames] = useState<string[]>([]);
 
   useEffect(() => {
     getPermissionForDocType(docType).then(setPermissionNames);

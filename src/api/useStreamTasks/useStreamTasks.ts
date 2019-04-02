@@ -7,13 +7,13 @@ import {
   Directions,
   FetchParameters,
   PagedTrackerInfo,
-  UseStreamTasks
+  UseStreamTasks,
 } from "./types";
 
 const defaultPagedInfo: PagedTrackerInfo = {
   trackers: [],
   numberOfPages: 1,
-  totalTrackers: 0
+  totalTrackers: 0,
 };
 
 const defaultFetchParameters: FetchParameters = {
@@ -21,19 +21,19 @@ const defaultFetchParameters: FetchParameters = {
   sortDirection: Directions.ascending,
   pageSize: 10,
   pageOffset: 0,
-  searchCriteria: "is:incomplete "
+  searchCriteria: "is:incomplete ",
 };
 
 const useStreamTasks = (): UseStreamTasks => {
   const { fetchTrackers, fetchMore, setEnabled } = useApi();
 
   const [fetchParameters, setFetchParameters] = useState<FetchParameters>(
-    defaultFetchParameters
+    defaultFetchParameters,
   );
   const { pageSize, pageOffset, sortBy } = fetchParameters;
 
   const [pagedTrackerInfo, setPagedTrackerInfo] = useState<PagedTrackerInfo>(
-    defaultPagedInfo
+    defaultPagedInfo,
   );
   const { trackers, totalTrackers, numberOfPages } = pagedTrackerInfo;
 
@@ -41,38 +41,38 @@ const useStreamTasks = (): UseStreamTasks => {
     (params: Partial<FetchParameters>) => {
       setFetchParameters({
         ...fetchParameters,
-        ...params
+        ...params,
       });
     },
-    [fetchParameters, setFetchParameters]
+    [fetchParameters, setFetchParameters],
   );
 
   const addTrackers = useCallback(
-    (streamTasks: Array<StreamTaskType>, totalStreamTasks: number) => {
+    (streamTasks: StreamTaskType[], totalStreamTasks: number) => {
       setPagedTrackerInfo({
         trackers: trackers.concat(streamTasks),
         totalTrackers: totalStreamTasks,
-        numberOfPages: Math.ceil(totalStreamTasks / pageSize)
+        numberOfPages: Math.ceil(totalStreamTasks / pageSize),
       });
     },
-    [setPagedTrackerInfo, trackers, pageSize]
+    [setPagedTrackerInfo, trackers, pageSize],
   );
 
   const updateSort = useCallback(
     (sortBy: SortByOptions, sortDirection: Directions) => {
       updateFetchParameters({ sortBy, sortDirection });
     },
-    [updateFetchParameters]
+    [updateFetchParameters],
   );
 
   const updateTrackers = useCallback(
-    (streamTasks: Array<StreamTaskType>, totalStreamTasks: number) =>
+    (streamTasks: StreamTaskType[], totalStreamTasks: number) =>
       setPagedTrackerInfo({
         trackers: streamTasks,
         totalTrackers: totalStreamTasks,
-        numberOfPages: Math.ceil(totalStreamTasks / pageSize)
+        numberOfPages: Math.ceil(totalStreamTasks / pageSize),
       }),
-    [setPagedTrackerInfo]
+    [setPagedTrackerInfo],
   );
 
   const updateEnabled = useCallback(
@@ -81,13 +81,13 @@ const useStreamTasks = (): UseStreamTasks => {
         trackers: trackers.map((tracker, i) =>
           tracker.filterId === filterId
             ? { ...tracker, enabled: enabled }
-            : tracker
+            : tracker,
         ),
         numberOfPages,
-        totalTrackers
+        totalTrackers,
       });
     },
-    [setPagedTrackerInfo, trackers, numberOfPages, totalTrackers]
+    [setPagedTrackerInfo, trackers, numberOfPages, totalTrackers],
   );
 
   const updateSearchCriteria = useCallback(
@@ -99,24 +99,24 @@ const useStreamTasks = (): UseStreamTasks => {
 
       updateFetchParameters({
         sortBy: newSortBy,
-        searchCriteria
+        searchCriteria,
       });
     },
-    [sortBy, setFetchParameters]
+    [sortBy, setFetchParameters],
   );
 
   const changePage = useCallback(
     (pageOffset: number) => {
       updateFetchParameters({ pageOffset });
     },
-    [updateFetchParameters]
+    [updateFetchParameters],
   );
 
   const updatePageSize = useCallback(
     (pageSize: number) => {
       updateFetchParameters({ pageSize });
     },
-    [updateFetchParameters]
+    [updateFetchParameters],
   );
 
   const resetPaging = useCallback(() => {
@@ -132,7 +132,7 @@ const useStreamTasks = (): UseStreamTasks => {
         ? currentPageOffset + 1
         : numberOfPagesToUse;
     updateFetchParameters({
-      pageOffset: newPageOffset
+      pageOffset: newPageOffset,
     });
   }, [updateFetchParameters, pageOffset, numberOfPages]);
 
@@ -140,19 +140,19 @@ const useStreamTasks = (): UseStreamTasks => {
     // We don't want to page further than is possible
     const newPageOffset = pageOffset > 0 ? pageOffset - 1 : 0;
     updateFetchParameters({
-      pageOffset: newPageOffset
+      pageOffset: newPageOffset,
     });
   }, [updateFetchParameters, pageOffset]);
 
   const fetchTrackersLocal = useCallback(() => {
     fetchTrackers(fetchParameters).then(d =>
-      updateTrackers(d.streamTasks, d.totalStreamTasks)
+      updateTrackers(d.streamTasks, d.totalStreamTasks),
     );
   }, [fetchParameters, fetchTrackers, updateTrackers]);
 
   const fetchMoreLocal = useCallback(() => {
     fetchMore(fetchParameters).then(d =>
-      addTrackers(d.streamTasks, d.totalStreamTasks)
+      addTrackers(d.streamTasks, d.totalStreamTasks),
     );
   }, [fetchMore, fetchParameters]);
 
@@ -161,11 +161,11 @@ const useStreamTasks = (): UseStreamTasks => {
       const tracker = trackers.find(t => t.filterId === filterId);
       if (tracker) {
         setEnabled(filterId, !tracker.enabled).then(() =>
-          updateEnabled(filterId, !tracker.enabled)
+          updateEnabled(filterId, !tracker.enabled),
         );
       }
     },
-    [setEnabled, trackers, updateEnabled]
+    [setEnabled, trackers, updateEnabled],
   );
 
   return {
@@ -184,7 +184,7 @@ const useStreamTasks = (): UseStreamTasks => {
     updatePageSize,
     updateSearchCriteria,
     updateSort,
-    updateTrackers
+    updateTrackers,
   };
 };
 

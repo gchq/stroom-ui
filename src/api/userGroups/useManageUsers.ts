@@ -6,7 +6,7 @@ import { IsGroup } from "./types";
 import useListReducer from "src/lib/useListReducer";
 
 interface ManageUsers {
-  users: Array<User>;
+  users: User[];
   findUsers: (name?: string, isGroup?: IsGroup, uuid?: string) => void;
   addUserToGroup: (userUuid: string, groupUuid: string) => void;
   createUser: (name: string, isGroup: boolean) => Promise<User>;
@@ -18,7 +18,7 @@ const useManageUsers = (): ManageUsers => {
     items: users,
     itemAdded,
     itemRemoved,
-    itemsReceived
+    itemsReceived,
   } = useListReducer<User>(u => u.uuid);
 
   const { createUser, deleteUser, addUserToGroup, findUsers } = useApi();
@@ -29,13 +29,13 @@ const useManageUsers = (): ManageUsers => {
       (name, isGroup, uuid) => {
         findUsers(name, isGroup, uuid).then(itemsReceived);
       },
-      [findUsers, itemsReceived]
+      [findUsers, itemsReceived],
     ),
     addUserToGroup: useCallback(
       (userUuid: string, groupUuid: string) => {
         addUserToGroup(userUuid, groupUuid); // no immediate feedback here...
       },
-      [addUserToGroup]
+      [addUserToGroup],
     ),
     createUser: useCallback(
       (name: string, isGroup: boolean) => {
@@ -43,14 +43,14 @@ const useManageUsers = (): ManageUsers => {
         p.then(itemAdded);
         return p;
       },
-      [createUser, itemAdded]
+      [createUser, itemAdded],
     ),
     deleteUser: useCallback(
       (userUuid: string) => {
         deleteUser(userUuid).then(() => itemRemoved(userUuid));
       },
-      [itemRemoved, deleteUser]
-    )
+      [itemRemoved, deleteUser],
+    ),
   };
 };
 

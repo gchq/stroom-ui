@@ -5,25 +5,25 @@ import { DEFAULT_TREE, DEFAULT_DOC_REF_WITH_LINEAGE } from "./values";
 
 export interface DocumentTreeContextValue {
   documentTree: DocRefTree;
-  searchApp: (args: SearchProps) => Promise<Array<DocRefType>>;
+  searchApp: (args: SearchProps) => Promise<DocRefType[]>;
   createDocument: (
     docRefType: string,
     docRefName: string,
     destinationFolderRef: DocRefType,
-    permissionInheritance: string
+    permissionInheritance: string,
   ) => void;
   renameDocument: (docRef: DocRefType, name: string) => void;
   copyDocuments: (
-    uuids: Array<string>,
+    uuids: string[],
     destination: DocRefType,
-    permissionInheritance: string
+    permissionInheritance: string,
   ) => void;
   moveDocuments: (
-    uuids: Array<string>,
+    uuids: string[],
     destination: DocRefType,
-    permissionInheritance: string
+    permissionInheritance: string,
   ) => void;
-  deleteDocuments: (uuids: Array<string>) => void;
+  deleteDocuments: (uuids: string[]) => void;
   findDocRefWithLineage: (docRefUuid: string) => DocRefWithLineage;
 }
 
@@ -38,7 +38,7 @@ const DocumentTreeContext = createContext<DocumentTreeContextValue>({
   findDocRefWithLineage: () => DEFAULT_DOC_REF_WITH_LINEAGE,
   moveDocuments: NO_OP_FUNCTION,
   renameDocument: NO_OP_FUNCTION,
-  searchApp: () => Promise.reject()
+  searchApp: () => Promise.reject(),
 });
 
 export default DocumentTreeContext;

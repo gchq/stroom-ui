@@ -14,22 +14,22 @@ interface ModeOption {
   position: "left" | "middle" | "right";
 }
 
-const MODE_OPTIONS: Array<ModeOption> = [
+const MODE_OPTIONS: ModeOption[] = [
   {
     mode: SearchMode.GLOBAL_SEARCH,
     icon: "search",
-    position: "left"
+    position: "left",
   },
   {
     mode: SearchMode.NAVIGATION,
     icon: "folder",
-    position: "middle"
+    position: "middle",
   },
   {
     mode: SearchMode.RECENT_ITEMS,
     icon: "history",
-    position: "right"
-  }
+    position: "right",
+  },
 ];
 
 const ModeOptionButtons = ({ switchMode }: Props) => (

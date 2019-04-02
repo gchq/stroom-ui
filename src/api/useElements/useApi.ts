@@ -3,7 +3,7 @@ import { useCallback } from "react";
 import useHttpClient from "../useHttpClient";
 import {
   ElementDefinitions,
-  ElementPropertiesByElementIdType
+  ElementPropertiesByElementIdType,
 } from "src/types";
 import { useConfig } from "src/startup/config";
 
@@ -19,21 +19,21 @@ export const useApi = (): Api => {
   const fetchElements = useCallback(
     () =>
       httpGetJson(`${stroomBaseServiceUrl}/elements/v1/elements`, {}, false),
-    [stroomBaseServiceUrl, httpGetJson]
+    [stroomBaseServiceUrl, httpGetJson],
   );
   const fetchElementProperties = useCallback(
     () =>
       httpGetJson(
         `${stroomBaseServiceUrl}/elements/v1/elementProperties`,
         {},
-        false
+        false,
       ),
-    [stroomBaseServiceUrl, httpGetJson]
+    [stroomBaseServiceUrl, httpGetJson],
   );
 
   return {
     fetchElementProperties,
-    fetchElements
+    fetchElements,
   };
 };
 

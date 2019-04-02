@@ -32,5 +32,5 @@ export const DOCUMENT_RESOURCES: ResourcesByDocType = {
   StatisticsStore: "/statistics/v1/",
   StroomStatsStore: "/stroomStats/v1/",
   Visualisation: "/visualisation/v1/",
-  XMLSchema: "/xmlSchema/v1/"
+  XMLSchema: "/xmlSchema/v1/",
 };

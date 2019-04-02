@@ -1,34 +1,34 @@
-import {IconProp} from '@fortawesome/fontawesome-svg-core';
-import {DocRefType} from 'src/types';
-import {IsGroup} from 'src/api/userGroups';
+import { IconProp } from "@fortawesome/fontawesome-svg-core";
+import { DocRefType } from "src/types";
+import { IsGroup } from "src/api/userGroups";
 
 export type ActiveMenuItem =
-  | 'welcome'
-  | 'userSettings'
-  | 'data'
-  | 'processing'
-  | 'groupPermissions'
-  | 'userPermissions'
-  | 'indexVolumes'
-  | 'indexVolumeGroups'
-  | 'userIdentities'
-  | 'apiKeys'
-  | 'explorer';
+  | "welcome"
+  | "userSettings"
+  | "data"
+  | "processing"
+  | "groupPermissions"
+  | "userPermissions"
+  | "indexVolumes"
+  | "indexVolumeGroups"
+  | "userIdentities"
+  | "apiKeys"
+  | "explorer";
 
 export type MenuItemOpened = (name: string, isOpen: boolean) => void;
 
-export type MenuItemsOpenState = {
+export interface MenuItemsOpenState {
   [s: string]: boolean;
-};
+}
 
 export interface MenuItemType {
   key: string;
   title?: string;
   onClick: () => void;
   icon: IconProp;
-  style: 'doc' | 'nav';
+  style: "doc" | "nav";
   skipInContractedMenu?: boolean;
-  children?: Array<MenuItemType>;
+  children?: MenuItemType[];
   docRef?: DocRefType;
   parentDocRef?: DocRefType;
   isActive?: boolean;

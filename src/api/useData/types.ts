@@ -7,7 +7,7 @@ export interface FetchDataParams {
 }
 
 export interface PagedData {
-  streamAttributeMaps: Array<DataRow>;
+  streamAttributeMaps: DataRow[];
   total: number;
 }
 

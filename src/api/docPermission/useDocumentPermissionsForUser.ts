@@ -4,26 +4,26 @@ import useApi from "./useApi";
 import useListReducer from "src/lib/useListReducer/useListReducer";
 
 interface UseDocumentPermissions {
-  permissionNames: Array<string>;
+  permissionNames: string[];
   addPermission: (permissionName: string) => void;
   removePermission: (permissionName: string) => void;
 }
 
 const useDocumentPermissionsForUser = (
   docRefUuid: string,
-  userUuid: string
+  userUuid: string,
 ): UseDocumentPermissions => {
   const {
     items: permissionNames,
     itemAdded,
     itemRemoved,
-    itemsReceived
+    itemsReceived,
   } = useListReducer<string>(g => g);
 
   const {
     getPermissionsForDocumentForUser,
     addDocPermission,
-    removeDocPermission
+    removeDocPermission,
   } = useApi();
 
   useEffect(() => {
@@ -33,24 +33,24 @@ const useDocumentPermissionsForUser = (
   const addPermission = useCallback(
     (permissionName: string) => {
       addDocPermission(docRefUuid, userUuid, permissionName).then(() =>
-        itemAdded(permissionName)
+        itemAdded(permissionName),
       );
     },
-    [docRefUuid, userUuid, addDocPermission]
+    [docRefUuid, userUuid, addDocPermission],
   );
   const removePermission = useCallback(
     (permissionName: string) => {
       removeDocPermission(docRefUuid, userUuid, permissionName).then(() =>
-        itemRemoved(permissionName)
+        itemRemoved(permissionName),
       );
     },
-    [docRefUuid, userUuid, removeDocPermission]
+    [docRefUuid, userUuid, removeDocPermission],
   );
 
   return {
     permissionNames,
     addPermission,
-    removePermission
+    removePermission,
   };
 };
 

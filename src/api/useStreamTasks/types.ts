@@ -3,17 +3,17 @@ import { StreamTaskType } from "src/types";
 export enum TrackerSelection {
   first = "first",
   last = "last",
-  none = "none"
+  none = "none",
 }
 export enum Directions {
   ascending = "ascending",
-  descending = "descending"
+  descending = "descending",
 }
 export enum SortByOptions {
   pipelineUuid = "pipelineUuid",
   pipelineName = "pipelineName",
   priority = "Priority",
-  progress = "progress"
+  progress = "progress",
 }
 
 export const sortByFromString = (asStr: string): SortByOptions => {
@@ -28,7 +28,7 @@ export interface FetchParameters {
   searchCriteria: string;
 }
 export interface PagedTrackerInfo {
-  trackers: Array<StreamTaskType>;
+  trackers: StreamTaskType[];
   totalTrackers: number;
   numberOfPages: number;
 }
@@ -41,13 +41,13 @@ export interface UseStreamTasks {
   fetchMore: () => void;
   enableToggle: (filterId: number) => void;
   addTrackers: (
-    streamTasks: Array<StreamTaskType>,
-    totalStreamTasks: number
+    streamTasks: StreamTaskType[],
+    totalStreamTasks: number,
   ) => void;
   updateSort: (sortBy: SortByOptions, sortDirection: Directions) => void;
   updateTrackers: (
-    streamTasks: Array<StreamTaskType>,
-    totalStreamTasks: number
+    streamTasks: StreamTaskType[],
+    totalStreamTasks: number,
   ) => void;
   updateEnabled: (filterId: number, enabled: boolean) => void;
   updateSearchCriteria: (searchCriteria: string) => void;

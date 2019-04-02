@@ -7,5 +7,5 @@ export {
   useDocRefInfo,
   useDocRefTypes,
   useDocumentTree,
-  DocumentTreeContextProvider
+  DocumentTreeContextProvider,
 };

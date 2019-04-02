@@ -7,7 +7,7 @@ import useListReducer from "src/lib/useListReducer/useListReducer";
  * An API for managing the application permissions for a single user.
  */
 interface UserAppPermissionApi {
-  userAppPermissions: Array<string>;
+  userAppPermissions: string[];
   addPermission: (permissionName: string) => void;
   removePermission: (permissionName: string) => void;
 }
@@ -23,13 +23,13 @@ const useAppPermissionsForUser = (userUuid: string): UserAppPermissionApi => {
     items: userAppPermissions,
     itemsReceived,
     itemAdded,
-    itemRemoved
+    itemRemoved,
   } = useListReducer<string>(g => g);
 
   const {
     getPermissionsForUser,
     addAppPermission,
-    removeAppPermission
+    removeAppPermission,
   } = useApi();
 
   useEffect(() => {
@@ -39,23 +39,23 @@ const useAppPermissionsForUser = (userUuid: string): UserAppPermissionApi => {
   const addPermission = useCallback(
     (permissionName: string) =>
       addAppPermission(userUuid, permissionName).then(() =>
-        itemAdded(permissionName)
+        itemAdded(permissionName),
       ),
-    [userUuid, addAppPermission]
+    [userUuid, addAppPermission],
   );
 
   const removePermission = useCallback(
     (permissionName: string) =>
       removeAppPermission(userUuid, permissionName).then(() =>
-        itemRemoved(permissionName)
+        itemRemoved(permissionName),
       ),
-    [userUuid, removeAppPermission]
+    [userUuid, removeAppPermission],
   );
 
   return {
     userAppPermissions,
     addPermission,
-    removePermission
+    removePermission,
   };
 };
 
