@@ -15,7 +15,6 @@
  */
 
 import * as React from "react";
-import { useState, useCallback } from "react";
 
 import IconHeader from "../../../IconHeader";
 import ThemedModal from "../../../ThemedModal";
@@ -32,7 +31,7 @@ interface Props {
   onConfirm: (
     docRefType: string,
     docRefName: string,
-    permissionInheritance: string
+    permissionInheritance: string,
   ) => void;
   onCloseDialog: () => void;
 }
@@ -45,20 +44,20 @@ interface FormValues {
 
 const initialValues: FormValues = {
   docRefName: "New Document",
-  permissionInheritance: PermissionInheritance.NONE
+  permissionInheritance: PermissionInheritance.NONE,
 };
 
-export const CreateDocRefDialog = ({
+export const CreateDocRefDialog: React.FunctionComponent<Props> = ({
   isOpen,
   onConfirm,
-  onCloseDialog
-}: Props) => {
+  onCloseDialog,
+}) => {
   const {
     value: { docRefType, docRefName, permissionInheritance },
     useControlledInputProps,
-    useTextInput
+    useTextInput,
   } = useForm<FormValues>({
-    initialValues
+    initialValues,
   });
 
   const docRefNameProps = useTextInput("docRefName");
@@ -67,7 +66,7 @@ export const CreateDocRefDialog = ({
     PermissionInheritance
   >("permissionInheritance");
 
-  const onConfirmLocal = useCallback(() => {
+  const onConfirmLocal = React.useCallback(() => {
     if (!!docRefType && !!docRefName && !!permissionInheritance) {
       onConfirm(docRefType, docRefName, permissionInheritance);
       onCloseDialog();
@@ -75,7 +74,7 @@ export const CreateDocRefDialog = ({
       console.error("Form Invalid", {
         docRefType,
         docRefName,
-        permissionInheritance
+        permissionInheritance,
       });
     }
   }, [docRefType, docRefName, permissionInheritance, onConfirm, onCloseDialog]);
@@ -115,7 +114,7 @@ export const CreateDocRefDialog = ({
  * These are the things returned by the custom hook that allow the owning component to interact
  * with this dialog.
  */
-type UseDialog = {
+interface UseDialog {
   /**
    * The owning component is ready to start a deletion process.
    * Calling this will open the dialog, and setup the UUIDs
@@ -126,7 +125,7 @@ type UseDialog = {
    * using destructing.
    */
   componentProps: Props;
-};
+}
 
 /**
  * This is a React custom hook that sets up things required by the owning component.
@@ -135,13 +134,13 @@ export const useDialog = (
   onConfirm: (
     docRefType: string,
     docRefName: string,
-    permissionInheritance: string
-  ) => void
+    permissionInheritance: string,
+  ) => void,
 ): UseDialog => {
-  const [destination, setDestination] = useState<DocRefType | undefined>(
-    undefined
+  const [destination, setDestination] = React.useState<DocRefType | undefined>(
+    undefined,
   );
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isOpen, setIsOpen] = React.useState<boolean>(false);
 
   return {
     componentProps: {
@@ -151,12 +150,12 @@ export const useDialog = (
       onCloseDialog: () => {
         setIsOpen(false);
         setDestination(undefined);
-      }
+      },
     },
     showDialog: _destination => {
       setIsOpen(true);
       setDestination(_destination);
-    }
+    },
   };
 };
 

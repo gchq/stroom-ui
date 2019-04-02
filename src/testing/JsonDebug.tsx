@@ -4,7 +4,7 @@ export interface Props {
   value: any;
 }
 
-export default ({ value }: Props) => (
+const JsonDebug: React.FunctionComponent<Props> = ({ value }) => (
   <div
     style={{
       margin: "3rem 0",
@@ -40,3 +40,4 @@ export default ({ value }: Props) => (
     </pre>
   </div>
 );
+export default JsonDebug;

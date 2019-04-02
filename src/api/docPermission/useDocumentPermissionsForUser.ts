@@ -1,4 +1,4 @@
-import { useEffect, useCallback } from "react";
+import * as React from "react";
 
 import useApi from "./useApi";
 import useListReducer from "src/lib/useListReducer/useListReducer";
@@ -26,11 +26,11 @@ const useDocumentPermissionsForUser = (
     removeDocPermission,
   } = useApi();
 
-  useEffect(() => {
+  React.useEffect(() => {
     getPermissionsForDocumentForUser(docRefUuid, userUuid).then(itemsReceived);
   }, [docRefUuid, userUuid, getPermissionsForDocumentForUser]);
 
-  const addPermission = useCallback(
+  const addPermission = React.useCallback(
     (permissionName: string) => {
       addDocPermission(docRefUuid, userUuid, permissionName).then(() =>
         itemAdded(permissionName),
@@ -38,7 +38,7 @@ const useDocumentPermissionsForUser = (
     },
     [docRefUuid, userUuid, addDocPermission],
   );
-  const removePermission = useCallback(
+  const removePermission = React.useCallback(
     (permissionName: string) => {
       removeDocPermission(docRefUuid, userUuid, permissionName).then(() =>
         itemRemoved(permissionName),

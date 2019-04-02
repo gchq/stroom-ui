@@ -1,5 +1,4 @@
 import * as React from "react";
-import { useEffect } from "react";
 import * as Mousetrap from "mousetrap";
 
 import PanelGroup from "react-panelgroup";
@@ -36,7 +35,7 @@ const HorizontalMainDetails: React.FunctionComponent<Props> = ({
     storeNumber,
   );
 
-  useEffect(() => {
+  React.useEffect(() => {
     Mousetrap.bind("esc", onClose);
 
     return () => {

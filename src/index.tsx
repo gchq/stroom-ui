@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 
-import { DragDropContext } from "react-dnd";
+import {} from "react-dnd";
 import HTML5Backend from "react-dnd-html5-backend";
 
 import { Routes } from "src/components/AppChrome";

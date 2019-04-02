@@ -1,4 +1,4 @@
-import { TableProps } from "react-table";
+import {} from "react-table";
 
 import { KeyDownState } from "../useKeyIsDown";
 import { SelectionBehaviour } from "./enums";

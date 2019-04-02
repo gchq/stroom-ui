@@ -24,7 +24,7 @@ import { Config } from "src/startup/config";
 import { TestData } from "../testTypes";
 
 import resources from "./resources";
-import { useEffect } from "react";
+import * as React from "react";
 
 // Register the fetch adapter so its accessible by all future polly instances
 Polly.register(FetchAdapter);
@@ -75,7 +75,7 @@ export interface Props {
 export const useTestServer = (testData: TestData) => {
   const { clearCache } = useHttpClient();
 
-  useEffect(() => {
+  React.useEffect(() => {
     clearCache();
     // Make a deep copy so that each test gets it's own data
     testCache.data = JSON.parse(JSON.stringify(testData));

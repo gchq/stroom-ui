@@ -15,12 +15,11 @@
  */
 
 import * as React from "react";
-// import { useEffect } from "react";
 
 // import * as moment from "moment";
 // import { path } from "ramda";
 // import * as Mousetrap from "mousetrap";
-// import ReactTable, { RowInfo, Column } from "react-table";
+// import ReactTable from "react-table";
 // import "react-table/react-table.css";
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -47,7 +46,10 @@ interface Props {
 //   pipeline?: string;
 // }
 
-const DataList = ({ dataViewerId, expression }: Props) => {
+const DataList: React.FunctionComponent<Props> = ({
+  dataViewerId,
+  expression,
+}) => {
   return <div>Nope</div>;
   /*
   const { selectRow } = useActionCreators();
@@ -109,7 +111,7 @@ const DataList = ({ dataViewerId, expression }: Props) => {
     }
   };
 
-  useEffect(() => {
+  React.useEffect(() => {
     streamAttributeMapApi.fetchDataSource(dataViewerId);
 
     // // We need to set up an expression so we've got something to search with,

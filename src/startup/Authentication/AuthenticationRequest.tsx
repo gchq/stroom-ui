@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { FunctionComponent, useEffect } from "react";
+import * as React from "react";
 
 import { sendAuthenticationRequest } from "./authentication";
 
@@ -33,7 +33,7 @@ const AuthenticationRequest: FunctionComponent<Props> = ({
   authenticationServiceUrl,
   appPermission,
 }) => {
-  useEffect(() => {
+  React.useEffect(() => {
     sendAuthenticationRequest(
       referrer,
       uiUrl,

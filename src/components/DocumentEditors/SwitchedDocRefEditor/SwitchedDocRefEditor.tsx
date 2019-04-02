@@ -1,5 +1,4 @@
 import * as React from "react";
-import { useEffect, useMemo } from "react";
 
 import PathNotFound from "../../PathNotFound";
 import useRecentItems from "src/lib/useRecentItems";
@@ -12,12 +11,12 @@ let SwitchedDocRefEditor: React.FunctionComponent<
 > = ({ docRefUuid }) => {
   const { addRecentItem } = useRecentItems();
   const { findDocRefWithLineage } = useDocumentTree();
-  const { node: docRef } = useMemo(() => findDocRefWithLineage(docRefUuid), [
-    findDocRefWithLineage,
-    docRefUuid
-  ]);
+  const { node: docRef } = React.useMemo(
+    () => findDocRefWithLineage(docRefUuid),
+    [findDocRefWithLineage, docRefUuid],
+  );
 
-  useEffect(() => {
+  React.useEffect(() => {
     addRecentItem(docRef);
   });
 

@@ -10,7 +10,7 @@ interface Props {
   permissionName: string;
 }
 
-const TestHarness = ({ permissionName }: Props) => {
+const TestHarness: React.FunctionComponent<Props> = ({ permissionName }) => {
   const permissions = useAuthorisationContext([permissionName]);
 
   return (

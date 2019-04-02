@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import * as React from "react";
 
 interface OutProps<T> {
   value: T;
@@ -49,9 +49,9 @@ const useLocalStorage = function<T>(
   noLocalStorageInitialState: T,
   stringConversion: StringConversion<T>,
 ): OutProps<T> {
-  const [value, setStateValue] = useState<T>(noLocalStorageInitialState);
+  const [value, setStateValue] = React.useState<T>(noLocalStorageInitialState);
 
-  useEffect(() => {
+  React.useEffect(() => {
     const rawValue: string | null = localStorage.getItem(stateName);
     if (rawValue !== null) {
       const value = stringConversion.fromString(rawValue);

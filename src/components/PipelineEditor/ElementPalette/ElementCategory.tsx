@@ -1,5 +1,4 @@
 import * as React from "react";
-import { useState } from "react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -16,7 +15,7 @@ const ElementCategory: React.FunctionComponent<Props> = ({
   category,
   elementsWithData,
 }) => {
-  const [isOpen, setIsOpen] = useState<boolean>(true);
+  const [isOpen, setIsOpen] = React.useState<boolean>(true);
 
   if (elementsWithData.length === 0) {
     return null;

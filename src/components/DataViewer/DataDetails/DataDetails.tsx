@@ -25,7 +25,7 @@ interface Props {
   data: StroomData;
 }
 
-const DataDetails = ({ data }: Props) => {
+const DataDetails: React.FunctionComponent<Props> = ({ data }) => {
   const streamType = path(["streamType", "path"], data);
   if (streamType === "ERROR") return <ErrorTable errors={data.markers} />;
   else if (streamType === "RAW_EVENTS") return <EventView events={data.data} />;

@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import * as React from "react";
 
 import useHttpClient from "../useHttpClient";
 import {
@@ -16,12 +16,12 @@ export const useApi = (): Api => {
   const { stroomBaseServiceUrl } = useConfig();
   const { httpGetJson } = useHttpClient();
 
-  const fetchElements = useCallback(
+  const fetchElements = React.useCallback(
     () =>
       httpGetJson(`${stroomBaseServiceUrl}/elements/v1/elements`, {}, false),
     [stroomBaseServiceUrl, httpGetJson],
   );
-  const fetchElementProperties = useCallback(
+  const fetchElementProperties = React.useCallback(
     () =>
       httpGetJson(
         `${stroomBaseServiceUrl}/elements/v1/elementProperties`,

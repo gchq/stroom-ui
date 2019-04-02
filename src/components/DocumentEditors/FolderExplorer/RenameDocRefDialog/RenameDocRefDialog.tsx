@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 import * as React from "react";
-import { useState, useMemo, useCallback } from "react";
 
 import DialogActionButtons from "../../../DialogActionButtons";
 import IconHeader from "../../../IconHeader";
@@ -34,28 +33,28 @@ interface FormValues {
   docRefName?: string;
 }
 
-export const RenameDocRefDialog = ({
+export const RenameDocRefDialog: React.FunctionComponent<Props> = ({
   isOpen,
   docRef,
   onConfirm,
-  onCloseDialog
-}: Props) => {
-  const initialValues = useMemo(
+  onCloseDialog,
+}) => {
+  const initialValues = React.useMemo(
     () => ({
-      docRefName: !!docRef ? docRef.name : "no document"
+      docRefName: !!docRef ? docRef.name : "no document",
     }),
-    [docRef]
+    [docRef],
   );
 
   const {
     value: { docRefName },
-    useTextInput
+    useTextInput,
   } = useForm<FormValues>({
-    initialValues
+    initialValues,
   });
 
   const docRefNameProps = useTextInput("docRefName");
-  const onConfirmLocal = useCallback(() => {
+  const onConfirmLocal = React.useCallback(() => {
     if (!!docRef && !!docRefName) {
       onConfirm(docRef, docRefName);
       onCloseDialog();
@@ -86,7 +85,7 @@ export const RenameDocRefDialog = ({
  * These are the things returned by the custom hook that allow the owning component to interact
  * with this dialog.
  */
-type UseDialog = {
+interface UseDialog {
   /**
    * The owning component is ready to start a deletion process.
    * Calling this will open the dialog, and setup the UUIDs
@@ -97,16 +96,16 @@ type UseDialog = {
    * using destructing.
    */
   componentProps: Props;
-};
+}
 
 /**
  * This is a React custom hook that sets up things required by the owning component.
  */
 export const useDialog = (
-  onConfirm: (docRef: DocRefType, newName: string) => void
+  onConfirm: (docRef: DocRefType, newName: string) => void,
 ): UseDialog => {
-  const [docRef, setDocRef] = useState<DocRefType | undefined>(undefined);
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [docRef, setDocRef] = React.useState<DocRefType | undefined>(undefined);
+  const [isOpen, setIsOpen] = React.useState<boolean>(false);
 
   return {
     componentProps: {
@@ -116,12 +115,12 @@ export const useDialog = (
       onCloseDialog: () => {
         setIsOpen(false);
         setDocRef(undefined);
-      }
+      },
     },
     showDialog: _docRef => {
       setIsOpen(true);
       setDocRef(_docRef);
-    }
+    },
   };
 };
 

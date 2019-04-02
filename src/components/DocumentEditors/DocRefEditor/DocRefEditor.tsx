@@ -1,10 +1,9 @@
 import * as React from "react";
-import { useCallback, useEffect, useState, useMemo } from "react";
 
 import {
   UseDocRefEditorProps,
   DocRefEditorProps,
-  UseDocRefEditorPropsIn
+  UseDocRefEditorPropsIn,
 } from "./types";
 
 import AppSearchBar from "../../AppSearchBar";
@@ -20,33 +19,33 @@ const DocRefEditor = <T extends {}>({
   children,
   docRefUuid,
   additionalActionBarItems,
-  isDirty
+  isDirty,
 }: DocRefEditorProps<T>) => {
   const { goToAuthorisationsForDocument, goToEditDocRef } = useAppNavigation();
   const { findDocRefWithLineage } = useDocumentTree();
-  const { node: docRef } = useMemo(() => findDocRefWithLineage(docRefUuid), [
-    findDocRefWithLineage,
-    docRefUuid
-  ]);
-
-  const openDocRefPermissions = useCallback(
-    () => goToAuthorisationsForDocument(docRefUuid),
-    [goToAuthorisationsForDocument, docRefUuid]
+  const { node: docRef } = React.useMemo(
+    () => findDocRefWithLineage(docRefUuid),
+    [findDocRefWithLineage, docRefUuid],
   );
 
-  const actionBarItems: Array<ButtonProps> = [];
+  const openDocRefPermissions = React.useCallback(
+    () => goToAuthorisationsForDocument(docRefUuid),
+    [goToAuthorisationsForDocument, docRefUuid],
+  );
+
+  const actionBarItems: ButtonProps[] = [];
   if (!!onClickSave) {
     actionBarItems.push({
       icon: "save",
       disabled: !isDirty,
       title: isDirty ? "Save" : "Saved",
-      onClick: onClickSave
+      onClick: onClickSave,
     });
   }
   actionBarItems.push({
     icon: "key",
     title: "Permissions",
-    onClick: openDocRefPermissions
+    onClick: openDocRefPermissions,
   });
 
   return (
@@ -82,18 +81,18 @@ const DocRefEditor = <T extends {}>({
 
 export function useDocRefEditor<T extends object>({
   docRefUuid,
-  documentApi
+  documentApi,
 }: UseDocRefEditorPropsIn<T>): UseDocRefEditorProps<T> {
-  const [isDirty, setIsDirty] = useState<boolean>(false);
-  const [docRefContents, setDocRefContents] = useState<T | undefined>(
-    undefined
+  const [isDirty, setIsDirty] = React.useState<boolean>(false);
+  const [docRefContents, setDocRefContents] = React.useState<T | undefined>(
+    undefined,
   );
 
   const fetchDocument:
     | DocumentApi<T>["fetchDocument"]
     | undefined = !!documentApi ? documentApi.fetchDocument : undefined;
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (!!fetchDocument) {
       fetchDocument(docRefUuid).then(d => {
         setDocRefContents(d);
@@ -102,7 +101,7 @@ export function useDocRefEditor<T extends object>({
     }
   }, [fetchDocument, setDocRefContents, setIsDirty, docRefUuid]);
 
-  const onClickSave = useCallback(() => {
+  const onClickSave = React.useCallback(() => {
     if (!!docRefContents && documentApi && !!documentApi.saveDocument) {
       documentApi.saveDocument((docRefContents as unknown) as T).then(() => {
         setIsDirty(false);
@@ -111,7 +110,7 @@ export function useDocRefEditor<T extends object>({
   }, [documentApi ? documentApi.saveDocument : undefined, docRefContents]);
 
   return {
-    onDocumentChange: useCallback(
+    onDocumentChange: React.useCallback(
       (updates: Partial<T>) => {
         if (!!docRefContents) {
           setDocRefContents({ ...docRefContents, ...updates });
@@ -120,7 +119,7 @@ export function useDocRefEditor<T extends object>({
           console.error("No existing doc ref contents to merge in");
         }
       },
-      [docRefContents, setIsDirty, setDocRefContents]
+      [docRefContents, setIsDirty, setDocRefContents],
     ),
     editorProps: {
       isDirty,
@@ -128,8 +127,8 @@ export function useDocRefEditor<T extends object>({
         ? ((docRefContents as unknown) as T)
         : undefined,
       onClickSave: !!documentApi ? onClickSave : undefined,
-      docRefUuid
-    }
+      docRefUuid,
+    },
   };
 }
 

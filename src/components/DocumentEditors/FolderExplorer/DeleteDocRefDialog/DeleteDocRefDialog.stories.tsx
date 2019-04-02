@@ -1,5 +1,4 @@
 import * as React from "react";
-import { useState } from "react";
 import { storiesOf } from "@storybook/react";
 
 import DeleteDocRefDialog, { useDialog } from "./DeleteDocRefDialog";
@@ -12,12 +11,12 @@ import JsonDebug from "src/testing/JsonDebug";
 const testFolder2 = fromSetupSampleData.children![1];
 
 interface Props {
-  testUuids: Array<string>;
+  testUuids: string[];
 }
 
 // Delete
-const TestDeleteDialog = ({ testUuids }: Props) => {
-  const [lastConfirmed, setLastConfirmed] = useState<object>({});
+const TestHarness: React.FunctionComponent<Props> = ({ testUuids }) => {
+  const [lastConfirmed, setLastConfirmed] = React.useState<object>({});
   const { showDialog, componentProps } = useDialog(setLastConfirmed);
 
   return (
@@ -30,7 +29,7 @@ const TestDeleteDialog = ({ testUuids }: Props) => {
 };
 
 storiesOf("Explorer/Delete Doc Ref Dialog", module).add("simple", () => (
-  <TestDeleteDialog
+  <TestHarness
     testUuids={testFolder2.children!.map((d: DocRefType) => d.uuid)}
   />
 ));

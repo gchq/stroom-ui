@@ -1,4 +1,4 @@
-import { useReducer, useCallback } from "react";
+import * as React from "react";
 
 /**
  * This file exports a custom hook that can be used to manage a list
@@ -47,11 +47,11 @@ interface UseListReducer<T extends {}> {
 const useListReducer = <T extends {}>(
   getKey: (item: T) => string,
 ): UseListReducer<T> => {
-  const [items, dispatch] = useReducer(createListReducer<T>(getKey), []);
+  const [items, dispatch] = React.useReducer(createListReducer<T>(getKey), []);
 
   return {
     items,
-    itemsReceived: useCallback(
+    itemsReceived: React.useCallback(
       (items: T[]) =>
         dispatch({
           type: "itemsReceived",
@@ -59,7 +59,7 @@ const useListReducer = <T extends {}>(
         }),
       [],
     ),
-    itemAdded: useCallback(
+    itemAdded: React.useCallback(
       (item: T) =>
         dispatch({
           type: "itemAdded",
@@ -67,7 +67,7 @@ const useListReducer = <T extends {}>(
         }),
       [],
     ),
-    itemRemoved: useCallback(
+    itemRemoved: React.useCallback(
       (itemKey: string) =>
         dispatch({
           type: "itemRemoved",

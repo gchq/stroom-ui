@@ -25,7 +25,10 @@ interface Props {
   enableToggle: () => void;
 }
 
-const ProcessingDetails = ({ tracker, enableToggle }: Props) => {
+const ProcessingDetails: React.FunctionComponent<Props> = ({
+  tracker,
+  enableToggle,
+}) => {
   const title = !!tracker ? tracker.pipelineName : "NONE";
 
   if (!tracker) {

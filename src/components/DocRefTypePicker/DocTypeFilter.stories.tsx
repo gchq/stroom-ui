@@ -14,18 +14,16 @@
  * limitations under the License.
  */
 import * as React from "react";
-import { useState } from "react";
 
 import { storiesOf } from "@storybook/react";
 
 import DocRefTypePicker from "./DocRefTypePicker";
 
-
 import JsonDebug from "src/testing/JsonDebug";
 import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
 
 const TestForm = () => {
-  const [chosenDocRefType, setChosenDocRefType] = useState<string>("");
+  const [chosenDocRefType, setChosenDocRefType] = React.useState<string>("");
 
   return (
     <form>

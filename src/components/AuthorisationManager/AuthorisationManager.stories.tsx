@@ -30,7 +30,7 @@ interface Props {
   isGroup: IsGroup;
 }
 
-const TestHarness = ({ isGroup }: Props) => (
+const TestHarness: React.FunctionComponent<Props> = ({ isGroup }) => (
   <Switch>
     <Route
       exact
@@ -43,10 +43,10 @@ const TestHarness = ({ isGroup }: Props) => (
   </Switch>
 );
 
-(["User", "Group"] as Array<IsGroup>).forEach(isGroup => {
+(["User", "Group"] as IsGroup[]).forEach(isGroup => {
   const stories = storiesOf(
     `Sections/Authorisation Manager/${isGroup}`,
-    module
+    module,
   );
 
   addThemedStories(stories, () => <TestHarness isGroup={isGroup} />);

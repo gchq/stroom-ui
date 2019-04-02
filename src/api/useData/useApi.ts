@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import * as React from "react";
 import useHttpClient from "../useHttpClient";
 import { AbstractFetchDataResult } from "src/types";
 import { FetchDataParams } from "./types";
@@ -14,7 +14,7 @@ export const useApi = (): Api => {
   const { stroomBaseServiceUrl } = useConfig();
   const { httpGetJson } = useHttpClient();
 
-  const getDataForSelectedRow = useCallback(
+  const getDataForSelectedRow = React.useCallback(
     ({ pageOffset, pageSize, metaId }: FetchDataParams) => {
       var url = new URL(`${stroomBaseServiceUrl}/data/v1/`);
       if (!!metaId) url.searchParams.append("metaId", metaId.toString());

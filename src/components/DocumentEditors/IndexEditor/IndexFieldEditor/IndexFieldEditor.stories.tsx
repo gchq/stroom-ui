@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 import * as React from "react";
-import { useState, useMemo, useCallback } from "react";
 import { storiesOf } from "@storybook/react";
 
 import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
@@ -30,15 +29,15 @@ const stories = storiesOf("Document Editors/Index/Field Editor", module);
 const FIELD_ID = 1007;
 
 const B: React.FunctionComponent = () => {
-  const testField = useMemo(generateTestField, []);
-  const [indexField, setIndexField] = useState<IndexField>(testField);
-  const [lastId, setLastId] = useState<number>(0);
+  const testField = React.useMemo(generateTestField, []);
+  const [indexField, setIndexField] = React.useState<IndexField>(testField);
+  const [lastId, setLastId] = React.useState<number>(0);
   const { componentProps, showEditor } = useEditor((_id, _indexField) => {
     setLastId(_id);
     setIndexField(_indexField);
   });
 
-  const onClick = useCallback(() => {
+  const onClick = React.useCallback(() => {
     showEditor(FIELD_ID, indexField);
   }, [showEditor, indexField]);
 

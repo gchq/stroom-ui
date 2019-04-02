@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import * as React from "react";
 import useHttpClient from "../useHttpClient";
 import { DataSourceType, DataRow, StreamAttributeMapResult } from "src/types";
 import { useConfig } from "src/startup/config";
@@ -19,7 +19,7 @@ export const useApi = (): Api => {
   const { httpGetJson, httpPostJsonResponse } = useHttpClient();
 
   return {
-    fetchDataSource: useCallback(
+    fetchDataSource: React.useCallback(
       () =>
         httpGetJson(
           `${stroomBaseServiceUrl}/streamattributemap/v1/dataSource`,
@@ -28,7 +28,7 @@ export const useApi = (): Api => {
         ),
       [stroomBaseServiceUrl, httpGetJson],
     ),
-    getDetailsForSelectedStream: useCallback(
+    getDetailsForSelectedStream: React.useCallback(
       (metaId: number) =>
         httpGetJson(
           `${stroomBaseServiceUrl}/streamattributemap/v1/${metaId}`,
@@ -37,7 +37,7 @@ export const useApi = (): Api => {
         ),
       [stroomBaseServiceUrl, httpGetJson],
     ),
-    page: useCallback(
+    page: React.useCallback(
       ({ pageInfo }: PageProps) => {
         var url = new URL(`${stroomBaseServiceUrl}/streamattributemap/v1/`);
 
@@ -53,7 +53,7 @@ export const useApi = (): Api => {
       },
       [stroomBaseServiceUrl, httpGetJson],
     ),
-    search: useCallback(
+    search: React.useCallback(
       ({ pageInfo, expressionWithUuids }: SearchWithExpressionProps) => {
         var url = new URL(`${stroomBaseServiceUrl}/streamattributemap/v1/`);
 

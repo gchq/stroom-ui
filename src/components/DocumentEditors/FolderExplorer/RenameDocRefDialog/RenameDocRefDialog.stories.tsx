@@ -1,5 +1,4 @@
 import * as React from "react";
-import { useState } from "react";
 import { storiesOf } from "@storybook/react";
 import { DocRefType } from "src/types";
 
@@ -15,10 +14,10 @@ interface Props {
 }
 
 // Rename
-const TestRenameDialog = ({ testDocRef }: Props) => {
-  const [lastConfirmed, setLastConfirmed] = useState<object>({});
+const TestHarness: React.FunctionComponent<Props> = ({ testDocRef }) => {
+  const [lastConfirmed, setLastConfirmed] = React.useState<object>({});
   const { showDialog, componentProps } = useDialog((docRef, newName) =>
-    setLastConfirmed({ docRef, newName })
+    setLastConfirmed({ docRef, newName }),
   );
 
   return (
@@ -32,5 +31,5 @@ const TestRenameDialog = ({ testDocRef }: Props) => {
 };
 
 storiesOf("Explorer/Rename Doc Ref Dialog", module).add("simple", () => (
-  <TestRenameDialog testDocRef={testDocRef} />
+  <TestHarness testDocRef={testDocRef} />
 ));

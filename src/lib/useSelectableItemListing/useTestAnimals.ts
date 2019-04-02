@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import * as React from "react";
 
 import * as uuidv4 from "uuid/v4";
 import * as loremIpsum from "lorem-ipsum";
@@ -29,10 +29,12 @@ interface OutProps {
 }
 
 const useTestAnimals = (): OutProps => {
-  const [animals, setAnimals] = useState<Animal[]>(initialAnimals);
+  const [animals, setAnimals] = React.useState<Animal[]>(initialAnimals);
 
-  const reset = useCallback(() => setAnimals(initialAnimals), [setAnimals]);
-  const preFocusWrap = useCallback((): boolean => {
+  const reset = React.useCallback(() => setAnimals(initialAnimals), [
+    setAnimals,
+  ]);
+  const preFocusWrap = React.useCallback((): boolean => {
     if (animals.length < MAX_ANIMALS) {
       setAnimals(
         animals.concat(
@@ -47,7 +49,7 @@ const useTestAnimals = (): OutProps => {
     return true;
   }, [animals, setAnimals]);
 
-  const addAnimal = useCallback(
+  const addAnimal = React.useCallback(
     (species: string, name: string) =>
       setAnimals(
         animals.concat([

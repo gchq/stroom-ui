@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { useCallback } from "react";
+import * as React from "react";
 
 import useHttpClient from "../useHttpClient";
 import {
@@ -33,7 +33,7 @@ export const useApi = (): Api => {
   const { httpGetJson } = useHttpClient();
 
   return {
-    searchPipelines: useCallback(
+    searchPipelines: React.useCallback(
       ({ filter, pageSize, pageOffset }: PipelineSearchCriteriaType) => {
         let url = `${stroomBaseServiceUrl}/pipelines/v1/?`;
 

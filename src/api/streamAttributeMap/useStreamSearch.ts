@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import * as React from "react";
 
 import { UseStreamSearch, PageProps, SearchWithExpressionProps } from "./types";
 import useApi from "./useApi";
@@ -15,18 +15,18 @@ const defaultStreams: StreamAttributeMapResult = {
 };
 
 const useStreamSearch = (): UseStreamSearch => {
-  const [streams, setStreams] = useState<StreamAttributeMapResult>(
+  const [streams, setStreams] = React.useState<StreamAttributeMapResult>(
     defaultStreams,
   );
   const { page, search } = useApi();
 
   return {
     streams,
-    search: useCallback(
+    search: React.useCallback(
       (s: SearchWithExpressionProps) => search(s).then(setStreams),
       [search, setStreams],
     ),
-    page: useCallback((s: PageProps) => page(s).then(setStreams), [
+    page: React.useCallback((s: PageProps) => page(s).then(setStreams), [
       page,
       setStreams,
     ]),

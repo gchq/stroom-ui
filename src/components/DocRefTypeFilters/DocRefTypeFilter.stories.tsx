@@ -14,18 +14,16 @@
  * limitations under the License.
  */
 import * as React from "react";
-import { useState } from "react";
 
 import { storiesOf } from "@storybook/react";
 
 import DocRefTypeFilters from "./DocRefTypeFilters";
 
-
 import JsonDebug from "src/testing/JsonDebug";
 import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
 
 const TestForm = () => {
-  const [chosenTypes, setChosenTypes] = useState<Array<string>>([]);
+  const [chosenTypes, setChosenTypes] = React.useState<string[]>([]);
   return (
     <form>
       <div>

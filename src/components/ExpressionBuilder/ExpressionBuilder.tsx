@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 import * as React from "react";
-import { useEffect, useState } from "react";
 
 import ExpressionOperator from "./ExpressionOperator";
 import DeleteExpressionItem, {
@@ -51,7 +50,7 @@ const ExpressionBuilder: React.FunctionComponent<Props> = ({
   expression,
   onChange,
 }) => {
-  const [inEditMode, setEditableByUser] = useState<boolean>(false);
+  const [inEditMode, setEditableByUser] = React.useState<boolean>(false);
 
   const expressionTermAdded = (itemId: string) => {
     const e = addItemsToTree(expression, itemId, [
@@ -90,7 +89,7 @@ const ExpressionBuilder: React.FunctionComponent<Props> = ({
     onChange(e);
   };
 
-  useEffect(() => {
+  React.useEffect(() => {
     setEditableByUser(editMode || false);
   }, []);
 

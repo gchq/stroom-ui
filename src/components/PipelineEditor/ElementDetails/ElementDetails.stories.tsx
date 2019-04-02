@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 import * as React from "react";
-import { useEffect } from "react";
 
 import { storiesOf } from "@storybook/react";
 
@@ -30,18 +29,18 @@ interface Props {
   testElementConfig: object;
 }
 
-const TestHarness = ({
+const TestHarness: React.FunctionComponent<Props> = ({
   pipelineId,
   testElementId,
   testElementConfig,
-}: Props) => {
+}) => {
   const {
     pipelineEditApi,
     useEditorProps: {
       editorProps: { docRefContents },
     },
   } = usePipelineState(pipelineId);
-  useEffect(() => {
+  React.useEffect(() => {
     pipelineEditApi.elementSelected(testElementId, testElementConfig);
   }, [pipelineId]);
 

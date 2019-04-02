@@ -1,11 +1,11 @@
 import * as React from "react";
 import { storiesOf } from "@storybook/react";
-import { useState } from "react";
+import * as React from "react";
 
 import { fromSetupSampleData } from "../test";
 import {
   CopyMoveDocRefDialog,
-  useDialog as useCopyMoveDocRefDialog
+  useDialog as useCopyMoveDocRefDialog,
 } from "./CopyMoveDocRefDialog";
 
 import { PermissionInheritance, DocRefType } from "src/types";
@@ -14,20 +14,22 @@ import JsonDebug from "src/testing/JsonDebug";
 const testFolder2 = fromSetupSampleData.children![1];
 
 interface Props {
-  testUuids: Array<string>;
+  testUuids: string[];
   testDestination: DocRefType;
 }
 
-// Copy
-const TestCopyDialog = ({ testUuids, testDestination }: Props) => {
-  const [lastConfirmed, setLastConfirmed] = useState<object>({});
+const TestHarness: React.FunctionComponent<Props> = ({
+  testUuids,
+  testDestination,
+}) => {
+  const [lastConfirmed, setLastConfirmed] = React.useState<object>({});
 
   const { showDialog, componentProps } = useCopyMoveDocRefDialog(
     (
-      uuids: Array<string>,
+      uuids: string[],
       destination: DocRefType,
-      permissionInheritance: PermissionInheritance
-    ) => setLastConfirmed({ uuids, destination, permissionInheritance })
+      permissionInheritance: PermissionInheritance,
+    ) => setLastConfirmed({ uuids, destination, permissionInheritance }),
   );
 
   return (
@@ -43,7 +45,7 @@ const TestCopyDialog = ({ testUuids, testDestination }: Props) => {
 };
 
 storiesOf("Explorer/Copy Doc Ref Dialog", module).add("simple", () => (
-  <TestCopyDialog
+  <TestHarness
     testUuids={testFolder2.children!.map(d => d.uuid)}
     testDestination={testFolder2}
   />

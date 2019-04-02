@@ -15,7 +15,6 @@
  */
 
 import * as React from "react";
-import { useMemo } from "react";
 
 // eslint-disable-next-line
 import * as brace from "brace";
@@ -37,7 +36,7 @@ if (brace) console.log("Brace found");
  */
 const ThemedAceEditor: React.FunctionComponent<AceEditorProps> = props => {
   const { theme } = useTheme();
-  const aceTheme = useMemo(
+  const aceTheme = React.useMemo(
     () => (theme === "theme-light" ? "github" : "ambiance"),
     [theme],
   );

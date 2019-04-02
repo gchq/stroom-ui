@@ -15,7 +15,6 @@
  */
 
 import * as React from "react";
-import { useState } from "react";
 
 import Button from "../../Button";
 import { ControlledInput } from "src/types";
@@ -24,8 +23,8 @@ const InValueWidget: React.FunctionComponent<ControlledInput<any>> = ({
   value,
   onChange,
 }) => {
-  const [inputHasFocus, setInputHasFocus] = useState(false);
-  const [composingValue, setComposingValue] = useState("");
+  const [inputHasFocus, setInputHasFocus] = React.useState(false);
+  const [composingValue, setComposingValue] = React.useState("");
 
   const hasValues = !!value && value.length > 0;
   const splitValues: string[] = hasValues ? value.split(",") : [];

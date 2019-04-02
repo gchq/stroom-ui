@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 import * as React from "react";
-import { useState } from "react";
 import { storiesOf } from "@storybook/react";
 
 import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
@@ -25,7 +24,9 @@ import { IndexFieldType } from "src/types";
 const stories = storiesOf("Pickers/Index Field Type", module);
 
 const B: React.FunctionComponent = () => {
-  const [value, onChange] = useState<IndexFieldType | undefined>(undefined);
+  const [value, onChange] = React.useState<IndexFieldType | undefined>(
+    undefined,
+  );
 
   return <IndexFieldTypePicker value={value} onChange={onChange} />;
 };

@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 import * as React from "react";
-import { useState } from "react";
 
 import { storiesOf } from "@storybook/react";
 
@@ -63,9 +62,9 @@ let AppSearchAsForm: React.FunctionComponent<Props> = ({ typeFilters }) => {
 };
 
 const AppSearchAsPicker: React.FunctionComponent<Props> = ({ typeFilters }) => {
-  const [pickedDocRef, setPickedDocRef] = useState<DocRefType | undefined>(
-    undefined,
-  );
+  const [pickedDocRef, setPickedDocRef] = React.useState<
+    DocRefType | undefined
+  >(undefined);
 
   return (
     <div>

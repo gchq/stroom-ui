@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import * as React from "react";
 
 import useApi from "./useApi";
 import {
@@ -17,14 +17,14 @@ interface UseElements {
  */
 const useElements = (): UseElements => {
   const { fetchElements, fetchElementProperties } = useApi();
-  const [elementDefinitions, setElementDefinitions] = useState<
+  const [elementDefinitions, setElementDefinitions] = React.useState<
     ElementDefinitions
   >([]);
-  const [elementProperties, setElementProperties] = useState<
+  const [elementProperties, setElementProperties] = React.useState<
     ElementPropertiesByElementIdType
   >({});
 
-  useEffect(() => {
+  React.useEffect(() => {
     fetchElements().then(setElementDefinitions);
     fetchElementProperties().then(setElementProperties);
   }, [

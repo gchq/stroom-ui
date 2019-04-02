@@ -14,8 +14,7 @@
  * limitations under the License.
  */
 
-import * as React from "react";
-import { Route, RouteProps } from "react-router-dom";
+import { RouteProps, Route } from "react-router-dom";
 
 import AuthenticationRequest from "./AuthenticationRequest";
 import useConfig from "../config/useConfig";

@@ -1,4 +1,4 @@
-import { useEffect, useCallback } from "react";
+import * as React from "react";
 
 import useApi from "./useApi";
 import { User } from "src/types";
@@ -25,11 +25,11 @@ const useGroupsForUser = (group: User): UseGroupsForUser => {
     fetchUser,
   } = useApi();
 
-  useEffect(() => {
+  React.useEffect(() => {
     findUsersInGroup(group.uuid).then(itemsReceived);
   }, [group]);
 
-  const addToGroup = useCallback(
+  const addToGroup = React.useCallback(
     (userUuid: string) => {
       addUserToGroup(userUuid, group.uuid)
         .then(() => fetchUser(userUuid))
@@ -37,7 +37,7 @@ const useGroupsForUser = (group: User): UseGroupsForUser => {
     },
     [group, fetchUser, addUserToGroup],
   );
-  const removeFromGroup = useCallback(
+  const removeFromGroup = React.useCallback(
     (userUuid: string) => {
       removeUserFromGroup(userUuid, group.uuid).then(() =>
         itemRemoved(userUuid),

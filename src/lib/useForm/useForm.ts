@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import * as React from "react";
 import { ControlledInput } from "src/types";
 import { Form } from "./types";
 
@@ -16,10 +16,12 @@ export const useForm = function<T>({
   initialValues,
   onValidate,
 }: UseForm<T>): Form<T> {
-  const [value, setCurrentValues] = useState<Partial<T>>(initialValues || {});
+  const [value, setCurrentValues] = React.useState<Partial<T>>(
+    initialValues || {},
+  );
 
   // Memo-ized function to combine updates with existing state
-  const onUpdate = useCallback(
+  const onUpdate = React.useCallback(
     (newUpdates: Partial<T>) => {
       setCurrentValues({ ...value, ...newUpdates });
     },
@@ -27,14 +29,14 @@ export const useForm = function<T>({
   );
 
   // Set the current values to the initial values, whenever those change
-  useEffect(() => {
+  React.useEffect(() => {
     if (!!initialValues) {
       setCurrentValues(initialValues);
     }
   }, [initialValues, setCurrentValues]);
 
   // Call out to the validation function when the values change
-  useEffect(() => {
+  React.useEffect(() => {
     if (!!onValidate) {
       onValidate(value);
     }
@@ -42,7 +44,7 @@ export const useForm = function<T>({
 
   const useTextInput = (s: keyof T) => ({
     type: "text",
-    onChange: useCallback(
+    onChange: React.useCallback(
       ({ target: { value } }) => onUpdate({ [s]: value } as T),
       [onUpdate],
     ),
@@ -52,7 +54,7 @@ export const useForm = function<T>({
   const useCheckboxInput = (s: keyof T) => ({
     type: "checkbox",
     checked: value[s],
-    onChange: useCallback(() => {
+    onChange: React.useCallback(() => {
       onUpdate(({
         [s]: !value[s],
       } as unknown) as Partial<T>);
@@ -63,7 +65,7 @@ export const useForm = function<T>({
     s: keyof T,
   ): ControlledInput<FIELD_TYPE> => ({
     value: (value[s] as unknown) as FIELD_TYPE,
-    onChange: useCallback(v => onUpdate(({ [s]: v } as unknown) as T), [
+    onChange: React.useCallback(v => onUpdate(({ [s]: v } as unknown) as T), [
       onUpdate,
     ]),
   });

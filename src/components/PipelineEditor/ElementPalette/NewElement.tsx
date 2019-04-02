@@ -15,9 +15,7 @@
  */
 
 import * as React from "react";
-import { useState } from "react";
-
-import { DragSource, DragSourceSpec, DragSourceCollector } from "react-dnd";
+import { DragSourceSpec, DragSourceCollector, DragSource } from "react-dnd";
 
 import ElementImage from "../../ElementImage";
 import Button from "../../Button";
@@ -59,7 +57,7 @@ const NewElement: React.FunctionComponent<EnhancedProps> = ({
   connectDragSource,
   elementWithData: { element, recycleData },
 }) => {
-  const [hasFocus, setHasFocus] = useState<boolean>(false);
+  const [hasFocus, setHasFocus] = React.useState<boolean>(false);
 
   return connectDragSource(
     <div

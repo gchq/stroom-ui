@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 import * as React from "react";
-import { useState } from "react";
 
 import { storiesOf } from "@storybook/react";
 
@@ -25,7 +24,7 @@ import { testExpression, testDataSource, simplestExpression } from "./test";
 import { ExpressionOperatorWithUuid } from "src/types";
 
 const PopulatedEditable = () => {
-  const [expression, onChange] = useState<ExpressionOperatorWithUuid>(
+  const [expression, onChange] = React.useState<ExpressionOperatorWithUuid>(
     testExpression,
   );
 
@@ -41,7 +40,7 @@ const PopulatedEditable = () => {
 };
 
 const PopulatedReadOnly = () => {
-  const [expression, onChange] = useState<ExpressionOperatorWithUuid>(
+  const [expression, onChange] = React.useState<ExpressionOperatorWithUuid>(
     testExpression,
   );
 
@@ -55,7 +54,7 @@ const PopulatedReadOnly = () => {
 };
 
 const SimplestEditable = () => {
-  const [expression, onChange] = useState<ExpressionOperatorWithUuid>(
+  const [expression, onChange] = React.useState<ExpressionOperatorWithUuid>(
     simplestExpression,
   );
 
@@ -70,7 +69,7 @@ const SimplestEditable = () => {
 };
 
 const MissingDataSource = () => {
-  const [expression, onChange] = useState<ExpressionOperatorWithUuid>(
+  const [expression, onChange] = React.useState<ExpressionOperatorWithUuid>(
     testExpression,
   );
 
@@ -84,7 +83,7 @@ const MissingDataSource = () => {
 };
 
 const HideModeToggle = () => {
-  const [expression, onChange] = useState<ExpressionOperatorWithUuid>(
+  const [expression, onChange] = React.useState<ExpressionOperatorWithUuid>(
     testExpression,
   );
 
@@ -99,7 +98,7 @@ const HideModeToggle = () => {
 };
 
 const HideModeButEdit = () => {
-  const [expression, onChange] = useState<ExpressionOperatorWithUuid>(
+  const [expression, onChange] = React.useState<ExpressionOperatorWithUuid>(
     testExpression,
   );
 

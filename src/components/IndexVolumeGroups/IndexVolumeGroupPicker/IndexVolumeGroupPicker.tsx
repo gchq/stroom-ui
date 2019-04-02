@@ -1,5 +1,4 @@
 import * as React from "react";
-import { useState, useMemo } from "react";
 
 import Select from "react-select";
 
@@ -14,7 +13,7 @@ const IndexVolumeGroupPicker: React.FunctionComponent<PickerProps> = ({
 }) => {
   const groupNames = useIndexVolumeGroupNames();
 
-  const options: SelectOptionType[] = useMemo(
+  const options: SelectOptionType[] = React.useMemo(
     () =>
       groupNames
         .filter(n => !valuesToFilterOut.includes(n))
@@ -36,7 +35,7 @@ const IndexVolumeGroupPicker: React.FunctionComponent<PickerProps> = ({
 };
 
 export const usePicker = (baseProps?: PickerBaseProps): UsePickerProps => {
-  const [value, onChange] = useState<string | undefined>(undefined);
+  const [value, onChange] = React.useState<string | undefined>(undefined);
 
   return {
     ...baseProps,

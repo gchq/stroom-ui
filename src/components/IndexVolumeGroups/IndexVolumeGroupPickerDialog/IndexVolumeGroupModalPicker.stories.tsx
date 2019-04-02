@@ -15,7 +15,6 @@
  */
 
 import * as React from "react";
-import { useState, useMemo } from "react";
 
 import { storiesOf } from "@storybook/react";
 
@@ -28,9 +27,9 @@ import JsonDebug from "src/testing/JsonDebug";
 import fullTestData from "src/testing/data";
 
 const TestHarness: React.FunctionComponent = () => {
-  const [picked, setPicked] = useState<string>("");
+  const [picked, setPicked] = React.useState<string>("");
 
-  const valuesToFilterOut = useMemo(
+  const valuesToFilterOut = React.useMemo(
     () =>
       fullTestData.indexVolumesAndGroups.groups.slice(0, 1).map(g => g.name),
     [],

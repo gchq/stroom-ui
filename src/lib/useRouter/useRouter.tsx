@@ -1,9 +1,9 @@
-import { useContext } from "react";
+import * as React from "react";
 import { RouterContext, HistoryContext } from "./BrowserRouter";
 
 export default function useRouter() {
-  const router = useContext(RouterContext);
-  const history = useContext(HistoryContext);
+  const router = React.useContext(RouterContext);
+  const history = React.useContext(HistoryContext);
 
   if (!history) {
     throw new Error("Could not find history");

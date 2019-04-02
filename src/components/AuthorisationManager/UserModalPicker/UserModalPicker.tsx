@@ -1,5 +1,4 @@
 import * as React from "react";
-import { useCallback, useState } from "react";
 
 import ThemedModal from "src/components/ThemedModal";
 import IconHeader from "src/components/IconHeader";
@@ -16,16 +15,16 @@ interface Props extends BaseProps {
   onCloseDialog: () => void;
 }
 
-export const UserModalPicker = ({
+export const UserModalPicker: React.FunctionComponent<Props> = ({
   isOpen,
   onConfirm,
   onCloseDialog,
   ...rest
-}: Props) => {
+}) => {
   const { pickerProps } = usePicker(rest);
   const { value: userUuid } = pickerProps;
 
-  const onConfirmLocal = useCallback(() => {
+  const onConfirmLocal = React.useCallback(() => {
     if (!!userUuid) {
       onConfirm(userUuid);
     }
@@ -58,19 +57,19 @@ interface UseDialog {
 }
 
 export const useDialog = (baseProps: BaseProps): UseDialog => {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isOpen, setIsOpen] = React.useState<boolean>(false);
 
   return {
     componentProps: {
       ...baseProps,
       isOpen,
-      onCloseDialog: useCallback(() => {
+      onCloseDialog: React.useCallback(() => {
         setIsOpen(false);
-      }, [setIsOpen])
+      }, [setIsOpen]),
     },
-    showDialog: useCallback(() => {
+    showDialog: React.useCallback(() => {
       setIsOpen(true);
-    }, [setIsOpen])
+    }, [setIsOpen]),
   };
 };
 

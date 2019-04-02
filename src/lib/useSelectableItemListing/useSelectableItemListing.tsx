@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import * as React from "react";
 import useKeyIsDown from "../useKeyIsDown";
 import { InProps, OutProps } from "./types";
 import { SelectionBehaviour } from "./enums";
@@ -51,19 +51,19 @@ const useSelectableItemListing = <TItem extends {}>({
   const keyIsDown = useKeyIsDown();
 
   // I think some of these state things should be recalculated in the event of
-  // the underlying items changing....may need to add a 'useEffect' which does
+  // the underlying items changing....may need to add a 'React.useEffect' which does
   // checking of everything
-  const [focusIndex, setFocusIndex] = useState<number>(-1);
-  const [focussedItem, setFocussedItem] = useState<TItem | undefined>(
+  const [focusIndex, setFocusIndex] = React.useState<number>(-1);
+  const [focussedItem, setFocussedItem] = React.useState<TItem | undefined>(
     undefined,
   );
-  const [lastSelectedIndex, setLastSelectedIndex] = useState<
+  const [lastSelectedIndex, setLastSelectedIndex] = React.useState<
     number | undefined
   >(-1);
-  const [selectedItems, setSelectedItems] = useState<TItem[]>([]);
-  const [selectedItemIndexes, setSelectedItemIndexes] = useState<Set<number>>(
-    new Set(),
-  );
+  const [selectedItems, setSelectedItems] = React.useState<TItem[]>([]);
+  const [selectedItemIndexes, setSelectedItemIndexes] = React.useState<
+    Set<number>
+  >(new Set());
 
   const focusUp = useFocusChanged({
     items,
@@ -82,7 +82,7 @@ const useSelectableItemListing = <TItem extends {}>({
     direction: +1,
   });
 
-  const clearSelection = useCallback(() => {
+  const clearSelection = React.useCallback(() => {
     setSelectedItems([]);
     setSelectedItemIndexes(new Set());
   }, [setSelectedItems, setSelectedItemIndexes]);

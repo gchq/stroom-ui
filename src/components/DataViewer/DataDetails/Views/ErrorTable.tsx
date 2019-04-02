@@ -28,7 +28,7 @@ interface Props {
   errors: ErrorData[];
 }
 
-const ErrorTable = ({ errors }: Props) => {
+const ErrorTable: React.FunctionComponent<Props> = ({ errors }) => {
   const tableColumns = [
     {
       Header: "",
@@ -79,17 +79,17 @@ const ErrorTable = ({ errors }: Props) => {
           return undefined;
         }
       },
-      width: 35
+      width: 35,
     },
     {
       Header: "Element",
       accessor: "elementId",
-      maxWidth: 120
+      maxWidth: 120,
     },
     {
       Header: "Message",
-      accessor: "message"
-    }
+      accessor: "message",
+    },
   ];
   const metaAndErrors = splitAt(1, errors);
   const tableData = metaAndErrors[1].map((error: ErrorData) => ({
@@ -98,7 +98,7 @@ const ErrorTable = ({ errors }: Props) => {
     line: error.location.lineNo,
     col: error.location.colNo,
     message: error.message,
-    severity: error.severity
+    severity: error.severity,
   }));
 
   return (

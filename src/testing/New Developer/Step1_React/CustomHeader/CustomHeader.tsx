@@ -23,7 +23,7 @@ interface Props {
  *
  * @param param0 The properties of the component. Props flow down from parent to child components.
  */
-export const CustomHeader = ({ title }: Props) => (
+export const CustomHeader: React.FunctionComponent<Props> = ({ title }) => (
   <h1>Custom Header - {title}</h1>
 );
 

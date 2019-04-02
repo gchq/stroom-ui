@@ -1,5 +1,4 @@
 import * as React from "react";
-import { useEffect } from "react";
 import * as Mousetrap from "mousetrap";
 
 import Button from "../Button";
@@ -19,7 +18,7 @@ const HorizontalPanel: React.FunctionComponent<Props> = ({
   onClose,
   className,
 }) => {
-  useEffect(() => {
+  React.useEffect(() => {
     Mousetrap.bind("esc", () => onClose());
 
     return () => {

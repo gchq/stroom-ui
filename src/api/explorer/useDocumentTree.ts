@@ -1,6 +1,6 @@
-import { useContext } from "react";
+import * as React from "react";
 import DocumentTreeContext from "./DocumentTreeContext";
 
-const useDocumentTree = () => useContext(DocumentTreeContext);
+const useDocumentTree = () => React.useContext(DocumentTreeContext);
 
 export default useDocumentTree;

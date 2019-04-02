@@ -1,4 +1,4 @@
-import { useEffect, useCallback, useState } from "react";
+import * as React from "react";
 
 import useApi from "./useApi";
 import { useApi as useIndexVolumeApi } from "../indexVolume/useApi";
@@ -12,15 +12,15 @@ interface UseIndexVolumeGroup {
 }
 
 const useIndexVolumeGroup = (groupName: string): UseIndexVolumeGroup => {
-  const [indexVolumes, setIndexVolumes] = useState<IndexVolume[]>([]);
-  const [indexVolumeGroup, setIndexVolumeGroup] = useState<
+  const [indexVolumes, setIndexVolumes] = React.useState<IndexVolume[]>([]);
+  const [indexVolumeGroup, setIndexVolumeGroup] = React.useState<
     IndexVolumeGroup | undefined
   >(undefined);
 
   const { getIndexVolumeGroup } = useApi();
   const { getIndexVolumesInGroup, removeVolumeFromGroup } = useIndexVolumeApi();
 
-  useEffect(() => {
+  React.useEffect(() => {
     getIndexVolumeGroup(groupName).then(setIndexVolumeGroup);
     getIndexVolumesInGroup(groupName).then(setIndexVolumes);
   }, [
@@ -31,7 +31,7 @@ const useIndexVolumeGroup = (groupName: string): UseIndexVolumeGroup => {
     setIndexVolumes,
   ]);
 
-  const removeVolume = useCallback(
+  const removeVolume = React.useCallback(
     (volumeId: string) => removeVolumeFromGroup(volumeId, groupName),
     [groupName, removeVolumeFromGroup],
   );

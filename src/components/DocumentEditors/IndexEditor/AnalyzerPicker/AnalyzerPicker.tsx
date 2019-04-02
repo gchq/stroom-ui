@@ -4,7 +4,7 @@ import {
   SelectOptionType,
   AnalyzerType,
   SelectOptionsType,
-  AnalyzerDisplayValues
+  AnalyzerDisplayValues,
 } from "src/types";
 
 interface Props {
@@ -16,11 +16,15 @@ interface Props {
 const OPTIONS: SelectOptionsType = Object.entries(AnalyzerDisplayValues).map(
   d => ({
     value: d[0],
-    label: d[1]
-  })
+    label: d[1],
+  }),
 );
 
-const AnalyzerPicker = ({ className, value, onChange }: Props) => (
+const AnalyzerPicker: React.FunctionComponent<Props> = ({
+  className,
+  value,
+  onChange,
+}) => (
   <Select
     className={className}
     placeholder="Index Field Type"

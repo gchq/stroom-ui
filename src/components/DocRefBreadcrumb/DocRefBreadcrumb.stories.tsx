@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 import * as React from "react";
-import { useState } from "react";
 
 import { storiesOf } from "@storybook/react";
 
@@ -23,15 +22,14 @@ import fullTestData from "src/testing/data";
 
 import { DocRefType } from "src/types";
 
-
 import JsonDebug from "src/testing/JsonDebug";
 import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
 
 const testDocRef = fullTestData.documentTree.children![0].children![0];
 
 const BreadcrumbOpen = () => {
-  const [openDocRef, setOpenDocRef] = useState<DocRefType | undefined>(
-    undefined
+  const [openDocRef, setOpenDocRef] = React.useState<DocRefType | undefined>(
+    undefined,
   );
 
   return (

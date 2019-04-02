@@ -1,5 +1,4 @@
 import * as React from "react";
-import { useState, useCallback } from "react";
 
 import { storiesOf } from "@storybook/react";
 
@@ -11,14 +10,16 @@ import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
 const EXPRESSION_ITEM_ID = "SomeItemID";
 
 const TestHarness: React.FunctionComponent = () => {
-  const [itemDeleted, setItemDeleted] = useState<string | undefined>(undefined);
+  const [itemDeleted, setItemDeleted] = React.useState<string | undefined>(
+    undefined,
+  );
   const { showDialog, componentProps } = useDialog(setItemDeleted);
 
-  const clearItemDeleted = useCallback(() => {
+  const clearItemDeleted = React.useCallback(() => {
     setItemDeleted(undefined);
   }, [setItemDeleted]);
 
-  const showDialogForTestItem = useCallback(() => {
+  const showDialogForTestItem = React.useCallback(() => {
     showDialog(EXPRESSION_ITEM_ID);
   }, [showDialog]);
 

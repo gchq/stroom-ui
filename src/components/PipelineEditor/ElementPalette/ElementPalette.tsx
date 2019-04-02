@@ -1,7 +1,6 @@
 import * as React from "react";
-import { useMemo } from "react";
+import { DropTargetSpec, DropTargetCollector, DropTarget } from "react-dnd";
 
-import { DropTarget, DropTargetSpec, DropTargetCollector } from "react-dnd";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import ElementCategory from "./ElementCategory";
@@ -57,17 +56,17 @@ const ElementPalette: React.FunctionComponent<EnhancedProps> = ({
 }) => {
   const { elementDefinitions } = useElements();
 
-  const byCategory: ElementDefinitionsByCategory = useMemo(
+  const byCategory: ElementDefinitionsByCategory = React.useMemo(
     () => groupByCategory(elementDefinitions),
     [elementDefinitions],
   );
 
-  const byType: ElementDefinitionsByType = useMemo(
+  const byType: ElementDefinitionsByType = React.useMemo(
     () => keyByType(elementDefinitions),
     [elementDefinitions],
   );
 
-  const recycleBinItems = useMemo(
+  const recycleBinItems = React.useMemo(
     () => (pipeline ? getBinItems(pipeline, byType) : []),
     [pipeline, byType],
   );

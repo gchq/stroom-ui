@@ -22,13 +22,16 @@ import useDocRefTypes from "src/api/explorer/useDocRefTypes";
 enum AllSelectState {
   ALL,
   NONE,
-  INDETERMINATE
+  INDETERMINATE,
 }
 
-interface Props extends ControlledInput<Array<string>> {}
+type Props = ControlledInput<string[]>;
 
-let DocRefTypeFilters = ({ onChange, value }: Props) => {
-  const docRefTypes: Array<string> = useDocRefTypes();
+let DocRefTypeFilters: React.FunctionComponent<Props> = ({
+  onChange,
+  value,
+}) => {
+  const docRefTypes: string[] = useDocRefTypes();
 
   let allSelectState = AllSelectState.INDETERMINATE;
   if (value.length === 0) {
@@ -66,7 +69,7 @@ let DocRefTypeFilters = ({ onChange, value }: Props) => {
       {docRefTypes
         .map(docRefType => ({
           docRefType,
-          isSelected: value.includes(docRefType)
+          isSelected: value.includes(docRefType),
         }))
         .map(({ docRefType, isSelected }) => (
           <div key={docRefType}>

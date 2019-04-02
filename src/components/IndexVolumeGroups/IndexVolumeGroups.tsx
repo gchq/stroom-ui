@@ -1,5 +1,4 @@
 import * as React from "react";
-import { useCallback } from "react";
 
 import { useIndexVolumeGroups } from "src/api/indexVolumeGroup";
 import IndexVolumeGroupsTable, {
@@ -38,19 +37,20 @@ const IndexVolumeGroups: React.FunctionComponent = () => {
     showDialog: showDeleteDialog,
     componentProps: deleteDialogComponentProps,
   } = useConfirmDialog({
-    getQuestion: useCallback(
+    getQuestion: React.useCallback(
       () => `Are you sure you want to delete selected groups?`,
       [],
     ),
-    getDetails: useCallback(() => selectedGroups.map(v => v.name).join(", "), [
-      selectedGroups.map(v => v.name),
-    ]),
-    onConfirm: useCallback(() => {
+    getDetails: React.useCallback(
+      () => selectedGroups.map(v => v.name).join(", "),
+      [selectedGroups.map(v => v.name)],
+    ),
+    onConfirm: React.useCallback(() => {
       selectedGroups.forEach(g => deleteIndexVolumeGroup(g.name));
     }, [deleteIndexVolumeGroup, selectedGroups.map(v => v.name)]),
   });
 
-  const onViewEditClick = useCallback(() => {
+  const onViewEditClick = React.useCallback(() => {
     if (selectedGroups.length === 1) {
       goToIndexVolumeGroup(selectedGroups[0].name);
     }

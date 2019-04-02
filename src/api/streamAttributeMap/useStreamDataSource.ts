@@ -1,5 +1,5 @@
 import useApi from "./useApi";
-import { useEffect, useState } from "react";
+import * as React from "react";
 import { DataSourceType } from "src/types";
 
 const defaultDataSource: DataSourceType = {
@@ -7,12 +7,12 @@ const defaultDataSource: DataSourceType = {
 };
 
 const useStreamDataSource = (): DataSourceType => {
-  const [dataSource, setDataSource] = useState<DataSourceType | undefined>(
-    undefined,
-  );
+  const [dataSource, setDataSource] = React.useState<
+    DataSourceType | undefined
+  >(undefined);
   const { fetchDataSource } = useApi();
 
-  useEffect(() => {
+  React.useEffect(() => {
     fetchDataSource().then(setDataSource);
   }, [fetchDataSource, setDataSource]);
 

@@ -15,7 +15,6 @@
  */
 
 import * as React from "react";
-import { useMemo } from "react";
 
 import { storiesOf } from "@storybook/react";
 
@@ -37,7 +36,7 @@ const TestHarness: React.FunctionComponent = () => {
     initialValues,
   });
 
-  const valuesToFilterOut = useMemo(
+  const valuesToFilterOut = React.useMemo(
     () =>
       fullTestData.indexVolumesAndGroups.groups.slice(0, 1).map(g => g.name),
     [],

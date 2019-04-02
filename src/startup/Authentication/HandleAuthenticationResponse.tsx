@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import * as queryString from "qs";
-import { useEffect, useMemo } from "react";
+import * as React from "react";
 
 import { handleAuthenticationResponse } from "./authentication";
 import useRouter from "src/lib/useRouter";
@@ -29,7 +29,7 @@ export const HandleAuthenticationResponse: React.FunctionComponent = () => {
   } = useRouter();
   const { setIdToken } = useAuthenticationContext();
 
-  const accessCode = useMemo(() => {
+  const accessCode = React.useMemo(() => {
     let query = location!.search;
     if (query[0] == "?") {
       query = query.substring(1);
@@ -37,7 +37,7 @@ export const HandleAuthenticationResponse: React.FunctionComponent = () => {
     return queryString.parse(query).accessCode;
   }, [location]);
 
-  useEffect(() => {
+  React.useEffect(() => {
     handleAuthenticationResponse(
       setIdToken,
       history,

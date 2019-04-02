@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 import * as React from "react";
-import { useState, useCallback, useMemo } from "react";
 
 import IconHeader from "../../../IconHeader";
 import DialogActionButtons from "../../../DialogActionButtons";
@@ -30,26 +29,26 @@ interface FormValues {
   permissionInheritance: PermissionInheritance;
 }
 
-export const CopyMoveDocRefDialog = ({
+export const CopyMoveDocRefDialog: React.FunctionComponent<Props> = ({
   uuids,
   initialDestination,
   isOpen,
   onConfirm,
-  onCloseDialog
-}: Props) => {
-  const initialValues = useMemo<FormValues>(
+  onCloseDialog,
+}) => {
+  const initialValues = React.useMemo<FormValues>(
     () => ({
       permissionInheritance: PermissionInheritance.NONE,
-      destination: initialDestination
+      destination: initialDestination,
     }),
-    [initialDestination, uuids]
+    [initialDestination, uuids],
   );
 
   const {
     value: { destination, permissionInheritance },
-    useControlledInputProps
+    useControlledInputProps,
   } = useForm<FormValues>({
-    initialValues
+    initialValues,
   });
 
   const destinationProps = useControlledInputProps<DocRefType>("destination");
@@ -57,14 +56,14 @@ export const CopyMoveDocRefDialog = ({
     PermissionInheritance
   >("permissionInheritance");
 
-  const onConfirmLocal = useCallback(() => {
+  const onConfirmLocal = React.useCallback(() => {
     if (!!destination && !!permissionInheritance) {
       onConfirm(uuids, destination, permissionInheritance);
       onCloseDialog();
     } else {
       console.error("Destination or Permission Inheritance Missing", {
         destination,
-        permissionInheritance
+        permissionInheritance,
       });
     }
   }, [destination, permissionInheritance, uuids, onConfirm, onCloseDialog]);
@@ -102,16 +101,16 @@ export const CopyMoveDocRefDialog = ({
 
 export const useDialog = (
   onConfirm: (
-    uuids: Array<string>,
+    uuids: string[],
     destination: DocRefType,
-    permissionInheritance: PermissionInheritance
-  ) => void
+    permissionInheritance: PermissionInheritance,
+  ) => void,
 ): UseDialog => {
-  const [initialDestination, setInitialDestination] = useState<
+  const [initialDestination, setInitialDestination] = React.useState<
     DocRefType | undefined
   >(undefined);
-  const [uuidsToCopy, setUuidToCopy] = useState<Array<string>>([]);
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [uuidsToCopy, setUuidToCopy] = React.useState<string[]>([]);
+  const [isOpen, setIsOpen] = React.useState<boolean>(false);
 
   return {
     componentProps: {
@@ -123,12 +122,12 @@ export const useDialog = (
         setIsOpen(false);
         setUuidToCopy([]);
         setInitialDestination(undefined);
-      }
+      },
     },
     showDialog: (_uuids, _destination) => {
       setIsOpen(true);
       setUuidToCopy(_uuids);
       setInitialDestination(_destination);
-    }
+    },
   };
 };

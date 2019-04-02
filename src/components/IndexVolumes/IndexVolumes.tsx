@@ -1,5 +1,4 @@
 import * as React from "react";
-import { useCallback } from "react";
 
 import IconHeader from "src/components/IconHeader";
 import Button from "src/components/Button";
@@ -43,15 +42,15 @@ const IndexVolumes: React.FunctionComponent = () => {
     showDialog: showDeleteDialog,
     componentProps: deleteDialogProps,
   } = useThemedConfirmDialog({
-    getQuestion: useCallback(
+    getQuestion: React.useCallback(
       () => `Are you sure you want to delete selected volumes`,
       [],
     ),
-    getDetails: useCallback(
+    getDetails: React.useCallback(
       () => selectedIndexVolumes.map(v => v.id).join(", "),
       [selectedIndexVolumes.map(v => v.id)],
     ),
-    onConfirm: useCallback(() => {
+    onConfirm: React.useCallback(() => {
       selectedIndexVolumes.forEach(v => deleteIndexVolume(v.id));
     }, [selectedIndexVolumes.map(v => v.id)]),
   });
@@ -60,7 +59,7 @@ const IndexVolumes: React.FunctionComponent = () => {
     showDialog: showAddToGroupDialog,
     componentProps: addToGroupProps,
   } = useIndexVolumeGroupModalPicker({
-    onConfirm: useCallback(
+    onConfirm: React.useCallback(
       groupName =>
         selectedIndexVolumes
           .map(v => v.id)
@@ -71,7 +70,7 @@ const IndexVolumes: React.FunctionComponent = () => {
 
   const onViewClick: React.MouseEventHandler<
     HTMLButtonElement
-  > = useCallback(() => {
+  > = React.useCallback(() => {
     if (selectedIndexVolumes.length === 1) {
       goToIndexVolume(selectedIndexVolumes[0].id);
     }

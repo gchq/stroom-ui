@@ -1,5 +1,4 @@
 import * as React from "react";
-import { useState, useCallback } from "react";
 
 import ThemedModal from "src/components/ThemedModal";
 import DialogActionButtons from "src/components/DialogActionButtons";
@@ -35,7 +34,7 @@ const NewIndexVolumeDialog: React.FunctionComponent<Props> = ({
   const nodeNameProps = useTextInput("nodeName");
   const pathProps = useTextInput("path");
 
-  const onConfirmLocal = useCallback(() => {
+  const onConfirmLocal = React.useCallback(() => {
     if (!!nodeName && !!path) {
       onConfirm(nodeName, path);
       onCloseDialog();
@@ -74,7 +73,7 @@ interface UseDialog {
 export const useDialog = (
   onConfirm: (nodeName: string, path: string) => void,
 ): UseDialog => {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isOpen, setIsOpen] = React.useState<boolean>(false);
 
   return {
     componentProps: {

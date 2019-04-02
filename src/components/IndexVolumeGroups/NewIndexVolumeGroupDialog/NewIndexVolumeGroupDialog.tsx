@@ -1,5 +1,4 @@
 import * as React from "react";
-import { useState, useCallback } from "react";
 
 import ThemedModal from "src/components/ThemedModal";
 import DialogActionButtons from "src/components/DialogActionButtons";
@@ -32,7 +31,7 @@ const NewIndexVolumeGroupDialog: React.FunctionComponent<Props> = ({
   });
   const nameProps = useTextInput("name");
 
-  const onConfirmLocal = useCallback(() => {
+  const onConfirmLocal = React.useCallback(() => {
     if (!!name) {
       onConfirm(name);
       onCloseDialog();
@@ -69,7 +68,7 @@ interface UseDialog {
 }
 
 export const useDialog = (onConfirm: (name: string) => void): UseDialog => {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isOpen, setIsOpen] = React.useState<boolean>(false);
 
   return {
     showDialog: () => setIsOpen(true),

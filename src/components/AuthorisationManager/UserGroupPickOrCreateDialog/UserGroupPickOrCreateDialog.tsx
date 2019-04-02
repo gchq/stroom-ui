@@ -1,5 +1,4 @@
 import * as React from "react";
-import { useState, useCallback } from "react";
 
 import UserPicker, { usePicker } from "../UserPicker";
 import ThemedModal from "src/components/ThemedModal";
@@ -10,7 +9,7 @@ import { useManageUsers } from "src/api/userGroups";
 
 interface BaseProps {
   onConfirm: (groupUuid: string) => void;
-  valuesToFilterOut?: Array<string>;
+  valuesToFilterOut?: string[];
 }
 
 interface Props extends BaseProps {
@@ -18,42 +17,42 @@ interface Props extends BaseProps {
   setIsOpen: (i: boolean) => void;
 }
 
-export const UserGroupPickOrCreateDialog = ({
+export const UserGroupPickOrCreateDialog: React.FunctionComponent<Props> = ({
   onConfirm,
   isOpen,
   setIsOpen,
-  valuesToFilterOut
-}: Props) => {
+  valuesToFilterOut,
+}) => {
   const { reset: resetUserGroup, pickerProps: useGroupPickerProps } = usePicker(
-    { isGroup: "Group", valuesToFilterOut }
+    { isGroup: "Group", valuesToFilterOut },
   );
   const { value: userGroupUuid } = useGroupPickerProps;
 
-  const [isNewGroup, setIsNewGroup] = useState<boolean>(false);
-  const [newGroupName, setNewGroupName] = useState<string>("");
+  const [isNewGroup, setIsNewGroup] = React.useState<boolean>(false);
+  const [newGroupName, setNewGroupName] = React.useState<string>("");
 
   const { createUser } = useManageUsers();
 
   const onNewGroupNameChange: React.ChangeEventHandler<
     HTMLInputElement
-  > = useCallback(({ target: { value } }) => setNewGroupName(value), [
-    setNewGroupName
+  > = React.useCallback(({ target: { value } }) => setNewGroupName(value), [
+    setNewGroupName,
   ]);
   const toggleNewGroup: React.MouseEventHandler<
     HTMLButtonElement
-  > = useCallback(() => setIsNewGroup(!isNewGroup), [
+  > = React.useCallback(() => setIsNewGroup(!isNewGroup), [
     setIsNewGroup,
-    isNewGroup
+    isNewGroup,
   ]);
   const newGroupButtonText = isNewGroup ? "Choose Existing" : "Create New";
 
-  const onClose = useCallback(() => {
+  const onClose = React.useCallback(() => {
     resetUserGroup();
     setIsOpen(false);
     setIsNewGroup(false);
   }, [resetUserGroup, setIsOpen, setIsNewGroup]);
 
-  const onConfirmLocal = useCallback(() => {
+  const onConfirmLocal = React.useCallback(() => {
     if (isNewGroup) {
       createUser(newGroupName, true)
         .then(newGroup => onConfirm(newGroup.uuid))
@@ -95,15 +94,15 @@ interface UseDialog {
 }
 
 export const useDialog = (props: BaseProps): UseDialog => {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isOpen, setIsOpen] = React.useState<boolean>(false);
 
   return {
     componentProps: {
       ...props,
       isOpen,
-      setIsOpen
+      setIsOpen,
     },
-    showDialog: () => setIsOpen(true)
+    showDialog: () => setIsOpen(true),
   };
 };
 

@@ -15,7 +15,6 @@
  */
 
 import * as React from "react";
-import { useEffect } from "react";
 import { storiesOf } from "@storybook/react";
 
 import ErrorPage from "./ErrorPage";
@@ -50,14 +49,14 @@ const testHttpErrorCode = 501;
 const TestErrorPage = ({
   errorMessage,
   stackTrace,
-  httpErrorCode
+  httpErrorCode,
 }: SingleError) => {
   const { reportError } = useErrorReporting();
-  useEffect(() => {
+  React.useEffect(() => {
     reportError({
       errorMessage,
       stackTrace,
-      httpErrorCode
+      httpErrorCode,
     });
   }, [reportError, errorMessage, stackTrace, httpErrorCode]);
 

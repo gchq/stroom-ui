@@ -15,7 +15,6 @@
  */
 
 import * as React from "react";
-import { useState, useCallback, useMemo } from "react";
 
 import { storiesOf } from "@storybook/react";
 
@@ -26,12 +25,14 @@ import Button from "src/components/Button";
 const users = fullTestData.usersAndGroups.users;
 
 const TestHarness = () => {
-  const [testListIndex, setTestListIndex] = useState<number>(0);
+  const [testListIndex, setTestListIndex] = React.useState<number>(0);
 
-  const userUuid = useMemo(() => users[testListIndex].uuid, [testListIndex]);
+  const userUuid = React.useMemo(() => users[testListIndex].uuid, [
+    testListIndex,
+  ]);
   const user = useUser(userUuid);
 
-  const switchList = useCallback(() => {
+  const switchList = React.useCallback(() => {
     setTestListIndex((testListIndex + 1) % users.length);
   }, [setTestListIndex, testListIndex]);
 

@@ -8,20 +8,20 @@ interface WithClassName {
 
 interface Props extends DropdownOptionProps, WithClassName {}
 
-export const DefaultDropdownOption = ({
+export const DefaultDropdownOption: React.FunctionComponent<Props> = ({
   option,
   className,
-  onClick
-}: Props) => (
+  onClick,
+}) => (
   <div className={className} onClick={onClick}>
     {option.text}
   </div>
 );
 
-let DefaultDropdownOption2 = ({
+let DefaultDropdownOption2: React.FunctionComponent<DropdownOptionProps> = ({
   option,
   inFocus,
-  onClick
+  onClick,
 }: DropdownOptionProps) => {
   let classNames = ["hoverable"];
 

@@ -32,7 +32,7 @@ const MODE_OPTIONS: ModeOption[] = [
   },
 ];
 
-const ModeOptionButtons = ({ switchMode }: Props) => (
+const ModeOptionButtons: React.FunctionComponent<Props> = ({ switchMode }) => (
   <React.Fragment>
     {MODE_OPTIONS.map(modeOption => (
       <Button

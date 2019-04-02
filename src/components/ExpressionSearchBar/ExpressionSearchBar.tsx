@@ -15,7 +15,6 @@
  */
 
 import * as React from "react";
-import { useEffect, useState, useCallback } from "react";
 import * as uuidv4 from "uuid/v4";
 
 import { processSearchString } from "./expressionSearchBarUtils";
@@ -50,20 +49,22 @@ const ExpressionSearchBar: React.FunctionComponent<Props> = ({
   dataSource,
   onSearch,
 }) => {
-  const [isExpression, setIsExpression] = useState<boolean>(false);
-  const [expression, setExpression] = useState<ExpressionOperatorWithUuid>(
-    initialSearchExpression || defaultSearchExpression,
-  );
-  const [searchString, setSearchString] = useState<string>(
+  const [isExpression, setIsExpression] = React.useState<boolean>(false);
+  const [expression, setExpression] = React.useState<
+    ExpressionOperatorWithUuid
+  >(initialSearchExpression || defaultSearchExpression);
+  const [searchString, setSearchString] = React.useState<string>(
     initialSearchString || "",
   );
-  const [isSearchStringValid, setIsSearchStringValid] = useState<boolean>(true);
+  const [isSearchStringValid, setIsSearchStringValid] = React.useState<boolean>(
+    true,
+  );
   const [
     searchStringValidationMessages,
     setSearchStringValidationMessages,
-  ] = useState<string[]>([]);
+  ] = React.useState<string[]>([]);
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (!expression) {
       const parsedExpression = processSearchString(dataSource, "");
       const e = assignRandomUuids(
@@ -104,13 +105,13 @@ const ExpressionSearchBar: React.FunctionComponent<Props> = ({
     setExpression(e);
   };
 
-  const onClickSearch = useCallback(() => {
+  const onClickSearch = React.useCallback(() => {
     onSearch(expression);
   }, [onSearch, expression]);
-  const onClickSetTextSearch = useCallback(() => {
+  const onClickSetTextSearch = React.useCallback(() => {
     setIsExpression(false);
   }, [setIsExpression]);
-  const onClickSetExpressionSearch = useCallback(() => {
+  const onClickSetExpressionSearch = React.useCallback(() => {
     if (!isExpression) {
       const parsedExpression = processSearchString(dataSource, searchString);
       const e = assignRandomUuids(

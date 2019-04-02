@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import * as React from "react";
 
 import useApi from "./useApi";
 import { User } from "src/types";
@@ -25,19 +25,19 @@ const useManageUsers = (): ManageUsers => {
 
   return {
     users,
-    findUsers: useCallback(
+    findUsers: React.useCallback(
       (name, isGroup, uuid) => {
         findUsers(name, isGroup, uuid).then(itemsReceived);
       },
       [findUsers, itemsReceived],
     ),
-    addUserToGroup: useCallback(
+    addUserToGroup: React.useCallback(
       (userUuid: string, groupUuid: string) => {
         addUserToGroup(userUuid, groupUuid); // no immediate feedback here...
       },
       [addUserToGroup],
     ),
-    createUser: useCallback(
+    createUser: React.useCallback(
       (name: string, isGroup: boolean) => {
         let p = createUser(name, isGroup);
         p.then(itemAdded);
@@ -45,7 +45,7 @@ const useManageUsers = (): ManageUsers => {
       },
       [createUser, itemAdded],
     ),
-    deleteUser: useCallback(
+    deleteUser: React.useCallback(
       (userUuid: string) => {
         deleteUser(userUuid).then(() => itemRemoved(userUuid));
       },

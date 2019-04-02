@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 import * as React from "react";
-import { useMemo, useCallback } from "react";
 import { pipe } from "ramda";
 import {
   DragSource,
@@ -183,7 +182,7 @@ const PipelineElement: React.FunctionComponent<EnhancedProps> = ({
   elementProperties,
   pipeline,
 }) => {
-  const onElementClick = useCallback(() => {
+  const onElementClick = React.useCallback(() => {
     // We need to get the initial values for this element and make sure they go into the state
     // TODO THIS MUST SURELY BE FIXED
     const thisElementProperties = pipeline.merged.properties.add!.filter(
@@ -196,7 +195,7 @@ const PipelineElement: React.FunctionComponent<EnhancedProps> = ({
     return pipelineEditApi.elementSelected(elementId, initialValues);
   }, [pipelineId, elementId, elementProperties, pipeline]);
 
-  const className = useMemo(() => {
+  const className = React.useMemo(() => {
     const classNames = ["Pipeline-element"];
     classNames.push("raised-low");
 

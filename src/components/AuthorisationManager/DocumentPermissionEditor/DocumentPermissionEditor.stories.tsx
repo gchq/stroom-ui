@@ -31,15 +31,15 @@ interface Props {
   docRefUuid: string;
 }
 
-const TestHarness = ({ docRefUuid }: Props) => (
+const TestHarness: React.FunctionComponent<Props> = ({ docRefUuid }) => (
   <Switch>
     <Route
       exact
       path="/s/authorisationManager/document/:docRefUuid/:userUuid"
       render={({
         match: {
-          params: { userUuid, docRefUuid }
-        }
+          params: { userUuid, docRefUuid },
+        },
       }: RouteComponentProps<any>) => (
         <DocumentPermissionForUserEditor
           docRefUuid={docRefUuid}
@@ -55,7 +55,7 @@ const TestHarness = ({ docRefUuid }: Props) => (
 
 const stories = storiesOf(
   "Sections/Authorisation Manager/Document Permission Editor",
-  module
+  module,
 );
 
 addThemedStories(stories, () => <TestHarness docRefUuid={testDocRef.uuid} />);

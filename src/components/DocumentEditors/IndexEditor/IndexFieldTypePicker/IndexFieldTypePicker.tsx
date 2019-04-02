@@ -4,7 +4,7 @@ import {
   SelectOptionType,
   IndexFieldType,
   SelectOptionsType,
-  IndexFieldTypeDisplayValues
+  IndexFieldTypeDisplayValues,
 } from "src/types";
 
 interface Props {
@@ -14,13 +14,17 @@ interface Props {
 }
 
 const OPTIONS: SelectOptionsType = Object.entries(
-  IndexFieldTypeDisplayValues
+  IndexFieldTypeDisplayValues,
 ).map(d => ({
   value: d[0],
-  label: d[1]
+  label: d[1],
 }));
 
-const IndexFieldTypePicker = ({ className, value, onChange }: Props) => (
+const IndexFieldTypePicker: React.FunctionComponent<Props> = ({
+  className,
+  value,
+  onChange,
+}) => (
   <Select
     className={className}
     placeholder="Index Field Type"

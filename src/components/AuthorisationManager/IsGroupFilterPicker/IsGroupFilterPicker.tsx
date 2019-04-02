@@ -1,5 +1,4 @@
 import * as React from "react";
-import { useCallback } from "react";
 
 import Select from "react-select";
 import { SelectOptionType } from "src/types";
@@ -10,27 +9,30 @@ interface Props {
   onChange: (v: IsGroup) => any;
 }
 
-const IS_GROUP_OPTIONS: Array<SelectOptionType> = [
+const IS_GROUP_OPTIONS: SelectOptionType[] = [
   {
     label: "N/A",
-    value: ""
+    value: "",
   },
   {
     label: "Group",
-    value: "Group"
+    value: "Group",
   },
   {
     label: "User",
-    value: "user"
-  }
+    value: "user",
+  },
 ];
 
-const IsGroupFilterPicker = ({ value, onChange }: Props) => (
+const IsGroupFilterPicker: React.FunctionComponent<Props> = ({
+  value,
+  onChange,
+}) => (
   <Select
     value={IS_GROUP_OPTIONS.find(o => o.value === value)}
     onChange={useCallback(
       (o: SelectOptionType) => onChange(o.value as IsGroup),
-      [onChange]
+      [onChange],
     )}
     placeholder="Is Group"
     options={IS_GROUP_OPTIONS}

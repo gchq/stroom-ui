@@ -1,4 +1,5 @@
-import { createContext } from "react";
+import * as React from "react";
+
 import { DocRefTree, DocRefType, DocRefWithLineage } from "src/types";
 import { SearchProps } from "./types";
 import { DEFAULT_TREE, DEFAULT_DOC_REF_WITH_LINEAGE } from "./values";
@@ -30,7 +31,7 @@ export interface DocumentTreeContextValue {
 const NO_OP_FUNCTION = () =>
   console.error("Unexpected call to default context");
 
-const DocumentTreeContext = createContext<DocumentTreeContextValue>({
+const DocumentTreeContext = React.createContext<DocumentTreeContextValue>({
   copyDocuments: NO_OP_FUNCTION,
   createDocument: NO_OP_FUNCTION,
   deleteDocuments: NO_OP_FUNCTION,

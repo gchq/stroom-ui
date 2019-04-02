@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 import * as React from "react";
-import { useState } from "react";
 import { storiesOf } from "@storybook/react";
 
 import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
@@ -26,13 +25,13 @@ import JsonDebug from "src/testing/JsonDebug";
 
 const stories = storiesOf(
   "Sections/Authorisation Manager/New User Dialog",
-  module
+  module,
 );
 
 const B: React.FunctionComponent = () => {
-  const [newUser, setNewUser] = useState<object>({});
+  const [newUser, setNewUser] = React.useState<object>({});
   const { componentProps, showDialog } = useDialog((name, isGroup) =>
-    setNewUser({ name, isGroup })
+    setNewUser({ name, isGroup }),
   );
 
   return (

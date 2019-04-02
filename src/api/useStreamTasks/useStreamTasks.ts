@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import * as React from "react";
 
 import useApi from "./useApi";
 import { StreamTaskType } from "src/types";
@@ -27,17 +27,17 @@ const defaultFetchParameters: FetchParameters = {
 const useStreamTasks = (): UseStreamTasks => {
   const { fetchTrackers, fetchMore, setEnabled } = useApi();
 
-  const [fetchParameters, setFetchParameters] = useState<FetchParameters>(
+  const [fetchParameters, setFetchParameters] = React.useState<FetchParameters>(
     defaultFetchParameters,
   );
   const { pageSize, pageOffset, sortBy } = fetchParameters;
 
-  const [pagedTrackerInfo, setPagedTrackerInfo] = useState<PagedTrackerInfo>(
-    defaultPagedInfo,
-  );
+  const [pagedTrackerInfo, setPagedTrackerInfo] = React.useState<
+    PagedTrackerInfo
+  >(defaultPagedInfo);
   const { trackers, totalTrackers, numberOfPages } = pagedTrackerInfo;
 
-  const updateFetchParameters = useCallback(
+  const updateFetchParameters = React.useCallback(
     (params: Partial<FetchParameters>) => {
       setFetchParameters({
         ...fetchParameters,
@@ -47,7 +47,7 @@ const useStreamTasks = (): UseStreamTasks => {
     [fetchParameters, setFetchParameters],
   );
 
-  const addTrackers = useCallback(
+  const addTrackers = React.useCallback(
     (streamTasks: StreamTaskType[], totalStreamTasks: number) => {
       setPagedTrackerInfo({
         trackers: trackers.concat(streamTasks),
@@ -58,14 +58,14 @@ const useStreamTasks = (): UseStreamTasks => {
     [setPagedTrackerInfo, trackers, pageSize],
   );
 
-  const updateSort = useCallback(
+  const updateSort = React.useCallback(
     (sortBy: SortByOptions, sortDirection: Directions) => {
       updateFetchParameters({ sortBy, sortDirection });
     },
     [updateFetchParameters],
   );
 
-  const updateTrackers = useCallback(
+  const updateTrackers = React.useCallback(
     (streamTasks: StreamTaskType[], totalStreamTasks: number) =>
       setPagedTrackerInfo({
         trackers: streamTasks,
@@ -75,7 +75,7 @@ const useStreamTasks = (): UseStreamTasks => {
     [setPagedTrackerInfo],
   );
 
-  const updateEnabled = useCallback(
+  const updateEnabled = React.useCallback(
     (filterId: number, enabled: boolean) => {
       setPagedTrackerInfo({
         trackers: trackers.map((tracker, i) =>
@@ -90,7 +90,7 @@ const useStreamTasks = (): UseStreamTasks => {
     [setPagedTrackerInfo, trackers, numberOfPages, totalTrackers],
   );
 
-  const updateSearchCriteria = useCallback(
+  const updateSearchCriteria = React.useCallback(
     (searchCriteria: string) => {
       let newSortBy: SortByOptions | undefined = sortBy;
       if (searchCriteria.includes("sort:next")) {
@@ -105,25 +105,25 @@ const useStreamTasks = (): UseStreamTasks => {
     [sortBy, setFetchParameters],
   );
 
-  const changePage = useCallback(
+  const changePage = React.useCallback(
     (pageOffset: number) => {
       updateFetchParameters({ pageOffset });
     },
     [updateFetchParameters],
   );
 
-  const updatePageSize = useCallback(
+  const updatePageSize = React.useCallback(
     (pageSize: number) => {
       updateFetchParameters({ pageSize });
     },
     [updateFetchParameters],
   );
 
-  const resetPaging = useCallback(() => {
+  const resetPaging = React.useCallback(() => {
     updateFetchParameters({ pageOffset: defaultFetchParameters.pageOffset });
   }, [updateFetchParameters]);
 
-  const pageRight = useCallback(() => {
+  const pageRight = React.useCallback(() => {
     // We don't want to page further than is possible
     const currentPageOffset = pageOffset;
     const numberOfPagesToUse = numberOfPages - 1;
@@ -136,7 +136,7 @@ const useStreamTasks = (): UseStreamTasks => {
     });
   }, [updateFetchParameters, pageOffset, numberOfPages]);
 
-  const pageLeft = useCallback(() => {
+  const pageLeft = React.useCallback(() => {
     // We don't want to page further than is possible
     const newPageOffset = pageOffset > 0 ? pageOffset - 1 : 0;
     updateFetchParameters({
@@ -144,19 +144,19 @@ const useStreamTasks = (): UseStreamTasks => {
     });
   }, [updateFetchParameters, pageOffset]);
 
-  const fetchTrackersLocal = useCallback(() => {
+  const fetchTrackersLocal = React.useCallback(() => {
     fetchTrackers(fetchParameters).then(d =>
       updateTrackers(d.streamTasks, d.totalStreamTasks),
     );
   }, [fetchParameters, fetchTrackers, updateTrackers]);
 
-  const fetchMoreLocal = useCallback(() => {
+  const fetchMoreLocal = React.useCallback(() => {
     fetchMore(fetchParameters).then(d =>
       addTrackers(d.streamTasks, d.totalStreamTasks),
     );
   }, [fetchMore, fetchParameters]);
 
-  const enableToggleLocal = useCallback(
+  const enableToggleLocal = React.useCallback(
     (filterId: number) => {
       const tracker = trackers.find(t => t.filterId === filterId);
       if (tracker) {

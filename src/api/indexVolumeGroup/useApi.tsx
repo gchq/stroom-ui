@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import * as React from "react";
 
 import useHttpClient from "../useHttpClient";
 import { IndexVolumeGroup } from "src/types";
@@ -21,32 +21,32 @@ export const useApi = (): Api => {
   } = useHttpClient();
 
   return {
-    getIndexVolumeGroupNames: useCallback(
+    getIndexVolumeGroupNames: React.useCallback(
       () =>
         httpGetJson(
           `${stroomBaseServiceUrl}/stroom-index/volumeGroup/v1/names`,
         ),
       [stroomBaseServiceUrl, httpGetJson],
     ),
-    getIndexVolumeGroups: useCallback(
+    getIndexVolumeGroups: React.useCallback(
       () => httpGetJson(`${stroomBaseServiceUrl}/stroom-index/volumeGroup/v1`),
       [stroomBaseServiceUrl, httpGetJson],
     ),
-    getIndexVolumeGroup: useCallback(
+    getIndexVolumeGroup: React.useCallback(
       (name: string) =>
         httpGetJson(
           `${stroomBaseServiceUrl}/stroom-index/volumeGroup/v1/${name}`,
         ),
       [stroomBaseServiceUrl, httpGetJson],
     ),
-    createIndexVolumeGroup: useCallback(
+    createIndexVolumeGroup: React.useCallback(
       (name: string) =>
         httpPostJsonResponse(
           `${stroomBaseServiceUrl}/stroom-index/volumeGroup/v1/${name}`,
         ),
       [stroomBaseServiceUrl, httpPostJsonResponse],
     ),
-    deleteIndexVolumeGroup: useCallback(
+    deleteIndexVolumeGroup: React.useCallback(
       (name: string) =>
         httpDeleteEmptyResponse(
           `${stroomBaseServiceUrl}/stroom-index/volumeGroup/v1/${name}`,

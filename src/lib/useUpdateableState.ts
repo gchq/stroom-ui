@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import * as React from "react";
 
 /**
  * An updateable state, the value is available, and a function that can accept partial updates.
@@ -17,11 +17,11 @@ interface UseUpdateableState<T extends object> {
 export const useUpdateableState = <T extends object>(
   initialValue: T,
 ): UseUpdateableState<T> => {
-  const [value, setValue] = useState<T>(initialValue);
+  const [value, setValue] = React.useState<T>(initialValue);
 
   return {
     value,
-    update: useCallback(
+    update: React.useCallback(
       (updates: Partial<T>) => {
         setValue({
           ...value,

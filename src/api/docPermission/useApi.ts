@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import * as React from "react";
 
 import useHttpClient from "../useHttpClient";
 import { DocumentPermissions } from "src/types";
@@ -43,7 +43,7 @@ export const useApi = (): Api => {
   } = useHttpClient();
 
   return {
-    getPermissionForDocType: useCallback(
+    getPermissionForDocType: React.useCallback(
       (docRefType: string): Promise<string[]> =>
         httpGetJson(
           `${stroomBaseServiceUrl}/docPermissions/v1/forDocType/${docRefType}`,
@@ -52,14 +52,14 @@ export const useApi = (): Api => {
         ),
       [stroomBaseServiceUrl, httpGetJson],
     ),
-    getPermissionsForDocumentForUser: useCallback(
+    getPermissionsForDocumentForUser: React.useCallback(
       (docRefUuid: string, userUuid: string): Promise<string[]> =>
         httpGetJson(
           `${stroomBaseServiceUrl}/docPermissions/v1/forDocForUser/${docRefUuid}/${userUuid}`,
         ),
       [stroomBaseServiceUrl, httpGetJson],
     ),
-    addDocPermission: useCallback(
+    addDocPermission: React.useCallback(
       (
         docRefUuid: string,
         userUuid: string,
@@ -70,7 +70,7 @@ export const useApi = (): Api => {
         ),
       [stroomBaseServiceUrl, httpPostEmptyResponse],
     ),
-    removeDocPermission: useCallback(
+    removeDocPermission: React.useCallback(
       (
         docRefUuid: string,
         userUuid: string,
@@ -81,21 +81,21 @@ export const useApi = (): Api => {
         ),
       [stroomBaseServiceUrl, httpDeleteEmptyResponse],
     ),
-    getPermissionForDoc: useCallback(
+    getPermissionForDoc: React.useCallback(
       (docRefUuid: string) =>
         httpGetJson(
           `${stroomBaseServiceUrl}/docPermissions/v1/forDoc/${docRefUuid}`,
         ),
       [stroomBaseServiceUrl, httpGetJson],
     ),
-    clearDocPermissionsForUser: useCallback(
+    clearDocPermissionsForUser: React.useCallback(
       (docRefUuid: string, userUuid: string) =>
         httpDeleteEmptyResponse(
           `${stroomBaseServiceUrl}/docPermissions/v1/forDocForUser/${docRefUuid}/${userUuid}`,
         ),
       [stroomBaseServiceUrl, httpDeleteEmptyResponse],
     ),
-    clearDocPermissions: useCallback(
+    clearDocPermissions: React.useCallback(
       (docRefUuid: string) =>
         httpDeleteEmptyResponse(
           `${stroomBaseServiceUrl}/docPermissions/v1/forDoc/${docRefUuid}`,

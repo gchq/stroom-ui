@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import * as React from "react";
 
 import useHttpClient from "../useHttpClient";
 import { StreamTasksResponseType } from "src/types";
@@ -16,7 +16,7 @@ export const useApi = (): Api => {
   const { stroomBaseServiceUrl } = useConfig();
   const { httpGetJson, httpPatchEmptyResponse } = useHttpClient();
 
-  const fetchTrackers = useCallback(
+  const fetchTrackers = React.useCallback(
     ({
       pageSize,
       pageOffset,
@@ -41,7 +41,7 @@ export const useApi = (): Api => {
     [stroomBaseServiceUrl, httpGetJson],
   );
 
-  const fetchMore = useCallback(
+  const fetchMore = React.useCallback(
     ({
       pageSize,
       pageOffset,
@@ -68,7 +68,7 @@ export const useApi = (): Api => {
     [stroomBaseServiceUrl, httpGetJson],
   );
 
-  const setEnabled = useCallback(
+  const setEnabled = React.useCallback(
     (filterId: number, enabled: boolean) => {
       const url = `${stroomBaseServiceUrl}/streamtasks/v1/${filterId}`;
       const body = JSON.stringify({

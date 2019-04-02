@@ -1,7 +1,7 @@
 import * as React from "react";
 import {
   useDocTypePermissions,
-  useDocumentPermissionsForUser
+  useDocumentPermissionsForUser,
 } from "src/api/docPermission";
 import {} from "src/api/docPermission";
 import CheckboxSeries from "src/components/CheckboxSeries";
@@ -15,10 +15,9 @@ interface Props {
   userUuid: string;
 }
 
-export const DocumentPermissionForUserEditor = ({
-  docRefUuid,
-  userUuid
-}: Props) => {
+export const DocumentPermissionForUserEditor: React.FunctionComponent<
+  Props
+> = ({ docRefUuid, userUuid }) => {
   const { history } = useRouter();
   const { findDocRefWithLineage } = useDocumentTree();
 
@@ -29,7 +28,7 @@ export const DocumentPermissionForUserEditor = ({
   const {
     permissionNames,
     addPermission,
-    removePermission
+    removePermission,
   } = useDocumentPermissionsForUser(docRefUuid, userUuid);
 
   return (

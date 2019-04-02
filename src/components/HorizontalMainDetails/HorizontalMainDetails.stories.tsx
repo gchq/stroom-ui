@@ -16,7 +16,7 @@
 
 import * as React from "react";
 import * as uuidv4 from "uuid/v4";
-import { useState, useCallback, useMemo } from "react";
+import * as React from "react";
 import * as loremIpsum from "lorem-ipsum";
 import { storiesOf } from "@storybook/react";
 import { Color } from "csstype";
@@ -40,11 +40,11 @@ const TestHarness: React.FunctionComponent<Props> = ({
   storageKey,
   title,
   detailContent,
-}: Props) => {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+}) => {
+  const [isOpen, setIsOpen] = React.useState<boolean>(false);
 
-  const onOpen = useCallback(() => setIsOpen(true), [setIsOpen]);
-  const onClose = useCallback(() => setIsOpen(false), [setIsOpen]);
+  const onOpen = React.useCallback(() => setIsOpen(true), [setIsOpen]);
+  const onClose = React.useCallback(() => setIsOpen(false), [setIsOpen]);
 
   return (
     <HorizontalMainDetails
@@ -114,7 +114,7 @@ const PanelPart: React.FunctionComponent<PanelPartProps> = ({
   backgroundColor,
   children,
 }) => {
-  const uuid = useMemo(() => uuidv4(), []);
+  const uuid = React.useMemo(() => uuidv4(), []);
 
   return (
     <div style={{ backgroundColor }}>
@@ -129,10 +129,10 @@ const PanelPart: React.FunctionComponent<PanelPartProps> = ({
 };
 
 const PanelTest = () => {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isOpen, setIsOpen] = React.useState<boolean>(false);
 
-  const onOpen = useCallback(() => setIsOpen(true), [setIsOpen]);
-  const onClose = useCallback(() => setIsOpen(false), [setIsOpen]);
+  const onOpen = React.useCallback(() => setIsOpen(true), [setIsOpen]);
+  const onClose = React.useCallback(() => setIsOpen(false), [setIsOpen]);
 
   return (
     <HorizontalMainDetails

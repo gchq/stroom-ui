@@ -14,34 +14,36 @@
  * limitations under the License.
  */
 
-import * as React from 'react';
-import {useCallback} from 'react';
-import PanelGroup from 'react-panelgroup';
+import * as React from "react";
+import { useCallback } from "react";
+import PanelGroup from "react-panelgroup";
 
-import Loader from '../Loader';
+import Loader from "../Loader";
 import AddElementModal, {
   useDialog as useAddElementDialog,
-} from './AddElementModal/AddElementModal';
-import {ButtonProps} from '../Button';
+} from "./AddElementModal/AddElementModal";
+import { ButtonProps } from "../Button";
 import PipelineSettings, {
   useDialog as usePipelineSettingsDialog,
-} from './PipelineSettings';
-import ElementPalette from './ElementPalette';
+} from "./PipelineSettings";
+import ElementPalette from "./ElementPalette";
 import DeletePipelineElement, {
   useDialog as useDeleteElementDialog,
-} from './DeletePipelineElement';
-import {ElementDetails} from './ElementDetails';
-import Pipeline from './Pipeline';
-import DocRefEditor, { SwitchedDocRefEditorProps } from '../DocumentEditors/DocRefEditor';
-import usePipelineState from './usePipelineState';
+} from "./DeletePipelineElement";
+import { ElementDetails } from "./ElementDetails";
+import Pipeline from "./Pipeline";
+import DocRefEditor, {
+  SwitchedDocRefEditorProps,
+} from "../DocumentEditors/DocRefEditor";
+import usePipelineState from "./usePipelineState";
 
-const PipelineEditor = ({docRefUuid}: SwitchedDocRefEditorProps) => {
+const PipelineEditor = ({ docRefUuid }: SwitchedDocRefEditorProps) => {
   const piplineStateProps = usePipelineState(docRefUuid);
   const {
     pipelineEditApi,
-    useEditorProps: {editorProps},
+    useEditorProps: { editorProps },
   } = piplineStateProps;
-  const {docRefContents: pipeline} = editorProps;
+  const { docRefContents: pipeline } = editorProps;
 
   const {
     settingsUpdated,
@@ -53,7 +55,9 @@ const PipelineEditor = ({docRefUuid}: SwitchedDocRefEditorProps) => {
   const {
     showDialog: showSettingsDialog,
     componentProps: settingsComponentProps,
-  } = usePipelineSettingsDialog(description => settingsUpdated({description}));
+  } = usePipelineSettingsDialog(description =>
+    settingsUpdated({ description }),
+  );
 
   const {
     showDialog: showAddElementDialog,
@@ -67,25 +71,25 @@ const PipelineEditor = ({docRefUuid}: SwitchedDocRefEditorProps) => {
     elementDeleted(elementIdToDelete);
   });
 
-  const onClickOpenSettings = useCallback(() => {
+  const onClickOpenSettings = React.useCallback(() => {
     if (!!pipeline) {
-      showSettingsDialog(pipeline.description || 'something');
+      showSettingsDialog(pipeline.description || "something");
     } else {
-      console.error('No pipeline set');
+      console.error("No pipeline set");
     }
   }, [showSettingsDialog, pipeline]);
 
-  const additionalActionBarItems: Array<ButtonProps> = [
+  const additionalActionBarItems: ButtonProps[] = [
     {
-      icon: 'cogs',
-      title: 'Open Settings',
+      icon: "cogs",
+      title: "Open Settings",
       onClick: onClickOpenSettings,
     },
     {
-      icon: 'recycle',
-      title: 'Create Child Pipeline',
+      icon: "recycle",
+      title: "Create Child Pipeline",
       onClick: () =>
-        console.log('TODO - Implement Selection of Parent Pipeline'),
+        console.log("TODO - Implement Selection of Parent Pipeline"),
     },
   ];
 
@@ -115,8 +119,8 @@ const PipelineEditor = ({docRefUuid}: SwitchedDocRefEditorProps) => {
           panelWidths={[
             {},
             {
-              resize: 'dynamic',
-              size: selectedElementId !== undefined ? '50%' : 0,
+              resize: "dynamic",
+              size: selectedElementId !== undefined ? "50%" : 0,
             },
           ]}
         >

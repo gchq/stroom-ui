@@ -1,5 +1,4 @@
 import * as React from "react";
-import { useState } from "react";
 import { storiesOf } from "@storybook/react";
 
 import SingleValueWidget from "./SingleValueWidget";
@@ -16,7 +15,7 @@ const stories = storiesOf("Expression/Value Widgets", module);
   stories
     .add(`Single ${valueType}`, () => {
       const B: React.FunctionComponent = () => {
-        const [value, onChange] = useState(defaultValue);
+        const [value, onChange] = React.useState(defaultValue);
         return (
           <div>
             <SingleValueWidget
@@ -32,7 +31,7 @@ const stories = storiesOf("Expression/Value Widgets", module);
     })
     .add(`In ${valueType}`, () => {
       const B: React.FunctionComponent = () => {
-        const [value, onChange] = useState(defaultValue);
+        const [value, onChange] = React.useState(defaultValue);
 
         return (
           <div>
@@ -44,7 +43,7 @@ const stories = storiesOf("Expression/Value Widgets", module);
     })
     .add(`Between ${valueType}`, () => {
       const B: React.FunctionComponent = () => {
-        const [value, onChange] = useState(defaultValue);
+        const [value, onChange] = React.useState(defaultValue);
 
         return (
           <div>

@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 import * as React from "react";
-import { useState } from "react";
 import { storiesOf } from "@storybook/react";
 
 import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
@@ -25,7 +24,7 @@ import { AnalyzerType } from "src/types";
 const stories = storiesOf("Pickers/Index Analyzer", module);
 
 const B: React.FunctionComponent = () => {
-  const [value, onChange] = useState<AnalyzerType | undefined>(undefined);
+  const [value, onChange] = React.useState<AnalyzerType | undefined>(undefined);
 
   return <AnalyzerPicker value={value} onChange={onChange} />;
 };

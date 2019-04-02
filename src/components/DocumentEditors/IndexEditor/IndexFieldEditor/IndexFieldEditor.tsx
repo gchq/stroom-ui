@@ -1,5 +1,4 @@
 import * as React from "react";
-import { useState, useCallback } from "react";
 
 import { IndexField, IndexFieldType, AnalyzerType } from "src/types";
 import ThemedModal from "../../../ThemedModal";
@@ -15,19 +14,19 @@ interface Props {
   onCloseDialog: () => void;
 }
 
-export const IndexFieldEditor = ({
+export const IndexFieldEditor: React.FunctionComponent<Props> = ({
   id,
   indexField,
   onUpdateField,
-  onCloseDialog
-}: Props) => {
+  onCloseDialog,
+}) => {
   const {
     value: indexUpdates,
     useControlledInputProps,
     useTextInput,
-    useCheckboxInput
+    useCheckboxInput,
   } = useForm<IndexField>({
-    initialValues: indexField
+    initialValues: indexField,
   });
 
   const fieldNameProps = useTextInput("fieldName");
@@ -41,7 +40,7 @@ export const IndexFieldEditor = ({
 
   const fieldTypeProps = useControlledInputProps<IndexFieldType>("fieldType");
   const analyzerTypeProps = useControlledInputProps<AnalyzerType>(
-    "analyzerType"
+    "analyzerType",
   );
 
   return !!indexField ? (
@@ -79,11 +78,11 @@ interface UseIndexFieldEditor {
 }
 
 export const useEditor = (
-  onUpdateField: (id: number, updates: IndexField) => void
+  onUpdateField: (id: number, updates: IndexField) => void,
 ): UseIndexFieldEditor => {
-  const [id, setId] = useState<number>(0);
-  const [indexField, setIndexField] = useState<IndexField | undefined>(
-    undefined
+  const [id, setId] = React.useState<number>(0);
+  const [indexField, setIndexField] = React.useState<IndexField | undefined>(
+    undefined,
   );
 
   return {
@@ -91,17 +90,17 @@ export const useEditor = (
       id,
       indexField,
       onUpdateField,
-      onCloseDialog: useCallback(() => setIndexField(undefined), [
-        setIndexField
-      ])
+      onCloseDialog: React.useCallback(() => setIndexField(undefined), [
+        setIndexField,
+      ]),
     },
-    showEditor: useCallback(
+    showEditor: React.useCallback(
       (_id, _indexField) => {
         setId(_id);
         setIndexField(_indexField);
       },
-      [setId, setIndexField]
-    )
+      [setId, setIndexField],
+    ),
   };
 };
 

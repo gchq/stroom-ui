@@ -6,7 +6,11 @@ interface Props {
   className?: string;
 }
 
-const DocRefImage = ({ docRefType, size = "lg", className = "" }: Props) => {
+const DocRefImage: React.FunctionComponent<Props> = ({
+  docRefType,
+  size = "lg",
+  className = "",
+}) => {
   if (docRefType !== "NONE") {
     return (
       <img

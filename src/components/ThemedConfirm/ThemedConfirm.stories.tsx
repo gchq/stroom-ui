@@ -15,7 +15,6 @@
  */
 
 import * as React from "react";
-import { useState, useCallback } from "react";
 import { storiesOf } from "@storybook/react";
 
 import Button from "../Button";
@@ -24,15 +23,15 @@ import ThemedConfirm, { useDialog } from "./ThemedConfirm";
 import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
 
 let TestHarness: React.FunctionComponent = () => {
-  const [confirmCount, setConfirmCount] = useState<number>(0);
+  const [confirmCount, setConfirmCount] = React.useState<number>(0);
 
   const { showDialog, componentProps } = useDialog({
-    getQuestion: useCallback(() => "Are you sure about this?", []),
-    getDetails: useCallback(
+    getQuestion: React.useCallback(() => "Are you sure about this?", []),
+    getDetails: React.useCallback(
       () => "Because...nothing will really happen anyway",
       [],
     ),
-    onConfirm: useCallback(() => setConfirmCount(confirmCount + 1), [
+    onConfirm: React.useCallback(() => setConfirmCount(confirmCount + 1), [
       confirmCount,
     ]),
   });

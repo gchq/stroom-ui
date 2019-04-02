@@ -1,5 +1,4 @@
 import * as React from "react";
-import { useState, useMemo, useCallback } from "react";
 
 import Button from "../Button";
 import IconHeader from "../IconHeader";
@@ -23,9 +22,10 @@ const PipelineSettings: React.FunctionComponent<Props> = ({
   updateValues,
   onCloseDialog,
 }) => {
-  const initialValues = useMemo(() => ({ description: initialDescription }), [
-    initialDescription,
-  ]);
+  const initialValues = React.useMemo(
+    () => ({ description: initialDescription }),
+    [initialDescription],
+  );
 
   const {
     value: { description },
@@ -35,7 +35,7 @@ const PipelineSettings: React.FunctionComponent<Props> = ({
   });
   const descriptionProps = useTextInput("description");
 
-  const onConfirmLocal = useCallback(() => {
+  const onConfirmLocal = React.useCallback(() => {
     if (!!description) {
       updateValues(description);
       onCloseDialog();
@@ -87,8 +87,10 @@ interface UseDialog {
 export const useDialog = (
   updateValues: (description: string) => void,
 ): UseDialog => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [initialDescription, setInitialDescription] = useState<string>("");
+  const [isOpen, setIsOpen] = React.useState(false);
+  const [initialDescription, setInitialDescription] = React.useState<string>(
+    "",
+  );
 
   return {
     showDialog: (_initialDescription: string) => {

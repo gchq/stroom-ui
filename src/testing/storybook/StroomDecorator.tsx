@@ -19,15 +19,13 @@ import { AuthenticationContext } from "src/startup/Authentication";
 import { DocumentTreeContextProvider } from "src/api/explorer";
 import { ErrorReportingContextProvider } from "src/components/ErrorPage";
 
-interface Props extends RouteComponentProps {}
-
-const RouteWrapper: React.StatelessComponent<Props> = ({
+const RouteWrapper: React.StatelessComponent<RouteComponentProps> = ({
   children,
-  history
+  history,
 }) => <CustomRouter history={history}>{children}</CustomRouter>;
 const DragDropRouted = pipe(
   DragDropContext(HTML5Backend),
-  withRouter
+  withRouter,
 )(RouteWrapper);
 
 const ThemedComponent: React.StatelessComponent<{}> = ({ children }) => {
@@ -49,9 +47,9 @@ export default (storyFn: RenderFunction) =>
             idToken: "PollyWannaCracker",
             setIdToken: () => {
               console.error(
-                "Setting the idToken in storybook? This is most unexpected!"
+                "Setting the idToken in storybook? This is most unexpected!",
               );
-            }
+            },
           }}
         >
           <AuthorisationContextProvider>

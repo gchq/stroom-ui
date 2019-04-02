@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import * as React from "react";
 
 import useHttpClient from "../useHttpClient";
 import { IndexVolume, IndexVolumeGroup } from "src/types";
@@ -28,14 +28,14 @@ export const useApi = (): Api => {
   } = useHttpClient();
 
   return {
-    addVolumeToGroup: useCallback(
+    addVolumeToGroup: React.useCallback(
       (indexVolumeId: string, groupName: string) =>
         httpPostEmptyResponse(
           `${stroomBaseServiceUrl}/stroom-index/volume/v1/inGroup/${indexVolumeId}/${groupName}`,
         ),
       [stroomBaseServiceUrl, httpPostEmptyResponse],
     ),
-    createIndexVolume: useCallback(
+    createIndexVolume: React.useCallback(
       (nodeName: string, path: string) =>
         httpPostJsonResponse(
           `${stroomBaseServiceUrl}/stroom-index/volume/v1/${name}`,
@@ -43,37 +43,37 @@ export const useApi = (): Api => {
         ),
       [stroomBaseServiceUrl, httpPostJsonResponse],
     ),
-    deleteIndexVolume: useCallback(
+    deleteIndexVolume: React.useCallback(
       (id: string) =>
         httpDeleteEmptyResponse(
           `${stroomBaseServiceUrl}/stroom-index/volume/v1/${id}`,
         ),
       [stroomBaseServiceUrl, httpDeleteEmptyResponse],
     ),
-    getIndexVolumeById: useCallback(
+    getIndexVolumeById: React.useCallback(
       (id: string) =>
         httpGetJson(`${stroomBaseServiceUrl}/stroom-index/volume/v1/${id}`),
       [stroomBaseServiceUrl, httpGetJson],
     ),
-    getIndexVolumes: useCallback(
+    getIndexVolumes: React.useCallback(
       () => httpGetJson(`${stroomBaseServiceUrl}/stroom-index/volume/v1`),
       [stroomBaseServiceUrl, httpGetJson],
     ),
-    getIndexVolumesInGroup: useCallback(
+    getIndexVolumesInGroup: React.useCallback(
       (groupName: string) =>
         httpGetJson(
           `${stroomBaseServiceUrl}/stroom-index/volume/v1/inGroup/${groupName}`,
         ),
       [stroomBaseServiceUrl, httpGetJson],
     ),
-    removeVolumeFromGroup: useCallback(
+    removeVolumeFromGroup: React.useCallback(
       (indexVolumeId: string, groupName: string) =>
         httpDeleteEmptyResponse(
           `${stroomBaseServiceUrl}/stroom-index/volume/v1/inGroup/${indexVolumeId}/${groupName}`,
         ),
       [stroomBaseServiceUrl, httpDeleteEmptyResponse],
     ),
-    getGroupsForIndexVolume: useCallback(
+    getGroupsForIndexVolume: React.useCallback(
       (id: string) =>
         httpGetJson(
           `${stroomBaseServiceUrl}/stroom-index/volume/v1/groupsFor/${id}`,

@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import * as React from "react";
 
 import useApi from "./useApi";
 import { UseData, PagedData, FetchDataParams } from "./types";
@@ -25,7 +25,7 @@ const useData = (): UseData => {
     FetchDataParams
   >(defaultFetchParams);
 
-  const getDataForSelectedRowWrapped = useCallback(() => {
+  const getDataForSelectedRowWrapped = React.useCallback(() => {
     getDataForSelectedRow(fetchParams).then(d => {
       console.log("D", d);
       // setPagedData({

@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 import * as React from "react";
-import { useState, useCallback } from "react";
 
 import { storiesOf } from "@storybook/react";
 
@@ -27,7 +26,7 @@ import Button from "../Button";
 import { ExpressionOperatorWithUuid } from "src/types";
 
 const TestHarness: React.FunctionComponent = () => {
-  const [lastSearch, setLastSearch] = useState<
+  const [lastSearch, setLastSearch] = React.useState<
     ExpressionOperatorWithUuid | undefined
   >(undefined);
 

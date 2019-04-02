@@ -14,13 +14,15 @@ interface Props {
   userUuid: string;
 }
 
-const UserAuthorisationEditor = ({ userUuid }: Props) => {
+const UserAuthorisationEditor: React.FunctionComponent<Props> = ({
+  userUuid,
+}) => {
   const { history } = useRouter();
   const user = useUser(userUuid);
   const {
     userAppPermissions,
     addPermission,
-    removePermission
+    removePermission,
   } = useAppPermissionsForUser(userUuid);
 
   if (!user) {

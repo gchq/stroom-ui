@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import * as React from "react";
 
 import useHttpClient from "../useHttpClient";
 import { useConfig } from "src/startup/config";
@@ -22,24 +22,24 @@ export const useApi = (): Api => {
   } = useHttpClient();
 
   return {
-    getPermissionsForUser: useCallback(
+    getPermissionsForUser: React.useCallback(
       (userUuid: string): Promise<string[]> =>
         httpGetJson(`${stroomBaseServiceUrl}/appPermissions/v1/${userUuid}`),
       [stroomBaseServiceUrl, httpGetJson],
     ),
-    getAllPermissionNames: useCallback(
+    getAllPermissionNames: React.useCallback(
       (): Promise<string[]> =>
         httpGetJson(`${stroomBaseServiceUrl}/appPermissions/v1`),
       [stroomBaseServiceUrl, httpGetJson],
     ),
-    addAppPermission: useCallback(
+    addAppPermission: React.useCallback(
       (userUuid: string, permissionName: string): Promise<void> =>
         httpPostEmptyResponse(
           `${stroomBaseServiceUrl}/appPermissions/v1/${userUuid}/${permissionName}`,
         ),
       [httpPostEmptyResponse],
     ),
-    removeAppPermission: useCallback(
+    removeAppPermission: React.useCallback(
       (userUuid: string, permissionName: string): Promise<void> =>
         httpDeleteEmptyResponse(
           `${stroomBaseServiceUrl}/appPermissions/v1/${userUuid}/${permissionName}`,

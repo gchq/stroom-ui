@@ -1,5 +1,4 @@
 import * as React from "react";
-import { useMemo } from "react";
 
 import { DocRefConsumer } from "src/types";
 import { useDocumentTree } from "src/api/explorer";
@@ -12,15 +11,15 @@ interface Props {
 
 const Divider = () => <div className="DocRefBreadcrumb__divider">/</div>;
 
-const DocRefBreadcrumb = ({
+const DocRefBreadcrumb: React.FunctionComponent<Props> = ({
   docRefUuid,
   openDocRef,
-  className = ""
-}: Props) => {
+  className = "",
+}) => {
   const { findDocRefWithLineage } = useDocumentTree();
-  const { lineage } = useMemo(() => findDocRefWithLineage(docRefUuid), [
+  const { lineage } = React.useMemo(() => findDocRefWithLineage(docRefUuid), [
     findDocRefWithLineage,
-    docRefUuid
+    docRefUuid,
   ]);
 
   return (

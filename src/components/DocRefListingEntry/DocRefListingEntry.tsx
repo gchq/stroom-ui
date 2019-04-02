@@ -1,5 +1,4 @@
 import * as React from "react";
-import { useCallback, useMemo } from "react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -7,7 +6,7 @@ import { DocRefType } from "src/types";
 import DocRefImage from "../DocRefImage";
 import { Props } from "./types";
 
-let DocRefListingEntry = ({
+let DocRefListingEntry: React.FunctionComponent<Props> = ({
   docRef,
   dndIsOver,
   dndCanDrop,
@@ -16,26 +15,30 @@ let DocRefListingEntry = ({
   children,
   toggleSelection,
   selectedDocRefs,
-  focussedDocRef
-}: Props) => {
-  const onSelect: React.MouseEventHandler<HTMLDivElement> = useCallback(
+  focussedDocRef,
+}) => {
+  const onSelect: React.MouseEventHandler<HTMLDivElement> = React.useCallback(
     e => {
       toggleSelection(docRef.uuid);
       e.preventDefault();
       e.stopPropagation();
     },
-    [toggleSelection, docRef]
+    [toggleSelection, docRef],
   );
 
-  const onOpenDocRef: React.MouseEventHandler<HTMLDivElement> = useCallback(
+  const onOpenDocRef: React.MouseEventHandler<
+    HTMLDivElement
+  > = React.useCallback(
     e => {
       openDocRef(docRef);
       e.preventDefault();
       e.stopPropagation();
     },
-    [openDocRef, docRef]
+    [openDocRef, docRef],
   );
-  const onEnterFolder: React.MouseEventHandler<HTMLDivElement> = useCallback(
+  const onEnterFolder: React.MouseEventHandler<
+    HTMLDivElement
+  > = React.useCallback(
     e => {
       if (enterFolder) {
         enterFolder(docRef);
@@ -45,10 +48,10 @@ let DocRefListingEntry = ({
       e.stopPropagation();
       e.preventDefault();
     },
-    [enterFolder, openDocRef, docRef]
+    [enterFolder, openDocRef, docRef],
   );
 
-  const className = useMemo(() => {
+  const className = React.useMemo(() => {
     const additionalClasses = [];
     additionalClasses.push("DocRefListingEntry");
     additionalClasses.push("hoverable");

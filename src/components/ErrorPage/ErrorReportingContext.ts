@@ -1,4 +1,4 @@
-import { createContext } from "react";
+import * as React from "react";
 import { SingleError } from "./types";
 
 interface ErrorReportingContextState {
@@ -10,8 +10,8 @@ export default createContext<ErrorReportingContextState>({
   error: {
     errorMessage: "",
     stackTrace: "",
-    httpErrorCode: 0
+    httpErrorCode: 0,
   },
   reportError: () =>
-    console.error("Reporting error to disconnected default context")
+    console.error("Reporting error to disconnected default context"),
 });

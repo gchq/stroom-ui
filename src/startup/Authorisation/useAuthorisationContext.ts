@@ -1,9 +1,9 @@
-import { useMemo, useContext } from "react";
+import * as React from "react";
 
 import AuthorisationContext from "./AuthorisationContext";
 
 const useAuthorisationContext = (permissionNames: string[]) => {
-  const { fetchAppPermission, appPermissions } = useContext(
+  const { fetchAppPermission, appPermissions } = React.useContext(
     AuthorisationContext,
   );
 

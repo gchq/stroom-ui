@@ -15,7 +15,6 @@
  */
 
 import * as React from "react";
-import { useEffect } from "react";
 
 import Button from "../Button";
 import { Pipeline } from "../PipelineEditor";
@@ -51,7 +50,7 @@ const PipelineDebugger: React.FunctionComponent<Props> = ({
     asTree,
   } = pipelineStateProps;
 
-  useEffect(() => {
+  React.useEffect(() => {
     fetchPipeline(pipelineId);
   }, [fetchPipeline, pipelineId, debuggerId]);
 

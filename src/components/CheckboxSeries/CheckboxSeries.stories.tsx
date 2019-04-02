@@ -1,5 +1,4 @@
 import * as React from "react";
-import { useState, useCallback } from "react";
 import { storiesOf } from "@storybook/react";
 import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
 
@@ -8,24 +7,24 @@ import JsonDebug from "src/testing/JsonDebug";
 
 const stories = storiesOf("General Purpose/Checkbox Series", module);
 
-const AVAILABLE_VALUES: Array<string> = [
+const AVAILABLE_VALUES: string[] = [
   "cereal",
   "toast",
   "sausages",
   "eggs",
-  "hash browns"
+  "hash browns",
 ];
 
 const TestHarness: React.FunctionComponent = () => {
-  const [breakfast, setBreakfast] = useState<Array<string>>([]);
+  const [breakfast, setBreakfast] = React.useState<string[]>([]);
 
-  const addBreakfast = useCallback(t => setBreakfast(breakfast.concat([t])), [
-    setBreakfast,
-    breakfast
-  ]);
-  const removeBreakfast = useCallback(
+  const addBreakfast = React.useCallback(
+    t => setBreakfast(breakfast.concat([t])),
+    [setBreakfast, breakfast],
+  );
+  const removeBreakfast = React.useCallback(
     t => setBreakfast(breakfast.filter(b => b !== t)),
-    [setBreakfast, breakfast]
+    [setBreakfast, breakfast],
   );
 
   return (

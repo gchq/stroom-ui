@@ -15,7 +15,6 @@
  */
 
 import * as React from "react";
-import { useState, useCallback, useMemo } from "react";
 
 import { storiesOf } from "@storybook/react";
 
@@ -30,14 +29,14 @@ const testUserLists = [
 ];
 
 const TestHarness = () => {
-  const [testListIndex, setTestListIndex] = useState<number>(0);
+  const [testListIndex, setTestListIndex] = React.useState<number>(0);
 
-  const userUuids = useMemo(() => testUserLists[testListIndex], [
+  const userUuids = React.useMemo(() => testUserLists[testListIndex], [
     testListIndex,
   ]);
   const users = useUsers(userUuids);
 
-  const switchList = useCallback(() => {
+  const switchList = React.useCallback(() => {
     setTestListIndex((testListIndex + 1) % testUserLists.length);
   }, [setTestListIndex, testListIndex]);
 

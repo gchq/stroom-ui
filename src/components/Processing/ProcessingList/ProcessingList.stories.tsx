@@ -1,5 +1,4 @@
 import * as React from "react";
-import { useState, useEffect } from "react";
 
 import { storiesOf } from "@storybook/react";
 import ProcessingList from "./ProcessingList";
@@ -10,11 +9,11 @@ import { StreamTaskType } from "src/types";
 
 const TestHarness = () => {
   const streamTasksApi = useStreamTasks();
-  const [selectedTracker, setSelectedTracker] = useState<
+  const [selectedTracker, setSelectedTracker] = React.useState<
     StreamTaskType | undefined
   >(undefined);
   const { fetchTrackers } = streamTasksApi;
-  useEffect(fetchTrackers, [fetchTrackers]);
+  React.useEffect(fetchTrackers, [fetchTrackers]);
 
   return (
     <div className="fill-space">

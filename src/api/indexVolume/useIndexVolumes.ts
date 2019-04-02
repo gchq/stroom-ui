@@ -1,4 +1,4 @@
-import { useEffect, useCallback, useReducer } from "react";
+import * as React from "react";
 
 import useApi from "./useApi";
 import { IndexVolume } from "src/types";
@@ -44,7 +44,7 @@ const reducer = (
 };
 
 const useIndexVolumes = (): UseIndexVolumes => {
-  const [indexVolumes, dispatch] = useReducer(reducer, []);
+  const [indexVolumes, dispatch] = React.useReducer(reducer, []);
 
   const {
     getIndexVolumes,
@@ -53,7 +53,7 @@ const useIndexVolumes = (): UseIndexVolumes => {
     createIndexVolume,
   } = useApi();
 
-  useEffect(() => {
+  React.useEffect(() => {
     getIndexVolumes().then(v =>
       dispatch({
         type: "received",
@@ -64,7 +64,7 @@ const useIndexVolumes = (): UseIndexVolumes => {
 
   return {
     indexVolumes,
-    createIndexVolume: useCallback(
+    createIndexVolume: React.useCallback(
       (nodeName: string, path: string) =>
         createIndexVolume(nodeName, path).then(indexVolume =>
           dispatch({
@@ -74,7 +74,7 @@ const useIndexVolumes = (): UseIndexVolumes => {
         ),
       [createIndexVolume],
     ),
-    deleteIndexVolume: useCallback(
+    deleteIndexVolume: React.useCallback(
       (id: string) =>
         deleteIndexVolume(id).then(() =>
           dispatch({
@@ -84,7 +84,7 @@ const useIndexVolumes = (): UseIndexVolumes => {
         ),
       [deleteIndexVolume],
     ),
-    addVolumeToGroup: useCallback(
+    addVolumeToGroup: React.useCallback(
       (volumeId: string, groupName: string) =>
         addVolumeToGroup(volumeId, groupName),
       [addVolumeToGroup],

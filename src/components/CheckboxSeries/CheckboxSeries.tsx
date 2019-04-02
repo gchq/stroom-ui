@@ -7,8 +7,8 @@ import * as React from "react";
  * It requires even handlers which handle the adding and removal of values as they are ticked/unticked.
  */
 interface Props {
-  allValues: Array<string>;
-  includedValues: Array<string>;
+  allValues: string[];
+  includedValues: string[];
   addValue: (value: string) => void;
   removeValue: (value: string) => void;
 }
@@ -17,14 +17,14 @@ export const CheckboxSeries: React.FunctionComponent<Props> = ({
   allValues = [],
   includedValues = [],
   addValue,
-  removeValue
-}: Props) => {
+  removeValue,
+}) => {
   return (
     <div>
       {allValues
         .map(value => ({
           value,
-          isSelected: includedValues.includes(value)
+          isSelected: includedValues.includes(value),
         }))
         .map(({ value, isSelected }) => (
           <div key={value}>

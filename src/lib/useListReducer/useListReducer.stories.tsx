@@ -1,5 +1,4 @@
 import * as React from "react";
-import { useCallback, useEffect, useState } from "react";
 import { storiesOf } from "@storybook/react";
 
 import useListReducer from "./useListReducer";
@@ -25,14 +24,16 @@ const TestHarness = () => {
     Character
   >(c => c.name);
 
-  const [newName, setNewName] = useState<string>("Queeq");
-  useEffect(() => itemsReceived(testCharacters), [itemsReceived]);
+  const [newName, setNewName] = React.useState<string>("Queeq");
+  React.useEffect(() => itemsReceived(testCharacters), [itemsReceived]);
 
   const onNewNameChange: React.ChangeEventHandler<
     HTMLInputElement
-  > = useCallback(({ target: { value } }) => setNewName(value), [setNewName]);
+  > = React.useCallback(({ target: { value } }) => setNewName(value), [
+    setNewName,
+  ]);
 
-  const onAddNewItem = useCallback(
+  const onAddNewItem = React.useCallback(
     e => {
       itemAdded({ name: newName });
       e.preventDefault();

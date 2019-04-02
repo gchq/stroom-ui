@@ -15,7 +15,6 @@
  */
 
 import * as React from "react";
-import { useState } from "react";
 
 import { storiesOf } from "@storybook/react";
 
@@ -24,7 +23,7 @@ import IsGroupFilterPicker from "./IsGroupFilterPicker";
 import { IsGroup } from "src/api/userGroups";
 
 const IsGroupFilterPickerInForm = () => {
-  const [isGroup, setIsGroup] = useState<IsGroup>("");
+  const [isGroup, setIsGroup] = React.useState<IsGroup>("");
 
   return (
     <div>

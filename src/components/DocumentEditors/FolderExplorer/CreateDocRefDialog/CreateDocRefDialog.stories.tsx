@@ -1,5 +1,4 @@
 import * as React from "react";
-import { useState } from "react";
 import { storiesOf } from "@storybook/react";
 
 import CreateDocRefDialog, { useDialog } from "./CreateDocRefDialog";
@@ -14,13 +13,12 @@ interface Props {
   testDestination: DocRefType;
 }
 
-// New Doc
-const TestNewDocRefDialog = ({ testDestination }: Props) => {
-  const [lastConfirmed, setLastConfirmed] = useState<object>({});
+const TestHarness: React.FunctionComponent<Props> = ({ testDestination }) => {
+  const [lastConfirmed, setLastConfirmed] = React.useState<object>({});
   const { showDialog, componentProps } = useDialog(
     (docRefType: string, docRefName: string, permissionInheritance: string) => {
       setLastConfirmed({ docRefType, docRefName, permissionInheritance });
-    }
+    },
   );
 
   return (
@@ -34,5 +32,5 @@ const TestNewDocRefDialog = ({ testDestination }: Props) => {
 };
 
 storiesOf("Explorer/Create Doc Ref Dialog", module).add("simple", () => (
-  <TestNewDocRefDialog testDestination={testFolder2} />
+  <TestHarness testDestination={testFolder2} />
 ));

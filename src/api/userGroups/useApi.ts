@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import * as React from "react";
 
 import useHttpClient from "../useHttpClient";
 import { User } from "src/types";
@@ -30,19 +30,19 @@ export const useApi = (): Api => {
   } = useHttpClient();
 
   return {
-    fetchUser: useCallback(
+    fetchUser: React.useCallback(
       (userUuid: string): Promise<User> =>
         httpGetJson(`${stroomBaseServiceUrl}/users/v1/${userUuid}`, {}, false),
       [stroomBaseServiceUrl, httpGetJson],
     ),
-    addUserToGroup: useCallback(
+    addUserToGroup: React.useCallback(
       (userUuid: string, groupUuid: string) =>
         httpPutEmptyResponse(
           `${stroomBaseServiceUrl}/users/v1/${userUuid}/${groupUuid}`,
         ),
       [stroomBaseServiceUrl, httpPutEmptyResponse],
     ),
-    createUser: useCallback(
+    createUser: React.useCallback(
       (name: string, isGroup: boolean) =>
         httpPostJsonResponse(`${stroomBaseServiceUrl}/users/v1`, {
           body: JSON.stringify({
@@ -52,12 +52,12 @@ export const useApi = (): Api => {
         }),
       [stroomBaseServiceUrl, httpPostJsonResponse],
     ),
-    deleteUser: useCallback(
+    deleteUser: React.useCallback(
       (uuid: string) =>
         httpDeleteEmptyResponse(`${stroomBaseServiceUrl}/users/v1/${uuid}`),
       [stroomBaseServiceUrl, httpDeleteEmptyResponse],
     ),
-    findGroupsForUser: useCallback(
+    findGroupsForUser: React.useCallback(
       (userUuid: string) =>
         httpGetJson(
           `${stroomBaseServiceUrl}/users/v1/groupsForUser/${userUuid}`,
@@ -66,7 +66,7 @@ export const useApi = (): Api => {
         ),
       [stroomBaseServiceUrl, httpGetJson],
     ),
-    findUsers: useCallback(
+    findUsers: React.useCallback(
       (name?: string, isGroup?: "Group" | "User", uuid?: string) => {
         var url = new URL(`${stroomBaseServiceUrl}/users/v1`);
         if (name !== undefined && name.length > 0)
@@ -89,7 +89,7 @@ export const useApi = (): Api => {
       },
       [stroomBaseServiceUrl, httpGetJson],
     ),
-    findUsersInGroup: useCallback(
+    findUsersInGroup: React.useCallback(
       (groupUuid: string) =>
         httpGetJson(
           `${stroomBaseServiceUrl}/users/v1/usersInGroup/${groupUuid}`,
@@ -98,7 +98,7 @@ export const useApi = (): Api => {
         ),
       [stroomBaseServiceUrl, httpGetJson],
     ),
-    removeUserFromGroup: useCallback(
+    removeUserFromGroup: React.useCallback(
       (userUuid: string, groupUuid: string) =>
         httpDeleteEmptyResponse(
           `${stroomBaseServiceUrl}/users/v1/${userUuid}/${groupUuid}`,

@@ -9,7 +9,7 @@ interface Props {
  * can be passed as the props to another.
  * @param param0 Props
  */
-export const DisplayPillChoice = ({ pill }: Props) => (
+export const DisplayPillChoice: React.FunctionComponent<Props> = ({ pill }) => (
   <p>
     You have chosen the <strong>{pill}</strong> pill
   </p>

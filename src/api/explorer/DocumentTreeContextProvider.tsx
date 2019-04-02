@@ -1,5 +1,4 @@
 import * as React from "react";
-import { useEffect, useCallback, useState, FunctionComponent } from "react";
 
 import useApi from "./useApi";
 import { DocRefTree, DocRefType } from "src/types";
@@ -9,8 +8,10 @@ import DocumentTreeContext, {
 } from "./DocumentTreeContext";
 import { DEFAULT_TREE, DEFAULT_DOC_REF_WITH_LINEAGE } from "./values";
 
-const DocumentTreeContextProvider: FunctionComponent = ({ children }) => {
-  const [documentTree, setDocumentTree] = useState<DocRefTree>(DEFAULT_TREE);
+const DocumentTreeContextProvider: React.FunctionComponent = ({ children }) => {
+  const [documentTree, setDocumentTree] = React.useState<DocRefTree>(
+    DEFAULT_TREE,
+  );
 
   const {
     fetchDocTree,
@@ -22,7 +23,7 @@ const DocumentTreeContextProvider: FunctionComponent = ({ children }) => {
     searchApp,
   } = useApi();
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (documentTree === DEFAULT_TREE) {
       fetchDocTree().then(setDocumentTree);
     }
@@ -31,7 +32,7 @@ const DocumentTreeContextProvider: FunctionComponent = ({ children }) => {
   const contextValue: DocumentTreeContextValue = {
     documentTree,
     searchApp,
-    createDocument: useCallback(
+    createDocument: React.useCallback(
       (
         docRefType: string,
         docRefName: string,
@@ -47,7 +48,7 @@ const DocumentTreeContextProvider: FunctionComponent = ({ children }) => {
       },
       [createDocument, setDocumentTree],
     ),
-    renameDocument: useCallback(
+    renameDocument: React.useCallback(
       (docRef: DocRefType, name: string) => {
         renameDocument(docRef, name).then(resultDocRef => {
           const newTree = updateItemInTree(
@@ -60,7 +61,7 @@ const DocumentTreeContextProvider: FunctionComponent = ({ children }) => {
       },
       [renameDocument, setDocumentTree, documentTree],
     ),
-    copyDocuments: useCallback(
+    copyDocuments: React.useCallback(
       (
         uuids: string[],
         destination: DocRefType,
@@ -73,7 +74,7 @@ const DocumentTreeContextProvider: FunctionComponent = ({ children }) => {
       },
       [documentTree, copyDocuments, setDocumentTree],
     ),
-    moveDocuments: useCallback(
+    moveDocuments: React.useCallback(
       (
         uuids: string[],
         destination: DocRefType,
@@ -86,14 +87,14 @@ const DocumentTreeContextProvider: FunctionComponent = ({ children }) => {
       },
       [documentTree, moveDocuments, setDocumentTree],
     ),
-    deleteDocuments: useCallback(
+    deleteDocuments: React.useCallback(
       (uuids: string[]) => {
         const docRefs = findByUuids(documentTree, uuids);
         deleteDocuments(docRefs).then(setDocumentTree);
       },
       [documentTree, deleteDocuments, setDocumentTree],
     ),
-    findDocRefWithLineage: useCallback(
+    findDocRefWithLineage: React.useCallback(
       (docRefUuid: string) =>
         findItem(documentTree, docRefUuid) || DEFAULT_DOC_REF_WITH_LINEAGE,
       [documentTree],

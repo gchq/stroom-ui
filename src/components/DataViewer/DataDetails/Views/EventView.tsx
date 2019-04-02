@@ -22,7 +22,7 @@ interface Props {
   events: string;
 }
 
-const EventView = ({ events }: Props) => (
+const EventView: React.FunctionComponent<Props> = ({ events }) => (
   <div className="EventView__container">
     <div className="EventView__aceEditor__container">
       <ThemedAceEditor

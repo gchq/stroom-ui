@@ -15,14 +15,13 @@
  */
 
 import * as React from "react";
-import { useState } from "react";
 
 import { storiesOf } from "@storybook/react";
 
 import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
 
 import UserGroupPickOrCreateDialog, {
-  useDialog
+  useDialog,
 } from "./UserGroupPickOrCreateDialog";
 import Button from "src/components/Button";
 import JsonDebug from "src/testing/JsonDebug";
@@ -30,10 +29,12 @@ import JsonDebug from "src/testing/JsonDebug";
 const stories = storiesOf("Pickers/User (or Create) Modal", module);
 
 const TestHarness = () => {
-  const [pickedUser, setPickedUser] = useState<string | undefined>(undefined);
+  const [pickedUser, setPickedUser] = React.useState<string | undefined>(
+    undefined,
+  );
 
   const { componentProps, showDialog } = useDialog({
-    onConfirm: setPickedUser
+    onConfirm: setPickedUser,
   });
 
   return (

@@ -1,5 +1,4 @@
 import * as React from "react";
-import { useState, useCallback } from "react";
 
 import IndexVolumeGroupPicker, {
   usePicker,
@@ -32,31 +31,31 @@ export const IndexVolumeGroupModalPicker: React.FunctionComponent<Props> = ({
     value: volumeGroupName,
   } = volumeGroupPickerProps;
 
-  const [isNewGroup, setIsNewGroup] = useState<boolean>(false);
-  const [newGroupName, setNewGroupName] = useState<string>("");
+  const [isNewGroup, setIsNewGroup] = React.useState<boolean>(false);
+  const [newGroupName, setNewGroupName] = React.useState<string>("");
 
   const { createIndexVolumeGroup } = useIndexVolumeGroups();
 
   const onNewGroupNameChange: React.ChangeEventHandler<
     HTMLInputElement
-  > = useCallback(({ target: { value } }) => setNewGroupName(value), [
+  > = React.useCallback(({ target: { value } }) => setNewGroupName(value), [
     setNewGroupName,
   ]);
   const toggleNewGroup: React.MouseEventHandler<
     HTMLButtonElement
-  > = useCallback(() => setIsNewGroup(!isNewGroup), [
+  > = React.useCallback(() => setIsNewGroup(!isNewGroup), [
     setIsNewGroup,
     isNewGroup,
   ]);
   const newGroupButtonText = isNewGroup ? "Choose Existing" : "Create New";
 
-  const onClose = useCallback(() => {
+  const onClose = React.useCallback(() => {
     resetVolumeGroup();
     setIsOpen(false);
     setIsNewGroup(false);
   }, [resetVolumeGroup, setIsOpen, setIsNewGroup]);
 
-  const onConfirmLocal = useCallback(() => {
+  const onConfirmLocal = React.useCallback(() => {
     if (isNewGroup) {
       createIndexVolumeGroup(newGroupName);
       onConfirm(newGroupName);
@@ -97,7 +96,7 @@ interface UseDialog {
 }
 
 export const useDialog = (props: BaseProps): UseDialog => {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isOpen, setIsOpen] = React.useState<boolean>(false);
 
   return {
     componentProps: {

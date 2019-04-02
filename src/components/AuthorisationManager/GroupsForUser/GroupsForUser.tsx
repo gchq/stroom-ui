@@ -1,5 +1,4 @@
 import * as React from "react";
-import { useCallback, useMemo } from "react";
 
 import { User } from "src/types";
 
@@ -8,50 +7,51 @@ import UsersTable, { useTable as useUsersTable } from "../UsersTable";
 import Button from "src/components/Button";
 import {
   UserGroupPickOrCreateDialog,
-  useDialog as useUserGroupModalPicker
+  useDialog as useUserGroupModalPicker,
 } from "../UserGroupPickOrCreateDialog";
 import ThemedConfirm, {
-  useDialog as useThemedConfirm
+  useDialog as useThemedConfirm,
 } from "src/components/ThemedConfirm";
 
 interface Props {
   user: User;
 }
 
-const GroupsForUser = ({ user }: Props) => {
+const GroupsForUser: React.FunctionComponent<Props> = ({ user }) => {
   const { groups, addToGroup, removeFromGroup } = useGroupsForUser(user);
 
   const { componentProps: tableProps } = useUsersTable(groups);
   const {
-    selectableTableProps: { selectedItems }
+    selectableTableProps: { selectedItems },
   } = tableProps;
 
   const {
     componentProps: deleteGroupMembershipComponentProps,
-    showDialog: showDeleteGroupMembershipDialog
+    showDialog: showDeleteGroupMembershipDialog,
   } = useThemedConfirm({
-    onConfirm: useCallback(
+    onConfirm: React.useCallback(
       () =>
         selectedItems.map(g => g.uuid).forEach(gUuid => removeFromGroup(gUuid)),
-      [removeFromGroup, user, selectedItems]
+      [removeFromGroup, user, selectedItems],
     ),
-    getQuestion: useCallback(
+    getQuestion: React.useCallback(
       () => "Are you sure you want to remove the user from these groups?",
-      []
+      [],
     ),
-    getDetails: useCallback(() => selectedItems.map(s => s.name).join(", "), [
-      selectedItems
-    ])
+    getDetails: React.useCallback(
+      () => selectedItems.map(s => s.name).join(", "),
+      [selectedItems],
+    ),
   });
 
   const {
     componentProps: userGroupPickerProps,
-    showDialog: showUserGroupPicker
+    showDialog: showUserGroupPicker,
   } = useUserGroupModalPicker({
-    onConfirm: useCallback((groupUuid: string) => addToGroup(groupUuid), [
-      addToGroup
+    onConfirm: React.useCallback((groupUuid: string) => addToGroup(groupUuid), [
+      addToGroup,
     ]),
-    valuesToFilterOut: useMemo(() => groups.map(g => g.uuid), [groups])
+    valuesToFilterOut: React.useMemo(() => groups.map(g => g.uuid), [groups]),
   });
 
   return (

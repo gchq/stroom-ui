@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 import * as React from "react";
-import { useCallback } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 
@@ -221,7 +220,7 @@ const AppChrome: React.FunctionComponent<Props> = ({ content }) => {
     {
       key: "indexing",
       title: "Indexing",
-      onClick: useCallback(
+      onClick: React.useCallback(
         () => menuItemOpened("indexing", !areMenuItemsOpen.indexing),
         [menuItemOpened, areMenuItemsOpen],
       ),
@@ -258,7 +257,7 @@ const AppChrome: React.FunctionComponent<Props> = ({ content }) => {
     {
       key: "admin",
       title: "Admin",
-      onClick: useCallback(
+      onClick: React.useCallback(
         () => menuItemOpened("admin", !areMenuItemsOpen.admin),
         [menuItemOpened, areMenuItemsOpen],
       ),
@@ -284,7 +283,7 @@ const AppChrome: React.FunctionComponent<Props> = ({ content }) => {
           title: "Permissions",
           icon: "key",
           style: "nav",
-          onClick: useCallback(
+          onClick: React.useCallback(
             () =>
               menuItemOpened(
                 "adminPermissions",

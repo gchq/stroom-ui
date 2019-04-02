@@ -1,13 +1,13 @@
-import { useEffect, useState } from "react";
+import * as React from "react";
 
 import useApi from "./useApi";
 
 const useDocRefTypes = (): string[] => {
-  const [docRefTypes, setDocRefTypes] = useState<string[]>([]);
+  const [docRefTypes, setDocRefTypes] = React.useState<string[]>([]);
 
   const { fetchDocRefTypes } = useApi();
 
-  useEffect(() => {
+  React.useEffect(() => {
     fetchDocRefTypes().then(setDocRefTypes);
   }, [setDocRefTypes, fetchDocRefTypes]);
 

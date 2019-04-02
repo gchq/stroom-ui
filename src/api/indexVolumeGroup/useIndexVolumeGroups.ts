@@ -1,4 +1,4 @@
-import { useEffect, useCallback } from "react";
+import * as React from "react";
 
 import useApi from "./useApi";
 import { IndexVolumeGroup } from "src/types";
@@ -24,17 +24,17 @@ const useIndexVolumeGroups = (): UseIndexVolumeGroups => {
     getIndexVolumeGroups,
   } = useApi();
 
-  useEffect(() => {
+  React.useEffect(() => {
     getIndexVolumeGroups().then(itemsReceived);
   }, [getIndexVolumeGroups]);
 
   return {
     groups,
-    createIndexVolumeGroup: useCallback(
+    createIndexVolumeGroup: React.useCallback(
       (groupName: string) => createIndexVolumeGroup(groupName).then(itemAdded),
       [groups, createIndexVolumeGroup],
     ),
-    deleteIndexVolumeGroup: useCallback(
+    deleteIndexVolumeGroup: React.useCallback(
       (groupName: string) =>
         deleteIndexVolumeGroup(groupName).then(() => itemRemoved(groupName)),
       [groups, deleteIndexVolumeGroup],

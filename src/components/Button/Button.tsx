@@ -15,7 +15,6 @@
  */
 
 import * as React from "react";
-import { useMemo } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { SizeProp } from "@fortawesome/fontawesome-svg-core";
 import { ButtonProps } from "./types";
@@ -30,7 +29,7 @@ export const Button = ({
   size,
   ...rest
 }: ButtonProps) => {
-  const className = useMemo(() => {
+  const className = React.useMemo(() => {
     let classNames = ["button"];
 
     if (rawClassName) classNames.push(rawClassName);
@@ -42,7 +41,7 @@ export const Button = ({
     return classNames.join(" ");
   }, [rawClassName, groupPosition, circular, text, selected]);
 
-  let fontAwesomeSize: SizeProp = useMemo(() => {
+  let fontAwesomeSize: SizeProp = React.useMemo(() => {
     switch (size) {
       case "small":
         return "sm";

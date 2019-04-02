@@ -1,16 +1,17 @@
 import * as React from "react";
-import { FunctionComponent, useState, useCallback } from "react";
 import { useAuthenticationContext } from "../Authentication";
 import { useConfig } from "../config";
 import { AppPermissions } from "./types";
 import AuthorisationContext from "./AuthorisationContext";
 
 const AuthorisationContextProvider: FunctionComponent = ({ children }) => {
-  const [appPermissions, setAppPermissions] = useState<AppPermissions>({});
+  const [appPermissions, setAppPermissions] = React.useState<AppPermissions>(
+    {},
+  );
   const { idToken } = useAuthenticationContext();
   const { authorisationServiceUrl } = useConfig();
 
-  const setHasAppPermission = useCallback(
+  const setHasAppPermission = React.useCallback(
     (permissionName: string, hasPermission: boolean) => {
       setAppPermissions({
         ...appPermissions,
@@ -20,7 +21,7 @@ const AuthorisationContextProvider: FunctionComponent = ({ children }) => {
     [appPermissions, setAppPermissions],
   );
 
-  const fetchAppPermission = useCallback(
+  const fetchAppPermission = React.useCallback(
     (permissionName: string) => {
       return fetch(`${authorisationServiceUrl}/hasAppPermission`, {
         headers: {

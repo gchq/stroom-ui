@@ -1,5 +1,4 @@
 import * as React from "react";
-import { useState, useMemo, useCallback } from "react";
 
 import IconHeader from "../../IconHeader";
 import Button from "../../Button";
@@ -21,7 +20,7 @@ export const AddElementModal: React.FunctionComponent<Props> = ({
   elementDefinition,
   existingNames,
 }) => {
-  const initialValues = useMemo<FormValues>(
+  const initialValues = React.useMemo<FormValues>(
     () => ({
       newName: !!elementDefinition
         ? elementDefinition.type
@@ -30,7 +29,7 @@ export const AddElementModal: React.FunctionComponent<Props> = ({
     [elementDefinition],
   );
 
-  const onUniqueNameCheck = useCallback(
+  const onUniqueNameCheck = React.useCallback(
     (value: string) => {
       return existingNames.includes(value);
     },
@@ -42,13 +41,13 @@ export const AddElementModal: React.FunctionComponent<Props> = ({
     useTextInput,
   } = useForm<FormValues>({
     initialValues,
-    onValidate: useCallback(v => {
+    onValidate: React.useCallback(v => {
       onUniqueNameCheck(v.newName);
     }, []),
   });
   const newNameProps = useTextInput("newName");
 
-  const onAddElementLocal = useCallback(() => {
+  const onAddElementLocal = React.useCallback(() => {
     if (!!parentId && !!elementDefinition && !!newName) {
       onAddElement(parentId, elementDefinition, newName);
       onCloseDialog();
@@ -92,12 +91,12 @@ export const AddElementModal: React.FunctionComponent<Props> = ({
 };
 
 export const useDialog = (onAddElement: OnAddElement): UseDialog => {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [parentId, setParentId] = useState<string | undefined>(undefined);
-  const [elementDefinition, setElementDefinition] = useState<
+  const [isOpen, setIsOpen] = React.useState<boolean>(false);
+  const [parentId, setParentId] = React.useState<string | undefined>(undefined);
+  const [elementDefinition, setElementDefinition] = React.useState<
     ElementDefinition | undefined
   >(undefined);
-  const [existingNames, setExistingNames] = useState<string[]>([]);
+  const [existingNames, setExistingNames] = React.useState<string[]>([]);
 
   return {
     showDialog: (_parentId, _elementDefinition, _existingNames) => {

@@ -1,6 +1,7 @@
+import * as React from "react";
+
 import { NavigateApp } from "./types";
 import useRouter from "src/lib/useRouter";
-import { useMemo } from "react";
 import { DocRefType } from "src/types";
 import { IsGroup } from "src/api/userGroups";
 
@@ -34,7 +35,7 @@ export const urlGenerator: NavigateApp<string> = {
 const useAppNavigation = (): NavigateApp<any> => {
   const { history: h } = useRouter();
   const u = urlGenerator; // just to make all the following rote lines short
-  return useMemo(
+  return React.useMemo(
     () => ({
       goToWelcome: () => h.push(u.goToWelcome()),
       goToDataViewer: () => h.push(u.goToDataViewer()),

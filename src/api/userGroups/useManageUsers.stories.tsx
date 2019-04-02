@@ -15,7 +15,6 @@
  */
 
 import * as React from "react";
-import { useCallback } from "react";
 import * as loremIpsum from "lorem-ipsum";
 
 import { storiesOf } from "@storybook/react";
@@ -26,7 +25,7 @@ import Button from "src/components/Button";
 const TestHarness = () => {
   const { users, createUser, deleteUser } = useManageUsers();
 
-  const onClickCreateUser = useCallback(() => {
+  const onClickCreateUser = React.useCallback(() => {
     createUser(loremIpsum({ count: 1, units: "words" }), false);
   }, [createUser]);
 

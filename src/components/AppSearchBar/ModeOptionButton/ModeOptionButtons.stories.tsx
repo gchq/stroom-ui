@@ -1,5 +1,4 @@
 import * as React from "react";
-import { useState } from "react";
 
 import { storiesOf } from "@storybook/react";
 
@@ -9,7 +8,7 @@ import { SearchMode } from "./types";
 import JsonDebug from "src/testing/JsonDebug";
 
 const TestHarness = () => {
-  const [mode, setMode] = useState<SearchMode>(SearchMode.GLOBAL_SEARCH);
+  const [mode, setMode] = React.useState<SearchMode>(SearchMode.GLOBAL_SEARCH);
 
   return (
     <div>

@@ -1,4 +1,4 @@
-import { useEffect, useCallback, useReducer } from "react";
+import * as React from "react";
 
 import useApi from "./useApi";
 import { DocumentPermissions } from "src/types";
@@ -62,7 +62,7 @@ const reducer = (
 const useDocumentPermissions = (
   docRefUuid: string | undefined,
 ): UseDocumentPermissions => {
-  const [permissionsByUser, dispatch] = useReducer(reducer, {});
+  const [permissionsByUser, dispatch] = React.useReducer(reducer, {});
 
   const {
     getPermissionForDoc,
@@ -70,7 +70,7 @@ const useDocumentPermissions = (
     clearDocPermissionsForUser,
   } = useApi();
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (!!docRefUuid) {
       getPermissionForDoc(docRefUuid).then(documentPermissions =>
         dispatch({
@@ -81,7 +81,7 @@ const useDocumentPermissions = (
     }
   }, [docRefUuid, getPermissionForDoc]);
 
-  const preparePermissionsForUser = useCallback(
+  const preparePermissionsForUser = React.useCallback(
     (userUuid: string) => {
       if (!!docRefUuid) {
         dispatch({
@@ -93,13 +93,13 @@ const useDocumentPermissions = (
     [docRefUuid],
   );
 
-  const clearPermissions = useCallback(() => {
+  const clearPermissions = React.useCallback(() => {
     if (!!docRefUuid) {
       clearDocPermissions(docRefUuid).then(() => dispatch({ type: "cleared" }));
     }
   }, [docRefUuid, clearDocPermissions]);
 
-  const clearPermissionForUser = useCallback(
+  const clearPermissionForUser = React.useCallback(
     (userUuid: string) => {
       if (!!docRefUuid) {
         clearDocPermissionsForUser(docRefUuid, userUuid).then(() =>

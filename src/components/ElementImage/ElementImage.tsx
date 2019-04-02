@@ -6,7 +6,11 @@ interface Props {
   className?: string;
 }
 
-const ElementImage = ({ icon, size = "lg", className = "" }: Props) => (
+const ElementImage: React.FunctionComponent<Props> = ({
+  icon,
+  size = "lg",
+  className = "",
+}) => (
   <img
     className={`stroom-icon--${size} ${className || ""}`}
     alt={`element icon ${icon}`}

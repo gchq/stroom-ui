@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 import * as React from "react";
-import { useState, useCallback } from "react";
 
 import fullTestData from "src/testing/data";
 import { storiesOf } from "@storybook/react";
@@ -25,21 +24,21 @@ import JsonDebug from "src/testing/JsonDebug";
 import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
 
 const TestForm = () => {
-  const [value, setAppPermissions] = useState<Array<string>>(
-    fullTestData.allAppPermissions.slice(0, 3)
+  const [value, setAppPermissions] = React.useState<string[]>(
+    fullTestData.allAppPermissions.slice(0, 3),
   );
 
-  const addPermission = useCallback(
+  const addPermission = React.useCallback(
     (permissionName: string) => {
       setAppPermissions(value.concat([permissionName]));
     },
-    [setAppPermissions, value]
+    [setAppPermissions, value],
   );
-  const removePermission = useCallback(
+  const removePermission = React.useCallback(
     (permissionName: string) => {
       setAppPermissions(value.filter(a => a !== permissionName));
     },
-    [setAppPermissions, value]
+    [setAppPermissions, value],
   );
 
   return (
@@ -50,7 +49,7 @@ const TestForm = () => {
           {...{
             value,
             addPermission,
-            removePermission
+            removePermission,
           }}
         />
       </div>

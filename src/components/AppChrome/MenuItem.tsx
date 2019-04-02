@@ -6,8 +6,8 @@ import {
   DropTargetCollector,
   DragSourceSpec,
   DragSourceCollector,
+  DragSource,
 } from "react-dnd";
-import { DragSource } from "react-dnd";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { canMove } from "src/lib/treeUtils";

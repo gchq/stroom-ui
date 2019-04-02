@@ -1,12 +1,12 @@
-import { useEffect, useState } from "react";
+import * as React from "react";
 
 import useApi from "./useApi";
 
 const useIndexVolumeGroupNames = (): string[] => {
-  const [groupNames, setGroupNames] = useState<string[]>([]);
+  const [groupNames, setGroupNames] = React.useState<string[]>([]);
   const { getIndexVolumeGroupNames } = useApi();
 
-  useEffect(() => {
+  React.useEffect(() => {
     getIndexVolumeGroupNames().then(setGroupNames);
   }, [getIndexVolumeGroupNames, setGroupNames]);
 

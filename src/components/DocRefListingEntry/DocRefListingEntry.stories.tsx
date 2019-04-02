@@ -14,12 +14,11 @@
  * limitations under the License.
  */
 import * as React from "react";
-import { useState } from "react";
 import { storiesOf } from "@storybook/react";
 
 import fullTestData from "src/testing/data";
 import useSelectableItemListing, {
-  SelectionBehaviour
+  SelectionBehaviour,
 } from "src/lib/useSelectableItemListing";
 import DocRefListingEntry from "./DocRefListingEntry";
 import { DocRefType } from "src/types";
@@ -32,25 +31,25 @@ const testFolder = fullTestData.documentTree;
 const testDocRef = fullTestData.documentTree.children![0].children![0];
 
 interface Props {
-  docRefs: Array<DocRefType>;
+  docRefs: DocRefType[];
   dndIsOver?: boolean;
   dndCanDrop?: boolean;
   provideBreadcrumbs?: boolean;
 }
 
-let TestDocRefListingEntry = ({
+let TestDocRefListingEntry: React.FunctionComponent<Props> = ({
   docRefs,
   dndIsOver,
   dndCanDrop,
-  provideBreadcrumbs
-}: Props) => {
-  const [enteredFolder, enterFolder] = useState<DocRefType | undefined>(
-    undefined
+  provideBreadcrumbs,
+}) => {
+  const [enteredFolder, enterFolder] = React.useState<DocRefType | undefined>(
+    undefined,
   );
-  const [openedDocRef, openDocRef] = useState<DocRefType | undefined>(
-    undefined
+  const [openedDocRef, openDocRef] = React.useState<DocRefType | undefined>(
+    undefined,
   );
-  const [wentBack, setWentBack] = useState<boolean>(false);
+  const [wentBack, setWentBack] = React.useState<boolean>(false);
 
   const goBack = () => setWentBack(true);
   const onClickClear = () => {
@@ -63,14 +62,14 @@ let TestDocRefListingEntry = ({
     onKeyDownWithShortcuts,
     toggleSelection,
     selectedItems: selectedDocRefs,
-    focussedItem: focussedDocRef
+    focussedItem: focussedDocRef,
   } = useSelectableItemListing<DocRefType>({
     items: docRefs,
     openItem: openDocRef,
     getKey: d => d.uuid,
     enterItem: enterFolder,
     goBack,
-    selectionBehaviour: SelectionBehaviour.MULTIPLE
+    selectionBehaviour: SelectionBehaviour.MULTIPLE,
   });
 
   return (
@@ -92,7 +91,7 @@ let TestDocRefListingEntry = ({
                 dndIsOver,
                 toggleSelection,
                 selectedDocRefs,
-                focussedDocRef
+                focussedDocRef,
               }}
             >
               {provideBreadcrumbs && (

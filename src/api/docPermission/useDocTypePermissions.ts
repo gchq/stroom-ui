@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import * as React from "react";
 
 import useApi from "./useApi";
 
@@ -8,9 +8,9 @@ import useApi from "./useApi";
 
 const useDocTypePermissions = (docType: string): string[] => {
   const { getPermissionForDocType } = useApi();
-  const [permissionNames, setPermissionNames] = useState<string[]>([]);
+  const [permissionNames, setPermissionNames] = React.useState<string[]>([]);
 
-  useEffect(() => {
+  React.useEffect(() => {
     getPermissionForDocType(docType).then(setPermissionNames);
   }, [docType, getPermissionForDocType]);
 

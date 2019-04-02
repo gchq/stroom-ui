@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 import * as React from "react";
-import { useState } from "react";
 import { storiesOf } from "@storybook/react";
 
 import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
@@ -24,7 +23,9 @@ import { ConditionType } from "src/types";
 const stories = storiesOf("Pickers/Condition", module);
 
 const TestHarness: React.FunctionComponent = () => {
-  const [value, onChange] = useState<ConditionType | undefined>(undefined);
+  const [value, onChange] = React.useState<ConditionType | undefined>(
+    undefined,
+  );
 
   return <ConditionPicker value={value} onChange={onChange} />;
 };

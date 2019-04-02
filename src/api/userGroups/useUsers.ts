@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from "react";
+import * as React from "react";
 
 import useApi from "./useApi";
 import { User } from "src/types";
@@ -13,13 +13,13 @@ const useUsers = (userUuids: string[]): User[] => {
   const { fetchUser } = useApi();
   const { items: allUsers, itemAdded } = useListReducer<User>(u => u.uuid);
 
-  const users = useMemo(
+  const users = React.useMemo(
     () => allUsers.filter(u => userUuids.includes(u.uuid)),
     [allUsers, userUuids],
   );
 
   // Don't feed 'users' into the [], otherwise it will re-run this as users come in
-  useEffect(() => {
+  React.useEffect(() => {
     let userUuidsFound = allUsers.map(u => u.uuid);
     userUuids
       .filter(userUuid => !userUuidsFound.includes(userUuid))

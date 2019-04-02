@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import * as React from "react";
 
 import useApi from "./useApi";
 
@@ -10,10 +10,12 @@ import useApi from "./useApi";
  * @param userUuid The UUID of the user or group
  */
 const useAllAppPermissions = (): string[] => {
-  const [allAppPermissions, setAllAppPermissions] = useState<string[]>([]);
+  const [allAppPermissions, setAllAppPermissions] = React.useState<string[]>(
+    [],
+  );
   const { getAllPermissionNames } = useApi();
 
-  useEffect(() => {
+  React.useEffect(() => {
     getAllPermissionNames().then(setAllAppPermissions);
   }, [getAllPermissionNames, setAllAppPermissions]);
 

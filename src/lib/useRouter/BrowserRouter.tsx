@@ -13,7 +13,10 @@ interface Props {
   children?: React.ReactNode;
 }
 
-const CustomRouter = ({ history, children }: Props) => (
+const CustomRouter: React.FunctionComponent<Props> = ({
+  history,
+  children,
+}) => (
   <Router history={history}>
     <Route>
       {routeProps => (

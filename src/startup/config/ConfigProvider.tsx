@@ -1,15 +1,14 @@
 import * as React from "react";
-import { useState, useEffect } from "react";
 
 import ConfigContext from "./ConfigContext";
 import { Config } from "./types";
 import Loader from "src/components/Loader";
 
 const ConfigProvider: React.FunctionComponent = ({ children }) => {
-  const [isReady, setIsReady] = useState<boolean>(false);
-  const [config, setConfig] = useState<Config>({});
+  const [isReady, setIsReady] = React.useState<boolean>(false);
+  const [config, setConfig] = React.useState<Config>({});
 
-  useEffect(() => {
+  React.useEffect(() => {
     // Not using our http client stuff, it depends on things which won't be ready until the config is loaded
     fetch("/config.json")
       .then(r => r.json())

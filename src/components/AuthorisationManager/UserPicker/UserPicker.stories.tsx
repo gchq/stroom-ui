@@ -15,7 +15,6 @@
  */
 
 import * as React from "react";
-import { useMemo } from "react";
 
 import { storiesOf } from "@storybook/react";
 
@@ -29,19 +28,19 @@ import fullTestData from "src/testing/data";
 const stories = storiesOf("Pickers/User Picker", module);
 
 const TestHarness = () => {
-  const { userNamesToFilterOut, valuesToFilterOut } = useMemo(() => {
+  const { userNamesToFilterOut, valuesToFilterOut } = React.useMemo(() => {
     let usersToFilterOut = fullTestData.usersAndGroups.users.slice(0, 3);
     let valuesToFilterOut = usersToFilterOut.map(u => u.uuid);
     let userNamesToFilterOut = usersToFilterOut.map(u => u.name);
     return {
       userNamesToFilterOut,
-      valuesToFilterOut
+      valuesToFilterOut,
     };
   }, []);
 
   const { pickerProps, reset } = usePicker({
     isGroup: undefined,
-    valuesToFilterOut
+    valuesToFilterOut,
   });
   const { value } = pickerProps;
 

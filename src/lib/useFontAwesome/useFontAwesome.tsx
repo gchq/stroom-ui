@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { useEffect } from "react";
+import * as React from "react";
 import { library } from "@fortawesome/fontawesome-svg-core";
 
 import {
@@ -64,7 +64,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 const useFontAwesome = () => {
-  useEffect(() => {
+  React.useEffect(() => {
     library.add(
       faFolder,
       faFolderOpen,

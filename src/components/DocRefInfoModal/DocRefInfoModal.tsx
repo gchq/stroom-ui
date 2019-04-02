@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 import * as React from "react";
-import { useState, useCallback } from "react";
 
 import Loader from "../Loader";
 import ThemedModal from "../ThemedModal";
@@ -29,7 +28,11 @@ interface Props {
   onCloseDialog: () => void;
 }
 
-const DocRefInfoModal = ({ isOpen, onCloseDialog, docRef }: Props) => {
+const DocRefInfoModal: React.FunctionComponent<Props> = ({
+  isOpen,
+  onCloseDialog,
+  docRef,
+}) => {
   const docRefInfo = useDocRefInfo(docRef);
 
   if (!isOpen || !docRef) {
@@ -43,10 +46,10 @@ const DocRefInfoModal = ({ isOpen, onCloseDialog, docRef }: Props) => {
   const { createTime, updateTime } = docRefInfo;
 
   const formattedCreateTime = new Date(createTime).toLocaleString("en-GB", {
-    timeZone: "UTC"
+    timeZone: "UTC",
   });
   const formattedUpdateTime = new Date(updateTime).toLocaleString("en-GB", {
-    timeZone: "UTC"
+    timeZone: "UTC",
   });
 
   return (
@@ -100,7 +103,7 @@ const DocRefInfoModal = ({ isOpen, onCloseDialog, docRef }: Props) => {
  * These are the things returned by the custom hook that allow the owning component to interact
  * with this dialog.
  */
-type UseDocRefInfoDialog = {
+interface UseDocRefInfoDialog {
   /**
    * The owning component is ready to start a deletion process.
    * Calling this will open the dialog, and setup the UUIDs
@@ -111,31 +114,31 @@ type UseDocRefInfoDialog = {
    * using destructing.
    */
   componentProps: Props;
-};
+}
 
 /**
  * This is a React custom hook that sets up things required by the owning component.
  */
 export const useDocRefInfoDialog = (): UseDocRefInfoDialog => {
-  const [docRef, setDocRef] = useState<DocRefType | undefined>(undefined);
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [docRef, setDocRef] = React.useState<DocRefType | undefined>(undefined);
+  const [isOpen, setIsOpen] = React.useState<boolean>(false);
 
   return {
     componentProps: {
       docRef,
       isOpen,
-      onCloseDialog: useCallback(() => {
+      onCloseDialog: React.useCallback(() => {
         setIsOpen(false);
         setDocRef(undefined);
-      }, [setIsOpen, setDocRef])
+      }, [setIsOpen, setDocRef]),
     },
-    showDialog: useCallback(
+    showDialog: React.useCallback(
       (_docRef: DocRefType) => {
         setIsOpen(true);
         setDocRef(_docRef);
       },
-      [setIsOpen, setDocRef]
-    )
+      [setIsOpen, setDocRef],
+    ),
   };
 };
 

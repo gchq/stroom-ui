@@ -16,9 +16,9 @@
 
 import * as React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { DragSource, DragSourceSpec } from "react-dnd";
 
 import Select from "react-select";
+import { DragSourceSpec, DragSource } from "react-dnd";
 import Button from "../Button";
 import ConditionPicker from "./ConditionPicker/ConditionPicker";
 import {

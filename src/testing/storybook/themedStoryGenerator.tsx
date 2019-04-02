@@ -20,15 +20,15 @@ import { Story, RenderFunction } from "@storybook/react";
 const styles = {
   fullScreen: {
     width: "100%",
-    height: "100%"
+    height: "100%",
   },
   center: {
     width: "100%",
     height: "100%",
     display: "flex",
     justifyContent: "center",
-    alignItems: "center"
-  }
+    alignItems: "center",
+  },
 };
 
 const themes = ["theme-light", "theme-dark"];
@@ -39,7 +39,11 @@ interface Props {
   centerComponent?: React.ReactNode;
 }
 
-const ThemedContainer = ({ theme, component, centerComponent }: Props) => (
+const ThemedContainer: React.FunctionComponent<Props> = ({
+  theme,
+  component,
+  centerComponent,
+}) => (
   <div
     className={`app-container ${theme} raised-low`}
     style={styles.fullScreen}
@@ -57,7 +61,7 @@ const ThemedContainer = ({ theme, component, centerComponent }: Props) => (
 export const addThemedStories = (
   stories: Story,
   component: RenderFunction,
-  centerComponent?: React.ReactNode
+  centerComponent?: React.ReactNode,
 ) => {
   themes.forEach(theme =>
     stories.add(theme, () => (
@@ -66,6 +70,6 @@ export const addThemedStories = (
         component={component}
         centerComponent={centerComponent}
       />
-    ))
+    )),
   );
 };

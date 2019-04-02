@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import useHttpClient from "src/api/useHttpClient";
-import { useCallback } from "react";
+import * as React from "react";
 import { Config } from "./types";
 
 interface Api {
@@ -24,7 +24,7 @@ interface Api {
 const useApi = (): Api => {
   const { httpGetJson } = useHttpClient();
 
-  const fetchConfig = useCallback(() => {
+  const fetchConfig = React.useCallback(() => {
     return httpGetJson("/config.json", {}, false);
   }, [httpGetJson]);
 

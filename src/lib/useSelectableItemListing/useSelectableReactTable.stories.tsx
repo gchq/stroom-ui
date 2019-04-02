@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 import * as React from "react";
-import { useState, useCallback, useEffect } from "react";
 import { storiesOf } from "@storybook/react";
 
 import useSelectableReactTable from "./useSelectableReactTable";
@@ -54,14 +53,14 @@ const TestTable = () => {
     useTextInput,
   } = useForm<NewItemFormValues>({ initialValues: defaultFormValues });
 
-  const [externalSelectedItem, setExternalSelectedItem] = useState<
+  const [externalSelectedItem, setExternalSelectedItem] = React.useState<
     Animal | undefined
   >(undefined);
   const { animals, preFocusWrap, reset, addAnimal } = useTestAnimals();
 
   const speciesProps = useTextInput("species");
   const nameProps = useTextInput("name");
-  const onClickAddItem = useCallback(
+  const onClickAddItem = React.useCallback(
     e => {
       if (!!name && !!species) {
         addAnimal(species, name);
@@ -87,7 +86,7 @@ const TestTable = () => {
     },
   );
 
-  useEffect(() => setExternalSelectedItem(selectedItem), [
+  React.useEffect(() => setExternalSelectedItem(selectedItem), [
     selectedItem,
     setExternalSelectedItem,
   ]);

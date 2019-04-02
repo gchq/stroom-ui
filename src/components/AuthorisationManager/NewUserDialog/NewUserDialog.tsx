@@ -1,5 +1,4 @@
 import * as React from "react";
-import { useState, useCallback } from "react";
 
 import ThemedModal from "src/components/ThemedModal";
 import DialogActionButtons from "src/components/DialogActionButtons";
@@ -19,21 +18,25 @@ interface Props {
 // You MUST use a memo-ized/global constant here or you end up with render recursion
 const defaultValues: FormValues = {
   name: "",
-  isGroup: false
+  isGroup: false,
 };
 
-const NewUserDialog = ({ isOpen, onCreateUser, onCloseDialog }: Props) => {
+const NewUserDialog: React.FunctionComponent<Props> = ({
+  isOpen,
+  onCreateUser,
+  onCloseDialog,
+}) => {
   const {
     value: { name, isGroup },
     useTextInput,
-    useCheckboxInput
+    useCheckboxInput,
   } = useForm<FormValues>({
-    initialValues: defaultValues
+    initialValues: defaultValues,
   });
   const nameProps = useTextInput("name");
   const isGroupProps = useCheckboxInput("isGroup");
 
-  const onConfirm = useCallback(() => {
+  const onConfirm = React.useCallback(() => {
     if (name) {
       onCreateUser(name, isGroup || false);
       onCloseDialog();
@@ -67,21 +70,21 @@ interface UseDialog {
 }
 
 export const useDialog = (
-  onCreateUser: (name: string, isGroup: boolean) => void
+  onCreateUser: (name: string, isGroup: boolean) => void,
 ): UseDialog => {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isOpen, setIsOpen] = React.useState<boolean>(false);
 
   return {
     componentProps: {
       isOpen,
       onCreateUser,
-      onCloseDialog: useCallback(() => {
+      onCloseDialog: React.useCallback(() => {
         setIsOpen(false);
-      }, [setIsOpen])
+      }, [setIsOpen]),
     },
-    showDialog: useCallback(() => {
+    showDialog: React.useCallback(() => {
       setIsOpen(true);
-    }, [setIsOpen])
+    }, [setIsOpen]),
   };
 };
 

@@ -15,10 +15,9 @@
  */
 
 import * as React from "react";
-import { useCallback, useMemo, useEffect } from "react";
-import { Progress } from "react-sweet-progress";
 import "react-sweet-progress/lib/style.css";
 import ReactTable, { RowInfo, SortingRule } from "react-table";
+import { Progress } from "react-sweet-progress";
 
 import Button from "src/components/Button";
 import {
@@ -38,7 +37,10 @@ interface Props {
   onSelectionChanged: (selectedTask: StreamTaskType | undefined) => void;
 }
 
-const ProcessingList = ({ streamTasksApi, onSelectionChanged }: Props) => {
+const ProcessingList: React.FunctionComponent<Props> = ({
+  streamTasksApi,
+  onSelectionChanged,
+}) => {
   const {
     pagedTrackerInfo: { trackers, totalTrackers },
     updateSort,
@@ -98,7 +100,7 @@ const ProcessingList = ({ streamTasksApi, onSelectionChanged }: Props) => {
     },
   ];
 
-  const tableData = useMemo(
+  const tableData = React.useMemo(
     () =>
       trackers.filter(
         (tracker: StreamTaskType) => tracker.filterId !== undefined,
@@ -106,7 +108,7 @@ const ProcessingList = ({ streamTasksApi, onSelectionChanged }: Props) => {
     [trackers],
   );
 
-  const preFocusWrap = useCallback((): boolean => {
+  const preFocusWrap = React.useCallback((): boolean => {
     if (totalTrackers === trackers.length) {
       return true;
     } else {
@@ -127,12 +129,12 @@ const ProcessingList = ({ streamTasksApi, onSelectionChanged }: Props) => {
     },
   );
 
-  useEffect(() => onSelectionChanged(selectedItem), [
+  React.useEffect(() => onSelectionChanged(selectedItem), [
     selectedItem,
     onSelectionChanged,
   ]);
 
-  const onHandleSort = useCallback(
+  const onHandleSort = React.useCallback(
     (sort: SortingRule) => {
       if (sort !== undefined) {
         const direction = sort.desc

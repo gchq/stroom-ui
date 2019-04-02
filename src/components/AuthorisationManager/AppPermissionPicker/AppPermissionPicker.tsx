@@ -3,16 +3,16 @@ import { useAllAppPermissions } from "src/api/appPermission";
 import CheckboxSeries from "src/components/CheckboxSeries";
 
 interface Props {
-  value: Array<string>;
+  value: string[];
   addPermission: (permissionName: string) => void;
   removePermission: (permissionName: string) => void;
 }
 
-export const AppPermissionPicker = ({
+export const AppPermissionPicker: React.FunctionComponent<Props> = ({
   value,
   addPermission,
-  removePermission
-}: Props) => {
+  removePermission,
+}) => {
   const allAppPermissions = useAllAppPermissions();
 
   return (

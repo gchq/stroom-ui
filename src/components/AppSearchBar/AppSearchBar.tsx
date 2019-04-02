@@ -1,5 +1,4 @@
 import * as React from "react";
-import { useState, useCallback } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { findItem, filterTree } from "src/lib/treeUtils";
@@ -14,7 +13,7 @@ import useRecentItems from "src/lib/useRecentItems";
 import { useDocumentTree } from "src/api/explorer";
 
 interface Props {
-  typeFilters?: Array<string>;
+  typeFilters?: string[];
   onChange: (d: DocRefType) => any;
   value?: DocRefType;
   className?: string;
@@ -24,28 +23,32 @@ const AppSearchBar = ({
   className,
   typeFilters = [],
   onChange,
-  value
+  value,
 }: Props) => {
   // Get data from and subscribe to the store
-  const [searchResults, setSearchResults] = useState<Array<DocRefType>>([]);
+  const [searchResults, setSearchResults] = React.useState<DocRefType[]>([]);
 
   const { documentTree, searchApp } = useDocumentTree();
   const { recentItems } = useRecentItems();
 
-  const onSearch = useCallback(p => searchApp(p).then(setSearchResults), [
+  const onSearch = React.useCallback(p => searchApp(p).then(setSearchResults), [
     searchApp,
-    setSearchResults
+    setSearchResults,
   ]);
 
-  let [textFocus, setTextFocus] = useState<boolean>(false);
-  let [searchTerm, setSearchTerm] = useState<string>("");
-  let [searchMode, setSearchMode] = useState<SearchMode>(SearchMode.NAVIGATION);
-  let [navFolder, setNavFolder] = useState<DocRefType | undefined>(undefined);
+  let [textFocus, setTextFocus] = React.useState<boolean>(false);
+  let [searchTerm, setSearchTerm] = React.useState<string>("");
+  let [searchMode, setSearchMode] = React.useState<SearchMode>(
+    SearchMode.NAVIGATION,
+  );
+  let [navFolder, setNavFolder] = React.useState<DocRefType | undefined>(
+    undefined,
+  );
 
-  const onSearchFocus = useCallback(() => setTextFocus(true), []);
-  const onSearchBlur = useCallback(() => setTextFocus(false), []);
+  const onSearchFocus = React.useCallback(() => setTextFocus(true), []);
+  const onSearchBlur = React.useCallback(() => setTextFocus(false), []);
 
-  const onThisChange = useCallback(
+  const onThisChange = React.useCallback(
     (docRef: DocRefType) => {
       if (docRef.type === "Folder") {
         if (
@@ -61,7 +64,7 @@ const AppSearchBar = ({
         onChange(docRef);
       }
     },
-    [typeFilters]
+    [typeFilters],
   );
 
   const documentTreeToUse: DocRefTree =
@@ -69,7 +72,7 @@ const AppSearchBar = ({
       ? filterTree(documentTree, d => typeFilters.includes(d.type))!
       : documentTree;
 
-  let docRefs: Array<DocRefType> = [];
+  let docRefs: DocRefType[] = [];
   let thisFolder: DocRefTree | undefined = undefined;
   let parentFolder: DocRefType | undefined = undefined;
   let valueToShow: string;
@@ -88,7 +91,7 @@ const AppSearchBar = ({
       if (!!navFolderToUse) {
         const navFolderWithLineage: DocRefWithLineage = findItem(
           documentTreeToUse,
-          navFolderToUse.uuid
+          navFolderToUse.uuid,
         )!;
         docRefs = navFolderWithLineage.node.children || [];
         thisFolder = navFolderWithLineage.node;
@@ -127,7 +130,7 @@ const AppSearchBar = ({
     onKeyDownWithShortcuts,
     toggleSelection,
     selectedItems: selectedDocRefs,
-    focussedItem: focussedDocRef
+    focussedItem: focussedDocRef,
   } = useSelectableItemListing({
     items: docRefs,
     openItem: onThisChange,
@@ -141,7 +144,7 @@ const AppSearchBar = ({
       if (!!parentFolder) {
         setNavFolder(parentFolder);
       }
-    }
+    },
   });
 
   let headerTitle = "unknown";
@@ -177,15 +180,15 @@ const AppSearchBar = ({
 
   const onSearchTermChange: React.ChangeEventHandler<
     HTMLInputElement
-  > = useCallback(
+  > = React.useCallback(
     ({ target: { value } }) => {
       setSearchTerm(value);
       setSearchMode(
-        value.length > 0 ? SearchMode.GLOBAL_SEARCH : SearchMode.NAVIGATION
+        value.length > 0 ? SearchMode.GLOBAL_SEARCH : SearchMode.NAVIGATION,
       );
       onSearch({ term: value });
     },
-    [onSearch, setSearchTerm, setSearchMode]
+    [onSearch, setSearchTerm, setSearchMode],
   );
 
   return (

@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 import * as React from "react";
-import { useState, useEffect } from "react";
 import { storiesOf } from "@storybook/react";
 
 import useSelectableItemListing from "./useSelectableItemListing";
@@ -24,8 +23,8 @@ import Button from "src/components/Button";
 import useTestAnimals, { Animal } from "./useTestAnimals";
 
 const TestList = () => {
-  const [lastAction, setLastAction] = useState<string>("no action");
-  const [externalSelectedItem, setExternalSelectedItem] = useState<
+  const [lastAction, setLastAction] = React.useState<string>("no action");
+  const [externalSelectedItem, setExternalSelectedItem] = React.useState<
     Animal | undefined
   >(undefined);
   const { animals, preFocusWrap, reset } = useTestAnimals();
@@ -45,7 +44,7 @@ const TestList = () => {
   });
 
   // Demonstrates how to 'watch' for selection changes
-  useEffect(() => setExternalSelectedItem(selectedItem), [
+  React.useEffect(() => setExternalSelectedItem(selectedItem), [
     selectedItem,
     setExternalSelectedItem,
   ]);

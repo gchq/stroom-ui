@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import * as React from "react";
 
 import { useErrorReporting } from "src/components/ErrorPage";
 
@@ -45,7 +45,7 @@ export const useHttpClient = (): HttpClient => {
   const { reportError } = useErrorReporting();
   const { goToError } = useAppNavigation();
 
-  const catchImpl = useCallback(
+  const catchImpl = React.useCallback(
     (error: any) => {
       reportError({
         errorMessage: error.message,
@@ -57,7 +57,7 @@ export const useHttpClient = (): HttpClient => {
     [reportError, goToError],
   );
 
-  const httpGetJson = useCallback(
+  const httpGetJson = React.useCallback(
     <T>(
       url: string,
       options: {
@@ -94,7 +94,7 @@ export const useHttpClient = (): HttpClient => {
   );
 
   const useFetchWithBodyAndJsonResponse = (method: string) =>
-    useCallback(
+    React.useCallback(
       <T>(
         url: string,
         options?: {
@@ -122,7 +122,7 @@ export const useHttpClient = (): HttpClient => {
     );
 
   const useFetchWithBodyAndEmptyResponse = (method: string) =>
-    useCallback(
+    React.useCallback(
       (
         url: string,
         options?: {

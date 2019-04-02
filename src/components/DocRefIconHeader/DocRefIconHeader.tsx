@@ -23,7 +23,11 @@ interface Props {
   className?: string;
 }
 
-const DocRefIconHeader = ({ text, docRefType, className }: Props) => (
+const DocRefIconHeader: React.FunctionComponent<Props> = ({
+  text,
+  docRefType,
+  className,
+}) => (
   <div className={`icon-header ${className || ""}`}>
     <DocRefImage docRefType={docRefType} size="lg" />
     <p className="icon-header__text">{text}</p>

@@ -15,7 +15,6 @@
  */
 
 import * as React from "react";
-import { useState } from "react";
 import * as ReactModal from "react-modal";
 
 import Button from "../Button";
@@ -87,9 +86,9 @@ interface UseDialog {
  * This is a React custom hook that sets up things required by the owning component.
  */
 export const useDialog = (props: NewProps): UseDialog => {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [question, setQuestion] = useState<string>("No Question");
-  const [details, setDetails] = useState<string | undefined>(undefined);
+  const [isOpen, setIsOpen] = React.useState<boolean>(false);
+  const [question, setQuestion] = React.useState<string>("No Question");
+  const [details, setDetails] = React.useState<string | undefined>(undefined);
 
   const { getQuestion, getDetails = () => undefined } = props;
 

@@ -1,5 +1,4 @@
 import * as React from "react";
-import { useState } from "react";
 
 import PillChoice from "./PillChoice";
 import DisplayPillChoice from "./DisplayPillChoice";
@@ -11,7 +10,7 @@ export const Step2 = () => {
    * Later we will show the use of optional values that can be 'undefined'. In TypeScript you must be explicit
    * about this. In this example I am seeding the state with a default value which is a valid string.
    */
-  const [pill, setPill] = useState<string>("none");
+  const [pill, setPill] = React.useState<string>("none");
 
   return (
     <div>

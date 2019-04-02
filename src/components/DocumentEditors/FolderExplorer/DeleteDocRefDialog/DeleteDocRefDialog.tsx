@@ -13,25 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import * as React from 'react';
-import {useState, useCallback} from 'react';
+import * as React from "react";
 
-import ThemedConfirm from '../../../ThemedConfirm';
+import ThemedConfirm from "../../../ThemedConfirm";
 
 interface Props {
-  uuids: Array<string>;
+  uuids: string[];
   isOpen: boolean;
-  onConfirm: (uuids: Array<string>) => void;
+  onConfirm: (uuids: string[]) => void;
   onCloseDialog: () => void;
 }
 
-export const DeleteDocRefDialog = ({
+export const DeleteDocRefDialog: React.FunctionComponent<Props> = ({
   uuids,
   isOpen,
   onConfirm,
   onCloseDialog,
-}: Props) => {
-  const onConfirmLocal = useCallback(() => {
+}) => {
+  const onConfirmLocal = React.useCallback(() => {
     onConfirm(uuids);
     onCloseDialog();
   }, [uuids, onConfirm, onCloseDialog]);
@@ -50,27 +49,25 @@ export const DeleteDocRefDialog = ({
  * These are the things returned by the custom hook that allow the owning component to interact
  * with this dialog.
  */
-type UseDialog = {
+interface UseDialog {
   /**
    * The owning component is ready to start a deletion process.
    * Calling this will open the dialog, and setup the UUIDs
    */
-  showDialog: (uuids: Array<string>) => void;
+  showDialog: (uuids: string[]) => void;
   /**
    * These are the properties that the owning component can just give to the Dialog component
    * using destructing.
    */
   componentProps: Props;
-};
+}
 
 /**
  * This is a React custom hook that sets up things required by the owning component.
  */
-export const useDialog = (
-  onConfirm: (uuids: Array<string>) => void,
-): UseDialog => {
-  const [uuidsToDelete, setUuidToDelete] = useState<Array<string>>([]);
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+export const useDialog = (onConfirm: (uuids: string[]) => void): UseDialog => {
+  const [uuidsToDelete, setUuidToDelete] = React.useState<string[]>([]);
+  const [isOpen, setIsOpen] = React.useState<boolean>(false);
 
   return {
     componentProps: {

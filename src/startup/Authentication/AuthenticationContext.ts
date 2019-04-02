@@ -1,4 +1,4 @@
-import { Context, createContext } from "react";
+import * as React from "react";
 
 interface AuthenticationContextApi {
   idToken: string;

@@ -1,5 +1,4 @@
 import * as React from "react";
-import { useState } from "react";
 
 import { ThemedConfirm } from "../ThemedConfirm";
 
@@ -37,8 +36,10 @@ interface UseDialog {
 }
 
 export const useDialog = (onDeleteElement: (e: string) => void): UseDialog => {
-  const [elementId, setElementId] = useState<string | undefined>(undefined);
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [elementId, setElementId] = React.useState<string | undefined>(
+    undefined,
+  );
+  const [isOpen, setIsOpen] = React.useState<boolean>(false);
 
   return {
     componentProps: {

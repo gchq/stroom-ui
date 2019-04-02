@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import * as React from "react";
 
 import { DocumentApi, ResourcesByDocType, DOCUMENT_RESOURCES } from "./types";
 import { DocumentType } from "src/types";
@@ -30,12 +30,12 @@ const useDocumentApi = <
   }
 
   return {
-    fetchDocument: useCallback(
+    fetchDocument: React.useCallback(
       (docRefUuid: string) =>
         httpGetJson(`${stroomBaseServiceUrl}${resourcePath}${docRefUuid}`),
       [stroomBaseServiceUrl, httpGetJson],
     ),
-    saveDocument: useCallback(
+    saveDocument: React.useCallback(
       (docRefContents: D) =>
         httpPostEmptyResponse(
           `${stroomBaseServiceUrl}${resourcePath}${docRefContents.uuid}`,

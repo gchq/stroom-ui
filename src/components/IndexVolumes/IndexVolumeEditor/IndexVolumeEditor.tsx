@@ -1,5 +1,4 @@
 import * as React from "react";
-import { useCallback } from "react";
 
 import IconHeader from "src/components/IconHeader";
 import Button from "src/components/Button";
@@ -44,19 +43,24 @@ const IndexVolumeEditor: React.FunctionComponent<Props> = ({ volumeId }) => {
     showDialog: showRemoveDialog,
     componentProps: removeDialogProps,
   } = useConfirmDialog({
-    onConfirm: useCallback(() => selectedItems.forEach(removeFromGroup), [
+    onConfirm: React.useCallback(() => selectedItems.forEach(removeFromGroup), [
       selectedItems,
       removeFromGroup,
     ]),
-    getQuestion: useCallback(() => "Remove volume from selected groups?", []),
-    getDetails: useCallback(() => selectedItems.join(", "), [selectedItems]),
+    getQuestion: React.useCallback(
+      () => "Remove volume from selected groups?",
+      [],
+    ),
+    getDetails: React.useCallback(() => selectedItems.join(", "), [
+      selectedItems,
+    ]),
   });
 
   const {
     componentProps: indexVolumeGroupPickerProps,
     showDialog: showIndexVolumeGroupPicker,
   } = useIndexVolumeGroupModalPicker({
-    onConfirm: useCallback((groupName: string) => addToGroup(groupName), [
+    onConfirm: React.useCallback((groupName: string) => addToGroup(groupName), [
       volumeId,
       addToGroup,
     ]),

@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import * as React from "react";
 import {
   PipelineSearchResultType,
   PipelineSearchCriteriaType,
@@ -23,10 +23,10 @@ const DEFAULT_CRITERIA: PipelineSearchCriteriaType = {
 };
 
 const usePipelineSearch = (): UsePipelineSearch => {
-  const [results, setResults] = useState<PipelineSearchResultType>(
+  const [results, setResults] = React.useState<PipelineSearchResultType>(
     DEFAULT_SEARCH_RESULT,
   );
-  const [criteria, setCriteria] = useState<PipelineSearchCriteriaType>(
+  const [criteria, setCriteria] = React.useState<PipelineSearchCriteriaType>(
     DEFAULT_CRITERIA,
   );
   const { searchPipelines } = useApi();
@@ -34,11 +34,11 @@ const usePipelineSearch = (): UsePipelineSearch => {
   return {
     results,
     criteria,
-    updateCriteria: useCallback(
+    updateCriteria: React.useCallback(
       updates => setCriteria({ ...criteria, ...updates }),
       [criteria, setCriteria],
     ),
-    searchPipelines: useCallback(() => {
+    searchPipelines: React.useCallback(() => {
       searchPipelines(criteria).then(s => setResults);
     }, [searchPipelines, setResults]),
   };

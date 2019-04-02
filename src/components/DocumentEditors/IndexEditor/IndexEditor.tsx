@@ -15,24 +15,23 @@
  */
 
 import * as React from "react";
-import { useCallback } from "react";
 
 import DocRefEditor, {
   useDocRefEditor,
-  SwitchedDocRefEditorProps
+  SwitchedDocRefEditorProps,
 } from "../DocRefEditor";
 import Loader from "../../Loader";
 import useDocumentApi from "src/api/useDocumentApi";
 import { IndexDoc, IndexField } from "src/types";
 import IndexFieldsTable, {
-  useTable as useFieldsTable
+  useTable as useFieldsTable,
 } from "./IndexFieldsTable";
 import ThemedConfirm, {
-  useDialog as useThemedConfirm
+  useDialog as useThemedConfirm,
 } from "../../ThemedConfirm";
 import Button from "../../Button";
 import IndexFieldEditor, {
-  useEditor as useFieldEditor
+  useEditor as useFieldEditor,
 } from "./IndexFieldEditor";
 import { IndexVolumeGroupPicker } from "../../IndexVolumeGroups/IndexVolumeGroupPicker";
 
@@ -41,56 +40,56 @@ const IndexEditor = ({ docRefUuid }: SwitchedDocRefEditorProps) => {
 
   const { editorProps, onDocumentChange } = useDocRefEditor<IndexDoc>({
     docRefUuid,
-    documentApi
+    documentApi,
   });
 
   const { docRefContents } = editorProps;
 
-  const onVolumeGroupChange = useCallback(
+  const onVolumeGroupChange = React.useCallback(
     volumeGroupName => {
       onDocumentChange({ volumeGroupName });
     },
-    [onDocumentChange]
+    [onDocumentChange],
   );
 
   const { componentProps } = useFieldsTable(
-    docRefContents && docRefContents.data ? docRefContents.data.fields : []
+    docRefContents && docRefContents.data ? docRefContents.data.fields : [],
   );
   const {
     fields,
-    selectableTableProps: { selectedItems, lastSelectedIndex }
+    selectableTableProps: { selectedItems, lastSelectedIndex },
   } = componentProps;
 
   const {
     componentProps: deleteFieldComponentProps,
-    showDialog: showDeleteFieldsDialog
+    showDialog: showDeleteFieldsDialog,
   } = useThemedConfirm({
-    onConfirm: useCallback(() => {
+    onConfirm: React.useCallback(() => {
       let fieldNamesToDelete = selectedItems.map(s => s.fieldName);
       if (!!docRefContents) {
         onDocumentChange({
           data: {
             ...docRefContents.data,
             fields: docRefContents.data.fields.filter(
-              f => !fieldNamesToDelete.includes(f.fieldName)
-            )
-          }
+              f => !fieldNamesToDelete.includes(f.fieldName),
+            ),
+          },
         });
       }
     }, [onDocumentChange, docRefContents, selectedItems]),
-    getQuestion: useCallback(
+    getQuestion: React.useCallback(
       () => "Are you sure you want to delete these fields",
-      []
+      [],
     ),
-    getDetails: useCallback(
+    getDetails: React.useCallback(
       () => selectedItems.map(s => s.fieldName).join(", "),
-      [selectedItems]
-    )
+      [selectedItems],
+    ),
   });
 
   const {
     componentProps: fieldEditorProps,
-    showEditor: showFieldEditor
+    showEditor: showFieldEditor,
   } = useFieldEditor(
     useCallback(
       (id: number, fieldUpdates: Partial<IndexField>) => {
@@ -102,20 +101,20 @@ const IndexEditor = ({ docRefUuid }: SwitchedDocRefEditorProps) => {
                 _id === id
                   ? {
                       ...f,
-                      ...fieldUpdates
+                      ...fieldUpdates,
                     }
-                  : f
-              )
-            }
+                  : f,
+              ),
+            },
           };
           onDocumentChange(updatedIndex);
         }
       },
-      [docRefContents, onDocumentChange]
-    )
+      [docRefContents, onDocumentChange],
+    ),
   );
 
-  const onCreateClick = useCallback(() => {
+  const onCreateClick = React.useCallback(() => {
     if (!!docRefContents && !!docRefContents.data) {
       let updatedIndex: Partial<IndexDoc> = {
         ...docRefContents,
@@ -131,17 +130,17 @@ const IndexEditor = ({ docRefUuid }: SwitchedDocRefEditorProps) => {
               termPositions: false,
               analyzerType: "KEYWORD",
               caseSensitive: false,
-              conditions: []
-            }
-          ]
-        }
+              conditions: [],
+            },
+          ],
+        },
       };
 
       onDocumentChange(updatedIndex);
     }
   }, [docRefContents, onDocumentChange]);
 
-  const onEditClick = useCallback(() => {
+  const onEditClick = React.useCallback(() => {
     if (lastSelectedIndex !== undefined) {
       showFieldEditor(lastSelectedIndex, selectedItems[0]);
     } else {
@@ -149,7 +148,7 @@ const IndexEditor = ({ docRefUuid }: SwitchedDocRefEditorProps) => {
     }
   }, [showFieldEditor, lastSelectedIndex, selectedItems]);
 
-  const onMoveUpClick = useCallback(() => {
+  const onMoveUpClick = React.useCallback(() => {
     if (
       !!docRefContents &&
       !!lastSelectedIndex &&
@@ -166,14 +165,14 @@ const IndexEditor = ({ docRefUuid }: SwitchedDocRefEditorProps) => {
       let updatedIndex: Partial<IndexDoc> = {
         data: {
           ...docRefContents.data,
-          fields: newFields
-        }
+          fields: newFields,
+        },
       };
       onDocumentChange(updatedIndex);
     }
   }, [lastSelectedIndex, docRefContents]);
 
-  const onMoveDownClick = useCallback(() => {
+  const onMoveDownClick = React.useCallback(() => {
     if (
       !!docRefContents &&
       !!lastSelectedIndex &&
@@ -190,8 +189,8 @@ const IndexEditor = ({ docRefUuid }: SwitchedDocRefEditorProps) => {
       let updatedIndex: Partial<IndexDoc> = {
         data: {
           ...docRefContents.data,
-          fields: newFields
-        }
+          fields: newFields,
+        },
       };
       onDocumentChange(updatedIndex);
     }

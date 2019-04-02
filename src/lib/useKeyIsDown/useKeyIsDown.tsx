@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import * as React from "react";
 import { KeyDownState } from "./types";
 
 export const DEFAULT_FILTERS = ["Control", "Shift", "Alt", "Meta"];
@@ -6,11 +6,11 @@ export const DEFAULT_FILTERS = ["Control", "Shift", "Alt", "Meta"];
 const useKeyIsDown = function(
   filters: string[] = DEFAULT_FILTERS,
 ): KeyDownState {
-  const [keysDown, setKeysDown] = useState<KeyDownState>(
+  const [keysDown, setKeysDown] = React.useState<KeyDownState>(
     filters.reduce((acc, c) => ({ ...acc, [c]: false }), {}),
   );
 
-  useEffect(() => {
+  React.useEffect(() => {
     const onkeydown = (e: KeyboardEvent) => {
       if (filters.indexOf(e.key) !== -1) {
         setKeysDown({ ...keysDown, [e.key]: true });
