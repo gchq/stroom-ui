@@ -4,8 +4,8 @@ interface Props {
   debuggerId: string;
 }
 
-const DebuggerStep = ({  }: Props) => (
-  <div>TODO: debugger step information</div>
+const DebuggerStep: React.FunctionComponent<Props> = ({ debuggerId }) => (
+  <div>TODO: debugger step information {debuggerId}</div>
 );
 
 export default DebuggerStep;

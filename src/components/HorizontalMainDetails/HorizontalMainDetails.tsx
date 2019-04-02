@@ -16,24 +16,24 @@ interface Props {
   onClose: () => void;
 }
 
-const HorizontalMainDetails = ({
+const HorizontalMainDetails: React.FunctionComponent<Props> = ({
   storageKey,
   title,
   headerMenuItems,
   mainContent,
   detailContent,
   onClose,
-  isOpen
-}: Props) => {
+  isOpen,
+}) => {
   const { value: mainHeight, setValue: setMainHeight } = useLocalStorage(
     `mainHeight_${storageKey}`,
     200,
-    storeNumber
+    storeNumber,
   );
   const { value: detailsHeight, setValue: setDetailsHeight } = useLocalStorage(
     `detailsHeight_${storageKey}`,
     200,
-    storeNumber
+    storeNumber,
   );
 
   useEffect(() => {
@@ -51,13 +51,13 @@ const HorizontalMainDetails = ({
         {
           resize: "dynamic",
           minSize: 100,
-          size: mainHeight
+          size: mainHeight,
         },
         {
           resize: "dynamic",
           minSize: 100,
-          size: detailsHeight
-        }
+          size: detailsHeight,
+        },
       ]}
       onUpdate={(panelWidths: any[]) => {
         setMainHeight(panelWidths[0].size);

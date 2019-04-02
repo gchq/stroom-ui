@@ -23,18 +23,18 @@ import ThemedConfirm, { useDialog } from "./ThemedConfirm";
 
 import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
 
-let TestConfirm = () => {
+let TestHarness: React.FunctionComponent = () => {
   const [confirmCount, setConfirmCount] = useState<number>(0);
 
   const { showDialog, componentProps } = useDialog({
     getQuestion: useCallback(() => "Are you sure about this?", []),
     getDetails: useCallback(
       () => "Because...nothing will really happen anyway",
-      []
+      [],
     ),
     onConfirm: useCallback(() => setConfirmCount(confirmCount + 1), [
-      confirmCount
-    ])
+      confirmCount,
+    ]),
   });
 
   return (
@@ -48,4 +48,4 @@ let TestConfirm = () => {
 
 const stories = storiesOf("General Purpose/Themed Confirm", module);
 
-addThemedStories(stories, () => <TestConfirm />);
+addThemedStories(stories, () => <TestHarness />);

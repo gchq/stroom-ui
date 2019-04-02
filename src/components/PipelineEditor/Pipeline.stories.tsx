@@ -20,7 +20,6 @@ import { storiesOf } from "@storybook/react";
 import Pipeline from "./Pipeline";
 import { testPipelines } from "src/testing/data/pipelines";
 
-
 import usePipelineState from "./usePipelineState";
 
 const pipelineStories = storiesOf("Pipeline/Display", module);
@@ -29,8 +28,8 @@ interface TestProps {
   pipelineId: string;
 }
 
-const TestPipeline: React.FunctionComponent<TestProps> = ({
-  pipelineId
+const TestHarness: React.FunctionComponent<TestProps> = ({
+  pipelineId,
 }: TestProps) => {
   const pipelineStateProps = usePipelineState(pipelineId);
   return (
@@ -43,5 +42,5 @@ const TestPipeline: React.FunctionComponent<TestProps> = ({
 };
 
 Object.keys(testPipelines).forEach(k => {
-  pipelineStories.add(k, () => <TestPipeline pipelineId={k} />);
+  pipelineStories.add(k, () => <TestHarness pipelineId={k} />);
 });

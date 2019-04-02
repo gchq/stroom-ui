@@ -19,8 +19,6 @@ import { storiesOf } from "@storybook/react";
 
 import Welcome from "./Welcome";
 
-
-
 import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
 
 const stories = storiesOf("Sections/Welcome", module);

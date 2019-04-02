@@ -1,5 +1,5 @@
 import IndexVolumeGroupPicker, {
-  usePicker as useIndexVolumeGroupPicker
+  usePicker as useIndexVolumeGroupPicker,
 } from "./IndexVolumeGroupPicker";
 
 export { IndexVolumeGroupPicker, useIndexVolumeGroupPicker };

@@ -1,5 +1,5 @@
 import IndexVolumeGroupNamesTable, {
-  useTable
+  useTable,
 } from "./IndexVolumeGroupNamesTable";
 
 export { IndexVolumeGroupNamesTable, useTable };

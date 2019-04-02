@@ -12,13 +12,13 @@ interface Props {
   className?: string;
 }
 
-const HorizontalPanel = ({
+const HorizontalPanel: React.FunctionComponent<Props> = ({
   title,
   headerMenuItems,
   content,
   onClose,
-  className
-}: Props) => {
+  className,
+}) => {
   useEffect(() => {
     Mousetrap.bind("esc", () => onClose());
 

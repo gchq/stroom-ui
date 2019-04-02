@@ -32,15 +32,15 @@ interface FormValues {
 
 const initialValues: FormValues = {};
 
-const TestForm: React.FunctionComponent = () => {
+const TestHarness: React.FunctionComponent = () => {
   const { value, useControlledInputProps } = useForm({
-    initialValues
+    initialValues,
   });
 
   const valuesToFilterOut = useMemo(
     () =>
       fullTestData.indexVolumesAndGroups.groups.slice(0, 1).map(g => g.name),
-    []
+    [],
   );
   const groupPickerProps = useControlledInputProps<string>("groupName");
 
@@ -59,4 +59,4 @@ const TestForm: React.FunctionComponent = () => {
 };
 
 const stories = storiesOf("Pickers/Index Volume Group", module);
-addThemedStories(stories, () => <TestForm />);
+addThemedStories(stories, () => <TestHarness />);

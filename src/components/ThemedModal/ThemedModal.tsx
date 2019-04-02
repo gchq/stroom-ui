@@ -35,7 +35,12 @@ interface Props extends ContentProps, ReactModal.Props {}
  * enough.
  * property, or not.
  */
-const ThemedModal = ({ header, content, actions, ...rest }: Props) => {
+const ThemedModal: React.FunctionComponent<Props> = ({
+  header,
+  content,
+  actions,
+  ...rest
+}) => {
   const { theme } = useTheme();
 
   return (

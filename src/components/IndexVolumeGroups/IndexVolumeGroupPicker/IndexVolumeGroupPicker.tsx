@@ -7,22 +7,22 @@ import { useIndexVolumeGroupNames } from "src/api/indexVolumeGroup";
 import { SelectOptionType } from "src/types";
 import { PickerProps, UsePickerProps, PickerBaseProps } from "./types";
 
-const IndexVolumeGroupPicker = ({
+const IndexVolumeGroupPicker: React.FunctionComponent<PickerProps> = ({
   value,
   onChange,
-  valuesToFilterOut = []
-}: PickerProps) => {
+  valuesToFilterOut = [],
+}) => {
   const groupNames = useIndexVolumeGroupNames();
 
-  const options: Array<SelectOptionType> = useMemo(
+  const options: SelectOptionType[] = useMemo(
     () =>
       groupNames
         .filter(n => !valuesToFilterOut.includes(n))
         .map(n => ({
           value: n,
-          label: n
+          label: n,
         })),
-    [groupNames, valuesToFilterOut]
+    [groupNames, valuesToFilterOut],
   );
 
   return (
@@ -42,7 +42,7 @@ export const usePicker = (baseProps?: PickerBaseProps): UsePickerProps => {
     ...baseProps,
     value,
     onChange,
-    reset: () => onChange(undefined)
+    reset: () => onChange(undefined),
   };
 };
 

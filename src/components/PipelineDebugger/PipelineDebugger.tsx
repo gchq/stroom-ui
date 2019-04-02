@@ -32,7 +32,10 @@ interface Props {
   pipelineId: string;
 }
 
-const PipelineDebugger = ({ pipelineId, debuggerId }: Props) => {
+const PipelineDebugger: React.FunctionComponent<Props> = ({
+  pipelineId,
+  debuggerId,
+}) => {
   const { fetchDocument: fetchPipeline } = useDocumentApi<
     "Pipeline",
     PipelineDocumentType
@@ -43,9 +46,9 @@ const PipelineDebugger = ({ pipelineId, debuggerId }: Props) => {
   const {
     pipelineEditApi: { selectedElementId, elementSelected },
     useEditorProps: {
-      editorProps: { docRefContents: pipeline }
+      editorProps: { docRefContents: pipeline },
     },
-    asTree
+    asTree,
   } = pipelineStateProps;
 
   useEffect(() => {
@@ -80,7 +83,7 @@ const PipelineDebugger = ({ pipelineId, debuggerId }: Props) => {
         pipelineStateProps={pipelineStateProps}
         showAddElementDialog={() =>
           console.error(
-            "Adding Elements from Palette not supported in debugger"
+            "Adding Elements from Palette not supported in debugger",
           )
         }
       />

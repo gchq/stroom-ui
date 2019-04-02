@@ -18,9 +18,7 @@ import * as React from "react";
 
 import IconHeader from "src/components/IconHeader";
 
-interface Props {}
-
-const Welcome = (props: Props) => (
+const Welcome: React.FunctionComponent = () => (
   <div className="welcome">
     <IconHeader icon="home" text="Welcome" />
     <div className="welcome__image">

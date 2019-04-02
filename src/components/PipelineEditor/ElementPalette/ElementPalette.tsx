@@ -11,7 +11,7 @@ import {
   ElementDefinition,
   ElementDefinitionsByCategory,
   ElementDefinitionsByType,
-  PipelineDocumentType
+  PipelineDocumentType,
 } from "src/types";
 import useElements from "src/api/useElements";
 import { groupByCategory, keyByType } from "../elementUtils";
@@ -30,46 +30,46 @@ const dropTarget: DropTargetSpec<Props> = {
   drop({ showDeleteElementDialog }, monitor) {
     const { elementId } = monitor.getItem();
     showDeleteElementDialog(elementId);
-  }
+  },
 };
 
 const dropCollect: DropTargetCollector<DropCollectedProps> = (
   connect,
-  monitor
+  monitor,
 ) => ({
   connectDropTarget: connect.dropTarget(),
   isOver: monitor.isOver(),
   draggingItemType: monitor.getItemType(),
-  canDrop: monitor.canDrop()
+  canDrop: monitor.canDrop(),
 });
 
 const enhance = DropTarget<Props, DropCollectedProps>(
   [DragDropTypes.ELEMENT],
   dropTarget,
-  dropCollect
+  dropCollect,
 );
 
-const ElementPalette = ({
+const ElementPalette: React.FunctionComponent<EnhancedProps> = ({
   pipeline,
   connectDropTarget,
   draggingItemType,
-  isOver
-}: EnhancedProps) => {
+  isOver,
+}) => {
   const { elementDefinitions } = useElements();
 
   const byCategory: ElementDefinitionsByCategory = useMemo(
     () => groupByCategory(elementDefinitions),
-    [elementDefinitions]
+    [elementDefinitions],
   );
 
   const byType: ElementDefinitionsByType = useMemo(
     () => keyByType(elementDefinitions),
-    [elementDefinitions]
+    [elementDefinitions],
   );
 
   const recycleBinItems = useMemo(
     () => (pipeline ? getBinItems(pipeline, byType) : []),
-    [pipeline, byType]
+    [pipeline, byType],
   );
 
   return connectDropTarget(
@@ -90,13 +90,13 @@ const ElementPalette = ({
               key={k[0]}
               category={k[0]}
               elementsWithData={k[1].map((e: ElementDefinition) => ({
-                element: e
+                element: e,
               }))}
             />
           ))}
         </React.Fragment>
       )}
-    </div>
+    </div>,
   );
 };
 

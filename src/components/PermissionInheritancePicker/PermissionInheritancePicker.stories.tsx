@@ -29,9 +29,9 @@ interface FormValues {
 }
 const initialValues: FormValues = {};
 
-const TestForm = () => {
+const TestHarness: React.FunctionComponent = () => {
   const { value, useControlledInputProps } = useForm<FormValues>({
-    initialValues
+    initialValues,
   });
 
   const permissionInheritanceProps = useControlledInputProps<
@@ -51,4 +51,4 @@ const TestForm = () => {
 
 const stories = storiesOf("Pickers/Permission Inheritance", module);
 
-addThemedStories(stories, () => <TestForm />);
+addThemedStories(stories, () => <TestHarness />);

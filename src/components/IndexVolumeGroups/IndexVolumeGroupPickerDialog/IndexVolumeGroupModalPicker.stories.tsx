@@ -27,18 +27,18 @@ import Button from "src/components/Button";
 import JsonDebug from "src/testing/JsonDebug";
 import fullTestData from "src/testing/data";
 
-const TestModal: React.FunctionComponent = () => {
+const TestHarness: React.FunctionComponent = () => {
   const [picked, setPicked] = useState<string>("");
 
   const valuesToFilterOut = useMemo(
     () =>
       fullTestData.indexVolumesAndGroups.groups.slice(0, 1).map(g => g.name),
-    []
+    [],
   );
 
   const { componentProps, showDialog } = useDialog({
     onConfirm: setPicked,
-    valuesToFilterOut
+    valuesToFilterOut,
   });
 
   return (
@@ -55,4 +55,4 @@ const TestModal: React.FunctionComponent = () => {
 };
 
 const stories = storiesOf("Pickers/Index Volume Group (modal)", module);
-addThemedStories(stories, () => <TestModal />);
+addThemedStories(stories, () => <TestHarness />);

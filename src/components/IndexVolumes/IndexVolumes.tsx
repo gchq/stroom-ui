@@ -4,69 +4,69 @@ import { useCallback } from "react";
 import IconHeader from "src/components/IconHeader";
 import Button from "src/components/Button";
 import NewIndexVolumeDialog, {
-  useDialog as useCreateNewIndexVolumeDialog
+  useDialog as useCreateNewIndexVolumeDialog,
 } from "./NewIndexVolumeDialog/NewIndexVolumeDialog";
 import ThemedConfirm, {
-  useDialog as useThemedConfirmDialog
+  useDialog as useThemedConfirmDialog,
 } from "src/components/ThemedConfirm";
 import IndexVolumesTable, {
-  useTable
+  useTable,
 } from "./IndexVolumesTable/IndexVolumesTable";
 import {
   IndexVolumeGroupModalPicker,
-  useIndexVolumeGroupModalPicker
+  useIndexVolumeGroupModalPicker,
 } from "../IndexVolumeGroups/IndexVolumeGroupPickerDialog";
 import { useIndexVolumes } from "src/api/indexVolume";
 import useAppNavigation from "../AppChrome/useAppNavigation";
 
-const IndexVolumes = () => {
+const IndexVolumes: React.FunctionComponent = () => {
   const { goToIndexVolume } = useAppNavigation();
 
   const {
     indexVolumes,
     createIndexVolume,
     deleteIndexVolume,
-    addVolumeToGroup
+    addVolumeToGroup,
   } = useIndexVolumes();
 
   const { componentProps: tableProps } = useTable(indexVolumes);
   const {
-    selectableTableProps: { selectedItems: selectedIndexVolumes }
+    selectableTableProps: { selectedItems: selectedIndexVolumes },
   } = tableProps;
 
   const {
     showDialog: showCreateNewDialog,
-    componentProps: createNewDialogProps
+    componentProps: createNewDialogProps,
   } = useCreateNewIndexVolumeDialog(createIndexVolume);
 
   const {
     showDialog: showDeleteDialog,
-    componentProps: deleteDialogProps
+    componentProps: deleteDialogProps,
   } = useThemedConfirmDialog({
     getQuestion: useCallback(
       () => `Are you sure you want to delete selected volumes`,
-      []
+      [],
     ),
     getDetails: useCallback(
       () => selectedIndexVolumes.map(v => v.id).join(", "),
-      [selectedIndexVolumes.map(v => v.id)]
+      [selectedIndexVolumes.map(v => v.id)],
     ),
     onConfirm: useCallback(() => {
       selectedIndexVolumes.forEach(v => deleteIndexVolume(v.id));
-    }, [selectedIndexVolumes.map(v => v.id)])
+    }, [selectedIndexVolumes.map(v => v.id)]),
   });
 
   const {
     showDialog: showAddToGroupDialog,
-    componentProps: addToGroupProps
+    componentProps: addToGroupProps,
   } = useIndexVolumeGroupModalPicker({
     onConfirm: useCallback(
       groupName =>
         selectedIndexVolumes
           .map(v => v.id)
           .forEach(vId => addVolumeToGroup(vId, groupName)),
-      [addVolumeToGroup, selectedIndexVolumes]
-    )
+      [addVolumeToGroup, selectedIndexVolumes],
+    ),
   });
 
   const onViewClick: React.MouseEventHandler<

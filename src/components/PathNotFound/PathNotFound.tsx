@@ -22,9 +22,9 @@ interface Props {
   message?: string;
 }
 
-const PathNotFound = ({
-  message = "There's nothing here I'm afraid matey."
-}: Props) => (
+const PathNotFound: React.FunctionComponent<Props> = ({
+  message = "There's nothing here I'm afraid matey.",
+}) => (
   <div className="path-not-found">
     <IconHeader icon="exclamation-triangle" text="Page not found!" />
     <div className="path-not-found__content">

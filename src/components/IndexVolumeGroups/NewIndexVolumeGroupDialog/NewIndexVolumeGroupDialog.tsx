@@ -16,19 +16,19 @@ interface FormValues {
 }
 
 const initialValues: FormValues = {
-  name: "New Group"
+  name: "New Group",
 };
 
-const NewIndexVolumeGroupDialog = ({
+const NewIndexVolumeGroupDialog: React.FunctionComponent<Props> = ({
   isOpen,
   onConfirm,
-  onCloseDialog
-}: Props) => {
+  onCloseDialog,
+}) => {
   const {
     useTextInput,
-    value: { name }
+    value: { name },
   } = useForm<FormValues>({
-    initialValues
+    initialValues,
   });
   const nameProps = useTextInput("name");
 
@@ -76,8 +76,8 @@ export const useDialog = (onConfirm: (name: string) => void): UseDialog => {
     componentProps: {
       onConfirm,
       onCloseDialog: () => setIsOpen(false),
-      isOpen
-    }
+      isOpen,
+    },
   };
 };
 

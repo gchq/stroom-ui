@@ -1,3 +1,3 @@
-import PathNotFound from './PathNotFound';
+import PathNotFound from "./PathNotFound";
 
 export default PathNotFound;

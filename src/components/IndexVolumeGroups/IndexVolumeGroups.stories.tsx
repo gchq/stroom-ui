@@ -23,7 +23,7 @@ import IndexVolumeGroups from "./IndexVolumeGroups";
 import IndexVolumeGroupEditor from "./IndexVolumeGroupEditor";
 import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
 
-const IndexVolumeGroupsWithRouter = () => (
+const TestHarness = () => (
   <Switch>
     <Route
       exact
@@ -38,4 +38,4 @@ const IndexVolumeGroupsWithRouter = () => (
 
 const stories = storiesOf("Sections/Index Volume Groups", module);
 
-addThemedStories(stories, () => <IndexVolumeGroupsWithRouter />);
+addThemedStories(stories, () => <TestHarness />);

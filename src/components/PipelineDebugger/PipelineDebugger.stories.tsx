@@ -21,8 +21,6 @@ import PipelineDebugger from "./PipelineDebugger";
 
 import { testPipelines } from "src/testing/data/pipelines";
 
-
-
 const pipelineStories = storiesOf("Pipeline/Debugger", module);
 
 Object.keys(testPipelines).forEach(k => {

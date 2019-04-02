@@ -14,7 +14,7 @@ interface Props {
 }
 
 class IFrame extends React.Component<Props> {
-  shouldComponentUpdate(nextProps: Props, nextState: {}) {
+  shouldComponentUpdate(nextProps: Props) {
     return nextProps.url !== this.props.url;
   }
 
@@ -31,13 +31,13 @@ class IFrame extends React.Component<Props> {
           position: this.props.position || "absolute",
           display: this.props.display || "block",
           height: this.props.height || "100%",
-          width: this.props.width || "100%"
+          width: this.props.width || "100%",
         },
-        this.props.styles || {}
+        this.props.styles || {},
       ),
       height: this.props.height || "100%",
       name: this.props.name || "",
-      width: this.props.width || "100%"
+      width: this.props.width || "100%",
     };
 
     return (
@@ -47,8 +47,8 @@ class IFrame extends React.Component<Props> {
           Object.assign(
             props,
             this.props.id ? { id: this.props.id } : {},
-            this.props.className ? { className: this.props.className } : {}
-          )
+            this.props.className ? { className: this.props.className } : {},
+          ),
         )}
       </div>
     );

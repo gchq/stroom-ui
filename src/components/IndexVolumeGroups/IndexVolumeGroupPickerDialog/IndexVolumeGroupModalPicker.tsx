@@ -2,7 +2,7 @@ import * as React from "react";
 import { useState, useCallback } from "react";
 
 import IndexVolumeGroupPicker, {
-  usePicker
+  usePicker,
 } from "../IndexVolumeGroupPicker/IndexVolumeGroupPicker";
 import ThemedModal from "src/components/ThemedModal";
 import IconHeader from "src/components/IconHeader";
@@ -20,16 +20,16 @@ interface Props extends BaseProps {
   setIsOpen: (i: boolean) => void;
 }
 
-export const IndexVolumeGroupModalPicker = ({
+export const IndexVolumeGroupModalPicker: React.FunctionComponent<Props> = ({
   onConfirm,
   isOpen,
   setIsOpen,
-  valuesToFilterOut
-}: Props) => {
+  valuesToFilterOut,
+}) => {
   const volumeGroupPickerProps = usePicker({ valuesToFilterOut });
   const {
     reset: resetVolumeGroup,
-    value: volumeGroupName
+    value: volumeGroupName,
   } = volumeGroupPickerProps;
 
   const [isNewGroup, setIsNewGroup] = useState<boolean>(false);
@@ -40,13 +40,13 @@ export const IndexVolumeGroupModalPicker = ({
   const onNewGroupNameChange: React.ChangeEventHandler<
     HTMLInputElement
   > = useCallback(({ target: { value } }) => setNewGroupName(value), [
-    setNewGroupName
+    setNewGroupName,
   ]);
   const toggleNewGroup: React.MouseEventHandler<
     HTMLButtonElement
   > = useCallback(() => setIsNewGroup(!isNewGroup), [
     setIsNewGroup,
-    isNewGroup
+    isNewGroup,
   ]);
   const newGroupButtonText = isNewGroup ? "Choose Existing" : "Create New";
 
@@ -103,9 +103,9 @@ export const useDialog = (props: BaseProps): UseDialog => {
     componentProps: {
       ...props,
       isOpen,
-      setIsOpen
+      setIsOpen,
     },
-    showDialog: () => setIsOpen(true)
+    showDialog: () => setIsOpen(true),
   };
 };
 

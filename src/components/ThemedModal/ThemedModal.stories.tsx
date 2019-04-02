@@ -23,7 +23,7 @@ import ThemedModal from "./ThemedModal";
 
 import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
 
-const TestModal = () => {
+const TestHarness: React.FunctionComponent = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   return (
@@ -47,4 +47,4 @@ const TestModal = () => {
 
 const stories = storiesOf("General Purpose/Themed Modal", module);
 
-addThemedStories(stories, () => <TestModal />);
+addThemedStories(stories, () => <TestHarness />);

@@ -10,12 +10,12 @@ interface Props {
   onDeleteElement: (elementId: string) => void;
 }
 
-const DeletePipelineElement = ({
+const DeletePipelineElement: React.FunctionComponent<Props> = ({
   isOpen,
   onCloseDialog,
   elementId,
-  onDeleteElement
-}: Props) => {
+  onDeleteElement,
+}) => {
   return (
     <ThemedConfirm
       isOpen={isOpen}
@@ -48,12 +48,12 @@ export const useDialog = (onDeleteElement: (e: string) => void): UseDialog => {
       onCloseDialog: () => {
         setIsOpen(false);
         setElementId(undefined);
-      }
+      },
     },
     showDialog: _elementId => {
       setIsOpen(true);
       setElementId(_elementId);
-    }
+    },
   };
 };
 

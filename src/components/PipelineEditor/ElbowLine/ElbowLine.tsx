@@ -27,7 +27,7 @@ const defaultProps: Props = {
   north: false,
   west: false,
   south: false,
-  east: false
+  east: false,
 };
 
 interface QuarterProps {
@@ -37,7 +37,7 @@ interface QuarterProps {
 
 const ElbowQuarter: React.StatelessComponent<QuarterProps> = ({
   vertical,
-  horizontal
+  horizontal,
 }) => (
   <div
     className={`ElbowLine__quarter ${vertical ? "vertical" : ""} ${
@@ -48,7 +48,7 @@ const ElbowQuarter: React.StatelessComponent<QuarterProps> = ({
 
 ElbowQuarter.defaultProps = {
   vertical: false,
-  horizontal: false
+  horizontal: false,
 };
 
 /**
@@ -58,7 +58,7 @@ const ElbowLine: React.StatelessComponent<Props> = ({
   north,
   south,
   east,
-  west
+  west,
 }) => (
   <div className="ElbowLine">
     <ElbowQuarter vertical={north!} horizontal={west!} />

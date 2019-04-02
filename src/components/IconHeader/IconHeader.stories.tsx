@@ -24,5 +24,5 @@ const stories = storiesOf("General Purpose/Icon Header", module);
 addThemedStories(
   stories,
   () => <IconHeader icon="angle-up" text="Good morrow fellow human" />,
-  true
+  true,
 );

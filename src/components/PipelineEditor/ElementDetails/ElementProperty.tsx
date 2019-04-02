@@ -20,7 +20,7 @@ import {
   getParentProperty,
   getChildValue,
   getCurrentValue,
-  getElementValue
+  getElementValue,
 } from "../pipelineUtils";
 import ElementPropertyFieldDetails from "./ElementPropertyInheritanceInfo";
 import ElementPropertyField from "./ElementPropertyField";
@@ -34,35 +34,35 @@ interface Props {
   elementPropertyType: ElementPropertyType;
 }
 
-const ElementProperty = ({
+const ElementProperty: React.FunctionComponent<Props> = ({
   pipeline,
   pipelineEditApi,
   elementId,
-  elementPropertyType
-}: Props) => {
+  elementPropertyType,
+}) => {
   const value = getElementValue(pipeline, elementId, elementPropertyType.name);
   const childValue = getChildValue(
     pipeline,
     elementId,
-    elementPropertyType.name
+    elementPropertyType.name,
   );
   const parentValue = getParentProperty(
     pipeline.configStack,
     elementId,
-    elementPropertyType.name
+    elementPropertyType.name,
   );
 
   const currentValue = getCurrentValue(
     value,
     parentValue,
     elementPropertyType.defaultValue,
-    elementPropertyType.type
+    elementPropertyType.type,
   );
 
   let type: string = elementPropertyType.type.toLowerCase();
 
   let defaultValue: any = elementPropertyType.defaultValue;
-  let docRefTypes: Array<string> | undefined = elementPropertyType.docRefTypes;
+  let docRefTypes: string[] | undefined = elementPropertyType.docRefTypes;
   let name: string = elementPropertyType.name;
   let description: string = elementPropertyType.description;
 
@@ -76,7 +76,7 @@ const ElementProperty = ({
           pipelineEditApi,
           elementId,
           type,
-          docRefTypes
+          docRefTypes,
         }}
       />
       <div className="element-property__advice">

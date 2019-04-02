@@ -33,17 +33,17 @@ interface Props {
   showAddElementDialog: ShowAddElementDialog;
 }
 
-export const Pipeline = ({
+export const Pipeline: React.FunctionComponent<Props> = ({
   pipelineId,
   pipelineStateProps,
-  showAddElementDialog
-}: Props) => {
+  showAddElementDialog,
+}) => {
   const {
     asTree,
     pipelineEditApi,
     useEditorProps: {
-      editorProps: { docRefContents: pipeline }
-    }
+      editorProps: { docRefContents: pipeline },
+    },
   } = pipelineStateProps;
   const { elementDefinitions, elementProperties } = useElements();
 
@@ -76,7 +76,7 @@ export const Pipeline = ({
                   .filter((e: PipelineElementType) => e.id === column.uuid)
                   .map(element => {
                     let elementDefinition = Object.values(
-                      elementDefinitions
+                      elementDefinitions,
                     ).find(e => e.type === element.type)!;
                     let elementPropertiesThis = elementProperties[element.type];
 

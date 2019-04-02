@@ -22,7 +22,7 @@ import {
   DragSourceSpec,
   DragSourceCollector,
   DropTargetSpec,
-  DropTargetCollector
+  DropTargetCollector,
 } from "react-dnd";
 
 import ElementImage from "../ElementImage";
@@ -35,7 +35,7 @@ import {
   PipelinePropertyType,
   PipelineDocumentType,
   PipelineAsTreeType,
-  ElementPropertiesType
+  ElementPropertiesType,
 } from "src/types";
 import { ShowDialog } from "./AddElementModal";
 import { PipelineEditApi } from "./types";
@@ -45,7 +45,7 @@ interface Props {
   elementId: string;
   className?: string;
   showAddElementDialog: ShowDialog;
-  existingNames: Array<string>;
+  existingNames: string[];
   pipelineEditApi: PipelineEditApi;
   pipeline: PipelineDocumentType;
   asTree: PipelineAsTreeType;
@@ -69,17 +69,17 @@ const dragSource: DragSourceSpec<Props, DragObject> = {
     return {
       pipelineId: props.pipelineId,
       elementId: props.elementId,
-      elementDefinition: props.elementDefinition
+      elementDefinition: props.elementDefinition,
     };
-  }
+  },
 };
 
 const dragCollect: DragSourceCollector<DragCollectedProps> = (
   connect,
-  monitor
+  monitor,
 ) => ({
   connectDragSource: connect.dragSource(),
-  isDragging: monitor.isDragging()
+  isDragging: monitor.isDragging(),
 });
 
 const dropTarget: DropTargetSpec<Props> = {
@@ -93,14 +93,14 @@ const dropTarget: DropTargetSpec<Props> = {
         const isValidChild = isValidChildType(
           elementDefinition,
           dropeeDefinition,
-          0
+          0,
         );
 
         const isValid = canMovePipelineElement(
           pipeline,
           asTree,
           dropeeId,
-          elementId
+          elementId,
         );
 
         return isValidChild && isValid;
@@ -110,7 +110,7 @@ const dropTarget: DropTargetSpec<Props> = {
           const isValidChild = isValidChildType(
             elementDefinition,
             dropeeType,
-            0
+            0,
           );
           return isValidChild;
         }
@@ -125,7 +125,7 @@ const dropTarget: DropTargetSpec<Props> = {
       elementId,
       pipelineEditApi,
       showAddElementDialog,
-      existingNames
+      existingNames,
     } = props;
 
     switch (monitor.getItemType()) {
@@ -147,17 +147,17 @@ const dropTarget: DropTargetSpec<Props> = {
       default:
         break;
     }
-  }
+  },
 };
 
 const dropCollect: DropTargetCollector<DropCollectedProps> = (
   connect,
-  monitor
+  monitor,
 ) => ({
   connectDropTarget: connect.dropTarget(),
   isOver: monitor.isOver(),
   canDrop: monitor.canDrop(),
-  draggingItemType: monitor.getItemType()
+  draggingItemType: monitor.getItemType(),
 });
 
 const enhance = pipe(
@@ -165,11 +165,11 @@ const enhance = pipe(
   DropTarget(
     [DragDropTypes.ELEMENT, DragDropTypes.PALLETE_ELEMENT],
     dropTarget,
-    dropCollect
-  )
+    dropCollect,
+  ),
 );
 
-const PipelineElement = ({
+const PipelineElement: React.FunctionComponent<EnhancedProps> = ({
   pipelineId,
   elementId,
   connectDragSource,
@@ -181,17 +181,17 @@ const PipelineElement = ({
   pipelineEditApi,
   elementDefinition,
   elementProperties,
-  pipeline
-}: EnhancedProps) => {
+  pipeline,
+}) => {
   const onElementClick = useCallback(() => {
     // We need to get the initial values for this element and make sure they go into the state
     // TODO THIS MUST SURELY BE FIXED
     const thisElementProperties = pipeline.merged.properties.add!.filter(
-      (property: PipelinePropertyType) => property.element === elementId
+      (property: PipelinePropertyType) => property.element === elementId,
     );
     const initialValues = getInitialValues(
       elementProperties,
-      thisElementProperties
+      thisElementProperties,
     );
     return pipelineEditApi.elementSelected(elementId, initialValues);
   }, [pipelineId, elementId, elementProperties, pipeline]);
@@ -227,7 +227,7 @@ const PipelineElement = ({
     isDragging,
     canDrop,
     pipelineEditApi.selectedElementId,
-    elementId
+    elementId,
   ]);
 
   return connectDragSource(
@@ -240,8 +240,8 @@ const PipelineElement = ({
           />
         )}
         <Button className="Pipeline-element__type" text={elementId} />
-      </div>
-    )
+      </div>,
+    ),
   );
 };
 

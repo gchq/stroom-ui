@@ -24,7 +24,7 @@ interface Props {
   content: React.ReactNode;
 }
 
-const Tooltip = ({ trigger, content }: Props) => {
+const Tooltip: React.FunctionComponent<Props> = ({ trigger, content }) => {
   const uuid = useMemo(() => uuidv4(), []);
 
   return (

@@ -25,7 +25,7 @@ import {
   setElementPropertyValueInPipeline,
   getParentProperty,
   revertPropertyToParent,
-  revertPropertyToDefault
+  revertPropertyToDefault,
 } from "./pipelineUtils";
 
 import { keyByType } from "./elementUtils";
@@ -36,17 +36,51 @@ import {
   PipelinePropertyType,
   DocRefType,
   PipelinePropertyValue,
-  PipelineAsTreeType
+  PipelineAsTreeType,
 } from "src/types";
 
 const elementsByType = keyByType(elements);
+
+function expectsForSimplePipeline(asTree: PipelineAsTreeType) {
+  expect(asTree.uuid).toBe("Source");
+  expect(asTree.children[0].uuid).toBe("dsParser");
+  expect(asTree.children[0].children[0].uuid).toBe("xsltFilter");
+  expect(asTree.children[0].children[0].children[0].uuid).toBe("xmlWriter");
+  expect(asTree.children[0].children[0].children[0].children[0].uuid).toBe(
+    "streamAppender",
+  );
+}
+
+function expectsForGetDescendants(children: string[]) {
+  expect(children.includes("xmlWriter1")).toBeTruthy();
+  expect(children.includes("xmlWriter2")).toBeTruthy();
+  expect(children.includes("streamAppender1")).toBeTruthy();
+  expect(children.includes("streamAppender2")).toBeTruthy();
+}
+
+function expectsForNewProperties(
+  properties: PipelinePropertyType[],
+  expectedSize: number,
+  elementName: string,
+  propertyName: string,
+  propertyValue: any,
+) {
+  expect(properties.length).toEqual(expectedSize);
+  const property = properties.find(
+    element => element.element === elementName && element.name == propertyName,
+  );
+  expect(property).toBeDefined();
+  expect(property!.element).toEqual(elementName);
+  expect(property!.name).toEqual(propertyName);
+  expect(property!.value).toEqual(propertyValue);
+}
 
 describe("Pipeline Utils", () => {
   describe("#getPipelineAsTree", () => {
     test("should convert a simple pipeline to a tree", () => {
       // When
       const asTree: PipelineAsTreeType | undefined = getPipelineAsTree(
-        testPipelines.simple
+        testPipelines.simple,
       );
 
       // Then
@@ -72,9 +106,9 @@ describe("Pipeline Utils", () => {
         merged: {
           ...testPipelines.simple.merged,
           links: {
-            add: [...testPipelines.simple.merged.links.add!]
-          }
-        }
+            add: [...testPipelines.simple.merged.links.add!],
+          },
+        },
       };
       const first = testPipeline.merged.links.add![0];
       expect(first).toBeDefined();
@@ -104,7 +138,7 @@ describe("Pipeline Utils", () => {
       // When
       const children = getAllChildren(
         testPipelines.forkedPipeline,
-        "xsltFilter"
+        "xsltFilter",
       );
 
       // Then
@@ -124,7 +158,7 @@ describe("Pipeline Utils", () => {
       // When
       const children = getAllChildren(
         testPipelines.forkedPipeline,
-        "xmlWriter1"
+        "xmlWriter1",
       );
 
       // Then
@@ -146,32 +180,32 @@ describe("Pipeline Utils", () => {
         testPipeline,
         parentId,
         elementDefinition,
-        newElementName
+        newElementName,
       );
 
       // Then
       const arrayContainingElement = expect.arrayContaining([
         {
           id: newElementName,
-          type: elementDefinition.type
-        }
+          type: elementDefinition.type,
+        },
       ]);
       const arrayContainingLink = expect.arrayContaining([
         {
           from: parentId,
-          to: newElementName
-        }
+          to: newElementName,
+        },
       ]);
 
       expect(updatedPipeline.configStack[0].elements.add).toEqual(
-        arrayContainingElement
+        arrayContainingElement,
       );
       expect(updatedPipeline.configStack[0].links.add).toEqual(
-        arrayContainingLink
+        arrayContainingLink,
       );
 
       expect(updatedPipeline.merged.elements.add).toEqual(
-        arrayContainingElement
+        arrayContainingElement,
       );
       expect(updatedPipeline.merged.links.add).toEqual(arrayContainingLink);
     });
@@ -182,15 +216,15 @@ describe("Pipeline Utils", () => {
       // Given
       const testPipeline: PipelineDocumentType = Object.assign(
         testPipelines.simple,
-        {}
+        {},
       );
-      const elementName: string = "xsltFilter";
-      const propertyName: string = "xslt";
-      const propertyType: string = "entity";
+      const elementName = "xsltFilter";
+      const propertyName = "xslt";
+      const propertyType = "entity";
       const propertyDocRefValue: DocRefType = {
         type: "some type",
         uuid: "some uuid",
-        name: "some name"
+        name: "some name",
       };
 
       // When
@@ -199,7 +233,7 @@ describe("Pipeline Utils", () => {
         elementName,
         propertyName,
         propertyType,
-        propertyDocRefValue
+        propertyDocRefValue,
       );
 
       // Then
@@ -208,16 +242,16 @@ describe("Pipeline Utils", () => {
         entity: propertyDocRefValue,
         integer: null,
         long: null,
-        string: null
+        string: null,
       };
-      const stackAdd: Array<PipelinePropertyType> = updatedPipeline
-        .configStack[0].properties.add!;
+      const stackAdd: PipelinePropertyType[] = updatedPipeline.configStack[0]
+        .properties.add!;
       expectsForNewProperties(
         stackAdd,
         2,
         elementName,
         propertyName,
-        propertyValue
+        propertyValue,
       );
       const mergedAdd = updatedPipeline.merged.properties.add;
       expect(mergedAdd).toBeDefined();
@@ -226,7 +260,7 @@ describe("Pipeline Utils", () => {
         2,
         elementName,
         propertyName,
-        propertyValue
+        propertyValue,
       );
     });
 
@@ -244,7 +278,7 @@ describe("Pipeline Utils", () => {
         elementName,
         propertyName,
         propertyType,
-        propertyDocRefValue
+        propertyDocRefValue,
       );
 
       // Then
@@ -253,7 +287,7 @@ describe("Pipeline Utils", () => {
         entity: null,
         integer: null,
         long: null,
-        string: propertyDocRefValue
+        string: propertyDocRefValue,
       };
       const stackAdd = updatedPipeline.configStack[0].properties.add;
       expect(stackAdd).toBeDefined();
@@ -262,7 +296,7 @@ describe("Pipeline Utils", () => {
         3,
         elementName,
         propertyName,
-        propertyValue
+        propertyValue,
       );
       const mergedAdd = updatedPipeline.merged.properties.add;
       expect(mergedAdd).toBeDefined();
@@ -271,7 +305,7 @@ describe("Pipeline Utils", () => {
         3,
         elementName,
         propertyName,
-        propertyValue
+        propertyValue,
       );
     });
   });
@@ -287,15 +321,15 @@ describe("Pipeline Utils", () => {
 
       // Verify that the test data is as we expect
       const parentTestConfirmation = testPipeline.configStack[0].properties.add!.find(
-        matchingProp
+        matchingProp,
       )!;
       expect(parentTestConfirmation.value.string).toBe("DSD");
       const childTestConfirmation = testPipeline.configStack[1].properties.add!.find(
-        matchingProp
+        matchingProp,
       )!;
       expect(childTestConfirmation.value.string).toBe("D");
       const mergedTestConfirmation = testPipeline.merged.properties.add!.find(
-        matchingProp
+        matchingProp,
       )!;
       expect(mergedTestConfirmation.value.string).toBe("D");
 
@@ -303,17 +337,17 @@ describe("Pipeline Utils", () => {
       const updatedPipeline = revertPropertyToParent(
         testPipeline,
         elementName,
-        propertyName
+        propertyName,
       );
 
       // Then
       const parentProperty: PipelinePropertyType = updatedPipeline.configStack[0].properties.add!.find(
-        matchingProp
+        matchingProp,
       )!;
       expect(parentProperty.value.string).toBe("DSD");
 
       const shouldBeNullChildProperty: PipelinePropertyType = updatedPipeline.configStack[1].properties.add!.find(
-        matchingProp
+        matchingProp,
       )!;
       expect(shouldBeNullChildProperty).toBe(undefined);
 
@@ -332,7 +366,7 @@ describe("Pipeline Utils", () => {
 
       // When
       expect(() =>
-        revertPropertyToParent(testPipeline, elementName, propertyName)
+        revertPropertyToParent(testPipeline, elementName, propertyName),
       ).toThrow();
     });
   });
@@ -348,16 +382,16 @@ describe("Pipeline Utils", () => {
 
       // Verify that the test data is as we expect
       const parentTestConfirmation = testPipeline.configStack[0].properties.add!.find(
-        matchingProp
+        matchingProp,
       );
       expect(parentTestConfirmation).toBeDefined();
       expect(parentTestConfirmation!.value.string).toBe("DSD");
       const childTestConfirmation = testPipeline.configStack[1].properties.add!.find(
-        matchingProp
+        matchingProp,
       );
       expect(childTestConfirmation!.value.string).toBe("D");
       const mergedTestConfirmation = testPipeline.merged.properties.add!.find(
-        matchingProp
+        matchingProp,
       );
       expect(mergedTestConfirmation!.value.string).toBe("D");
 
@@ -365,7 +399,7 @@ describe("Pipeline Utils", () => {
       const updatedPipeline = revertPropertyToDefault(
         testPipeline,
         elementName,
-        propertyName
+        propertyName,
       );
 
       // Then
@@ -378,13 +412,13 @@ describe("Pipeline Utils", () => {
 
       // We expect the add in the child to have been removed/not exist
       const shouldBeNullChildProperty = updatedPipeline.configStack[1].properties.add!.find(
-        matchingProp
+        matchingProp,
       );
       expect(shouldBeNullChildProperty).toBe(undefined);
 
       // We expect there to be a remove in the child config stack
       const shouldBeFoundInRemove = updatedPipeline.configStack[1].properties.remove!.find(
-        matchingProp
+        matchingProp,
       );
       expect(shouldBeFoundInRemove).toBeDefined();
       expect(shouldBeFoundInRemove!.value.string).toBe("D");
@@ -406,18 +440,18 @@ describe("Pipeline Utils", () => {
 
       // Verify that the test data is as we expect
       const parentTestConfirmation = testPipeline.configStack[0].properties.add!.find(
-        matchingProp
+        matchingProp,
       );
       expect(parentTestConfirmation).toBeDefined();
       expect(parentTestConfirmation!.value.string).toBe("DSD");
 
       const childTestConfirmation = testPipeline.configStack[1].properties.add!.find(
-        matchingProp
+        matchingProp,
       );
       expect(childTestConfirmation).toBe(undefined);
 
       const mergedTestConfirmation = testPipeline.merged.properties.add!.find(
-        matchingProp
+        matchingProp,
       );
       expect(mergedTestConfirmation).toBeDefined();
       expect(mergedTestConfirmation!.value.string).toBe("D");
@@ -426,33 +460,33 @@ describe("Pipeline Utils", () => {
       const updatedPipeline = revertPropertyToDefault(
         testPipeline,
         elementName,
-        propertyName
+        propertyName,
       );
 
       // Then
       // We expect the paret to be unchanged
       const parentProperty = updatedPipeline.configStack[0].properties.add!.find(
-        matchingProp
+        matchingProp,
       );
       expect(parentProperty).toBeDefined();
       expect(parentProperty!.value.string).toBe("DSD");
 
       // We expect the add in the child to have been removed/not exist
       const shouldBeNullChildProperty = updatedPipeline.configStack[1].properties.add!.find(
-        matchingProp
+        matchingProp,
       );
       expect(shouldBeNullChildProperty).toBe(undefined);
 
       // We expect there to be a remove in the child config stack
       const shouldBeFoundInRemove = updatedPipeline.configStack[1].properties.remove!.find(
-        matchingProp
+        matchingProp,
       );
       expect(shouldBeFoundInRemove).toBeDefined();
       expect(shouldBeFoundInRemove!.value.string).toBe("DSD");
 
       // We expect there to be no such property in the merged add list
       const mergedProperty = updatedPipeline.merged.properties.add!.find(
-        matchingProp
+        matchingProp,
       );
       expect(mergedProperty).toBe(undefined);
     });
@@ -470,19 +504,19 @@ describe("Pipeline Utils", () => {
       const updatedPipeline = reinstateElementToPipeline(
         testPipeline,
         parentId,
-        itemToReinstate
+        itemToReinstate,
       );
       const updatedConfigStackThis = updatedPipeline.configStack[0];
 
       // Then
       const expectedLink = {
         from: parentId,
-        to: itemToReinstate.id
+        to: itemToReinstate.id,
       };
 
       expect(updatedConfigStackThis.elements.remove!.length).toBe(0);
       expect(updatedConfigStackThis.links.add).toEqual(
-        expect.arrayContaining([expectedLink])
+        expect.arrayContaining([expectedLink]),
       );
     });
   });
@@ -497,76 +531,76 @@ describe("Pipeline Utils", () => {
       // When
       const updatedPipeline = removeElementFromPipeline(
         testPipeline,
-        itemToDelete
+        itemToDelete,
       );
       const updatedConfigStackThis = updatedPipeline.configStack[1];
 
       // Then
       // Check merged - elements
       expect(
-        testPipeline.merged.elements.add!.map(e => e.id).includes(itemToDelete)
+        testPipeline.merged.elements.add!.map(e => e.id).includes(itemToDelete),
       ).toBeTruthy();
       expect(
         updatedPipeline.merged.elements
           .add!.map(e => e.id)
-          .includes(itemToDelete)
+          .includes(itemToDelete),
       ).toBeFalsy();
 
       // Check merged - links
       expect(
-        testPipeline.merged.links.add!.map(l => l.to).includes(itemToDelete)
+        testPipeline.merged.links.add!.map(l => l.to).includes(itemToDelete),
       ).toBeTruthy();
       expect(
-        updatedPipeline.merged.links.add!.map(l => l.to).includes(itemToDelete)
+        updatedPipeline.merged.links.add!.map(l => l.to).includes(itemToDelete),
       ).toBeFalsy();
 
       // Check config stack - elements
       expect(
-        configStackThis.elements.add!.map(e => e.id).includes(itemToDelete)
+        configStackThis.elements.add!.map(e => e.id).includes(itemToDelete),
       ).toBeFalsy();
       expect(
-        configStackThis.elements.remove!.map(e => e.id).includes(itemToDelete)
+        configStackThis.elements.remove!.map(e => e.id).includes(itemToDelete),
       ).toBeFalsy();
       expect(
         updatedConfigStackThis.elements
           .add!.map(e => e.id)
-          .includes(itemToDelete)
+          .includes(itemToDelete),
       ).toBeFalsy();
       expect(
         updatedConfigStackThis.elements
           .remove!.map(e => e.id)
-          .includes(itemToDelete)
+          .includes(itemToDelete),
       ).toBeTruthy();
 
       // Check config stack - links
       expect(
-        configStackThis.links.add!.map(l => l.to).includes(itemToDelete)
+        configStackThis.links.add!.map(l => l.to).includes(itemToDelete),
       ).toBeFalsy();
       expect(
-        configStackThis.links.remove!.map(l => l.to).includes(itemToDelete)
+        configStackThis.links.remove!.map(l => l.to).includes(itemToDelete),
       ).toBeFalsy();
       expect(
-        updatedConfigStackThis.links.add!.map(l => l.to).includes(itemToDelete)
+        updatedConfigStackThis.links.add!.map(l => l.to).includes(itemToDelete),
       ).toBeFalsy();
       expect(
         updatedConfigStackThis.links
           .remove!.map(l => l.to)
-          .includes(itemToDelete)
+          .includes(itemToDelete),
       ).toBeTruthy();
 
       // Check that a follow on element & link are still just being added to merged picture
       expect(
         updatedPipeline.merged.elements
           .add!.map(e => e.id)
-          .includes("pStreamAppender")
+          .includes("pStreamAppender"),
       ).toBeTruthy();
       expect(updatedPipeline.merged.links.add).toEqual(
         expect.arrayContaining([
           {
             from: "pXmlWriter",
-            to: "pStreamAppender"
-          }
-        ])
+            to: "pStreamAppender",
+          },
+        ]),
       );
     });
     test("should hide an element that is inherited, but delete a link that is ours", () => {
@@ -579,7 +613,7 @@ describe("Pipeline Utils", () => {
       // When
       const updatedPipeline = removeElementFromPipeline(
         testPipeline,
-        itemToDelete
+        itemToDelete,
       );
 
       // Then
@@ -587,55 +621,55 @@ describe("Pipeline Utils", () => {
       expect(
         updatedPipeline.merged.elements
           .remove!.map(e => e.id)
-          .includes(itemToDelete)
+          .includes(itemToDelete),
       ).toBeFalsy();
 
       // Check merged links
       const testLink = [
         {
           from: itemToDeleteParent,
-          to: itemToDelete
-        }
+          to: itemToDelete,
+        },
       ];
       expect(testPipeline.merged.links.add).toEqual(
-        expect.arrayContaining(testLink)
+        expect.arrayContaining(testLink),
       );
       expect(updatedPipeline.merged.links.add).not.toEqual(
-        expect.arrayContaining(testLink)
+        expect.arrayContaining(testLink),
       );
 
       const testFollowOnLink = [
         {
           from: itemToDelete,
-          to: itemToDeleteChild
-        }
+          to: itemToDeleteChild,
+        },
       ];
       expect(testPipeline.merged.links.add).toEqual(
-        expect.arrayContaining(testFollowOnLink)
+        expect.arrayContaining(testFollowOnLink),
       );
       expect(updatedPipeline.merged.links.add).toEqual(
-        expect.arrayContaining(testFollowOnLink)
+        expect.arrayContaining(testFollowOnLink),
       );
 
       // Check merged elements
       expect(
-        testPipeline.merged.elements.add!.map(e => e.id).includes(itemToDelete)
+        testPipeline.merged.elements.add!.map(e => e.id).includes(itemToDelete),
       ).toBeTruthy();
       expect(
         testPipeline.merged.elements
           .add!.map(e => e.id)
-          .includes(itemToDeleteChild)
+          .includes(itemToDeleteChild),
       ).toBeTruthy();
 
       expect(
         updatedPipeline.merged.elements
           .add!.map(e => e.id)
-          .includes(itemToDelete)
+          .includes(itemToDelete),
       ).toBeFalsy();
       expect(
         updatedPipeline.merged.elements
           .add!.map(e => e.id)
-          .includes(itemToDeleteChild)
+          .includes(itemToDeleteChild),
       ).toBeTruthy();
     });
     test("should be able to get a pipeline as a tree after deletion", () => {
@@ -646,7 +680,7 @@ describe("Pipeline Utils", () => {
       // When
       const updatedPipeline = removeElementFromPipeline(
         testPipeline,
-        itemToDelete
+        itemToDelete,
       );
       const updatedConfigStackThis = updatedPipeline.configStack[1];
 
@@ -666,76 +700,76 @@ describe("Pipeline Utils", () => {
       // When
       const updatedPipeline = removeElementFromPipeline(
         testPipeline,
-        itemToDelete
+        itemToDelete,
       );
       const updatedConfigStackThis = updatedPipeline.configStack[0];
 
       // Then
       // Check merged - elements
       expect(
-        testPipeline.merged.elements.add!.map(e => e.id).includes(itemToDelete)
+        testPipeline.merged.elements.add!.map(e => e.id).includes(itemToDelete),
       ).toBeTruthy();
       expect(
         updatedPipeline.merged.elements
           .add!.map(e => e.id)
-          .includes(itemToDelete)
+          .includes(itemToDelete),
       ).toBeFalsy();
 
       // Check merged - links
       expect(
-        testPipeline.merged.links.add!.map(l => l.to).includes(itemToDelete)
+        testPipeline.merged.links.add!.map(l => l.to).includes(itemToDelete),
       ).toBeTruthy();
       expect(
-        updatedPipeline.merged.links.add!.map(l => l.to).includes(itemToDelete)
+        updatedPipeline.merged.links.add!.map(l => l.to).includes(itemToDelete),
       ).toBeFalsy();
 
       // Check Config Stack - elements
       expect(
-        configStackThis.elements.add!.map(e => e.id).includes(itemToDelete)
+        configStackThis.elements.add!.map(e => e.id).includes(itemToDelete),
       ).toBeTruthy();
       expect(
-        configStackThis.elements.remove!.map(e => e.id).includes(itemToDelete)
+        configStackThis.elements.remove!.map(e => e.id).includes(itemToDelete),
       ).toBeFalsy();
       expect(
         updatedConfigStackThis.elements
           .add!.map(e => e.id)
-          .includes(itemToDelete)
+          .includes(itemToDelete),
       ).toBeFalsy();
       expect(
         updatedConfigStackThis.elements
           .remove!.map(e => e.id)
-          .includes(itemToDelete)
+          .includes(itemToDelete),
       ).toBeTruthy();
 
       // Check Config stack - links
       expect(
-        configStackThis.links.add!.map(l => l.to).includes(itemToDelete)
+        configStackThis.links.add!.map(l => l.to).includes(itemToDelete),
       ).toBeTruthy();
       expect(
-        configStackThis.links.remove!.map(l => l.to).includes(itemToDelete)
+        configStackThis.links.remove!.map(l => l.to).includes(itemToDelete),
       ).toBeFalsy();
       expect(
-        updatedConfigStackThis.links.add!.map(l => l.to).includes(itemToDelete)
+        updatedConfigStackThis.links.add!.map(l => l.to).includes(itemToDelete),
       ).toBeFalsy();
       expect(
         updatedConfigStackThis.links
           .remove!.map(l => l.to)
-          .includes(itemToDelete)
+          .includes(itemToDelete),
       ).toBeFalsy();
 
       // Check that a follow on element & link are still just being added to merged picture
       expect(
         updatedPipeline.merged.elements
           .add!.map(e => e.id)
-          .includes("streamAppender")
+          .includes("streamAppender"),
       ).toBeTruthy();
       expect(updatedPipeline.merged.links.add).toEqual(
         expect.arrayContaining([
           {
             from: "xmlWriter",
-            to: "streamAppender"
-          }
-        ])
+            to: "streamAppender",
+          },
+        ]),
       );
     });
   });
@@ -748,7 +782,7 @@ describe("Pipeline Utils", () => {
       const parentProperty = getParentProperty(
         pipeline.configStack,
         "xsltFilter",
-        "xsltNamePattern"
+        "xsltNamePattern",
       );
 
       // Then
@@ -762,7 +796,7 @@ describe("Pipeline Utils", () => {
       const parentProperty = getParentProperty(
         pipeline.configStack,
         "combinedParser",
-        "type"
+        "type",
       );
       // Then
       expect(parentProperty).toBe(undefined);
@@ -774,12 +808,12 @@ describe("Pipeline Utils", () => {
       const parentProperty = getParentProperty(
         pipeline.configStack,
         "combinedParser",
-        "type"
+        "type",
       );
       const parentProperty2 = getParentProperty(
         pipeline.configStack,
         "xsltFilter",
-        "xsltNamePattern"
+        "xsltNamePattern",
       );
 
       // Then
@@ -801,7 +835,7 @@ describe("Pipeline Utils", () => {
       const parentProperty = getParentProperty(
         pipeline.configStack,
         "combinedParser",
-        "type"
+        "type",
       );
       // Then
       expect(parentProperty).toBe(undefined);
@@ -814,7 +848,7 @@ describe("Pipeline Utils", () => {
       const parentProperty = getParentProperty(
         pipeline.configStack,
         "xsltFilter",
-        "property1"
+        "property1",
       );
       // Then
       expect(parentProperty).toBeDefined();
@@ -830,7 +864,7 @@ describe("Pipeline Utils", () => {
       const parentProperty = getParentProperty(
         pipeline.configStack,
         "xsltFilter",
-        "property1"
+        "property1",
       );
       // Then
       expect(parentProperty).toBeDefined();
@@ -846,7 +880,7 @@ describe("Pipeline Utils", () => {
       const parentProperty = getParentProperty(
         pipeline.configStack,
         "xsltFilter",
-        "xsltNamePattern"
+        "xsltNamePattern",
       );
       // Then
       expect(parentProperty).toBeDefined();
@@ -862,44 +896,10 @@ describe("Pipeline Utils", () => {
       const parentProperty = getParentProperty(
         pipeline.configStack,
         "xsltFilter",
-        "property2"
+        "property2",
       );
       // Then
       expect(parentProperty).toBe(undefined);
     });
   });
 });
-
-function expectsForSimplePipeline(asTree: PipelineAsTreeType) {
-  expect(asTree.uuid).toBe("Source");
-  expect(asTree.children[0].uuid).toBe("dsParser");
-  expect(asTree.children[0].children[0].uuid).toBe("xsltFilter");
-  expect(asTree.children[0].children[0].children[0].uuid).toBe("xmlWriter");
-  expect(asTree.children[0].children[0].children[0].children[0].uuid).toBe(
-    "streamAppender"
-  );
-}
-
-function expectsForGetDescendants(children: Array<string>) {
-  expect(children.includes("xmlWriter1")).toBeTruthy();
-  expect(children.includes("xmlWriter2")).toBeTruthy();
-  expect(children.includes("streamAppender1")).toBeTruthy();
-  expect(children.includes("streamAppender2")).toBeTruthy();
-}
-
-function expectsForNewProperties(
-  properties: Array<PipelinePropertyType>,
-  expectedSize: number,
-  elementName: string,
-  propertyName: string,
-  propertyValue: any
-) {
-  expect(properties.length).toEqual(expectedSize);
-  const property = properties.find(
-    element => element.element === elementName && element.name == propertyName
-  );
-  expect(property).toBeDefined();
-  expect(property!.element).toEqual(elementName);
-  expect(property!.name).toEqual(propertyName);
-  expect(property!.value).toEqual(propertyValue);
-}

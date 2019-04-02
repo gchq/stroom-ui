@@ -19,11 +19,11 @@ import * as React from "react";
 import IconHeader from "src/components/IconHeader";
 import { themeOptions, useTheme } from "src/lib/theme";
 
-const UserSettings = () => {
+const UserSettings: React.FunctionComponent = () => {
   const { theme, setTheme } = useTheme();
 
   const onThemeChanged: React.ChangeEventHandler<HTMLSelectElement> = ({
-    target: { value }
+    target: { value },
   }) => {
     setTheme(value);
   };

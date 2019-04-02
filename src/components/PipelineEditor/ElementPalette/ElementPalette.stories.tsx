@@ -29,7 +29,7 @@ storiesOf("Pipeline/Element Palette", module).add("Element Palette", () => {
     <ElementPalette
       pipeline={
         Object.values(
-          fullTestData.documents.Pipeline
+          fullTestData.documents.Pipeline,
         )[0] as PipelineDocumentType
       }
       showDeleteElementDialog={showDeleteElementDialog}

@@ -7,10 +7,10 @@ import useRouter from "src/lib/useRouter";
 import { useIndexVolumeGroup } from "src/api/indexVolumeGroup";
 import {
   useTable as useIndexVolumesTable,
-  IndexVolumesTable
+  IndexVolumesTable,
 } from "../../IndexVolumes/IndexVolumesTable";
 import ThemedConfirm, {
-  useDialog as useConfirmDialog
+  useDialog as useConfirmDialog,
 } from "src/components/ThemedConfirm";
 import Loader from "src/components/Loader";
 
@@ -18,28 +18,30 @@ interface Props {
   groupName: string;
 }
 
-const IndexVolumeGroupEditor = ({ groupName }: Props) => {
+const IndexVolumeGroupEditor: React.FunctionComponent<Props> = ({
+  groupName,
+}) => {
   const { history } = useRouter();
 
   const { indexVolumes, indexVolumeGroup, removeVolume } = useIndexVolumeGroup(
-    groupName
+    groupName,
   );
 
   const { componentProps: tableProps } = useIndexVolumesTable(indexVolumes);
 
   const {
-    selectableTableProps: { selectedItems }
+    selectableTableProps: { selectedItems },
   } = tableProps;
 
   const {
     showDialog: showRemoveDialog,
-    componentProps: removeDialogProps
+    componentProps: removeDialogProps,
   } = useConfirmDialog({
     onConfirm: () => selectedItems.forEach(v => removeVolume(v.id)),
     getQuestion: useCallback(() => "Remove selected volumes from group?", []),
     getDetails: useCallback(() => selectedItems.map(s => s.id).join(", "), [
-      selectedItems.map(s => s.id)
-    ])
+      selectedItems.map(s => s.id),
+    ]),
   });
 
   if (!indexVolumeGroup) {

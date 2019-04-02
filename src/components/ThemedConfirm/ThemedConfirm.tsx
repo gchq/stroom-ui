@@ -36,13 +36,13 @@ interface Props extends ReactModal.Props {
   onCloseDialog: () => void;
 }
 
-const ThemedConfirm = ({
+const ThemedConfirm: React.FunctionComponent<Props> = ({
   question,
   details,
   onCloseDialog,
   onConfirm,
   ...rest
-}: Props) => {
+}) => {
   const { theme } = useTheme();
 
   return (
@@ -70,7 +70,7 @@ const ThemedConfirm = ({
   );
 };
 
-type UseDialog = {
+interface UseDialog {
   /**
    * The owning component is ready to start a deletion process.
    * Calling this will open the dialog, and setup the UUIDs
@@ -81,7 +81,7 @@ type UseDialog = {
    * using destructing.
    */
   componentProps: Props;
-};
+}
 
 /**
  * This is a React custom hook that sets up things required by the owning component.
@@ -101,13 +101,13 @@ export const useDialog = (props: NewProps): UseDialog => {
       onConfirm: props.onConfirm,
       onCloseDialog: () => {
         setIsOpen(false);
-      }
+      },
     },
     showDialog: () => {
       setQuestion(getQuestion());
       setDetails(getDetails());
       setIsOpen(true);
-    }
+    },
   };
 };
 

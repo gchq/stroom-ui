@@ -25,12 +25,12 @@ import {
   Directions,
   SortByOptions,
   sortByFromString,
-  UseStreamTasks
+  UseStreamTasks,
 } from "src/api/useStreamTasks/types";
 import { StreamTaskType } from "src/types";
 import {
   useSelectableReactTable,
-  SelectionBehaviour
+  SelectionBehaviour,
 } from "src/lib/useSelectableItemListing";
 
 interface Props {
@@ -44,7 +44,7 @@ const ProcessingList = ({ streamTasksApi, onSelectionChanged }: Props) => {
     updateSort,
     fetchMore,
     fetchTrackers,
-    fetchParameters: { pageSize }
+    fetchParameters: { pageSize },
   } = streamTasksApi;
 
   // We add an empty 'load more' row, but we need to make sure it's not there when we re-render.
@@ -58,7 +58,7 @@ const ProcessingList = ({ streamTasksApi, onSelectionChanged }: Props) => {
     {
       Header: "",
       accessor: "filterId",
-      show: false
+      show: false,
     },
     {
       Header: "Pipeline name",
@@ -66,7 +66,7 @@ const ProcessingList = ({ streamTasksApi, onSelectionChanged }: Props) => {
       Cell: (row: RowInfo) =>
         row.original.filterId !== undefined
           ? row.original.pipelineName
-          : "UNKNOWN"
+          : "UNKNOWN",
     },
     {
       Header: "Priority",
@@ -81,7 +81,7 @@ const ProcessingList = ({ streamTasksApi, onSelectionChanged }: Props) => {
             onClick={fetchMore}
             text={retrievalStave}
           />
-        )
+        ),
     },
     {
       Header: "Progress",
@@ -94,16 +94,16 @@ const ProcessingList = ({ streamTasksApi, onSelectionChanged }: Props) => {
           />
         ) : (
           "UNKNOWN"
-        )
-    }
+        ),
+    },
   ];
 
   const tableData = useMemo(
     () =>
       trackers.filter(
-        (tracker: StreamTaskType) => tracker.filterId !== undefined
+        (tracker: StreamTaskType) => tracker.filterId !== undefined,
       ),
-    [trackers]
+    [trackers],
   );
 
   const preFocusWrap = useCallback((): boolean => {
@@ -120,16 +120,16 @@ const ProcessingList = ({ streamTasksApi, onSelectionChanged }: Props) => {
       items: tableData,
       getKey: t => `${t.filterId}`,
       selectionBehaviour: SelectionBehaviour.SINGLE,
-      preFocusWrap
+      preFocusWrap,
     },
     {
-      columns: tableColumns
-    }
+      columns: tableColumns,
+    },
   );
 
   useEffect(() => onSelectionChanged(selectedItem), [
     selectedItem,
-    onSelectionChanged
+    onSelectionChanged,
   ]);
 
   const onHandleSort = useCallback(
@@ -143,7 +143,7 @@ const ProcessingList = ({ streamTasksApi, onSelectionChanged }: Props) => {
         fetchTrackers();
       }
     },
-    [fetchTrackers, updateSort]
+    [fetchTrackers, updateSort],
   );
 
   return (

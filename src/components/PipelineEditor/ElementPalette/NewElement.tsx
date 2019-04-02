@@ -34,17 +34,17 @@ const dragSource: DragSourceSpec<Props, DragObject> = {
   },
   beginDrag(props) {
     return {
-      ...props.elementWithData
+      ...props.elementWithData,
     };
-  }
+  },
 };
 
 const dragCollect: DragSourceCollector<DragCollectedProps> = (
   connect,
-  monitor
+  monitor,
 ) => ({
   connectDragSource: connect.dragSource(),
-  isDragging: monitor.isDragging()
+  isDragging: monitor.isDragging(),
 });
 
 interface EnhancedProps extends Props, DragCollectedProps {}
@@ -52,13 +52,13 @@ interface EnhancedProps extends Props, DragCollectedProps {}
 const enhance = DragSource<Props, DragCollectedProps>(
   DragDropTypes.PALLETE_ELEMENT,
   dragSource,
-  dragCollect
+  dragCollect,
 );
 
-const NewElement = ({
+const NewElement: React.FunctionComponent<EnhancedProps> = ({
   connectDragSource,
-  elementWithData: { element, recycleData }
-}: EnhancedProps) => {
+  elementWithData: { element, recycleData },
+}) => {
   const [hasFocus, setHasFocus] = useState<boolean>(false);
 
   return connectDragSource(
@@ -74,7 +74,7 @@ const NewElement = ({
         onBlur={() => setHasFocus(false)}
         text={recycleData ? recycleData.id : element.type}
       />
-    </div>
+    </div>,
   );
 };
 

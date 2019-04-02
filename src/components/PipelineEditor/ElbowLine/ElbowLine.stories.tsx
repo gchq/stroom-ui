@@ -18,8 +18,6 @@ import { storiesOf } from "@storybook/react";
 
 import ElbowLine from "./ElbowLine";
 
-
-
 storiesOf("Pipeline/Elbow Line", module)
   .add("Pipeline Cell", () => (
     <div className={`Pipeline-editor__elements_cell ELBOW`}>

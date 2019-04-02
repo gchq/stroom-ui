@@ -1,5 +1,5 @@
 export interface PickerBaseProps {
-  valuesToFilterOut?: Array<string>;
+  valuesToFilterOut?: string[];
 }
 
 export interface PickerProps extends PickerBaseProps {

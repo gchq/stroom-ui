@@ -36,7 +36,7 @@ var options = {
   left: "50%",
   shadow: false,
   hwaccel: false,
-  position: "relative"
+  position: "relative",
 };
 
 interface Props {
@@ -47,7 +47,7 @@ interface Props {
  * Configures and wraps react-loader, which itself wraps spin.js. Isn't 2018 great?
  * Adds a message.
  */
-const Loader = ({ message }: Props) => (
+const Loader: React.FunctionComponent<Props> = ({ message }) => (
   <div className="loader__container">
     <ReactLoader loaded={false} options={options} />
     <p>{message}</p>

@@ -25,7 +25,7 @@ interface Props {
   pipelineEditApi: PipelineEditApi;
   elementId: string;
   type: string;
-  docRefTypes?: Array<string>;
+  docRefTypes?: string[];
 }
 
 /**
@@ -37,14 +37,14 @@ interface Props {
  * @param {string} type The type of the element
  * @param {array} docRefTypes The docref types to filter by
  */
-const ElementPropertyField = ({
+const ElementPropertyField: React.FunctionComponent<Props> = ({
   value,
   name,
   pipelineEditApi,
   elementId,
   type,
-  docRefTypes
-}: Props) => {
+  docRefTypes,
+}) => {
   let elementField;
   switch (type) {
     case "boolean":
@@ -59,7 +59,7 @@ const ElementPropertyField = ({
                 elementId,
                 name,
                 "boolean",
-                !value
+                !value,
               )
             }
           />
@@ -78,7 +78,7 @@ const ElementPropertyField = ({
                 elementId,
                 name,
                 "integer",
-                parseInt(value, 10)
+                parseInt(value, 10),
               )
             }
           />
@@ -95,7 +95,7 @@ const ElementPropertyField = ({
               elementId,
               name,
               "docref",
-              node
+              node,
             )
           }
         />
@@ -114,7 +114,7 @@ const ElementPropertyField = ({
                 elementId,
                 name,
                 type,
-                value
+                value,
               )
             }
           />
@@ -135,7 +135,7 @@ const ElementPropertyField = ({
                 elementId,
                 name,
                 type,
-                value
+                value,
               )
             }
           />

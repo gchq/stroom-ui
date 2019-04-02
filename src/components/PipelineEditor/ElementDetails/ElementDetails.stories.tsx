@@ -33,13 +33,13 @@ interface Props {
 const TestElementDetails = ({
   pipelineId,
   testElementId,
-  testElementConfig
+  testElementConfig,
 }: Props) => {
   const {
     pipelineEditApi,
     useEditorProps: {
-      editorProps: { docRefContents }
-    }
+      editorProps: { docRefContents },
+    },
   } = usePipelineState(pipelineId);
   useEffect(() => {
     pipelineEditApi.elementSelected(testElementId, testElementConfig);

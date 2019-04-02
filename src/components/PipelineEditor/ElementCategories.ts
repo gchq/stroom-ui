@@ -14,5 +14,5 @@ export const ElementCategories = {
   PARSER: new ElementCategoryType("Parser", 1),
   FILTER: new ElementCategoryType("Filter", 2),
   WRITER: new ElementCategoryType("Writer", 3),
-  DESTINATION: new ElementCategoryType("Destination", 4)
+  DESTINATION: new ElementCategoryType("Destination", 4),
 };

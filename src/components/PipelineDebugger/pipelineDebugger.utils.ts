@@ -3,7 +3,7 @@ import { PipelineAsTreeType, PipelineDocumentType } from "src/types";
 export function getNext(
   selectedElementId?: string,
   pipeline?: PipelineDocumentType,
-  asTree?: PipelineAsTreeType
+  asTree?: PipelineAsTreeType,
 ): string | undefined {
   if (selectedElementId && pipeline) {
     const nextLink =
@@ -19,7 +19,7 @@ export function getNext(
 export function getPrevious(
   selectedElementId?: string,
   pipeline?: PipelineDocumentType,
-  asTree?: PipelineAsTreeType
+  asTree?: PipelineAsTreeType,
 ): string | undefined {
   if (selectedElementId && pipeline) {
     const previousLink =

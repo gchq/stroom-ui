@@ -25,14 +25,14 @@ import ProcessingDetails from "./ProcessingDetails";
 import ProcessingSearchHelp from "./ProcessingSearchHelp";
 import HorizontalMainDetails from "../HorizontalMainDetails";
 
-const ProcessingContainer = () => {
+const ProcessingContainer: React.FunctionComponent = () => {
   const streamTasksApi = useStreamTasks();
   const {
     fetchTrackers,
     resetPaging,
     enableToggle,
     updateSearchCriteria,
-    fetchParameters: { searchCriteria }
+    fetchParameters: { searchCriteria },
   } = streamTasksApi;
 
   const onHandleSearchChange: React.ChangeEventHandler<
@@ -45,7 +45,7 @@ const ProcessingContainer = () => {
       // This line enables search as you type. Whether we want it or not depends on performance
       fetchTrackers();
     },
-    [fetchTrackers, updateSearchCriteria, resetPaging]
+    [fetchTrackers, updateSearchCriteria, resetPaging],
   );
 
   const [selectedTracker, setSelectedTracker] = useState<

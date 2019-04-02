@@ -18,15 +18,19 @@ interface FormValues {
 
 const initialValues: FormValues = {
   nodeName: "",
-  path: ""
+  path: "",
 };
 
-const NewIndexVolumeDialog = ({ isOpen, onConfirm, onCloseDialog }: Props) => {
+const NewIndexVolumeDialog: React.FunctionComponent<Props> = ({
+  isOpen,
+  onConfirm,
+  onCloseDialog,
+}) => {
   const {
     value: { nodeName, path },
-    useTextInput
+    useTextInput,
   } = useForm<FormValues>({
-    initialValues
+    initialValues,
   });
   const nodeNameProps = useTextInput("nodeName");
   const pathProps = useTextInput("path");
@@ -68,7 +72,7 @@ interface UseDialog {
 }
 
 export const useDialog = (
-  onConfirm: (nodeName: string, path: string) => void
+  onConfirm: (nodeName: string, path: string) => void,
 ): UseDialog => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
@@ -78,11 +82,11 @@ export const useDialog = (
       onConfirm,
       onCloseDialog: () => {
         setIsOpen(false);
-      }
+      },
     },
     showDialog: () => {
       setIsOpen(true);
-    }
+    },
   };
 };
 

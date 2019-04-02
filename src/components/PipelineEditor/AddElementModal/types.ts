@@ -3,14 +3,14 @@ import { ElementDefinition } from "src/types";
 export type OnAddElement = (
   parentId: string,
   elementDefinition: ElementDefinition,
-  name: string
+  name: string,
 ) => void;
 
 export interface Props {
   isOpen: boolean;
   onCloseDialog: () => void;
   onAddElement: OnAddElement;
-  existingNames: Array<string>;
+  existingNames: string[];
   parentId?: string;
   elementDefinition?: ElementDefinition;
 }
@@ -18,7 +18,7 @@ export interface Props {
 export type ShowDialog = (
   parentId: string,
   elementDefinition: ElementDefinition,
-  existingNames: Array<string>
+  existingNames: string[],
 ) => void;
 
 export interface UseDialog {

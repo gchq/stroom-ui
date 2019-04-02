@@ -13,38 +13,38 @@ interface FormValues {
   newName: string;
 }
 
-export const AddElementModal = ({
+export const AddElementModal: React.FunctionComponent<Props> = ({
   isOpen,
   onAddElement,
   onCloseDialog,
   parentId,
   elementDefinition,
-  existingNames
-}: Props) => {
+  existingNames,
+}) => {
   const initialValues = useMemo<FormValues>(
     () => ({
       newName: !!elementDefinition
         ? elementDefinition.type
-        : "no element definition"
+        : "no element definition",
     }),
-    [elementDefinition]
+    [elementDefinition],
   );
 
   const onUniqueNameCheck = useCallback(
     (value: string) => {
       return existingNames.includes(value);
     },
-    [existingNames]
+    [existingNames],
   );
 
   const {
     value: { newName },
-    useTextInput
+    useTextInput,
   } = useForm<FormValues>({
     initialValues,
     onValidate: useCallback(v => {
       onUniqueNameCheck(v.newName);
-    }, [])
+    }, []),
   });
   const newNameProps = useTextInput("newName");
 
@@ -97,7 +97,7 @@ export const useDialog = (onAddElement: OnAddElement): UseDialog => {
   const [elementDefinition, setElementDefinition] = useState<
     ElementDefinition | undefined
   >(undefined);
-  const [existingNames, setExistingNames] = useState<Array<string>>([]);
+  const [existingNames, setExistingNames] = useState<string[]>([]);
 
   return {
     showDialog: (_parentId, _elementDefinition, _existingNames) => {
@@ -117,8 +117,8 @@ export const useDialog = (onAddElement: OnAddElement): UseDialog => {
         setElementDefinition(undefined);
         setExistingNames([]);
         setIsOpen(false);
-      }
-    }
+      },
+    },
   };
 };
 

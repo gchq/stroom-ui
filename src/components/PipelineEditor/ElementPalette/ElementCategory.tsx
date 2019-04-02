@@ -9,10 +9,13 @@ import { RecycleBinItem } from "../types";
 
 interface Props {
   category: string;
-  elementsWithData: Array<RecycleBinItem>;
+  elementsWithData: RecycleBinItem[];
 }
 
-const ElementCategory = ({ category, elementsWithData }: Props) => {
+const ElementCategory: React.FunctionComponent<Props> = ({
+  category,
+  elementsWithData,
+}) => {
   const [isOpen, setIsOpen] = useState<boolean>(true);
 
   if (elementsWithData.length === 0) {

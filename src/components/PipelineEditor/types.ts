@@ -1,16 +1,16 @@
-import {ConnectDropTarget, ConnectDragSource} from 'react-dnd';
+import { ConnectDropTarget, ConnectDragSource } from "react-dnd";
 
 import {
   PipelineElementType,
   ElementDefinition,
   PipelineDocumentType,
   PipelineAsTreeType,
-} from 'src/types';
-import {UseDocRefEditorProps} from '../DocumentEditors/DocRefEditor';
+} from "src/types";
+import { UseDocRefEditorProps } from "../DocumentEditors/DocRefEditor";
 
 export enum DragDropTypes {
-  ELEMENT = 'element',
-  PALLETE_ELEMENT = 'paletteElement',
+  ELEMENT = "element",
+  PALLETE_ELEMENT = "paletteElement",
 }
 export interface DragObject {
   element: ElementDefinition;
@@ -36,7 +36,7 @@ export interface PipelineProps {
 export interface PipelineEditApi {
   selectedElementId?: string;
   elementInitialValues: object;
-  settingsUpdated: (p: {description: string}) => void;
+  settingsUpdated: (p: { description: string }) => void;
   elementSelected: (elementId: string, initialValues?: object) => void;
   elementSelectionCleared: () => void;
   elementMoved: (itemToMove: string, destination: string) => void;
@@ -85,9 +85,9 @@ export interface PipelineLayoutCell {
 }
 
 export interface PipelineLayoutRow {
-  columns: Array<PipelineLayoutCell>;
+  columns: PipelineLayoutCell[];
 }
 
 export interface PipelineLayoutGrid {
-  rows: Array<PipelineLayoutRow>;
+  rows: PipelineLayoutRow[];
 }

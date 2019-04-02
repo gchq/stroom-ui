@@ -31,5 +31,5 @@ export enum ElementRoles {
    * Add this type to elements that we want to appear in the pipeline tree in
    * stepping mode.
    */
-  VISABILITY_STEPPING = "stepping"
+  VISABILITY_STEPPING = "stepping",
 }

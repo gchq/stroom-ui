@@ -54,7 +54,7 @@ describe("Element Utils", () => {
         "JSONWriter",
         "XMLFragmentParser",
         "TextWriter",
-        "XMLWriter"
+        "XMLWriter",
       ];
       expectedTypes.forEach(c => expect(byType).toHaveProperty(c));
     });

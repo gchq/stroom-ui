@@ -7,14 +7,14 @@ import useRouter from "src/lib/useRouter";
 import { useIndexVolume } from "src/api/indexVolume";
 import {
   useTable as useIndexVolumeGroupNamesTable,
-  IndexVolumeGroupNamesTable
+  IndexVolumeGroupNamesTable,
 } from "../../IndexVolumeGroups/IndexVolumeGroupNamesTable";
 import {
   useIndexVolumeGroupModalPicker,
-  IndexVolumeGroupModalPicker
+  IndexVolumeGroupModalPicker,
 } from "../../IndexVolumeGroups/IndexVolumeGroupPickerDialog";
 import ThemedConfirm, {
-  useDialog as useConfirmDialog
+  useDialog as useConfirmDialog,
 } from "src/components/ThemedConfirm";
 import Loader from "src/components/Loader";
 
@@ -22,44 +22,44 @@ interface Props {
   volumeId: string;
 }
 
-const IndexVolumeEditor = ({ volumeId }: Props) => {
+const IndexVolumeEditor: React.FunctionComponent<Props> = ({ volumeId }) => {
   const { history } = useRouter();
 
   const {
     indexVolume,
     groupNames,
     addToGroup,
-    removeFromGroup
+    removeFromGroup,
   } = useIndexVolume(volumeId);
 
   const { componentProps: tableProps } = useIndexVolumeGroupNamesTable(
-    groupNames
+    groupNames,
   );
 
   const {
-    selectableTableProps: { selectedItems }
+    selectableTableProps: { selectedItems },
   } = tableProps;
 
   const {
     showDialog: showRemoveDialog,
-    componentProps: removeDialogProps
+    componentProps: removeDialogProps,
   } = useConfirmDialog({
     onConfirm: useCallback(() => selectedItems.forEach(removeFromGroup), [
       selectedItems,
-      removeFromGroup
+      removeFromGroup,
     ]),
     getQuestion: useCallback(() => "Remove volume from selected groups?", []),
-    getDetails: useCallback(() => selectedItems.join(", "), [selectedItems])
+    getDetails: useCallback(() => selectedItems.join(", "), [selectedItems]),
   });
 
   const {
     componentProps: indexVolumeGroupPickerProps,
-    showDialog: showIndexVolumeGroupPicker
+    showDialog: showIndexVolumeGroupPicker,
   } = useIndexVolumeGroupModalPicker({
     onConfirm: useCallback((groupName: string) => addToGroup(groupName), [
       volumeId,
-      addToGroup
-    ])
+      addToGroup,
+    ]),
   });
 
   if (!indexVolume) {

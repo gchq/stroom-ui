@@ -61,7 +61,7 @@ const getDisplayValue = (value: any, type: string): string => {
  * @param {string} defaultValue The default property
  * @param {string} type The type of the property
  */
-const ElementPropertyFieldDetails = ({
+const ElementPropertyFieldDetails: React.FunctionComponent<Props> = ({
   pipeline,
   pipelineEditApi,
   elementId,
@@ -70,8 +70,8 @@ const ElementPropertyFieldDetails = ({
   parentValue,
   childValue,
   defaultValue,
-  type
-}: Props) => {
+  type,
+}) => {
   const RevertToDefaultButton = (
     <Button
       text="Revert to default"
