@@ -12,11 +12,11 @@ interface Props {
   valueType: string;
 }
 
-const ValueWidget = ({
-  term: { uuid, value, condition },
+const ValueWidget: React.FunctionComponent<Props> = ({
+  term: { value, condition },
   onChange,
-  valueType
-}: Props) => {
+  valueType,
+}) => {
   switch (condition) {
     case "CONTAINS":
     case "EQUALS":

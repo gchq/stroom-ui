@@ -148,7 +148,7 @@ const getMenuItems = (
     </React.Fragment>
   ));
 
-const AppChrome = ({ content }: Props) => {
+const AppChrome: React.FunctionComponent<Props> = ({ content }) => {
   const { theme } = useTheme();
 
   const {

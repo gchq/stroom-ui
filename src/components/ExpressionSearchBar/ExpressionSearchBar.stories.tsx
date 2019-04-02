@@ -22,12 +22,11 @@ import { testDataSource as dataSource } from "../ExpressionBuilder/test";
 import ExpressionSearchBar from "./ExpressionSearchBar";
 import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
 
-
 import JsonDebug from "src/testing/JsonDebug";
 import Button from "../Button";
 import { ExpressionOperatorWithUuid } from "src/types";
 
-const TestHarness = () => {
+const TestHarness: React.FunctionComponent = () => {
   const [lastSearch, setLastSearch] = useState<
     ExpressionOperatorWithUuid | undefined
   >(undefined);

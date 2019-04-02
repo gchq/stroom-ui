@@ -26,7 +26,7 @@ import useForm from "src/lib/useForm";
 import JsonDebug from "src/testing/JsonDebug";
 
 interface Props {
-  typeFilters?: Array<string>;
+  typeFilters?: string[];
 }
 
 interface FormValues {
@@ -35,12 +35,12 @@ interface FormValues {
 }
 const defaultValues: FormValues = {
   someName: "",
-  chosenDocRef: undefined
+  chosenDocRef: undefined,
 };
 
-let AppSearchAsForm = ({ typeFilters }: Props) => {
+let AppSearchAsForm: React.FunctionComponent<Props> = ({ typeFilters }) => {
   const { value, useControlledInputProps, useTextInput } = useForm<FormValues>({
-    initialValues: defaultValues
+    initialValues: defaultValues,
   });
 
   const someNameProps = useTextInput("someName");
@@ -62,9 +62,9 @@ let AppSearchAsForm = ({ typeFilters }: Props) => {
   );
 };
 
-const AppSearchAsPicker = ({ typeFilters }: Props) => {
+const AppSearchAsPicker: React.FunctionComponent<Props> = ({ typeFilters }) => {
   const [pickedDocRef, setPickedDocRef] = useState<DocRefType | undefined>(
-    undefined
+    undefined,
   );
 
   return (
@@ -89,7 +89,7 @@ class AppSearchAsNavigator extends React.Component<
 
     this.displayRef = React.createRef();
     this.state = {
-      chosenDocRef: undefined
+      chosenDocRef: undefined,
     };
   }
   render() {

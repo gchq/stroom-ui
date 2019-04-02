@@ -5,7 +5,11 @@ interface Props extends ControlledInput<any> {
   valueType: string;
 }
 
-export const SingleValueWidget = ({ value, onChange, valueType }: Props) => (
+export const SingleValueWidget: React.FunctionComponent<Props> = ({
+  value,
+  onChange,
+  valueType,
+}) => (
   <input
     placeholder="value"
     type={valueType}

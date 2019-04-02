@@ -21,7 +21,7 @@ import {
   DropTarget,
   DropTargetCollector,
   DropTargetSpec,
-  DragSourceSpec
+  DragSourceSpec,
 } from "react-dnd";
 
 import { canMove } from "src/lib/treeUtils";
@@ -30,7 +30,7 @@ import {
   DragObject,
   dragCollect,
   DragCollectedProps,
-  DropCollectedProps
+  DropCollectedProps,
 } from "./types";
 import ExpressionTerm from "./ExpressionTerm";
 import Button from "../Button";
@@ -40,7 +40,7 @@ import {
   ExpressionOperatorWithUuid,
   OperatorTypeValues,
   ExpressionHasUuid,
-  ExpressionTermWithUuid
+  ExpressionTermWithUuid,
 } from "src/types";
 import ElbowLine from "../PipelineEditor/ElbowLine/ElbowLine";
 
@@ -55,7 +55,7 @@ interface Props {
   expressionItemUpdated: (itemId: string, updates: object) => void;
   expressionItemMoved: (
     destination: ExpressionHasUuid,
-    itemToMove: ExpressionHasUuid
+    itemToMove: ExpressionHasUuid,
   ) => void;
 }
 
@@ -67,9 +67,9 @@ const dragSource: DragSourceSpec<Props, DragObject> = {
   },
   beginDrag(props) {
     return {
-      expressionItem: props.operator
+      expressionItem: props.operator,
     };
-  }
+  },
 };
 
 const dropTarget: DropTargetSpec<Props> = {
@@ -78,17 +78,17 @@ const dropTarget: DropTargetSpec<Props> = {
   },
   drop(props, monitor) {
     props.expressionItemMoved(monitor.getItem().expressionItem, props.operator);
-  }
+  },
 };
 
 let dropCollect: DropTargetCollector<DropCollectedProps> = function dropCollect(
   connect,
-  monitor
+  monitor,
 ) {
   return {
     connectDropTarget: connect.dropTarget(),
     isOver: monitor.isOver(),
-    canDrop: monitor.canDrop()
+    canDrop: monitor.canDrop(),
   };
 };
 
@@ -97,11 +97,11 @@ const enhance = pipe(
   DropTarget(
     [DragDropTypes.OPERATOR, DragDropTypes.TERM],
     dropTarget,
-    dropCollect
-  )
+    dropCollect,
+  ),
 );
 
-const ExpressionOperator = ({
+const ExpressionOperator: React.FunctionComponent<EnhancedProps> = ({
   operator,
   isRoot,
   isEnabled,
@@ -116,8 +116,8 @@ const ExpressionOperator = ({
   expressionOperatorAdded,
   expressionTermAdded,
   expressionItemUpdated,
-  expressionItemMoved
-}: EnhancedProps) => {
+  expressionItemMoved,
+}) => {
   const onAddOperator = () => {
     expressionOperatorAdded(operator.uuid);
   };
@@ -128,7 +128,7 @@ const ExpressionOperator = ({
 
   const onOpChange = (op: OperatorType) => {
     expressionItemUpdated(operator.uuid, {
-      op
+      op,
     });
   };
 
@@ -139,7 +139,7 @@ const ExpressionOperator = ({
   const onEnabledToggled = () => {
     if (!isRoot) {
       expressionItemUpdated(operator.uuid, {
-        enabled: !operator.enabled
+        enabled: !operator.enabled,
       });
     }
   };
@@ -171,7 +171,7 @@ const ExpressionOperator = ({
           {connectDragSource(
             <span>
               <FontAwesomeIcon color={dndBarColour} icon="bars" />
-            </span>
+            </span>,
           )}
 
           {OperatorTypeValues.map((l, i) => (
@@ -219,7 +219,7 @@ const ExpressionOperator = ({
               </React.Fragment>
             )}
           </div>
-        </div>
+        </div>,
       )}
 
       <div className="operator__children">
@@ -242,7 +242,7 @@ const ExpressionOperator = ({
                         expressionTermAdded,
                         expressionOperatorAdded,
                         expressionItemUpdated,
-                        expressionItemMoved
+                        expressionItemMoved,
                       }}
                     />
                   </div>
@@ -259,7 +259,7 @@ const ExpressionOperator = ({
                       expressionTermAdded,
                       expressionOperatorAdded,
                       expressionItemUpdated,
-                      expressionItemMoved
+                      expressionItemMoved,
                     }}
                   />
                 );

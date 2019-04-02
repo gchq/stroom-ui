@@ -3,7 +3,7 @@ import { FunctionComponent, useState } from "react";
 
 import AuthenticationContext from "./AuthenticationContext";
 
-const AuthenticationContextProvider: FunctionComponent<{}> = ({ children }) => {
+const AuthenticationContextProvider: FunctionComponent = ({ children }) => {
   const [idToken, setIdToken] = useState<string>("");
 
   return (

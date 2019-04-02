@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   ExpressionOperatorWithUuid,
   ExpressionHasUuid,
-  ExpressionTermWithUuid
+  ExpressionTermWithUuid,
 } from "src/types";
 
 interface Props {
@@ -19,7 +19,11 @@ interface Props {
 /**
  * Read only expression operator
  */
-const ROExpressionOperator = ({ operator, isRoot, isEnabled }: Props) => {
+const ROExpressionOperator: React.FunctionComponent<Props> = ({
+  operator,
+  isRoot,
+  isEnabled,
+}) => {
   let className = "expression-item expression-item--readonly";
   if (isRoot) {
     className += " expression-item__root";

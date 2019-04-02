@@ -20,8 +20,44 @@ import { testDataSource } from "../ExpressionBuilder/test";
 import {
   ConditionType,
   ExpressionTermType,
-  ExpressionOperatorType
+  ExpressionOperatorType,
 } from "src/types";
+
+const expectForTerm = (
+  child: ExpressionTermType,
+  field: string,
+  condition: ConditionType,
+  value: any,
+) => {
+  expect(child.field).toBe(field);
+  expect(child.value).toBe(value);
+  expect(child.condition).toBe(condition);
+};
+const expectForHealthy = (
+  children: (ExpressionTermType | ExpressionOperatorType)[],
+) => {
+  expect(children.length).toBe(5);
+  expectForTerm(
+    children[0] as ExpressionTermType,
+    "foo4",
+    "GREATER_THAN_OR_EQUAL_TO",
+    "bar4",
+  );
+  expectForTerm(
+    children[1] as ExpressionTermType,
+    "foo5",
+    "LESS_THAN_OR_EQUAL_TO",
+    "bar5",
+  );
+  expectForTerm(children[2] as ExpressionTermType, "foo1", "EQUALS", "bar1");
+  expectForTerm(
+    children[3] as ExpressionTermType,
+    "foo2",
+    "GREATER_THAN",
+    "bar2",
+  );
+  expectForTerm(children[4] as ExpressionTermType, "foo3", "LESS_THAN", "bar3");
+};
 
 describe("ExpressionSearchBarUtils", () => {
   describe("#processSearchString", () => {
@@ -151,31 +187,31 @@ describe("ExpressionSearchBarUtils", () => {
         results.expression.children[0] as ExpressionTermType,
         "foo1",
         "EQUALS",
-        "bar1"
+        "bar1",
       );
       expectForTerm(
         results.expression.children[1] as ExpressionTermType,
         "foo2",
         "GREATER_THAN",
-        "bar2"
+        "bar2",
       );
       expectForTerm(
         results.expression.children[2] as ExpressionTermType,
         "foo3",
         "LESS_THAN",
-        "bar3"
+        "bar3",
       );
       expectForTerm(
         results.expression.children[3] as ExpressionTermType,
         "foo4",
         "GREATER_THAN_OR_EQUAL_TO",
-        "bar4"
+        "bar4",
       );
       expectForTerm(
         results.expression.children[4] as ExpressionTermType,
         "foo5",
         "LESS_THAN_OR_EQUAL_TO",
-        "bar5"
+        "bar5",
       );
     });
 
@@ -188,35 +224,35 @@ describe("ExpressionSearchBarUtils", () => {
 
       // Then
       expect(
-        results.fields.filter(field => field.parsed === undefined).length
+        results.fields.filter(field => field.parsed === undefined).length,
       ).toBe(1);
       expect(
-        results.fields.filter(field => field.parsed === undefined)[0].original
+        results.fields.filter(field => field.parsed === undefined)[0].original,
       ).toBe("foo2~bar2");
       expect(results.expression.children.length).toBe(4);
       expectForTerm(
         results.expression.children[0] as ExpressionTermType,
         "foo1",
         "EQUALS",
-        "bar1"
+        "bar1",
       );
       expectForTerm(
         results.expression.children[1] as ExpressionTermType,
         "foo3",
         "LESS_THAN",
-        "bar3"
+        "bar3",
       );
       expectForTerm(
         results.expression.children[2] as ExpressionTermType,
         "foo4",
         "GREATER_THAN_OR_EQUAL_TO",
-        "bar4"
+        "bar4",
       );
       expectForTerm(
         results.expression.children[3] as ExpressionTermType,
         "foo5",
         "LESS_THAN_OR_EQUAL_TO",
-        "bar5"
+        "bar5",
       );
     });
 
@@ -229,7 +265,7 @@ describe("ExpressionSearchBarUtils", () => {
 
       // Then
       expect(
-        results.fields.filter(field => field.parsed === undefined).length
+        results.fields.filter(field => field.parsed === undefined).length,
       ).toBe(0);
       expectForHealthy(results.expression.children);
     });
@@ -244,10 +280,10 @@ describe("ExpressionSearchBarUtils", () => {
 
       // Then
       expect(
-        results.fields.filter(field => field.parsed === undefined).length
+        results.fields.filter(field => field.parsed === undefined).length,
       ).toBe(1);
       expect(
-        results.fields.filter(field => field.parsed === undefined)[0].original
+        results.fields.filter(field => field.parsed === undefined)[0].original,
       ).toBe("BAD_CONDITION");
       expectForHealthy(results.expression.children);
     });
@@ -262,10 +298,10 @@ describe("ExpressionSearchBarUtils", () => {
 
       // Then
       expect(
-        results.fields.filter(field => field.parsed === undefined).length
+        results.fields.filter(field => field.parsed === undefined).length,
       ).toBe(1);
       expect(
-        results.fields.filter(field => field.parsed === undefined)[0].original
+        results.fields.filter(field => field.parsed === undefined)[0].original,
       ).toBe("BAD_CONDITION");
       expectForHealthy(results.expression.children);
     });
@@ -280,49 +316,12 @@ describe("ExpressionSearchBarUtils", () => {
 
       // Then
       expect(
-        results.fields.filter(field => field.parsed === undefined).length
+        results.fields.filter(field => field.parsed === undefined).length,
       ).toBe(1);
       expect(
-        results.fields.filter(field => field.parsed === undefined)[0].original
+        results.fields.filter(field => field.parsed === undefined)[0].original,
       ).toBe("BAD_CONDITION");
       expectForHealthy(results.expression.children);
     });
   });
 });
-
-const expectForHealthy = (
-  children: Array<ExpressionTermType | ExpressionOperatorType>
-) => {
-  expect(children.length).toBe(5);
-  expectForTerm(
-    children[0] as ExpressionTermType,
-    "foo4",
-    "GREATER_THAN_OR_EQUAL_TO",
-    "bar4"
-  );
-  expectForTerm(
-    children[1] as ExpressionTermType,
-    "foo5",
-    "LESS_THAN_OR_EQUAL_TO",
-    "bar5"
-  );
-  expectForTerm(children[2] as ExpressionTermType, "foo1", "EQUALS", "bar1");
-  expectForTerm(
-    children[3] as ExpressionTermType,
-    "foo2",
-    "GREATER_THAN",
-    "bar2"
-  );
-  expectForTerm(children[4] as ExpressionTermType, "foo3", "LESS_THAN", "bar3");
-};
-
-const expectForTerm = (
-  child: ExpressionTermType,
-  field: string,
-  condition: ConditionType,
-  value: any
-) => {
-  expect(child.field).toBe(field);
-  expect(child.value).toBe(value);
-  expect(child.condition).toBe(condition);
-};

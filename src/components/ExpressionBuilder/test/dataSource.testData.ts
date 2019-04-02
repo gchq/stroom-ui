@@ -6,13 +6,13 @@ const testDataSource: DataSourceType = {
       type: "ID",
       name: "id",
       queryable: true,
-      conditions: ["EQUALS", "IN", "IN_DICTIONARY"]
+      conditions: ["EQUALS", "IN", "IN_DICTIONARY"],
     },
     {
       type: "FIELD",
       name: "colour",
       queryable: true,
-      conditions: ["CONTAINS", "EQUALS", "IN", "IN_DICTIONARY"]
+      conditions: ["CONTAINS", "EQUALS", "IN", "IN_DICTIONARY"],
     },
     {
       type: "NUMERIC_FIELD",
@@ -26,14 +26,14 @@ const testDataSource: DataSourceType = {
         "LESS_THAN",
         "LESS_THAN_OR_EQUAL_TO",
         "IN",
-        "IN_DICTIONARY"
-      ]
+        "IN_DICTIONARY",
+      ],
     },
     {
       type: "FIELD",
       name: "createUser",
       queryable: true,
-      conditions: ["EQUALS", "CONTAINS", "IN", "IN_DICTIONARY"]
+      conditions: ["EQUALS", "CONTAINS", "IN", "IN_DICTIONARY"],
     },
     {
       type: "DATE_FIELD",
@@ -45,14 +45,14 @@ const testDataSource: DataSourceType = {
         "GREATER_THAN",
         "GREATER_THAN_OR_EQUAL_TO",
         "LESS_THAN",
-        "LESS_THAN_OR_EQUAL_TO"
-      ]
+        "LESS_THAN_OR_EQUAL_TO",
+      ],
     },
     {
       type: "FIELD",
       name: "updateUser",
       queryable: true,
-      conditions: ["EQUALS", "CONTAINS", "IN", "IN_DICTIONARY"]
+      conditions: ["EQUALS", "CONTAINS", "IN", "IN_DICTIONARY"],
     },
     {
       type: "DATE_FIELD",
@@ -64,10 +64,10 @@ const testDataSource: DataSourceType = {
         "GREATER_THAN",
         "GREATER_THAN_OR_EQUAL_TO",
         "LESS_THAN",
-        "LESS_THAN_OR_EQUAL_TO"
-      ]
-    }
-  ]
+        "LESS_THAN_OR_EQUAL_TO",
+      ],
+    },
+  ],
 };
 
 const emptyDataSource = { fields: [] };

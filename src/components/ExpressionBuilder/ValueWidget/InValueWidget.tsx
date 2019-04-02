@@ -20,14 +20,15 @@ import { useState } from "react";
 import Button from "../../Button";
 import { ControlledInput } from "src/types";
 
-interface Props extends ControlledInput<any> {}
-
-const InValueWidget = ({ value, onChange }: Props) => {
+const InValueWidget: React.FunctionComponent<ControlledInput<any>> = ({
+  value,
+  onChange,
+}) => {
   const [inputHasFocus, setInputHasFocus] = useState(false);
   const [composingValue, setComposingValue] = useState("");
 
   const hasValues = !!value && value.length > 0;
-  const splitValues: Array<string> = hasValues ? value.split(",") : [];
+  const splitValues: string[] = hasValues ? value.split(",") : [];
 
   const valueToShow = inputHasFocus ? composingValue : value;
 
@@ -38,7 +39,7 @@ const InValueWidget = ({ value, onChange }: Props) => {
     setInputHasFocus(false);
   };
   const onInputChange: React.ChangeEventHandler<HTMLInputElement> = ({
-    target: { value }
+    target: { value },
   }: React.ChangeEvent<HTMLInputElement>) => {
     setComposingValue(value);
   };

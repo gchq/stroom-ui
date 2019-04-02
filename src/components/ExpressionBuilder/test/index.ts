@@ -3,7 +3,7 @@ import {
   simplestExpression,
   testAndOperator,
   testOrOperator,
-  testNotOperator
+  testNotOperator,
 } from "./queryExpression.testData";
 
 import {
@@ -16,7 +16,7 @@ import {
   partlyDisabledExpression01,
   partlyDisabledExpression02,
   partlyDisabledExpression03,
-  hugeExpression
+  hugeExpression,
 } from "./expressionBuilderUtils.testData";
 
 import { testDataSource, emptyDataSource } from "./dataSource.testData";
@@ -38,5 +38,5 @@ export {
   partlyDisabledExpression03,
   hugeExpression,
   testDataSource,
-  emptyDataSource
+  emptyDataSource,
 };

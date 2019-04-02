@@ -22,8 +22,8 @@ interface Props {
   expression: ExpressionOperatorWithUuid;
 }
 
-const ROExpressionBuilder = ({ expression }: Props) => (
-  <ROExpressionOperator isEnabled operator={expression} />
-);
+const ROExpressionBuilder: React.FunctionComponent<Props> = ({
+  expression,
+}) => <ROExpressionOperator isEnabled operator={expression} />;
 
 export default ROExpressionBuilder;

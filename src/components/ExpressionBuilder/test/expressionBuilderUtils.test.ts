@@ -26,7 +26,7 @@ import {
   partlyDisabledExpression01,
   partlyDisabledExpression02,
   partlyDisabledExpression03,
-  hugeExpression
+  hugeExpression,
 } from "./expressionBuilderUtils.testData";
 
 describe("ExpressionBuilter Utils", () => {
@@ -65,7 +65,7 @@ describe("ExpressionBuilter Utils", () => {
 
       // Then
       expect(asString).toBe(
-        "colour contains red OR colour in blue OR (numberOfDoors between 1,5 AND createUser = me)"
+        "colour contains red OR colour in blue OR (numberOfDoors between 1,5 AND createUser = me)",
       );
     });
     test("can convert a deeply nested expression", () => {
@@ -74,7 +74,7 @@ describe("ExpressionBuilter Utils", () => {
 
       // Then
       expect(asString).toBe(
-        "colour contains red OR colour in blue OR (numberOfDoors between 1,5 AND createUser = me AND (id contains bob OR updateTime between me))"
+        "colour contains red OR colour in blue OR (numberOfDoors between 1,5 AND createUser = me AND (id contains bob OR updateTime between me))",
       );
     });
     test("can convert a partly disabled expression 01", () => {
@@ -97,7 +97,7 @@ describe("ExpressionBuilter Utils", () => {
 
       // Then
       expect(asString).toBe(
-        "colour contains red OR colour in blue OR (numberOfDoors between 1,5)"
+        "colour contains red OR colour in blue OR (numberOfDoors between 1,5)",
       );
     });
     test("can convert a huge expression", () => {
@@ -106,7 +106,7 @@ describe("ExpressionBuilter Utils", () => {
 
       // Then
       expect(asString).toBe(
-        "colour contains red OR colour in blue OR (numberOfDoors between 1,5 AND createUser = me)"
+        "colour contains red OR colour in blue OR (numberOfDoors between 1,5 AND createUser = me)",
       );
     });
   });

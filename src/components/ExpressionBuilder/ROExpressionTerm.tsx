@@ -9,7 +9,10 @@ interface Props {
 /**
  * Read only expression operator
  */
-const ROExpressionTerm = ({ term, isEnabled }: Props) => {
+const ROExpressionTerm: React.FunctionComponent<Props> = ({
+  term,
+  isEnabled,
+}) => {
   let className = "expression-item expression-item--readonly";
   if (!isEnabled) {
     className += " expression-item--disabled";

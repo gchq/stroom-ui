@@ -23,7 +23,7 @@ import Button from "../Button";
 import {
   DataSourceType,
   StyledComponentProps,
-  ExpressionOperatorWithUuid
+  ExpressionOperatorWithUuid,
 } from "src/types";
 import { assignRandomUuids } from "src/lib/treeUtils";
 import { toString } from "../ExpressionBuilder/expressionBuilderUtils";
@@ -41,33 +41,33 @@ const defaultSearchExpression: ExpressionOperatorWithUuid = {
   op: "AND",
   enabled: true,
   uuid: uuidv4(),
-  children: []
+  children: [],
 };
 
-const ExpressionSearchBar = ({
+const ExpressionSearchBar: React.FunctionComponent<Props> = ({
   initialSearchString,
   initialSearchExpression,
   dataSource,
-  onSearch
-}: Props) => {
+  onSearch,
+}) => {
   const [isExpression, setIsExpression] = useState<boolean>(false);
   const [expression, setExpression] = useState<ExpressionOperatorWithUuid>(
-    initialSearchExpression || defaultSearchExpression
+    initialSearchExpression || defaultSearchExpression,
   );
   const [searchString, setSearchString] = useState<string>(
-    initialSearchString || ""
+    initialSearchString || "",
   );
   const [isSearchStringValid, setIsSearchStringValid] = useState<boolean>(true);
   const [
     searchStringValidationMessages,
-    setSearchStringValidationMessages
-  ] = useState<Array<string>>([]);
+    setSearchStringValidationMessages,
+  ] = useState<string[]>([]);
 
   useEffect(() => {
     if (!expression) {
       const parsedExpression = processSearchString(dataSource, "");
       const e = assignRandomUuids(
-        parsedExpression.expression
+        parsedExpression.expression,
       ) as ExpressionOperatorWithUuid;
       setExpression(e);
     }
@@ -76,19 +76,19 @@ const ExpressionSearchBar = ({
   }, [onSearch, setExpression]);
 
   const onChange: React.ChangeEventHandler<HTMLInputElement> = ({
-    target: { value }
+    target: { value },
   }) => {
     const expression = processSearchString(dataSource, value);
     const invalidFields = expression.fields.filter(
       field =>
-        !field.conditionIsValid || !field.fieldIsValid || !field.valueIsValid
+        !field.conditionIsValid || !field.fieldIsValid || !field.valueIsValid,
     );
 
-    const searchStringValidationMessages: Array<string> = [];
+    const searchStringValidationMessages: string[] = [];
     if (invalidFields.length > 0) {
       invalidFields.forEach(invalidField => {
         searchStringValidationMessages.push(
-          `'${invalidField.original}' is not a valid search term`
+          `'${invalidField.original}' is not a valid search term`,
         );
       });
     }
@@ -99,7 +99,7 @@ const ExpressionSearchBar = ({
 
     const parsedExpression = processSearchString(dataSource, searchString);
     const e = assignRandomUuids(
-      parsedExpression.expression
+      parsedExpression.expression,
     ) as ExpressionOperatorWithUuid;
     setExpression(e);
   };
@@ -114,7 +114,7 @@ const ExpressionSearchBar = ({
     if (!isExpression) {
       const parsedExpression = processSearchString(dataSource, searchString);
       const e = assignRandomUuids(
-        parsedExpression.expression
+        parsedExpression.expression,
       ) as ExpressionOperatorWithUuid;
       setExpression(e);
       setIsExpression(true);

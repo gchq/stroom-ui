@@ -23,10 +23,10 @@ import { ConditionType } from "src/types";
 
 const stories = storiesOf("Pickers/Condition", module);
 
-const B: React.FunctionComponent = () => {
+const TestHarness: React.FunctionComponent = () => {
   const [value, onChange] = useState<ConditionType | undefined>(undefined);
 
   return <ConditionPicker value={value} onChange={onChange} />;
 };
 
-addThemedStories(stories, () => <B />);
+addThemedStories(stories, () => <TestHarness />);

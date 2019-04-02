@@ -10,7 +10,7 @@ import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
 
 const EXPRESSION_ITEM_ID = "SomeItemID";
 
-const TestHarness = () => {
+const TestHarness: React.FunctionComponent = () => {
   const [itemDeleted, setItemDeleted] = useState<string | undefined>(undefined);
   const { showDialog, componentProps } = useDialog(setItemDeleted);
 

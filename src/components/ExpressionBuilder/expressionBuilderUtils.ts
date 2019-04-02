@@ -6,14 +6,14 @@ import {
   ExpressionOperatorType,
   ConditionDisplayValues,
   ExpressionTermWithUuid,
-  ExpressionOperatorWithUuid
+  ExpressionOperatorWithUuid,
 } from "src/types";
 
 export const getNewTerm = (): ExpressionTermWithUuid => ({
   uuid: uuidv4(),
   type: "term",
   condition: "EQUALS",
-  enabled: true
+  enabled: true,
 });
 
 export const getNewOperator = (): ExpressionOperatorWithUuid => ({
@@ -21,25 +21,12 @@ export const getNewOperator = (): ExpressionOperatorWithUuid => ({
   type: "operator",
   op: "AND",
   enabled: true,
-  children: []
+  children: [],
 });
-
-/**
- * Converts an expression to a string.
- *
- * Currently the string is intended only for display, but we
- * might want to parse it back into an expression at some point.
- */
-export function toString(expression: ExpressionOperatorType) {
-  if (expression.children !== undefined && expression.children.length > 0) {
-    return childrenToString(expression);
-  }
-  return "";
-}
 
 function childrenToString(
   expression: ExpressionOperatorType,
-  asString: string = ""
+  asString: string = "",
 ) {
   if (!!expression.children) {
     expression.children.forEach((child: ExpressionItem, i: number) => {
@@ -63,4 +50,17 @@ function childrenToString(
     });
   }
   return asString;
+}
+
+/**
+ * Converts an expression to a string.
+ *
+ * Currently the string is intended only for display, but we
+ * might want to parse it back into an expression at some point.
+ */
+export function toString(expression: ExpressionOperatorType) {
+  if (expression.children !== undefined && expression.children.length > 0) {
+    return childrenToString(expression);
+  }
+  return "";
 }

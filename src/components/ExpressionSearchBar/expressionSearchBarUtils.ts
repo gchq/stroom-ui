@@ -19,7 +19,7 @@ import {
   ExpressionItem,
   ExpressionOperatorType,
   ExpressionTermType,
-  ConditionType
+  ConditionType,
 } from "src/types";
 
 interface ValidationResult {
@@ -32,81 +32,14 @@ interface ValidationResult {
 }
 
 /**
- * Takes a search string from the input box and checks that the fields
- * exist in the data source.
- * @param {object} dataSource The data source for the expression
- * @param {string} criteria The search string
+ * A map of operators to ExpressionBuilder conditions
  */
-export const processSearchString = (
-  dataSource: DataSourceType,
-  criteria: string
-): {
-  expression: ExpressionOperatorType;
-  fields: ValidationResult[];
-} => {
-  const splitted = split(criteria);
-
-  const validationResults: ValidationResult[] = [];
-  splitted.forEach((criterionObj: any) => {
-    let validationResult: ValidationResult;
-    if (criterionObj.splitCriterion !== undefined) {
-      // Field validation
-      const field = criterionObj.splitCriterion[0];
-      const foundField = dataSource.fields.filter(
-        availableField => availableField.name === field
-      );
-      const fieldIsValid = foundField.length > 0;
-
-      // Condition/operator validation
-      const operator = criterionObj.splitCriterion[1];
-      const foundCondition = dataSource.fields.filter(
-        availableField =>
-          availableField.name === field &&
-          availableField.conditions.find(condition => condition === operator)
-      );
-      const conditionIsValid = foundCondition.length > 0;
-
-      // Value validation
-      const value = criterionObj.splitCriterion[2];
-      const valueIsValid = value !== undefined && value !== "";
-
-      validationResult = {
-        original: criterionObj.criterion,
-        parsed: criterionObj.splitCriterion,
-        fieldIsValid,
-        conditionIsValid,
-        valueIsValid,
-        term: toTermFromArray(criterionObj.splitCriterion)
-      };
-    } else {
-      // If we don't have a splitCriterion then the term is invalid and we'll return
-      // a result with false for everything.
-      validationResult = {
-        original: criterionObj.criterion,
-        fieldIsValid: false,
-        conditionIsValid: false,
-        valueIsValid: false
-      };
-    }
-    validationResults.push(validationResult);
-  });
-
-  const expression: ExpressionOperatorType = {
-    type: "operator",
-    op: "AND",
-    children: validationResults
-      .filter(
-        (validationResult: ValidationResult) =>
-          validationResult.term !== undefined
-      )
-      .map(
-        (validationResult: ValidationResult) =>
-          validationResult.term as ExpressionTermType
-      ),
-    enabled: true
-  };
-
-  return { expression, fields: validationResults };
+const operatorMap = {
+  "=": "EQUALS",
+  ">": "GREATER_THAN",
+  "<": "LESS_THAN",
+  ">=": "GREATER_THAN_OR_EQUAL_TO",
+  "<=": "LESS_THAN_OR_EQUAL_TO",
 };
 
 /**
@@ -137,13 +70,6 @@ const split = (criteria: string) =>
     .map(criterion => ({ criterion, splitCriterion: parse(criterion) }));
 
 /**
- * Creates an ExpressionBuilder term from the passed array. The array must look like ['foo', 'EQUALS', 'bar'].
- * @param {array} asArray The term as an array
- */
-const toTermFromArray = (asArray: string[]): ExpressionTermType =>
-  toTerm(asArray[0], asArray[1] as ConditionType, asArray[2]);
-
-/**
  * Returns an ExpressionBuilder term
  * @param {string} field
  * @param {string} condition
@@ -152,23 +78,97 @@ const toTermFromArray = (asArray: string[]): ExpressionTermType =>
 const toTerm = (
   field: string,
   condition: ConditionType,
-  value: string
+  value: string,
 ): ExpressionTermType => ({
   type: "term",
   field,
   condition,
   value,
   dictionary: null,
-  enabled: true
+  enabled: true,
 });
 
 /**
- * A map of operators to ExpressionBuilder conditions
+ * Creates an ExpressionBuilder term from the passed array. The array must look like ['foo', 'EQUALS', 'bar'].
+ * @param {array} asArray The term as an array
  */
-const operatorMap = {
-  "=": "EQUALS",
-  ">": "GREATER_THAN",
-  "<": "LESS_THAN",
-  ">=": "GREATER_THAN_OR_EQUAL_TO",
-  "<=": "LESS_THAN_OR_EQUAL_TO"
+const toTermFromArray = (asArray: string[]): ExpressionTermType =>
+  toTerm(asArray[0], asArray[1] as ConditionType, asArray[2]);
+
+/**
+ * Takes a search string from the input box and checks that the fields
+ * exist in the data source.
+ * @param {object} dataSource The data source for the expression
+ * @param {string} criteria The search string
+ */
+export const processSearchString = (
+  dataSource: DataSourceType,
+  criteria: string,
+): {
+  expression: ExpressionOperatorType;
+  fields: ValidationResult[];
+} => {
+  const splitted = split(criteria);
+
+  const validationResults: ValidationResult[] = [];
+  splitted.forEach((criterionObj: any) => {
+    let validationResult: ValidationResult;
+    if (criterionObj.splitCriterion !== undefined) {
+      // Field validation
+      const field = criterionObj.splitCriterion[0];
+      const foundField = dataSource.fields.filter(
+        availableField => availableField.name === field,
+      );
+      const fieldIsValid = foundField.length > 0;
+
+      // Condition/operator validation
+      const operator = criterionObj.splitCriterion[1];
+      const foundCondition = dataSource.fields.filter(
+        availableField =>
+          availableField.name === field &&
+          availableField.conditions.find(condition => condition === operator),
+      );
+      const conditionIsValid = foundCondition.length > 0;
+
+      // Value validation
+      const value = criterionObj.splitCriterion[2];
+      const valueIsValid = value !== undefined && value !== "";
+
+      validationResult = {
+        original: criterionObj.criterion,
+        parsed: criterionObj.splitCriterion,
+        fieldIsValid,
+        conditionIsValid,
+        valueIsValid,
+        term: toTermFromArray(criterionObj.splitCriterion),
+      };
+    } else {
+      // If we don't have a splitCriterion then the term is invalid and we'll return
+      // a result with false for everything.
+      validationResult = {
+        original: criterionObj.criterion,
+        fieldIsValid: false,
+        conditionIsValid: false,
+        valueIsValid: false,
+      };
+    }
+    validationResults.push(validationResult);
+  });
+
+  const expression: ExpressionOperatorType = {
+    type: "operator",
+    op: "AND",
+    children: validationResults
+      .filter(
+        (validationResult: ValidationResult) =>
+          validationResult.term !== undefined,
+      )
+      .map(
+        (validationResult: ValidationResult) =>
+          validationResult.term as ExpressionTermType,
+      ),
+    enabled: true,
+  };
+
+  return { expression, fields: validationResults };
 };

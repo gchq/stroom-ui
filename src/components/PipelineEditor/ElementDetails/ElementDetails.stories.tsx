@@ -30,7 +30,7 @@ interface Props {
   testElementConfig: object;
 }
 
-const TestElementDetails = ({
+const TestHarness = ({
   pipelineId,
   testElementId,
   testElementConfig,
@@ -64,7 +64,7 @@ Object.values(fullTestData.documents.Pipeline)
   .map(pipeline => {
     pipeline.merged.elements.add!.map(element => {
       stories.add(`${pipeline.uuid} - ${element.id}`, () => (
-        <TestElementDetails
+        <TestHarness
           pipelineId={pipeline.uuid}
           testElementId={element.id}
           testElementConfig={{ splitDepth: 10, splitCount: 10 }}

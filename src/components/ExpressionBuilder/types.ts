@@ -13,19 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {
-  ExpressionOperatorWithUuid,
-  ExpressionTermWithUuid
-} from "src/types";
+import { ExpressionOperatorWithUuid, ExpressionTermWithUuid } from "src/types";
 import {
   DragSourceCollector,
   ConnectDragSource,
-  ConnectDropTarget
+  ConnectDropTarget,
 } from "react-dnd";
 
 export enum DragDropTypes {
   OPERATOR = "operator",
-  TERM = "term"
+  TERM = "term",
 }
 
 export interface DragCollectedProps {
@@ -47,6 +44,6 @@ export const dragCollect: DragSourceCollector<
 > = function dragCollect(connect, monitor) {
   return {
     connectDragSource: connect.dragSource(),
-    isDragging: monitor.isDragging()
+    isDragging: monitor.isDragging(),
   };
 };

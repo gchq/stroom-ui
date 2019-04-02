@@ -6,14 +6,12 @@ import SingleValueWidget from "./SingleValueWidget";
 import InValueWidget from "./InValueWidget";
 import BetweenValueWidget from "./BetweenValueWidget";
 
-
-
 const stories = storiesOf("Expression/Value Widgets", module);
 
 [
   { valueType: "text", defaultValue: "" },
   { valueType: "number", defaultValue: 10 },
-  { valueType: "datetime-local", defaultValue: Date.now() }
+  { valueType: "datetime-local", defaultValue: Date.now() },
 ].forEach(({ valueType, defaultValue }) => {
   stories
     .add(`Single ${valueType}`, () => {

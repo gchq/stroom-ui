@@ -20,7 +20,7 @@ const emptyExpression: ExpressionOperatorType = {
   type: "operator",
   op: "AND",
   children: [],
-  enabled: true
+  enabled: true,
 };
 
 const singleTermExpression: ExpressionOperatorType = {
@@ -33,10 +33,10 @@ const singleTermExpression: ExpressionOperatorType = {
       condition: "CONTAINS",
       value: "red",
       dictionary: null,
-      enabled: true
-    }
+      enabled: true,
+    },
   ],
-  enabled: true
+  enabled: true,
 };
 
 const simpleAndExpression: ExpressionOperatorType = {
@@ -49,7 +49,7 @@ const simpleAndExpression: ExpressionOperatorType = {
       condition: "CONTAINS",
       value: "red",
       dictionary: null,
-      enabled: true
+      enabled: true,
     },
     {
       type: "term",
@@ -57,10 +57,10 @@ const simpleAndExpression: ExpressionOperatorType = {
       condition: "IN",
       value: "blue",
       dictionary: null,
-      enabled: true
-    }
+      enabled: true,
+    },
   ],
-  enabled: true
+  enabled: true,
 };
 
 const simpleOrExpression: ExpressionOperatorType = {
@@ -73,7 +73,7 @@ const simpleOrExpression: ExpressionOperatorType = {
       condition: "CONTAINS",
       value: "red",
       dictionary: null,
-      enabled: true
+      enabled: true,
     },
     {
       type: "term",
@@ -81,10 +81,10 @@ const simpleOrExpression: ExpressionOperatorType = {
       condition: "EQUALS",
       value: "blue",
       dictionary: null,
-      enabled: true
-    }
+      enabled: true,
+    },
   ],
-  enabled: true
+  enabled: true,
 };
 
 const nestedExpression: ExpressionOperatorType = {
@@ -97,7 +97,7 @@ const nestedExpression: ExpressionOperatorType = {
       condition: "CONTAINS",
       value: "red",
       dictionary: null,
-      enabled: true
+      enabled: true,
     },
     {
       type: "term",
@@ -105,7 +105,7 @@ const nestedExpression: ExpressionOperatorType = {
       condition: "IN",
       value: "blue",
       dictionary: null,
-      enabled: true
+      enabled: true,
     },
     {
       type: "operator",
@@ -118,7 +118,7 @@ const nestedExpression: ExpressionOperatorType = {
           condition: "BETWEEN",
           value: "1,5",
           dictionary: null,
-          enabled: true
+          enabled: true,
         },
         {
           type: "term",
@@ -126,12 +126,12 @@ const nestedExpression: ExpressionOperatorType = {
           condition: "EQUALS",
           value: "me",
           dictionary: null,
-          enabled: true
-        }
-      ]
-    }
+          enabled: true,
+        },
+      ],
+    },
   ],
-  enabled: true
+  enabled: true,
 };
 
 const deeplyNestedExpression: ExpressionOperatorType = {
@@ -144,7 +144,7 @@ const deeplyNestedExpression: ExpressionOperatorType = {
       condition: "CONTAINS",
       value: "red",
       dictionary: null,
-      enabled: true
+      enabled: true,
     },
     {
       type: "term",
@@ -152,7 +152,7 @@ const deeplyNestedExpression: ExpressionOperatorType = {
       condition: "IN",
       value: "blue",
       dictionary: null,
-      enabled: true
+      enabled: true,
     },
     {
       type: "operator",
@@ -165,7 +165,7 @@ const deeplyNestedExpression: ExpressionOperatorType = {
           condition: "BETWEEN",
           value: "1,5",
           dictionary: null,
-          enabled: true
+          enabled: true,
         },
         {
           type: "term",
@@ -173,7 +173,7 @@ const deeplyNestedExpression: ExpressionOperatorType = {
           condition: "EQUALS",
           value: "me",
           dictionary: null,
-          enabled: true
+          enabled: true,
         },
         {
           type: "operator",
@@ -186,7 +186,7 @@ const deeplyNestedExpression: ExpressionOperatorType = {
               condition: "CONTAINS",
               value: "bob",
               dictionary: null,
-              enabled: true
+              enabled: true,
             },
             {
               type: "term",
@@ -194,14 +194,14 @@ const deeplyNestedExpression: ExpressionOperatorType = {
               condition: "BETWEEN",
               value: "me",
               dictionary: null,
-              enabled: true
-            }
-          ]
-        }
-      ]
-    }
+              enabled: true,
+            },
+          ],
+        },
+      ],
+    },
   ],
-  enabled: true
+  enabled: true,
 };
 
 const partlyDisabledExpression01: ExpressionOperatorType = {
@@ -214,7 +214,7 @@ const partlyDisabledExpression01: ExpressionOperatorType = {
       condition: "CONTAINS",
       value: "red",
       dictionary: null,
-      enabled: true
+      enabled: true,
     },
     {
       type: "term",
@@ -222,10 +222,10 @@ const partlyDisabledExpression01: ExpressionOperatorType = {
       condition: "EQUALS",
       value: "blue",
       dictionary: null,
-      enabled: false
-    }
+      enabled: false,
+    },
   ],
-  enabled: true
+  enabled: true,
 };
 
 const partlyDisabledExpression02: ExpressionOperatorType = {
@@ -238,7 +238,7 @@ const partlyDisabledExpression02: ExpressionOperatorType = {
       condition: "CONTAINS",
       value: "red",
       dictionary: null,
-      enabled: false
+      enabled: false,
     },
     {
       type: "term",
@@ -246,10 +246,10 @@ const partlyDisabledExpression02: ExpressionOperatorType = {
       condition: "EQUALS",
       value: "blue",
       dictionary: null,
-      enabled: true
-    }
+      enabled: true,
+    },
   ],
-  enabled: true
+  enabled: true,
 };
 
 const partlyDisabledExpression03: ExpressionOperatorType = {
@@ -262,7 +262,7 @@ const partlyDisabledExpression03: ExpressionOperatorType = {
       condition: "CONTAINS",
       value: "red",
       dictionary: null,
-      enabled: true
+      enabled: true,
     },
     {
       type: "term",
@@ -270,7 +270,7 @@ const partlyDisabledExpression03: ExpressionOperatorType = {
       condition: "IN",
       value: "blue",
       dictionary: null,
-      enabled: true
+      enabled: true,
     },
     {
       type: "operator",
@@ -283,7 +283,7 @@ const partlyDisabledExpression03: ExpressionOperatorType = {
           condition: "BETWEEN",
           value: "1,5",
           dictionary: null,
-          enabled: true
+          enabled: true,
         },
         {
           type: "term",
@@ -291,12 +291,12 @@ const partlyDisabledExpression03: ExpressionOperatorType = {
           condition: "EQUALS",
           value: "me",
           dictionary: null,
-          enabled: false
-        }
-      ]
-    }
+          enabled: false,
+        },
+      ],
+    },
   ],
-  enabled: true
+  enabled: true,
 };
 
 const hugeExpression: ExpressionOperatorType = {
@@ -309,7 +309,7 @@ const hugeExpression: ExpressionOperatorType = {
       condition: "CONTAINS",
       value: "red",
       dictionary: null,
-      enabled: true
+      enabled: true,
     },
     {
       type: "term",
@@ -317,7 +317,7 @@ const hugeExpression: ExpressionOperatorType = {
       condition: "IN",
       value: "blue",
       dictionary: null,
-      enabled: true
+      enabled: true,
     },
     {
       type: "operator",
@@ -330,7 +330,7 @@ const hugeExpression: ExpressionOperatorType = {
           condition: "BETWEEN",
           value: "1,5",
           dictionary: null,
-          enabled: true
+          enabled: true,
         },
         {
           type: "term",
@@ -338,9 +338,9 @@ const hugeExpression: ExpressionOperatorType = {
           condition: "EQUALS",
           value: "me",
           dictionary: null,
-          enabled: true
-        }
-      ]
+          enabled: true,
+        },
+      ],
     },
     {
       type: "operator",
@@ -353,7 +353,7 @@ const hugeExpression: ExpressionOperatorType = {
           condition: "CONTAINS",
           value: "bob",
           dictionary: null,
-          enabled: false
+          enabled: false,
         },
         {
           type: "term",
@@ -361,12 +361,12 @@ const hugeExpression: ExpressionOperatorType = {
           condition: "BETWEEN",
           value: "me",
           dictionary: null,
-          enabled: true
-        }
-      ]
-    }
+          enabled: true,
+        },
+      ],
+    },
   ],
-  enabled: true
+  enabled: true,
 };
 
 export {
@@ -379,5 +379,5 @@ export {
   partlyDisabledExpression01,
   partlyDisabledExpression02,
   partlyDisabledExpression03,
-  hugeExpression
+  hugeExpression,
 };

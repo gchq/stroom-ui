@@ -1,7 +1,5 @@
-import ValueWidget from './ValueWidget';
+import ValueWidget from "./ValueWidget";
 
 export default ValueWidget;
 
-export {
-  ValueWidget
-}
+export { ValueWidget };

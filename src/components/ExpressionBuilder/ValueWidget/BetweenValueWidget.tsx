@@ -6,9 +6,13 @@ interface Props extends ControlledInput<any> {
   valueType: string;
 }
 
-const BetweenValueWidget = ({ valueType, onChange, value }: Props) => {
+const BetweenValueWidget: React.FunctionComponent<Props> = ({
+  valueType,
+  onChange,
+  value,
+}) => {
   const onFromValueChange = ({
-    target: { value }
+    target: { value },
   }: React.ChangeEvent<HTMLInputElement>) => {
     const parts = value.split(",");
     const existingToValue = parts.length === 2 ? parts[1] : "";
@@ -18,7 +22,7 @@ const BetweenValueWidget = ({ valueType, onChange, value }: Props) => {
   };
 
   const onToValueChange = ({
-    target: { value }
+    target: { value },
   }: React.ChangeEvent<HTMLInputElement>) => {
     const parts = value.split(",");
     const existingFromValue = parts.length === 2 ? parts[0] : "";

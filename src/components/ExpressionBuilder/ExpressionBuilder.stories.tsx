@@ -26,7 +26,7 @@ import { ExpressionOperatorWithUuid } from "src/types";
 
 const PopulatedEditable = () => {
   const [expression, onChange] = useState<ExpressionOperatorWithUuid>(
-    testExpression
+    testExpression,
   );
 
   return (
@@ -42,7 +42,7 @@ const PopulatedEditable = () => {
 
 const PopulatedReadOnly = () => {
   const [expression, onChange] = useState<ExpressionOperatorWithUuid>(
-    testExpression
+    testExpression,
   );
 
   return (
@@ -56,7 +56,7 @@ const PopulatedReadOnly = () => {
 
 const SimplestEditable = () => {
   const [expression, onChange] = useState<ExpressionOperatorWithUuid>(
-    simplestExpression
+    simplestExpression,
   );
 
   return (
@@ -71,7 +71,7 @@ const SimplestEditable = () => {
 
 const MissingDataSource = () => {
   const [expression, onChange] = useState<ExpressionOperatorWithUuid>(
-    testExpression
+    testExpression,
   );
 
   return (
@@ -85,7 +85,7 @@ const MissingDataSource = () => {
 
 const HideModeToggle = () => {
   const [expression, onChange] = useState<ExpressionOperatorWithUuid>(
-    testExpression
+    testExpression,
   );
 
   return (
@@ -100,7 +100,7 @@ const HideModeToggle = () => {
 
 const HideModeButEdit = () => {
   const [expression, onChange] = useState<ExpressionOperatorWithUuid>(
-    testExpression
+    testExpression,
   );
 
   return (

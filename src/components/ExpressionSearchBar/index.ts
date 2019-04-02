@@ -1,3 +1,3 @@
-import ExpressionSearchBar from './ExpressionSearchBar';
+import ExpressionSearchBar from "./ExpressionSearchBar";
 
 export default ExpressionSearchBar;

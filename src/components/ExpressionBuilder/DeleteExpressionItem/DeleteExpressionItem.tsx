@@ -10,12 +10,12 @@ interface Props {
   onDeleteExpressionItem: (expressionItemId: string) => void;
 }
 
-const DeletePipelineExpressionItem = ({
+const DeletePipelineExpressionItem: React.FunctionComponent<Props> = ({
   isOpen,
   onCloseDialog,
   expressionItemId,
-  onDeleteExpressionItem
-}: Props) => {
+  onDeleteExpressionItem,
+}) => {
   return (
     <ThemedConfirm
       isOpen={isOpen}
@@ -37,10 +37,10 @@ interface UseDialog {
 }
 
 export const useDialog = (
-  onDeleteExpressionItem: (e: string) => void
+  onDeleteExpressionItem: (e: string) => void,
 ): UseDialog => {
   const [expressionItemId, setExpressionItemId] = useState<string | undefined>(
-    undefined
+    undefined,
   );
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
@@ -52,12 +52,12 @@ export const useDialog = (
       onCloseDialog: () => {
         setIsOpen(false);
         setExpressionItemId(undefined);
-      }
+      },
     },
     showDialog: _expressionItemId => {
       setIsOpen(true);
       setExpressionItemId(_expressionItemId);
-    }
+    },
   };
 };
 
