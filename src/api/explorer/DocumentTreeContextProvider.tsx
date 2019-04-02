@@ -9,7 +9,7 @@ import DocumentTreeContext, {
 } from "./DocumentTreeContext";
 import { DEFAULT_TREE, DEFAULT_DOC_REF_WITH_LINEAGE } from "./values";
 
-const DocumentTreeContextProvider: FunctionComponent<{}> = ({ children }) => {
+const DocumentTreeContextProvider: FunctionComponent = ({ children }) => {
   const [documentTree, setDocumentTree] = useState<DocRefTree>(DEFAULT_TREE);
 
   const {

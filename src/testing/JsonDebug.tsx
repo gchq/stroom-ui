@@ -31,7 +31,7 @@ export default ({ value }: Props) => (
     </div>
     <pre
       style={{
-        fontSize: ".65rem",
+        fontSize: "1.5rem",
         padding: ".25rem .5rem",
         overflowX: "scroll"
       }}

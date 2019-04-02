@@ -5,7 +5,7 @@ import { useConfig } from "../config";
 import { AppPermissions } from "./types";
 import AuthorisationContext from "./AuthorisationContext";
 
-const AuthorisationContextProvider: FunctionComponent<{}> = ({ children }) => {
+const AuthorisationContextProvider: FunctionComponent = ({ children }) => {
   const [appPermissions, setAppPermissions] = useState<AppPermissions>({});
   const { idToken } = useAuthenticationContext();
   const { authorisationServiceUrl } = useConfig();

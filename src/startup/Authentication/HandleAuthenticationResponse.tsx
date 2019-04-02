@@ -21,7 +21,7 @@ import useRouter from "src/lib/useRouter";
 import useAuthenticationContext from "./useAuthenticationContext";
 import { useConfig } from "../config";
 
-export const HandleAuthenticationResponse: React.FunctionComponent<{}> = () => {
+export const HandleAuthenticationResponse: React.FunctionComponent = () => {
   const { authenticationServiceUrl, authorisationServiceUrl } = useConfig();
   const {
     router: { location },

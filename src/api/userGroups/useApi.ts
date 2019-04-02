@@ -43,13 +43,15 @@ export const useApi = (): Api => {
       [stroomBaseServiceUrl, httpPutEmptyResponse]
     ),
     createUser: useCallback(
-      (name: string, isGroup: boolean) =>
-        httpPostJsonResponse(`${stroomBaseServiceUrl}/users/v1`, {
+      (name: string, isGroup: boolean) => {
+        console.log("Whats up?", stroomBaseServiceUrl);
+        return httpPostJsonResponse(`${stroomBaseServiceUrl}/users/v1`, {
           body: JSON.stringify({
             name,
             isGroup
           })
-        }),
+        });
+      },
       [stroomBaseServiceUrl, httpPostJsonResponse]
     ),
     deleteUser: useCallback(

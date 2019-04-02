@@ -12,6 +12,6 @@ export default createContext<ErrorReportingContextState>({
     stackTrace: "",
     httpErrorCode: 0
   },
-  reportError: () =>
-    console.error("Reporting error to disconnected default context")
+  reportError: e =>
+    console.error("Reporting error to disconnected default context", e)
 });
