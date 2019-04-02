@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import useHttpClient from "../useHttpClient";
+import useHttpClient from "src/lib/useHttpClient";
 import { DocRefType, DocRefTree, DocRefInfoType } from "src/types";
 import { SearchProps } from "./types";
 import { useConfig } from "src/startup/config";

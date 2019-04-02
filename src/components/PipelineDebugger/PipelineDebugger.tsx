@@ -17,7 +17,7 @@
 import * as React from "react";
 
 import Button from "../Button";
-import { Pipeline } from "../PipelineEditor";
+import { PipelineDisplay } from "../PipelineEditor";
 import Loader from "../Loader";
 
 import DebuggerStep from "./DebuggerStep";
@@ -77,7 +77,7 @@ const PipelineDebugger: React.FunctionComponent<Props> = ({
         <Button icon="chevron-left" text="Previous" onClick={onPrevious} />
         <Button icon="chevron-right" text="Next" onClick={onNext} />
       </div>
-      <Pipeline
+      <PipelineDisplay
         pipelineId={pipelineId}
         pipelineStateProps={pipelineStateProps}
         showAddElementDialog={() =>

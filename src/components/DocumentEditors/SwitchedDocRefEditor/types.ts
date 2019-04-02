@@ -9,7 +9,7 @@ import ElasticIndexEditor from "../ElasticIndexEditor";
 import DashboardEditor from "../DashboardEditor";
 import ScriptEditor from "../ScriptEditor";
 import StroomStatsStoreEditor from "../StroomStatsStoreEditor";
-import StatisticsStoreEditor from "../StatisticsStoreEditor";
+import StatisticStoreEditor from "../StatisticStoreEditor";
 import VisualisationEditor from "../VisualisationEditor";
 import XMLSchemaEditor from "../XMLSchemaEditor";
 
@@ -23,12 +23,12 @@ export const docRefEditorClasses: DocRefEditorClasses = {
   Dashboard: DashboardEditor,
   Script: ScriptEditor,
   StroomStatsStore: StroomStatsStoreEditor,
-  StatisticsStore: StatisticsStoreEditor,
+  StatisticStore: StatisticStoreEditor,
   Visualisation: VisualisationEditor,
   XMLSchema: XMLSchemaEditor,
   Folder: FolderExplorer,
   XSLT: XsltEditor,
   Dictionary: DictionaryEditor,
   Pipeline: PipelineEditor,
-  Index: IndexEditor
+  Index: IndexEditor,
 };

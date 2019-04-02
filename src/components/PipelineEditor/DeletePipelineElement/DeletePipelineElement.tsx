@@ -15,17 +15,19 @@ const DeletePipelineElement: React.FunctionComponent<Props> = ({
   elementId,
   onDeleteElement,
 }) => {
+  const onConfirm = React.useCallback(() => {
+    if (!!elementId) {
+      onDeleteElement(elementId);
+    }
+    onCloseDialog();
+  }, [elementId, onDeleteElement, onCloseDialog]);
+
   return (
     <ThemedConfirm
       isOpen={isOpen}
       question={`Delete ${elementId} from pipeline?`}
       onCloseDialog={onCloseDialog}
-      onConfirm={() => {
-        if (!!elementId) {
-          onDeleteElement(elementId);
-        }
-        onCloseDialog();
-      }}
+      onConfirm={onConfirm}
     />
   );
 };

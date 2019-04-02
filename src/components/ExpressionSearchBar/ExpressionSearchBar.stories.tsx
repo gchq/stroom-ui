@@ -25,6 +25,8 @@ import JsonDebug from "src/testing/JsonDebug";
 import Button from "../Button";
 import { ExpressionOperatorWithUuid } from "src/types";
 
+const stories = storiesOf("Expression/Search Bar", module);
+
 const TestHarness: React.FunctionComponent = () => {
   const [lastSearch, setLastSearch] = React.useState<
     ExpressionOperatorWithUuid | undefined
@@ -47,7 +49,5 @@ const TestHarness: React.FunctionComponent = () => {
     </div>
   );
 };
-
-const stories = storiesOf("Expression/Search Bar", module);
 
 addThemedStories(stories, () => <TestHarness />);

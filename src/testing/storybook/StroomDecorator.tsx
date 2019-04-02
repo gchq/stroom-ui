@@ -10,7 +10,7 @@ import { useTestServer } from "./PollyDecorator";
 
 import useFontAwesome from "src/lib/useFontAwesome/useFontAwesome";
 import testData from "../data";
-import { ThemeContextProvider, useTheme } from "src/lib/theme";
+import { ThemeContextProvider } from "src/lib/theme";
 import { withRouter, RouteComponentProps } from "react-router";
 import { CustomRouter } from "src/lib/useRouter";
 import { ConfigProvider } from "src/startup/config";
@@ -19,22 +19,27 @@ import { AuthenticationContext } from "src/startup/Authentication";
 import { DocumentTreeContextProvider } from "src/api/explorer";
 import { ErrorReportingContextProvider } from "src/components/ErrorPage";
 
+const B: React.FunctionComponent = ({ children }) => {
+  useFontAwesome();
+  useTestServer(testData);
+
+  return <div>{children}</div>;
+};
+
 const RouteWrapper: React.StatelessComponent<RouteComponentProps> = ({
   children,
   history,
-}) => <CustomRouter history={history}>{children}</CustomRouter>;
+}) => {
+  return (
+    <CustomRouter history={history}>
+      <B>{children}</B>
+    </CustomRouter>
+  );
+};
 const DragDropRouted = pipe(
   DragDropContext(HTML5Backend),
   withRouter,
 )(RouteWrapper);
-
-const ThemedComponent: React.StatelessComponent<{}> = ({ children }) => {
-  const { theme } = useTheme();
-  useFontAwesome();
-  useTestServer(testData);
-
-  return <div className={`app-container ${theme}`}>{children}</div>;
-};
 
 ReactModal.setAppElement("#root");
 
@@ -56,7 +61,7 @@ export default (storyFn: RenderFunction) =>
             <ThemeContextProvider>
               <DragDropRouted>
                 <DocumentTreeContextProvider>
-                  <ThemedComponent>{storyFn()}</ThemedComponent>
+                  {storyFn()}
                 </DocumentTreeContextProvider>
               </DragDropRouted>
             </ThemeContextProvider>

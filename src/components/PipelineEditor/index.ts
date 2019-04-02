@@ -15,8 +15,8 @@
  */
 
 import PipelineEditor from "./PipelineEditor";
-import Pipeline from "./Pipeline";
+import PipelineDisplay from "./PipelineDisplay";
 
-export { PipelineEditor, Pipeline };
+export { PipelineEditor, PipelineDisplay };
 
 export default PipelineEditor;

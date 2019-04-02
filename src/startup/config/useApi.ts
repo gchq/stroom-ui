@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import useHttpClient from "src/api/useHttpClient";
+import useHttpClient from "src/lib/useHttpClient";
 import * as React from "react";
 import { Config } from "./types";
 

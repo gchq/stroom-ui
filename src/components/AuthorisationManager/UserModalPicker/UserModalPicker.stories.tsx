@@ -27,7 +27,7 @@ import fullTestData from "src/testing/data";
 
 const stories = storiesOf("Pickers/User Picker (Modal)", module);
 
-const TestHarness = () => {
+const TestHarness: React.FunctionComponent = () => {
   const [pickedUser, setPickedUser] = React.useState<string | undefined>(
     undefined,
   );

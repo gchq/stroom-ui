@@ -165,7 +165,7 @@ export interface StatisticsDataSourceData {
     [fieldName: string]: number;
   };
 }
-export interface StatisticsStoreDoc extends DocumentType<"StatisticsStore"> {
+export interface StatisticStoreDoc extends DocumentType<"StatisticStore"> {
   description?: string;
   statisticType?: StatisticType;
   rollUpType?: StatisticRollupType;

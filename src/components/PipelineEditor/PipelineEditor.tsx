@@ -30,7 +30,7 @@ import DeletePipelineElement, {
   useDialog as useDeleteElementDialog,
 } from "./DeletePipelineElement";
 import { ElementDetails } from "./ElementDetails";
-import Pipeline from "./Pipeline";
+import PipelineDisplay from "./PipelineDisplay";
 import DocRefEditor, {
   SwitchedDocRefEditorProps,
 } from "../DocumentEditors/DocRefEditor";
@@ -124,7 +124,7 @@ const PipelineEditor = ({ docRefUuid }: SwitchedDocRefEditorProps) => {
           ]}
         >
           <div className="Pipeline-editor__topPanel">
-            <Pipeline
+            <PipelineDisplay
               pipelineId={docRefUuid}
               pipelineStateProps={piplineStateProps}
               showAddElementDialog={showAddElementDialog}

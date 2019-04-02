@@ -27,11 +27,11 @@ const JsonDebug: React.FunctionComponent<Props> = ({ value }) => (
         letterSpacing: "1px",
       }}
     >
-      Form State
+      Debug Information
     </div>
     <pre
       style={{
-        fontSize: ".65rem",
+        fontSize: "1.5rem",
         padding: ".25rem .5rem",
         overflowX: "scroll",
       }}

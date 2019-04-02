@@ -1,6 +1,6 @@
 import * as React from "react";
-import useHttpClient from "../useHttpClient";
 import { DataSourceType, DataRow, StreamAttributeMapResult } from "src/types";
+import useHttpClient from "src/lib/useHttpClient";
 import { useConfig } from "src/startup/config";
 import { SearchWithExpressionProps, PageProps } from "./types";
 import cleanExpression from "./cleanExpression";

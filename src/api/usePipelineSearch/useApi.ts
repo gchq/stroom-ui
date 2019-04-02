@@ -15,7 +15,7 @@
  */
 import * as React from "react";
 
-import useHttpClient from "../useHttpClient";
+import useHttpClient from "src/lib/useHttpClient";
 import {
   PipelineSearchCriteriaType,
   PipelineSearchResultType,

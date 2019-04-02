@@ -1,12 +1,19 @@
 import * as React from "react";
+import { History } from "history";
+import { RouteProps } from "react-router";
 import { RouterContext, HistoryContext } from "./BrowserRouter";
 
-export default function useRouter() {
+interface UseRouter {
+  history: History;
+  router: RouteProps;
+}
+
+export default function useRouter(): UseRouter {
   const router = React.useContext(RouterContext);
   const history = React.useContext(HistoryContext);
 
   if (!history) {
-    throw new Error("Could not find history");
+    throw new Error("No History Provided");
   }
 
   return {

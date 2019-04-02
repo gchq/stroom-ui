@@ -1,9 +1,9 @@
 import * as uuidv4 from "uuid/v4";
 import * as loremIpsum from "lorem-ipsum";
-import { StatisticsStoreDoc } from "src/types";
+import { StatisticStoreDoc } from "src/types";
 
-export const generate = (): StatisticsStoreDoc => ({
-  type: "StatisticsStore",
+export const generate = (): StatisticStoreDoc => ({
+  type: "StatisticStore",
   uuid: uuidv4(),
   name: loremIpsum({ count: 2, units: "words" }),
 });

@@ -7,7 +7,7 @@ import PillChoice from "./PillChoice";
 
 const stories = storiesOf("New Developer/Step 2/Pill Choice", module);
 
-const TestHarness = () => {
+addThemedStories(stories, () => {
   return (
     <div>
       <h2>Pill Choice Test Harness</h2>
@@ -23,6 +23,4 @@ const TestHarness = () => {
       <PillChoice onChoice={p => console.log("Pill Chosen", p)} />
     </div>
   );
-};
-
-addThemedStories(stories, () => <TestHarness />);
+});

@@ -28,7 +28,7 @@ import JsonDebug from "src/testing/JsonDebug";
 
 const stories = storiesOf("Pickers/User (or Create) Modal", module);
 
-const TestHarness = () => {
+const TestHarness: React.FunctionComponent = () => {
   const [pickedUser, setPickedUser] = React.useState<string | undefined>(
     undefined,
   );

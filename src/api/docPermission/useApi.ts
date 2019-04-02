@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import useHttpClient from "../useHttpClient";
+import useHttpClient from "src/lib/useHttpClient";
 import { DocumentPermissions } from "src/types";
 import { useConfig } from "src/startup/config";
 

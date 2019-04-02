@@ -17,8 +17,8 @@
 import * as React from "react";
 import { path } from "ramda";
 
-import ErrorTable from "./Views/ErrorTable";
-import EventView from "./Views/EventView";
+import ErrorTable from "./ErrorTable";
+import EventView from "./EventView";
 import { StroomData } from "./types";
 
 interface Props {

@@ -17,7 +17,7 @@
 import * as React from "react";
 import { storiesOf } from "@storybook/react";
 
-import Pipeline from "./Pipeline";
+import PipelineDisplay from "./PipelineDisplay";
 import { testPipelines } from "src/testing/data/pipelines";
 
 import usePipelineState from "./usePipelineState";
@@ -33,7 +33,7 @@ const TestHarness: React.FunctionComponent<TestProps> = ({
 }: TestProps) => {
   const pipelineStateProps = usePipelineState(pipelineId);
   return (
-    <Pipeline
+    <PipelineDisplay
       pipelineId={pipelineId}
       pipelineStateProps={pipelineStateProps}
       showAddElementDialog={() => console.log("Add Element")}

@@ -22,7 +22,7 @@ import { storiesOf } from "@storybook/react";
 import useManageUsers from "./useManageUsers";
 import Button from "src/components/Button";
 
-const TestHarness = () => {
+const TestHarness: React.FunctionComponent = () => {
   const { users, createUser, deleteUser } = useManageUsers();
 
   const onClickCreateUser = React.useCallback(() => {

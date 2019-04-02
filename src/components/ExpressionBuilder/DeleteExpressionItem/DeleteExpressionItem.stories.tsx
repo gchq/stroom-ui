@@ -9,10 +9,13 @@ import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
 
 const EXPRESSION_ITEM_ID = "SomeItemID";
 
+const stories = storiesOf("Expression/Delete Expression Item", module);
+
 const TestHarness: React.FunctionComponent = () => {
   const [itemDeleted, setItemDeleted] = React.useState<string | undefined>(
     undefined,
   );
+
   const { showDialog, componentProps } = useDialog(setItemDeleted);
 
   const clearItemDeleted = React.useCallback(() => {
@@ -32,7 +35,4 @@ const TestHarness: React.FunctionComponent = () => {
     </div>
   );
 };
-
-const stories = storiesOf("Expression/Delete Expression Item", module);
-
 addThemedStories(stories, () => <TestHarness />);
