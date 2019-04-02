@@ -1,4 +1,4 @@
-import { ElementPropertiesByElementIdType } from "../../../types";
+import { ElementPropertiesByElementIdType } from "src/types";
 
 export default {
   JSONWriter: {
@@ -7,7 +7,7 @@ export default {
         type: "JSONWriter",
         category: "WRITER",
         roles: ["writer", "mutator", "stepping", "target"],
-        icon: "json.svg"
+        icon: "json.svg",
       },
       name: "indentOutput",
       type: "boolean",
@@ -16,14 +16,14 @@ export default {
       defaultValue: "false",
       pipelineReference: false,
       docRefTypes: undefined,
-      displayPriority: 1
+      displayPriority: 1,
     },
     encoding: {
       elementType: {
         type: "JSONWriter",
         category: "WRITER",
         roles: ["writer", "mutator", "stepping", "target"],
-        icon: "json.svg"
+        icon: "json.svg",
       },
       name: "encoding",
       type: "String",
@@ -31,8 +31,8 @@ export default {
       defaultValue: "UTF-8",
       pipelineReference: false,
       docRefTypes: undefined,
-      displayPriority: 2
-    }
+      displayPriority: 2,
+    },
   },
   BadTextXMLFilterReader: {
     tags: {
@@ -40,7 +40,7 @@ export default {
         type: "BadTextXMLFilterReader",
         category: "READER",
         roles: ["reader", "hasTargets"],
-        icon: "stream.svg"
+        icon: "stream.svg",
       },
       name: "tags",
       type: "String",
@@ -49,8 +49,8 @@ export default {
       defaultValue: "",
       pipelineReference: false,
       docRefTypes: undefined,
-      displayPriority: 1
-    }
+      displayPriority: 1,
+    },
   },
   XMLFragmentParser: {
     textConverter: {
@@ -63,9 +63,9 @@ export default {
           "simple",
           "hasTargets",
           "stepping",
-          "mutator"
+          "mutator",
         ],
-        icon: "xml.svg"
+        icon: "xml.svg",
       },
       name: "textConverter",
       type: "entity",
@@ -74,8 +74,8 @@ export default {
       defaultValue: "",
       pipelineReference: false,
       docRefTypes: ["TextConverter"],
-      displayPriority: 1
-    }
+      displayPriority: 1,
+    },
   },
   ElasticIndexingFilter: {
     index: {
@@ -83,7 +83,7 @@ export default {
         type: "ElasticIndexingFilter",
         category: "FILTER",
         roles: ["simple", "hasTargets", "target"],
-        icon: "ElasticSearch.svg"
+        icon: "ElasticSearch.svg",
       },
       name: "index",
       type: "entity",
@@ -91,14 +91,14 @@ export default {
       defaultValue: "",
       pipelineReference: false,
       docRefTypes: ["ElasticIndex"],
-      displayPriority: 1
+      displayPriority: 1,
     },
     idFieldName: {
       elementType: {
         type: "ElasticIndexingFilter",
         category: "FILTER",
         roles: ["simple", "hasTargets", "target"],
-        icon: "ElasticSearch.svg"
+        icon: "ElasticSearch.svg",
       },
       name: "idFieldName",
       type: "String",
@@ -106,8 +106,8 @@ export default {
       defaultValue: "",
       pipelineReference: false,
       docRefTypes: undefined,
-      displayPriority: 2
-    }
+      displayPriority: 2,
+    },
   },
   RecordCountFilter: {
     countRead: {
@@ -115,7 +115,7 @@ export default {
         type: "RecordCountFilter",
         category: "FILTER",
         roles: ["hasTargets", "target"],
-        icon: "recordCount.svg"
+        icon: "recordCount.svg",
       },
       name: "countRead",
       type: "boolean",
@@ -123,8 +123,8 @@ export default {
       defaultValue: "true",
       pipelineReference: false,
       docRefTypes: undefined,
-      displayPriority: 1
-    }
+      displayPriority: 1,
+    },
   },
   TextWriter: {
     footer: {
@@ -132,7 +132,7 @@ export default {
         type: "TextWriter",
         category: "WRITER",
         roles: ["hasTargets", "writer", "mutator", "stepping", "target"],
-        icon: "text.svg"
+        icon: "text.svg",
       },
       name: "footer",
       type: "String",
@@ -140,14 +140,14 @@ export default {
       defaultValue: "",
       pipelineReference: false,
       docRefTypes: undefined,
-      displayPriority: 2
+      displayPriority: 2,
     },
     header: {
       elementType: {
         type: "TextWriter",
         category: "WRITER",
         roles: ["hasTargets", "writer", "mutator", "stepping", "target"],
-        icon: "text.svg"
+        icon: "text.svg",
       },
       name: "header",
       type: "String",
@@ -155,14 +155,14 @@ export default {
       defaultValue: "",
       pipelineReference: false,
       docRefTypes: undefined,
-      displayPriority: 1
+      displayPriority: 1,
     },
     encoding: {
       elementType: {
         type: "TextWriter",
         category: "WRITER",
         roles: ["hasTargets", "writer", "mutator", "stepping", "target"],
-        icon: "text.svg"
+        icon: "text.svg",
       },
       name: "encoding",
       type: "String",
@@ -170,8 +170,8 @@ export default {
       defaultValue: "UTF-8",
       pipelineReference: false,
       docRefTypes: undefined,
-      displayPriority: 3
-    }
+      displayPriority: 3,
+    },
   },
   RollingFileAppender: {
     fileName: {
@@ -179,7 +179,7 @@ export default {
         type: "RollingFileAppender",
         category: "DESTINATION",
         roles: ["destination", "stepping", "target"],
-        icon: "files.svg"
+        icon: "files.svg",
       },
       name: "fileName",
       type: "String",
@@ -187,14 +187,14 @@ export default {
       defaultValue: "",
       pipelineReference: false,
       docRefTypes: undefined,
-      displayPriority: 2
+      displayPriority: 2,
     },
     rolledFileName: {
       elementType: {
         type: "RollingFileAppender",
         category: "DESTINATION",
         roles: ["destination", "stepping", "target"],
-        icon: "files.svg"
+        icon: "files.svg",
       },
       name: "rolledFileName",
       type: "String",
@@ -203,14 +203,14 @@ export default {
       defaultValue: "",
       pipelineReference: false,
       docRefTypes: undefined,
-      displayPriority: 3
+      displayPriority: 3,
     },
     maxSize: {
       elementType: {
         type: "RollingFileAppender",
         category: "DESTINATION",
         roles: ["destination", "stepping", "target"],
-        icon: "files.svg"
+        icon: "files.svg",
       },
       name: "maxSize",
       type: "String",
@@ -219,14 +219,14 @@ export default {
       defaultValue: "100M",
       pipelineReference: false,
       docRefTypes: undefined,
-      displayPriority: 5
+      displayPriority: 5,
     },
     outputPaths: {
       elementType: {
         type: "RollingFileAppender",
         category: "DESTINATION",
         roles: ["destination", "stepping", "target"],
-        icon: "files.svg"
+        icon: "files.svg",
       },
       name: "outputPaths",
       type: "String",
@@ -235,14 +235,14 @@ export default {
       defaultValue: "",
       pipelineReference: false,
       docRefTypes: undefined,
-      displayPriority: 1
+      displayPriority: 1,
     },
     frequency: {
       elementType: {
         type: "RollingFileAppender",
         category: "DESTINATION",
         roles: ["destination", "stepping", "target"],
-        icon: "files.svg"
+        icon: "files.svg",
       },
       name: "frequency",
       type: "String",
@@ -250,8 +250,8 @@ export default {
       defaultValue: "1h",
       pipelineReference: false,
       docRefTypes: undefined,
-      displayPriority: 4
-    }
+      displayPriority: 4,
+    },
   },
   StroomStatsFilter: {
     kafkaConfig: {
@@ -259,7 +259,7 @@ export default {
         type: "StroomStatsFilter",
         category: "FILTER",
         roles: ["simple", "hasTargets", "target"],
-        icon: "StroomStatsStore.svg"
+        icon: "StroomStatsStore.svg",
       },
       name: "kafkaConfig",
       type: "entity",
@@ -267,14 +267,14 @@ export default {
       defaultValue: "",
       pipelineReference: false,
       docRefTypes: ["KAFKA_CONFIG"],
-      displayPriority: 1
+      displayPriority: 1,
     },
     statisticsDataSource: {
       elementType: {
         type: "StroomStatsFilter",
         category: "FILTER",
         roles: ["simple", "hasTargets", "target"],
-        icon: "StroomStatsStore.svg"
+        icon: "StroomStatsStore.svg",
       },
       name: "statisticsDataSource",
       type: "entity",
@@ -282,14 +282,14 @@ export default {
       defaultValue: "",
       pipelineReference: false,
       docRefTypes: ["StroomStatsStore"],
-      displayPriority: 1
+      displayPriority: 1,
     },
     flushOnSend: {
       elementType: {
         type: "StroomStatsFilter",
         category: "FILTER",
         roles: ["simple", "hasTargets", "target"],
-        icon: "StroomStatsStore.svg"
+        icon: "StroomStatsStore.svg",
       },
       name: "flushOnSend",
       type: "boolean",
@@ -298,8 +298,8 @@ export default {
       defaultValue: "false",
       pipelineReference: false,
       docRefTypes: undefined,
-      displayPriority: 3
-    }
+      displayPriority: 3,
+    },
   },
   Reader: {},
   TestFilter: {},
@@ -314,9 +314,9 @@ export default {
           "simple",
           "hasTargets",
           "stepping",
-          "mutator"
+          "mutator",
         ],
-        icon: "text.svg"
+        icon: "text.svg",
       },
       name: "textConverter",
       type: "entity",
@@ -325,8 +325,8 @@ export default {
       defaultValue: "",
       pipelineReference: false,
       docRefTypes: ["TextConverter"],
-      displayPriority: 1
-    }
+      displayPriority: 1,
+    },
   },
   CombinedParser: {
     textConverter: {
@@ -339,9 +339,9 @@ export default {
           "simple",
           "hasTargets",
           "stepping",
-          "mutator"
+          "mutator",
         ],
-        icon: "text.svg"
+        icon: "text.svg",
       },
       name: "textConverter",
       type: "entity",
@@ -350,7 +350,7 @@ export default {
       defaultValue: "",
       pipelineReference: false,
       docRefTypes: ["TextConverter"],
-      displayPriority: 2
+      displayPriority: 2,
     },
     type: {
       elementType: {
@@ -362,9 +362,9 @@ export default {
           "simple",
           "hasTargets",
           "stepping",
-          "mutator"
+          "mutator",
         ],
-        icon: "text.svg"
+        icon: "text.svg",
       },
       name: "type",
       type: "String",
@@ -372,7 +372,7 @@ export default {
       defaultValue: "",
       pipelineReference: false,
       docRefTypes: undefined,
-      displayPriority: 1
+      displayPriority: 1,
     },
     fixInvalidChars: {
       elementType: {
@@ -384,9 +384,9 @@ export default {
           "simple",
           "hasTargets",
           "stepping",
-          "mutator"
+          "mutator",
         ],
-        icon: "text.svg"
+        icon: "text.svg",
       },
       name: "fixInvalidChars",
       type: "boolean",
@@ -394,8 +394,8 @@ export default {
       defaultValue: "false",
       pipelineReference: false,
       docRefTypes: undefined,
-      displayPriority: 3
-    }
+      displayPriority: 3,
+    },
   },
   XMLWriter: {
     indentOutput: {
@@ -403,7 +403,7 @@ export default {
         type: "XMLWriter",
         category: "WRITER",
         roles: ["hasTargets", "writer", "mutator", "stepping", "target"],
-        icon: "xml.svg"
+        icon: "xml.svg",
       },
       name: "indentOutput",
       type: "boolean",
@@ -412,14 +412,14 @@ export default {
       defaultValue: "false",
       pipelineReference: false,
       docRefTypes: undefined,
-      displayPriority: 1
+      displayPriority: 1,
     },
     encoding: {
       elementType: {
         type: "XMLWriter",
         category: "WRITER",
         roles: ["hasTargets", "writer", "mutator", "stepping", "target"],
-        icon: "xml.svg"
+        icon: "xml.svg",
       },
       name: "encoding",
       type: "String",
@@ -427,8 +427,8 @@ export default {
       defaultValue: "UTF-8",
       pipelineReference: false,
       docRefTypes: undefined,
-      displayPriority: 2
-    }
+      displayPriority: 2,
+    },
   },
   Source: {},
   InvalidCharFilterReader: {},
@@ -438,7 +438,7 @@ export default {
         type: "SplitFilter",
         category: "FILTER",
         roles: ["hasTargets", "target"],
-        icon: "split.svg"
+        icon: "split.svg",
       },
       name: "splitDepth",
       type: "int",
@@ -446,14 +446,14 @@ export default {
       defaultValue: "1",
       pipelineReference: false,
       docRefTypes: undefined,
-      displayPriority: 1
+      displayPriority: 1,
     },
     splitCount: {
       elementType: {
         type: "SplitFilter",
         category: "FILTER",
         roles: ["hasTargets", "target"],
-        icon: "split.svg"
+        icon: "split.svg",
       },
       name: "splitCount",
       type: "int",
@@ -462,8 +462,8 @@ export default {
       defaultValue: "10000",
       pipelineReference: false,
       docRefTypes: undefined,
-      displayPriority: 2
-    }
+      displayPriority: 2,
+    },
   },
   HttpPostFilter: {
     receivingApiUrl: {
@@ -471,7 +471,7 @@ export default {
         type: "HttpPostFilter",
         category: "FILTER",
         roles: ["simple", "hasTargets", "target"],
-        icon: "stream.svg"
+        icon: "stream.svg",
       },
       name: "receivingApiUrl",
       type: "String",
@@ -479,8 +479,8 @@ export default {
       defaultValue: "",
       pipelineReference: false,
       docRefTypes: undefined,
-      displayPriority: 1
-    }
+      displayPriority: 1,
+    },
   },
   RollingKafkaAppender: {
     kafkaConfig: {
@@ -488,7 +488,7 @@ export default {
         type: "RollingKafkaAppender",
         category: "DESTINATION",
         roles: ["destination", "stepping", "target"],
-        icon: "apache_kafka-icon.svg"
+        icon: "apache_kafka-icon.svg",
       },
       name: "kafkaConfig",
       type: "entity",
@@ -496,14 +496,14 @@ export default {
       defaultValue: "",
       pipelineReference: false,
       docRefTypes: ["KAFKA_CONFIG"],
-      displayPriority: 1
+      displayPriority: 1,
     },
     recordKey: {
       elementType: {
         type: "RollingKafkaAppender",
         category: "DESTINATION",
         roles: ["destination", "stepping", "target"],
-        icon: "apache_kafka-icon.svg"
+        icon: "apache_kafka-icon.svg",
       },
       name: "recordKey",
       type: "String",
@@ -512,14 +512,14 @@ export default {
       defaultValue: "",
       pipelineReference: false,
       docRefTypes: undefined,
-      displayPriority: 3
+      displayPriority: 3,
     },
     topic: {
       elementType: {
         type: "RollingKafkaAppender",
         category: "DESTINATION",
         roles: ["destination", "stepping", "target"],
-        icon: "apache_kafka-icon.svg"
+        icon: "apache_kafka-icon.svg",
       },
       name: "topic",
       type: "String",
@@ -528,14 +528,14 @@ export default {
       defaultValue: "",
       pipelineReference: false,
       docRefTypes: undefined,
-      displayPriority: 2
+      displayPriority: 2,
     },
     maxSize: {
       elementType: {
         type: "RollingKafkaAppender",
         category: "DESTINATION",
         roles: ["destination", "stepping", "target"],
-        icon: "apache_kafka-icon.svg"
+        icon: "apache_kafka-icon.svg",
       },
       name: "maxSize",
       type: "String",
@@ -544,14 +544,14 @@ export default {
       defaultValue: "100M",
       pipelineReference: false,
       docRefTypes: undefined,
-      displayPriority: 5
+      displayPriority: 5,
     },
     flushOnSend: {
       elementType: {
         type: "RollingKafkaAppender",
         category: "DESTINATION",
         roles: ["destination", "stepping", "target"],
-        icon: "apache_kafka-icon.svg"
+        icon: "apache_kafka-icon.svg",
       },
       name: "flushOnSend",
       type: "boolean",
@@ -560,14 +560,14 @@ export default {
       defaultValue: "false",
       pipelineReference: false,
       docRefTypes: undefined,
-      displayPriority: 6
+      displayPriority: 6,
     },
     frequency: {
       elementType: {
         type: "RollingKafkaAppender",
         category: "DESTINATION",
         roles: ["destination", "stepping", "target"],
-        icon: "apache_kafka-icon.svg"
+        icon: "apache_kafka-icon.svg",
       },
       name: "frequency",
       type: "String",
@@ -575,8 +575,8 @@ export default {
       defaultValue: "1h",
       pipelineReference: false,
       docRefTypes: undefined,
-      displayPriority: 4
-    }
+      displayPriority: 4,
+    },
   },
   TestAppender: {},
   KafkaAppender: {
@@ -585,7 +585,7 @@ export default {
         type: "KafkaAppender",
         category: "DESTINATION",
         roles: ["destination", "stepping", "target"],
-        icon: "apache_kafka-icon.svg"
+        icon: "apache_kafka-icon.svg",
       },
       name: "kafkaConfig",
       type: "entity",
@@ -593,14 +593,14 @@ export default {
       defaultValue: "",
       pipelineReference: false,
       docRefTypes: ["KAFKA_CONFIG"],
-      displayPriority: 1
+      displayPriority: 1,
     },
     recordKey: {
       elementType: {
         type: "KafkaAppender",
         category: "DESTINATION",
         roles: ["destination", "stepping", "target"],
-        icon: "apache_kafka-icon.svg"
+        icon: "apache_kafka-icon.svg",
       },
       name: "recordKey",
       type: "String",
@@ -609,14 +609,14 @@ export default {
       defaultValue: "",
       pipelineReference: false,
       docRefTypes: undefined,
-      displayPriority: 2
+      displayPriority: 2,
     },
     maxRecordCount: {
       elementType: {
         type: "KafkaAppender",
         category: "DESTINATION",
         roles: ["destination", "stepping", "target"],
-        icon: "apache_kafka-icon.svg"
+        icon: "apache_kafka-icon.svg",
       },
       name: "maxRecordCount",
       type: "String",
@@ -625,14 +625,14 @@ export default {
       defaultValue: "1",
       pipelineReference: false,
       docRefTypes: undefined,
-      displayPriority: 3
+      displayPriority: 3,
     },
     topic: {
       elementType: {
         type: "KafkaAppender",
         category: "DESTINATION",
         roles: ["destination", "stepping", "target"],
-        icon: "apache_kafka-icon.svg"
+        icon: "apache_kafka-icon.svg",
       },
       name: "topic",
       type: "String",
@@ -640,14 +640,14 @@ export default {
       defaultValue: "",
       pipelineReference: false,
       docRefTypes: undefined,
-      displayPriority: 1
+      displayPriority: 1,
     },
     flushOnSend: {
       elementType: {
         type: "KafkaAppender",
         category: "DESTINATION",
         roles: ["destination", "stepping", "target"],
-        icon: "apache_kafka-icon.svg"
+        icon: "apache_kafka-icon.svg",
       },
       name: "flushOnSend",
       type: "boolean",
@@ -656,8 +656,8 @@ export default {
       defaultValue: "false",
       pipelineReference: false,
       docRefTypes: undefined,
-      displayPriority: 4
-    }
+      displayPriority: 4,
+    },
   },
   XSLTFilter: {
     suppressXSLTNotFoundWarnings: {
@@ -670,9 +670,9 @@ export default {
           "hasTargets",
           "stepping",
           "mutator",
-          "target"
+          "target",
         ],
-        icon: "xslt.svg"
+        icon: "xslt.svg",
       },
       name: "suppressXSLTNotFoundWarnings",
       type: "boolean",
@@ -681,7 +681,7 @@ export default {
       defaultValue: "false",
       pipelineReference: false,
       docRefTypes: undefined,
-      displayPriority: 3
+      displayPriority: 3,
     },
     usePool: {
       elementType: {
@@ -693,9 +693,9 @@ export default {
           "hasTargets",
           "stepping",
           "mutator",
-          "target"
+          "target",
         ],
-        icon: "xslt.svg"
+        icon: "xslt.svg",
       },
       name: "usePool",
       type: "boolean",
@@ -704,7 +704,7 @@ export default {
       defaultValue: "true",
       pipelineReference: false,
       docRefTypes: undefined,
-      displayPriority: 4
+      displayPriority: 4,
     },
     pipelineReference: {
       elementType: {
@@ -716,9 +716,9 @@ export default {
           "hasTargets",
           "stepping",
           "mutator",
-          "target"
+          "target",
         ],
-        icon: "xslt.svg"
+        icon: "xslt.svg",
       },
       name: "pipelineReference",
       type: "PipelineReference",
@@ -726,7 +726,7 @@ export default {
       defaultValue: "",
       pipelineReference: true,
       docRefTypes: undefined,
-      displayPriority: 5
+      displayPriority: 5,
     },
     xslt: {
       elementType: {
@@ -738,9 +738,9 @@ export default {
           "hasTargets",
           "stepping",
           "mutator",
-          "target"
+          "target",
         ],
-        icon: "xslt.svg"
+        icon: "xslt.svg",
       },
       name: "xslt",
       type: "entity",
@@ -748,7 +748,7 @@ export default {
       defaultValue: "",
       pipelineReference: false,
       docRefTypes: ["XSLT"],
-      displayPriority: 1
+      displayPriority: 1,
     },
     xsltNamePattern: {
       elementType: {
@@ -760,9 +760,9 @@ export default {
           "hasTargets",
           "stepping",
           "mutator",
-          "target"
+          "target",
         ],
-        icon: "xslt.svg"
+        icon: "xslt.svg",
       },
       name: "xsltNamePattern",
       type: "String",
@@ -770,8 +770,8 @@ export default {
       defaultValue: "",
       pipelineReference: false,
       docRefTypes: undefined,
-      displayPriority: 2
-    }
+      displayPriority: 2,
+    },
   },
   StreamAppender: {
     feed: {
@@ -779,7 +779,7 @@ export default {
         type: "StreamAppender",
         category: "DESTINATION",
         roles: ["destination", "stepping", "target"],
-        icon: "stream.svg"
+        icon: "stream.svg",
       },
       name: "feed",
       type: "entity",
@@ -788,14 +788,14 @@ export default {
       defaultValue: "",
       pipelineReference: false,
       docRefTypes: ["Feed"],
-      displayPriority: 2
+      displayPriority: 2,
     },
     segmentOutput: {
       elementType: {
         type: "StreamAppender",
         category: "DESTINATION",
         roles: ["destination", "stepping", "target"],
-        icon: "stream.svg"
+        icon: "stream.svg",
       },
       name: "segmentOutput",
       type: "boolean",
@@ -804,14 +804,14 @@ export default {
       defaultValue: "true",
       pipelineReference: false,
       docRefTypes: undefined,
-      displayPriority: 3
+      displayPriority: 3,
     },
     streamType: {
       elementType: {
         type: "StreamAppender",
         category: "DESTINATION",
         roles: ["destination", "stepping", "target"],
-        icon: "stream.svg"
+        icon: "stream.svg",
       },
       name: "streamType",
       type: "String",
@@ -820,8 +820,8 @@ export default {
       defaultValue: "",
       pipelineReference: false,
       docRefTypes: undefined,
-      displayPriority: 1
-    }
+      displayPriority: 1,
+    },
   },
   XMLParser: {},
   RecordOutputFilter: {},
@@ -831,7 +831,7 @@ export default {
         type: "HDFSFileAppender",
         category: "DESTINATION",
         roles: ["destination", "stepping", "target"],
-        icon: "hadoop-elephant-logo.svg"
+        icon: "hadoop-elephant-logo.svg",
       },
       name: "runAsUser",
       type: "String",
@@ -839,14 +839,14 @@ export default {
       defaultValue: "",
       pipelineReference: false,
       docRefTypes: undefined,
-      displayPriority: 3
+      displayPriority: 3,
     },
     fileSystemUri: {
       elementType: {
         type: "HDFSFileAppender",
         category: "DESTINATION",
         roles: ["destination", "stepping", "target"],
-        icon: "hadoop-elephant-logo.svg"
+        icon: "hadoop-elephant-logo.svg",
       },
       name: "fileSystemUri",
       type: "String",
@@ -855,14 +855,14 @@ export default {
       defaultValue: "",
       pipelineReference: false,
       docRefTypes: undefined,
-      displayPriority: 2
+      displayPriority: 2,
     },
     outputPaths: {
       elementType: {
         type: "HDFSFileAppender",
         category: "DESTINATION",
         roles: ["destination", "stepping", "target"],
-        icon: "hadoop-elephant-logo.svg"
+        icon: "hadoop-elephant-logo.svg",
       },
       name: "outputPaths",
       type: "String",
@@ -871,8 +871,8 @@ export default {
       defaultValue: "",
       pipelineReference: false,
       docRefTypes: undefined,
-      displayPriority: 1
-    }
+      displayPriority: 1,
+    },
   },
   SearchResultOutputFilter: {},
   FileAppender: {
@@ -881,7 +881,7 @@ export default {
         type: "FileAppender",
         category: "DESTINATION",
         roles: ["destination", "stepping", "target"],
-        icon: "file.svg"
+        icon: "file.svg",
       },
       name: "outputPaths",
       type: "String",
@@ -890,8 +890,8 @@ export default {
       defaultValue: "",
       pipelineReference: false,
       docRefTypes: undefined,
-      displayPriority: 1
-    }
+      displayPriority: 1,
+    },
   },
   ReferenceDataFilter: {
     warnOnDuplicateKeys: {
@@ -899,7 +899,7 @@ export default {
         type: "ReferenceDataFilter",
         category: "FILTER",
         roles: ["hasTargets", "target"],
-        icon: "referenceData.svg"
+        icon: "referenceData.svg",
       },
       name: "warnOnDuplicateKeys",
       type: "boolean",
@@ -908,14 +908,14 @@ export default {
       defaultValue: "false",
       pipelineReference: false,
       docRefTypes: undefined,
-      displayPriority: 1
+      displayPriority: 1,
     },
     overrideExistingValues: {
       elementType: {
         type: "ReferenceDataFilter",
         category: "FILTER",
         roles: ["hasTargets", "target"],
-        icon: "referenceData.svg"
+        icon: "referenceData.svg",
       },
       name: "overrideExistingValues",
       type: "boolean",
@@ -923,8 +923,8 @@ export default {
       defaultValue: "true",
       pipelineReference: false,
       docRefTypes: undefined,
-      displayPriority: 2
-    }
+      displayPriority: 2,
+    },
   },
   InvalidXMLCharFilterReader: {
     xmlVersion: {
@@ -932,7 +932,7 @@ export default {
         type: "InvalidXMLCharFilterReader",
         category: "READER",
         roles: ["reader", "hasTargets"],
-        icon: "stream.svg"
+        icon: "stream.svg",
       },
       name: "xmlVersion",
       type: "String",
@@ -940,8 +940,8 @@ export default {
       defaultValue: "1.1",
       pipelineReference: false,
       docRefTypes: undefined,
-      displayPriority: 1
-    }
+      displayPriority: 1,
+    },
   },
   IdEnrichmentFilter: {},
   HTTPAppender: {
@@ -950,7 +950,7 @@ export default {
         type: "HTTPAppender",
         category: "DESTINATION",
         roles: ["destination", "stepping", "target"],
-        icon: "stream.svg"
+        icon: "stream.svg",
       },
       name: "logMetaKeys",
       type: "String",
@@ -958,14 +958,14 @@ export default {
       defaultValue: "guid,feed,system,environment,remotehost,remoteaddress",
       pipelineReference: false,
       docRefTypes: undefined,
-      displayPriority: 5
+      displayPriority: 5,
     },
     forwardChunkSize: {
       elementType: {
         type: "HTTPAppender",
         category: "DESTINATION",
         roles: ["destination", "stepping", "target"],
-        icon: "stream.svg"
+        icon: "stream.svg",
       },
       name: "forwardChunkSize",
       type: "String",
@@ -974,14 +974,14 @@ export default {
       defaultValue: "",
       pipelineReference: false,
       docRefTypes: undefined,
-      displayPriority: 4
+      displayPriority: 4,
     },
     forwardUrl: {
       elementType: {
         type: "HTTPAppender",
         category: "DESTINATION",
         roles: ["destination", "stepping", "target"],
-        icon: "stream.svg"
+        icon: "stream.svg",
       },
       name: "forwardUrl",
       type: "String",
@@ -989,14 +989,14 @@ export default {
       defaultValue: "",
       pipelineReference: false,
       docRefTypes: undefined,
-      displayPriority: 1
+      displayPriority: 1,
     },
     useCompression: {
       elementType: {
         type: "HTTPAppender",
         category: "DESTINATION",
         roles: ["destination", "stepping", "target"],
-        icon: "stream.svg"
+        icon: "stream.svg",
       },
       name: "useCompression",
       type: "boolean",
@@ -1004,14 +1004,14 @@ export default {
       defaultValue: "true",
       pipelineReference: false,
       docRefTypes: undefined,
-      displayPriority: 2
+      displayPriority: 2,
     },
     connectionTimeout: {
       elementType: {
         type: "HTTPAppender",
         category: "DESTINATION",
         roles: ["destination", "stepping", "target"],
-        icon: "stream.svg"
+        icon: "stream.svg",
       },
       name: "connectionTimeout",
       type: "String",
@@ -1020,8 +1020,8 @@ export default {
       defaultValue: "",
       pipelineReference: false,
       docRefTypes: undefined,
-      displayPriority: 3
-    }
+      displayPriority: 3,
+    },
   },
   SchemaFilter: {
     systemId: {
@@ -1029,7 +1029,7 @@ export default {
         type: "SchemaFilter",
         category: "FILTER",
         roles: ["validator", "hasTargets", "stepping", "target"],
-        icon: "xsd.svg"
+        icon: "xsd.svg",
       },
       name: "systemId",
       type: "String",
@@ -1038,14 +1038,14 @@ export default {
       defaultValue: "",
       pipelineReference: false,
       docRefTypes: undefined,
-      displayPriority: 2
+      displayPriority: 2,
     },
     schemaValidation: {
       elementType: {
         type: "SchemaFilter",
         category: "FILTER",
         roles: ["validator", "hasTargets", "stepping", "target"],
-        icon: "xsd.svg"
+        icon: "xsd.svg",
       },
       name: "schemaValidation",
       type: "boolean",
@@ -1053,14 +1053,14 @@ export default {
       defaultValue: "true",
       pipelineReference: false,
       docRefTypes: undefined,
-      displayPriority: 5
+      displayPriority: 5,
     },
     namespaceURI: {
       elementType: {
         type: "SchemaFilter",
         category: "FILTER",
         roles: ["validator", "hasTargets", "stepping", "target"],
-        icon: "xsd.svg"
+        icon: "xsd.svg",
       },
       name: "namespaceURI",
       type: "String",
@@ -1069,14 +1069,14 @@ export default {
       defaultValue: "",
       pipelineReference: false,
       docRefTypes: undefined,
-      displayPriority: 3
+      displayPriority: 3,
     },
     schemaLanguage: {
       elementType: {
         type: "SchemaFilter",
         category: "FILTER",
         roles: ["validator", "hasTargets", "stepping", "target"],
-        icon: "xsd.svg"
+        icon: "xsd.svg",
       },
       name: "schemaLanguage",
       type: "String",
@@ -1084,14 +1084,14 @@ export default {
       defaultValue: "http://www.w3.org/2001/XMLSchema",
       pipelineReference: false,
       docRefTypes: undefined,
-      displayPriority: 4
+      displayPriority: 4,
     },
     schemaGroup: {
       elementType: {
         type: "SchemaFilter",
         category: "FILTER",
         roles: ["validator", "hasTargets", "stepping", "target"],
-        icon: "xsd.svg"
+        icon: "xsd.svg",
       },
       name: "schemaGroup",
       type: "String",
@@ -1100,8 +1100,8 @@ export default {
       defaultValue: "",
       pipelineReference: false,
       docRefTypes: undefined,
-      displayPriority: 1
-    }
+      displayPriority: 1,
+    },
   },
   IndexingFilter: {
     index: {
@@ -1109,7 +1109,7 @@ export default {
         type: "IndexingFilter",
         category: "FILTER",
         roles: ["simple", "hasTargets", "target"],
-        icon: "index.svg"
+        icon: "index.svg",
       },
       name: "index",
       type: "entity",
@@ -1117,8 +1117,8 @@ export default {
       defaultValue: "",
       pipelineReference: false,
       docRefTypes: ["Index"],
-      displayPriority: 1
-    }
+      displayPriority: 1,
+    },
   },
   BOMRemovalFilterInput: {},
   StroomStatsAppender: {
@@ -1127,7 +1127,7 @@ export default {
         type: "StroomStatsAppender",
         category: "DESTINATION",
         roles: ["destination", "stepping", "target"],
-        icon: "StroomStatsStore.svg"
+        icon: "StroomStatsStore.svg",
       },
       name: "kafkaConfig",
       type: "entity",
@@ -1135,14 +1135,14 @@ export default {
       defaultValue: "",
       pipelineReference: false,
       docRefTypes: ["KAFKA_CONFIG"],
-      displayPriority: 1
+      displayPriority: 1,
     },
     maxRecordCount: {
       elementType: {
         type: "StroomStatsAppender",
         category: "DESTINATION",
         roles: ["destination", "stepping", "target"],
-        icon: "StroomStatsStore.svg"
+        icon: "StroomStatsStore.svg",
       },
       name: "maxRecordCount",
       type: "String",
@@ -1151,14 +1151,14 @@ export default {
       defaultValue: "1",
       pipelineReference: false,
       docRefTypes: undefined,
-      displayPriority: 3
+      displayPriority: 3,
     },
     statisticsDataSource: {
       elementType: {
         type: "StroomStatsAppender",
         category: "DESTINATION",
         roles: ["destination", "stepping", "target"],
-        icon: "StroomStatsStore.svg"
+        icon: "StroomStatsStore.svg",
       },
       name: "statisticsDataSource",
       type: "entity",
@@ -1166,14 +1166,14 @@ export default {
       defaultValue: "",
       pipelineReference: false,
       docRefTypes: ["StroomStatsStore"],
-      displayPriority: 1
+      displayPriority: 1,
     },
     flushOnSend: {
       elementType: {
         type: "StroomStatsAppender",
         category: "DESTINATION",
         roles: ["destination", "stepping", "target"],
-        icon: "StroomStatsStore.svg"
+        icon: "StroomStatsStore.svg",
       },
       name: "flushOnSend",
       type: "boolean",
@@ -1182,8 +1182,8 @@ export default {
       defaultValue: "false",
       pipelineReference: false,
       docRefTypes: undefined,
-      displayPriority: 4
-    }
+      displayPriority: 4,
+    },
   },
   RollingStreamAppender: {
     feed: {
@@ -1191,7 +1191,7 @@ export default {
         type: "RollingStreamAppender",
         category: "DESTINATION",
         roles: ["destination", "stepping", "target"],
-        icon: "stream.svg"
+        icon: "stream.svg",
       },
       name: "feed",
       type: "entity",
@@ -1200,14 +1200,14 @@ export default {
       defaultValue: "",
       pipelineReference: false,
       docRefTypes: ["Feed"],
-      displayPriority: 2
+      displayPriority: 2,
     },
     segmentOutput: {
       elementType: {
         type: "RollingStreamAppender",
         category: "DESTINATION",
         roles: ["destination", "stepping", "target"],
-        icon: "stream.svg"
+        icon: "stream.svg",
       },
       name: "segmentOutput",
       type: "boolean",
@@ -1216,14 +1216,14 @@ export default {
       defaultValue: "true",
       pipelineReference: false,
       docRefTypes: undefined,
-      displayPriority: 6
+      displayPriority: 6,
     },
     streamType: {
       elementType: {
         type: "RollingStreamAppender",
         category: "DESTINATION",
         roles: ["destination", "stepping", "target"],
-        icon: "stream.svg"
+        icon: "stream.svg",
       },
       name: "streamType",
       type: "String",
@@ -1232,14 +1232,14 @@ export default {
       defaultValue: "",
       pipelineReference: false,
       docRefTypes: undefined,
-      displayPriority: 1
+      displayPriority: 1,
     },
     maxSize: {
       elementType: {
         type: "RollingStreamAppender",
         category: "DESTINATION",
         roles: ["destination", "stepping", "target"],
-        icon: "stream.svg"
+        icon: "stream.svg",
       },
       name: "maxSize",
       type: "String",
@@ -1248,14 +1248,14 @@ export default {
       defaultValue: "100M",
       pipelineReference: false,
       docRefTypes: undefined,
-      displayPriority: 5
+      displayPriority: 5,
     },
     frequency: {
       elementType: {
         type: "RollingStreamAppender",
         category: "DESTINATION",
         roles: ["destination", "stepping", "target"],
-        icon: "stream.svg"
+        icon: "stream.svg",
       },
       name: "frequency",
       type: "String",
@@ -1263,8 +1263,8 @@ export default {
       defaultValue: "1h",
       pipelineReference: false,
       docRefTypes: undefined,
-      displayPriority: 4
-    }
+      displayPriority: 4,
+    },
   },
   JSONParser: {},
   GenericKafkaProducerFilter: {
@@ -1273,7 +1273,7 @@ export default {
         type: "GenericKafkaProducerFilter",
         category: "FILTER",
         roles: ["simple", "hasTargets", "target"],
-        icon: "apache_kafka-icon.svg"
+        icon: "apache_kafka-icon.svg",
       },
       name: "kafkaConfig",
       type: "entity",
@@ -1281,14 +1281,14 @@ export default {
       defaultValue: "",
       pipelineReference: false,
       docRefTypes: ["KAFKA_CONFIG"],
-      displayPriority: 1
+      displayPriority: 1,
     },
     recordKey: {
       elementType: {
         type: "GenericKafkaProducerFilter",
         category: "FILTER",
         roles: ["simple", "hasTargets", "target"],
-        icon: "apache_kafka-icon.svg"
+        icon: "apache_kafka-icon.svg",
       },
       name: "recordKey",
       type: "String",
@@ -1297,14 +1297,14 @@ export default {
       defaultValue: "",
       pipelineReference: false,
       docRefTypes: undefined,
-      displayPriority: 2
+      displayPriority: 2,
     },
     topic: {
       elementType: {
         type: "GenericKafkaProducerFilter",
         category: "FILTER",
         roles: ["simple", "hasTargets", "target"],
-        icon: "apache_kafka-icon.svg"
+        icon: "apache_kafka-icon.svg",
       },
       name: "topic",
       type: "String",
@@ -1312,14 +1312,14 @@ export default {
       defaultValue: "",
       pipelineReference: false,
       docRefTypes: undefined,
-      displayPriority: 1
+      displayPriority: 1,
     },
     flushOnSend: {
       elementType: {
         type: "GenericKafkaProducerFilter",
         category: "FILTER",
         roles: ["simple", "hasTargets", "target"],
-        icon: "apache_kafka-icon.svg"
+        icon: "apache_kafka-icon.svg",
       },
       name: "flushOnSend",
       type: "boolean",
@@ -1328,7 +1328,7 @@ export default {
       defaultValue: "false",
       pipelineReference: false,
       docRefTypes: undefined,
-      displayPriority: 3
-    }
-  }
+      displayPriority: 3,
+    },
+  },
 } as ElementPropertiesByElementIdType;

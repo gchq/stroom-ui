@@ -4,15 +4,15 @@ import { useState, useCallback } from "react";
 import { storiesOf } from "@storybook/react";
 
 import DeleteExpressionItem, { useDialog } from "./DeleteExpressionItem";
-import JsonDebug from "../../../testing/JsonDebug";
+import JsonDebug from "src/testing/JsonDebug";
 import Button from "../../Button";
-import { addThemedStories } from "../../../testing/storybook/themedStoryGenerator";
-
-
+import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
 
 const EXPRESSION_ITEM_ID = "SomeItemID";
 
-const TestHarness = () => {
+const stories = storiesOf("Expression/Delete Expression Item", module);
+
+addThemedStories(stories, () => {
   const [itemDeleted, setItemDeleted] = useState<string | undefined>(undefined);
   const { showDialog, componentProps } = useDialog(setItemDeleted);
 
@@ -32,8 +32,4 @@ const TestHarness = () => {
       <JsonDebug value={{ itemDeleted }} />
     </div>
   );
-};
-
-const stories = storiesOf("Expression/Delete Expression Item", module);
-
-addThemedStories(stories, () => <TestHarness />);
+});

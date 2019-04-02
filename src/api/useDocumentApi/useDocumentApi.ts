@@ -1,9 +1,9 @@
 import { useCallback } from "react";
 
 import { DocumentApi, ResourcesByDocType, DOCUMENT_RESOURCES } from "./types";
-import { DocumentType } from "../../types";
-import { useConfig } from "../../startup/config";
-import useHttpClient from "../useHttpClient";
+import { DocumentType } from "src/types";
+import { useConfig } from "src/startup/config";
+import useHttpClient from "src/lib/useHttpClient";
 
 /**
  * This returns an API that can fetch/save a particular document type.

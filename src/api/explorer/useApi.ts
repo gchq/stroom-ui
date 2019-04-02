@@ -1,39 +1,39 @@
 import { useCallback } from "react";
 
-import useHttpClient from "../useHttpClient";
-import { DocRefType, DocRefTree, DocRefInfoType } from "../../types";
+import useHttpClient from "src/lib/useHttpClient";
+import { DocRefType, DocRefTree, DocRefInfoType } from "src/types";
 import { SearchProps } from "./types";
-import { useConfig } from "../../startup/config";
+import { useConfig } from "src/startup/config";
 
 const stripDocRef = (docRef: DocRefType) => ({
   uuid: docRef.uuid,
   type: docRef.type,
-  name: docRef.name
+  name: docRef.name,
 });
 
 interface Api {
   fetchDocTree: () => Promise<DocRefTree>;
-  fetchDocRefTypes: () => Promise<Array<string>>;
+  fetchDocRefTypes: () => Promise<string[]>;
   fetchDocInfo: (docRef: DocRefType) => Promise<DocRefInfoType>;
-  searchApp: (args: SearchProps) => Promise<Array<DocRefType>>;
+  searchApp: (args: SearchProps) => Promise<DocRefType[]>;
   createDocument: (
     docRefType: string,
     docRefName: string,
     destinationFolderRef: DocRefType,
-    permissionInheritance: string
+    permissionInheritance: string,
   ) => Promise<DocRefTree>;
   renameDocument: (docRef: DocRefType, name: string) => Promise<DocRefType>;
   copyDocuments: (
-    docRefs: Array<DocRefType>,
+    docRefs: DocRefType[],
     destination: DocRefType,
-    permissionInheritance: string
+    permissionInheritance: string,
   ) => Promise<DocRefTree>;
   moveDocuments: (
-    docRefs: Array<DocRefType>,
+    docRefs: DocRefType[],
     destination: DocRefType,
-    permissionInheritance: string
+    permissionInheritance: string,
   ) => Promise<DocRefTree>;
-  deleteDocuments: (docRefs: Array<DocRefType>) => Promise<DocRefTree>;
+  deleteDocuments: (docRefs: DocRefType[]) => Promise<DocRefTree>;
 }
 
 export const useApi = (): Api => {
@@ -43,27 +43,27 @@ export const useApi = (): Api => {
     httpGetJson,
     httpPostJsonResponse,
     httpPutJsonResponse,
-    httpDeleteJsonResponse
+    httpDeleteJsonResponse,
   } = useHttpClient();
 
   return {
     fetchDocTree: useCallback(
       () => httpGetJson(`${stroomBaseServiceUrl}/explorer/v1/all`),
-      [stroomBaseServiceUrl, httpGetJson]
+      [stroomBaseServiceUrl, httpGetJson],
     ),
 
     fetchDocRefTypes: useCallback(
       () => httpGetJson(`${stroomBaseServiceUrl}/explorer/v1/docRefTypes`),
-      [stroomBaseServiceUrl, httpGetJson]
+      [stroomBaseServiceUrl, httpGetJson],
     ),
     fetchDocInfo: useCallback(
       (docRef: DocRefType) =>
         httpGetJson(
           `${stroomBaseServiceUrl}/explorer/v1/info/${docRef.type}/${
             docRef.uuid
-          }`
+          }`,
         ),
-      [stroomBaseServiceUrl, httpGetJson]
+      [stroomBaseServiceUrl, httpGetJson],
     ),
     searchApp: useCallback(
       ({ term = "", docRefType = "", pageOffset = 0, pageSize = 10 }) => {
@@ -72,72 +72,72 @@ export const useApi = (): Api => {
 
         return httpGetJson(url);
       },
-      [stroomBaseServiceUrl, httpGetJson]
+      [stroomBaseServiceUrl, httpGetJson],
     ),
     createDocument: useCallback(
       (
         docRefType: string,
         docRefName: string,
         destinationFolderRef: DocRefType,
-        permissionInheritance: string
+        permissionInheritance: string,
       ) =>
         httpPostJsonResponse(`${stroomBaseServiceUrl}/explorer/v1/create`, {
           body: JSON.stringify({
             docRefType,
             docRefName,
             destinationFolderRef: stripDocRef(destinationFolderRef),
-            permissionInheritance
-          })
+            permissionInheritance,
+          }),
         }),
-      [stroomBaseServiceUrl, httpPostJsonResponse]
+      [stroomBaseServiceUrl, httpPostJsonResponse],
     ),
     renameDocument: useCallback(
       (docRef: DocRefType, name: string) =>
         httpPutJsonResponse(`${stroomBaseServiceUrl}/explorer/v1/rename`, {
           body: JSON.stringify({
             docRef: stripDocRef(docRef),
-            name
-          })
+            name,
+          }),
         }),
-      [stroomBaseServiceUrl, httpPutJsonResponse]
+      [stroomBaseServiceUrl, httpPutJsonResponse],
     ),
     copyDocuments: useCallback(
       (
-        docRefs: Array<DocRefType>,
+        docRefs: DocRefType[],
         destination: DocRefType,
-        permissionInheritance: string
+        permissionInheritance: string,
       ) =>
         httpPostJsonResponse(`${stroomBaseServiceUrl}/explorer/v1/copy`, {
           body: JSON.stringify({
             docRefs: docRefs.map(stripDocRef),
             destinationFolderRef: stripDocRef(destination),
-            permissionInheritance
-          })
+            permissionInheritance,
+          }),
         }),
-      [stroomBaseServiceUrl, httpPostJsonResponse]
+      [stroomBaseServiceUrl, httpPostJsonResponse],
     ),
     moveDocuments: useCallback(
       (
-        docRefs: Array<DocRefType>,
+        docRefs: DocRefType[],
         destination: DocRefType,
-        permissionInheritance: string
+        permissionInheritance: string,
       ) =>
         httpPutJsonResponse(`${stroomBaseServiceUrl}/explorer/v1/move`, {
           body: JSON.stringify({
             docRefs: docRefs.map(stripDocRef),
             destinationFolderRef: stripDocRef(destination),
-            permissionInheritance
-          })
+            permissionInheritance,
+          }),
         }),
-      [stroomBaseServiceUrl, httpPutJsonResponse]
+      [stroomBaseServiceUrl, httpPutJsonResponse],
     ),
     deleteDocuments: useCallback(
-      (docRefs: Array<DocRefType>) =>
+      (docRefs: DocRefType[]) =>
         httpDeleteJsonResponse(`${stroomBaseServiceUrl}/explorer/v1/delete`, {
-          body: JSON.stringify(docRefs.map(stripDocRef))
+          body: JSON.stringify(docRefs.map(stripDocRef)),
         }),
-      [stroomBaseServiceUrl, httpDeleteJsonResponse]
-    )
+      [stroomBaseServiceUrl, httpDeleteJsonResponse],
+    ),
   };
 };
 

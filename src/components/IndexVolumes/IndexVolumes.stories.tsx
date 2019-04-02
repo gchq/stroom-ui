@@ -22,7 +22,7 @@ import { Switch, Route, RouteComponentProps } from "react-router";
 import IndexVolumes from "./IndexVolumes";
 
 import IndexVolumeEditor from "./IndexVolumeEditor";
-import { addThemedStories } from "../../testing/storybook/themedStoryGenerator";
+import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
 
 const IndexVolumeGroupsWithRouter = () => (
   <Switch>

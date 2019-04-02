@@ -4,9 +4,9 @@ import { useState, useMemo, useCallback } from "react";
 import IconHeader from "../../IconHeader";
 import Button from "../../Button";
 import ThemedModal from "../../ThemedModal";
-// import { required, minLength2 } from "../../lib/formUtils";
-import { ElementDefinition } from "../../../types";
-import useForm from "../../../lib/useForm";
+// import { required, minLength2 } from "src/lib/formUtils";
+import { ElementDefinition } from "src/types";
+import useForm from "src/lib/useForm";
 import { Props, OnAddElement, UseDialog } from "./types";
 
 interface FormValues {
@@ -19,32 +19,32 @@ export const AddElementModal = ({
   onCloseDialog,
   parentId,
   elementDefinition,
-  existingNames
+  existingNames,
 }: Props) => {
   const initialValues = useMemo<FormValues>(
     () => ({
       newName: !!elementDefinition
         ? elementDefinition.type
-        : "no element definition"
+        : "no element definition",
     }),
-    [elementDefinition]
+    [elementDefinition],
   );
 
   const onUniqueNameCheck = useCallback(
     (value: string) => {
       return existingNames.includes(value);
     },
-    [existingNames]
+    [existingNames],
   );
 
   const {
     value: { newName },
-    useTextInput
+    useTextInput,
   } = useForm<FormValues>({
     initialValues,
     onValidate: useCallback(v => {
       onUniqueNameCheck(v.newName);
-    }, [])
+    }, []),
   });
   const newNameProps = useTextInput("newName");
 
@@ -97,7 +97,7 @@ export const useDialog = (onAddElement: OnAddElement): UseDialog => {
   const [elementDefinition, setElementDefinition] = useState<
     ElementDefinition | undefined
   >(undefined);
-  const [existingNames, setExistingNames] = useState<Array<string>>([]);
+  const [existingNames, setExistingNames] = useState<string[]>([]);
 
   return {
     showDialog: (_parentId, _elementDefinition, _existingNames) => {
@@ -117,8 +117,8 @@ export const useDialog = (onAddElement: OnAddElement): UseDialog => {
         setElementDefinition(undefined);
         setExistingNames([]);
         setIsOpen(false);
-      }
-    }
+      },
+    },
   };
 };
 

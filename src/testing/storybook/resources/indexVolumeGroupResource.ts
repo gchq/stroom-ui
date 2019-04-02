@@ -1,13 +1,13 @@
 import { HttpRequest, HttpResponse } from "@pollyjs/adapter-fetch";
 
 import { TestCache } from "../PollyDecorator";
-import { Config } from "../../../startup/config";
+import { Config } from "src/startup/config";
 import { ResourceBuilder } from "./types";
 
 const resourceBuilder: ResourceBuilder = (
   server: any,
   { stroomBaseServiceUrl }: Config,
-  testCache: TestCache
+  testCache: TestCache,
 ) => {
   const resource = `${stroomBaseServiceUrl}/stroom-index/volumeGroup/v1`;
 
@@ -28,7 +28,7 @@ const resourceBuilder: ResourceBuilder = (
     .get(`${resource}/:name`)
     .intercept((req: HttpRequest, res: HttpResponse) => {
       let group = testCache.data!.indexVolumesAndGroups.groups.find(
-        g => g.name === req.params.name
+        g => g.name === req.params.name,
       );
       if (!!group) {
         res.json(group);
@@ -48,13 +48,13 @@ const resourceBuilder: ResourceBuilder = (
         createTimeMs: now,
         updateTimeMs: now,
         createUser: "test",
-        updateUser: "test"
+        updateUser: "test",
       };
       testCache.data!.indexVolumesAndGroups = {
         ...testCache.data!.indexVolumesAndGroups,
         groups: testCache.data!.indexVolumesAndGroups.groups.concat([
-          newIndexVolumeGroup
-        ])
+          newIndexVolumeGroup,
+        ]),
       };
 
       res.json(newIndexVolumeGroup);
@@ -68,11 +68,11 @@ const resourceBuilder: ResourceBuilder = (
       testCache.data!.indexVolumesAndGroups = {
         ...testCache.data!.indexVolumesAndGroups,
         groups: testCache.data!.indexVolumesAndGroups.groups.filter(
-          g => g.name !== oldName
+          g => g.name !== oldName,
         ),
         groupMemberships: testCache.data!.indexVolumesAndGroups.groupMemberships.filter(
-          m => m.groupName !== oldName
-        )
+          m => m.groupName !== oldName,
+        ),
       };
 
       res.send(undefined);

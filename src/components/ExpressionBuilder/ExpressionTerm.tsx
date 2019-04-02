@@ -25,7 +25,7 @@ import {
   DragDropTypes,
   DragObject,
   dragCollect,
-  DragCollectedProps
+  DragCollectedProps,
 } from "./types";
 import ValueWidget from "./ValueWidget";
 import {
@@ -35,8 +35,8 @@ import {
   SelectOptionType,
   ConditionDisplayValues,
   ExpressionTermWithUuid,
-  SelectOptionsType
-} from "../../types";
+  SelectOptionsType,
+} from "src/types";
 import withValueType from "./withValueType";
 
 interface Props {
@@ -52,9 +52,9 @@ interface EnhancedProps extends Props, DragCollectedProps {}
 const dragSource: DragSourceSpec<Props, DragObject> = {
   beginDrag(props) {
     return {
-      expressionItem: props.term
+      expressionItem: props.term,
     };
-  }
+  },
 };
 
 const enhance = DragSource(DragDropTypes.TERM, dragSource, dragCollect);
@@ -65,7 +65,7 @@ const ExpressionTerm = ({
   term,
   isEnabled,
   expressionItemUpdated,
-  dataSource
+  dataSource,
 }: EnhancedProps) => {
   const onRequestDeleteTerm = () => {
     showDeleteItemDialog(term.uuid);
@@ -73,19 +73,19 @@ const ExpressionTerm = ({
 
   const onEnabledToggled = () => {
     expressionItemUpdated(term.uuid, {
-      enabled: !term.enabled
+      enabled: !term.enabled,
     });
   };
 
   const onFieldChange = (value: string) => {
     expressionItemUpdated(term.uuid, {
-      field: value
+      field: value,
     });
   };
 
   const onConditionChange = (value: ConditionType) => {
     expressionItemUpdated(term.uuid, {
-      condition: value
+      condition: value,
     });
   };
 
@@ -100,18 +100,18 @@ const ExpressionTerm = ({
 
   const fieldOptions = dataSource.fields.map((f: DataSourceFieldType) => ({
     value: f.name,
-    label: f.name
+    label: f.name,
   }));
 
   const thisField = dataSource.fields.find(
-    (f: DataSourceFieldType) => f.name === term.field
+    (f: DataSourceFieldType) => f.name === term.field,
   );
 
   let conditionOptions: SelectOptionsType = [];
   if (thisField) {
     conditionOptions = thisField.conditions.map((c: ConditionType) => ({
       value: c,
-      label: ConditionDisplayValues[c]
+      label: ConditionDisplayValues[c],
     }));
   }
 
@@ -124,7 +124,7 @@ const ExpressionTerm = ({
       {connectDragSource(
         <span>
           <FontAwesomeIcon icon="bars" />
-        </span>
+        </span>,
       )}
       <Select
         className="expression-term__select"

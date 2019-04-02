@@ -3,12 +3,14 @@ import { useState, useEffect } from "react";
 
 import { storiesOf } from "@storybook/react";
 import ProcessingList from "./ProcessingList";
-import { addThemedStories } from "../../../testing/storybook/themedStoryGenerator";
-import useStreamTasks from "../../../api/useStreamTasks";
-import JsonDebug from "../../../testing/JsonDebug";
+import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
+import useStreamTasks from "src/api/useStreamTasks";
+import JsonDebug from "src/testing/JsonDebug";
 import { StreamTaskType } from "src/types";
 
-const TestHarness = () => {
+const stories = storiesOf("Sections/Processing/List", module);
+
+addThemedStories(stories, () => {
   const streamTasksApi = useStreamTasks();
   const [selectedTracker, setSelectedTracker] = useState<
     StreamTaskType | undefined
@@ -25,8 +27,4 @@ const TestHarness = () => {
       <JsonDebug value={{ selectedTracker }} />
     </div>
   );
-};
-
-const stories = storiesOf("Sections/Processing/List", module);
-
-addThemedStories(stories, TestHarness);
+});

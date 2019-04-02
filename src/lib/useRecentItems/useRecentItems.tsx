@@ -1,22 +1,22 @@
 import useLocalStorage, { storeObjectFactory } from "../useLocalStorage";
-import { DocRefType, DocRefConsumer } from "../../types";
+import { DocRefType, DocRefConsumer } from "src/types";
 
 interface OutProps {
-  recentItems: Array<DocRefType>;
+  recentItems: DocRefType[];
   addRecentItem: DocRefConsumer;
 }
 
 export const useRecentItems = (): OutProps => {
-  const { setValue, value } = useLocalStorage<Array<DocRefType>>(
+  const { setValue, value } = useLocalStorage<DocRefType[]>(
     "recent-items",
     [],
-    storeObjectFactory()
+    storeObjectFactory(),
   );
 
   return {
     recentItems: value,
     addRecentItem: (d: DocRefType) =>
-      setValue([d, ...value.filter(v => v.uuid !== d.uuid)])
+      setValue([d, ...value.filter(v => v.uuid !== d.uuid)]),
   };
 };
 

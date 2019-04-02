@@ -1,9 +1,9 @@
 import * as React from "react";
 import { useState, useCallback } from "react";
 
-import ThemedModal from "../../../components/ThemedModal";
-import DialogActionButtons from "../../../components/DialogActionButtons";
-import useForm from "../../../lib/useForm";
+import ThemedModal from "src/components/ThemedModal";
+import DialogActionButtons from "src/components/DialogActionButtons";
+import useForm from "src/lib/useForm";
 
 interface Props {
   isOpen: boolean;
@@ -16,19 +16,19 @@ interface FormValues {
 }
 
 const initialValues: FormValues = {
-  name: "New Group"
+  name: "New Group",
 };
 
 const NewIndexVolumeGroupDialog = ({
   isOpen,
   onConfirm,
-  onCloseDialog
+  onCloseDialog,
 }: Props) => {
   const {
     useTextInput,
-    value: { name }
+    value: { name },
   } = useForm<FormValues>({
-    initialValues
+    initialValues,
   });
   const nameProps = useTextInput("name");
 
@@ -76,8 +76,8 @@ export const useDialog = (onConfirm: (name: string) => void): UseDialog => {
     componentProps: {
       onConfirm,
       onCloseDialog: () => setIsOpen(false),
-      isOpen
-    }
+      isOpen,
+    },
   };
 };
 

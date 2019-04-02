@@ -20,12 +20,12 @@ import { useState, useMemo } from "react";
 import { storiesOf } from "@storybook/react";
 
 import IndexVolumeGroupModalPicker from "./IndexVolumeGroupModalPicker";
-import { addThemedStories } from "../../../testing/storybook/themedStoryGenerator";
+import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
 
 import { useDialog } from "./IndexVolumeGroupModalPicker";
-import Button from "../../../components/Button";
-import JsonDebug from "../../../testing/JsonDebug";
-import fullTestData from "../../../testing/data";
+import Button from "src/components/Button";
+import JsonDebug from "src/testing/JsonDebug";
+import fullTestData from "src/testing/data";
 
 const TestModal: React.FunctionComponent = () => {
   const [picked, setPicked] = useState<string>("");
@@ -33,20 +33,16 @@ const TestModal: React.FunctionComponent = () => {
   const valuesToFilterOut = useMemo(
     () =>
       fullTestData.indexVolumesAndGroups.groups.slice(0, 1).map(g => g.name),
-    []
+    [],
   );
 
   const { componentProps, showDialog } = useDialog({
     onConfirm: setPicked,
-    valuesToFilterOut
+    valuesToFilterOut,
   });
 
   return (
     <div>
-      <fieldset>
-        <label>Picked Group Name</label>
-        <p>{picked}</p>
-      </fieldset>
       <Button text="Pick" onClick={showDialog} />
       <IndexVolumeGroupModalPicker {...componentProps} />
       <JsonDebug value={{ picked }} />

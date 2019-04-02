@@ -19,30 +19,29 @@ import { useMemo } from "react";
 
 import { storiesOf } from "@storybook/react";
 
-import { addThemedStories } from "../../../testing/storybook/themedStoryGenerator";
-
+import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
 
 import UserPicker, { usePicker } from "./UserPicker";
-import Button from "../../../components/Button";
-import JsonDebug from "../../../testing/JsonDebug";
-import fullTestData from "../../../testing/data";
+import Button from "src/components/Button";
+import JsonDebug from "src/testing/JsonDebug";
+import fullTestData from "src/testing/data";
 
 const stories = storiesOf("Pickers/User Picker", module);
 
-const TestHarness = () => {
+addThemedStories(stories, () => {
   const { userNamesToFilterOut, valuesToFilterOut } = useMemo(() => {
     let usersToFilterOut = fullTestData.usersAndGroups.users.slice(0, 3);
     let valuesToFilterOut = usersToFilterOut.map(u => u.uuid);
     let userNamesToFilterOut = usersToFilterOut.map(u => u.name);
     return {
       userNamesToFilterOut,
-      valuesToFilterOut
+      valuesToFilterOut,
     };
   }, []);
 
   const { pickerProps, reset } = usePicker({
     isGroup: undefined,
-    valuesToFilterOut
+    valuesToFilterOut,
   });
   const { value } = pickerProps;
 
@@ -53,6 +52,4 @@ const TestHarness = () => {
       <JsonDebug value={{ value, userNamesToFilterOut }} />
     </div>
   );
-};
-
-addThemedStories(stories, () => <TestHarness />);
+});

@@ -1,18 +1,18 @@
 import * as React from "react";
 import { useCallback } from "react";
 
-import IconHeader from "../../../components/IconHeader";
-import Button from "../../../components/Button";
-import useRouter from "../../../lib/useRouter";
-import { useIndexVolumeGroup } from "../../../api/indexVolumeGroup";
+import IconHeader from "src/components/IconHeader";
+import Button from "src/components/Button";
+import useRouter from "src/lib/useRouter";
+import { useIndexVolumeGroup } from "src/api/indexVolumeGroup";
 import {
   useTable as useIndexVolumesTable,
-  IndexVolumesTable
+  IndexVolumesTable,
 } from "../../IndexVolumes/IndexVolumesTable";
 import ThemedConfirm, {
-  useDialog as useConfirmDialog
-} from "../../../components/ThemedConfirm";
-import Loader from "../../../components/Loader";
+  useDialog as useConfirmDialog,
+} from "src/components/ThemedConfirm";
+import Loader from "src/components/Loader";
 
 interface Props {
   groupName: string;
@@ -22,24 +22,24 @@ const IndexVolumeGroupEditor = ({ groupName }: Props) => {
   const { history } = useRouter();
 
   const { indexVolumes, indexVolumeGroup, removeVolume } = useIndexVolumeGroup(
-    groupName
+    groupName,
   );
 
   const { componentProps: tableProps } = useIndexVolumesTable(indexVolumes);
 
   const {
-    selectableTableProps: { selectedItems }
+    selectableTableProps: { selectedItems },
   } = tableProps;
 
   const {
     showDialog: showRemoveDialog,
-    componentProps: removeDialogProps
+    componentProps: removeDialogProps,
   } = useConfirmDialog({
     onConfirm: () => selectedItems.forEach(v => removeVolume(v.id)),
     getQuestion: useCallback(() => "Remove selected volumes from group?", []),
     getDetails: useCallback(() => selectedItems.map(s => s.id).join(", "), [
-      selectedItems.map(s => s.id)
-    ])
+      selectedItems.map(s => s.id),
+    ]),
   });
 
   if (!indexVolumeGroup) {

@@ -1,6 +1,6 @@
 import { useMemo, useState, useCallback } from "react";
 
-import useDocumentApi from "../../api/useDocumentApi";
+import useDocumentApi from "src/api/useDocumentApi";
 import { useDocRefEditor } from "../DocumentEditors/DocRefEditor";
 import {
   getPipelineAsTree,

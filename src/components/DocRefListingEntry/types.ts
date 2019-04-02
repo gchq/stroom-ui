@@ -1,4 +1,4 @@
-import { DocRefType, DocRefConsumer } from "../../types";
+import { DocRefType, DocRefConsumer } from "src/types";
 
 export interface Props {
   docRef: DocRefType;
@@ -8,6 +8,6 @@ export interface Props {
   enterFolder?: DocRefConsumer;
   children?: React.ReactNode;
   toggleSelection: (itemKey: string) => void;
-  selectedDocRefs: Array<DocRefType>;
+  selectedDocRefs: DocRefType[];
   focussedDocRef?: DocRefType;
 }

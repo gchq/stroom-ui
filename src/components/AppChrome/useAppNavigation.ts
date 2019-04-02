@@ -1,8 +1,8 @@
 import { NavigateApp } from "./types";
-import useRouter from "../../lib/useRouter";
+import useRouter from "src/lib/useRouter";
 import { useMemo } from "react";
-import { DocRefType } from "../../types";
-import { IsGroup } from "../../api/userGroups";
+import { DocRefType } from "src/types";
+import { IsGroup } from "src/api/userGroups";
 
 export const urlGenerator: NavigateApp<string> = {
   goToWelcome: () => `/s/welcome`,

@@ -17,17 +17,22 @@ import * as React from "react";
 import { useState } from "react";
 import { storiesOf } from "@storybook/react";
 
-import { addThemedStories } from "../../../../testing/storybook/themedStoryGenerator";
+import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
 
 import AnalyzerPicker from "./AnalyzerPicker";
-import { AnalyzerType } from "../../../../types";
+import { AnalyzerType } from "src/types";
 
 const stories = storiesOf("Pickers/Index Analyzer", module);
 
 const B: React.FunctionComponent = () => {
   const [value, onChange] = useState<AnalyzerType | undefined>(undefined);
 
-  return <AnalyzerPicker value={value} onChange={onChange} />;
+  return (
+    <form>
+      <label>Analyzer</label>
+      <AnalyzerPicker value={value} onChange={onChange} />
+    </form>
+  );
 };
 
 addThemedStories(stories, () => <B />);

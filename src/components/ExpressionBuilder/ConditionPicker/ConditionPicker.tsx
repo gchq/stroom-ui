@@ -4,8 +4,8 @@ import {
   SelectOptionType,
   ConditionType,
   ConditionDisplayValues,
-  SelectOptionsType
-} from "../../../types";
+  SelectOptionsType,
+} from "src/types";
 
 interface Props {
   className?: string;
@@ -15,17 +15,17 @@ interface Props {
 }
 
 const DEFAULT_OPTIONS: SelectOptionsType = Object.entries(
-  ConditionDisplayValues
+  ConditionDisplayValues,
 ).map(d => ({
   value: d[0],
-  label: d[1]
+  label: d[1],
 }));
 
 const ConditionPicker = ({
   className,
   conditionOptions = DEFAULT_OPTIONS,
   value,
-  onChange
+  onChange,
 }: Props) => (
   <Select
     className={className}

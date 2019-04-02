@@ -1,9 +1,9 @@
 import * as React from "react";
 import { useState, useCallback } from "react";
 
-import ThemedModal from "../../../components/ThemedModal";
-import DialogActionButtons from "../../../components/DialogActionButtons";
-import useForm from "../../../lib/useForm";
+import ThemedModal from "src/components/ThemedModal";
+import DialogActionButtons from "src/components/DialogActionButtons";
+import useForm from "src/lib/useForm";
 
 interface Props {
   isOpen: boolean;
@@ -18,15 +18,15 @@ interface FormValues {
 
 const initialValues: FormValues = {
   nodeName: "",
-  path: ""
+  path: "",
 };
 
 const NewIndexVolumeDialog = ({ isOpen, onConfirm, onCloseDialog }: Props) => {
   const {
     value: { nodeName, path },
-    useTextInput
+    useTextInput,
   } = useForm<FormValues>({
-    initialValues
+    initialValues,
   });
   const nodeNameProps = useTextInput("nodeName");
   const pathProps = useTextInput("path");
@@ -68,7 +68,7 @@ interface UseDialog {
 }
 
 export const useDialog = (
-  onConfirm: (nodeName: string, path: string) => void
+  onConfirm: (nodeName: string, path: string) => void,
 ): UseDialog => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
@@ -78,11 +78,11 @@ export const useDialog = (
       onConfirm,
       onCloseDialog: () => {
         setIsOpen(false);
-      }
+      },
     },
     showDialog: () => {
       setIsOpen(true);
-    }
+    },
   };
 };
 

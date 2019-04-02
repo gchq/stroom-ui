@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { DocRefTree } from "../../../../types";
+import { DocRefTree } from "src/types";
 
 export default {
   uuid: "0",

@@ -18,21 +18,21 @@ import { useEffect, useState } from "react";
 
 import ExpressionOperator from "./ExpressionOperator";
 import DeleteExpressionItem, {
-  useDialog as useDeleteItemDialog
+  useDialog as useDeleteItemDialog,
 } from "./DeleteExpressionItem/DeleteExpressionItem";
 import {
   DataSourceType,
   StyledComponentProps,
   ExpressionOperatorWithUuid,
-  ExpressionHasUuid
-} from "../../types";
+  ExpressionHasUuid,
+} from "src/types";
 import ROExpressionBuilder from "./ROExpressionBuilder";
 import {
   updateItemInTree,
   addItemsToTree,
   deleteItemFromTree,
-  moveItemsInTree
-} from "../../lib/treeUtils";
+  moveItemsInTree,
+} from "src/lib/treeUtils";
 
 import { getNewTerm, getNewOperator } from "./expressionBuilderUtils";
 
@@ -49,19 +49,19 @@ const ExpressionBuilder = ({
   showModeToggle: smtRaw,
   editMode,
   expression,
-  onChange
+  onChange,
 }: Props) => {
   const [inEditMode, setEditableByUser] = useState<boolean>(false);
 
   const expressionTermAdded = (itemId: string) => {
     const e = addItemsToTree(expression, itemId, [
-      getNewTerm()
+      getNewTerm(),
     ]) as ExpressionOperatorWithUuid;
     onChange(e);
   };
   const expressionOperatorAdded = (itemId: string) => {
     const e = addItemsToTree(expression, itemId, [
-      getNewOperator()
+      getNewOperator(),
     ]) as ExpressionOperatorWithUuid;
     onChange(e);
   };
@@ -69,23 +69,23 @@ const ExpressionBuilder = ({
     const e = updateItemInTree(
       expression,
       itemId,
-      updates
+      updates,
     ) as ExpressionOperatorWithUuid;
     onChange(e);
   };
   const expressionItemDeleted = (itemId: string) => {
     const e = deleteItemFromTree(
       expression,
-      itemId
+      itemId,
     ) as ExpressionOperatorWithUuid;
     onChange(e);
   };
   const expressionItemMoved = (
     destination: ExpressionHasUuid,
-    itemToMove: ExpressionHasUuid
+    itemToMove: ExpressionHasUuid,
   ) => {
     const e = moveItemsInTree(expression, destination, [
-      itemToMove
+      itemToMove,
     ]) as ExpressionOperatorWithUuid;
     onChange(e);
   };
@@ -96,7 +96,7 @@ const ExpressionBuilder = ({
 
   const {
     showDialog: showDeleteItemDialog,
-    componentProps: deleteDialogComponentProps
+    componentProps: deleteDialogComponentProps,
   } = useDeleteItemDialog(itemId => expressionItemDeleted(itemId));
 
   const showModeToggle = smtRaw && !!dataSource;

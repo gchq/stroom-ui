@@ -2,14 +2,14 @@ import * as React from "react";
 import { useMemo } from "react";
 
 import DocRefImage from "../DocRefImage";
-import { OptionType, ControlledInput } from "../../types";
+import { OptionType, ControlledInput } from "src/types";
 import DropdownSelect, { DropdownOptionProps } from "../DropdownSelect";
-import useDocRefTypes from "../../api/explorer/useDocRefTypes";
+import useDocRefTypes from "src/api/explorer/useDocRefTypes";
 
 const DocRefTypeOption = ({
   inFocus,
   option: { text, value },
-  onClick
+  onClick,
 }: DropdownOptionProps) => (
   <div className={`hoverable ${inFocus ? "inFocus" : ""}`} onClick={onClick}>
     <DocRefImage size="sm" docRefType={value} />
@@ -18,15 +18,15 @@ const DocRefTypeOption = ({
 );
 
 let DocRefTypePicker = (props: ControlledInput<string>) => {
-  const docRefTypes: Array<string> = useDocRefTypes();
+  const docRefTypes: string[] = useDocRefTypes();
 
-  let options: Array<OptionType> = useMemo(
+  let options: OptionType[] = useMemo(
     () =>
       docRefTypes.map((d: string) => ({
         text: d,
-        value: d
+        value: d,
       })),
-    [docRefTypes]
+    [docRefTypes],
   );
   return (
     <DropdownSelect

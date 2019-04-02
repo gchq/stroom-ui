@@ -29,9 +29,9 @@ import PipelineSettings, {
 import ElementPalette from "./ElementPalette";
 import DeletePipelineElement, {
   useDialog as useDeleteElementDialog,
-} from "./DeletePipelineElement";
+} from "./DeletePipelineElement/DeletePipelineElement";
 import { ElementDetails } from "./ElementDetails";
-import Pipeline from "./Pipeline";
+import Pipeline from "./PipelineDisplay";
 import DocRefEditor, {
   SwitchedDocRefEditorProps,
 } from "../DocumentEditors/DocRefEditor";

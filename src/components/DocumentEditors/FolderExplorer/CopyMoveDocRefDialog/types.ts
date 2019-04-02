@@ -1,4 +1,4 @@
-import { DocRefType, PermissionInheritance } from "../../../../types";
+import { DocRefType, PermissionInheritance } from "src/types";
 
 export interface Props {
   uuids: string[];

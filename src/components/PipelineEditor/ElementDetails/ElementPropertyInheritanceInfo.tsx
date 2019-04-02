@@ -18,7 +18,7 @@ import * as React from "react";
 
 import Button from "../../Button";
 
-import { PipelineDocumentType } from "../../../types";
+import { PipelineDocumentType } from "src/types";
 import { PipelineEditApi } from "../types";
 
 interface Props {

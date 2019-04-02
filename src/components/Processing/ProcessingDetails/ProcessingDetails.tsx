@@ -17,8 +17,8 @@
 import * as React from "react";
 import * as moment from "moment";
 
-import HorizontalPanel from "../../../components/HorizontalPanel";
-import { StreamTaskType } from "../../../types";
+import HorizontalPanel from "src/components/HorizontalPanel";
+import { StreamTaskType } from "src/types";
 
 interface Props {
   tracker?: StreamTaskType;

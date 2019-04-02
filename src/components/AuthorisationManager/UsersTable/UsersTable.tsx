@@ -2,15 +2,15 @@ import * as React from "react";
 
 import ReactTable from "react-table";
 
-import { User } from "../../../types";
+import { User } from "src/types";
 import {
   useSelectableReactTable,
   SelectionBehaviour,
-  TableOutProps
-} from "../../../lib/useSelectableItemListing";
+  TableOutProps,
+} from "src/lib/useSelectableItemListing";
 
 interface Props {
-  users: Array<User>;
+  users: User[];
   selectableTableProps: TableOutProps<User>;
 }
 
@@ -18,22 +18,22 @@ const COLUMNS = [
   {
     id: "uuid",
     Header: "UUID",
-    accessor: (u: User) => u.uuid
+    accessor: (u: User) => u.uuid,
   },
   {
     id: "name",
     Header: "Name",
-    accessor: (u: User) => u.name
+    accessor: (u: User) => u.name,
   },
   {
     id: "isGroup",
     Header: "Is Group",
-    accessor: (u: User) => (u.isGroup ? "Group" : "User")
-  }
+    accessor: (u: User) => (u.isGroup ? "Group" : "User"),
+  },
 ];
 
 const UsersTable = ({
-  selectableTableProps: { onKeyDownWithShortcuts, tableProps }
+  selectableTableProps: { onKeyDownWithShortcuts, tableProps },
 }: Props) => (
   <div tabIndex={0} onKeyDown={onKeyDownWithShortcuts}>
     <ReactTable {...tableProps} />
@@ -44,23 +44,23 @@ interface UseTable {
   componentProps: Props;
 }
 
-export const useTable = (users: Array<User>): UseTable => {
+export const useTable = (users: User[]): UseTable => {
   const selectableTableProps = useSelectableReactTable<User>(
     {
       getKey: v => v.uuid,
       items: users,
-      selectionBehaviour: SelectionBehaviour.MULTIPLE
+      selectionBehaviour: SelectionBehaviour.MULTIPLE,
     },
     {
-      columns: COLUMNS
-    }
+      columns: COLUMNS,
+    },
   );
 
   return {
     componentProps: {
       selectableTableProps,
-      users
-    }
+      users,
+    },
   };
 };
 

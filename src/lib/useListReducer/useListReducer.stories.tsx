@@ -12,15 +12,15 @@ class Character {
   }
 }
 
-const testCharacters: Array<Character> = [
+const testCharacters: Character[] = [
   { name: "Arnold Rimmer" },
   { name: "Dave Lister" },
   { name: "Cat" },
   { name: "Holly" },
-  { name: "Kochanski" }
+  { name: "Kochanski" },
 ];
 
-const TestHarness = () => {
+storiesOf("Custom Hooks/useListReducer", module).add("basic", () => {
   const { items, itemsReceived, itemAdded, itemRemoved } = useListReducer<
     Character
   >(c => c.name);
@@ -37,7 +37,7 @@ const TestHarness = () => {
       itemAdded({ name: newName });
       e.preventDefault();
     },
-    [itemAdded, newName]
+    [itemAdded, newName],
   );
 
   return (
@@ -55,8 +55,4 @@ const TestHarness = () => {
       ))}
     </div>
   );
-};
-
-storiesOf("Custom Hooks/useListReducer", module).add("basic", () => (
-  <TestHarness />
-));
+});

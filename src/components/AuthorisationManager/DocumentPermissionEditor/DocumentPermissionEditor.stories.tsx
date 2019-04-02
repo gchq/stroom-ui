@@ -19,9 +19,8 @@ import * as React from "react";
 import { storiesOf } from "@storybook/react";
 import { Switch, Route, RouteComponentProps } from "react-router";
 
-import fullTestData from "../../../testing/data";
-import { addThemedStories } from "../../../testing/storybook/themedStoryGenerator";
-
+import fullTestData from "src/testing/data";
+import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
 
 import DocumentPermissionEditor from "./DocumentPermissionEditor";
 import DocumentPermissionForUserEditor from "../DocumentPermissionForUserEditor";
@@ -39,8 +38,8 @@ const TestHarness = ({ docRefUuid }: Props) => (
       path="/s/authorisationManager/document/:docRefUuid/:userUuid"
       render={({
         match: {
-          params: { userUuid, docRefUuid }
-        }
+          params: { userUuid, docRefUuid },
+        },
       }: RouteComponentProps<any>) => (
         <DocumentPermissionForUserEditor
           docRefUuid={docRefUuid}
@@ -56,7 +55,7 @@ const TestHarness = ({ docRefUuid }: Props) => (
 
 const stories = storiesOf(
   "Sections/Authorisation Manager/Document Permission Editor",
-  module
+  module,
 );
 
 addThemedStories(stories, () => <TestHarness docRefUuid={testDocRef.uuid} />);

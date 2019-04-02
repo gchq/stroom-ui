@@ -1,4 +1,4 @@
-import { IndexDoc, IndexField } from "../../types";
+import { IndexDoc, IndexField } from "src/types";
 import * as uuidv4 from "uuid/v4";
 import * as loremIpsum from "lorem-ipsum";
 

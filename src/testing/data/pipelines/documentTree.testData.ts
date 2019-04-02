@@ -15,7 +15,7 @@
  */
 
 import testPipelines from "./testPipelines";
-import { DocRefTree } from "../../../types";
+import { DocRefTree } from "src/types";
 
 export default {
   uuid: "root1234567890",
@@ -24,11 +24,11 @@ export default {
   children: Object.entries(testPipelines)
     .map(k => ({
       uuid: k[0],
-      data: k[1]
+      data: k[1],
     }))
     .map(pipeline => ({
       uuid: pipeline.uuid,
       type: "Pipeline",
-      name: pipeline.uuid
-    }))
+      name: pipeline.uuid,
+    })),
 } as DocRefTree;

@@ -20,9 +20,8 @@ import { storiesOf } from "@storybook/react";
 
 import DocRefTypePicker from "./DocRefTypePicker";
 
-
-import JsonDebug from "../../testing/JsonDebug";
-import { addThemedStories } from "../../testing/storybook/themedStoryGenerator";
+import JsonDebug from "src/testing/JsonDebug";
+import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
 
 const TestForm = () => {
   const [chosenDocRefType, setChosenDocRefType] = useState<string>("");

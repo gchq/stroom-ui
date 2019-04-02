@@ -1,4 +1,4 @@
-import { DataSourceType } from "../../../types";
+import { DataSourceType } from "src/types";
 
 export default {
   fields: [
@@ -6,7 +6,7 @@ export default {
       type: "FIELD",
       name: "feedName",
       queryable: true,
-      conditions: ["EQUALS", "CONTAINS"]
-    }
-  ]
+      conditions: ["EQUALS", "CONTAINS"],
+    },
+  ],
 } as DataSourceType;

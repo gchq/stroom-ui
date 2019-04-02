@@ -3,32 +3,32 @@ import { useEffect, useState, useMemo } from "react";
 
 import Select from "react-select";
 
-import { useManageUsers } from "../../../api/userGroups";
-import { SelectOptionType } from "../../../types";
+import { useManageUsers } from "src/api/userGroups";
+import { SelectOptionType } from "src/types";
 import { Props, BaseProps, UseProps } from "./types";
 
-const DEFAULT_USER_UUIDS_TO_FILTER_OUT: Array<string> = [];
+const DEFAULT_USER_UUIDS_TO_FILTER_OUT: string[] = [];
 
 const UserPicker = ({
   value,
   onChange,
   isGroup,
-  valuesToFilterOut = DEFAULT_USER_UUIDS_TO_FILTER_OUT
+  valuesToFilterOut = DEFAULT_USER_UUIDS_TO_FILTER_OUT,
 }: Props) => {
   const { findUsers, users } = useManageUsers();
   useEffect(() => {
     findUsers(undefined, isGroup, undefined);
   }, [findUsers]);
 
-  const options: Array<SelectOptionType> = useMemo(
+  const options: SelectOptionType[] = useMemo(
     () =>
       users
         .filter(user => !valuesToFilterOut.includes(user.uuid))
         .map(g => ({
           value: g.uuid,
-          label: g.name
+          label: g.name,
         })),
-    [users, valuesToFilterOut]
+    [users, valuesToFilterOut],
   );
 
   return (
@@ -43,13 +43,13 @@ const UserPicker = ({
 
 export const usePicker = ({
   isGroup,
-  valuesToFilterOut
+  valuesToFilterOut,
 }: BaseProps): UseProps => {
   const [value, onChange] = useState<string | undefined>(undefined);
 
   return {
     pickerProps: { value, onChange, isGroup, valuesToFilterOut },
-    reset: () => onChange(undefined)
+    reset: () => onChange(undefined),
   };
 };
 

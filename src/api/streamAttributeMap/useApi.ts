@@ -1,20 +1,20 @@
 import { useCallback } from "react";
-import useHttpClient from "../useHttpClient";
+import useHttpClient from "src/lib/useHttpClient";
 import {
   ExpressionOperatorType,
   DataSourceType,
   ExpressionOperatorWithUuid,
   ExpressionHasUuid,
   DataRow,
-  StreamAttributeMapResult
-} from "../../types";
-import { useConfig } from "../../startup/config";
+  StreamAttributeMapResult,
+} from "src/types";
+import { useConfig } from "src/startup/config";
 import { SearchWithExpressionProps, PageProps } from "./types";
 
 interface Api {
   page: (props: PageProps) => Promise<StreamAttributeMapResult>;
   search: (
-    props: SearchWithExpressionProps
+    props: SearchWithExpressionProps,
   ) => Promise<StreamAttributeMapResult>;
   fetchDataSource: () => Promise<DataSourceType>;
   getDetailsForSelectedStream: (metaId: number) => Promise<DataRow>;
@@ -30,18 +30,18 @@ export const useApi = (): Api => {
         httpGetJson(
           `${stroomBaseServiceUrl}/streamattributemap/v1/dataSource`,
           {},
-          false
+          false,
         ),
-      [stroomBaseServiceUrl, httpGetJson]
+      [stroomBaseServiceUrl, httpGetJson],
     ),
     getDetailsForSelectedStream: useCallback(
       (metaId: number) =>
         httpGetJson(
           `${stroomBaseServiceUrl}/streamattributemap/v1/${metaId}`,
           {},
-          false
+          false,
         ),
-      [stroomBaseServiceUrl, httpGetJson]
+      [stroomBaseServiceUrl, httpGetJson],
     ),
     page: useCallback(
       ({ pageInfo }: PageProps) => {
@@ -57,7 +57,7 @@ export const useApi = (): Api => {
 
         return httpGetJson(url.href);
       },
-      [stroomBaseServiceUrl, httpGetJson]
+      [stroomBaseServiceUrl, httpGetJson],
     ),
     search: useCallback(
       ({ pageInfo, expressionWithUuids }: SearchWithExpressionProps) => {
@@ -74,11 +74,11 @@ export const useApi = (): Api => {
         const expression = cleanExpression(expressionWithUuids);
 
         return httpPostJsonResponse(url.href, {
-          body: JSON.stringify(expression)
+          body: JSON.stringify(expression),
         });
       },
-      [stroomBaseServiceUrl, httpPostJsonResponse]
-    )
+      [stroomBaseServiceUrl, httpPostJsonResponse],
+    ),
   };
 };
 
@@ -88,7 +88,7 @@ export const useApi = (): Api => {
  * fails if we have these uuids.
  */
 const cleanExpression = (
-  expression: ExpressionOperatorWithUuid
+  expression: ExpressionOperatorWithUuid,
 ): ExpressionOperatorType => {
   // UUIDs are not part of Expression
   delete expression.uuid;

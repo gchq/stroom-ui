@@ -5,7 +5,7 @@ import { useConfig } from "../config";
 import { AppPermissions } from "./types";
 import AuthorisationContext from "./AuthorisationContext";
 
-const AuthorisationContextProvider: FunctionComponent<{}> = ({ children }) => {
+const AuthorisationContextProvider: FunctionComponent = ({ children }) => {
   const [appPermissions, setAppPermissions] = useState<AppPermissions>({});
   const { idToken } = useAuthenticationContext();
   const { authorisationServiceUrl } = useConfig();
@@ -14,10 +14,10 @@ const AuthorisationContextProvider: FunctionComponent<{}> = ({ children }) => {
     (permissionName: string, hasPermission: boolean) => {
       setAppPermissions({
         ...appPermissions,
-        [permissionName]: hasPermission
+        [permissionName]: hasPermission,
       });
     },
-    [appPermissions, setAppPermissions]
+    [appPermissions, setAppPermissions],
   );
 
   const fetchAppPermission = useCallback(
@@ -26,13 +26,13 @@ const AuthorisationContextProvider: FunctionComponent<{}> = ({ children }) => {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
-          Authorization: `Bearer ${idToken}`
+          Authorization: `Bearer ${idToken}`,
         },
         method: "post",
         mode: "cors",
         body: JSON.stringify({
-          permissionName
-        })
+          permissionName,
+        }),
       }).then(response => {
         if (response.status === 401) {
           setHasAppPermission(permissionName, false);
@@ -40,12 +40,12 @@ const AuthorisationContextProvider: FunctionComponent<{}> = ({ children }) => {
           setHasAppPermission(permissionName, true);
         } else {
           console.log(
-            `Unknown response from the authorisation service! ${response}`
+            `Unknown response from the authorisation service! ${response}`,
           );
         }
       });
     },
-    [authorisationServiceUrl, setHasAppPermission]
+    [authorisationServiceUrl, setHasAppPermission],
   );
 
   return (

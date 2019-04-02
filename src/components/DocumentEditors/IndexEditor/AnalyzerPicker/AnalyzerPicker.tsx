@@ -5,7 +5,7 @@ import {
   AnalyzerType,
   SelectOptionsType,
   AnalyzerDisplayValues,
-} from "../../../../types";
+} from "src/types";
 
 interface Props {
   className?: string;

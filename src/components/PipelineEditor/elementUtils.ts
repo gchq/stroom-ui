@@ -18,8 +18,8 @@ import {
   ElementDefinitions,
   ElementDefinitionsByCategory,
   ElementDefinitionsByType,
-  ElementDefinition
-} from "../../types";
+  ElementDefinition,
+} from "src/types";
 
 /**
  * This will take in the map of element types and return a new map
@@ -27,16 +27,16 @@ import {
  * @param {elementTypes} elements The element definitions from Stroom
  */
 export function groupByCategory(
-  elements: ElementDefinitions
+  elements: ElementDefinitions,
 ): ElementDefinitionsByCategory {
   return Object.entries(elements)
     .map(k => k[1])
     .reduce(
       (acc, next) => ({
         ...acc,
-        [next.category]: [...(acc[next.category] || []), next]
+        [next.category]: [...(acc[next.category] || []), next],
       }),
-      {}
+      {},
     );
 }
 
@@ -46,16 +46,16 @@ export function groupByCategory(
  * @param {elementTypes} elements The element definitions from Stroom
  */
 export function keyByType(
-  elements: ElementDefinitions
+  elements: ElementDefinitions,
 ): ElementDefinitionsByType {
   return Object.entries(elements)
     .map(k => k[1])
     .reduce(
       (acc, next) => ({
         ...acc,
-        [next.type]: next
+        [next.type]: next,
       }),
-      {}
+      {},
     );
 }
 
@@ -71,7 +71,7 @@ export function keyByType(
 export function isValidChildType(
   parentType: ElementDefinition,
   childType: ElementDefinition,
-  currentChildCount: number
+  currentChildCount: number,
 ) {
   if (parentType.roles.includes(ElementRoles.WRITER)) {
     if (currentChildCount > 0) {

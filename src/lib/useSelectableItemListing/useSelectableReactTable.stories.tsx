@@ -21,21 +21,21 @@ import useSelectableReactTable from "./useSelectableReactTable";
 import { SelectionBehaviour } from "./enums";
 import ReactTable from "react-table";
 import useForm from "../useForm";
-import Button from "../../components/Button";
-import JsonDebug from "../../testing/JsonDebug";
+import Button from "src/components/Button";
+import JsonDebug from "src/testing/JsonDebug";
 import useTestAnimals, { Animal } from "./useTestAnimals";
 
 const COLUMNS = [
   {
     id: "species",
     Header: "Species",
-    accessor: (u: Animal) => u.species
+    accessor: (u: Animal) => u.species,
   },
   {
     id: "name",
     Header: "Name",
-    accessor: (u: Animal) => u.name
-  }
+    accessor: (u: Animal) => u.name,
+  },
 ];
 
 interface NewItemFormValues {
@@ -45,13 +45,13 @@ interface NewItemFormValues {
 
 const defaultFormValues: NewItemFormValues = {
   species: "Dog",
-  name: "Fluffy"
+  name: "Fluffy",
 };
 
 const TestTable = () => {
   const {
     value: { species, name },
-    useTextInput
+    useTextInput,
   } = useForm<NewItemFormValues>({ initialValues: defaultFormValues });
 
   const [externalSelectedItem, setExternalSelectedItem] = useState<
@@ -68,28 +68,28 @@ const TestTable = () => {
       }
       e.preventDefault();
     },
-    [animals, name, species, addAnimal]
+    [animals, name, species, addAnimal],
   );
 
   const {
     onKeyDownWithShortcuts,
     selectedItem,
-    tableProps
+    tableProps,
   } = useSelectableReactTable<Animal>(
     {
       getKey: a => a.uuid,
       items: animals,
       selectionBehaviour: SelectionBehaviour.MULTIPLE,
-      preFocusWrap
+      preFocusWrap,
     },
     {
-      columns: COLUMNS
-    }
+      columns: COLUMNS,
+    },
   );
 
   useEffect(() => setExternalSelectedItem(selectedItem), [
     selectedItem,
-    setExternalSelectedItem
+    setExternalSelectedItem,
   ]);
 
   return (
@@ -109,7 +109,7 @@ const TestTable = () => {
         value={{
           species: speciesProps.value,
           name: nameProps.value,
-          externalSelectedItem
+          externalSelectedItem,
         }}
       />
     </div>
@@ -118,5 +118,5 @@ const TestTable = () => {
 
 storiesOf("Custom Hooks/useSelectableReactTable", module).add(
   "Table",
-  TestTable
+  TestTable,
 );

@@ -4,7 +4,7 @@ import { useState, useMemo, useCallback } from "react";
 import Button from "../Button";
 import IconHeader from "../IconHeader";
 import ThemedModal from "../ThemedModal";
-import useForm from "../../lib/useForm";
+import useForm from "src/lib/useForm";
 
 interface Props {
   isOpen: boolean;
@@ -21,17 +21,17 @@ const PipelineSettings = ({
   isOpen,
   initialDescription,
   updateValues,
-  onCloseDialog
+  onCloseDialog,
 }: Props) => {
   const initialValues = useMemo(() => ({ description: initialDescription }), [
-    initialDescription
+    initialDescription,
   ]);
 
   const {
     value: { description },
-    useTextInput
+    useTextInput,
   } = useForm<FormValues>({
-    initialValues
+    initialValues,
   });
   const descriptionProps = useTextInput("description");
 
@@ -71,7 +71,7 @@ const PipelineSettings = ({
   );
 };
 
-type UseDialog = {
+interface UseDialog {
   /**
    * The owning component is ready to start a deletion process.
    * Calling this will open the dialog, and setup the UUIDs
@@ -82,10 +82,10 @@ type UseDialog = {
    * using destructing.
    */
   componentProps: Props;
-};
+}
 
 export const useDialog = (
-  updateValues: (description: string) => void
+  updateValues: (description: string) => void,
 ): UseDialog => {
   const [isOpen, setIsOpen] = useState(false);
   const [initialDescription, setInitialDescription] = useState<string>("");
@@ -101,8 +101,8 @@ export const useDialog = (
         setIsOpen(false);
       },
       initialDescription,
-      updateValues
-    }
+      updateValues,
+    },
   };
 };
 

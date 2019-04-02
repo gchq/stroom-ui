@@ -1,6 +1,6 @@
 import * as uuidv4 from "uuid/v4";
 import * as loremIpsum from "lorem-ipsum";
-import { StroomStatsStoreDoc } from "../../types";
+import { StroomStatsStoreDoc } from "src/types";
 
 export const generate = (): StroomStatsStoreDoc => ({
   type: "StroomStatsStore",

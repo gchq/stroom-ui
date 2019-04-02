@@ -1,11 +1,11 @@
-import { StreamAttributeMapResult } from "../../../types";
+import { StreamAttributeMapResult } from "src/types";
 
 export default {
   pageResponse: {
     offset: 0,
     length: 126,
     total: 126,
-    exact: true
+    exact: true,
   },
   streamAttributeMaps: [
     {
@@ -20,8 +20,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158039016,
         createMs: 1136073600000,
-        effectiveMs: 1136073600000
-      }
+        effectiveMs: 1136073600000,
+      },
     },
     {
       data: {
@@ -35,8 +35,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158039115,
         createMs: 1536158039094,
-        effectiveMs: 1136073600000
-      }
+        effectiveMs: 1136073600000,
+      },
     },
     {
       data: {
@@ -50,8 +50,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158039241,
         createMs: 1136073600000,
-        effectiveMs: 1136073600000
-      }
+        effectiveMs: 1136073600000,
+      },
     },
     {
       data: {
@@ -65,8 +65,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158039360,
         createMs: 1536158039344,
-        effectiveMs: 1136073600000
-      }
+        effectiveMs: 1136073600000,
+      },
     },
     {
       data: {
@@ -80,8 +80,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158039415,
         createMs: 1136073600000,
-        effectiveMs: 1136073600000
-      }
+        effectiveMs: 1136073600000,
+      },
     },
     {
       data: {
@@ -95,8 +95,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158039545,
         createMs: 1536158039529,
-        effectiveMs: 1136073600000
-      }
+        effectiveMs: 1136073600000,
+      },
     },
     {
       data: {
@@ -110,8 +110,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158039808,
         createMs: 1136073600000,
-        effectiveMs: 1136073600000
-      }
+        effectiveMs: 1136073600000,
+      },
     },
     {
       data: {
@@ -125,8 +125,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158040039,
         createMs: 1536158040017,
-        effectiveMs: 1136073600000
-      }
+        effectiveMs: 1136073600000,
+      },
     },
     {
       data: {
@@ -140,8 +140,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158040125,
         createMs: 1136073600000,
-        effectiveMs: 1136073600000
-      }
+        effectiveMs: 1136073600000,
+      },
     },
     {
       data: {
@@ -155,8 +155,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158040334,
         createMs: 1536158040305,
-        effectiveMs: 1136073600000
-      }
+        effectiveMs: 1136073600000,
+      },
     },
     {
       data: {
@@ -170,8 +170,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158040636,
         createMs: 1143849600000,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -185,8 +185,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158040898,
         createMs: 1536158040869,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -200,8 +200,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158040920,
         createMs: 1143849600000,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -215,8 +215,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158041078,
         createMs: 1536158041057,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -230,8 +230,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158041100,
         createMs: 1143849600000,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -245,8 +245,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158041258,
         createMs: 1536158041234,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -260,8 +260,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158041280,
         createMs: 1143849600000,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -275,8 +275,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158041449,
         createMs: 1536158041423,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -290,8 +290,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158041533,
         createMs: 1143849600000,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -305,8 +305,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158041825,
         createMs: 1536158041806,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -320,8 +320,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158041847,
         createMs: 1143849600000,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -335,8 +335,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158042029,
         createMs: 1536158042017,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -350,8 +350,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158042047,
         createMs: 1143849600000,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -365,8 +365,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158042239,
         createMs: 1536158042225,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -380,8 +380,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158042255,
         createMs: 1143849600000,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -395,8 +395,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158042502,
         createMs: 1536158042489,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -410,8 +410,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158042543,
         createMs: 1143849600000,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -425,8 +425,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158042730,
         createMs: 1536158042712,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -440,8 +440,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158042748,
         createMs: 1143849600000,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -455,8 +455,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158042997,
         createMs: 1536158042987,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -470,8 +470,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158043016,
         createMs: 1143849600000,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -485,8 +485,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158043198,
         createMs: 1536158043188,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -500,8 +500,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158043219,
         createMs: 1143849600000,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -515,8 +515,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158043473,
         createMs: 1536158043463,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -530,8 +530,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158043521,
         createMs: 1143849600000,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -545,8 +545,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158043781,
         createMs: 1536158043737,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -560,8 +560,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158043775,
         createMs: 1536158043750,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -575,8 +575,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158043770,
         createMs: 1536158043759,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -590,8 +590,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158043809,
         createMs: 1143849600000,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -605,8 +605,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158044148,
         createMs: 1536158044094,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -620,8 +620,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158044139,
         createMs: 1536158044105,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -635,8 +635,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158044132,
         createMs: 1536158044116,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -650,8 +650,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158044178,
         createMs: 1143849600000,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -665,8 +665,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158044461,
         createMs: 1536158044411,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -680,8 +680,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158044454,
         createMs: 1536158044420,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -695,8 +695,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158044447,
         createMs: 1536158044429,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -710,8 +710,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158044490,
         createMs: 1143849600000,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -725,8 +725,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158044764,
         createMs: 1536158044713,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -740,8 +740,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158044757,
         createMs: 1536158044724,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -755,8 +755,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158044750,
         createMs: 1536158044735,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -770,8 +770,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158044814,
         createMs: 1143849600000,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -785,8 +785,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158045014,
         createMs: 1536158045000,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -800,8 +800,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158045035,
         createMs: 1143849600000,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -815,8 +815,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158045330,
         createMs: 1536158045316,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -830,8 +830,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158045351,
         createMs: 1143849600000,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -845,8 +845,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158045587,
         createMs: 1536158045575,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -860,8 +860,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158045611,
         createMs: 1143849600000,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -875,8 +875,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158045858,
         createMs: 1536158045847,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -890,8 +890,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158045907,
         createMs: 1143849600000,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -905,8 +905,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158046250,
         createMs: 1536158046193,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -920,8 +920,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158046243,
         createMs: 1536158046209,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -935,8 +935,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158046236,
         createMs: 1536158046221,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -950,8 +950,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158046279,
         createMs: 1143849600000,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -965,8 +965,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158046626,
         createMs: 1536158046569,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -980,8 +980,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158046620,
         createMs: 1536158046586,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -995,8 +995,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158046615,
         createMs: 1536158046600,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -1010,8 +1010,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158046653,
         createMs: 1143849600000,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -1025,8 +1025,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158047038,
         createMs: 1536158046984,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -1040,8 +1040,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158047031,
         createMs: 1536158046993,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -1055,8 +1055,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158047023,
         createMs: 1536158047004,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -1070,8 +1070,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158047068,
         createMs: 1143849600000,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -1085,8 +1085,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158047382,
         createMs: 1536158047337,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -1100,8 +1100,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158047375,
         createMs: 1536158047346,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -1115,8 +1115,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158047368,
         createMs: 1536158047354,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -1130,8 +1130,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158047465,
         createMs: 1143849600000,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -1145,8 +1145,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158047774,
         createMs: 1536158047746,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -1160,8 +1160,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158047817,
         createMs: 1143849600000,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -1175,8 +1175,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158048078,
         createMs: 1536158048062,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -1190,8 +1190,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158048120,
         createMs: 1143849600000,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -1205,8 +1205,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158048436,
         createMs: 1536158048408,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -1220,8 +1220,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158048456,
         createMs: 1143849600000,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -1235,8 +1235,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158048797,
         createMs: 1536158048727,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -1250,8 +1250,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158048816,
         createMs: 1143849600000,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -1265,8 +1265,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158049078,
         createMs: 1536158049052,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -1280,8 +1280,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158049097,
         createMs: 1143849600000,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -1295,8 +1295,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158049723,
         createMs: 1536158049700,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -1310,8 +1310,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158049764,
         createMs: 1143849600000,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -1325,8 +1325,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158050126,
         createMs: 1536158050103,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -1340,8 +1340,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158050167,
         createMs: 1143849600000,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -1355,8 +1355,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158050534,
         createMs: 1536158050509,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -1370,8 +1370,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158050604,
         createMs: 1143849600000,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -1385,8 +1385,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158051103,
         createMs: 1536158051075,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -1400,8 +1400,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158051123,
         createMs: 1143849600000,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -1415,8 +1415,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158051604,
         createMs: 1536158051584,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -1430,8 +1430,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158051624,
         createMs: 1143849600000,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -1445,8 +1445,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158052044,
         createMs: 1536158052019,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -1460,8 +1460,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158052063,
         createMs: 1143849600000,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -1475,8 +1475,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158052415,
         createMs: 1536158052395,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -1490,8 +1490,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158052454,
         createMs: 1143849600000,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -1505,8 +1505,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158052753,
         createMs: 1536158052733,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -1520,8 +1520,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158052782,
         createMs: 1143849600000,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -1535,8 +1535,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158053314,
         createMs: 1536158053302,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -1550,8 +1550,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158053335,
         createMs: 1143849600000,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -1565,8 +1565,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158053780,
         createMs: 1536158053769,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -1580,8 +1580,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158053801,
         createMs: 1143849600000,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -1595,8 +1595,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158054114,
         createMs: 1536158054104,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -1610,8 +1610,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158054154,
         createMs: 1143849600000,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -1625,8 +1625,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158054584,
         createMs: 1536158054560,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -1640,8 +1640,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158054603,
         createMs: 1143849600000,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -1655,8 +1655,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158054931,
         createMs: 1536158054912,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -1670,8 +1670,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158054949,
         createMs: 1143849600000,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -1685,8 +1685,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158055313,
         createMs: 1536158055293,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -1700,8 +1700,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158055333,
         createMs: 1143849600000,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -1715,8 +1715,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158055850,
         createMs: 1536158055828,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -1730,8 +1730,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158055895,
         createMs: 1143849600000,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -1745,8 +1745,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158056457,
         createMs: 1536158056430,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -1760,8 +1760,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158056534,
         createMs: 1143849600000,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -1775,8 +1775,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158057148,
         createMs: 1536158057111,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -1790,8 +1790,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158057169,
         createMs: 1143849600000,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -1805,8 +1805,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158057763,
         createMs: 1536158057743,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -1820,8 +1820,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158057782,
         createMs: 1143849600000,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -1835,8 +1835,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158058416,
         createMs: 1536158058396,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -1850,8 +1850,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158058436,
         createMs: 1143849600000,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -1865,8 +1865,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158058973,
         createMs: 1536158058949,
-        effectiveMs: 1143849600000
-      }
+        effectiveMs: 1143849600000,
+      },
     },
     {
       data: {
@@ -1880,8 +1880,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158059050,
         createMs: 1536158059030,
-        effectiveMs: 1536158059030
-      }
+        effectiveMs: 1536158059030,
+      },
     },
     {
       data: {
@@ -1895,8 +1895,8 @@ export default {
         status: "UNLOCKED",
         statusMs: 1536158059648,
         createMs: 1536158059546,
-        effectiveMs: 1536158059030
-      }
-    }
-  ]
+        effectiveMs: 1536158059030,
+      },
+    },
+  ],
 } as StreamAttributeMapResult;

@@ -15,7 +15,7 @@
  */
 import * as uuidv4 from "uuid/v4";
 
-import { Dictionary, ExpressionOperatorWithUuid } from "../../../types";
+import { Dictionary, ExpressionOperatorWithUuid } from "src/types";
 
 const colourDictionary: Dictionary = {
   type: "Dictionary",
@@ -30,7 +30,7 @@ const colourDictionary: Dictionary = {
   indigo
   violet
   `,
-  imports: []
+  imports: [],
 };
 
 const testExpression: ExpressionOperatorWithUuid = {
@@ -45,7 +45,7 @@ const testExpression: ExpressionOperatorWithUuid = {
       condition: "CONTAINS",
       value: "red",
       dictionary: null,
-      enabled: true
+      enabled: true,
     },
     {
       uuid: uuidv4(),
@@ -54,7 +54,7 @@ const testExpression: ExpressionOperatorWithUuid = {
       condition: "IN",
       value: "blue",
       dictionary: null,
-      enabled: true
+      enabled: true,
     },
     {
       uuid: uuidv4(),
@@ -63,7 +63,7 @@ const testExpression: ExpressionOperatorWithUuid = {
       condition: "IN_DICTIONARY",
       value: null,
       dictionary: colourDictionary,
-      enabled: true
+      enabled: true,
     },
     {
       uuid: uuidv4(),
@@ -78,7 +78,7 @@ const testExpression: ExpressionOperatorWithUuid = {
           condition: "BETWEEN",
           value: "1,5",
           dictionary: null,
-          enabled: true
+          enabled: true,
         },
         {
           uuid: uuidv4(),
@@ -87,9 +87,9 @@ const testExpression: ExpressionOperatorWithUuid = {
           condition: "EQUALS",
           value: "me",
           dictionary: null,
-          enabled: true
-        }
-      ]
+          enabled: true,
+        },
+      ],
     },
     {
       uuid: uuidv4(),
@@ -104,7 +104,7 @@ const testExpression: ExpressionOperatorWithUuid = {
           condition: "CONTAINS",
           value: "bob",
           dictionary: null,
-          enabled: false
+          enabled: false,
         },
         {
           uuid: uuidv4(),
@@ -113,12 +113,12 @@ const testExpression: ExpressionOperatorWithUuid = {
           condition: "BETWEEN",
           value: "me",
           dictionary: null,
-          enabled: true
-        }
-      ]
-    }
+          enabled: true,
+        },
+      ],
+    },
   ],
-  enabled: true
+  enabled: true,
 };
 
 const simplestExpression: ExpressionOperatorWithUuid = {
@@ -126,7 +126,7 @@ const simplestExpression: ExpressionOperatorWithUuid = {
   type: "operator",
   op: "AND",
   children: [],
-  enabled: true
+  enabled: true,
 };
 
 const testAndOperator: ExpressionOperatorWithUuid = {
@@ -134,26 +134,26 @@ const testAndOperator: ExpressionOperatorWithUuid = {
   type: "operator",
   op: "AND",
   enabled: true,
-  children: []
+  children: [],
 };
 const testOrOperator: ExpressionOperatorWithUuid = {
   uuid: uuidv4(),
   type: "operator",
   op: "AND",
   enabled: true,
-  children: []
+  children: [],
 };
 const testNotOperator: ExpressionOperatorWithUuid = {
   uuid: uuidv4(),
   type: "operator",
   op: "AND",
   enabled: true,
-  children: []
+  children: [],
 };
 export {
   testExpression,
   simplestExpression,
   testAndOperator,
   testOrOperator,
-  testNotOperator
+  testNotOperator,
 };

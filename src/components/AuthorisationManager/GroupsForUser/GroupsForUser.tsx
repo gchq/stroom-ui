@@ -1,18 +1,18 @@
 import * as React from "react";
 import { useCallback, useMemo } from "react";
 
-import { User } from "../../../types";
+import { User } from "src/types";
 
-import { useGroupsForUser } from "../../../api/userGroups";
+import { useGroupsForUser } from "src/api/userGroups";
 import UsersTable, { useTable as useUsersTable } from "../UsersTable";
-import Button from "../../../components/Button";
+import Button from "src/components/Button";
 import {
   UserGroupPickOrCreateDialog,
-  useDialog as useUserGroupModalPicker
+  useDialog as useUserGroupModalPicker,
 } from "../UserGroupPickOrCreateDialog";
 import ThemedConfirm, {
-  useDialog as useThemedConfirm
-} from "../../../components/ThemedConfirm";
+  useDialog as useThemedConfirm,
+} from "src/components/ThemedConfirm";
 
 interface Props {
   user: User;
@@ -23,35 +23,35 @@ const GroupsForUser = ({ user }: Props) => {
 
   const { componentProps: tableProps } = useUsersTable(groups);
   const {
-    selectableTableProps: { selectedItems }
+    selectableTableProps: { selectedItems },
   } = tableProps;
 
   const {
     componentProps: deleteGroupMembershipComponentProps,
-    showDialog: showDeleteGroupMembershipDialog
+    showDialog: showDeleteGroupMembershipDialog,
   } = useThemedConfirm({
     onConfirm: useCallback(
       () =>
         selectedItems.map(g => g.uuid).forEach(gUuid => removeFromGroup(gUuid)),
-      [removeFromGroup, user, selectedItems]
+      [removeFromGroup, user, selectedItems],
     ),
     getQuestion: useCallback(
       () => "Are you sure you want to remove the user from these groups?",
-      []
+      [],
     ),
     getDetails: useCallback(() => selectedItems.map(s => s.name).join(", "), [
-      selectedItems
-    ])
+      selectedItems,
+    ]),
   });
 
   const {
     componentProps: userGroupPickerProps,
-    showDialog: showUserGroupPicker
+    showDialog: showUserGroupPicker,
   } = useUserGroupModalPicker({
     onConfirm: useCallback((groupUuid: string) => addToGroup(groupUuid), [
-      addToGroup
+      addToGroup,
     ]),
-    valuesToFilterOut: useMemo(() => groups.map(g => g.uuid), [groups])
+    valuesToFilterOut: useMemo(() => groups.map(g => g.uuid), [groups]),
   });
 
   return (

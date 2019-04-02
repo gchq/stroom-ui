@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 import useApi from "./useApi";
-import { DataRow } from "../../types";
+import { DataRow } from "src/types";
 
 const useStreamDataRow = (metaId: number): DataRow | undefined => {
   const [dataRow, setDataRow] = useState<DataRow | undefined>(undefined);

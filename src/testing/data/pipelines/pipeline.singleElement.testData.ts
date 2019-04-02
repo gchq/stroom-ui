@@ -1,5 +1,5 @@
 import * as uuidv4 from "uuid/v4";
-import { PipelineDocumentType } from "../../../types";
+import { PipelineDocumentType } from "src/types";
 
 /*
  * Copyright 2018 Crown Copyright

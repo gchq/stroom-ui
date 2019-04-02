@@ -2,15 +2,15 @@ import * as React from "react";
 
 import ReactTable from "react-table";
 
-import { IndexVolume } from "../../../types";
+import { IndexVolume } from "src/types";
 import {
   useSelectableReactTable,
   SelectionBehaviour,
-  TableOutProps
-} from "../../../lib/useSelectableItemListing";
+  TableOutProps,
+} from "src/lib/useSelectableItemListing";
 
 interface Props {
-  indexVolumes: Array<IndexVolume>;
+  indexVolumes: IndexVolume[];
   selectableTableProps: TableOutProps<IndexVolume>;
 }
 
@@ -18,22 +18,22 @@ const COLUMNS = [
   {
     id: "id",
     Header: "ID",
-    accessor: (u: IndexVolume) => u.id
+    accessor: (u: IndexVolume) => u.id,
   },
   {
     id: "nodeName",
     Header: "Node",
-    accessor: (u: IndexVolume) => u.nodeName
+    accessor: (u: IndexVolume) => u.nodeName,
   },
   {
     id: "path",
     Header: "Path",
-    accessor: (u: IndexVolume) => u.path
-  }
+    accessor: (u: IndexVolume) => u.path,
+  },
 ];
 
 const IndexVolumesTable = ({
-  selectableTableProps: { onKeyDownWithShortcuts, tableProps }
+  selectableTableProps: { onKeyDownWithShortcuts, tableProps },
 }: Props) => (
   <div tabIndex={0} onKeyDown={onKeyDownWithShortcuts}>
     <ReactTable {...tableProps} />
@@ -44,23 +44,23 @@ interface UseTable {
   componentProps: Props;
 }
 
-export const useTable = (indexVolumes: Array<IndexVolume>): UseTable => {
+export const useTable = (indexVolumes: IndexVolume[]): UseTable => {
   const selectableTableProps = useSelectableReactTable<IndexVolume>(
     {
       getKey: v => v.id,
       items: indexVolumes,
-      selectionBehaviour: SelectionBehaviour.MULTIPLE
+      selectionBehaviour: SelectionBehaviour.MULTIPLE,
     },
     {
-      columns: COLUMNS
-    }
+      columns: COLUMNS,
+    },
   );
 
   return {
     componentProps: {
       selectableTableProps,
-      indexVolumes
-    }
+      indexVolumes,
+    },
   };
 };
 

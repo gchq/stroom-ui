@@ -1,5 +1,5 @@
 import * as loremIpsum from "lorem-ipsum";
-import { StreamTaskType, QueryDataType } from "../../types";
+import { StreamTaskType, QueryDataType } from "src/types";
 
 const getRandomInt = (min: number, max: number) =>
   Math.floor(Math.random() * (max - min)) + min;
@@ -10,7 +10,7 @@ const createTestFilter = (): QueryDataType => ({
   dataSource: {
     type: "StreamStore",
     uuid: "0",
-    name: "StreamStore"
+    name: "StreamStore",
   },
   expression: {
     type: "operator",
@@ -22,7 +22,7 @@ const createTestFilter = (): QueryDataType => ({
         condition: "EQUALS",
         value: loremIpsum(LOREM_CONFIG as any),
         dictionary: null,
-        enabled: true
+        enabled: true,
       },
       {
         type: "operator",
@@ -34,7 +34,7 @@ const createTestFilter = (): QueryDataType => ({
             condition: "EQUALS",
             value: loremIpsum(LOREM_CONFIG as any),
             dictionary: null,
-            enabled: true
+            enabled: true,
           },
           {
             type: "term",
@@ -42,7 +42,7 @@ const createTestFilter = (): QueryDataType => ({
             condition: "EQUALS",
             value: loremIpsum(LOREM_CONFIG as any),
             dictionary: null,
-            enabled: true
+            enabled: true,
           },
           {
             type: "term",
@@ -50,7 +50,7 @@ const createTestFilter = (): QueryDataType => ({
             condition: "EQUALS",
             value: loremIpsum(LOREM_CONFIG as any),
             dictionary: null,
-            enabled: true
+            enabled: true,
           },
           {
             type: "term",
@@ -58,7 +58,7 @@ const createTestFilter = (): QueryDataType => ({
             condition: "EQUALS",
             value: loremIpsum(LOREM_CONFIG as any),
             dictionary: null,
-            enabled: true
+            enabled: true,
           },
           {
             type: "term",
@@ -66,7 +66,7 @@ const createTestFilter = (): QueryDataType => ({
             condition: "EQUALS",
             value: loremIpsum(LOREM_CONFIG as any),
             dictionary: null,
-            enabled: true
+            enabled: true,
           },
           {
             type: "term",
@@ -74,7 +74,7 @@ const createTestFilter = (): QueryDataType => ({
             condition: "EQUALS",
             value: loremIpsum(LOREM_CONFIG as any),
             dictionary: null,
-            enabled: true
+            enabled: true,
           },
           {
             type: "term",
@@ -82,7 +82,7 @@ const createTestFilter = (): QueryDataType => ({
             condition: "EQUALS",
             value: loremIpsum(LOREM_CONFIG as any),
             dictionary: null,
-            enabled: true
+            enabled: true,
           },
           {
             type: "term",
@@ -90,7 +90,7 @@ const createTestFilter = (): QueryDataType => ({
             condition: "EQUALS",
             value: loremIpsum(LOREM_CONFIG as any),
             dictionary: null,
-            enabled: true
+            enabled: true,
           },
           {
             type: "term",
@@ -98,7 +98,7 @@ const createTestFilter = (): QueryDataType => ({
             condition: "EQUALS",
             value: loremIpsum(LOREM_CONFIG as any),
             dictionary: null,
-            enabled: true
+            enabled: true,
           },
           {
             type: "term",
@@ -106,7 +106,7 @@ const createTestFilter = (): QueryDataType => ({
             condition: "EQUALS",
             value: loremIpsum(LOREM_CONFIG as any),
             dictionary: null,
-            enabled: true
+            enabled: true,
           },
           {
             type: "term",
@@ -114,7 +114,7 @@ const createTestFilter = (): QueryDataType => ({
             condition: "EQUALS",
             value: loremIpsum(LOREM_CONFIG as any),
             dictionary: null,
-            enabled: true
+            enabled: true,
           },
           {
             type: "term",
@@ -122,7 +122,7 @@ const createTestFilter = (): QueryDataType => ({
             condition: "EQUALS",
             value: loremIpsum(LOREM_CONFIG as any),
             dictionary: null,
-            enabled: true
+            enabled: true,
           },
           {
             type: "term",
@@ -130,7 +130,7 @@ const createTestFilter = (): QueryDataType => ({
             condition: "EQUALS",
             value: loremIpsum(LOREM_CONFIG as any),
             dictionary: null,
-            enabled: true
+            enabled: true,
           },
           {
             type: "term",
@@ -138,7 +138,7 @@ const createTestFilter = (): QueryDataType => ({
             condition: "EQUALS",
             value: loremIpsum(LOREM_CONFIG as any),
             dictionary: null,
-            enabled: true
+            enabled: true,
           },
           {
             type: "term",
@@ -146,7 +146,7 @@ const createTestFilter = (): QueryDataType => ({
             condition: "EQUALS",
             value: loremIpsum(LOREM_CONFIG as any),
             dictionary: null,
-            enabled: true
+            enabled: true,
           },
           {
             type: "term",
@@ -154,7 +154,7 @@ const createTestFilter = (): QueryDataType => ({
             condition: "EQUALS",
             value: loremIpsum(LOREM_CONFIG as any),
             dictionary: null,
-            enabled: true
+            enabled: true,
           },
           {
             type: "term",
@@ -162,7 +162,7 @@ const createTestFilter = (): QueryDataType => ({
             condition: "EQUALS",
             value: loremIpsum(LOREM_CONFIG as any),
             dictionary: null,
-            enabled: true
+            enabled: true,
           },
           {
             type: "term",
@@ -170,14 +170,14 @@ const createTestFilter = (): QueryDataType => ({
             condition: "EQUALS",
             value: loremIpsum(LOREM_CONFIG as any),
             dictionary: null,
-            enabled: true
-          }
+            enabled: true,
+          },
         ],
-        enabled: true
-      }
+        enabled: true,
+      },
     ],
-    enabled: true
-  }
+    enabled: true,
+  },
   //limits: true, this should be LimitsType?
 });
 
@@ -191,7 +191,7 @@ const minimalTracker_undefinedLastPollAge = {
   filterName: loremIpsum(LOREM_CONFIG as any),
   filter: createTestFilter(),
   createUser: "tester",
-  createdOn: 87134234234
+  createdOn: 87134234234,
 };
 
 const minimalTracker_nullLastPollAge = {
@@ -204,7 +204,7 @@ const minimalTracker_nullLastPollAge = {
   filterName: loremIpsum(LOREM_CONFIG as any),
   filter: createTestFilter(),
   createUser: "tester",
-  createdOn: 87134234234
+  createdOn: 87134234234,
 };
 
 const minimalTracker_emptyLastPollAge = {
@@ -217,7 +217,7 @@ const minimalTracker_emptyLastPollAge = {
   filterName: loremIpsum(LOREM_CONFIG as any),
   filter: createTestFilter(),
   createUser: "tester",
-  createdOn: 87134234234
+  createdOn: 87134234234,
 };
 
 const maximalTracker = {
@@ -238,7 +238,7 @@ const maximalTracker = {
   createUser: "tester",
   createdOn: 87134234234,
   updateUser: "tester2",
-  updatedOn: 87934234234
+  updatedOn: 87934234234,
 };
 
 const maximalTracker_withLongName = {
@@ -259,7 +259,7 @@ const maximalTracker_withLongName = {
   createUser: "tester",
   createdOn: 87134234234,
   updateUser: "tester2",
-  updatedOn: 87934234234
+  updatedOn: 87934234234,
 };
 
 let nextFilterId = 0;
@@ -282,7 +282,7 @@ export const generateGenericTracker = (): StreamTaskType => ({
   createUser: "tester",
   createdOn: 87134234234,
   updateUser: "tester2",
-  updatedOn: 87934234234
+  updatedOn: 87934234234,
 });
 
 export const trackers = {
@@ -290,5 +290,5 @@ export const trackers = {
   minimalTracker_nullLastPollAge,
   minimalTracker_emptyLastPollAge,
   maximalTracker,
-  maximalTracker_withLongName
+  maximalTracker_withLongName,
 };

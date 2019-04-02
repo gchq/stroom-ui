@@ -19,19 +19,18 @@ import { useState } from "react";
 import { storiesOf } from "@storybook/react";
 
 import DocRefBreadcrumb from "./DocRefBreadcrumb";
-import fullTestData from "../../testing/data";
+import fullTestData from "src/testing/data";
 
-import { DocRefType } from "../../types";
+import { DocRefType } from "src/types";
 
-
-import JsonDebug from "../../testing/JsonDebug";
-import { addThemedStories } from "../../testing/storybook/themedStoryGenerator";
+import JsonDebug from "src/testing/JsonDebug";
+import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
 
 const testDocRef = fullTestData.documentTree.children![0].children![0];
 
 const BreadcrumbOpen = () => {
   const [openDocRef, setOpenDocRef] = useState<DocRefType | undefined>(
-    undefined
+    undefined,
   );
 
   return (

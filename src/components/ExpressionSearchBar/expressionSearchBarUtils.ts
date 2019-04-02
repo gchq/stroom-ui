@@ -19,8 +19,8 @@ import {
   ExpressionItem,
   ExpressionOperatorType,
   ExpressionTermType,
-  ConditionType
-} from "../../types";
+  ConditionType,
+} from "src/types";
 
 interface ValidationResult {
   original: string;
@@ -39,7 +39,7 @@ interface ValidationResult {
  */
 export const processSearchString = (
   dataSource: DataSourceType,
-  criteria: string
+  criteria: string,
 ): {
   expression: ExpressionOperatorType;
   fields: ValidationResult[];
@@ -53,7 +53,7 @@ export const processSearchString = (
       // Field validation
       const field = criterionObj.splitCriterion[0];
       const foundField = dataSource.fields.filter(
-        availableField => availableField.name === field
+        availableField => availableField.name === field,
       );
       const fieldIsValid = foundField.length > 0;
 
@@ -62,7 +62,7 @@ export const processSearchString = (
       const foundCondition = dataSource.fields.filter(
         availableField =>
           availableField.name === field &&
-          availableField.conditions.find(condition => condition === operator)
+          availableField.conditions.find(condition => condition === operator),
       );
       const conditionIsValid = foundCondition.length > 0;
 
@@ -76,7 +76,7 @@ export const processSearchString = (
         fieldIsValid,
         conditionIsValid,
         valueIsValid,
-        term: toTermFromArray(criterionObj.splitCriterion)
+        term: toTermFromArray(criterionObj.splitCriterion),
       };
     } else {
       // If we don't have a splitCriterion then the term is invalid and we'll return
@@ -85,7 +85,7 @@ export const processSearchString = (
         original: criterionObj.criterion,
         fieldIsValid: false,
         conditionIsValid: false,
-        valueIsValid: false
+        valueIsValid: false,
       };
     }
     validationResults.push(validationResult);
@@ -97,13 +97,13 @@ export const processSearchString = (
     children: validationResults
       .filter(
         (validationResult: ValidationResult) =>
-          validationResult.term !== undefined
+          validationResult.term !== undefined,
       )
       .map(
         (validationResult: ValidationResult) =>
-          validationResult.term as ExpressionTermType
+          validationResult.term as ExpressionTermType,
       ),
-    enabled: true
+    enabled: true,
   };
 
   return { expression, fields: validationResults };
@@ -152,14 +152,14 @@ const toTermFromArray = (asArray: string[]): ExpressionTermType =>
 const toTerm = (
   field: string,
   condition: ConditionType,
-  value: string
+  value: string,
 ): ExpressionTermType => ({
   type: "term",
   field,
   condition,
   value,
   dictionary: null,
-  enabled: true
+  enabled: true,
 });
 
 /**
@@ -170,5 +170,5 @@ const operatorMap = {
   ">": "GREATER_THAN",
   "<": "LESS_THAN",
   ">=": "GREATER_THAN_OR_EQUAL_TO",
-  "<=": "LESS_THAN_OR_EQUAL_TO"
+  "<=": "LESS_THAN_OR_EQUAL_TO",
 };

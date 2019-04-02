@@ -2,15 +2,15 @@ import * as React from "react";
 import { useState, useCallback } from "react";
 
 import UserPicker, { usePicker } from "../UserPicker";
-import ThemedModal from "../../../components/ThemedModal";
-import IconHeader from "../../../components/IconHeader";
-import Button from "../../../components/Button";
-import DialogActionButtons from "../../../components/DialogActionButtons";
-import { useManageUsers } from "../../../api/userGroups";
+import ThemedModal from "src/components/ThemedModal";
+import IconHeader from "src/components/IconHeader";
+import Button from "src/components/Button";
+import DialogActionButtons from "src/components/DialogActionButtons";
+import { useManageUsers } from "src/api/userGroups";
 
 interface BaseProps {
   onConfirm: (groupUuid: string) => void;
-  valuesToFilterOut?: Array<string>;
+  valuesToFilterOut?: string[];
 }
 
 interface Props extends BaseProps {
@@ -22,10 +22,10 @@ export const UserGroupPickOrCreateDialog = ({
   onConfirm,
   isOpen,
   setIsOpen,
-  valuesToFilterOut
+  valuesToFilterOut,
 }: Props) => {
   const { reset: resetUserGroup, pickerProps: useGroupPickerProps } = usePicker(
-    { isGroup: "Group", valuesToFilterOut }
+    { isGroup: "Group", valuesToFilterOut },
   );
   const { value: userGroupUuid } = useGroupPickerProps;
 
@@ -37,13 +37,13 @@ export const UserGroupPickOrCreateDialog = ({
   const onNewGroupNameChange: React.ChangeEventHandler<
     HTMLInputElement
   > = useCallback(({ target: { value } }) => setNewGroupName(value), [
-    setNewGroupName
+    setNewGroupName,
   ]);
   const toggleNewGroup: React.MouseEventHandler<
     HTMLButtonElement
   > = useCallback(() => setIsNewGroup(!isNewGroup), [
     setIsNewGroup,
-    isNewGroup
+    isNewGroup,
   ]);
   const newGroupButtonText = isNewGroup ? "Choose Existing" : "Create New";
 
@@ -101,9 +101,9 @@ export const useDialog = (props: BaseProps): UseDialog => {
     componentProps: {
       ...props,
       isOpen,
-      setIsOpen
+      setIsOpen,
     },
-    showDialog: () => setIsOpen(true)
+    showDialog: () => setIsOpen(true),
   };
 };
 

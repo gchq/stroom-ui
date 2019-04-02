@@ -1,15 +1,15 @@
 import { useCallback } from "react";
 
-import useHttpClient from "../useHttpClient";
-import { useConfig } from "../../startup/config";
+import useHttpClient from "src/lib/useHttpClient";
+import { useConfig } from "src/startup/config";
 
 interface Api {
-  getPermissionsForUser: (userUuid: string) => Promise<Array<string>>;
-  getAllPermissionNames: () => Promise<Array<string>>;
+  getPermissionsForUser: (userUuid: string) => Promise<string[]>;
+  getAllPermissionNames: () => Promise<string[]>;
   addAppPermission: (userUuid: string, permissionName: string) => Promise<void>;
   removeAppPermission: (
     userUuid: string,
-    permissionName: string
+    permissionName: string,
   ) => Promise<void>;
 }
 
@@ -18,34 +18,34 @@ export const useApi = (): Api => {
   const {
     httpGetJson,
     httpPostEmptyResponse,
-    httpDeleteEmptyResponse
+    httpDeleteEmptyResponse,
   } = useHttpClient();
 
   return {
     getPermissionsForUser: useCallback(
-      (userUuid: string): Promise<Array<string>> =>
+      (userUuid: string): Promise<string[]> =>
         httpGetJson(`${stroomBaseServiceUrl}/appPermissions/v1/${userUuid}`),
-      [stroomBaseServiceUrl, httpGetJson]
+      [stroomBaseServiceUrl, httpGetJson],
     ),
     getAllPermissionNames: useCallback(
-      (): Promise<Array<string>> =>
+      (): Promise<string[]> =>
         httpGetJson(`${stroomBaseServiceUrl}/appPermissions/v1`),
-      [stroomBaseServiceUrl, httpGetJson]
+      [stroomBaseServiceUrl, httpGetJson],
     ),
     addAppPermission: useCallback(
       (userUuid: string, permissionName: string): Promise<void> =>
         httpPostEmptyResponse(
-          `${stroomBaseServiceUrl}/appPermissions/v1/${userUuid}/${permissionName}`
+          `${stroomBaseServiceUrl}/appPermissions/v1/${userUuid}/${permissionName}`,
         ),
-      [httpPostEmptyResponse]
+      [httpPostEmptyResponse],
     ),
     removeAppPermission: useCallback(
       (userUuid: string, permissionName: string): Promise<void> =>
         httpDeleteEmptyResponse(
-          `${stroomBaseServiceUrl}/appPermissions/v1/${userUuid}/${permissionName}`
+          `${stroomBaseServiceUrl}/appPermissions/v1/${userUuid}/${permissionName}`,
         ),
-      [httpDeleteEmptyResponse]
-    )
+      [httpDeleteEmptyResponse],
+    ),
   };
 };
 

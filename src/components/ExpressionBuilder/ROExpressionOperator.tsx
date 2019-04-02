@@ -7,8 +7,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   ExpressionOperatorWithUuid,
   ExpressionHasUuid,
-  ExpressionTermWithUuid
-} from "../../types";
+  ExpressionTermWithUuid,
+} from "src/types";
 
 interface Props {
   operator: ExpressionOperatorWithUuid;

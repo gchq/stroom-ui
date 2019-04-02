@@ -22,7 +22,7 @@ import { storiesOf } from "@storybook/react";
 import { Color } from "csstype";
 
 import HorizontalMainDetails from "./HorizontalMainDetails";
-import { addThemedStories } from "../../testing/storybook/themedStoryGenerator";
+import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
 
 const EnabledCheckbox = () => (
   <label>
@@ -39,7 +39,7 @@ interface Props {
 const TestHarness: React.FunctionComponent<Props> = ({
   storageKey,
   title,
-  detailContent
+  detailContent,
 }: Props) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
@@ -112,7 +112,7 @@ interface PanelPartProps {
 const PanelPart: React.FunctionComponent<PanelPartProps> = ({
   title,
   backgroundColor,
-  children
+  children,
 }) => {
   const uuid = useMemo(() => uuidv4(), []);
 
@@ -152,6 +152,6 @@ const PanelTest = () => {
 
 const stories = storiesOf(
   "General Purpose/Horizontal Main Details/Mounting Issue",
-  module
+  module,
 );
 addThemedStories(stories, () => <PanelTest />);

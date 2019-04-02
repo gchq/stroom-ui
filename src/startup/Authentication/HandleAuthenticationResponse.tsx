@@ -17,15 +17,15 @@ import * as queryString from "qs";
 import { useEffect, useMemo } from "react";
 
 import { handleAuthenticationResponse } from "./authentication";
-import useRouter from "../../lib/useRouter";
+import useRouter from "src/lib/useRouter";
 import useAuthenticationContext from "./useAuthenticationContext";
 import { useConfig } from "../config";
 
-export const HandleAuthenticationResponse: React.FunctionComponent<{}> = () => {
+export const HandleAuthenticationResponse: React.FunctionComponent = () => {
   const { authenticationServiceUrl, authorisationServiceUrl } = useConfig();
   const {
     router: { location },
-    history
+    history,
   } = useRouter();
   const { setIdToken } = useAuthenticationContext();
 
@@ -43,14 +43,14 @@ export const HandleAuthenticationResponse: React.FunctionComponent<{}> = () => {
       history,
       accessCode,
       authenticationServiceUrl!,
-      authorisationServiceUrl!
+      authorisationServiceUrl!,
     );
   }, [
     accessCode,
     setIdToken,
     history,
     authenticationServiceUrl,
-    authorisationServiceUrl
+    authorisationServiceUrl,
   ]);
 
   return null;

@@ -17,22 +17,22 @@ import * as React from "react";
 import { useState } from "react";
 import { storiesOf } from "@storybook/react";
 
-import fullTestData from "../../testing/data";
+import fullTestData from "src/testing/data";
 import useSelectableItemListing, {
-  SelectionBehaviour
-} from "../../lib/useSelectableItemListing";
+  SelectionBehaviour,
+} from "src/lib/useSelectableItemListing";
 import DocRefListingEntry from "./DocRefListingEntry";
-import { DocRefType } from "../../types";
+import { DocRefType } from "src/types";
 
 import { DocRefBreadcrumb } from "../DocRefBreadcrumb";
-import JsonDebug from "../../testing/JsonDebug";
+import JsonDebug from "src/testing/JsonDebug";
 import Button from "../Button";
 
 const testFolder = fullTestData.documentTree;
 const testDocRef = fullTestData.documentTree.children![0].children![0];
 
 interface Props {
-  docRefs: Array<DocRefType>;
+  docRefs: DocRefType[];
   dndIsOver?: boolean;
   dndCanDrop?: boolean;
   provideBreadcrumbs?: boolean;
@@ -42,13 +42,13 @@ let TestDocRefListingEntry = ({
   docRefs,
   dndIsOver,
   dndCanDrop,
-  provideBreadcrumbs
+  provideBreadcrumbs,
 }: Props) => {
   const [enteredFolder, enterFolder] = useState<DocRefType | undefined>(
-    undefined
+    undefined,
   );
   const [openedDocRef, openDocRef] = useState<DocRefType | undefined>(
-    undefined
+    undefined,
   );
   const [wentBack, setWentBack] = useState<boolean>(false);
 
@@ -63,14 +63,14 @@ let TestDocRefListingEntry = ({
     onKeyDownWithShortcuts,
     toggleSelection,
     selectedItems: selectedDocRefs,
-    focussedItem: focussedDocRef
+    focussedItem: focussedDocRef,
   } = useSelectableItemListing<DocRefType>({
     items: docRefs,
     openItem: openDocRef,
     getKey: d => d.uuid,
     enterItem: enterFolder,
     goBack,
-    selectionBehaviour: SelectionBehaviour.MULTIPLE
+    selectionBehaviour: SelectionBehaviour.MULTIPLE,
   });
 
   return (
@@ -92,7 +92,7 @@ let TestDocRefListingEntry = ({
                 dndIsOver,
                 toggleSelection,
                 selectedDocRefs,
-                focussedDocRef
+                focussedDocRef,
               }}
             >
               {provideBreadcrumbs && (

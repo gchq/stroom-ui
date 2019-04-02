@@ -2,15 +2,15 @@ import * as React from "react";
 
 import ReactTable from "react-table";
 
-import { IndexVolumeGroup } from "../../../types";
+import { IndexVolumeGroup } from "src/types";
 import {
   useSelectableReactTable,
   SelectionBehaviour,
-  TableOutProps
-} from "../../../lib/useSelectableItemListing";
+  TableOutProps,
+} from "src/lib/useSelectableItemListing";
 
- interface Props {
-  groups: Array<IndexVolumeGroup>;
+interface Props {
+  groups: IndexVolumeGroup[];
   selectableTableProps: TableOutProps<IndexVolumeGroup>;
 }
 
@@ -18,39 +18,39 @@ const COLUMNS = [
   {
     id: "name",
     Header: "Name",
-    accessor: (u: IndexVolumeGroup) => u.name
-  }
+    accessor: (u: IndexVolumeGroup) => u.name,
+  },
 ];
 
 const IndexVolumeGroupsTable = ({
-  selectableTableProps: { onKeyDownWithShortcuts, tableProps }
+  selectableTableProps: { onKeyDownWithShortcuts, tableProps },
 }: Props) => (
   <div tabIndex={0} onKeyDown={onKeyDownWithShortcuts}>
     <ReactTable {...tableProps} />
   </div>
 );
 
- interface UseTable {
+interface UseTable {
   componentProps: Props;
 }
 
-export const useTable = (groups: Array<IndexVolumeGroup>): UseTable => {
+export const useTable = (groups: IndexVolumeGroup[]): UseTable => {
   const selectableTableProps = useSelectableReactTable<IndexVolumeGroup>(
     {
       getKey: v => v.name,
       items: groups,
-      selectionBehaviour: SelectionBehaviour.MULTIPLE
+      selectionBehaviour: SelectionBehaviour.MULTIPLE,
     },
     {
-      columns: COLUMNS
-    }
+      columns: COLUMNS,
+    },
   );
 
   return {
     componentProps: {
       selectableTableProps,
-      groups
-    }
+      groups,
+    },
   };
 };
 

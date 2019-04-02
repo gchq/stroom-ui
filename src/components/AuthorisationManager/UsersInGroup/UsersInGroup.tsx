@@ -1,16 +1,16 @@
 import * as React from "react";
 import { useCallback } from "react";
 
-import { User } from "../../../types";
+import { User } from "src/types";
 
 import UsersTable, { useTable as useUsersTable } from "../UsersTable";
-import Button from "../../../components/Button";
+import Button from "src/components/Button";
 import ThemedConfirm, {
-  useDialog as useThemedConfirm
-} from "../../../components/ThemedConfirm";
-import { useUsersInGroup } from "../../../api/userGroups";
+  useDialog as useThemedConfirm,
+} from "src/components/ThemedConfirm";
+import { useUsersInGroup } from "src/api/userGroups";
 import UserModalPicker, {
-  useDialog as useUserModalPicker
+  useDialog as useUserModalPicker,
 } from "../UserModalPicker";
 
 interface Props {
@@ -22,33 +22,33 @@ const UsersInGroup = ({ group }: Props) => {
 
   const { componentProps: tableProps } = useUsersTable(users);
   const {
-    selectableTableProps: { selectedItems }
+    selectableTableProps: { selectedItems },
   } = tableProps;
 
   const {
     componentProps: deleteGroupMembershipComponentProps,
-    showDialog: showDeleteGroupMembershipDialog
+    showDialog: showDeleteGroupMembershipDialog,
   } = useThemedConfirm({
     onConfirm: useCallback(
       () =>
         selectedItems.map(s => s.uuid).forEach(uUuid => removeFromGroup(uUuid)),
-      [removeFromGroup, group, selectedItems]
+      [removeFromGroup, group, selectedItems],
     ),
     getQuestion: useCallback(
       () => "Are you sure you want to remove these users from the group?",
-      []
+      [],
     ),
     getDetails: useCallback(() => selectedItems.map(s => s.name).join(", "), [
-      selectedItems
-    ])
+      selectedItems,
+    ]),
   });
 
   const {
     componentProps: userPickerProps,
-    showDialog: showUserPicker
+    showDialog: showUserPicker,
   } = useUserModalPicker({
     isGroup: "User",
-    onConfirm: addToGroup
+    onConfirm: addToGroup,
   });
 
   return (

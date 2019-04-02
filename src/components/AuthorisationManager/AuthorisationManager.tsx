@@ -1,21 +1,21 @@
 import * as React from "react";
 import { useCallback } from "react";
 
-import { useManageUsers } from "../../api/userGroups";
-import { IsGroup } from "../../api/userGroups";
-import IconHeader from "../../components/IconHeader";
+import { useManageUsers } from "src/api/userGroups";
+import { IsGroup } from "src/api/userGroups";
+import IconHeader from "src/components/IconHeader";
 import UsersTable, { useTable } from "./UsersTable";
-import Button from "../../components/Button";
+import Button from "src/components/Button";
 import NewUserDialog, {
-  useDialog as useNewUserDialog
+  useDialog as useNewUserDialog,
 } from "./NewUserDialog/NewUserDialog";
 import ThemedConfirm, {
-  useDialog as useThemedConfim
-} from "../../components/ThemedConfirm";
-import useForm from "../../lib/useForm";
+  useDialog as useThemedConfim,
+} from "src/components/ThemedConfirm";
+import useForm from "src/lib/useForm";
 import {
   UserGroupPickOrCreateDialog,
-  useDialog as useGroupModalDialog
+  useDialog as useGroupModalDialog,
 } from "./UserGroupPickOrCreateDialog";
 import useAppNavigation from "../AppChrome/useAppNavigation";
 
@@ -30,7 +30,7 @@ interface Values {
 
 const defaultValues: Values = {
   name: "",
-  uuid: ""
+  uuid: "",
 };
 
 const Authorisation = ({ isGroup }: Props) => {
@@ -40,52 +40,52 @@ const Authorisation = ({ isGroup }: Props) => {
     users,
     createUser,
     deleteUser,
-    addUserToGroup
+    addUserToGroup,
   } = useManageUsers();
 
   const { componentProps: tableProps } = useTable(users);
   const {
-    selectableTableProps: { selectedItems: selectedUsers }
+    selectableTableProps: { selectedItems: selectedUsers },
   } = tableProps;
 
   const {
     componentProps: newDialogComponentProps,
-    showDialog: showNewDialog
+    showDialog: showNewDialog,
   } = useNewUserDialog(createUser);
   const {
     componentProps: deleteDialogProps,
-    showDialog: showDeleteDialog
+    showDialog: showDeleteDialog,
   } = useThemedConfim({
     getQuestion: useCallback(() => `Are you sure you want to delete user`, []),
     getDetails: useCallback(() => selectedUsers.map(v => v.name).join(", "), [
-      selectedUsers.map(v => v.uuid)
+      selectedUsers.map(v => v.uuid),
     ]),
     onConfirm: useCallback(() => {
       selectedUsers.forEach(v => deleteUser(v.uuid));
-    }, [selectedUsers.map(v => v.uuid)])
+    }, [selectedUsers.map(v => v.uuid)]),
   });
 
   const { useTextInput } = useForm({
     initialValues: defaultValues,
     onValidate: useCallback(
       ({ name, uuid }: Values) => findUsers(name, isGroup, uuid),
-      [findUsers]
-    )
+      [findUsers],
+    ),
   });
   const nameProps = useTextInput("name");
   const uuidProps = useTextInput("uuid");
 
   const {
     componentProps: userGroupPickerProps,
-    showDialog: showGroupPicker
+    showDialog: showGroupPicker,
   } = useGroupModalDialog({
     onConfirm: useCallback(
       (groupUuid: string) =>
         selectedUsers.forEach(u => {
           addUserToGroup(u.uuid, groupUuid);
         }),
-      [addUserToGroup, selectedUsers]
-    )
+      [addUserToGroup, selectedUsers],
+    ),
   });
 
   const onViewEditClick = useCallback(() => {

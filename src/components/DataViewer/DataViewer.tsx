@@ -20,34 +20,34 @@ import ReactTable, { Column } from "react-table";
 
 import {
   useStreamSearch,
-  useStreamDataSource
-} from "../../api/streamAttributeMap";
+  useStreamDataSource,
+} from "src/api/streamAttributeMap";
 import {
   useSelectableReactTable,
-  SelectionBehaviour
-} from "../../lib/useSelectableItemListing";
-import { DataRow, PageRequest, ExpressionOperatorWithUuid } from "../../types";
+  SelectionBehaviour,
+} from "src/lib/useSelectableItemListing";
+import { DataRow, PageRequest, ExpressionOperatorWithUuid } from "src/types";
 import IconHeader from "../IconHeader";
 import ExpressionSearchBar from "../ExpressionSearchBar";
 import HorizontalMainDetails from "../HorizontalMainDetails";
 import DetailsTabs from "./DetailsTabs";
 
-const COLUMNS: Array<Column> = [
+const COLUMNS: Column[] = [
   {
     id: "id",
     Header: "ID",
-    accessor: (u: DataRow) => u.data.id
+    accessor: (u: DataRow) => u.data.id,
   },
   {
     id: "feedName",
     Header: "Feed",
-    accessor: (u: DataRow) => u.data.feedName
-  }
+    accessor: (u: DataRow) => u.data.feedName,
+  },
 ];
 
 const defaultPageRequest: PageRequest = {
   pageOffset: 0,
-  pageSize: 10
+  pageSize: 10,
 };
 
 const DataViewer = () => {
@@ -63,11 +63,11 @@ const DataViewer = () => {
     {
       items: !!streams ? streams.streamAttributeMaps : [],
       getKey: d => `${d.data.id}`,
-      selectionBehaviour: SelectionBehaviour.SINGLE
+      selectionBehaviour: SelectionBehaviour.SINGLE,
     },
     {
-      columns: COLUMNS
-    }
+      columns: COLUMNS,
+    },
   );
 
   // The expression search bar will call this on mount
@@ -75,10 +75,10 @@ const DataViewer = () => {
     (expression: ExpressionOperatorWithUuid) => {
       search({
         expressionWithUuids: expression,
-        pageInfo: defaultPageRequest
+        pageInfo: defaultPageRequest,
       });
     },
-    [search]
+    [search],
   );
 
   return (

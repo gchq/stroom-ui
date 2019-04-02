@@ -21,7 +21,7 @@ import { storiesOf } from "@storybook/react";
 import Button from "../Button";
 import ThemedConfirm, { useDialog } from "./ThemedConfirm";
 
-import { addThemedStories } from "../../testing/storybook/themedStoryGenerator";
+import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
 
 let TestConfirm = () => {
   const [confirmCount, setConfirmCount] = useState<number>(0);
@@ -30,11 +30,11 @@ let TestConfirm = () => {
     getQuestion: useCallback(() => "Are you sure about this?", []),
     getDetails: useCallback(
       () => "Because...nothing will really happen anyway",
-      []
+      [],
     ),
     onConfirm: useCallback(() => setConfirmCount(confirmCount + 1), [
-      confirmCount
-    ])
+      confirmCount,
+    ]),
   });
 
   return (

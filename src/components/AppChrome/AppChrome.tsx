@@ -29,23 +29,23 @@ import {
   ActiveMenuItem,
 } from "./types";
 
-import useSelectableItemListing from "../../lib/useSelectableItemListing";
-import { DocRefType, DocRefConsumer, DocRefTree } from "../../types";
-import { KeyDownState } from "../../lib/useKeyIsDown";
+import useSelectableItemListing from "src/lib/useSelectableItemListing";
+import { DocRefType, DocRefConsumer, DocRefTree } from "src/types";
+import { KeyDownState } from "src/lib/useKeyIsDown";
 import {
   CopyMoveDocRefDialog,
   useDialog as useCopyMoveDocRefDialog,
   ShowDialog as ShowCopyDocRefDialog,
-} from "../DocumentEditors/FolderExplorer/CopyMoveDocRefDialog";
+} from "src/components/DocumentEditors/FolderExplorer/CopyMoveDocRefDialog";
 import useLocalStorage, {
   storeBoolean,
   storeObjectFactory,
-} from "../../lib/useLocalStorage";
-import useRouter from "../../lib/useRouter";
-import { useDocumentTree } from "../../api/explorer";
+} from "src/lib/useLocalStorage";
+import useRouter from "src/lib/useRouter";
+import { useDocumentTree } from "src/api/explorer";
 import useAppNavigation from "./useAppNavigation";
-import { useTheme } from "../../lib/theme";
-import { IsGroup } from "../../api/userGroups";
+import { useTheme } from "src/lib/theme";
+import { IsGroup } from "src/api/userGroups";
 
 const PATH_PREFIX = "/s";
 

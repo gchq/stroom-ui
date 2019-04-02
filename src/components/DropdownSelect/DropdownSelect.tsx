@@ -2,12 +2,12 @@ import * as React from "react";
 import { useState } from "react";
 
 import DefaultDropdownOption from "./DefaultDropdownOption";
-import { OptionType, ControlledInput } from "../../types";
-import useSelectableItemListing from "../../lib/useSelectableItemListing";
+import { OptionType, ControlledInput } from "src/types";
+import useSelectableItemListing from "src/lib/useSelectableItemListing";
 import { DropdownOptionProps } from "./types";
 
 interface Props extends ControlledInput<string> {
-  options: Array<OptionType>;
+  options: OptionType[];
   OptionComponent?: React.ComponentType<DropdownOptionProps>;
 }
 
@@ -15,25 +15,25 @@ let DropdownSelect = ({
   options,
   OptionComponent = DefaultDropdownOption,
   onChange,
-  value
+  value,
 }: Props) => {
   const [textFocus, setTextFocus] = useState<boolean>(false);
   const [searchTerm, onSearchTermChange] = useState<string>("");
 
   const onSearchKeyDown: React.ChangeEventHandler<HTMLInputElement> = ({
-    target: { value }
+    target: { value },
   }) => onSearchTermChange(value);
   let optionsToUse = options.filter(
     d =>
       searchTerm.length === 0 ||
-      d.text.toLowerCase().includes(searchTerm.toLowerCase())
+      d.text.toLowerCase().includes(searchTerm.toLowerCase()),
   );
   let valueToShow = textFocus ? searchTerm : value;
 
   const { focussedItem, onKeyDownWithShortcuts } = useSelectableItemListing({
     items: optionsToUse,
     openItem: v => onChange(v.value),
-    getKey: v => v.value
+    getKey: v => v.value,
   });
 
   return (

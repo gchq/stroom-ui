@@ -5,11 +5,11 @@ import ReactTable from "react-table";
 import {
   useSelectableReactTable,
   SelectionBehaviour,
-  TableOutProps
-} from "../../../lib/useSelectableItemListing";
+  TableOutProps,
+} from "src/lib/useSelectableItemListing";
 
 interface Props {
-  groupNames: Array<string>;
+  groupNames: string[];
   selectableTableProps: TableOutProps<string>;
 }
 
@@ -17,12 +17,12 @@ const COLUMNS = [
   {
     id: "name",
     Header: "Name",
-    accessor: (u: string) => u
-  }
+    accessor: (u: string) => u,
+  },
 ];
 
 const IndexVolumeGroupNamesTable = ({
-  selectableTableProps: { onKeyDownWithShortcuts, tableProps }
+  selectableTableProps: { onKeyDownWithShortcuts, tableProps },
 }: Props) => (
   <div tabIndex={0} onKeyDown={onKeyDownWithShortcuts}>
     <ReactTable {...tableProps} />
@@ -33,23 +33,23 @@ interface UseTable {
   componentProps: Props;
 }
 
-export const useTable = (groupNames: Array<string>): UseTable => {
+export const useTable = (groupNames: string[]): UseTable => {
   const selectableTableProps = useSelectableReactTable<string>(
     {
       getKey: v => v,
       items: groupNames,
-      selectionBehaviour: SelectionBehaviour.MULTIPLE
+      selectionBehaviour: SelectionBehaviour.MULTIPLE,
     },
     {
-      columns: COLUMNS
-    }
+      columns: COLUMNS,
+    },
   );
 
   return {
     componentProps: {
       selectableTableProps,
-      groupNames
-    }
+      groupNames,
+    },
   };
 };
 

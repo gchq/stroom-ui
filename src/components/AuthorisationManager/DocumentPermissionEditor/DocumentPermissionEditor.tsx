@@ -1,20 +1,20 @@
 import * as React from "react";
 import { useCallback, useMemo } from "react";
 
-import IconHeader from "../../../components/IconHeader";
-import useDocumentPermissions from "../../../api/docPermission/useDocumentPermissions";
-import { User } from "../../../types";
-import Button from "../../../components/Button";
+import IconHeader from "src/components/IconHeader";
+import useDocumentPermissions from "src/api/docPermission/useDocumentPermissions";
+import { User } from "src/types";
+import Button from "src/components/Button";
 import ThemedConfirm, {
-  useDialog as useThemedConfirm
-} from "../../../components/ThemedConfirm";
-import { useUsers } from "../../../api/userGroups";
+  useDialog as useThemedConfirm,
+} from "src/components/ThemedConfirm";
+import { useUsers } from "src/api/userGroups";
 import UsersTable, { useTable as useUsersTable } from "../UsersTable";
 import useAppNavigation from "../../AppChrome/useAppNavigation";
-import useRouter from "../../../lib/useRouter";
-import { useDocumentTree } from "../../../api/explorer";
+import useRouter from "src/lib/useRouter";
+import { useDocumentTree } from "src/api/explorer";
 import UserModalPicker, {
-  useDialog as useUserModalPicker
+  useDialog as useUserModalPicker,
 } from "../UserModalPicker";
 
 interface Props {
@@ -27,12 +27,12 @@ export const DocumentPermissionEditor = ({ docRefUuid }: Props) => {
     clearPermissions,
     clearPermissionForUser,
     preparePermissionsForUser,
-    permissionsByUser
+    permissionsByUser,
   } = useDocumentPermissions(docRefUuid);
 
   const { history } = useRouter();
   const userUuids = useMemo(() => Object.keys(permissionsByUser), [
-    permissionsByUser
+    permissionsByUser,
   ]);
   const users = useUsers(userUuids);
   const { componentProps: usersTableProps } = useUsersTable(users);
@@ -40,32 +40,32 @@ export const DocumentPermissionEditor = ({ docRefUuid }: Props) => {
   const { findDocRefWithLineage } = useDocumentTree();
   const { node: docRef } = useMemo(() => findDocRefWithLineage(docRefUuid), [
     findDocRefWithLineage,
-    docRefUuid
+    docRefUuid,
   ]);
   const {
-    selectableTableProps: { selectedItems: selectedUsers, clearSelection }
+    selectableTableProps: { selectedItems: selectedUsers, clearSelection },
   } = usersTableProps;
   const selectedUser: User | undefined =
     selectedUsers.length > 0 ? selectedUsers[0] : undefined;
 
   const {
     componentProps: userPickerProps,
-    showDialog: showUserPicker
+    showDialog: showUserPicker,
   } = useUserModalPicker({
     isGroup: undefined, // either,
-    onConfirm: preparePermissionsForUser
+    onConfirm: preparePermissionsForUser,
   });
 
   const {
     showDialog: showConfirmClear,
-    componentProps: confirmClearProps
+    componentProps: confirmClearProps,
   } = useThemedConfirm({
     getQuestion: useCallback(
       () =>
         `Are you sure you wish to clear permissions for ${
           selectedUsers.length === 0 ? "all" : "selected"
         } users?`,
-      [selectedUsers.length]
+      [selectedUsers.length],
     ),
     getDetails: useCallback(() => {
       if (selectedUsers.length === 0) {
@@ -88,8 +88,8 @@ export const DocumentPermissionEditor = ({ docRefUuid }: Props) => {
       selectedUsers,
       clearSelection,
       clearPermissionForUser,
-      clearPermissions
-    ])
+      clearPermissions,
+    ]),
   });
   const clearButtonText =
     selectedUsers.length === 0 ? "Clear All" : "Clear Selected";

@@ -16,31 +16,30 @@
 import * as React from "react";
 import { useState, useCallback } from "react";
 
-import fullTestData from "../../../testing/data";
+import fullTestData from "src/testing/data";
 import { storiesOf } from "@storybook/react";
 
 import AppPermissionPicker from "./AppPermissionPicker";
 
-
-import JsonDebug from "../../../testing/JsonDebug";
-import { addThemedStories } from "../../../testing/storybook/themedStoryGenerator";
+import JsonDebug from "src/testing/JsonDebug";
+import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
 
 const TestForm = () => {
-  const [value, setAppPermissions] = useState<Array<string>>(
-    fullTestData.allAppPermissions.slice(0, 3)
+  const [value, setAppPermissions] = useState<string[]>(
+    fullTestData.allAppPermissions.slice(0, 3),
   );
 
   const addPermission = useCallback(
     (permissionName: string) => {
       setAppPermissions(value.concat([permissionName]));
     },
-    [setAppPermissions, value]
+    [setAppPermissions, value],
   );
   const removePermission = useCallback(
     (permissionName: string) => {
       setAppPermissions(value.filter(a => a !== permissionName));
     },
-    [setAppPermissions, value]
+    [setAppPermissions, value],
   );
 
   return (
@@ -51,7 +50,7 @@ const TestForm = () => {
           {...{
             value,
             addPermission,
-            removePermission
+            removePermission,
           }}
         />
       </div>

@@ -2,19 +2,19 @@ import * as React from "react";
 import { useState, useCallback } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import { findItem, filterTree } from "../../lib/treeUtils";
-import { DocRefType, DocRefTree, DocRefWithLineage } from "../../types";
+import { findItem, filterTree } from "src/lib/treeUtils";
+import { DocRefType, DocRefTree, DocRefWithLineage } from "src/types";
 import { DocRefBreadcrumb } from "../DocRefBreadcrumb";
 import DocRefListingEntry from "../DocRefListingEntry";
 
 import ModeOptionButtons, { SearchMode } from "./ModeOptionButton";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
-import useSelectableItemListing from "../../lib/useSelectableItemListing";
-import useRecentItems from "../../lib/useRecentItems";
-import { useDocumentTree } from "../../api/explorer";
+import useSelectableItemListing from "src/lib/useSelectableItemListing";
+import useRecentItems from "src/lib/useRecentItems";
+import { useDocumentTree } from "src/api/explorer";
 
 interface Props {
-  typeFilters?: Array<string>;
+  typeFilters?: string[];
   onChange: (d: DocRefType) => any;
   value?: DocRefType;
   className?: string;
@@ -24,17 +24,17 @@ const AppSearchBar = ({
   className,
   typeFilters = [],
   onChange,
-  value
+  value,
 }: Props) => {
   // Get data from and subscribe to the store
-  const [searchResults, setSearchResults] = useState<Array<DocRefType>>([]);
+  const [searchResults, setSearchResults] = useState<DocRefType[]>([]);
 
   const { documentTree, searchApp } = useDocumentTree();
   const { recentItems } = useRecentItems();
 
   const onSearch = useCallback(p => searchApp(p).then(setSearchResults), [
     searchApp,
-    setSearchResults
+    setSearchResults,
   ]);
 
   let [textFocus, setTextFocus] = useState<boolean>(false);
@@ -61,7 +61,7 @@ const AppSearchBar = ({
         onChange(docRef);
       }
     },
-    [typeFilters]
+    [typeFilters],
   );
 
   const documentTreeToUse: DocRefTree =
@@ -69,7 +69,7 @@ const AppSearchBar = ({
       ? filterTree(documentTree, d => typeFilters.includes(d.type))!
       : documentTree;
 
-  let docRefs: Array<DocRefType> = [];
+  let docRefs: DocRefType[] = [];
   let thisFolder: DocRefTree | undefined = undefined;
   let parentFolder: DocRefType | undefined = undefined;
   let valueToShow: string;
@@ -88,7 +88,7 @@ const AppSearchBar = ({
       if (!!navFolderToUse) {
         const navFolderWithLineage: DocRefWithLineage = findItem(
           documentTreeToUse,
-          navFolderToUse.uuid
+          navFolderToUse.uuid,
         )!;
         docRefs = navFolderWithLineage.node.children || [];
         thisFolder = navFolderWithLineage.node;
@@ -127,7 +127,7 @@ const AppSearchBar = ({
     onKeyDownWithShortcuts,
     toggleSelection,
     selectedItems: selectedDocRefs,
-    focussedItem: focussedDocRef
+    focussedItem: focussedDocRef,
   } = useSelectableItemListing({
     items: docRefs,
     openItem: onThisChange,
@@ -141,7 +141,7 @@ const AppSearchBar = ({
       if (!!parentFolder) {
         setNavFolder(parentFolder);
       }
-    }
+    },
   });
 
   let headerTitle = "unknown";
@@ -181,11 +181,11 @@ const AppSearchBar = ({
     ({ target: { value } }) => {
       setSearchTerm(value);
       setSearchMode(
-        value.length > 0 ? SearchMode.GLOBAL_SEARCH : SearchMode.NAVIGATION
+        value.length > 0 ? SearchMode.GLOBAL_SEARCH : SearchMode.NAVIGATION,
       );
       onSearch({ term: value });
     },
-    [onSearch, setSearchTerm, setSearchMode]
+    [onSearch, setSearchTerm, setSearchMode],
   );
 
   return (

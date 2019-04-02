@@ -2,13 +2,13 @@ import * as uuidv4 from "uuid/v4";
 import { HttpRequest, HttpResponse } from "@pollyjs/adapter-fetch";
 
 import { TestCache } from "../PollyDecorator";
-import { Config } from "../../../startup/config";
+import { Config } from "src/startup/config";
 import { ResourceBuilder } from "./types";
 
 const resourceBuilder: ResourceBuilder = (
   server: any,
   { stroomBaseServiceUrl }: Config,
-  testCache: TestCache
+  testCache: TestCache,
 ) => {
   const resource = `${stroomBaseServiceUrl}/users/v1`;
 
@@ -18,7 +18,7 @@ const resourceBuilder: ResourceBuilder = (
     .intercept((req: HttpRequest, res: HttpResponse) => {
       let userUuid = req.params.userUuid;
       let user = testCache.data!.usersAndGroups.users.find(
-        u => u.uuid === userUuid
+        u => u.uuid === userUuid,
       );
 
       res.json(user);
@@ -29,11 +29,11 @@ const resourceBuilder: ResourceBuilder = (
     const { name, uuid, isGroup } = req.query;
     let filtered = testCache
       .data!.usersAndGroups.users.filter(
-        u => name === undefined || u.name.includes(name)
+        u => name === undefined || u.name.includes(name),
       )
       .filter(u => uuid === undefined || u.uuid === uuid)
       .filter(
-        u => isGroup === undefined || Boolean(u.isGroup).toString() === isGroup
+        u => isGroup === undefined || Boolean(u.isGroup).toString() === isGroup,
       );
     res.json(filtered);
   });
@@ -44,7 +44,7 @@ const resourceBuilder: ResourceBuilder = (
     let newUser = { name, isGroup, uuid: uuidv4() };
 
     testCache.data!.usersAndGroups.users = testCache.data!.usersAndGroups.users.concat(
-      [newUser]
+      [newUser],
     );
 
     res.json(newUser);
@@ -56,11 +56,11 @@ const resourceBuilder: ResourceBuilder = (
       let oldUuid = req.params.userUuid;
       testCache.data!.usersAndGroups = {
         users: testCache.data!.usersAndGroups.users.filter(
-          u => u.uuid !== oldUuid
+          u => u.uuid !== oldUuid,
         ),
         userGroupMemberships: testCache.data!.usersAndGroups.userGroupMemberships.filter(
-          m => m.groupUuid !== oldUuid && m.userUuid !== oldUuid
-        )
+          m => m.groupUuid !== oldUuid && m.userUuid !== oldUuid,
+        ),
       };
 
       res.send(undefined);
@@ -72,13 +72,13 @@ const resourceBuilder: ResourceBuilder = (
     .intercept((req: HttpRequest, res: HttpResponse) => {
       let users = testCache
         .data!.usersAndGroups.userGroupMemberships.filter(
-          ugm => ugm.groupUuid === req.params.groupUuid
+          ugm => ugm.groupUuid === req.params.groupUuid,
         )
         .map(ugm => ugm.userUuid)
         .map(userUuid =>
           testCache
             .data!.usersAndGroups.users.filter(user => !user.isGroup)
-            .find(user => user.uuid === userUuid)
+            .find(user => user.uuid === userUuid),
         );
 
       res.json(users);
@@ -90,13 +90,13 @@ const resourceBuilder: ResourceBuilder = (
     .intercept((req: HttpRequest, res: HttpResponse) => {
       let users = testCache
         .data!.usersAndGroups.userGroupMemberships.filter(
-          ugm => ugm.userUuid === req.params.userUuid
+          ugm => ugm.userUuid === req.params.userUuid,
         )
         .map(ugm => ugm.groupUuid)
         .map(groupUuid =>
           testCache
             .data!.usersAndGroups.users.filter(user => user.isGroup)
-            .find(user => user.uuid === groupUuid)
+            .find(user => user.uuid === groupUuid),
         );
       res.json(users);
     });
@@ -109,9 +109,9 @@ const resourceBuilder: ResourceBuilder = (
         [
           {
             userUuid: req.params.userUuid,
-            groupUuid: req.params.groupUuid
-          }
-        ]
+            groupUuid: req.params.groupUuid,
+          },
+        ],
       );
 
       res.send(undefined);
@@ -127,7 +127,7 @@ const resourceBuilder: ResourceBuilder = (
           !(
             m.groupUuid === req.params.groupUuid &&
             m.userUuid === req.params.userUuid
-          )
+          ),
       );
 
       res.send(undefined);

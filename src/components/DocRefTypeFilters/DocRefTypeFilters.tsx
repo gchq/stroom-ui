@@ -16,19 +16,19 @@
 import * as React from "react";
 
 import DocRefImage from "../DocRefImage";
-import { ControlledInput } from "../../types";
-import useDocRefTypes from "../../api/explorer/useDocRefTypes";
+import { ControlledInput } from "src/types";
+import useDocRefTypes from "src/api/explorer/useDocRefTypes";
 
 enum AllSelectState {
   ALL,
   NONE,
-  INDETERMINATE
+  INDETERMINATE,
 }
 
-interface Props extends ControlledInput<Array<string>> {}
+interface Props extends ControlledInput<string[]> {}
 
 let DocRefTypeFilters = ({ onChange, value }: Props) => {
-  const docRefTypes: Array<string> = useDocRefTypes();
+  const docRefTypes: string[] = useDocRefTypes();
 
   let allSelectState = AllSelectState.INDETERMINATE;
   if (value.length === 0) {
@@ -66,7 +66,7 @@ let DocRefTypeFilters = ({ onChange, value }: Props) => {
       {docRefTypes
         .map(docRefType => ({
           docRefType,
-          isSelected: value.includes(docRefType)
+          isSelected: value.includes(docRefType),
         }))
         .map(({ docRefType, isSelected }) => (
           <div key={docRefType}>

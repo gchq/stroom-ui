@@ -18,12 +18,10 @@ import * as React from "react";
 
 import { storiesOf } from "@storybook/react";
 
+import fullTestData from "src/testing/data";
+import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
 
-import fullTestData from "../../../testing/data";
-import { addThemedStories } from "../../../testing/storybook/themedStoryGenerator";
-
-
-import { User } from "../../../types";
+import { User } from "src/types";
 import UsersInGroup from "./UsersInGroup";
 
 // Pick a group
@@ -33,7 +31,7 @@ let aGroup: User = fullTestData.usersAndGroups.users
 
 const stories = storiesOf(
   "Sections/Authorisation Manager/Users In Group",
-  module
+  module,
 );
 
 addThemedStories(stories, () => <UsersInGroup group={aGroup} />);

@@ -5,22 +5,22 @@ import * as ReactDOM from "react-dom";
 import { DragDropContext } from "react-dnd";
 import HTML5Backend from "react-dnd-html5-backend";
 
-import { Routes } from "./components/AppChrome";
+import { Routes } from "src/components/AppChrome";
 import useFontAwesome from "./lib/useFontAwesome/useFontAwesome";
 
 import { ThemeContextProvider } from "./lib/theme";
 import { CustomRouter } from "./lib/useRouter";
 
 import createHistory from "history/createBrowserHistory";
-import { ConfigProvider } from "./startup/config";
+import { ConfigProvider } from "src/startup/config";
 export const history = createHistory();
 
 import "react-table/react-table.css";
 import "./styles/main.css";
-import { AuthorisationContextProvider } from "./startup/Authorisation";
-import { AuthenticationContextProvider } from "./startup/Authentication";
-import { DocumentTreeContextProvider } from "./api/explorer";
-import { ErrorReportingContextProvider } from "./components/ErrorPage";
+import { AuthorisationContextProvider } from "src/startup/Authorisation";
+import { AuthenticationContextProvider } from "src/startup/Authentication";
+import { DocumentTreeContextProvider } from "src/api/explorer";
+import { ErrorReportingContextProvider } from "src/components/ErrorPage";
 
 const DndRoutes = DragDropContext(HTML5Backend)(Routes);
 

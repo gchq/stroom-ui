@@ -24,15 +24,15 @@ import * as React from "react";
 // import "react-table/react-table.css";
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-// import useStreamAttributeMapApi from "../../../api/streamAttributeMap/useApi";
-// import useDataApi from "../../../api/data/useApi";
+// import useStreamAttributeMapApi from "src/api/streamAttributeMap/useApi";
+// import useDataApi from "src/api/data/useApi";
 
-// import Loader from "../../../components/Loader";
-// import Button from "../../../components/Button";
-// import { Direction, ExpressionOperatorWithUuid, DataRow } from "../../../types";
-import { ExpressionOperatorWithUuid } from "../../../types";
+// import Loader from "src/components/Loader";
+// import Button from "src/components/Button";
+// import { Direction, ExpressionOperatorWithUuid, DataRow } from "src/types";
+import { ExpressionOperatorWithUuid } from "src/types";
 
-// import useReduxState from "../../../lib/useReduxState";
+// import useReduxState from "src/lib/useReduxState";
 
 interface Props {
   dataViewerId: string;

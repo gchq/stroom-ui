@@ -24,14 +24,14 @@ import {
   XsltDoc,
   XMLSchemaDoc,
   VisualisationDoc,
-  StatisticsStoreDoc,
+  StatisticStoreDoc,
   StroomStatsStoreDoc,
   ScriptDoc,
   ElasticIndexDoc,
   DashboardDoc,
   AnnotationsIndexDoc,
   FeedDoc,
-} from "../../types";
+} from "src/types";
 import { testPipelines, elements, elementProperties } from "./pipelines";
 import testDocRefsTypes from "./docRefTypes";
 import { generate as generateAnnotationsIndex } from "./annotationsIndex";
@@ -41,7 +41,7 @@ import { generate as generateElasticIndex } from "./elasticIndex";
 import { generate as generateFeed } from "./feed";
 import { generate as generateIndex } from "./indexDocs";
 import { generate as generateScript } from "./script";
-import { generate as generateStatisticsStore } from "./statisticsStore";
+import { generate as generateStatisticStore } from "./statisticStore";
 import { generate as generateStroomStatsStore } from "./stroomStatsStore";
 import { generate as generateVisualisation } from "./visualisation";
 import { generate as generateXmlSchema } from "./xmlSchema";
@@ -58,11 +58,11 @@ import {
   User,
   IndexVolumeGroup,
   IndexVolume,
-} from "../../types";
+} from "src/types";
 import allAppPermissions from "./appPermissions";
 import { UserGroupMembership, TestData, UserDocPermission } from "../testTypes";
 import { documentPermissionNames } from "./docPermissions";
-import { iterateNodes } from "../../lib/treeUtils";
+import { iterateNodes } from "src/lib/treeUtils";
 
 let docPermissionByType = testDocRefsTypes.reduce(
   (acc, curr) => ({ ...acc, [curr]: documentPermissionNames }),
@@ -122,9 +122,9 @@ let feeds: FeedDoc[] = Array(3)
 let scripts: ScriptDoc[] = Array(3)
   .fill(1)
   .map(generateScript);
-let statisticsStores: StatisticsStoreDoc[] = Array(3)
+let StatisticStores: StatisticStoreDoc[] = Array(3)
   .fill(1)
-  .map(generateStatisticsStore);
+  .map(generateStatisticStore);
 let stroomStatsStores: StroomStatsStoreDoc[] = Array(3)
   .fill(1)
   .map(generateStroomStatsStore);
@@ -183,6 +183,24 @@ const docTree = {
         },
         {
           uuid: uuidv4(),
+          name: "XML_Schemas",
+          type: "Folder",
+          children: xmlSchemas.map(copyDocRef),
+        },
+        {
+          uuid: uuidv4(),
+          name: "Feeds",
+          type: "Folder",
+          children: feeds.map(copyDocRef),
+        },
+        {
+          uuid: uuidv4(),
+          name: "Scripts",
+          type: "Folder",
+          children: scripts.map(copyDocRef),
+        },
+        {
+          uuid: uuidv4(),
           name: "XSLT",
           type: "Folder",
           children: xslt.map(copyDocRef),
@@ -202,9 +220,45 @@ const docTree = {
         },
         {
           uuid: uuidv4(),
+          name: "Dashboards",
+          type: "Folder",
+          children: dashboards.map(copyDocRef),
+        },
+        {
+          uuid: uuidv4(),
           name: "Indexes",
           type: "Folder",
           children: indexes.map(copyDocRef),
+        },
+        {
+          uuid: uuidv4(),
+          name: "Annotation Indexes",
+          type: "Folder",
+          children: annotationIndexes.map(copyDocRef),
+        },
+        {
+          uuid: uuidv4(),
+          name: "Elastic Indexes",
+          type: "Folder",
+          children: elasticIndexes.map(copyDocRef),
+        },
+        {
+          uuid: uuidv4(),
+          name: "Visualisations",
+          type: "Folder",
+          children: visualisations.map(copyDocRef),
+        },
+        {
+          uuid: uuidv4(),
+          name: "StatisticStore",
+          type: "Folder",
+          children: StatisticStores.map(copyDocRef),
+        },
+        {
+          uuid: uuidv4(),
+          name: "StroomStatsStore",
+          type: "Folder",
+          children: stroomStatsStores.map(copyDocRef),
         },
       ],
     },
@@ -249,7 +303,7 @@ export const fullTestData: TestData = {
     Dashboard: dashboards,
     ElasticIndex: elasticIndexes,
     Script: scripts,
-    StatisticsStore: statisticsStores,
+    StatisticStore: StatisticStores,
     StroomStatsStore: stroomStatsStores,
     Visualisation: visualisations,
     XMLSchema: xmlSchemas,

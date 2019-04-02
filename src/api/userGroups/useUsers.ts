@@ -1,21 +1,21 @@
 import { useEffect, useMemo } from "react";
 
 import useApi from "./useApi";
-import { User } from "../../types";
-import useListReducer from "../../lib/useListReducer";
+import { User } from "src/types";
+import useListReducer from "src/lib/useListReducer";
 
 /**
  * Use this to convert a list of users UUID's into a list of user objects.
  *
  * @param userUuids The list of user UUID's to retrieve
  */
-const useUsers = (userUuids: Array<string>): Array<User> => {
+const useUsers = (userUuids: string[]): User[] => {
   const { fetchUser } = useApi();
   const { items: allUsers, itemAdded } = useListReducer<User>(u => u.uuid);
 
   const users = useMemo(
     () => allUsers.filter(u => userUuids.includes(u.uuid)),
-    [allUsers, userUuids]
+    [allUsers, userUuids],
   );
 
   // Don't feed 'users' into the [], otherwise it will re-run this as users come in

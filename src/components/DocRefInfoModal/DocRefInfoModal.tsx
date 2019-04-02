@@ -20,8 +20,8 @@ import Loader from "../Loader";
 import ThemedModal from "../ThemedModal";
 import IconHeader from "../IconHeader";
 import Button from "../Button";
-import { useDocRefInfo } from "../../api/explorer";
-import { DocRefType } from "../../types";
+import { useDocRefInfo } from "src/api/explorer";
+import { DocRefType } from "src/types";
 
 interface Props {
   docRef?: DocRefType;
@@ -43,10 +43,10 @@ const DocRefInfoModal = ({ isOpen, onCloseDialog, docRef }: Props) => {
   const { createTime, updateTime } = docRefInfo;
 
   const formattedCreateTime = new Date(createTime).toLocaleString("en-GB", {
-    timeZone: "UTC"
+    timeZone: "UTC",
   });
   const formattedUpdateTime = new Date(updateTime).toLocaleString("en-GB", {
-    timeZone: "UTC"
+    timeZone: "UTC",
   });
 
   return (
@@ -100,7 +100,7 @@ const DocRefInfoModal = ({ isOpen, onCloseDialog, docRef }: Props) => {
  * These are the things returned by the custom hook that allow the owning component to interact
  * with this dialog.
  */
-type UseDocRefInfoDialog = {
+interface UseDocRefInfoDialog {
   /**
    * The owning component is ready to start a deletion process.
    * Calling this will open the dialog, and setup the UUIDs
@@ -111,7 +111,7 @@ type UseDocRefInfoDialog = {
    * using destructing.
    */
   componentProps: Props;
-};
+}
 
 /**
  * This is a React custom hook that sets up things required by the owning component.
@@ -127,15 +127,15 @@ export const useDocRefInfoDialog = (): UseDocRefInfoDialog => {
       onCloseDialog: useCallback(() => {
         setIsOpen(false);
         setDocRef(undefined);
-      }, [setIsOpen, setDocRef])
+      }, [setIsOpen, setDocRef]),
     },
     showDialog: useCallback(
       (_docRef: DocRefType) => {
         setIsOpen(true);
         setDocRef(_docRef);
       },
-      [setIsOpen, setDocRef]
-    )
+      [setIsOpen, setDocRef],
+    ),
   };
 };
 

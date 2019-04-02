@@ -1,14 +1,14 @@
 import * as React from "react";
 import {
   useDocTypePermissions,
-  useDocumentPermissionsForUser
-} from "../../../api/docPermission";
-import {} from "../../../api/docPermission";
-import CheckboxSeries from "../../../components/CheckboxSeries";
-import Button from "../../../components/Button";
-import useRouter from "../../../lib/useRouter";
-import { useUser } from "../../../api/userGroups";
-import { useDocumentTree } from "../../../api/explorer";
+  useDocumentPermissionsForUser,
+} from "src/api/docPermission";
+import {} from "src/api/docPermission";
+import CheckboxSeries from "src/components/CheckboxSeries";
+import Button from "src/components/Button";
+import useRouter from "src/lib/useRouter";
+import { useUser } from "src/api/userGroups";
+import { useDocumentTree } from "src/api/explorer";
 
 interface Props {
   docRefUuid: string;
@@ -17,7 +17,7 @@ interface Props {
 
 export const DocumentPermissionForUserEditor = ({
   docRefUuid,
-  userUuid
+  userUuid,
 }: Props) => {
   const { history } = useRouter();
   const { findDocRefWithLineage } = useDocumentTree();
@@ -29,7 +29,7 @@ export const DocumentPermissionForUserEditor = ({
   const {
     permissionNames,
     addPermission,
-    removePermission
+    removePermission,
   } = useDocumentPermissionsForUser(docRefUuid, userUuid);
 
   return (

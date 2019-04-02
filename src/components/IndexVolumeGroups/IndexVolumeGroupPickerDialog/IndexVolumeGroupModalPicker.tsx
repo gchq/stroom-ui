@@ -2,13 +2,13 @@ import * as React from "react";
 import { useState, useCallback } from "react";
 
 import IndexVolumeGroupPicker, {
-  usePicker
+  usePicker,
 } from "../IndexVolumeGroupPicker/IndexVolumeGroupPicker";
-import ThemedModal from "../../../components/ThemedModal";
-import IconHeader from "../../../components/IconHeader";
-import Button from "../../../components/Button";
-import DialogActionButtons from "../../../components/DialogActionButtons";
-import { useIndexVolumeGroups } from "../../../api/indexVolumeGroup";
+import ThemedModal from "src/components/ThemedModal";
+import IconHeader from "src/components/IconHeader";
+import Button from "src/components/Button";
+import DialogActionButtons from "src/components/DialogActionButtons";
+import { useIndexVolumeGroups } from "src/api/indexVolumeGroup";
 import { PickerBaseProps } from "../IndexVolumeGroupPicker/types";
 
 interface BaseProps extends PickerBaseProps {
@@ -24,12 +24,12 @@ export const IndexVolumeGroupModalPicker = ({
   onConfirm,
   isOpen,
   setIsOpen,
-  valuesToFilterOut
+  valuesToFilterOut,
 }: Props) => {
   const volumeGroupPickerProps = usePicker({ valuesToFilterOut });
   const {
     reset: resetVolumeGroup,
-    value: volumeGroupName
+    value: volumeGroupName,
   } = volumeGroupPickerProps;
 
   const [isNewGroup, setIsNewGroup] = useState<boolean>(false);
@@ -40,13 +40,13 @@ export const IndexVolumeGroupModalPicker = ({
   const onNewGroupNameChange: React.ChangeEventHandler<
     HTMLInputElement
   > = useCallback(({ target: { value } }) => setNewGroupName(value), [
-    setNewGroupName
+    setNewGroupName,
   ]);
   const toggleNewGroup: React.MouseEventHandler<
     HTMLButtonElement
   > = useCallback(() => setIsNewGroup(!isNewGroup), [
     setIsNewGroup,
-    isNewGroup
+    isNewGroup,
   ]);
   const newGroupButtonText = isNewGroup ? "Choose Existing" : "Create New";
 
@@ -103,9 +103,9 @@ export const useDialog = (props: BaseProps): UseDialog => {
     componentProps: {
       ...props,
       isOpen,
-      setIsOpen
+      setIsOpen,
     },
-    showDialog: () => setIsOpen(true)
+    showDialog: () => setIsOpen(true),
   };
 };
 

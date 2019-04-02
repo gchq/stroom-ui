@@ -16,7 +16,7 @@
 
 import * as React from "react";
 
-import IconHeader from "../../components/IconHeader";
+import IconHeader from "src/components/IconHeader";
 
 interface Props {}
 

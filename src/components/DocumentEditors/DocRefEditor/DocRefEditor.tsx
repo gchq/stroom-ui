@@ -11,8 +11,8 @@ import AppSearchBar from "../../AppSearchBar";
 import DocRefIconHeader from "../../DocRefIconHeader";
 import DocRefBreadcrumb from "../../DocRefBreadcrumb";
 import Button, { ButtonProps } from "../../Button";
-import { DocumentApi } from "../../../api/useDocumentApi";
-import { useDocumentTree } from "../../../api/explorer";
+import { DocumentApi } from "src/api/useDocumentApi";
+import { useDocumentTree } from "src/api/explorer";
 import useAppNavigation from "../../AppChrome/useAppNavigation";
 
 const DocRefEditor = <T extends {}>({

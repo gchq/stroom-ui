@@ -19,17 +19,16 @@ import { useState, useMemo } from "react";
 
 import { storiesOf } from "@storybook/react";
 
-import { addThemedStories } from "../../../testing/storybook/themedStoryGenerator";
-
+import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
 
 import UserModalPicker, { useDialog } from "./UserModalPicker";
-import Button from "../../../components/Button";
-import JsonDebug from "../../../testing/JsonDebug";
-import fullTestData from "../../../testing/data";
+import Button from "src/components/Button";
+import JsonDebug from "src/testing/JsonDebug";
+import fullTestData from "src/testing/data";
 
 const stories = storiesOf("Pickers/User Picker (Modal)", module);
 
-const TestHarness = () => {
+addThemedStories(stories, () => {
   const [pickedUser, setPickedUser] = useState<string | undefined>(undefined);
 
   const { userNamesToFilterOut, valuesToFilterOut } = useMemo(() => {
@@ -38,13 +37,13 @@ const TestHarness = () => {
     let userNamesToFilterOut = usersToFilterOut.map(u => u.name);
     return {
       userNamesToFilterOut,
-      valuesToFilterOut
+      valuesToFilterOut,
     };
   }, []);
   const { componentProps, showDialog } = useDialog({
     isGroup: undefined,
     onConfirm: setPickedUser,
-    valuesToFilterOut
+    valuesToFilterOut,
   });
 
   return (
@@ -54,6 +53,4 @@ const TestHarness = () => {
       <UserModalPicker {...componentProps} />
     </div>
   );
-};
-
-addThemedStories(stories, () => <TestHarness />);
+});

@@ -1,11 +1,11 @@
 import * as React from "react";
 import ReactTable from "react-table";
 
-import { IndexField } from "../../../../types";
+import { IndexField } from "src/types";
 import {
   useSelectableReactTable,
   SelectionBehaviour,
-} from "../../../../lib/useSelectableItemListing";
+} from "src/lib/useSelectableItemListing";
 import { Props, UseTable } from "./types";
 
 const COLUMNS = [

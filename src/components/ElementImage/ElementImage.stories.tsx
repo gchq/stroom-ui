@@ -4,7 +4,7 @@ import { storiesOf } from "@storybook/react";
 
 import ElementImage from "./ElementImage";
 
-import { addThemedStories } from "../../testing/storybook/themedStoryGenerator";
+import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
 
 storiesOf("Pipeline/Element Image", module)
   .add("default (large)", () => <ElementImage icon="ElasticSearch.svg" />)

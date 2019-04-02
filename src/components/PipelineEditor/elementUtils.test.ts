@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import { groupByCategory, isValidChildType, keyByType } from "./elementUtils";
-import { elements } from "../../testing/data/pipelines";
+import { elements } from "src/testing/data/pipelines";
 
 const jsonWriter = elements.find(f => f.type === "JSONWriter")!;
 const streamAppender = elements.find(f => f.type === "StreamAppender")!;
@@ -54,7 +54,7 @@ describe("Element Utils", () => {
         "JSONWriter",
         "XMLFragmentParser",
         "TextWriter",
-        "XMLWriter"
+        "XMLWriter",
       ];
       expectedTypes.forEach(c => expect(byType).toHaveProperty(c));
     });

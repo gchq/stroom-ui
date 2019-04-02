@@ -1,16 +1,16 @@
 import { HttpRequest, HttpResponse } from "@pollyjs/adapter-fetch";
 
 import { TestCache } from "../PollyDecorator";
-import { Config } from "../../../startup/config";
+import { Config } from "src/startup/config";
 import { ResourceBuilder } from "./types";
-import { IndexVolume, IndexVolumeGroup } from "../../../types";
+import { IndexVolume, IndexVolumeGroup } from "src/types";
 
 let nextIdToCreate = 100000;
 
 const resourceBuilder: ResourceBuilder = (
   server: any,
   { stroomBaseServiceUrl }: Config,
-  testCache: TestCache
+  testCache: TestCache,
 ) => {
   const resource = `${stroomBaseServiceUrl}/stroom-index/volume/v1`;
 
@@ -25,7 +25,7 @@ const resourceBuilder: ResourceBuilder = (
     .intercept((req: HttpRequest, res: HttpResponse) => {
       let indexVolumeId: string = req.params.indexVolumeId;
       let indexVolume = testCache.data!.indexVolumesAndGroups.volumes.find(
-        v => `${v.id}` === indexVolumeId
+        v => `${v.id}` === indexVolumeId,
       );
       if (!!indexVolume) {
         res.json(indexVolume);
@@ -50,14 +50,14 @@ const resourceBuilder: ResourceBuilder = (
       bytesLimit: 100,
       bytesUsed: 100,
       bytesTotal: 100,
-      statusMs: now
+      statusMs: now,
     };
 
     testCache.data!.indexVolumesAndGroups = {
       ...testCache.data!.indexVolumesAndGroups,
       volumes: testCache.data!.indexVolumesAndGroups.volumes.concat([
-        newIndexVolume
-      ])
+        newIndexVolume,
+      ]),
     };
 
     res.json(newIndexVolume);
@@ -71,8 +71,8 @@ const resourceBuilder: ResourceBuilder = (
       testCache.data!.indexVolumesAndGroups = {
         ...testCache.data!.indexVolumesAndGroups,
         volumes: testCache.data!.indexVolumesAndGroups.volumes.filter(
-          v => v.id !== oldIndexVolumeId
-        )
+          v => v.id !== oldIndexVolumeId,
+        ),
       };
 
       res.send(undefined);
@@ -85,13 +85,13 @@ const resourceBuilder: ResourceBuilder = (
     .intercept((req: HttpRequest, res: HttpResponse) => {
       let groupName = req.params.groupName;
 
-      let indexVolumeIds: Array<IndexVolume> = testCache
+      let indexVolumeIds: IndexVolume[] = testCache
         .data!.indexVolumesAndGroups.groupMemberships.filter(
-          m => m.groupName === groupName
+          m => m.groupName === groupName,
         )
         .map(m => m.volumeId)
         .map(vId =>
-          testCache.data!.indexVolumesAndGroups.volumes.find(v => v.id === vId)
+          testCache.data!.indexVolumesAndGroups.volumes.find(v => v.id === vId),
         )
         .map(v => v!);
 
@@ -104,15 +104,15 @@ const resourceBuilder: ResourceBuilder = (
     .intercept((req: HttpRequest, res: HttpResponse) => {
       let indexVolumeId = req.params.indexVolumeId;
 
-      let groups: Array<IndexVolumeGroup> = testCache
+      let groups: IndexVolumeGroup[] = testCache
         .data!.indexVolumesAndGroups.groupMemberships.filter(
-          m => m.volumeId === indexVolumeId
+          m => m.volumeId === indexVolumeId,
         )
         .map(m => m.groupName)
         .map(groupName =>
           testCache.data!.indexVolumesAndGroups.groups.find(
-            g => g.name === groupName
-          )
+            g => g.name === groupName,
+          ),
         )
         .filter(g => g !== undefined)
         .map(g => g!);
@@ -128,9 +128,9 @@ const resourceBuilder: ResourceBuilder = (
         [
           {
             groupName: req.params.groupName,
-            volumeId: req.params.volumeId
-          }
-        ]
+            volumeId: req.params.volumeId,
+          },
+        ],
       );
 
       res.send(undefined);
@@ -144,7 +144,7 @@ const resourceBuilder: ResourceBuilder = (
       let groupName: string = req.params.groupName;
       let volumeId: string = req.params.volumeId;
       testCache.data!.indexVolumesAndGroups.groupMemberships = testCache.data!.indexVolumesAndGroups.groupMemberships.filter(
-        m => !(m.groupName === groupName && m.volumeId === volumeId)
+        m => !(m.groupName === groupName && m.volumeId === volumeId),
       );
 
       res.send(undefined);

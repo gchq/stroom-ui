@@ -1,11 +1,11 @@
 import { useEffect, useCallback } from "react";
 
 import useApi from "./useApi";
-import { User } from "../../types";
-import useListReducer from "../../lib/useListReducer/useListReducer";
+import { User } from "src/types";
+import useListReducer from "src/lib/useListReducer/useListReducer";
 
 interface UseGroupsForUser {
-  groups: Array<User>;
+  groups: User[];
   addToGroup: (groupUuid: string) => void;
   removeFromGroup: (groupUuid: string) => void;
 }
@@ -15,14 +15,14 @@ const useGroupsForUser = (user: User): UseGroupsForUser => {
     items: groups,
     itemsReceived,
     itemAdded,
-    itemRemoved
+    itemRemoved,
   } = useListReducer<User>(g => g.uuid);
 
   const {
     findGroupsForUser,
     addUserToGroup,
     removeUserFromGroup,
-    fetchUser
+    fetchUser,
   } = useApi();
 
   useEffect(() => {
@@ -35,21 +35,21 @@ const useGroupsForUser = (user: User): UseGroupsForUser => {
         .then(() => fetchUser(groupUuid))
         .then(itemAdded);
     },
-    [user, fetchUser, addUserToGroup]
+    [user, fetchUser, addUserToGroup],
   );
   const removeFromGroup = useCallback(
     (groupUuid: string) => {
       removeUserFromGroup(user.uuid, groupUuid).then(() =>
-        itemRemoved(groupUuid)
+        itemRemoved(groupUuid),
       );
     },
-    [user, removeUserFromGroup]
+    [user, removeUserFromGroup],
   );
 
   return {
     groups,
     addToGroup,
-    removeFromGroup
+    removeFromGroup,
   };
 };
 

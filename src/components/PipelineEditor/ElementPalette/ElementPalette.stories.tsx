@@ -18,8 +18,8 @@ import { storiesOf } from "@storybook/react";
 
 import ElementPalette from "./ElementPalette";
 
-import { fullTestData } from "../../../testing/data";
-import { PipelineDocumentType } from "../../../types";
+import { fullTestData } from "src/testing/data";
+import { PipelineDocumentType } from "src/types";
 
 const showDeleteElementDialog = () =>
   console.error("Deleting Elements Not Supported in this Story");

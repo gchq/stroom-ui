@@ -4,7 +4,7 @@ import useApi from "./useApi";
 import {
   ElementDefinitions,
   ElementPropertiesByElementIdType,
-} from "../../types";
+} from "src/types";
 
 interface UseElements {
   elementDefinitions: ElementDefinitions;

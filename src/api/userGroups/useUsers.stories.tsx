@@ -19,23 +19,21 @@ import { useState, useCallback, useMemo } from "react";
 
 import { storiesOf } from "@storybook/react";
 
-import fullTestData from "../../testing/data";
+import fullTestData from "src/testing/data";
 import useUsers from "./useUsers";
-import Button from "../../components/Button";
-
-
+import Button from "src/components/Button";
 
 const testUserLists = [
   fullTestData.usersAndGroups.users.slice(0, 3).map(u => u.uuid),
   fullTestData.usersAndGroups.users.slice(4, 8).map(u => u.uuid),
-  fullTestData.usersAndGroups.users.slice(10, 14).map(u => u.uuid)
+  fullTestData.usersAndGroups.users.slice(10, 14).map(u => u.uuid),
 ];
 
 const TestHarness = () => {
   const [testListIndex, setTestListIndex] = useState<number>(0);
 
   const userUuids = useMemo(() => testUserLists[testListIndex], [
-    testListIndex
+    testListIndex,
   ]);
   const users = useUsers(userUuids);
 

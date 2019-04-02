@@ -17,8 +17,8 @@
 import * as React from "react";
 import * as moment from "moment";
 
-import { DataRow } from "../../types";
-import { useStreamDataRow } from "../../api/streamAttributeMap";
+import { DataRow } from "src/types";
+import { useStreamDataRow } from "src/api/streamAttributeMap";
 import Loader from "../Loader";
 
 interface Props {
@@ -41,7 +41,7 @@ const DetailsTabs = ({ data }: Props) => {
           TODO: ACtually Source the data
           <DataDetails data={dataRow} /> */}
         </div>
-      )
+      ),
     },
     {
       menuItem: "Details",
@@ -68,7 +68,7 @@ const DetailsTabs = ({ data }: Props) => {
                       <td>Status MS</td>
                       <td>
                         {moment(dataRow.data.statusMs).format(
-                          "MMMM Do YYYY, h:mm:ss a"
+                          "MMMM Do YYYY, h:mm:ss a",
                         )}
                       </td>
                     </tr>
@@ -86,7 +86,7 @@ const DetailsTabs = ({ data }: Props) => {
                       <td>Created</td>
                       <td>
                         {moment(dataRow.data.createMs).format(
-                          "MMMM Do YYYY, h:mm:ss a"
+                          "MMMM Do YYYY, h:mm:ss a",
                         )}
                       </td>
                     </tr>
@@ -94,7 +94,7 @@ const DetailsTabs = ({ data }: Props) => {
                       <td>Effective</td>
                       <td>
                         {moment(dataRow.data.effectiveMs).format(
-                          "MMMM Do YYYY, h:mm:ss a"
+                          "MMMM Do YYYY, h:mm:ss a",
                         )}
                       </td>
                     </tr>
@@ -114,7 +114,7 @@ const DetailsTabs = ({ data }: Props) => {
             </div>
           </div>
         );
-      }
+      },
     },
     {
       menuItem: "Attributes",
@@ -143,7 +143,7 @@ const DetailsTabs = ({ data }: Props) => {
             </div>
           </div>
         </div>
-      )
+      ),
     },
     {
       menuItem: "Retention",
@@ -173,8 +173,8 @@ const DetailsTabs = ({ data }: Props) => {
             </div>
           </div>
         </div>
-      )
-    }
+      ),
+    },
   ];
   if (panes) {
     console.log("Panes defined"); // TODO

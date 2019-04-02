@@ -1,8 +1,8 @@
 import {
   ExpressionOperatorWithUuid,
   PageRequest,
-  StreamAttributeMapResult
-} from "../../types";
+  StreamAttributeMapResult,
+} from "src/types";
 
 export interface UseStreamSearch {
   page: (p: PageProps) => void;

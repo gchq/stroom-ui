@@ -20,18 +20,18 @@ import { Progress } from "react-sweet-progress";
 import "react-sweet-progress/lib/style.css";
 import ReactTable, { RowInfo, SortingRule } from "react-table";
 
-import Button from "../../../components/Button";
+import Button from "src/components/Button";
 import {
   Directions,
   SortByOptions,
   sortByFromString,
   UseStreamTasks,
-} from "../../../api/useStreamTasks/types";
-import { StreamTaskType } from "../../../types";
+} from "src/api/useStreamTasks/types";
+import { StreamTaskType } from "src/types";
 import {
   useSelectableReactTable,
   SelectionBehaviour,
-} from "../../../lib/useSelectableItemListing";
+} from "src/lib/useSelectableItemListing";
 
 interface Props {
   streamTasksApi: UseStreamTasks;

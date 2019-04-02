@@ -1,14 +1,14 @@
 import { HttpRequest, HttpResponse } from "@pollyjs/adapter-fetch";
 
 import { TestCache } from "../PollyDecorator";
-import { Config } from "../../../startup/config";
+import { Config } from "src/startup/config";
 import { ResourceBuilder } from "./types";
 import { DocumentPermissions } from "src/types";
 
 const resourceBuilder: ResourceBuilder = (
   server: any,
   { stroomBaseServiceUrl }: Config,
-  testCache: TestCache
+  testCache: TestCache,
 ) => {
   const resource = `${stroomBaseServiceUrl}/docPermissions/v1`;
 
@@ -30,9 +30,9 @@ const resourceBuilder: ResourceBuilder = (
       res.json(
         testCache
           .data!.userDocPermission.filter(
-            udp => udp.docRefUuid === docRefUuid && udp.userUuid === userUuid
+            udp => udp.docRefUuid === docRefUuid && udp.userUuid === userUuid,
           )
-          .map(udp => udp.permissionName)
+          .map(udp => udp.permissionName),
       );
     });
 
@@ -47,9 +47,9 @@ const resourceBuilder: ResourceBuilder = (
           {
             docRefUuid,
             userUuid,
-            permissionName
-          }
-        ]
+            permissionName,
+          },
+        ],
       );
 
       res.json(testCache.data!.allAppPermissions);
@@ -67,7 +67,7 @@ const resourceBuilder: ResourceBuilder = (
             udp.userUuid === userUuid &&
             udp.docRefUuid === docRefUuid &&
             udp.permissionName === permissionName
-          )
+          ),
       );
 
       res.send(undefined);
@@ -81,17 +81,17 @@ const resourceBuilder: ResourceBuilder = (
       let documentPermissions: DocumentPermissions = {
         document: {
           uuid: docRefUuid,
-          type: "TEST"
+          type: "TEST",
         },
         byUser: testCache
           .data!.userDocPermission.filter(d => d.docRefUuid === docRefUuid)
           .reduce(
             (acc, { userUuid, permissionName }) => ({
               ...acc,
-              [userUuid]: [...(acc[userUuid] || [])].concat([permissionName])
+              [userUuid]: [...(acc[userUuid] || [])].concat([permissionName]),
             }),
-            {}
-          )
+            {},
+          ),
       };
 
       res.json(documentPermissions);
@@ -104,7 +104,7 @@ const resourceBuilder: ResourceBuilder = (
       const { docRefUuid, userUuid } = req.params;
 
       testCache.data!.userDocPermission = testCache.data!.userDocPermission.filter(
-        udp => !(udp.docRefUuid === docRefUuid && udp.userUuid === userUuid)
+        udp => !(udp.docRefUuid === docRefUuid && udp.userUuid === userUuid),
       );
 
       res.send(undefined);
@@ -117,7 +117,7 @@ const resourceBuilder: ResourceBuilder = (
       const { docRefUuid } = req.params;
 
       testCache.data!.userDocPermission = testCache.data!.userDocPermission.filter(
-        udp => udp.docRefUuid !== docRefUuid
+        udp => udp.docRefUuid !== docRefUuid,
       );
 
       res.send(undefined);

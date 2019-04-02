@@ -36,7 +36,7 @@ import {
   PipelineDocumentType,
   PipelineAsTreeType,
   ElementPropertiesType,
-} from "../../types";
+} from "src/types";
 import { ShowDialog } from "./AddElementModal";
 import { PipelineEditApi } from "./types";
 

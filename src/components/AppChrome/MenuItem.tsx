@@ -10,7 +10,7 @@ import {
 import { DragSource } from "react-dnd";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import { canMove } from "../../lib/treeUtils";
+import { canMove } from "src/lib/treeUtils";
 import {
   DragDropTypes,
   DragObject,
@@ -18,8 +18,8 @@ import {
   DropCollectedProps,
 } from "../DocumentEditors/FolderExplorer/types";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
-import { DocRefType, StyledComponentProps } from "../../types";
-import { KeyDownState } from "../../lib/useKeyIsDown";
+import { DocRefType, StyledComponentProps } from "src/types";
+import { KeyDownState } from "src/lib/useKeyIsDown";
 import { MenuItemOpened, MenuItemType, MenuItemsOpenState } from "./types";
 
 interface Props extends StyledComponentProps {

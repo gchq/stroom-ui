@@ -19,14 +19,14 @@ import { storiesOf } from "@storybook/react";
 
 import DropdownSelect from "./DropdownSelect";
 import { DropdownOptionProps } from "./types";
-import useForm from "../../lib/useForm";
-import JsonDebug from "../../testing/JsonDebug";
+import useForm from "src/lib/useForm";
+import JsonDebug from "src/testing/JsonDebug";
 
-import { ControlledInput } from "../../types";
+import { ControlledInput } from "src/types";
 
 const toSimpleOption = (c: string) => ({
   value: c.toLowerCase(),
-  text: c
+  text: c,
 });
 
 const colourOptions = [
@@ -36,13 +36,13 @@ const colourOptions = [
   "Green",
   "Blue",
   "Indigo",
-  "Violet"
+  "Violet",
 ].map(toSimpleOption);
 
 const ColorOption = ({
   option: { text, value },
   onClick,
-  inFocus
+  inFocus,
 }: DropdownOptionProps) => (
   <div className={`hoverable ${inFocus ? "inFocus" : ""}`} onClick={onClick}>
     <span style={{ backgroundColor: value, width: "2rem" }}>&nbsp;</span>
@@ -66,7 +66,7 @@ const weekdayOptions = [
   "Thursday",
   "Friday",
   "Saturday",
-  "Sunday"
+  "Sunday",
 ].map(toSimpleOption);
 
 const WeekdayPicker = (props: ControlledInput<string>) => (
@@ -82,7 +82,7 @@ const initialValues: FormValues = {};
 
 const TestForm = () => {
   const { value, useControlledInputProps } = useForm({
-    initialValues
+    initialValues,
   });
 
   const colourPickerProps = useControlledInputProps<string>("colour");
@@ -108,5 +108,5 @@ const TestForm = () => {
 
 storiesOf("General Purpose/Dropdown Select", module).add(
   "simple pickers",
-  () => <TestForm />
+  () => <TestForm />,
 );

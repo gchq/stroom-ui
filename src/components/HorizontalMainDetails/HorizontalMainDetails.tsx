@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import * as Mousetrap from "mousetrap";
 
 import PanelGroup from "react-panelgroup";
-import useLocalStorage, { storeNumber } from "../../lib/useLocalStorage";
+import useLocalStorage, { storeNumber } from "src/lib/useLocalStorage";
 import HorizontalPanel from "../HorizontalPanel";
 
 interface Props {
@@ -23,17 +23,17 @@ const HorizontalMainDetails = ({
   mainContent,
   detailContent,
   onClose,
-  isOpen
+  isOpen,
 }: Props) => {
   const { value: mainHeight, setValue: setMainHeight } = useLocalStorage(
     `mainHeight_${storageKey}`,
     200,
-    storeNumber
+    storeNumber,
   );
   const { value: detailsHeight, setValue: setDetailsHeight } = useLocalStorage(
     `detailsHeight_${storageKey}`,
     200,
-    storeNumber
+    storeNumber,
   );
 
   useEffect(() => {
@@ -51,13 +51,13 @@ const HorizontalMainDetails = ({
         {
           resize: "dynamic",
           minSize: 100,
-          size: mainHeight
+          size: mainHeight,
         },
         {
           resize: "dynamic",
           minSize: 100,
-          size: detailsHeight
-        }
+          size: detailsHeight,
+        },
       ]}
       onUpdate={(panelWidths: any[]) => {
         setMainHeight(panelWidths[0].size);

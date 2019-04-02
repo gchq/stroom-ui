@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { ControlledInput } from "../../../types";
+import { ControlledInput } from "src/types";
 
 interface Props extends ControlledInput<any> {
   valueType: string;
@@ -8,7 +8,7 @@ interface Props extends ControlledInput<any> {
 
 const BetweenValueWidget = ({ valueType, onChange, value }: Props) => {
   const onFromValueChange = ({
-    target: { value }
+    target: { value },
   }: React.ChangeEvent<HTMLInputElement>) => {
     const parts = value.split(",");
     const existingToValue = parts.length === 2 ? parts[1] : "";
@@ -18,7 +18,7 @@ const BetweenValueWidget = ({ valueType, onChange, value }: Props) => {
   };
 
   const onToValueChange = ({
-    target: { value }
+    target: { value },
   }: React.ChangeEvent<HTMLInputElement>) => {
     const parts = value.split(",");
     const existingFromValue = parts.length === 2 ? parts[0] : "";

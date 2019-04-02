@@ -1,36 +1,36 @@
 import { useEffect, useCallback, useReducer } from "react";
 
 import useApi from "./useApi";
-import { IndexVolume } from "../../types";
+import { IndexVolume } from "src/types";
 
 /**
  * Convenience function for using Index Volume.
  * This hook connects the REST API calls to the Redux Store.
  */
 interface UseIndexVolumes {
-  indexVolumes: Array<IndexVolume>;
+  indexVolumes: IndexVolume[];
   createIndexVolume: (nodeName: string, path: string) => void;
   deleteIndexVolume: (id: string) => void;
   addVolumeToGroup: (indexVolumeId: string, groupName: string) => void;
 }
 
-type ReceiveAction = {
+interface ReceiveAction {
   type: "received";
-  indexVolumes: Array<IndexVolume>;
-};
-type DeleteAction = {
+  indexVolumes: IndexVolume[];
+}
+interface DeleteAction {
   type: "deleted";
   id: string;
-};
-type CreateAction = {
+}
+interface CreateAction {
   type: "created";
   indexVolume: IndexVolume;
-};
+}
 
 const reducer = (
-  state: Array<IndexVolume>,
-  action: ReceiveAction | DeleteAction | CreateAction
-): Array<IndexVolume> => {
+  state: IndexVolume[],
+  action: ReceiveAction | DeleteAction | CreateAction,
+): IndexVolume[] => {
   switch (action.type) {
     case "received":
       return action.indexVolumes;
@@ -50,15 +50,15 @@ const useIndexVolumes = (): UseIndexVolumes => {
     getIndexVolumes,
     deleteIndexVolume,
     addVolumeToGroup,
-    createIndexVolume
+    createIndexVolume,
   } = useApi();
 
   useEffect(() => {
     getIndexVolumes().then(v =>
       dispatch({
         type: "received",
-        indexVolumes: v
-      })
+        indexVolumes: v,
+      }),
     );
   }, [dispatch, getIndexVolumes]);
 
@@ -69,26 +69,26 @@ const useIndexVolumes = (): UseIndexVolumes => {
         createIndexVolume(nodeName, path).then(indexVolume =>
           dispatch({
             type: "created",
-            indexVolume
-          })
+            indexVolume,
+          }),
         ),
-      [createIndexVolume]
+      [createIndexVolume],
     ),
     deleteIndexVolume: useCallback(
       (id: string) =>
         deleteIndexVolume(id).then(() =>
           dispatch({
             type: "deleted",
-            id
-          })
+            id,
+          }),
         ),
-      [deleteIndexVolume]
+      [deleteIndexVolume],
     ),
     addVolumeToGroup: useCallback(
       (volumeId: string, groupName: string) =>
         addVolumeToGroup(volumeId, groupName),
-      [addVolumeToGroup]
-    )
+      [addVolumeToGroup],
+    ),
   };
 };
 

@@ -21,9 +21,9 @@ import DocRefEditor, {
   SwitchedDocRefEditorProps,
 } from "../DocRefEditor";
 import Loader from "../../Loader";
-import useDocumentApi from "../../../api/useDocumentApi";
+import useDocumentApi from "src/api/useDocumentApi";
 import ThemedAceEditor from "../../ThemedAceEditor";
-import { XsltDoc } from "../../../types";
+import { XsltDoc } from "src/types";
 
 const XsltEditor: React.FunctionComponent<SwitchedDocRefEditorProps> = ({
   docRefUuid,

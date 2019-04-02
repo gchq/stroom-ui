@@ -19,8 +19,8 @@ import { storiesOf } from "@storybook/react";
 
 import useSelectableItemListing from "./useSelectableItemListing";
 import { SelectionBehaviour } from "./enums";
-import JsonDebug from "../../testing/JsonDebug";
-import Button from "../../components/Button";
+import JsonDebug from "src/testing/JsonDebug";
+import Button from "src/components/Button";
 import useTestAnimals, { Animal } from "./useTestAnimals";
 
 const TestList = () => {
@@ -35,19 +35,19 @@ const TestList = () => {
     selectedItemIndexes,
     selectedItem,
     focusIndex,
-    toggleSelection
+    toggleSelection,
   } = useSelectableItemListing({
     getKey: a => a.name,
     openItem: a => setLastAction(`Opened Item ${a.name}`),
     items: animals,
     selectionBehaviour: SelectionBehaviour.MULTIPLE,
-    preFocusWrap
+    preFocusWrap,
   });
 
   // Demonstrates how to 'watch' for selection changes
   useEffect(() => setExternalSelectedItem(selectedItem), [
     selectedItem,
-    setExternalSelectedItem
+    setExternalSelectedItem,
   ]);
 
   return (
@@ -63,7 +63,7 @@ const TestList = () => {
               borderStyle: focusIndex === i ? "solid" : "none",
               backgroundColor: selectedItemIndexes.has(i)
                 ? "lightblue"
-                : "white"
+                : "white",
             }}
           >
             {animal.species} - {animal.name}
@@ -77,5 +77,5 @@ const TestList = () => {
 
 storiesOf("Custom Hooks/useSelectableItemListing", module).add(
   "A List",
-  TestList
+  TestList,
 );

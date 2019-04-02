@@ -1,17 +1,17 @@
 import {
   DataSourceFieldType,
   ExpressionTermWithUuid,
-  DataSourceType
-} from "../../types";
+  DataSourceType,
+} from "src/types";
 
 const withValueType = (
   term: ExpressionTermWithUuid,
-  dataSource: DataSourceType
+  dataSource: DataSourceType,
 ): string => {
-  let valueType: string = "text";
+  let valueType = "text";
 
   const thisField = dataSource.fields.find(
-    (f: DataSourceFieldType) => f.name === term.field
+    (f: DataSourceFieldType) => f.name === term.field,
   );
 
   if (thisField) {

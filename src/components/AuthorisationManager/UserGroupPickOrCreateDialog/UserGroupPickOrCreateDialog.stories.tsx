@@ -19,26 +19,21 @@ import { useState } from "react";
 
 import { storiesOf } from "@storybook/react";
 
-
-import { addThemedStories } from "../../../testing/storybook/themedStoryGenerator";
-
+import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
 
 import UserGroupPickOrCreateDialog, {
-  useDialog
+  useDialog,
 } from "./UserGroupPickOrCreateDialog";
-import Button from "../../../components/Button";
-import JsonDebug from "../../../testing/JsonDebug";
+import Button from "src/components/Button";
+import JsonDebug from "src/testing/JsonDebug";
 
-const stories = storiesOf(
-  "Pickers/User (or Create) Modal",
-  module
-);
+const stories = storiesOf("Pickers/User (or Create) Modal", module);
 
-const TestHarness = () => {
+addThemedStories(stories, () => {
   const [pickedUser, setPickedUser] = useState<string | undefined>(undefined);
 
   const { componentProps, showDialog } = useDialog({
-    onConfirm: setPickedUser
+    onConfirm: setPickedUser,
   });
 
   return (
@@ -48,6 +43,4 @@ const TestHarness = () => {
       <UserGroupPickOrCreateDialog {...componentProps} />
     </div>
   );
-};
-
-addThemedStories(stories, () => <TestHarness />);
+});

@@ -19,7 +19,7 @@ import { storiesOf } from "@storybook/react";
 
 import PathNotFound from "./PathNotFound";
 
-import { addThemedStories } from "../../testing/storybook/themedStoryGenerator";
+import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
 
 const stories = storiesOf("Sections/Path not found", module);
 

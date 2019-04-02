@@ -16,14 +16,14 @@
 
 import * as React from "react";
 
-import IconHeader from "../../components/IconHeader";
-import { themeOptions, useTheme } from "../../lib/theme";
+import IconHeader from "src/components/IconHeader";
+import { themeOptions, useTheme } from "src/lib/theme";
 
 const UserSettings = () => {
   const { theme, setTheme } = useTheme();
 
   const onThemeChanged: React.ChangeEventHandler<HTMLSelectElement> = ({
-    target: { value }
+    target: { value },
   }) => {
     setTheme(value);
   };

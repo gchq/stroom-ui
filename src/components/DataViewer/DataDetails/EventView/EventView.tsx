@@ -13,14 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 import * as React from "react";
-import { storiesOf } from "@storybook/react";
 
-import fullTestData from "../../../testing/data";
-import DictionaryEditor from "./DictionaryEditor";
+import ThemedAceEditor from "src/components/ThemedAceEditor";
 
-const stories = storiesOf("Document Editors/Dictionary", module);
+interface Props {
+  events: string;
+}
 
-let uuid: string = fullTestData.documents.Dictionary[0].uuid;
+const EventView = ({ events }: Props) => (
+  <div className="EventView__container">
+    <div className="EventView__aceEditor__container">
+      <ThemedAceEditor
+        className="EventView__aceEditor"
+        style={{ width: "100%", height: "100%" }}
+        mode="xml"
+        value={events}
+        readOnly
+      />
+    </div>
+  </div>
+);
 
-stories.add("editor", () => <DictionaryEditor docRefUuid={uuid} />);
+export default EventView;

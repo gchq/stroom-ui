@@ -1,7 +1,7 @@
 import * as React from "react";
-import { useState } from "react";
+import { useState, useCallback } from "react";
 
-import { ThemedConfirm } from "../ThemedConfirm";
+import { ThemedConfirm } from "src/components/ThemedConfirm";
 
 interface Props {
   isOpen: boolean;
@@ -14,19 +14,21 @@ const DeletePipelineElement = ({
   isOpen,
   onCloseDialog,
   elementId,
-  onDeleteElement
+  onDeleteElement,
 }: Props) => {
+  const onConfirm = useCallback(() => {
+    if (!!elementId) {
+      onDeleteElement(elementId);
+    }
+    onCloseDialog();
+  }, [elementId, onDeleteElement, onCloseDialog]);
+
   return (
     <ThemedConfirm
       isOpen={isOpen}
       question={`Delete ${elementId} from pipeline?`}
       onCloseDialog={onCloseDialog}
-      onConfirm={() => {
-        if (!!elementId) {
-          onDeleteElement(elementId);
-        }
-        onCloseDialog();
-      }}
+      onConfirm={onConfirm}
     />
   );
 };
@@ -48,12 +50,12 @@ export const useDialog = (onDeleteElement: (e: string) => void): UseDialog => {
       onCloseDialog: () => {
         setIsOpen(false);
         setElementId(undefined);
-      }
+      },
     },
     showDialog: _elementId => {
       setIsOpen(true);
       setElementId(_elementId);
-    }
+    },
   };
 };
 

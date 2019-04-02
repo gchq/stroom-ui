@@ -1,6 +1,6 @@
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
-import { DocRefType } from "../../types";
-import { IsGroup } from "../../api/userGroups";
+import { DocRefType } from "src/types";
+import { IsGroup } from "src/api/userGroups";
 
 export type ActiveMenuItem =
   | "welcome"
