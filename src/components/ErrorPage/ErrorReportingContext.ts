@@ -6,7 +6,7 @@ interface ErrorReportingContextState {
   reportError: (e: SingleError) => void;
 }
 
-export default createContext<ErrorReportingContextState>({
+export default React.createContext<ErrorReportingContextState>({
   error: {
     errorMessage: "",
     stackTrace: "",

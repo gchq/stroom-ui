@@ -4,7 +4,9 @@ import { useConfig } from "../config";
 import { AppPermissions } from "./types";
 import AuthorisationContext from "./AuthorisationContext";
 
-const AuthorisationContextProvider: FunctionComponent = ({ children }) => {
+const AuthorisationContextProvider: React.FunctionComponent = ({
+  children,
+}) => {
   const [appPermissions, setAppPermissions] = React.useState<AppPermissions>(
     {},
   );

@@ -15,7 +15,7 @@
  */
 
 import * as React from "react";
-import ReactTable from "react-table";
+import ReactTable, { Column } from "react-table";
 
 import {
   useStreamSearch,

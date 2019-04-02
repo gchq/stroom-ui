@@ -9,7 +9,9 @@ interface Props {
   className?: string;
 }
 
-const Divider = () => <div className="DocRefBreadcrumb__divider">/</div>;
+const Divider: React.FunctionComponent = () => (
+  <div className="DocRefBreadcrumb__divider">/</div>
+);
 
 const DocRefBreadcrumb: React.FunctionComponent<Props> = ({
   docRefUuid,

@@ -16,7 +16,6 @@
 
 import * as React from "react";
 import * as uuidv4 from "uuid/v4";
-import * as React from "react";
 import * as loremIpsum from "lorem-ipsum";
 import { storiesOf } from "@storybook/react";
 import { Color } from "csstype";

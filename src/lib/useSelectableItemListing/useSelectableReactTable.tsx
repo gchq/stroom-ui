@@ -1,4 +1,5 @@
-import {} from "react-table";
+import * as React from "react";
+import { TableProps, RowInfo } from "react-table";
 import { TableOutProps, InProps } from "./types";
 import useSelectableItemListing from ".";
 

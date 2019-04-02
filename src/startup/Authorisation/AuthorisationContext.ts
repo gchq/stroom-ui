@@ -6,7 +6,9 @@ interface AuthorisationContextApi {
   fetchAppPermission: (appPermission: string) => void;
 }
 
-const AuthorisationContext: Context<AuthorisationContextApi> = createContext({
+const AuthorisationContext: React.Context<
+  AuthorisationContextApi
+> = React.createContext({
   appPermissions: {},
   fetchAppPermission: () => {
     console.error("Default Implementation for Authorisation Context");

@@ -39,7 +39,7 @@ const TestHarness: React.FunctionComponent = () => {
       />
       <Button
         text="Reset"
-        onClick={useCallback(() => {
+        onClick={React.useCallback(() => {
           setLastSearch(undefined);
         }, [setLastSearch])}
       />

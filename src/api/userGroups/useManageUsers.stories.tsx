@@ -35,7 +35,7 @@ const TestHarness = () => {
       <h2>Users</h2>
       <ul>
         {users.map(user => (
-          <div>
+          <div key={user.uuid}>
             <Button onClick={() => deleteUser(user.uuid)} text="Delete" />
             {JSON.stringify(user)}
           </div>

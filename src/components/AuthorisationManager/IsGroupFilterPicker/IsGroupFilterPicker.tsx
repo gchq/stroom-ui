@@ -30,7 +30,7 @@ const IsGroupFilterPicker: React.FunctionComponent<Props> = ({
 }) => (
   <Select
     value={IS_GROUP_OPTIONS.find(o => o.value === value)}
-    onChange={useCallback(
+    onChange={React.useCallback(
       (o: SelectOptionType) => onChange(o.value as IsGroup),
       [onChange],
     )}

@@ -20,7 +20,7 @@ const PermissionInheritancePicker: React.FunctionComponent<
 > = ({ value, onChange }) => (
   <Select
     value={options.find(o => o.value === value)}
-    onChange={useCallback(
+    onChange={React.useCallback(
       (o: SelectOptionType) => onChange(o.value as PermissionInheritance),
       [onChange],
     )}

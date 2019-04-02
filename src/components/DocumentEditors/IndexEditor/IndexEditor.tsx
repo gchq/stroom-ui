@@ -28,7 +28,7 @@ import IndexFieldsTable, {
 } from "./IndexFieldsTable";
 import ThemedConfirm, {
   useDialog as useThemedConfirm,
-} from "../../ThemedConfirm";
+} from "src/components/ThemedConfirm";
 import Button from "../../Button";
 import IndexFieldEditor, {
   useEditor as useFieldEditor,
@@ -91,7 +91,7 @@ const IndexEditor = ({ docRefUuid }: SwitchedDocRefEditorProps) => {
     componentProps: fieldEditorProps,
     showEditor: showFieldEditor,
   } = useFieldEditor(
-    useCallback(
+    React.useCallback(
       (id: number, fieldUpdates: Partial<IndexField>) => {
         if (!!docRefContents) {
           let updatedIndex: Partial<IndexDoc> = {

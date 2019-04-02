@@ -5,7 +5,9 @@ interface AuthenticationContextApi {
   setIdToken: (idToken: string) => void;
 }
 
-const AuthenticationContext: Context<AuthenticationContextApi> = createContext({
+const AuthenticationContext: React.Context<
+  AuthenticationContextApi
+> = React.createContext({
   idToken: "",
   setIdToken: () => {
     console.error("Default Implementation for Authentication Context");

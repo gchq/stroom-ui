@@ -26,7 +26,7 @@ interface Props {
   appPermission?: string;
 }
 
-const AuthenticationRequest: FunctionComponent<Props> = ({
+const AuthenticationRequest: React.FunctionComponent<Props> = ({
   referrer,
   uiUrl,
   appClientId,

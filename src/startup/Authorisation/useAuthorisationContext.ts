@@ -7,7 +7,7 @@ const useAuthorisationContext = (permissionNames: string[]) => {
     AuthorisationContext,
   );
 
-  return useMemo(
+  return React.useMemo(
     () =>
       permissionNames.reduce((acc, permissionName) => {
         if (!(permissionName in appPermissions)) {

@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { ThemedConfirm } from "../../ThemedConfirm";
+import { ThemedConfirm } from "src/components/ThemedConfirm";
 
 interface Props {
   isOpen: boolean;

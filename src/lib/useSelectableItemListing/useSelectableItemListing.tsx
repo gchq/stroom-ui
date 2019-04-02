@@ -22,7 +22,7 @@ const useFocusChanged = <T extends {}>({
   setFocussedItem,
   preFocusWrap,
 }: UseFocusChanged<T>) =>
-  useCallback(() => {
+  React.useCallback(() => {
     let nextIndex = 0;
     if (focusIndex !== -1) {
       nextIndex = (items.length + (focusIndex + direction)) % items.length;
