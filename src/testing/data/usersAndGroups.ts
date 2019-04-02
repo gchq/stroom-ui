@@ -6,17 +6,17 @@ import { User } from "src/types";
 export const adminUser: User = {
   uuid: uuidv4(),
   name: "admin",
-  isGroup: false
+  isGroup: false,
 };
 
 export const generateTestUser = (): User => ({
   uuid: uuidv4(),
   name: loremIpsum({ count: 3, units: "words" }),
-  isGroup: false
+  isGroup: false,
 });
 
 export const generateTestGroup = (): User => ({
   uuid: uuidv4(),
   name: loremIpsum({ count: 3, units: "words" }),
-  isGroup: true
+  isGroup: true,
 });

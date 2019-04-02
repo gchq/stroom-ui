@@ -9,7 +9,7 @@ import {
   IndexVolumeGroup,
   IndexVolumeGroupMembership,
   StreamAttributeMapResult,
-  DocumentType
+  DocumentType,
 } from "../types";
 import { ResourcesByDocType } from "src/api/useDocumentApi/types";
 
@@ -25,31 +25,31 @@ export interface UserDocPermission {
 }
 
 export interface TestData {
-  docRefTypes: Array<string>;
+  docRefTypes: string[];
   documentTree: DocRefTree;
   elements: ElementDefinitions;
   elementProperties: ElementPropertiesByElementIdType;
   documents: {
-    [docRefType in keyof ResourcesByDocType]: Array<DocumentType<docRefType>>
+    [docRefType in keyof ResourcesByDocType]: DocumentType<docRefType>[]
   };
-  trackers: Array<StreamTaskType>;
+  trackers: StreamTaskType[];
   dataList: StreamAttributeMapResult;
   dataSource: DataSourceType;
   usersAndGroups: {
-    users: Array<User>;
-    userGroupMemberships: Array<UserGroupMembership>;
+    users: User[];
+    userGroupMemberships: UserGroupMembership[];
   };
   indexVolumesAndGroups: {
-    volumes: Array<IndexVolume>;
-    groups: Array<IndexVolumeGroup>;
-    groupMemberships: Array<IndexVolumeGroupMembership>;
+    volumes: IndexVolume[];
+    groups: IndexVolumeGroup[];
+    groupMemberships: IndexVolumeGroupMembership[];
   };
-  allAppPermissions: Array<string>;
+  allAppPermissions: string[];
   userAppPermissions: {
-    [userUuid: string]: Array<string>;
+    [userUuid: string]: string[];
   };
   docPermissionByType: {
-    [docType: string]: Array<string>;
+    [docType: string]: string[];
   };
-  userDocPermission: Array<UserDocPermission>;
+  userDocPermission: UserDocPermission[];
 }

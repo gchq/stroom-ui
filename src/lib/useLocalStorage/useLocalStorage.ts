@@ -15,7 +15,7 @@ interface StringConversion<T> {
  */
 export const storeBoolean: StringConversion<boolean> = {
   toString: v => (v ? "true" : "false"),
-  fromString: s => s === "true"
+  fromString: s => s === "true",
 };
 
 /**
@@ -23,7 +23,7 @@ export const storeBoolean: StringConversion<boolean> = {
  */
 export const storeString: StringConversion<string> = {
   toString: v => v,
-  fromString: s => s
+  fromString: s => s,
 };
 
 /**
@@ -31,7 +31,7 @@ export const storeString: StringConversion<string> = {
  */
 export const storeNumber: StringConversion<number> = {
   toString: n => `${n}`,
-  fromString: v => Number.parseInt(v)
+  fromString: v => Number.parseInt(v),
 };
 
 /**
@@ -40,14 +40,14 @@ export const storeNumber: StringConversion<number> = {
 export const storeObjectFactory = <T>(): StringConversion<T> => {
   return {
     toString: v => JSON.stringify(v),
-    fromString: v => JSON.parse(v)
+    fromString: v => JSON.parse(v),
   };
 };
 
 const useLocalStorage = function<T>(
   stateName: string,
   noLocalStorageInitialState: T,
-  stringConversion: StringConversion<T>
+  stringConversion: StringConversion<T>,
 ): OutProps<T> {
   const [value, setStateValue] = useState<T>(noLocalStorageInitialState);
 
@@ -67,7 +67,7 @@ const useLocalStorage = function<T>(
 
   return {
     value,
-    setValue
+    setValue,
   };
 };
 

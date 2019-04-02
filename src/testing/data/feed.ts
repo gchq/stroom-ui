@@ -5,5 +5,5 @@ import { FeedDoc } from "src/types";
 export const generate = (): FeedDoc => ({
   type: "Feed",
   uuid: uuidv4(),
-  name: loremIpsum({ count: 2, units: "words" })
+  name: loremIpsum({ count: 2, units: "words" }),
 });

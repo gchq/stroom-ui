@@ -6,24 +6,24 @@ import { useReducer, useCallback } from "react";
  * that were common to a number of components.
  */
 
-type ReceivedAction<T> = {
+interface ReceivedAction<T> {
   type: "itemsReceived";
-  items: Array<T>;
-};
-type AddedToListAction<T> = {
+  items: T[];
+}
+interface AddedToListAction<T> {
   type: "itemAdded";
   item: T;
-};
-type RemovedFromListAction = {
+}
+interface RemovedFromListAction {
   type: "itemRemoved";
   itemKey: string;
-};
+}
 
 const createListReducer = <T extends {}>(getKey: (item: T) => string) => {
   return (
-    state: Array<T>,
-    action: ReceivedAction<T> | AddedToListAction<T> | RemovedFromListAction
-  ): Array<T> => {
+    state: T[],
+    action: ReceivedAction<T> | AddedToListAction<T> | RemovedFromListAction,
+  ): T[] => {
     switch (action.type) {
       case "itemsReceived":
         return action.items;
@@ -38,43 +38,43 @@ const createListReducer = <T extends {}>(getKey: (item: T) => string) => {
 };
 
 interface UseListReducer<T extends {}> {
-  items: Array<T>;
-  itemsReceived: (items: Array<T>) => void;
+  items: T[];
+  itemsReceived: (items: T[]) => void;
   itemAdded: (item: T) => void;
   itemRemoved: (itemKey: string) => void;
 }
 
 const useListReducer = <T extends {}>(
-  getKey: (item: T) => string
+  getKey: (item: T) => string,
 ): UseListReducer<T> => {
   const [items, dispatch] = useReducer(createListReducer<T>(getKey), []);
 
   return {
     items,
     itemsReceived: useCallback(
-      (items: Array<T>) =>
+      (items: T[]) =>
         dispatch({
           type: "itemsReceived",
-          items
+          items,
         }),
-      []
+      [],
     ),
     itemAdded: useCallback(
       (item: T) =>
         dispatch({
           type: "itemAdded",
-          item
+          item,
         }),
-      []
+      [],
     ),
     itemRemoved: useCallback(
       (itemKey: string) =>
         dispatch({
           type: "itemRemoved",
-          itemKey
+          itemKey,
         }),
-      []
-    )
+      [],
+    ),
   };
 };
 

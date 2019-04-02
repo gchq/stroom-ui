@@ -31,7 +31,7 @@ const AuthenticationRequest: FunctionComponent<Props> = ({
   uiUrl,
   appClientId,
   authenticationServiceUrl,
-  appPermission
+  appPermission,
 }) => {
   useEffect(() => {
     sendAuthenticationRequest(
@@ -39,7 +39,7 @@ const AuthenticationRequest: FunctionComponent<Props> = ({
       uiUrl,
       appClientId,
       authenticationServiceUrl,
-      appPermission
+      appPermission,
     );
   }, []);
 

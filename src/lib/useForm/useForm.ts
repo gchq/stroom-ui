@@ -14,7 +14,7 @@ interface UseForm<T> {
 
 export const useForm = function<T>({
   initialValues,
-  onValidate
+  onValidate,
 }: UseForm<T>): Form<T> {
   const [value, setCurrentValues] = useState<Partial<T>>(initialValues || {});
 
@@ -23,7 +23,7 @@ export const useForm = function<T>({
     (newUpdates: Partial<T>) => {
       setCurrentValues({ ...value, ...newUpdates });
     },
-    [value, setCurrentValues]
+    [value, setCurrentValues],
   );
 
   // Set the current values to the initial values, whenever those change
@@ -44,9 +44,9 @@ export const useForm = function<T>({
     type: "text",
     onChange: useCallback(
       ({ target: { value } }) => onUpdate({ [s]: value } as T),
-      [onUpdate]
+      [onUpdate],
     ),
-    value: `${value[s]}`
+    value: `${value[s]}`,
   });
 
   const useCheckboxInput = (s: keyof T) => ({
@@ -54,18 +54,18 @@ export const useForm = function<T>({
     checked: value[s],
     onChange: useCallback(() => {
       onUpdate(({
-        [s]: !value[s]
+        [s]: !value[s],
       } as unknown) as Partial<T>);
-    }, [value[s], onUpdate])
+    }, [value[s], onUpdate]),
   });
 
   const useControlledInputProps = <FIELD_TYPE>(
-    s: keyof T
+    s: keyof T,
   ): ControlledInput<FIELD_TYPE> => ({
     value: (value[s] as unknown) as FIELD_TYPE,
     onChange: useCallback(v => onUpdate(({ [s]: v } as unknown) as T), [
-      onUpdate
-    ])
+      onUpdate,
+    ]),
   });
 
   return {
@@ -73,7 +73,7 @@ export const useForm = function<T>({
     value,
     useTextInput,
     useCheckboxInput,
-    useControlledInputProps
+    useControlledInputProps,
   };
 };
 

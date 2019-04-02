@@ -5,12 +5,12 @@ import useLocalStorage, { storeString } from "./useLocalStorage";
 export const themeOptions = [
   {
     text: "Light",
-    value: "theme-light"
+    value: "theme-light",
   },
   {
     text: "Dark",
-    value: "theme-dark"
-  }
+    value: "theme-dark",
+  },
 ];
 
 interface ThemeContextValue {
@@ -22,15 +22,15 @@ let ThemeContext: React.Context<ThemeContextValue> = React.createContext({
   theme: themeOptions[0].value,
   setTheme: (t: string) =>
     console.log("Theme Change Ignored, something wrong with context setup", {
-      t
-    })
+      t,
+    }),
 });
 
 const ThemeContextProvider: React.StatelessComponent<{}> = ({ children }) => {
   const { value, setValue } = useLocalStorage(
     "theme",
     themeOptions[0].value,
-    storeString
+    storeString,
   );
 
   return (

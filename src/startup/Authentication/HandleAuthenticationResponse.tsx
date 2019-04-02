@@ -25,7 +25,7 @@ export const HandleAuthenticationResponse: React.FunctionComponent<{}> = () => {
   const { authenticationServiceUrl, authorisationServiceUrl } = useConfig();
   const {
     router: { location },
-    history
+    history,
   } = useRouter();
   const { setIdToken } = useAuthenticationContext();
 
@@ -43,14 +43,14 @@ export const HandleAuthenticationResponse: React.FunctionComponent<{}> = () => {
       history,
       accessCode,
       authenticationServiceUrl!,
-      authorisationServiceUrl!
+      authorisationServiceUrl!,
     );
   }, [
     accessCode,
     setIdToken,
     history,
     authenticationServiceUrl,
-    authorisationServiceUrl
+    authorisationServiceUrl,
   ]);
 
   return null;

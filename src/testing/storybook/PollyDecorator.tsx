@@ -16,7 +16,7 @@
 import { Polly } from "@pollyjs/core";
 import FetchAdapter, {
   HttpRequest,
-  HttpResponse
+  HttpResponse,
 } from "@pollyjs/adapter-fetch";
 
 import { useHttpClient } from "src/api/useHttpClient";
@@ -38,7 +38,7 @@ const testConfig: Config = {
   authTokensUiUrl:
     "auth/tokens/because/they/are/loaded/in/an/iframe/which/is/beyond/scope/of/these/tests",
   advertisedUrl: "/",
-  appClientId: "stroom-ui"
+  appClientId: "stroom-ui",
 };
 
 // The server is created as a singular thing for the whole app
@@ -46,7 +46,7 @@ const testConfig: Config = {
 const polly = new Polly("Mock Stroom API");
 polly.configure({
   adapters: ["fetch", FetchAdapter],
-  logging: true
+  logging: true,
 });
 const { server } = polly;
 

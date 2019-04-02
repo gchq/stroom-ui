@@ -36,8 +36,8 @@ const PrivateRoute = ({ render, ...rest }: RouteProps) => {
       `Config Not Correct for Private Routes ${JSON.stringify({
         advertisedUrl,
         appClientId,
-        authenticationServiceUrl
-      })}`
+        authenticationServiceUrl,
+      })}`,
     );
   }
 

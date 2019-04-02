@@ -7,5 +7,5 @@ export const generate = (): ElasticIndexDoc => ({
   uuid: uuidv4(),
   name: loremIpsum({ count: 2, units: "words" }),
   indexName: loremIpsum({ count: 1, units: "words" }),
-  indexedType: loremIpsum({ count: 2, units: "words" })
+  indexedType: loremIpsum({ count: 2, units: "words" }),
 });

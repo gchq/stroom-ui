@@ -5,7 +5,7 @@ import { History } from "history";
 
 export const RouterContext = React.createContext<RouteProps>({});
 export const HistoryContext = React.createContext<History | undefined>(
-  undefined
+  undefined,
 );
 
 interface Props {

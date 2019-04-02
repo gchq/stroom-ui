@@ -8,7 +8,7 @@ export {
   useSelectableItemListing,
   useSelectableReactTable,
   SelectionBehaviour,
-  TableOutProps
+  TableOutProps,
 };
 
 export default useSelectableItemListing;

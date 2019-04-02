@@ -15,7 +15,7 @@ interface UseUpdateableState<T extends object> {
  * @param initialValue A complete initial value for the state
  */
 export const useUpdateableState = <T extends object>(
-  initialValue: T
+  initialValue: T,
 ): UseUpdateableState<T> => {
   const [value, setValue] = useState<T>(initialValue);
 
@@ -25,11 +25,11 @@ export const useUpdateableState = <T extends object>(
       (updates: Partial<T>) => {
         setValue({
           ...value,
-          ...updates
+          ...updates,
         });
       },
-      [value, setValue]
-    )
+      [value, setValue],
+    ),
   };
 };
 

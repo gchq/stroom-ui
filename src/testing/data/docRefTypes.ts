@@ -1,4 +1,4 @@
-const docRefTypes: Array<string> = [
+const docRefTypes: string[] = [
   "AnnotationsIndex",
   "ElasticIndex",
   "Dashboard",
@@ -14,7 +14,7 @@ const docRefTypes: Array<string> = [
   "TextConverter",
   "Visualisation",
   "XMLSchema",
-  "XSLT"
+  "XSLT",
 ];
 
 export default docRefTypes;

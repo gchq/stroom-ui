@@ -9,12 +9,12 @@ import { DOCUMENT_RESOURCES } from "src/api/useDocumentApi/types";
 const resourceBuilder: ResourceBuilder = (
   server: any,
   { stroomBaseServiceUrl }: Config,
-  testCache: TestCache
+  testCache: TestCache,
 ) => {
   Object.entries(DOCUMENT_RESOURCES)
     .map(k => ({
       docRefType: k[0],
-      resourcePath: k[1]
+      resourcePath: k[1],
     }))
     .forEach(({ docRefType, resourcePath }) => {
       const resource = `${stroomBaseServiceUrl}${resourcePath}`;
@@ -23,7 +23,7 @@ const resourceBuilder: ResourceBuilder = (
         .get(`${resource}/:docRefUuid`)
         .intercept((req: HttpRequest, res: HttpResponse) => {
           const dict = testCache.data!.documents[docRefType].find(
-            (d: DocumentType<any>) => d.uuid === req.params.docRefUuid
+            (d: DocumentType<any>) => d.uuid === req.params.docRefUuid,
           );
           if (dict) {
             res.json(dict);
@@ -34,7 +34,7 @@ const resourceBuilder: ResourceBuilder = (
       server
         .post(`${resource}/:docRefUuid`)
         .intercept((req: HttpRequest, res: HttpResponse) =>
-          res.sendStatus(200)
+          res.sendStatus(200),
         );
     });
 };

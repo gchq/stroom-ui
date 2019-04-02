@@ -12,5 +12,5 @@ export {
   PrivateRoute,
   AuthenticationContext,
   AuthenticationContextProvider,
-  useAuthenticationContext
+  useAuthenticationContext,
 };

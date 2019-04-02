@@ -11,27 +11,27 @@ interface Person {
   age: number;
 }
 
-const testData: Array<Person> = [
+const testData: Person[] = [
   {
     name: "arnold",
-    age: 35
+    age: 35,
   },
   { name: "cat", age: 23 },
   { name: "lister", age: 30 },
-  { name: "kryten", age: 30000000 }
+  { name: "kryten", age: 30000000 },
 ];
 
 const COLUMNS = [
   {
     id: "name",
     Header: "Name",
-    accessor: (u: Person) => u.name
+    accessor: (u: Person) => u.name,
   },
   {
     id: "name",
     Header: "Name",
-    accessor: (u: Person) => u.name
-  }
+    accessor: (u: Person) => u.name,
+  },
 ];
 
 const ThemedTable = () => {

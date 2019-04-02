@@ -6,7 +6,7 @@ import { SelectionBehaviour } from "./enums";
 const defaultPreFocusWrap = () => true;
 
 interface UseFocusChanged<T> {
-  items: Array<T>;
+  items: T[];
   focusIndex: number;
   direction: number;
   setFocusIndex: (f: number) => void;
@@ -20,7 +20,7 @@ const useFocusChanged = <T extends {}>({
   direction,
   setFocusIndex,
   setFocussedItem,
-  preFocusWrap
+  preFocusWrap,
 }: UseFocusChanged<T>) =>
   useCallback(() => {
     let nextIndex = 0;
@@ -46,7 +46,7 @@ const useSelectableItemListing = <TItem extends {}>({
   enterItem,
   goBack,
   selectionBehaviour = SelectionBehaviour.NONE,
-  preFocusWrap = defaultPreFocusWrap
+  preFocusWrap = defaultPreFocusWrap,
 }: InProps<TItem>): OutProps<TItem> => {
   const keyIsDown = useKeyIsDown();
 
@@ -55,14 +55,14 @@ const useSelectableItemListing = <TItem extends {}>({
   // checking of everything
   const [focusIndex, setFocusIndex] = useState<number>(-1);
   const [focussedItem, setFocussedItem] = useState<TItem | undefined>(
-    undefined
+    undefined,
   );
   const [lastSelectedIndex, setLastSelectedIndex] = useState<
     number | undefined
   >(-1);
-  const [selectedItems, setSelectedItems] = useState<Array<TItem>>([]);
+  const [selectedItems, setSelectedItems] = useState<TItem[]>([]);
   const [selectedItemIndexes, setSelectedItemIndexes] = useState<Set<number>>(
-    new Set()
+    new Set(),
   );
 
   const focusUp = useFocusChanged({
@@ -71,7 +71,7 @@ const useSelectableItemListing = <TItem extends {}>({
     setFocusIndex,
     preFocusWrap,
     setFocussedItem,
-    direction: -1
+    direction: -1,
   });
   const focusDown = useFocusChanged({
     items,
@@ -79,7 +79,7 @@ const useSelectableItemListing = <TItem extends {}>({
     setFocusIndex,
     preFocusWrap,
     setFocussedItem,
-    direction: +1
+    direction: +1,
   });
 
   const clearSelection = useCallback(() => {
@@ -128,9 +128,9 @@ const useSelectableItemListing = <TItem extends {}>({
       }
     }
 
-    const newSelectedItems: Array<any> = [];
+    const newSelectedItems: any[] = [];
     newSelectedItemIndexes.forEach((i: number) =>
-      newSelectedItems.push(items[i])
+      newSelectedItems.push(items[i]),
     );
     const newFocussedItem = items[indexToUse];
 
@@ -194,7 +194,7 @@ const useSelectableItemListing = <TItem extends {}>({
     toggleSelection,
     clearSelection,
     keyIsDown,
-    onKeyDownWithShortcuts
+    onKeyDownWithShortcuts,
   };
 };
 

@@ -17,19 +17,19 @@ import {
   itemIsInSubtree,
   canMove,
   findItem,
-  assignRandomUuids
+  assignRandomUuids,
 } from "src/lib/treeUtils";
 import {
   Tree,
   ExpressionOperatorType,
-  ExpressionOperatorWithUuid
+  ExpressionOperatorWithUuid,
 } from "../types";
 
-type DocRef = {
+interface DocRef {
   uuid: string;
   type: string;
   name: string;
-};
+}
 
 interface Folder extends Tree<DocRef>, DocRef {}
 
@@ -37,91 +37,91 @@ interface Folder extends Tree<DocRef>, DocRef {}
 const oneOne: DocRef = {
   uuid: "1-1",
   type: "file",
-  name: "myFirstFirst"
+  name: "myFirstFirst",
 };
 
 const oneTwo: DocRef = {
   uuid: "1-2",
   type: "file",
-  name: "myFirstSecond"
+  name: "myFirstSecond",
 };
 
 const oneThreeOne: DocRef = {
   uuid: "1-3-1",
   type: "file",
-  name: "myFirstThirdFirst"
+  name: "myFirstThirdFirst",
 };
 
 const oneThreeTwo: DocRef = {
   uuid: "1-3-2",
   type: "file",
-  name: "myFirstThirdSecond"
+  name: "myFirstThirdSecond",
 };
 
 const oneThree: Folder = {
   uuid: "1-3",
   type: "folder",
   name: "myFirstThird",
-  children: [oneThreeOne, oneThreeTwo]
+  children: [oneThreeOne, oneThreeTwo],
 };
 
 const oneFourOne: DocRef = {
   uuid: "1-4-1",
   type: "file",
-  name: "myFirstFourthFirst"
+  name: "myFirstFourthFirst",
 };
 
 const oneFourTwo: DocRef = {
   uuid: "1-4-2",
   type: "file",
-  name: "myFirstFourthSecond"
+  name: "myFirstFourthSecond",
 };
 
 const oneFour: Folder = {
   uuid: "1-4",
   type: "folder",
   name: "myFirstFourth",
-  children: [oneFourOne, oneFourTwo]
+  children: [oneFourOne, oneFourTwo],
 };
 
 const oneFiveOneOne: DocRef = {
   uuid: "1-5-1-1",
   type: "file",
-  name: "myFirstFifthFirstFirst"
+  name: "myFirstFifthFirstFirst",
 };
 
 const oneFiveOne: Folder = {
   uuid: "1-5-1",
   type: "folder",
   name: "myFirstFifthFirst",
-  children: [oneFiveOneOne]
+  children: [oneFiveOneOne],
 };
 
 const oneFive: Folder = {
   uuid: "1-5",
   type: "folder",
   name: "myFirstFifth",
-  children: [oneFiveOne]
+  children: [oneFiveOne],
 };
 
 const testTree: Folder = {
   uuid: "1",
   type: "folder",
   name: "root",
-  children: [oneOne, oneTwo, oneThree, oneFour, oneFive]
+  children: [oneOne, oneTwo, oneThree, oneFour, oneFive],
 };
 
 const testExpression: ExpressionOperatorType = {
   type: "operator",
   op: "AND",
   enabled: true,
-  children: []
+  children: [],
 };
 
 describe("Tree Utils", () => {
   describe("#assignRandomUuids()", () => {
     const withUuids: ExpressionOperatorWithUuid = assignRandomUuids(
-      testExpression
+      testExpression,
     ) as ExpressionOperatorWithUuid;
     expect(withUuids.uuid).toBeDefined();
   });
@@ -171,15 +171,17 @@ describe("Tree Utils", () => {
   });
   describe("#findItem()", () => {
     test("should find a match when is root", () => {
-      const { node: found } = findItem(testTree, testTree.uuid)!;
+      const { node: found } = findItem(testTree, testTree.uuid) || { node: {} };
       expect(found).toBe(testTree);
     });
     test("should find a match when present within children", () => {
-      const { node: found } = findItem(testTree, oneTwo.uuid)!;
+      const { node: found } = findItem(testTree, oneTwo.uuid) || { node: {} };
       expect(found).toBe(oneTwo);
     });
     test("should find a match when present within grand-children", () => {
-      const { node: found } = findItem(testTree, oneThreeOne.uuid)!;
+      const { node: found } = findItem(testTree, oneThreeOne.uuid) || {
+        node: {},
+      };
       expect(found).toBe(oneThreeOne);
     });
     test("should not find a match when missing", () => {

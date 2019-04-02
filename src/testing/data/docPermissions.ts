@@ -3,5 +3,5 @@ export const documentPermissionNames = [
   "READ",
   "UPDATE",
   "DELETE",
-  "OWNER"
+  "OWNER",
 ];

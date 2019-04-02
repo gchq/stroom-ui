@@ -4,10 +4,10 @@ import { KeyDownState } from "./types";
 export const DEFAULT_FILTERS = ["Control", "Shift", "Alt", "Meta"];
 
 const useKeyIsDown = function(
-  filters: Array<string> = DEFAULT_FILTERS
+  filters: string[] = DEFAULT_FILTERS,
 ): KeyDownState {
   const [keysDown, setKeysDown] = useState<KeyDownState>(
-    filters.reduce((acc, c) => ({ ...acc, [c]: false }), {})
+    filters.reduce((acc, c) => ({ ...acc, [c]: false }), {}),
   );
 
   useEffect(() => {

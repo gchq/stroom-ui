@@ -8,7 +8,7 @@ import { onlyUnique } from "src/lib/formUtils";
 const resourceBuilder: ResourceBuilder = (
   server: any,
   { stroomBaseServiceUrl }: Config,
-  testCache: TestCache
+  testCache: TestCache,
 ) => {
   const resource = `${stroomBaseServiceUrl}/appPermissions/v1`;
 
@@ -26,7 +26,7 @@ const resourceBuilder: ResourceBuilder = (
     .intercept((req: HttpRequest, res: HttpResponse) => {
       testCache.data!.userAppPermissions[req.params.userUuid] = [
         ...(testCache.data!.userAppPermissions[req.params.userUuid] || []),
-        req.params.permissionName
+        req.params.permissionName,
       ].filter(onlyUnique);
 
       res.send(undefined);
@@ -39,7 +39,7 @@ const resourceBuilder: ResourceBuilder = (
       testCache.data!.userAppPermissions[
         req.params.userUuid
       ] = testCache.data!.userAppPermissions[req.params.userUuid].filter(
-        p => p !== req.params.permissionName
+        p => p !== req.params.permissionName,
       );
 
       res.send(undefined);

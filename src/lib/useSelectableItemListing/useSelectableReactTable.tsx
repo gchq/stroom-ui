@@ -5,7 +5,7 @@ import useSelectableItemListing from ".";
 
 function useSelectableReactTable<TItem>(
   props: InProps<TItem>,
-  customTableProps: Partial<TableProps>
+  customTableProps: Partial<TableProps>,
 ): TableOutProps<TItem> {
   const selectableItemProps = useSelectableItemListing<TItem>(props);
   const { getKey, items } = props;
@@ -22,10 +22,10 @@ function useSelectableReactTable<TItem>(
           if (handleOriginal) {
             handleOriginal();
           }
-        }
+        },
       };
     },
-    [toggleSelection, getKey]
+    [toggleSelection, getKey],
   );
 
   const getTrProps = useCallback(
@@ -49,10 +49,10 @@ function useSelectableReactTable<TItem>(
         }
       }
       return {
-        className: classNames.join(" ")
+        className: classNames.join(" "),
       };
     },
-    [selectedItems, focussedItem, getKey]
+    [selectedItems, focussedItem, getKey],
   );
 
   return {
@@ -61,8 +61,8 @@ function useSelectableReactTable<TItem>(
       data: items,
       getTdProps,
       getTrProps,
-      ...customTableProps
-    }
+      ...customTableProps,
+    },
   };
 }
 

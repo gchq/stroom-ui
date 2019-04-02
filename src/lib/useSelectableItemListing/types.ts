@@ -5,7 +5,7 @@ import { SelectionBehaviour } from "./enums";
 
 export interface InProps<TItem> {
   getKey: (x: TItem) => string;
-  items: Array<TItem>;
+  items: TItem[];
   openItem?: (i: TItem) => void;
   enterItem?: (i: TItem) => void;
   goBack?: (i: TItem) => void;
@@ -24,7 +24,7 @@ export interface OutProps<TItem> {
   focussedItem?: any;
   lastSelectedIndex?: number;
   selectedItem?: TItem;
-  selectedItems: Array<TItem>;
+  selectedItems: TItem[];
   selectedItemIndexes: Set<number>;
   toggleSelection: (itemKey: string) => void;
   clearSelection: () => void;

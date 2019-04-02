@@ -7,7 +7,7 @@ import { ResourceBuilder } from "./types";
 const resourceBuilder: ResourceBuilder = (
   server: any,
   { authorisationServiceUrl }: Config,
-  testCache: TestCache
+  testCache: TestCache,
 ) => {
   server
     .post(`${authorisationServiceUrl}/hasAppPermission`)

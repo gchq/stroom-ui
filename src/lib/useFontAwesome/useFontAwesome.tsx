@@ -60,7 +60,7 @@ import {
   faICursor,
   faSave,
   faChevronLeft,
-  faChevronRight
+  faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
 
 const useFontAwesome = () => {
@@ -108,7 +108,7 @@ const useFontAwesome = () => {
       faICursor,
       faSave,
       faChevronLeft,
-      faChevronRight
+      faChevronRight,
     );
   }, []);
 };

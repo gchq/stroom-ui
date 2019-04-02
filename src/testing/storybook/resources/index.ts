@@ -14,7 +14,7 @@ import streamTaskResource from "./streamTaskResource";
 import userResource from "./userAndGroupsResource";
 import documentResources from "./documentResources";
 
-const resourceBuilders: Array<ResourceBuilder> = [
+const resourceBuilders: ResourceBuilder[] = [
   appPermissionResource,
   authenticationResource,
   authorisationResource,
@@ -27,7 +27,7 @@ const resourceBuilders: Array<ResourceBuilder> = [
   pipelineResource,
   streamAttributeMapResource,
   streamTaskResource,
-  userResource
+  userResource,
 ];
 
 export default resourceBuilders;

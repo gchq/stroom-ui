@@ -25,43 +25,43 @@ export default {
     {
       elements: {
         add: [],
-        remove: []
+        remove: [],
       },
       properties: {
         add: [],
-        remove: []
+        remove: [],
       },
       pipelineReferences: {
         add: [],
-        remove: []
+        remove: [],
       },
       links: {
         add: [],
-        remove: []
-      }
-    }
+        remove: [],
+      },
+    },
   ],
   merged: {
     elements: {
       add: [
         {
           id: "Source",
-          type: "Source"
-        }
+          type: "Source",
+        },
       ],
-      remove: []
+      remove: [],
     },
     properties: {
       add: [],
-      remove: []
+      remove: [],
     },
     pipelineReferences: {
       add: [],
-      remove: []
+      remove: [],
     },
     links: {
       add: [],
-      remove: []
-    }
-  }
+      remove: [],
+    },
+  },
 } as PipelineDocumentType;

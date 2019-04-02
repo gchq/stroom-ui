@@ -12,240 +12,240 @@ export default {
         add: [
           {
             id: "dsParser1",
-            type: "DSParser"
+            type: "DSParser",
           },
           {
             id: "dsParser2",
-            type: "DSParser"
+            type: "DSParser",
           },
           {
             id: "dsParser3",
-            type: "DSParser"
+            type: "DSParser",
           },
           {
             id: "xsltFilter1",
-            type: "XSLTFilter"
+            type: "XSLTFilter",
           },
           {
             id: "xmlWriter1",
-            type: "XMLWriter"
+            type: "XMLWriter",
           },
           {
             id: "streamAppender1",
-            type: "StreamAppender"
+            type: "StreamAppender",
           },
           {
             id: "idEnrichmentFilter2",
-            type: "IdEnrichmentFilter"
+            type: "IdEnrichmentFilter",
           },
           {
             id: "xmlWriter2",
-            type: "XMLWriter"
+            type: "XMLWriter",
           },
           {
             id: "fileAppender2",
-            type: "FileAppender"
+            type: "FileAppender",
           },
           {
             id: "recordCountFilter3",
-            type: "RecordCountFilter"
+            type: "RecordCountFilter",
           },
           {
             id: "xmlWriter3",
-            type: "XMLWriter"
+            type: "XMLWriter",
           },
           {
             id: "hdfsFileAppender3",
-            type: "HDFSFileAppender"
+            type: "HDFSFileAppender",
           },
           {
             id: "Source",
-            type: "Source"
-          }
+            type: "Source",
+          },
         ],
-        remove: []
+        remove: [],
       },
       properties: {
         add: [],
-        remove: []
+        remove: [],
       },
       pipelineReferences: {
         add: [],
-        remove: []
+        remove: [],
       },
       links: {
         add: [
           {
             from: "Source",
-            to: "dsParser1"
+            to: "dsParser1",
           },
           {
             from: "Source",
-            to: "dsParser2"
+            to: "dsParser2",
           },
           {
             from: "Source",
-            to: "dsParser3"
+            to: "dsParser3",
           },
           {
             from: "dsParser1",
-            to: "xsltFilter1"
+            to: "xsltFilter1",
           },
           {
             from: "dsParser2",
-            to: "idEnrichmentFilter2"
+            to: "idEnrichmentFilter2",
           },
           {
             from: "dsParser3",
-            to: "recordCountFilter3"
+            to: "recordCountFilter3",
           },
           {
             from: "xsltFilter1",
-            to: "xmlWriter1"
+            to: "xmlWriter1",
           },
           {
             from: "xmlWriter1",
-            to: "streamAppender1"
+            to: "streamAppender1",
           },
           {
             from: "idEnrichmentFilter2",
-            to: "xmlWriter2"
+            to: "xmlWriter2",
           },
           {
             from: "xmlWriter2",
-            to: "fileAppender2"
+            to: "fileAppender2",
           },
           {
             from: "recordCountFilter3",
-            to: "xmlWriter3"
+            to: "xmlWriter3",
           },
           {
             from: "xmlWriter3",
-            to: "hdfsFileAppender3"
-          }
+            to: "hdfsFileAppender3",
+          },
         ],
-        remove: []
-      }
-    }
+        remove: [],
+      },
+    },
   ],
   merged: {
     elements: {
       add: [
         {
           id: "hdfsFileAppender3",
-          type: "HDFSFileAppender"
+          type: "HDFSFileAppender",
         },
         {
           id: "streamAppender1",
-          type: "StreamAppender"
+          type: "StreamAppender",
         },
         {
           id: "Source",
-          type: "Source"
+          type: "Source",
         },
         {
           id: "dsParser3",
-          type: "DSParser"
+          type: "DSParser",
         },
         {
           id: "dsParser2",
-          type: "DSParser"
+          type: "DSParser",
         },
         {
           id: "dsParser1",
-          type: "DSParser"
+          type: "DSParser",
         },
         {
           id: "xsltFilter1",
-          type: "XSLTFilter"
+          type: "XSLTFilter",
         },
         {
           id: "xmlWriter1",
-          type: "XMLWriter"
+          type: "XMLWriter",
         },
         {
           id: "fileAppender2",
-          type: "FileAppender"
+          type: "FileAppender",
         },
         {
           id: "recordCountFilter3",
-          type: "RecordCountFilter"
+          type: "RecordCountFilter",
         },
         {
           id: "idEnrichmentFilter2",
-          type: "IdEnrichmentFilter"
+          type: "IdEnrichmentFilter",
         },
         {
           id: "xmlWriter3",
-          type: "XMLWriter"
+          type: "XMLWriter",
         },
         {
           id: "xmlWriter2",
-          type: "XMLWriter"
-        }
+          type: "XMLWriter",
+        },
       ],
-      remove: []
+      remove: [],
     },
     properties: {
       add: [],
-      remove: []
+      remove: [],
     },
     pipelineReferences: {
       add: [],
-      remove: []
+      remove: [],
     },
     links: {
       add: [
         {
           from: "dsParser3",
-          to: "recordCountFilter3"
+          to: "recordCountFilter3",
         },
         {
           from: "dsParser2",
-          to: "idEnrichmentFilter2"
+          to: "idEnrichmentFilter2",
         },
         {
           from: "xmlWriter1",
-          to: "streamAppender1"
+          to: "streamAppender1",
         },
         {
           from: "xsltFilter1",
-          to: "xmlWriter1"
+          to: "xmlWriter1",
         },
         {
           from: "dsParser1",
-          to: "xsltFilter1"
+          to: "xsltFilter1",
         },
         {
           from: "recordCountFilter3",
-          to: "xmlWriter3"
+          to: "xmlWriter3",
         },
         {
           from: "idEnrichmentFilter2",
-          to: "xmlWriter2"
+          to: "xmlWriter2",
         },
         {
           from: "xmlWriter3",
-          to: "hdfsFileAppender3"
+          to: "hdfsFileAppender3",
         },
         {
           from: "xmlWriter2",
-          to: "fileAppender2"
+          to: "fileAppender2",
         },
         {
           from: "Source",
-          to: "dsParser1"
+          to: "dsParser1",
         },
         {
           from: "Source",
-          to: "dsParser2"
+          to: "dsParser2",
         },
         {
           from: "Source",
-          to: "dsParser3"
-        }
+          to: "dsParser3",
+        },
       ],
-      remove: []
-    }
-  }
+      remove: [],
+    },
+  },
 } as PipelineDocumentType;

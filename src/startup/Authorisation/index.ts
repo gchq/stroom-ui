@@ -5,5 +5,5 @@ import useAuthorisationContext from "./useAuthorisationContext";
 export {
   AuthorisationContext,
   AuthorisationContextProvider,
-  useAuthorisationContext
+  useAuthorisationContext,
 };

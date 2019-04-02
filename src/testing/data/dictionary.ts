@@ -11,5 +11,5 @@ export const generate = (): Dictionary => ({
     .fill(null)
     .map(() => loremIpsum({ count: 1, units: "words" }))
     .join("\n"),
-  imports: []
+  imports: [],
 });

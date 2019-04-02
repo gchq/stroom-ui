@@ -24,11 +24,11 @@ export default {
   children: Object.entries(testPipelines)
     .map(k => ({
       uuid: k[0],
-      data: k[1]
+      data: k[1],
     }))
     .map(pipeline => ({
       uuid: pipeline.uuid,
       type: "Pipeline",
-      name: pipeline.uuid
-    }))
+      name: pipeline.uuid,
+    })),
 } as DocRefTree;

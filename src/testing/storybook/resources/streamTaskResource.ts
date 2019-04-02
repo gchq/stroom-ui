@@ -7,7 +7,7 @@ import { ResourceBuilder } from "./types";
 const resourceBuilder: ResourceBuilder = (
   server: any,
   { stroomBaseServiceUrl }: Config,
-  testCache: TestCache
+  testCache: TestCache,
 ) => {
   const resource = `${stroomBaseServiceUrl}/streamtasks/v1/`;
 
@@ -16,8 +16,8 @@ const resourceBuilder: ResourceBuilder = (
       streamTasks: testCache.data!.trackers || [],
       totalStreamTasks: testCache.data!.trackers
         ? testCache.data!.trackers.length
-        : 0
-    })
+        : 0,
+    }),
   );
 };
 

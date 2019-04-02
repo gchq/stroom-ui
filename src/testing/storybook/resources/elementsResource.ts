@@ -7,7 +7,7 @@ import { ResourceBuilder } from "./types";
 const resourceBuilder: ResourceBuilder = (
   server: any,
   { stroomBaseServiceUrl }: Config,
-  testCache: TestCache
+  testCache: TestCache,
 ) => {
   const resource = `${stroomBaseServiceUrl}/elements/v1/`;
 

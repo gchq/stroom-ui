@@ -7,7 +7,7 @@ import { ResourceBuilder } from "./types";
 const resourceBuilder: ResourceBuilder = (
   server: any,
   { authenticationServiceUrl }: Config,
-  testCache: TestCache
+  testCache: TestCache,
 ) => {
   server
     .get(`${authenticationServiceUrl}/idToken`)

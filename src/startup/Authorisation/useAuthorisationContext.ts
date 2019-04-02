@@ -2,9 +2,9 @@ import { useMemo, useContext } from "react";
 
 import AuthorisationContext from "./AuthorisationContext";
 
-const useAuthorisationContext = (permissionNames: Array<string>) => {
+const useAuthorisationContext = (permissionNames: string[]) => {
   const { fetchAppPermission, appPermissions } = useContext(
-    AuthorisationContext
+    AuthorisationContext,
   );
 
   return useMemo(
@@ -16,10 +16,10 @@ const useAuthorisationContext = (permissionNames: Array<string>) => {
 
         return {
           [permissionName]: appPermissions[permissionName],
-          ...acc
+          ...acc,
         };
       }, {}),
-    [permissionNames, appPermissions, fetchAppPermission]
+    [permissionNames, appPermissions, fetchAppPermission],
   );
 };
 

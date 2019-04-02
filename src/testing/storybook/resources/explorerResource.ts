@@ -7,7 +7,7 @@ import {
   addItemsToTree,
   findByUuids,
   deleteItemsFromTree,
-  iterateNodes
+  iterateNodes,
 } from "src/lib/treeUtils";
 import { DocRefType, DocRefTree, DocRefWithLineage } from "src/types";
 import { TestCache } from "../PollyDecorator";
@@ -17,7 +17,7 @@ import { ResourceBuilder } from "./types";
 const resourceBuilder: ResourceBuilder = (
   server: any,
   { stroomBaseServiceUrl }: Config,
-  testCache: TestCache
+  testCache: TestCache,
 ) => {
   const startTime = Date.now();
   const resource = `${stroomBaseServiceUrl}/explorer/v1`;
@@ -33,11 +33,11 @@ const resourceBuilder: ResourceBuilder = (
       const { searchTerm, docRefType, pageOffset, pageSize } = req.query;
 
       interface TempType extends DocRefType {
-        lineage: Array<DocRefType>;
+        lineage: DocRefType[];
         lineageNames: string;
       }
 
-      let searchResults: Array<TempType> = [];
+      let searchResults: TempType[] = [];
       const searchTermValid = searchTerm && searchTerm.length > 1;
       const docRefTypeValid = docRefType && docRefType.length > 1;
 
@@ -50,8 +50,8 @@ const resourceBuilder: ResourceBuilder = (
             lineage,
             lineageNames: lineage.reduce(
               (acc, curr) => `${acc} ${curr.name}`,
-              ""
-            )
+              "",
+            ),
           });
         });
 
@@ -61,7 +61,7 @@ const resourceBuilder: ResourceBuilder = (
           search.addIndex("lineageNames");
           search.addDocuments(searchResults);
 
-          searchResults = search.search(searchTerm) as Array<TempType>;
+          searchResults = search.search(searchTerm) as TempType[];
         }
 
         if (docRefTypeValid) {
@@ -74,9 +74,9 @@ const resourceBuilder: ResourceBuilder = (
           .map(s => ({
             name: s.name,
             type: s.type,
-            uuid: s.uuid
+            uuid: s.uuid,
           }))
-          .splice(pageOffset, pageSize)
+          .splice(pageOffset, pageSize),
       );
     });
   // // Get Info
@@ -85,7 +85,7 @@ const resourceBuilder: ResourceBuilder = (
     .intercept((req: HttpRequest, res: HttpResponse) => {
       const { node: docRef } = findItem(
         testCache.data!.documentTree,
-        req.params.docRefUuid
+        req.params.docRefUuid,
       )!;
       const info = {
         docRef,
@@ -93,7 +93,7 @@ const resourceBuilder: ResourceBuilder = (
         updateTime: Date.now(),
         createUser: "testGuy",
         updateUser: "testGuy",
-        otherInfo: "pet peeves - crying babies"
+        otherInfo: "pet peeves - crying babies",
       };
       res.json(info);
     });
@@ -108,19 +108,19 @@ const resourceBuilder: ResourceBuilder = (
     .post(`${resource}/create`)
     .intercept((req: HttpRequest, res: HttpResponse) => {
       const { docRefType, docRefName, destinationFolderRef } = JSON.parse(
-        req.body
+        req.body,
       );
 
       const newDocRef = {
         uuid: uuidv4(),
         type: docRefType,
         name: docRefName,
-        children: docRefType === "Folder" ? [] : undefined
+        children: docRefType === "Folder" ? [] : undefined,
       };
       testCache.data!.documentTree = addItemsToTree(
         testCache.data!.documentTree,
         destinationFolderRef.uuid,
-        [newDocRef]
+        [newDocRef],
       );
 
       res.json(testCache.data!.documentTree);
@@ -130,7 +130,7 @@ const resourceBuilder: ResourceBuilder = (
     uuid: uuidv4(),
     type: docRef.type,
     name: `${docRef.name}-copy-${uuidv4()}`,
-    children: docRef.children ? docRef.children.map(copyDocRef) : undefined
+    children: docRef.children ? docRef.children.map(copyDocRef) : undefined,
   });
 
   // Copy Document
@@ -146,7 +146,7 @@ const resourceBuilder: ResourceBuilder = (
       testCache.data!.documentTree = addItemsToTree(
         testCache.data!.documentTree,
         destinationFolderRef.uuid,
-        copies
+        copies,
       );
 
       res.json(testCache.data!.documentTree);
@@ -160,16 +160,16 @@ const resourceBuilder: ResourceBuilder = (
       const docRefUuidsToDelete = docRefs.map((d: DocRefType) => d.uuid);
       const itemsToMove = findByUuids(
         testCache.data!.documentTree,
-        docRefUuidsToDelete
+        docRefUuidsToDelete,
       );
       testCache.data!.documentTree = deleteItemsFromTree(
         testCache.data!.documentTree,
-        docRefUuidsToDelete
+        docRefUuidsToDelete,
       );
       testCache.data!.documentTree = addItemsToTree(
         testCache.data!.documentTree,
         destinationFolderRef.uuid,
-        itemsToMove
+        itemsToMove,
       );
 
       res.json(testCache.data!.documentTree);
@@ -185,12 +185,12 @@ const resourceBuilder: ResourceBuilder = (
   server
     .delete(`${resource}/delete`)
     .intercept((req: HttpRequest, res: HttpResponse) => {
-      const docRefsToDelete: Array<DocRefType> = JSON.parse(req.body);
+      const docRefsToDelete: DocRefType[] = JSON.parse(req.body);
       const docRefUuidsToDelete = docRefsToDelete.map(d => d.uuid);
 
       testCache.data!.documentTree = deleteItemsFromTree(
         testCache.data!.documentTree,
-        docRefUuidsToDelete
+        docRefUuidsToDelete,
       );
       //const docRefs = JSON.parse(req.body);
       res.json(testCache.data!.documentTree);

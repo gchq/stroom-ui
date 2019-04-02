@@ -3,16 +3,16 @@ import { useState, useCallback } from "react";
 import * as uuidv4 from "uuid/v4";
 import * as loremIpsum from "lorem-ipsum";
 
-export type Animal = {
+export interface Animal {
   uuid: string;
   species: string;
   name: string;
-};
+}
 
 const generateAnimal = (): Animal => ({
   uuid: uuidv4(),
   species: loremIpsum({ units: "words", count: 1 }),
-  name: loremIpsum({ units: "words", count: 3 })
+  name: loremIpsum({ units: "words", count: 3 }),
 });
 
 const AMOUNT_TO_FETCH = 5;
@@ -22,14 +22,14 @@ const initialAnimals = Array(AMOUNT_TO_FETCH)
 const MAX_ANIMALS = 13;
 
 interface OutProps {
-  animals: Array<Animal>;
+  animals: Animal[];
   preFocusWrap: () => boolean;
   reset: () => void;
   addAnimal: (species: string, name: string) => void;
 }
 
 const useTestAnimals = (): OutProps => {
-  const [animals, setAnimals] = useState<Array<Animal>>(initialAnimals);
+  const [animals, setAnimals] = useState<Animal[]>(initialAnimals);
 
   const reset = useCallback(() => setAnimals(initialAnimals), [setAnimals]);
   const preFocusWrap = useCallback((): boolean => {
@@ -38,8 +38,8 @@ const useTestAnimals = (): OutProps => {
         animals.concat(
           Array(AMOUNT_TO_FETCH)
             .fill(1)
-            .map(generateAnimal)
-        )
+            .map(generateAnimal),
+        ),
       );
       return false;
     }
@@ -54,18 +54,18 @@ const useTestAnimals = (): OutProps => {
           {
             uuid: uuidv4(),
             species,
-            name
-          }
-        ])
+            name,
+          },
+        ]),
       ),
-    [animals, setAnimals]
+    [animals, setAnimals],
   );
 
   return {
     animals,
     reset,
     preFocusWrap,
-    addAnimal
+    addAnimal,
   };
 };
 

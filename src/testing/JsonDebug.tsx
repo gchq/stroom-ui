@@ -11,7 +11,7 @@ export default ({ value }: Props) => (
       borderRadius: 4,
       background: "#f6f8fa",
 
-      boxShadow: "0 0 1px  #eee inset"
+      boxShadow: "0 0 1px  #eee inset",
     }}
   >
     <div
@@ -24,7 +24,7 @@ export default ({ value }: Props) => (
         padding: ".5rem",
         background: "#555",
         color: "#fff",
-        letterSpacing: "1px"
+        letterSpacing: "1px",
       }}
     >
       Form State
@@ -33,7 +33,7 @@ export default ({ value }: Props) => (
       style={{
         fontSize: ".65rem",
         padding: ".25rem .5rem",
-        overflowX: "scroll"
+        overflowX: "scroll",
       }}
     >
       {JSON.stringify(value, null, 2)}

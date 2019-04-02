@@ -11,6 +11,6 @@ export default function useRouter() {
 
   return {
     router,
-    history
+    history,
   };
 }

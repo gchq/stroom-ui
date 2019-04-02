@@ -9,7 +9,7 @@ export const generate = (): XsltDoc => ({
   uuid: uuidv4(),
   name: loremIpsum({ count: 2, units: "words" }),
   description: loremIpsum({ count: 6, units: "words" }),
-  data: bitmapReference
+  data: bitmapReference,
 });
 
 export default generate;

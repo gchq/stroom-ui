@@ -22,7 +22,7 @@ import { KeyDownState } from "./types";
 
 const TestHarness = () => {
   const keyIsDown1: KeyDownState = useKeyIsDown();
-  const filters2: Array<string> = ["Control", "Alt"];
+  const filters2: string[] = ["Control", "Alt"];
   const keyIsDown2: KeyDownState = useKeyIsDown(filters2);
   return (
     <div>
@@ -50,5 +50,7 @@ const TestHarness = () => {
   );
 };
 
-storiesOf("Custom Hooks/useKeyIsDown", module)
-  .add("Test Component", TestHarness);
+storiesOf("Custom Hooks/useKeyIsDown", module).add(
+  "Test Component",
+  TestHarness,
+);
