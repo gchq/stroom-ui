@@ -10,7 +10,7 @@ import useFontAwesome from "./lib/useFontAwesome/useFontAwesome";
 import { ThemeContextProvider } from "./lib/theme";
 import { CustomRouter } from "./lib/useRouter";
 
-import createHistory from "history/createBrowserHistory";
+import { createBrowserHistory as createHistory } from "history";
 import { ConfigProvider } from "src/startup/config";
 export const history = createHistory();
 

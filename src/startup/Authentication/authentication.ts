@@ -51,7 +51,6 @@ export const handleAuthenticationResponse = (
   history: History,
   accessCode: string,
   authenticationServiceUrl: string,
-  authorisationServiceUrl: string,
 ) => {
   const idTokenRequestUrl = `${authenticationServiceUrl}/idToken?accessCode=${accessCode}`;
 

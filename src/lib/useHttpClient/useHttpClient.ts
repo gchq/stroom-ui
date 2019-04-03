@@ -68,6 +68,12 @@ export const useHttpClient = (): HttpClient => {
       // console.group("HTTP GET");
       // console.log("Fetching", { url, cacheKeys: Object.keys(cache) });
 
+      if (!idToken) {
+        let p = Promise.reject();
+        p.catch(() => console.log("Missing ID Token, not making request"));
+        return p;
+      }
+
       // If we do not have an entry in the cache or we are forcing GET, create a new call
       if (!cache[url] || forceGet) {
         // console.log("Making a Fresh Call");
@@ -90,7 +96,7 @@ export const useHttpClient = (): HttpClient => {
 
       return cache[url];
     },
-    [catchImpl],
+    [catchImpl, idToken],
   );
 
   const useFetchWithBodyAndJsonResponse = (method: string) =>
@@ -101,6 +107,12 @@ export const useHttpClient = (): HttpClient => {
           [s: string]: any;
         },
       ): Promise<T | void> => {
+        if (!idToken) {
+          let p = Promise.reject();
+          p.catch(() => console.log("Missing ID Token, not making request"));
+          return p;
+        }
+
         const headers = {
           Accept: "application/json",
           "Content-Type": "application/json",
@@ -118,7 +130,7 @@ export const useHttpClient = (): HttpClient => {
           .then(r => r.json())
           .catch(catchImpl);
       },
-      [catchImpl],
+      [catchImpl, idToken],
     );
 
   const useFetchWithBodyAndEmptyResponse = (method: string) =>
@@ -129,6 +141,12 @@ export const useHttpClient = (): HttpClient => {
           [s: string]: any;
         },
       ): Promise<string | void> => {
+        if (!idToken) {
+          let p = Promise.reject();
+          p.catch(() => console.log("Missing ID Token, not making request"));
+          return p;
+        }
+
         const headers = {
           "Content-Type": "application/json",
           Authorization: `Bearer ${idToken}`,
@@ -145,7 +163,7 @@ export const useHttpClient = (): HttpClient => {
           .then(r => r.text())
           .catch(catchImpl);
       },
-      [catchImpl],
+      [catchImpl, idToken],
     );
 
   return {

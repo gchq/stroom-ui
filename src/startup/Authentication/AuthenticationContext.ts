@@ -1,14 +1,14 @@
 import * as React from "react";
 
 interface AuthenticationContextApi {
-  idToken: string;
+  idToken?: string;
   setIdToken: (idToken: string) => void;
 }
 
 const AuthenticationContext: React.Context<
   AuthenticationContextApi
 > = React.createContext({
-  idToken: "",
+  idToken: undefined,
   setIdToken: () => {
     console.error("Default Implementation for Authentication Context");
   },

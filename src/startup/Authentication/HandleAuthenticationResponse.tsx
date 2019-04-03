@@ -43,7 +43,6 @@ export const HandleAuthenticationResponse: React.FunctionComponent = () => {
       history,
       accessCode,
       authenticationServiceUrl!,
-      authorisationServiceUrl!,
     );
   }, [
     accessCode,

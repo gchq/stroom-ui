@@ -5,7 +5,7 @@ import AuthenticationContext from "./AuthenticationContext";
 const AuthenticationContextProvider: React.FunctionComponent = ({
   children,
 }) => {
-  const [idToken, setIdToken] = React.useState<string>("");
+  const [idToken, setIdToken] = React.useState<string | undefined>(undefined);
 
   return (
     <AuthenticationContext.Provider value={{ idToken, setIdToken }}>

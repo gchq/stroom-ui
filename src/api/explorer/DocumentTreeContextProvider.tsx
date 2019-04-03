@@ -23,15 +23,14 @@ const DocumentTreeContextProvider: React.FunctionComponent = ({ children }) => {
     searchApp,
   } = useApi();
 
-  React.useEffect(() => {
-    if (documentTree === DEFAULT_TREE) {
-      fetchDocTree().then(setDocumentTree);
-    }
-  }, [documentTree, fetchDocTree]);
-
   const contextValue: DocumentTreeContextValue = {
     documentTree,
     searchApp,
+    fetchDocTree: React.useCallback(() => {
+      if (documentTree === DEFAULT_TREE) {
+        fetchDocTree().then(setDocumentTree);
+      }
+    }, [documentTree, fetchDocTree]),
     createDocument: React.useCallback(
       (
         docRefType: string,

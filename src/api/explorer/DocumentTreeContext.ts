@@ -6,6 +6,7 @@ import { DEFAULT_TREE, DEFAULT_DOC_REF_WITH_LINEAGE } from "./values";
 
 export interface DocumentTreeContextValue {
   documentTree: DocRefTree;
+  fetchDocTree: () => void;
   searchApp: (args: SearchProps) => Promise<DocRefType[]>;
   createDocument: (
     docRefType: string,
@@ -32,6 +33,7 @@ const NO_OP_FUNCTION = () =>
   console.error("Unexpected call to default context");
 
 const DocumentTreeContext = React.createContext<DocumentTreeContextValue>({
+  fetchDocTree: NO_OP_FUNCTION,
   copyDocuments: NO_OP_FUNCTION,
   createDocument: NO_OP_FUNCTION,
   deleteDocuments: NO_OP_FUNCTION,
