@@ -5,10 +5,12 @@ import DisplayPillChoice from "./DisplayPillChoice";
 
 export const Step2 = () => {
   /**
-   * This is our first use of state. This component will track a value called 'pill' and useState
-   * returns this 'array', the first item is the value, the second item is a function to update that value.
-   * Later we will show the use of optional values that can be 'undefined'. In TypeScript you must be explicit
-   * about this. In this example I am seeding the state with a default value which is a valid string.
+   * This is our first use of state. This component will track a value called
+   * 'pill' and useState returns this 'array', the first item is the value, the
+   * second item is a function to update that value. Later we will show the use
+   * of optional values that can be 'undefined'. In TypeScript you must be
+   * explicit about this. In this example I am seeding the state with a default
+   * value which is a valid string.
    */
   const [pill, setPill] = React.useState<string>("none");
 

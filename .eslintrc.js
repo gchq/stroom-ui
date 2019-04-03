@@ -11,6 +11,7 @@ module.exports = {
   extends: [
     //"airbnb",
     "plugin:@typescript-eslint/recommended",
+    "plugin:react/recommended",
     "prettier",
     "prettier/react",
     "prettier/@typescript-eslint",
@@ -34,6 +35,7 @@ module.exports = {
   plugins: ["react", "@typescript-eslint", "prettier"],
   rules: {
     "prettier/prettier": "error",
+    //"react/jsx-uses-vars": 1,
     // Indent with 2 spaces
     //indent: ["error", 2],
     // Indent JSX with 2 spaces
