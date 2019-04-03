@@ -53,6 +53,9 @@ module.exports = {
     //quotes: ["error", "single"],
     semi: ["error", "always"],
 
+    // Don't think we need PropTypes as typescript handles typechecking
+    "react/prop-types": 0,
+
     // This rule seems to force the use of ReactElement in this example
     //
     // export const DisplayPillChoice: React.FunctionComponent<Props> = ({

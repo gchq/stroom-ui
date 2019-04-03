@@ -1,4 +1,5 @@
 import * as React from "react";
+// import PropTypes from "prop-types";
 
 interface Props {
   pill: string;
@@ -14,5 +15,9 @@ export const DisplayPillChoice: React.FunctionComponent<Props> = ({ pill }) => (
     You have chosen the <strong>{pill}</strong> pill
   </p>
 );
+
+// DisplayPillChoice.propTypes = {
+//   pill: PropTypes.string.
+// };
 
 export default DisplayPillChoice;
