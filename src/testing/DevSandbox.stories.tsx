@@ -28,38 +28,41 @@ const TestHarness = () => {
   );
 };
 
+const MyContextProvider: React.FunctionComponent = ({ children }) => {
+  const [value, setValue] = useState<number>(23);
+
+  const increment = useCallback(() => setValue(value + 1), [value, setValue]);
+
+  return (
+    <MyContext.Provider value={value}>
+      <button onClick={increment}>Increment</button>
+      {children}
+    </MyContext.Provider>
+  );
+};
+
 storiesOf("Dev Sandbox/Context Weirdness Demo", module)
-  .addDecorator(fn => {
-    const [value, setValue] = useState<number>(23);
-
-    const increment = useCallback(() => setValue(value + 1), [value, setValue]);
-
-    return (
-      <MyContext.Provider value={value}>
-        <button onClick={increment}>Increment</button>
-        {fn()}
-      </MyContext.Provider>
-    );
-  })
+  .addDecorator(fn => <MyContextProvider>{fn()}</MyContextProvider>)
 
   // This one will NOT update correctly, it will get the default value of the context,
   // not even the 'initial value' of the decorator one.
-  .add("usingContextDirectly", () => {
-    const valueRead = useContext(MyContext);
+  // To be fair, tslint-react-hooks plugin actually warns about this...but only in production running
+  // .add("usingContextDirectly", () => {
+  //   const valueRead = useContext(MyContext);
 
-    return (
-      <div>
-        <p>
-          This component will not work correctly, because it is reading in the
-          context in an inline function within the story. For some reason,
-          decorators that provide context do not work quite correctly/as
-          expected in this case. Switch to usingTestHarness to see a working
-          version of this component.
-        </p>
-        <JsonDebug value={{ valueRead }} />
-      </div>
-    );
-  })
+  //   return (
+  //     <div>
+  //       <p>
+  //         This component will not work correctly, because it is reading in the
+  //         context in an inline function within the story. For some reason,
+  //         decorators that provide context do not work quite correctly/as
+  //         expected in this case. Switch to usingTestHarness to see a working
+  //         version of this component.
+  //       </p>
+  //       <JsonDebug value={{ valueRead }} />
+  //     </div>
+  //   );
+  // })
 
   // This works just fine...so just do this
   .add("usingTestHarness", () => <TestHarness />);

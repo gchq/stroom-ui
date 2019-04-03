@@ -9,7 +9,7 @@ import { StreamTaskType } from "src/types";
 
 const stories = storiesOf("Sections/Processing/List", module);
 
-addThemedStories(stories, () => {
+const TestHarness = () => {
   const streamTasksApi = useStreamTasks();
   const [selectedTracker, setSelectedTracker] = React.useState<
     StreamTaskType | undefined
@@ -26,4 +26,6 @@ addThemedStories(stories, () => {
       <JsonDebug value={{ selectedTracker }} />
     </div>
   );
-});
+};
+
+addThemedStories(stories, () => <TestHarness />);

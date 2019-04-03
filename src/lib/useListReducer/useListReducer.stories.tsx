@@ -19,7 +19,7 @@ const testCharacters: Character[] = [
   { name: "Kochanski" },
 ];
 
-storiesOf("Custom Hooks/useListReducer", module).add("basic", () => {
+const TestHarness: React.FunctionComponent = () => {
   const { items, itemsReceived, itemAdded, itemRemoved } = useListReducer<
     Character
   >(c => c.name);
@@ -56,4 +56,8 @@ storiesOf("Custom Hooks/useListReducer", module).add("basic", () => {
       ))}
     </div>
   );
-});
+};
+
+storiesOf("Custom Hooks/useListReducer", module).add("basic", () => (
+  <TestHarness />
+));

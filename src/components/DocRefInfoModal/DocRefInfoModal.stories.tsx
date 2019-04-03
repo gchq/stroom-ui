@@ -25,7 +25,7 @@ import fullTestData from "src/testing/data";
 
 const testFolder1 = fullTestData.documentTree.children![0];
 
-storiesOf("Doc Ref/Info Modal", module).add("Doc Ref Info Modal", () => {
+const TestHarness: React.FunctionComponent = () => {
   const { showDialog, componentProps } = useDocRefInfoDialog();
 
   return (
@@ -34,4 +34,8 @@ storiesOf("Doc Ref/Info Modal", module).add("Doc Ref Info Modal", () => {
       <DocRefInfoModal {...componentProps} />
     </div>
   );
-});
+};
+
+storiesOf("Doc Ref/Info Modal", module).add("Doc Ref Info Modal", () => (
+  <TestHarness />
+));

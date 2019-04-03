@@ -20,7 +20,7 @@ import useKeyIsDown, { DEFAULT_FILTERS } from "./useKeyIsDown";
 
 import { KeyDownState } from "./types";
 
-storiesOf("Custom Hooks/useKeyIsDown", module).add("test", () => {
+const TestHarness: React.FunctionComponent = () => {
   const keyIsDown1: KeyDownState = useKeyIsDown();
   const filters2: string[] = ["Control", "Alt"];
   const keyIsDown2: KeyDownState = useKeyIsDown(filters2);
@@ -48,4 +48,8 @@ storiesOf("Custom Hooks/useKeyIsDown", module).add("test", () => {
       </form>
     </div>
   );
-});
+};
+
+storiesOf("Custom Hooks/useKeyIsDown", module).add("test", () => (
+  <TestHarness />
+));

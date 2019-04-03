@@ -12,7 +12,7 @@ const stories = storiesOf("Pipeline/Delete Element", module);
 
 let nextElementId = 12;
 
-addThemedStories(stories, () => {
+const TestHarness: React.FunctionComponent = () => {
   const [elementDeleted, setElementDeleted] = useState<string | undefined>(
     undefined,
   );
@@ -26,4 +26,6 @@ addThemedStories(stories, () => {
       <JsonDebug value={{ elementDeleted }} />
     </div>
   );
-});
+};
+
+addThemedStories(stories, () => <TestHarness />);
