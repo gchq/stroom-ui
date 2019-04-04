@@ -1,18 +1,18 @@
 export interface LineDefinition {
   lineId: string;
-  lineType?: string;
   fromRect: DOMRect;
   toRect: DOMRect;
 }
 
-export type LineElementCreator = (ld: LineDefinition) => React.ReactNode;
-
-export interface LineElementCreators {
-  [lineType: string]: LineElementCreator;
-}
+export type LineElementCreator = React.FunctionComponent<LineDefinition>;
 
 export interface LineType {
-  lineType?: string;
+  lineId: string;
   fromId: string;
   toId: string;
+}
+
+export interface LineContextApi {
+  lineCreated: (line: LineType) => void;
+  lineDestroyed: (lineId: string) => void;
 }

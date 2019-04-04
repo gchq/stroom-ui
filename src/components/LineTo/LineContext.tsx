@@ -14,7 +14,14 @@
  * limitations under the License.
  */
 import * as React from "react";
+import { LineContextApi } from "./types";
 
-const LineContext = React.createContext("default-svg-line-context");
+const defaultFunction = () =>
+  console.error("Could not create line without Line Context");
+
+const LineContext = React.createContext<LineContextApi>({
+  lineCreated: defaultFunction,
+  lineDestroyed: defaultFunction,
+});
 
 export default LineContext;

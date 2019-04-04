@@ -18,14 +18,14 @@ import * as React from "react";
 
 import Loader from "../Loader";
 import PipelineElement from "./PipelineElement";
-import ElbowLine from "./ElbowLine/ElbowLine";
 import { getPipelineLayoutGrid } from "./pipelineUtils";
-import { PipelineLayoutGrid, CellType } from "./types";
+import { PipelineLayoutGrid } from "./types";
 import { PipelineElementType } from "src/types";
 import { getAllElementNames } from "./pipelineUtils";
 import { ShowDialog as ShowAddElementDialog } from "./AddElementModal";
 import { PipelineProps } from "./types";
 import useElements from "src/api/useElements";
+import { LineContainer, LineTo } from "../LineTo";
 
 interface Props {
   pipelineId: string;
@@ -59,17 +59,22 @@ export const Pipeline: React.FunctionComponent<Props> = ({
   const layoutGrid: PipelineLayoutGrid = getPipelineLayoutGrid(asTree);
 
   return (
-    <div className="Pipeline-editor__elements">
+    <LineContainer className="Pipeline-editor__elements">
+      {pipeline &&
+        pipeline.merged.links &&
+        pipeline.merged.links.add &&
+        pipeline.merged.links.add.map(l => (
+          <LineTo key={`${l.from}-${l.to}`} fromId={l.from} toId={l.to} />
+        ))}
       {layoutGrid.rows.map((row, r) => (
         <div key={r} className="Pipeline-editor__elements-row">
           {row.columns.map((column, c) => (
             <div
               key={c}
-              className={`Pipeline-editor__elements_cell ${
-                CellType[column.cellType]
-              }`}
+              id={column.uuid}
+              className={`Pipeline-editor__elements_cell`}
             >
-              {column.cellType == CellType.ELEMENT &&
+              {column.uuid &&
                 pipeline &&
                 pipeline.merged.elements.add &&
                 pipeline.merged.elements.add
@@ -95,12 +100,11 @@ export const Pipeline: React.FunctionComponent<Props> = ({
                       />
                     );
                   })}
-              {column.cellType == CellType.ELBOW && <ElbowLine north east />}
             </div>
           ))}
         </div>
       ))}
-    </div>
+    </LineContainer>
   );
 };
 

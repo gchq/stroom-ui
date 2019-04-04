@@ -14,71 +14,26 @@
  * limitations under the License.
  */
 import * as React from "react";
-
-import { connect } from "react-redux";
+import * as uuidv4 from "uuid/v4";
 
 import LineContext from "./LineContext";
 
-import { actionCreators } from "./redux";
-import { LineType } from "./types";
-
-const { lineCreated, lineDestroyed } = actionCreators;
-
-export interface Props extends LineType {
-  lineId: string;
+interface Props {
+  fromId: string;
+  toId: string;
 }
 
-interface ConnectDispatch {
-  lineCreated: typeof lineCreated;
-  lineDestroyed: typeof lineDestroyed;
-}
+const LineTo: React.FunctionComponent<Props> = ({ toId, fromId }) => {
+  const { lineCreated, lineDestroyed } = React.useContext(LineContext);
+  const lineId = React.useMemo(() => uuidv4(), []);
 
-export interface ContextProps {
-  lineContextId: string;
-}
+  React.useEffect(() => {
+    lineCreated({ lineId, fromId, toId });
 
-export interface EnhancedProps extends Props, ContextProps, ConnectDispatch {}
+    return () => lineDestroyed(lineId);
+  }, [toId, fromId, lineCreated, lineDestroyed]);
 
-const enhance = connect(
-  state => ({
-    // operators are nested, so take all their props from parent
-  }),
-  {
-    lineCreated,
-    lineDestroyed,
-  },
-);
+  return null;
+};
 
-class LineTo extends React.Component<EnhancedProps> {
-  componentDidMount() {
-    const {
-      lineCreated,
-      lineContextId,
-      lineId,
-      lineType,
-      fromId,
-      toId,
-    } = this.props;
-
-    lineCreated(lineContextId, lineId, fromId, toId, lineType);
-  }
-
-  componentWillUnmount() {
-    const { lineDestroyed, lineContextId, lineId } = this.props;
-    lineDestroyed(lineContextId, lineId);
-  }
-
-  render() {
-    return null;
-  }
-}
-
-const EnhancedLineTo = enhance(LineTo);
-
-export default (props: Props) => (
-  <LineContext.Consumer>
-    {lineContextId => (
-      <EnhancedLineTo {...props} lineContextId={lineContextId} />
-    )}
-  </LineContext.Consumer>
-);
+export default LineTo;

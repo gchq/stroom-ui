@@ -60,12 +60,6 @@ export interface PipelineEditApi {
   elementPropertyRevertToDefault: (elementId: string, name: string) => void;
 }
 
-export enum CellType {
-  EMPTY,
-  ELBOW,
-  ELEMENT,
-}
-
 export interface RecycleBinItem {
   recycleData?: PipelineElementType;
   element: ElementDefinition;
@@ -80,7 +74,6 @@ export interface PipelineLayoutInfoById {
 }
 
 export interface PipelineLayoutCell {
-  cellType: CellType;
   uuid?: string;
 }
 

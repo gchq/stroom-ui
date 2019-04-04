@@ -32,7 +32,6 @@ import {
   PipelineLayoutGrid,
   PipelineLayoutInfoById,
   PipelineLayoutRow,
-  CellType,
 } from "./types";
 
 export function getBinItems(
@@ -167,9 +166,7 @@ export function getPipelineLayoutGrid(
       columns: [],
     };
     for (let column = 0; column <= highestColumn; column++) {
-      rowData.columns.push({
-        cellType: CellType.EMPTY,
-      });
+      rowData.columns.push({});
     }
     layoutGrid.rows.push(rowData);
   }
@@ -180,14 +177,6 @@ export function getPipelineLayoutGrid(
       layoutInfo: k[1],
     }))
     .forEach(({ uuid, layoutInfo: { row, column } }) => {
-      if (column > 0) {
-        if (
-          layoutGrid.rows[row].columns[column - 1].cellType == CellType.EMPTY
-        ) {
-          layoutGrid.rows[row].columns[column - 1].cellType = CellType.ELBOW;
-        }
-      }
-      layoutGrid.rows[row].columns[column].cellType = CellType.ELEMENT;
       layoutGrid.rows[row].columns[column].uuid = uuid;
     });
 
