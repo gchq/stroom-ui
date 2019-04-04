@@ -49,7 +49,7 @@ RUN yarn build
 
 
 # ~~~ Final stage ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-FROM nginx:1.13.8-alpine
+FROM nginx:1.15.10-alpine
 WORKDIR /root/app
 
 # Set tini as entrypoint
