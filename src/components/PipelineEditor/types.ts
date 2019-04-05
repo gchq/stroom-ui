@@ -27,6 +27,10 @@ export interface DragCollectedProps {
   isDragging: boolean;
 }
 
+export interface PipelineSettingsValues {
+  description: string;
+}
+
 export interface PipelineProps {
   asTree?: PipelineAsTreeType;
   pipelineEditApi: PipelineEditApi;
@@ -36,7 +40,7 @@ export interface PipelineProps {
 export interface PipelineEditApi {
   selectedElementId?: string;
   elementInitialValues: object;
-  settingsUpdated: (p: { description: string }) => void;
+  settingsUpdated: (p: PipelineSettingsValues) => void;
   elementSelected: (elementId: string, initialValues?: object) => void;
   elementSelectionCleared: () => void;
   elementMoved: (itemToMove: string, destination: string) => void;

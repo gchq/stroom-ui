@@ -21,7 +21,7 @@ import PipelineDebugger from "./PipelineDebugger";
 
 import { testPipelines } from "src/testing/data/pipelines";
 
-const pipelineStories = storiesOf("Pipeline/Debugger", module);
+const pipelineStories = storiesOf("Document Editors/Pipeline/Debugger", module);
 
 Object.keys(testPipelines).forEach(k => {
   pipelineStories.add(k, () => (

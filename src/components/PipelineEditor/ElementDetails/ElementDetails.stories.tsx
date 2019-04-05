@@ -56,7 +56,7 @@ const TestHarness: React.FunctionComponent<Props> = ({
   );
 };
 
-const stories = storiesOf("Pipeline/Element Details", module);
+const stories = storiesOf("Document Editors/Pipeline/Element Details", module);
 
 Object.values(fullTestData.documents.Pipeline)
   .map(p => p as PipelineDocumentType)

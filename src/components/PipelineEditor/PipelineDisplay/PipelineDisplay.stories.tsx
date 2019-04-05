@@ -20,9 +20,9 @@ import { storiesOf } from "@storybook/react";
 import PipelineDisplay from "./PipelineDisplay";
 import { testPipelines } from "src/testing/data/pipelines";
 
-import usePipelineState from "./usePipelineState";
+import usePipelineState from "../usePipelineState";
 
-const pipelineStories = storiesOf("Pipeline/Display", module);
+const pipelineStories = storiesOf("Document Editors/Pipeline/Display", module);
 
 interface TestProps {
   pipelineId: string;

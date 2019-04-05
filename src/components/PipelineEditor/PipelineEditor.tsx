@@ -24,7 +24,7 @@ import AddElementModal, {
 import { ButtonProps } from "../Button";
 import PipelineSettings, {
   useDialog as usePipelineSettingsDialog,
-} from "./PipelineSettings";
+} from "./PipelineSettings/PipelineSettings";
 import ElementPalette from "./ElementPalette";
 import DeletePipelineElement, {
   useDialog as useDeleteElementDialog,
@@ -54,9 +54,7 @@ const PipelineEditor = ({ docRefUuid }: SwitchedDocRefEditorProps) => {
   const {
     showDialog: showSettingsDialog,
     componentProps: settingsComponentProps,
-  } = usePipelineSettingsDialog(description =>
-    settingsUpdated({ description }),
-  );
+  } = usePipelineSettingsDialog(settingsUpdated);
 
   const {
     showDialog: showAddElementDialog,
@@ -72,7 +70,7 @@ const PipelineEditor = ({ docRefUuid }: SwitchedDocRefEditorProps) => {
 
   const onClickOpenSettings = React.useCallback(() => {
     if (!!pipeline) {
-      showSettingsDialog(pipeline.description || "something");
+      showSettingsDialog({ description: pipeline.description || "something" });
     } else {
       console.error("No pipeline set");
     }

@@ -20,11 +20,8 @@ import PipelineEditor from "./PipelineEditor";
 
 import { testPipelines } from "src/testing/data/pipelines";
 
-const pipelineStories = storiesOf(
-  "Document Editors/Pipeline/Topologies",
-  module,
-);
+const stories = storiesOf("Document Editors/Pipeline/Topologies", module);
 
 Object.entries(testPipelines).forEach(k => {
-  pipelineStories.add(k[0], () => <PipelineEditor docRefUuid={k[1].uuid} />);
+  stories.add(k[0], () => <PipelineEditor docRefUuid={k[1].uuid} />);
 });

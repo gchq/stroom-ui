@@ -16,16 +16,16 @@
 
 import * as React from "react";
 
-import Loader from "../Loader";
-import PipelineElement from "./PipelineElement";
-import { getPipelineLayoutGrid } from "./pipelineUtils";
-import { PipelineLayoutGrid } from "./types";
+import Loader from "../../Loader";
+import PipelineElement from "../PipelineElement";
+import { getPipelineLayoutGrid } from "../pipelineUtils";
+import { PipelineLayoutGrid } from "../types";
 import { PipelineElementType } from "src/types";
-import { getAllElementNames } from "./pipelineUtils";
-import { ShowDialog as ShowAddElementDialog } from "./AddElementModal";
-import { PipelineProps } from "./types";
+import { getAllElementNames } from "../pipelineUtils";
+import { ShowDialog as ShowAddElementDialog } from "../AddElementModal";
+import { PipelineProps } from "../types";
 import useElements from "src/api/useElements";
-import { LineContainer, LineTo } from "../LineTo";
+import { LineContainer, LineTo } from "../../LineTo";
 
 interface Props {
   pipelineId: string;

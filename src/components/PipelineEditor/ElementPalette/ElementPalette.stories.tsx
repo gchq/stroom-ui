@@ -24,15 +24,18 @@ import { PipelineDocumentType } from "src/types";
 const showDeleteElementDialog = () =>
   console.error("Deleting Elements Not Supported in this Story");
 
-storiesOf("Pipeline/Element Palette", module).add("Element Palette", () => {
-  return (
-    <ElementPalette
-      pipeline={
-        Object.values(
-          fullTestData.documents.Pipeline,
-        )[0] as PipelineDocumentType
-      }
-      showDeleteElementDialog={showDeleteElementDialog}
-    />
-  );
-});
+storiesOf("Document Editors/Pipeline/Element Palette", module).add(
+  "Element Palette",
+  () => {
+    return (
+      <ElementPalette
+        pipeline={
+          Object.values(
+            fullTestData.documents.Pipeline,
+          )[0] as PipelineDocumentType
+        }
+        showDeleteElementDialog={showDeleteElementDialog}
+      />
+    );
+  },
+);

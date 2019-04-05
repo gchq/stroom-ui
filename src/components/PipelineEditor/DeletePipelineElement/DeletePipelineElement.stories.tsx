@@ -8,7 +8,7 @@ import DeletePipelineElement, { useDialog } from ".";
 import Button from "src/components/Button";
 import JsonDebug from "src/testing/JsonDebug";
 
-const stories = storiesOf("Pipeline/Delete Element", module);
+const stories = storiesOf("Document Editors/Pipeline/Delete Element", module);
 
 let nextElementId = 12;
 

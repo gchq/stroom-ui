@@ -1,43 +1,35 @@
 import * as React from "react";
 
-import Button from "../Button";
-import IconHeader from "../IconHeader";
-import ThemedModal from "../ThemedModal";
+import Button from "src/components/Button";
+import IconHeader from "src/components/IconHeader";
+import ThemedModal from "src/components/ThemedModal";
 import useForm from "src/lib/useForm";
+import { PipelineSettingsValues } from "../types";
 
 interface Props {
   isOpen: boolean;
-  initialDescription: string;
-  updateValues: (description: string) => void;
+  initialValues: PipelineSettingsValues;
+  updateValues: (updates: Partial<PipelineSettingsValues>) => void;
   onCloseDialog: () => void;
-}
-
-interface FormValues {
-  description: string;
 }
 
 const PipelineSettings: React.FunctionComponent<Props> = ({
   isOpen,
-  initialDescription,
+  initialValues,
   updateValues,
   onCloseDialog,
 }) => {
-  const initialValues = React.useMemo(
-    () => ({ description: initialDescription }),
-    [initialDescription],
-  );
-
   const {
     value: { description },
     useTextInput,
-  } = useForm<FormValues>({
+  } = useForm<PipelineSettingsValues>({
     initialValues,
   });
   const descriptionProps = useTextInput("description");
 
   const onConfirmLocal = React.useCallback(() => {
     if (!!description) {
-      updateValues(description);
+      updateValues({ description });
       onCloseDialog();
     } else {
       console.error("Form invalid", { description });
@@ -76,7 +68,7 @@ interface UseDialog {
    * The owning component is ready to start a deletion process.
    * Calling this will open the dialog, and setup the UUIDs
    */
-  showDialog: (_initialDescription: string) => void;
+  showDialog: (_initialValues: PipelineSettingsValues) => void;
   /**
    * These are the properties that the owning component can just give to the Dialog component
    * using destructing.
@@ -85,24 +77,24 @@ interface UseDialog {
 }
 
 export const useDialog = (
-  updateValues: (description: string) => void,
+  updateValues: (updates: Partial<PipelineSettingsValues>) => void,
 ): UseDialog => {
   const [isOpen, setIsOpen] = React.useState(false);
-  const [initialDescription, setInitialDescription] = React.useState<string>(
-    "",
-  );
+  const [initialValues, setInitialValues] = React.useState<
+    PipelineSettingsValues
+  >({ description: "" });
 
   return {
-    showDialog: (_initialDescription: string) => {
+    showDialog: (_initialValues: PipelineSettingsValues) => {
       setIsOpen(true);
-      setInitialDescription(_initialDescription);
+      setInitialValues(_initialValues);
     },
     componentProps: {
       isOpen,
       onCloseDialog: () => {
         setIsOpen(false);
       },
-      initialDescription,
+      initialValues,
       updateValues,
     },
   };
