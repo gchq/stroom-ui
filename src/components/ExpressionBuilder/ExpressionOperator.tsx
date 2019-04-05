@@ -42,7 +42,7 @@ import {
   ExpressionHasUuid,
   ExpressionTermWithUuid,
 } from "src/types";
-import ElbowLine from "../PipelineEditor/ElbowLine/ElbowLine";
+import { LineTo } from "../LineTo";
 
 interface Props {
   dataSource: DataSourceType;
@@ -62,7 +62,7 @@ interface Props {
 interface EnhancedProps extends Props, DragCollectedProps, DropCollectedProps {}
 
 const dragSource: DragSourceSpec<Props, DragObject> = {
-  canDrag(props) {
+  canDrag() {
     return true;
   },
   beginDrag(props) {
@@ -271,7 +271,7 @@ const ExpressionOperator: React.FunctionComponent<EnhancedProps> = ({
             // Wrap it with a line to
             return (
               <div key={c.uuid} className="operator__child">
-                <ElbowLine />
+                <LineTo fromId={operator.uuid} toId={c.uuid} />
                 {itemElement}
               </div>
             );
