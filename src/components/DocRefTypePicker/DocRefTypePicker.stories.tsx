@@ -22,20 +22,23 @@ import DocRefTypePicker from "./DocRefTypePicker";
 import JsonDebug from "src/testing/JsonDebug";
 import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
 
+const invalidTypes: string[] = ["Folder", "Dictionary", "XSLT"];
+
 const TestForm = () => {
-  const [chosenDocRefType, setChosenDocRefType] = React.useState<string>("");
+  const [docRefType, setDocRefType] = React.useState<string>("");
 
   return (
     <form>
       <div>
         <label>Chosen Doc Type</label>
         <DocRefTypePicker
-          value={chosenDocRefType}
-          onChange={setChosenDocRefType}
+          value={docRefType}
+          onChange={setDocRefType}
+          invalidTypes={invalidTypes}
         />
       </div>
 
-      <JsonDebug value={{ chosenDocRefType }} />
+      <JsonDebug value={{ invalidTypes, docRefType }} />
     </form>
   );
 };

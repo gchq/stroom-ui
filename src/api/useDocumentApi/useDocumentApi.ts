@@ -23,6 +23,22 @@ const useDocumentApi = <
   const { httpGetJson, httpPostEmptyResponse } = useHttpClient();
   const resourcePath = DOCUMENT_RESOURCES[docRefType];
 
+  const fetchDocument = React.useCallback(
+    (docRefUuid: string) =>
+      httpGetJson(`${stroomBaseServiceUrl}${resourcePath}${docRefUuid}`),
+    [resourcePath, stroomBaseServiceUrl, httpGetJson],
+  );
+  const saveDocument = React.useCallback(
+    (docRefContents: D) =>
+      httpPostEmptyResponse(
+        `${stroomBaseServiceUrl}${resourcePath}${docRefContents.uuid}`,
+        {
+          body: docRefContents,
+        },
+      ),
+    [resourcePath, stroomBaseServiceUrl, httpPostEmptyResponse],
+  );
+
   if (!resourcePath) {
     throw new Error(
       `API for Doc Ref requested, no generic implementation ${docRefType}`,
@@ -30,21 +46,8 @@ const useDocumentApi = <
   }
 
   return {
-    fetchDocument: React.useCallback(
-      (docRefUuid: string) =>
-        httpGetJson(`${stroomBaseServiceUrl}${resourcePath}${docRefUuid}`),
-      [stroomBaseServiceUrl, httpGetJson],
-    ),
-    saveDocument: React.useCallback(
-      (docRefContents: D) =>
-        httpPostEmptyResponse(
-          `${stroomBaseServiceUrl}${resourcePath}${docRefContents.uuid}`,
-          {
-            body: docRefContents,
-          },
-        ),
-      [stroomBaseServiceUrl, httpPostEmptyResponse],
-    ),
+    fetchDocument,
+    saveDocument,
   };
 };
 

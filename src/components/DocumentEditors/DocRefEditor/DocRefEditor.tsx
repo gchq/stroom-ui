@@ -107,7 +107,7 @@ export function useDocRefEditor<T extends object>({
         setIsDirty(false);
       });
     }
-  }, [documentApi ? documentApi.saveDocument : undefined, docRefContents]);
+  }, [!!documentApi ? documentApi.saveDocument : undefined, docRefContents]);
 
   return {
     onDocumentChange: React.useCallback(

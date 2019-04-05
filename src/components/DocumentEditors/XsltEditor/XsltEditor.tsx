@@ -18,7 +18,7 @@ import * as React from "react";
 
 import DocRefEditor, {
   useDocRefEditor,
-  SwitchedDocRefEditorProps
+  SwitchedDocRefEditorProps,
 } from "../DocRefEditor";
 import Loader from "../../Loader";
 import useDocumentApi from "src/api/useDocumentApi";
@@ -26,22 +26,18 @@ import ThemedAceEditor from "../../ThemedAceEditor";
 import { XsltDoc } from "src/types";
 
 const XsltEditor: React.FunctionComponent<SwitchedDocRefEditorProps> = ({
-  docRefUuid
+  docRefUuid,
 }) => {
   const documentApi = useDocumentApi<"XSLT", XsltDoc>("XSLT");
 
   const { onDocumentChange, editorProps } = useDocRefEditor<XsltDoc>({
     docRefUuid,
-    documentApi
+    documentApi,
   });
 
   const { docRefContents } = editorProps;
 
-  if (!docRefContents) {
-    return <Loader message="Loading XSLT..." />;
-  }
-
-  return (
+  return !!docRefContents ? (
     <DocRefEditor {...editorProps}>
       <ThemedAceEditor
         style={{ width: "100%", height: "100%", minHeight: "25rem" }}
@@ -55,6 +51,8 @@ const XsltEditor: React.FunctionComponent<SwitchedDocRefEditorProps> = ({
         }}
       />
     </DocRefEditor>
+  ) : (
+    <Loader message="Loading XSLT..." />
   );
 };
 

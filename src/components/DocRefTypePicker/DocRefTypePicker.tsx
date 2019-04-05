@@ -1,37 +1,40 @@
 import * as React from "react";
 
 import DocRefImage from "../DocRefImage";
-import { OptionType, ControlledInput } from "src/types";
-import DropdownSelect, { DropdownOptionProps } from "../DropdownSelect";
+import { ControlledInput } from "src/types";
 import useDocRefTypes from "src/api/explorer/useDocRefTypes";
+import Select from "react-select";
+import { OptionProps } from "react-select/lib/components/Option";
+
+interface Props extends ControlledInput<string> {
+  invalidTypes?: string[];
+}
 
 const DocRefTypeOption = ({
-  inFocus,
-  option: { text, value },
-  onClick,
-}: DropdownOptionProps) => (
-  <div className={`hoverable ${inFocus ? "inFocus" : ""}`} onClick={onClick}>
-    <DocRefImage size="sm" docRefType={value} />
-    {text}
+  data,
+  innerProps: { onClick },
+}: OptionProps<string>) => (
+  // <div className={`hoverable ${inFocus ? "inFocus" : ""}`} onClick={onClick}>
+  <div onClick={onClick}>
+    <DocRefImage size="sm" docRefType={data} />
+    {data}
   </div>
 );
 
-let DocRefTypePicker = (props: ControlledInput<string>) => {
+let DocRefTypePicker = ({ value, onChange, invalidTypes = [] }: Props) => {
   const docRefTypes: string[] = useDocRefTypes();
-
-  let options: OptionType[] = React.useMemo(
-    () =>
-      docRefTypes.map((d: string) => ({
-        text: d,
-        value: d,
-      })),
-    [docRefTypes],
+  const options = React.useMemo(
+    () => docRefTypes.filter(d => !invalidTypes.includes(d)),
+    [docRefTypes, invalidTypes],
   );
+
   return (
-    <DropdownSelect
-      {...props}
+    <Select
+      value={value}
+      onChange={(d: string) => onChange(d)}
       options={options}
-      OptionComponent={DocRefTypeOption}
+      getOptionLabel={d => d}
+      components={{ Option: DocRefTypeOption }}
     />
   );
 };

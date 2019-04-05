@@ -3,7 +3,7 @@ import { DocumentApi } from "src/api/useDocumentApi";
 
 export interface DocRefEditorProps<T> {
   docRefUuid: string;
-  additionalActionBarItems?: Array<ButtonProps>;
+  additionalActionBarItems?: ButtonProps[];
   onClickSave?: () => void;
   isDirty: boolean;
   docRefContents?: T;

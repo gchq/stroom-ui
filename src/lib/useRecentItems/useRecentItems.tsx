@@ -1,3 +1,4 @@
+import * as React from "react";
 import useLocalStorage, { storeObjectFactory } from "../useLocalStorage";
 import { DocRefType, DocRefConsumer } from "src/types";
 
@@ -13,10 +14,14 @@ export const useRecentItems = (): OutProps => {
     storeObjectFactory(),
   );
 
+  const addRecentItem = React.useCallback(
+    (d: DocRefType) => setValue([d, ...value.filter(v => v.uuid !== d.uuid)]),
+    [value, setValue],
+  );
+
   return {
     recentItems: value,
-    addRecentItem: (d: DocRefType) =>
-      setValue([d, ...value.filter(v => v.uuid !== d.uuid)]),
+    addRecentItem,
   };
 };
 

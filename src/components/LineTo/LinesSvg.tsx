@@ -63,7 +63,6 @@ const LinesSvg: React.FunctionComponent<Props> = ({
         .map(e => e as LineDefinition),
     [rawLines],
   );
-  console.log("Lines", lines);
 
   // If the SVG has been scrolled, we need to translate the generated lines to cancel out that effect
   let transform;
