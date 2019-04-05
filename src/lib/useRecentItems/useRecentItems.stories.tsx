@@ -35,6 +35,4 @@ const TestHarness: React.FunctionComponent = () => {
   );
 };
 
-storiesOf("Custom Hooks/useRecentItems", module).add("test", () => (
-  <TestHarness />
-));
+storiesOf("lib/useRecentItems", module).add("test", () => <TestHarness />);

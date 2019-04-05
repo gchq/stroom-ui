@@ -13,6 +13,6 @@ const TestHarness: React.FunctionComponent = () => {
   return <JsonDebug value={{ userUuid, permissions }} />;
 };
 
-storiesOf("Custom Hooks/useAppPermissionsForUser", module).add("test", () => (
+storiesOf("API/useAppPermissionsForUser", module).add("test", () => (
   <TestHarness />
 ));

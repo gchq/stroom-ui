@@ -58,6 +58,4 @@ const TestHarness: React.FunctionComponent = () => {
   );
 };
 
-storiesOf("Custom Hooks/useListReducer", module).add("basic", () => (
-  <TestHarness />
-));
+storiesOf("lib/useListReducer", module).add("basic", () => <TestHarness />);

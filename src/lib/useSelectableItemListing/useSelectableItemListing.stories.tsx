@@ -74,7 +74,4 @@ const TestList = () => {
   );
 };
 
-storiesOf("Custom Hooks/useSelectableItemListing", module).add(
-  "A List",
-  TestList,
-);
+storiesOf("lib/useSelectableItemListing", module).add("A List", TestList);

@@ -39,6 +39,4 @@ const TestHarness: React.FunctionComponent = () => {
   );
 };
 
-storiesOf("Custom Hooks/useLocalStorage", module).add("test", () => (
-  <TestHarness />
-));
+storiesOf("lib/useLocalStorage", module).add("test", () => <TestHarness />);

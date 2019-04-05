@@ -52,6 +52,4 @@ const TestHarness: React.FunctionComponent = () => {
   );
 };
 
-storiesOf("Custom Hooks/useDocumentApi", module).add("test", () => (
-  <TestHarness />
-));
+storiesOf("API/useDocumentApi", module).add("test", () => <TestHarness />);

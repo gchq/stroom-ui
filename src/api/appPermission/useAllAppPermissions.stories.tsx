@@ -10,6 +10,6 @@ const TestHarness: React.FunctionComponent = () => {
   return <JsonDebug value={all} />;
 };
 
-storiesOf("Custom Hooks/useAllAppPermissions", module).add("test", () => (
+storiesOf("API/useAllAppPermissions", module).add("test", () => (
   <TestHarness />
 ));

@@ -10,4 +10,4 @@ const TestHarness: React.FunctionComponent = () => {
   return <JsonDebug value={config} />;
 };
 
-storiesOf("Custom Hooks/useConfig", module).add("test", () => <TestHarness />);
+storiesOf("startup/useConfig", module).add("test", () => <TestHarness />);

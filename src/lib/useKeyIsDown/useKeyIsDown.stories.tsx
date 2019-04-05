@@ -50,6 +50,4 @@ const TestHarness: React.FunctionComponent = () => {
   );
 };
 
-storiesOf("Custom Hooks/useKeyIsDown", module).add("test", () => (
-  <TestHarness />
-));
+storiesOf("lib/useKeyIsDown", module).add("test", () => <TestHarness />);

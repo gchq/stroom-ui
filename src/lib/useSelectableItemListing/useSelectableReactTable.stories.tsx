@@ -115,7 +115,4 @@ const TestTable = () => {
   );
 };
 
-storiesOf("Custom Hooks/useSelectableReactTable", module).add(
-  "Table",
-  TestTable,
-);
+storiesOf("lib/useSelectableReactTable", module).add("Table", TestTable);

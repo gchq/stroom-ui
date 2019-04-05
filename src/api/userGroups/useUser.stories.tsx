@@ -47,6 +47,4 @@ const TestHarness = () => {
   );
 };
 
-storiesOf("Custom Hooks/useUser", module).add("Sample 1", () => (
-  <TestHarness />
-));
+storiesOf("API/useUser", module).add("Sample 1", () => <TestHarness />);

@@ -23,7 +23,7 @@ const TestHarness: React.FunctionComponent<Props> = ({ permissionName }) => {
   );
 };
 
-storiesOf("Custom Hooks/useAuthorisationContext", module)
+storiesOf("startup/useAuthorisationContext", module)
   .add("Valid", () => (
     <TestHarness permissionName={fullTestData.allAppPermissions[0]} />
   ))
