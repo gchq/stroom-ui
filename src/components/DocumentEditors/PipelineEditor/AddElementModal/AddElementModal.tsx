@@ -49,7 +49,7 @@ export const AddElementModal: React.FunctionComponent<Props> = ({
 
   const onAddElementLocal = React.useCallback(() => {
     if (!!parentId && !!elementDefinition && !!newName) {
-      onAddElement(parentId, elementDefinition, newName);
+      onAddElement({ parentId, elementDefinition, name: newName });
       onCloseDialog();
     } else {
       console.error("Form invalid");

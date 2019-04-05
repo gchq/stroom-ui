@@ -41,6 +41,6 @@ const TestHarness: React.FunctionComponent<TestProps> = ({
   );
 };
 
-Object.keys(testPipelines).forEach(k => {
-  pipelineStories.add(k, () => <TestHarness pipelineId={k} />);
+Object.entries(testPipelines).forEach(k => {
+  pipelineStories.add(k[0], () => <TestHarness pipelineId={k[1].uuid} />);
 });

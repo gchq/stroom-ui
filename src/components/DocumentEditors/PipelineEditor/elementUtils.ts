@@ -15,10 +15,9 @@
  */
 import { ElementRoles } from "./ElementRoles";
 import {
-  ElementDefinitions,
+  ElementDefinition,
   ElementDefinitionsByCategory,
   ElementDefinitionsByType,
-  ElementDefinition,
 } from "src/types";
 
 /**
@@ -27,7 +26,7 @@ import {
  * @param {elementTypes} elements The element definitions from Stroom
  */
 export function groupByCategory(
-  elements: ElementDefinitions,
+  elements: ElementDefinition[],
 ): ElementDefinitionsByCategory {
   return Object.entries(elements)
     .map(k => k[1])
@@ -46,7 +45,7 @@ export function groupByCategory(
  * @param {elementTypes} elements The element definitions from Stroom
  */
 export function keyByType(
-  elements: ElementDefinitions,
+  elements: ElementDefinition[],
 ): ElementDefinitionsByType {
   return Object.entries(elements)
     .map(k => k[1])

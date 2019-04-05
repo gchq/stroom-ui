@@ -310,7 +310,6 @@ export interface ElementDefinition {
   icon: string;
 }
 
-export type ElementDefinitions = ElementDefinition[];
 export interface ElementDefinitionsByCategory {
   [category: string]: ElementDefinition[];
 }

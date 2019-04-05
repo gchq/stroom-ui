@@ -1,4 +1,4 @@
-import { ElementDefinitions } from "src/types";
+import { ElementDefinition } from "src/types";
 
 export default [
   {
@@ -229,4 +229,4 @@ export default [
     roles: ["simple", "hasTargets", "target"],
     icon: "apache_kafka-icon.svg",
   },
-] as ElementDefinitions;
+] as ElementDefinition[];

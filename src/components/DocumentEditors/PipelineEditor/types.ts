@@ -37,6 +37,12 @@ export interface PipelineProps {
   useEditorProps: UseDocRefEditorProps<PipelineDocumentType>;
 }
 
+export interface NewElement {
+  parentId: string;
+  elementDefinition: ElementDefinition;
+  name: string;
+}
+
 export interface PipelineEditApi {
   selectedElementId?: string;
   elementInitialValues: object;
@@ -44,11 +50,7 @@ export interface PipelineEditApi {
   elementSelected: (elementId: string, initialValues?: object) => void;
   elementSelectionCleared: () => void;
   elementMoved: (itemToMove: string, destination: string) => void;
-  elementAdded: (
-    parentId: string,
-    elementDefinition: ElementDefinition,
-    name: string,
-  ) => void;
+  elementAdded: (newElement: NewElement) => void;
   elementDeleted: (elementId: string) => void;
   elementReinstated: (
     parentId: string,

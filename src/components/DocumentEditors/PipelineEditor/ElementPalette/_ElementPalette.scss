@@ -1,3 +1,11 @@
+.bin__icon {
+  color: $low-priority-component-color;
+}
+
+.bin__icon__hover {
+  border-width: 2px;
+}
+
 .element-palette {
   background-color: #fafafa;
   min-width: 11.5rem;

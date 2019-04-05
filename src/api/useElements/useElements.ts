@@ -1,13 +1,10 @@
 import * as React from "react";
 
 import useApi from "./useApi";
-import {
-  ElementDefinitions,
-  ElementPropertiesByElementIdType,
-} from "src/types";
+import { ElementDefinition, ElementPropertiesByElementIdType } from "src/types";
 
 interface UseElements {
-  elementDefinitions: ElementDefinitions;
+  elementDefinitions: ElementDefinition[];
   elementProperties: ElementPropertiesByElementIdType;
 }
 
@@ -18,7 +15,7 @@ interface UseElements {
 const useElements = (): UseElements => {
   const { fetchElements, fetchElementProperties } = useApi();
   const [elementDefinitions, setElementDefinitions] = React.useState<
-    ElementDefinitions
+    ElementDefinition[]
   >([]);
   const [elementProperties, setElementProperties] = React.useState<
     ElementPropertiesByElementIdType

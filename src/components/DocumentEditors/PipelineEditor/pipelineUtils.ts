@@ -20,7 +20,6 @@ import {
   PipelineAsTreeType,
   PipelineElementType,
   ElementDefinitionsByType,
-  ElementDefinition,
   PipelineDataType,
   PipelinePropertyType,
   AddRemove,
@@ -32,6 +31,7 @@ import {
   PipelineLayoutGrid,
   PipelineLayoutInfoById,
   PipelineLayoutRow,
+  NewElement,
 } from "./types";
 
 export function getBinItems(
@@ -229,13 +229,11 @@ function mapLastItemInArray(input: any, mapFunc: (input: any) => any) {
  */
 export function createNewElementInPipeline(
   pipeline: PipelineDocumentType,
-  parentId: string,
-  childDefinition: ElementDefinition,
-  name: string,
+  { parentId, elementDefinition, name }: NewElement,
 ): PipelineDocumentType {
   const newElement = {
     id: name,
-    type: childDefinition.type,
+    type: elementDefinition.type,
   };
   const newLink = {
     from: parentId,

@@ -1,6 +1,6 @@
 import {
   DocRefTree,
-  ElementDefinitions,
+  ElementDefinition,
   ElementPropertiesByElementIdType,
   DataSourceType,
   StreamTaskType,
@@ -27,7 +27,7 @@ export interface UserDocPermission {
 export interface TestData {
   docRefTypes: string[];
   documentTree: DocRefTree;
-  elements: ElementDefinitions;
+  elements: ElementDefinition[];
   elementProperties: ElementPropertiesByElementIdType;
   documents: {
     [docRefType in keyof ResourcesByDocType]: DocumentType<docRefType>[]

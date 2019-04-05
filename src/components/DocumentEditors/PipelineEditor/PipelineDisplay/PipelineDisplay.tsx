@@ -17,7 +17,7 @@
 import * as React from "react";
 
 import Loader from "src/components/Loader";
-import PipelineElement from "../PipelineElement";
+import PipelineElement from "../PipelineElement/PipelineElement";
 import { getPipelineLayoutGrid } from "../pipelineUtils";
 import { PipelineLayoutGrid } from "../types";
 import { PipelineElementType } from "src/types";

@@ -86,15 +86,10 @@ export const usePipelineState = (pipelineId: string): PipelineProps => {
         [docRefContents],
       ),
       elementAdded: React.useCallback<PipelineEditApi["elementAdded"]>(
-        (parentId, elementDefinition, name) => {
+        newElement => {
           if (!!docRefContents) {
             onDocumentChange(
-              createNewElementInPipeline(
-                docRefContents,
-                parentId,
-                elementDefinition,
-                name,
-              ),
+              createNewElementInPipeline(docRefContents, newElement),
             );
           }
         },

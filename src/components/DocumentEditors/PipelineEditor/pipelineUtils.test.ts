@@ -176,12 +176,11 @@ describe("Pipeline Utils", () => {
       const parentId = "dsParser";
 
       // When
-      const updatedPipeline = createNewElementInPipeline(
-        testPipeline,
+      const updatedPipeline = createNewElementInPipeline(testPipeline, {
         parentId,
         elementDefinition,
-        newElementName,
-      );
+        name: newElementName,
+      });
 
       // Then
       const arrayContainingElement = expect.arrayContaining([

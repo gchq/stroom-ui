@@ -1,10 +1,7 @@
 import { ElementDefinition } from "src/types";
+import { NewElement } from "../types";
 
-export type OnAddElement = (
-  parentId: string,
-  elementDefinition: ElementDefinition,
-  name: string,
-) => void;
+export type OnAddElement = (newElement: NewElement) => void;
 
 export interface Props {
   isOpen: boolean;

@@ -1,7 +1,8 @@
 @import "./ElementPalette/ElementPalette";
 @import "./ElementDetails/ElementDetails";
-@import "./PipelineElement";
-@import "./Bin";
+@import "./PipelineDebugger/PipelineDebugger";
+@import "./PipelineElement/PipelineElement";
+
 $palette-width: 12rem;
 
 .pipeline-editor__container {

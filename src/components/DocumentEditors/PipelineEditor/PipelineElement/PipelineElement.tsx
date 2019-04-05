@@ -24,10 +24,14 @@ import {
   DropTargetCollector,
 } from "react-dnd";
 
-import ElementImage from "./ElementImage";
-import { canMovePipelineElement, getInitialValues } from "./pipelineUtils";
-import { DragDropTypes, DragCollectedProps, DropCollectedProps } from "./types";
-import { isValidChildType } from "./elementUtils";
+import ElementImage from "../ElementImage";
+import { canMovePipelineElement, getInitialValues } from "../pipelineUtils";
+import {
+  DragDropTypes,
+  DragCollectedProps,
+  DropCollectedProps,
+} from "../types";
+import { isValidChildType } from "../elementUtils";
 import Button from "src/components/Button";
 import {
   ElementDefinition,
@@ -36,8 +40,8 @@ import {
   PipelineAsTreeType,
   ElementPropertiesType,
 } from "src/types";
-import { ShowDialog } from "./AddElementModal";
-import { PipelineEditApi } from "./types";
+import { ShowDialog } from "../AddElementModal";
+import { PipelineEditApi } from "../types";
 
 interface Props {
   pipelineId: string;
