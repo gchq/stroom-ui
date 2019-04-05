@@ -84,7 +84,6 @@ const ElementProperty: React.FunctionComponent<Props> = ({
           The <em>field name</em> of this property is <strong>{name}</strong>
         </p>
         <ElementPropertyFieldDetails
-          pipeline={pipeline}
           pipelineEditApi={pipelineEditApi}
           elementId={elementId}
           name={name}

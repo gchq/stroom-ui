@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import useDocumentApi from "src/api/useDocumentApi";
-import { useDocRefEditor } from "../DocumentEditors/DocRefEditor";
+import { useDocRefEditor } from "../DocRefEditor";
 import {
   getPipelineAsTree,
   moveElementInPipeline,

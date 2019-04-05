@@ -17,10 +17,10 @@
 import * as React from "react";
 import { DragSourceSpec, DragSourceCollector, DragSource } from "react-dnd";
 
-import ElementImage from "../../ElementImage";
-import Button from "../../Button";
+import Button from "src/components/Button";
 import { DragDropTypes, DragObject, DragCollectedProps } from "../types";
 import { RecycleBinItem } from "../types";
+import ElementImage from "../ElementImage";
 
 interface Props {
   elementWithData: RecycleBinItem;

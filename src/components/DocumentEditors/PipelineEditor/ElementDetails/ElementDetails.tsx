@@ -16,8 +16,8 @@
 
 import * as React from "react";
 
-import ElementImage from "../../ElementImage";
-import HorizontalPanel from "../../HorizontalPanel";
+import ElementImage from "../ElementImage";
+import HorizontalPanel from "src/components/HorizontalPanel";
 import ElementProperty from "./ElementProperty";
 import {
   PipelineElementType,

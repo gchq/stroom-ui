@@ -16,13 +16,11 @@
 
 import * as React from "react";
 
-import Button from "../../Button";
+import Button from "src/components/Button";
 
-import { PipelineDocumentType } from "src/types";
 import { PipelineEditApi } from "../types";
 
 interface Props {
-  pipeline: PipelineDocumentType;
   pipelineEditApi: PipelineEditApi;
   elementId: string;
   name: string;
@@ -62,7 +60,6 @@ const getDisplayValue = (value: any, type: string): string => {
  * @param {string} type The type of the property
  */
 const ElementPropertyFieldDetails: React.FunctionComponent<Props> = ({
-  pipeline,
   pipelineEditApi,
   elementId,
   name,
@@ -112,8 +109,8 @@ const ElementPropertyFieldDetails: React.FunctionComponent<Props> = ({
           <strong>{getDisplayValue(defaultValue, type)}</strong>.
         </p>
         <p>
-          It is not inheriting anything and hasn't been set to anything by a
-          user.
+          It is not inheriting anything and hasn&apos;t been set to anything by
+          a user.
         </p>
       </div>
     );
@@ -141,8 +138,8 @@ const ElementPropertyFieldDetails: React.FunctionComponent<Props> = ({
     return (
       <div>
         <p>
-          This property is currently set to the default value. It's parent has a
-          value of{" "}
+          This property is currently set to the default value. It&apos;s parent
+          has a value of{" "}
           <strong>{getDisplayValue(parentValue.value[type], type)}</strong>. You
           may revert to this if you wish.
         </p>
@@ -170,8 +167,8 @@ const ElementPropertyFieldDetails: React.FunctionComponent<Props> = ({
           </p>
 
           <p>
-            You may revert it to the default or you may revert to the parent's
-            value
+            You may revert it to the default or you may revert to the
+            parent&apos;s value
           </p>
           <div>
             {RevertToDefaultButton}
@@ -201,7 +198,7 @@ const ElementPropertyFieldDetails: React.FunctionComponent<Props> = ({
     return (
       <p>
         This property has no default value, it is not inheriting anything, and
-        hasn't been set to anything by a user.
+        hasn&apos;t been set to anything by a user.
       </p>
     );
   } else if (
@@ -253,7 +250,7 @@ const ElementPropertyFieldDetails: React.FunctionComponent<Props> = ({
         <div>
           <p>This property has no default value.</p>
 
-          <p>This property is inheriting it's value.</p>
+          <p>This property is inheriting it&apos;s value.</p>
         </div>
       );
     }

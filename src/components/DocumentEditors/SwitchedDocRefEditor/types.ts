@@ -2,7 +2,7 @@ import { SwitchedDocRefEditorProps } from "../DocRefEditor";
 import FolderExplorer from "../FolderExplorer";
 import XsltEditor from "../XsltEditor";
 import DictionaryEditor from "../DictionaryEditor";
-import PipelineEditor from "src/components/PipelineEditor";
+import PipelineEditor from "../PipelineEditor";
 import IndexEditor from "../IndexEditor";
 import AnnotationsIndexEditor from "../AnnotationsIndexEditor";
 import ElasticIndexEditor from "../ElasticIndexEditor";

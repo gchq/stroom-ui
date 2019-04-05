@@ -17,11 +17,11 @@
 import * as React from "react";
 import PanelGroup from "react-panelgroup";
 
-import Loader from "../Loader";
+import Loader from "src/components/Loader";
 import AddElementModal, {
   useDialog as useAddElementDialog,
 } from "./AddElementModal/AddElementModal";
-import { ButtonProps } from "../Button";
+import { ButtonProps } from "src/components/Button";
 import PipelineSettings, {
   useDialog as usePipelineSettingsDialog,
 } from "./PipelineSettings/PipelineSettings";
@@ -31,9 +31,7 @@ import DeletePipelineElement, {
 } from "./DeletePipelineElement";
 import { ElementDetails } from "./ElementDetails";
 import PipelineDisplay from "./PipelineDisplay";
-import DocRefEditor, {
-  SwitchedDocRefEditorProps,
-} from "../DocumentEditors/DocRefEditor";
+import DocRefEditor, { SwitchedDocRefEditorProps } from "../DocRefEditor";
 import usePipelineState from "./usePipelineState";
 
 const PipelineEditor = ({ docRefUuid }: SwitchedDocRefEditorProps) => {

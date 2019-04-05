@@ -1,4 +1,4 @@
-import ElementPalette from './ElementPalette';
+import ElementPalette from "./ElementPalette";
 
 export { ElementPalette };
 

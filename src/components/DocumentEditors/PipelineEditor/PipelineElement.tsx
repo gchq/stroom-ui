@@ -24,11 +24,11 @@ import {
   DropTargetCollector,
 } from "react-dnd";
 
-import ElementImage from "../ElementImage";
+import ElementImage from "./ElementImage";
 import { canMovePipelineElement, getInitialValues } from "./pipelineUtils";
 import { DragDropTypes, DragCollectedProps, DropCollectedProps } from "./types";
 import { isValidChildType } from "./elementUtils";
-import Button from "../Button";
+import Button from "src/components/Button";
 import {
   ElementDefinition,
   PipelinePropertyType,

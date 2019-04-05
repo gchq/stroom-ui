@@ -16,14 +16,14 @@
 
 import * as React from "react";
 
-import Button from "../Button";
-import { PipelineDisplay } from "../PipelineEditor";
-import Loader from "../Loader";
+import Button from "src/components/Button";
+import PipelineDisplay from "../PipelineDisplay";
+import Loader from "src/components/Loader";
 
 import DebuggerStep from "./DebuggerStep";
 import { getNext, getPrevious } from "./pipelineDebugger.utils";
 import useDocumentApi from "src/api/useDocumentApi";
-import usePipelineState from "../PipelineEditor/usePipelineState";
+import usePipelineState from "../usePipelineState";
 import { PipelineDocumentType } from "src/types";
 
 interface Props {

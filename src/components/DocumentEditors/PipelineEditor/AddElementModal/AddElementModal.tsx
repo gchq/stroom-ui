@@ -1,8 +1,8 @@
 import * as React from "react";
 
-import IconHeader from "../../IconHeader";
-import Button from "../../Button";
-import ThemedModal from "../../ThemedModal";
+import IconHeader from "src/components/IconHeader";
+import Button from "src/components/Button";
+import ThemedModal from "src/components/ThemedModal";
 // import { required, minLength2 } from "src/lib/formUtils";
 import { ElementDefinition } from "src/types";
 import useForm from "src/lib/useForm";

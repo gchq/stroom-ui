@@ -6,7 +6,7 @@ import {
   PipelineDocumentType,
   PipelineAsTreeType,
 } from "src/types";
-import { UseDocRefEditorProps } from "../DocumentEditors/DocRefEditor";
+import { UseDocRefEditorProps } from "../DocRefEditor";
 
 export enum DragDropTypes {
   ELEMENT = "element",
