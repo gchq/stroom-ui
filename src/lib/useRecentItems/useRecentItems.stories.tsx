@@ -21,8 +21,6 @@ const TestHarness: React.FunctionComponent = () => {
     setDocumentIndex((documentIndex + 1) % documents.length);
   }, [documents, documentIndex, addRecentItem, setDocumentIndex]);
 
-  console.log("Rendering useRecentItems test Harness");
-
   return (
     <div>
       <Button onClick={onClickAddNext} text="Add" />

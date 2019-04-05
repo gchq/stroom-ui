@@ -37,11 +37,14 @@ export const storeNumber: StringConversion<number> = {
 /**
  * Pre-made utility string conversion generator for storing objects
  */
-export const storeObjectFactory = <T>(): StringConversion<T> => {
-  return {
-    toString: v => JSON.stringify(v),
-    fromString: v => JSON.parse(v),
-  };
+export const useStoreObjectFactory = <T>(): StringConversion<T> => {
+  return React.useMemo(
+    () => ({
+      toString: (v: T) => JSON.stringify(v),
+      fromString: (v: string) => JSON.parse(v),
+    }),
+    [],
+  );
 };
 
 const useLocalStorage = function<T>(
@@ -57,7 +60,7 @@ const useLocalStorage = function<T>(
       const value = stringConversion.fromString(rawValue);
       setStateValue(value);
     }
-  });
+  }, [stateName, setStateValue]);
 
   const setValue = (valueToSet: T) => {
     const asString = stringConversion.toString(valueToSet);

@@ -1,5 +1,5 @@
 import * as React from "react";
-import useLocalStorage, { storeObjectFactory } from "../useLocalStorage";
+import useLocalStorage, { useStoreObjectFactory } from "../useLocalStorage";
 import { DocRefType, DocRefConsumer } from "src/types";
 
 interface OutProps {
@@ -11,7 +11,7 @@ export const useRecentItems = (): OutProps => {
   const { setValue, value } = useLocalStorage<DocRefType[]>(
     "recent-items",
     [],
-    storeObjectFactory(),
+    useStoreObjectFactory(),
   );
 
   const addRecentItem = React.useCallback(

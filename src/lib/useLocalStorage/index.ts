@@ -2,7 +2,7 @@ import useLocalStorage, {
   storeNumber,
   storeString,
   storeBoolean,
-  storeObjectFactory,
+  useStoreObjectFactory,
 } from "./useLocalStorage";
 
 export {
@@ -10,7 +10,7 @@ export {
   storeNumber,
   storeString,
   storeBoolean,
-  storeObjectFactory,
+  useStoreObjectFactory,
 };
 
 export default useLocalStorage;

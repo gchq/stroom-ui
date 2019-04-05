@@ -1,46 +1,38 @@
 import * as React from "react";
 
 import { storiesOf } from "@storybook/react";
-import useLocalStorage, { storeString } from "./useLocalStorage";
+import useLocalStorage, { useStoreObjectFactory } from "./useLocalStorage";
 import JsonDebug from "src/testing/JsonDebug";
 
+interface TestStore {
+  name: string;
+}
+
 const TestHarness: React.FunctionComponent = () => {
-  const [storageKey, setStorageKey] = React.useState<string>(
-    "testUseLocalStorage",
-  );
+  const storageKey = "testUseLocalStorage";
 
-  const { value, setValue } = useLocalStorage(
+  const { value, setValue } = useLocalStorage<TestStore>(
     storageKey,
-    "defaultValue",
-    storeString,
+    {
+      name: "someName",
+    },
+    useStoreObjectFactory(),
   );
 
-  const onChangeStorageKey: React.ChangeEventHandler<
+  const onNameChange: React.ChangeEventHandler<
     HTMLInputElement
   > = React.useCallback(
     ({ target: { value } }) => {
-      setStorageKey(value);
+      setValue({ name: value });
     },
     [setValue],
   );
-
-  const onChangeValue: React.ChangeEventHandler<
-    HTMLInputElement
-  > = React.useCallback(
-    ({ target: { value } }) => {
-      setValue(value);
-    },
-    [setValue],
-  );
-  console.log("Rendering useLocalStorage test Harness");
 
   return (
     <div>
       <form>
-        <label>Storage Key</label>
-        <input value={storageKey} onChange={onChangeStorageKey} />
         <label>Value in Storage</label>
-        <input value={value} onChange={onChangeValue} />
+        <input value={value.name} onChange={onNameChange} />
       </form>
       <JsonDebug value={{ storageKey, value }} />
     </div>

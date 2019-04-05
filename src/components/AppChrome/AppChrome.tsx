@@ -38,7 +38,7 @@ import {
 } from "src/components/DocumentEditors/FolderExplorer/CopyMoveDocRefDialog";
 import useLocalStorage, {
   storeBoolean,
-  storeObjectFactory,
+  useStoreObjectFactory,
 } from "src/lib/useLocalStorage";
 import useRouter from "src/lib/useRouter";
 import { useDocumentTree } from "src/api/explorer";
@@ -161,7 +161,7 @@ const AppChrome: React.FunctionComponent<Props> = ({ content }) => {
   } = useLocalStorage<MenuItemsOpenState>(
     "app-chrome-menu-items-open",
     {},
-    storeObjectFactory<MenuItemsOpenState>(),
+    useStoreObjectFactory<MenuItemsOpenState>(),
   );
   const menuItemOpened: MenuItemOpened = (name: string, isOpen: boolean) => {
     setOpenMenuItems({
