@@ -98,7 +98,10 @@ const Authorisation: React.FunctionComponent<Props> = ({ isGroup }) => {
 
   return (
     <div className="Authorisation">
-      <IconHeader icon="users" text={`${isGroup} Permissions`} />
+      <IconHeader
+        icon="users"
+        text={`${isGroup ? "Group" : "User"} Permissions`}
+      />
 
       <form>
         <label htmlFor="name">Name</label>

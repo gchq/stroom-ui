@@ -1,10 +1,18 @@
 import * as React from "react";
 
+import { HttpError } from "src/lib/ErrorTypes";
 import { useErrorReporting } from "src/components/ErrorPage";
 
-import handleStatus from "./handleStatus";
 import useAppNavigation from "src/components/AppChrome/useAppNavigation";
 import { useAuthenticationContext } from "src/startup/Authentication";
+
+const useCheckStatus = (status: number) =>
+  React.useCallback((response: Response): Promise<any> => {
+    if (response.status === status) {
+      return Promise.resolve(response);
+    }
+    return Promise.reject(new HttpError(response.status, response.statusText));
+  }, []);
 
 /**
  * A wrapper around HTTP fetch that allows us to plop in idTokens, CORS specifications,
@@ -44,6 +52,9 @@ export const useHttpClient = (): HttpClient => {
   const { idToken } = useAuthenticationContext();
   const { reportError } = useErrorReporting();
   const { goToError } = useAppNavigation();
+
+  const handle200 = useCheckStatus(200);
+  const handle204 = useCheckStatus(204);
 
   const catchImpl = React.useCallback(
     (error: any) => {
@@ -88,7 +99,7 @@ export const useHttpClient = (): HttpClient => {
             ...(options ? options.headers : {}),
           },
         })
-          .then(handleStatus)
+          .then(handle200)
           .then(r => r.json())
           .catch(catchImpl);
       }
@@ -126,7 +137,7 @@ export const useHttpClient = (): HttpClient => {
           method,
           headers,
         })
-          .then(handleStatus)
+          .then(handle200)
           .then(r => r.json())
           .catch(catchImpl);
       },
@@ -159,7 +170,7 @@ export const useHttpClient = (): HttpClient => {
           method,
           headers,
         })
-          .then(handleStatus)
+          .then(handle204)
           .then(r => r.text())
           .catch(catchImpl);
       },

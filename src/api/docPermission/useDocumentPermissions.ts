@@ -1,11 +1,8 @@
 import * as React from "react";
 
 import useApi from "./useApi";
-import { DocumentPermissions } from "src/types";
+import { PermissionsByUser, DocumentPermissions } from "./types";
 
-interface PermissionsByUser {
-  [userUuid: string]: string[];
-}
 const DEFAULT_PERMISSIONS_BY_USER: PermissionsByUser = {};
 
 /**
@@ -43,7 +40,7 @@ const reducer = (
 ): PermissionsByUser => {
   switch (action.type) {
     case "received":
-      return action.documentPermissions.byUser;
+      return action.documentPermissions.userPermissions;
     case "cleared":
       return DEFAULT_PERMISSIONS_BY_USER;
     case "prepareForUser":

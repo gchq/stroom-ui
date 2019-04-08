@@ -3,7 +3,7 @@ import { HttpRequest, HttpResponse } from "@pollyjs/adapter-fetch";
 import { TestCache } from "../PollyDecorator";
 import { Config } from "src/startup/config";
 import { ResourceBuilder } from "./types";
-import { DocumentPermissions } from "src/types";
+import { DocumentPermissions } from "src/api/docPermission";
 
 const resourceBuilder: ResourceBuilder = (
   server: any,
@@ -79,11 +79,8 @@ const resourceBuilder: ResourceBuilder = (
     .intercept((req: HttpRequest, res: HttpResponse) => {
       const { docRefUuid } = req.params;
       let documentPermissions: DocumentPermissions = {
-        document: {
-          uuid: docRefUuid,
-          type: "TEST",
-        },
-        byUser: testCache
+        docRefUuid,
+        userPermissions: testCache
           .data!.userDocPermission.filter(d => d.docRefUuid === docRefUuid)
           .reduce(
             (acc, { userUuid, permissionName }) => ({

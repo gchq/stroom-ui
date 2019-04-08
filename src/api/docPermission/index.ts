@@ -7,3 +7,5 @@ export {
   useDocumentPermissions,
   useDocumentPermissionsForUser,
 };
+
+export * from "./types";
