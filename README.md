@@ -22,9 +22,15 @@ To run Storybook
 npm run storybook
 ```
 
-Once the app is running, it should be possible to visit it at
+Once storybook is running, it should be possible to visit it at
 
 [http://localhost:9001/](http://localhost:9001/)
+
+To run the app for real
+
+```bash
+npm start
+```
 
 ## New Developers
 
