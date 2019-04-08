@@ -24,10 +24,8 @@ import AuthorisationManager from ".";
 import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
 
 import UserAuthorisationEditor from "./UserAuthorisationEditor";
-import { IsGroup } from "src/api/userGroups";
-
 interface Props {
-  isGroup: IsGroup;
+  isGroup: boolean;
 }
 
 const TestHarness: React.FunctionComponent<Props> = ({ isGroup }) => (
@@ -43,9 +41,9 @@ const TestHarness: React.FunctionComponent<Props> = ({ isGroup }) => (
   </Switch>
 );
 
-(["User", "Group"] as IsGroup[]).forEach(isGroup => {
+[true, false].forEach(isGroup => {
   const stories = storiesOf(
-    `Sections/Authorisation Manager/${isGroup}`,
+    `Sections/Authorisation Manager/${isGroup ? "Group" : "User"}`,
     module,
   );
 

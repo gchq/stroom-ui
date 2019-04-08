@@ -42,7 +42,6 @@ import { useConfig } from "src/startup/config";
 import DocumentPermissionEditor from "../AuthorisationManager/DocumentPermissionEditor";
 import DocumentPermissionForUserEditor from "../AuthorisationManager/DocumentPermissionForUserEditor";
 import IndexVolumeEditor from "../IndexVolumes/IndexVolumeEditor";
-import { IsGroup } from "src/api/userGroups";
 import { urlGenerator } from "./useAppNavigation";
 
 const renderWelcome = () => (
@@ -112,16 +111,14 @@ const Routes: React.FunctionComponent = () => {
           <AppChrome activeMenuItem="userSettings" content={<UserSettings />} />
         )}
       />
-      {(["Group", "User"] as IsGroup[]).map(isGroup => (
+      {[false, true].map(isGroup => (
         <PrivateRoute
-          key={isGroup}
+          key={isGroup ? "Group" : "User"}
           exact
           path={urlGenerator.goToAuthorisationManager(isGroup)}
           render={() => (
             <AppChrome
-              activeMenuItem={
-                isGroup === "Group" ? "groupPermissions" : "userPermissions"
-              }
+              activeMenuItem={isGroup ? "groupPermissions" : "userPermissions"}
               content={<AuthorisationManager isGroup={isGroup} />}
             />
           )}

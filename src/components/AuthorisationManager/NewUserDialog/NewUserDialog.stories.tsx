@@ -28,11 +28,16 @@ const stories = storiesOf(
   module,
 );
 
-const B: React.FunctionComponent = () => {
+interface Props {
+  isGroup: boolean;
+}
+
+const TestHarness: React.FunctionComponent<Props> = ({ isGroup }) => {
   const [newUser, setNewUser] = React.useState<object>({});
-  const { componentProps, showDialog } = useDialog((name, isGroup) =>
-    setNewUser({ name, isGroup }),
-  );
+  const { componentProps, showDialog } = useDialog({
+    isGroup,
+    onCreateUser: (name, isGroup) => setNewUser({ name, isGroup }),
+  });
 
   return (
     <div>
@@ -47,4 +52,4 @@ const B: React.FunctionComponent = () => {
   );
 };
 
-addThemedStories(stories, () => <B />);
+addThemedStories(stories, () => <TestHarness isGroup={false} />);

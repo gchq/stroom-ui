@@ -2,12 +2,11 @@ import * as React from "react";
 
 import useApi from "./useApi";
 import { User } from "src/types";
-import { IsGroup } from "./types";
 import useListReducer from "src/lib/useListReducer";
 
 interface ManageUsers {
   users: User[];
-  findUsers: (name?: string, isGroup?: IsGroup, uuid?: string) => void;
+  findUsers: (name?: string, isGroup?: boolean, uuid?: string) => void;
   addUserToGroup: (userUuid: string, groupUuid: string) => void;
   createUser: (name: string, isGroup: boolean) => Promise<User>;
   deleteUser: (userUuid: string) => void;

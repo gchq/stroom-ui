@@ -24,7 +24,7 @@ export const UserGroupPickOrCreateDialog: React.FunctionComponent<Props> = ({
   valuesToFilterOut,
 }) => {
   const { reset: resetUserGroup, pickerProps: useGroupPickerProps } = usePicker(
-    { isGroup: "Group", valuesToFilterOut },
+    { isGroup: true, valuesToFilterOut },
   );
   const { value: userGroupUuid } = useGroupPickerProps;
 

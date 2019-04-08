@@ -1,10 +1,8 @@
-import { IsGroup } from "src/api/userGroups";
-
 export interface BaseProps {
-  isGroup: IsGroup;
+  isGroup?: boolean;
   // If we are picking a group to add to an existing list...we should
   // not present those existing items as options
-  valuesToFilterOut?: Array<string>;
+  valuesToFilterOut?: string[];
 }
 
 export interface Props extends BaseProps {

@@ -3,14 +3,13 @@ import * as React from "react";
 import { NavigateApp } from "./types";
 import useRouter from "src/lib/useRouter";
 import { DocRefType } from "src/types";
-import { IsGroup } from "src/api/userGroups";
 
 export const urlGenerator: NavigateApp<string> = {
   goToWelcome: () => `/s/welcome`,
   goToDataViewer: () => `/s/data`,
   goToProcessing: () => `/s/processing`,
   goToUserSettings: () => `/s/me`,
-  goToAuthorisationManager: (isGroup: IsGroup) =>
+  goToAuthorisationManager: (isGroup: boolean) =>
     `/s/authorisationManager/${isGroup}`,
   goToAuthorisationsForUser: (userUuid: string) =>
     `/s/authorisationManager/${userUuid}`,
@@ -41,7 +40,7 @@ const useAppNavigation = (): NavigateApp<any> => {
       goToDataViewer: () => h.push(u.goToDataViewer()),
       goToProcessing: () => h.push(u.goToProcessing()),
       goToUserSettings: () => h.push(u.goToUserSettings()),
-      goToAuthorisationManager: (isGroup: IsGroup) =>
+      goToAuthorisationManager: (isGroup: boolean) =>
         h.push(u.goToAuthorisationManager(isGroup)),
       goToAuthorisationsForUser: (userUuid: string) =>
         h.push(u.goToAuthorisationsForUser(userUuid)),

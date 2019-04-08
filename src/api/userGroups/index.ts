@@ -1,4 +1,4 @@
-import { StoreState, IsGroup } from "./types";
+import { StoreState } from "./types";
 import useUser from "./useUser";
 import useUsers from "./useUsers";
 import useGroupsForUser from "./useGroupsForUser";
@@ -7,7 +7,6 @@ import useManageUsers from "./useManageUsers";
 
 export {
   StoreState,
-  IsGroup,
   useUser,
   useUsers,
   useGroupsForUser,

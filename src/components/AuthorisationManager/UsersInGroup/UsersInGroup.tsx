@@ -47,7 +47,7 @@ const UsersInGroup = ({ group }: Props) => {
     componentProps: userPickerProps,
     showDialog: showUserPicker,
   } = useUserModalPicker({
-    isGroup: "User",
+    isGroup: false,
     onConfirm: addToGroup,
   });
 

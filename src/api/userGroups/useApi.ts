@@ -2,14 +2,13 @@ import * as React from "react";
 
 import useHttpClient from "src/lib/useHttpClient";
 import { User } from "src/types";
-import { IsGroup } from "./types";
 import { useConfig } from "src/startup/config";
 
 interface Api {
   fetchUser: (uuid: string) => Promise<User>;
   findUsers: (
     name?: string,
-    isGroup?: IsGroup,
+    isGroup?: boolean,
     uuid?: string,
   ) => Promise<User[]>;
   findUsersInGroup: (groupUuid: string) => Promise<User[]>;
@@ -44,12 +43,9 @@ export const useApi = (): Api => {
     ),
     createUser: React.useCallback(
       (name: string, isGroup: boolean) =>
-        httpPostJsonResponse(`${stroomBaseServiceUrl}/users/v1`, {
-          body: JSON.stringify({
-            name,
-            isGroup,
-          }),
-        }),
+        httpPostJsonResponse(
+          `${stroomBaseServiceUrl}/users/v1/create/${name}/${isGroup}`,
+        ),
       [stroomBaseServiceUrl, httpPostJsonResponse],
     ),
     deleteUser: React.useCallback(
@@ -67,20 +63,11 @@ export const useApi = (): Api => {
       [stroomBaseServiceUrl, httpGetJson],
     ),
     findUsers: React.useCallback(
-      (name?: string, isGroup?: "Group" | "User", uuid?: string) => {
+      (name?: string, isGroup?: boolean, uuid?: string) => {
         var url = new URL(`${stroomBaseServiceUrl}/users/v1`);
         if (name !== undefined && name.length > 0)
           url.searchParams.append("name", name);
-        if (isGroup !== undefined) {
-          switch (isGroup) {
-            case "Group":
-              url.searchParams.append("isGroup", "true");
-              break;
-            case "User":
-              url.searchParams.append("isGroup", "false");
-              break;
-          }
-        }
+        url.searchParams.append("isGroup", (isGroup || false).toString());
 
         if (uuid !== undefined && uuid.length > 0)
           url.searchParams.append("uuid", uuid);

@@ -6,11 +6,11 @@ import useForm from "src/lib/useForm";
 
 interface FormValues {
   name: string;
-  isGroup: boolean;
 }
 
 interface Props {
   isOpen: boolean;
+  isGroup: boolean;
   onCreateUser: (name: string, isGroup: boolean) => void;
   onCloseDialog: () => void;
 }
@@ -18,27 +18,25 @@ interface Props {
 // You MUST use a memo-ized/global constant here or you end up with render recursion
 const defaultValues: FormValues = {
   name: "",
-  isGroup: false,
 };
 
 const NewUserDialog: React.FunctionComponent<Props> = ({
   isOpen,
+  isGroup,
   onCreateUser,
   onCloseDialog,
 }) => {
   const {
-    value: { name, isGroup },
+    value: { name },
     useTextInput,
-    useCheckboxInput,
   } = useForm<FormValues>({
     initialValues: defaultValues,
   });
   const nameProps = useTextInput("name");
-  const isGroupProps = useCheckboxInput("isGroup");
 
   const onConfirm = React.useCallback(() => {
     if (name) {
-      onCreateUser(name, isGroup || false);
+      onCreateUser(name, isGroup);
       onCloseDialog();
     }
   }, [onCreateUser, onCloseDialog, name, isGroup]);
@@ -46,14 +44,12 @@ const NewUserDialog: React.FunctionComponent<Props> = ({
   return (
     <ThemedModal
       isOpen={isOpen}
-      header={<h2>Create User/Group</h2>}
+      header={<h2>Create {isGroup ? "User" : "Group"}</h2>}
       content={
         <form>
           <div>
             <label>Name</label>
             <input {...nameProps} />
-            <label>Is Group</label>
-            <input {...isGroupProps} />
           </div>
         </form>
       }
@@ -69,14 +65,21 @@ interface UseDialog {
   showDialog: () => void;
 }
 
-export const useDialog = (
-  onCreateUser: (name: string, isGroup: boolean) => void,
-): UseDialog => {
+interface UseDialogProps {
+  isGroup: boolean;
+  onCreateUser: (name: string, isGroup: boolean) => void;
+}
+
+export const useDialog = ({
+  onCreateUser,
+  isGroup,
+}: UseDialogProps): UseDialog => {
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
 
   return {
     componentProps: {
       isOpen,
+      isGroup,
       onCreateUser,
       onCloseDialog: React.useCallback(() => {
         setIsOpen(false);

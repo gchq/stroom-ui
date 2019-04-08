@@ -1,7 +1,5 @@
 import { User } from "src/types";
 
-export type IsGroup = "User" | "Group" | "" | undefined;
-
 export interface StoreState {
   allUsers: User[];
   usersInGroup: {

@@ -1,7 +1,6 @@
 import * as React from "react";
 
 import { useManageUsers } from "src/api/userGroups";
-import { IsGroup } from "src/api/userGroups";
 import IconHeader from "src/components/IconHeader";
 import UsersTable, { useTable } from "./UsersTable";
 import Button from "src/components/Button";
@@ -19,7 +18,7 @@ import {
 import useAppNavigation from "../AppChrome/useAppNavigation";
 
 interface Props {
-  isGroup: IsGroup;
+  isGroup: boolean;
 }
 
 interface Values {
@@ -50,7 +49,7 @@ const Authorisation: React.FunctionComponent<Props> = ({ isGroup }) => {
   const {
     componentProps: newDialogComponentProps,
     showDialog: showNewDialog,
-  } = useNewUserDialog(createUser);
+  } = useNewUserDialog({ isGroup, onCreateUser: createUser });
   const {
     componentProps: deleteDialogProps,
     showDialog: showDeleteDialog,

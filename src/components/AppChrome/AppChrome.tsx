@@ -44,7 +44,6 @@ import useRouter from "src/lib/useRouter";
 import { useDocumentTree } from "src/api/explorer";
 import useAppNavigation from "./useAppNavigation";
 import { useTheme } from "src/lib/theme";
-import { IsGroup } from "src/api/userGroups";
 
 const PATH_PREFIX = "/s";
 
@@ -291,9 +290,9 @@ const AppChrome: React.FunctionComponent<Props> = ({ content }) => {
               ),
             [menuItemOpened, areMenuItemsOpen],
           ),
-          children: (["User", "Group"] as IsGroup[]).map(isGroup => ({
+          children: [true, false].map((isGroup: boolean) => ({
             key: `admin-permissions-${isGroup}`,
-            title: isGroup,
+            title: isGroup ? "Group" : "User",
             onClick: () => goToAuthorisationManager(isGroup),
             icon: "user" as IconProp,
             style: "nav",
