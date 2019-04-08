@@ -13,7 +13,7 @@ import {
   revertPropertyToDefault,
 } from "./pipelineUtils";
 import { PipelineEditApi, PipelineProps } from "./types";
-import { PipelineDocumentType } from "src/types";
+import { PipelineDocumentType } from "src/api/useDocumentApi/types/pipelineDoc";
 
 export const usePipelineState = (pipelineId: string): PipelineProps => {
   const documentApi = useDocumentApi<"Pipeline", PipelineDocumentType>(

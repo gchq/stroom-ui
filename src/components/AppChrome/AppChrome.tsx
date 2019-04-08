@@ -29,7 +29,6 @@ import {
 } from "./types";
 
 import useSelectableItemListing from "src/lib/useSelectableItemListing";
-import { DocRefType, DocRefConsumer, DocRefTree } from "src/types";
 import { KeyDownState } from "src/lib/useKeyIsDown";
 import {
   CopyMoveDocRefDialog,
@@ -44,6 +43,11 @@ import useRouter from "src/lib/useRouter";
 import { useDocumentTree } from "src/api/explorer";
 import useAppNavigation from "./useAppNavigation";
 import { useTheme } from "src/lib/theme";
+import {
+  DocRefConsumer,
+  DocRefType,
+  DocRefTree,
+} from "src/api/useDocumentApi/types/base";
 
 const PATH_PREFIX = "/s";
 

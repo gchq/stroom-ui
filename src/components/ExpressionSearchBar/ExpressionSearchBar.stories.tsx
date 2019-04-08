@@ -23,7 +23,7 @@ import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
 
 import JsonDebug from "src/testing/JsonDebug";
 import Button from "../Button";
-import { ExpressionOperatorWithUuid } from "src/types";
+import { ExpressionOperatorWithUuid } from "../ExpressionBuilder/types";
 
 const stories = storiesOf("Expression/Search Bar", module);
 

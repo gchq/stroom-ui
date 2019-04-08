@@ -1,8 +1,8 @@
 import {
-  DataSourceFieldType,
   ExpressionTermWithUuid,
   DataSourceType,
-} from "src/types";
+  DataSourceFieldType,
+} from "./types";
 
 const withValueType = (
   term: ExpressionTermWithUuid,

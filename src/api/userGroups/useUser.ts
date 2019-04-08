@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import useApi from "./useApi";
-import { User } from "src/types";
+import { User } from "./types";
 
 const useUser = (userUuid: string): User | undefined => {
   const { fetchUser } = useApi();

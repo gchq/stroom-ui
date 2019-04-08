@@ -1,8 +1,8 @@
 import * as React from "react";
 
 import useApi from "./useApi";
-import { User } from "src/types";
 import useListReducer from "src/lib/useListReducer";
+import { User } from "./types";
 
 interface ManageUsers {
   users: User[];

@@ -1,5 +1,5 @@
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
-import { DocRefType } from "src/types";
+import { DocRefType } from "src/api/useDocumentApi/types/base";
 
 export type ActiveMenuItem =
   | "welcome"

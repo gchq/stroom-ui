@@ -1,8 +1,8 @@
 import * as React from "react";
 
 import useHttpClient from "src/lib/useHttpClient";
-import { User } from "src/types";
 import { useConfig } from "src/startup/config";
+import { User } from "./types";
 
 interface Api {
   fetchUser: (uuid: string) => Promise<User>;

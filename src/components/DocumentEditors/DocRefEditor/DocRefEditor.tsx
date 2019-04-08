@@ -10,9 +10,9 @@ import AppSearchBar from "../../AppSearchBar";
 import DocRefIconHeader from "../../DocRefIconHeader";
 import DocRefBreadcrumb from "../../DocRefBreadcrumb";
 import Button, { ButtonProps } from "../../Button";
-import { DocumentApi } from "src/api/useDocumentApi";
 import { useDocumentTree } from "src/api/explorer";
 import useAppNavigation from "../../AppChrome/useAppNavigation";
+import { DocumentApi } from "src/api/useDocumentApi/types/documentApi";
 
 const DocRefEditor = <T extends {}>({
   onClickSave,

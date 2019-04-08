@@ -6,15 +6,17 @@ import DocRefEditor, {
   SwitchedDocRefEditorProps,
 } from "../DocRefEditor";
 import useDocumentApi from "src/api/useDocumentApi";
-import { Dictionary } from "src/types";
+import { DictionaryDoc } from "src/api/useDocumentApi/types/dictionary";
 
 const DictionaryEditor: React.FunctionComponent<SwitchedDocRefEditorProps> = ({
   docRefUuid,
 }) => {
   // Get data from and subscribe to the store
-  const documentApi = useDocumentApi<"Dictionary", Dictionary>("Dictionary");
+  const documentApi = useDocumentApi<"DictionaryDoc", DictionaryDoc>(
+    "DictionaryDoc",
+  );
 
-  const { onDocumentChange, editorProps } = useDocRefEditor<Dictionary>({
+  const { onDocumentChange, editorProps } = useDocRefEditor<DictionaryDoc>({
     docRefUuid,
     documentApi,
   });
@@ -30,7 +32,7 @@ const DictionaryEditor: React.FunctionComponent<SwitchedDocRefEditorProps> = ({
       <textarea value={docRefContents.data} onChange={onTextAreaChange} />
     </DocRefEditor>
   ) : (
-    <Loader message={`Loading Dictionary ${docRefUuid}`} />
+    <Loader message={`Loading DictionaryDoc ${docRefUuid}`} />
   );
 };
 

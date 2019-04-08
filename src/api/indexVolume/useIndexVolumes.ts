@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import useApi from "./useApi";
-import { IndexVolume } from "src/types";
+import { IndexVolume } from "./types";
 
 /**
  * Convenience function for using Index Volume.

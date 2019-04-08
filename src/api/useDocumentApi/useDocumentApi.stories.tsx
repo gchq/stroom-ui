@@ -3,7 +3,7 @@ import * as React from "react";
 import { storiesOf } from "@storybook/react";
 import DocRefTypePicker from "src/components/DocRefTypePicker";
 import useDocumentApi from "./useDocumentApi";
-import { ResourcesByDocType } from "./types";
+import { ResourcesByDocType } from "./types/resourceUrls";
 import { useDocumentTree } from "src/api/explorer";
 import { iterateNodes } from "src/lib/treeUtils";
 import JsonDebug from "src/testing/JsonDebug";
@@ -11,7 +11,7 @@ import JsonDebug from "src/testing/JsonDebug";
 const TestHarness: React.FunctionComponent = () => {
   const { documentTree } = useDocumentTree();
   const [docRefContents, setDocRefContents] = React.useState<object>({});
-  const [docRefType, setDocRefType] = React.useState<string>("Dictionary");
+  const [docRefType, setDocRefType] = React.useState<string>("DictionaryDoc");
 
   const docRefUuid = React.useMemo(() => {
     let d;

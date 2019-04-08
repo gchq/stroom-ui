@@ -32,11 +32,10 @@ import {
   DataSourceType,
   ConditionType,
   DataSourceFieldType,
-  SelectOptionType,
   ConditionDisplayValues,
   ExpressionTermWithUuid,
-  SelectOptionsType,
-} from "src/types";
+} from "./types";
+import { SelectOptionType, SelectOptionsType } from "src/types";
 import withValueType from "./withValueType";
 
 interface Props {

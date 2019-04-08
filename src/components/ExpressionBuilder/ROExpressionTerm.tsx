@@ -1,5 +1,5 @@
 import * as React from "react";
-import { ExpressionTermType } from "src/types";
+import { ExpressionTermType } from "./types";
 
 interface Props {
   term: ExpressionTermType;

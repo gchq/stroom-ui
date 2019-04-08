@@ -22,3 +22,9 @@ export interface UseDialog {
   componentProps: Props;
   showDialog: ShowDialog;
 }
+
+export interface PipelineAsTreeType {
+  uuid: string;
+  type: string;
+  children: PipelineAsTreeType[];
+}

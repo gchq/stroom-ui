@@ -3,9 +3,9 @@ import { storiesOf } from "@storybook/react";
 
 import CreateDocRefDialog, { useDialog } from "./CreateDocRefDialog";
 import { fromSetupSampleData } from "../test";
-import { DocRefType } from "src/types";
 
 import JsonDebug from "src/testing/JsonDebug";
+import { DocRefType } from "src/api/useDocumentApi/types/base";
 
 const testFolder2 = fromSetupSampleData.children![1];
 

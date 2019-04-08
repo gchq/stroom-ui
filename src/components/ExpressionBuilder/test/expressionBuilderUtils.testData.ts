@@ -1,3 +1,5 @@
+import { ExpressionOperatorType } from "../types";
+
 /*
  * Copyright 2018 Crown Copyright
  *
@@ -13,8 +15,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-import { ExpressionOperatorType } from "src/types";
 
 const emptyExpression: ExpressionOperatorType = {
   type: "operator",

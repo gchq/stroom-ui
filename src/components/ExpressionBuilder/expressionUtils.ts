@@ -7,7 +7,7 @@ import {
   ConditionDisplayValues,
   ExpressionTermWithUuid,
   ExpressionOperatorWithUuid,
-} from "src/types";
+} from "./types";
 
 export const getNewTerm = (): ExpressionTermWithUuid => ({
   uuid: uuidv4(),

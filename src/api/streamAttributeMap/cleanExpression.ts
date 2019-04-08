@@ -1,8 +1,8 @@
 import {
-  ExpressionHasUuid,
   ExpressionOperatorWithUuid,
   ExpressionOperatorType,
-} from "src/types";
+  ExpressionHasUuid,
+} from "src/components/ExpressionBuilder/types";
 
 /**
  * TODO: shouldn't actually have to use this -- ideally the ExpressionBuilder would

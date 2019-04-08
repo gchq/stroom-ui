@@ -14,7 +14,7 @@ const stories = storiesOf("Document Editors", module);
 
 const TestHarness: React.FunctionComponent = () => {
   const { documentTree } = useDocumentTree();
-  const [docRefType, setDocRefType] = React.useState<string>("Dictionary");
+  const [docRefType, setDocRefType] = React.useState<string>("DictionaryDoc");
   const documentApi = useDocumentApi(docRefType as keyof ResourcesByDocType);
 
   const docRefUuid = React.useMemo(() => {

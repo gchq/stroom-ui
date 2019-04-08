@@ -1,11 +1,15 @@
 import * as React from "react";
 
-import { IndexField, IndexFieldType, AnalyzerType } from "src/types";
 import ThemedModal from "../../../ThemedModal";
 import { DialogActionButtons } from "../../../DialogActionButtons";
 import IndexFieldTypePicker from "../IndexFieldTypePicker/IndexFieldTypePicker";
 import AnalyzerPicker from "../AnalyzerPicker";
 import useForm from "src/lib/useForm";
+import {
+  IndexField,
+  IndexFieldType,
+  AnalyzerType,
+} from "src/api/useDocumentApi/types/indexDoc";
 
 interface Props {
   id: number;

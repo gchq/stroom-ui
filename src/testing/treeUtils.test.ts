@@ -19,11 +19,11 @@ import {
   findItem,
   assignRandomUuids,
 } from "src/lib/treeUtils";
+import { Tree } from "../types";
 import {
-  Tree,
-  ExpressionOperatorType,
   ExpressionOperatorWithUuid,
-} from "../types";
+  ExpressionOperatorType,
+} from "src/components/ExpressionBuilder/types";
 
 interface DocRef {
   uuid: string;

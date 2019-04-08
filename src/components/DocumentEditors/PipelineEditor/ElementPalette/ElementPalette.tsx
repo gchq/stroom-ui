@@ -10,10 +10,10 @@ import {
   ElementDefinition,
   ElementDefinitionsByCategory,
   ElementDefinitionsByType,
-  PipelineDocumentType,
 } from "src/types";
 import useElements from "src/api/useElements";
 import { groupByCategory, keyByType } from "../elementUtils";
+import { PipelineDocumentType } from "src/api/useDocumentApi/types/pipelineDoc";
 
 interface Props {
   pipeline: PipelineDocumentType;

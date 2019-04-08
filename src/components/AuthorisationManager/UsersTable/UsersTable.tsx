@@ -2,12 +2,12 @@ import * as React from "react";
 
 import ReactTable from "react-table";
 
-import { User } from "src/types";
 import {
   useSelectableReactTable,
   SelectionBehaviour,
   TableOutProps,
 } from "src/lib/useSelectableItemListing";
+import { User } from "src/api/userGroups";
 
 interface Props {
   users: User[];

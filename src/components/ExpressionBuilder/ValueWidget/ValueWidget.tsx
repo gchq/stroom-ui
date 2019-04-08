@@ -4,7 +4,7 @@ import SingleValueWidget from "./SingleValueWidget";
 import BetweenValueWidget from "./BetweenValueWidget";
 import InValueWidget from "./InValueWidget";
 import AppSearchBar from "../../AppSearchBar";
-import { ExpressionTermWithUuid } from "src/types";
+import { ExpressionTermWithUuid } from "../types";
 
 interface Props {
   onChange: (value: any) => any;
@@ -47,7 +47,7 @@ const ValueWidget: React.FunctionComponent<Props> = ({
     case "IN_DICTIONARY": {
       return (
         <AppSearchBar
-          typeFilters={["Dictionary"]}
+          typeFilters={["DictionaryDoc"]}
           onChange={onChange}
           value={value}
         />

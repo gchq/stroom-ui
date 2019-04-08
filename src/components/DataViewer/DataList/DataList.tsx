@@ -15,6 +15,7 @@
  */
 
 import * as React from "react";
+import { ExpressionOperatorWithUuid } from "src/components/ExpressionBuilder/types";
 
 // import * as moment from "moment";
 // import { path } from "ramda";
@@ -29,7 +30,6 @@ import * as React from "react";
 // import Loader from "src/components/Loader";
 // import Button from "src/components/Button";
 // import { Direction, ExpressionOperatorWithUuid, DataRow } from "src/types";
-import { ExpressionOperatorWithUuid } from "src/types";
 
 // import useReduxState from "src/lib/useReduxState";
 

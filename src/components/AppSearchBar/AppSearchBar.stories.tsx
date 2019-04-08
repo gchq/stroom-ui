@@ -20,9 +20,9 @@ import { storiesOf } from "@storybook/react";
 import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
 import AppSearchBar from "./AppSearchBar";
 
-import { DocRefType } from "src/types";
 import useForm from "src/lib/useForm";
 import JsonDebug from "src/testing/JsonDebug";
+import { DocRefType } from "src/api/useDocumentApi/types/base";
 
 interface Props {
   typeFilters?: string[];
@@ -121,8 +121,8 @@ stories
   .add("Doc Ref Form (Pipeline)", () => (
     <AppSearchAsForm typeFilters={["Pipeline"]} />
   ))
-  .add("Doc Ref Picker (Feed AND Dictionary)", () => (
-    <AppSearchAsPicker typeFilters={["Feed", "Dictionary"]} />
+  .add("Doc Ref Picker (Feed AND DictionaryDoc)", () => (
+    <AppSearchAsPicker typeFilters={["Feed", "DictionaryDoc"]} />
   ))
   .add("Doc Ref Form (Folders)", () => (
     <AppSearchAsForm typeFilters={["Folder"]} />

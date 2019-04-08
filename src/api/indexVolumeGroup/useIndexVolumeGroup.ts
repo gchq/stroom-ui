@@ -2,8 +2,8 @@ import * as React from "react";
 
 import useApi from "./useApi";
 import { useApi as useIndexVolumeApi } from "../indexVolume/useApi";
-
-import { IndexVolume, IndexVolumeGroup } from "src/types";
+import { IndexVolumeGroup } from "./types";
+import { IndexVolume } from "../indexVolume/types";
 
 interface UseIndexVolumeGroup {
   indexVolumes: IndexVolume[];

@@ -1,13 +1,11 @@
 import * as React from "react";
 
-import { User } from "src/types";
-
 import UsersTable, { useTable as useUsersTable } from "../UsersTable";
 import Button from "src/components/Button";
 import ThemedConfirm, {
   useDialog as useThemedConfirm,
 } from "src/components/ThemedConfirm";
-import { useUsersInGroup } from "src/api/userGroups";
+import { useUsersInGroup, User } from "src/api/userGroups";
 import UserModalPicker, {
   useDialog as useUserModalPicker,
 } from "../UserModalPicker";

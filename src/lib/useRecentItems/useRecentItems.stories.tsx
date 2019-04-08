@@ -3,9 +3,9 @@ import * as React from "react";
 import { storiesOf } from "@storybook/react";
 import useRecentItems from ".";
 import { useDocumentTree } from "src/api/explorer";
-import { DocRefType, copyDocRef } from "src/types";
 import { iterateNodes } from "../treeUtils";
 import Button from "src/components/Button";
+import { DocRefType, copyDocRef } from "src/api/useDocumentApi/types/base";
 
 const TestHarness: React.FunctionComponent = () => {
   const { recentItems, addRecentItem } = useRecentItems();

@@ -2,7 +2,7 @@ import * as React from "react";
 
 import { NavigateApp } from "./types";
 import useRouter from "src/lib/useRouter";
-import { DocRefType } from "src/types";
+import { DocRefType } from "src/api/useDocumentApi/types/base";
 
 export const urlGenerator: NavigateApp<string> = {
   goToWelcome: () => `/s/welcome`,

@@ -1,6 +1,6 @@
-import { IndexDoc, IndexField } from "src/types";
 import * as uuidv4 from "uuid/v4";
 import * as loremIpsum from "lorem-ipsum";
+import { IndexField, IndexDoc } from "src/api/useDocumentApi/types/indexDoc";
 
 export const generateTestField = (): IndexField => ({
   fieldName: loremIpsum({ count: 2, units: "words" }),

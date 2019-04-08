@@ -21,11 +21,11 @@ import useSelectableItemListing, {
   SelectionBehaviour,
 } from "src/lib/useSelectableItemListing";
 import DocRefListingEntry from "./DocRefListingEntry";
-import { DocRefType } from "src/types";
 
 import { DocRefBreadcrumb } from "../DocRefBreadcrumb";
 import JsonDebug from "src/testing/JsonDebug";
 import Button from "../Button";
+import { DocRefType } from "src/api/useDocumentApi/types/base";
 
 const testFolder = fullTestData.documentTree;
 const testDocRef = fullTestData.documentTree.children![0].children![0];

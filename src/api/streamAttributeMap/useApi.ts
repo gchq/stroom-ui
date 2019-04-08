@@ -1,9 +1,10 @@
 import * as React from "react";
-import { DataSourceType, DataRow, StreamAttributeMapResult } from "src/types";
+import { DataRow, StreamAttributeMapResult } from "src/types";
 import useHttpClient from "src/lib/useHttpClient";
 import { useConfig } from "src/startup/config";
 import { SearchWithExpressionProps, PageProps } from "./types";
 import cleanExpression from "./cleanExpression";
+import { DataSourceType } from "src/components/ExpressionBuilder/types";
 
 interface Api {
   page: (props: PageProps) => Promise<StreamAttributeMapResult>;

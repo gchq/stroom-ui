@@ -1,8 +1,6 @@
 import * as React from "react";
 
-import { User } from "src/types";
-
-import { useGroupsForUser } from "src/api/userGroups";
+import { useGroupsForUser, User } from "src/api/userGroups";
 import UsersTable, { useTable as useUsersTable } from "../UsersTable";
 import Button from "src/components/Button";
 import {

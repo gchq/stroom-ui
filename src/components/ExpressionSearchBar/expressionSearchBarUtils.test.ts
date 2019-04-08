@@ -21,7 +21,7 @@ import {
   ConditionType,
   ExpressionTermType,
   ExpressionOperatorType,
-} from "src/types";
+} from "../ExpressionBuilder/types";
 
 const expectForTerm = (
   child: ExpressionTermType,

@@ -15,14 +15,13 @@
  */
 import * as loremIpsum from "lorem-ipsum";
 import * as uuidv4 from "uuid/v4";
-
-import { DocRefTree, DocRefType } from "src/types";
+import { DocRefType, DocRefTree } from "src/api/useDocumentApi/types/base";
 
 function createRandomItem(docRefType: string): DocRefType {
   return {
     uuid: uuidv4(),
     type: docRefType,
-    name: loremIpsum({ count: 3, units: "words" })
+    name: loremIpsum({ count: 3, units: "words" }),
   };
 }
 
@@ -41,26 +40,26 @@ const testTree: DocRefTree = {
           type: "Folder",
           name: "Stroom 101",
           children: [
-            createRandomItem("Dictionary"),
+            createRandomItem("DictionaryDoc"),
             createRandomItem("Pipeline"),
             createRandomItem("XSLT"),
             createRandomItem("Index"),
-            createRandomItem("Dashboard")
-          ]
+            createRandomItem("Dashboard"),
+          ],
         },
         {
           uuid: uuidv4(),
           type: "Folder",
           name: "Stroom Elastic Example",
           children: [
-            createRandomItem("Dictionary"),
+            createRandomItem("DictionaryDoc"),
             createRandomItem("Pipeline"),
             createRandomItem("TextConverter"),
             createRandomItem("ElasticIndex"),
-            createRandomItem("Dashboard")
-          ]
-        }
-      ]
+            createRandomItem("Dashboard"),
+          ],
+        },
+      ],
     },
     {
       uuid: uuidv4(),
@@ -72,7 +71,7 @@ const testTree: DocRefTree = {
           type: "Folder",
           name: "Stroom 102",
           children: [
-            createRandomItem("Dictionary"),
+            createRandomItem("DictionaryDoc"),
             createRandomItem("Pipeline"),
             createRandomItem("XSLT"),
             createRandomItem("Index"),
@@ -80,23 +79,23 @@ const testTree: DocRefTree = {
             {
               uuid: uuidv4(),
               type: "Visualisation",
-              name: "abababababababa"
-            }
-          ]
+              name: "abababababababa",
+            },
+          ],
         },
         {
           uuid: uuidv4(),
           type: "Folder",
           name: "Stroom Annotations Example",
           children: [
-            createRandomItem("Dictionary"),
+            createRandomItem("DictionaryDoc"),
             createRandomItem("Pipeline"),
             createRandomItem("TextConverter"),
             createRandomItem("AnnotationsIndex"),
-            createRandomItem("Dashboard")
-          ]
-        }
-      ]
+            createRandomItem("Dashboard"),
+          ],
+        },
+      ],
     },
     {
       uuid: uuidv4(),
@@ -106,16 +105,16 @@ const testTree: DocRefTree = {
         {
           uuid: uuidv4(),
           type: "Visualisation",
-          name: "abcdefghijklmnopqrstuvwxyz"
-        }
-      ]
+          name: "abcdefghijklmnopqrstuvwxyz",
+        },
+      ],
     },
     {
       uuid: uuidv4(),
       type: "Dashboard",
-      name: "ababababababababa"
-    }
-  ]
+      name: "ababababababababa",
+    },
+  ],
 };
 
 export default testTree;

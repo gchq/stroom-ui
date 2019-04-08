@@ -9,10 +9,14 @@ import {
   deleteItemsFromTree,
   iterateNodes,
 } from "src/lib/treeUtils";
-import { DocRefType, DocRefTree, DocRefWithLineage } from "src/types";
 import { TestCache } from "../PollyDecorator";
 import { Config } from "src/startup/config";
 import { ResourceBuilder } from "./types";
+import {
+  DocRefType,
+  DocRefTree,
+  DocRefWithLineage,
+} from "src/api/useDocumentApi/types/base";
 
 const resourceBuilder: ResourceBuilder = (
   server: any,

@@ -16,7 +16,7 @@
 import * as React from "react";
 
 import ROExpressionOperator from "./ROExpressionOperator";
-import { ExpressionOperatorWithUuid } from "src/types";
+import { ExpressionOperatorWithUuid } from "./types";
 
 interface Props {
   expression: ExpressionOperatorWithUuid;

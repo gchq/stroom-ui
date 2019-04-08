@@ -20,15 +20,17 @@ import ElementImage from "../ElementImage";
 import HorizontalPanel from "src/components/HorizontalPanel";
 import ElementProperty from "./ElementProperty";
 import {
-  PipelineElementType,
   ElementPropertiesType,
   ElementDefinition,
   ElementPropertyType,
-  PipelineDocumentType,
 } from "src/types";
 import Loader from "src/components/Loader";
 import useElements from "src/api/useElements";
 import { PipelineEditApi } from "../types";
+import {
+  PipelineDocumentType,
+  PipelineElementType,
+} from "src/api/useDocumentApi/types/pipelineDoc";
 
 interface Props {
   pipeline: PipelineDocumentType;

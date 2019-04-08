@@ -1,11 +1,11 @@
 import * as React from "react";
 import { storiesOf } from "@storybook/react";
-import { DocRefType } from "src/types";
 
 import RenameDocRefDialog, { useDialog } from "./RenameDocRefDialog";
 import { fromSetupSampleData } from "../test";
 
 import JsonDebug from "src/testing/JsonDebug";
+import { DocRefType } from "src/api/useDocumentApi/types/base";
 
 const testDocRef = fromSetupSampleData.children![0].children![0].children![0];
 

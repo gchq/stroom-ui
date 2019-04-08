@@ -1,8 +1,8 @@
 import * as React from "react";
 
 import useApi from "./useApi";
-import { User } from "src/types";
 import useListReducer from "src/lib/useListReducer";
+import { User } from "./types";
 
 /**
  * Use this to convert a list of users UUID's into a list of user objects.

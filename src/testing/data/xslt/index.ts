@@ -1,8 +1,8 @@
 import * as uuidv4 from "uuid/v4";
 import * as loremIpsum from "lorem-ipsum";
 
-import { XsltDoc } from "src/types";
 import bitmapReference from "./bitmap-reference";
+import { XsltDoc } from "src/api/useDocumentApi/types/xsltDoc";
 
 export const generate = (): XsltDoc => ({
   type: "XSLT",

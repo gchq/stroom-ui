@@ -34,10 +34,10 @@ import { testPipelines, elements } from "src/testing/data/pipelines";
 import {
   PipelineDocumentType,
   PipelinePropertyType,
-  DocRefType,
   PipelinePropertyValue,
-  PipelineAsTreeType,
-} from "src/types";
+} from "src/api/useDocumentApi/types/pipelineDoc";
+import { PipelineAsTreeType } from "./AddElementModal/types";
+import { DocRefType } from "src/api/useDocumentApi/types/base";
 
 const elementsByType = keyByType(elements);
 

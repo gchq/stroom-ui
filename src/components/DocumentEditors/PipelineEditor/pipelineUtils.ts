@@ -15,17 +15,7 @@
  */
 
 import { findItem, itemIsInSubtree, iterateNodes } from "src/lib/treeUtils";
-import {
-  PipelineDocumentType,
-  PipelineAsTreeType,
-  PipelineElementType,
-  ElementDefinitionsByType,
-  PipelineDataType,
-  PipelinePropertyType,
-  AddRemove,
-  PipelineLinkType,
-  ElementPropertiesType,
-} from "src/types";
+import { ElementDefinitionsByType, ElementPropertiesType } from "src/types";
 import {
   RecycleBinItem,
   PipelineLayoutGrid,
@@ -33,6 +23,15 @@ import {
   PipelineLayoutRow,
   NewElement,
 } from "./types";
+import {
+  PipelineDocumentType,
+  PipelineElementType,
+  PipelineDataType,
+  PipelinePropertyType,
+  AddRemove,
+  PipelineLinkType,
+} from "src/api/useDocumentApi/types/pipelineDoc";
+import { PipelineAsTreeType } from "./AddElementModal/types";
 
 export function getBinItems(
   pipeline: PipelineDocumentType,

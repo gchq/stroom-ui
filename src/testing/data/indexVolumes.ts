@@ -1,6 +1,6 @@
 import * as loremIpsum from "lorem-ipsum";
-
-import { IndexVolumeGroup, IndexVolume } from "src/types";
+import { IndexVolumeGroup } from "src/api/indexVolumeGroup";
+import { IndexVolume } from "src/api/indexVolume";
 
 export const generateTestIndexVolumeGroup = (): IndexVolumeGroup => ({
   name: loremIpsum({ count: 3, units: "words" }),

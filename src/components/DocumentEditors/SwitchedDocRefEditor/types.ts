@@ -28,7 +28,7 @@ export const docRefEditorClasses: DocRefEditorClasses = {
   XMLSchema: XMLSchemaEditor,
   Folder: FolderExplorer,
   XSLT: XsltEditor,
-  Dictionary: DictionaryEditor,
+  DictionaryDoc: DictionaryEditor,
   Pipeline: PipelineEditor,
   Index: IndexEditor,
 };

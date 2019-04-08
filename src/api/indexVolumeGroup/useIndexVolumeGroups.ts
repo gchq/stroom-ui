@@ -1,8 +1,8 @@
 import * as React from "react";
 
 import useApi from "./useApi";
-import { IndexVolumeGroup } from "src/types";
 import useListReducer from "src/lib/useListReducer/useListReducer";
+import { IndexVolumeGroup } from "./types";
 
 interface UseIndexVolumeGroups {
   groups: IndexVolumeGroup[];

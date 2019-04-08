@@ -1,6 +1,6 @@
 import * as uuidv4 from "uuid/v4";
 import * as loremIpsum from "lorem-ipsum";
-import { VisualisationDoc } from "src/types";
+import { VisualisationDoc } from "src/api/useDocumentApi/types/visualisation";
 
 export const generate = (): VisualisationDoc => ({
   type: "Visualisation",
