@@ -18,7 +18,7 @@ import {
   ElementDefinition,
   ElementDefinitionsByCategory,
   ElementDefinitionsByType,
-} from "src/types";
+} from "src/api/useElements/types";
 
 /**
  * This will take in the map of element types and return a new map

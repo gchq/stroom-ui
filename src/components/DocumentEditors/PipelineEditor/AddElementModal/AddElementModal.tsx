@@ -4,9 +4,9 @@ import IconHeader from "src/components/IconHeader";
 import Button from "src/components/Button";
 import ThemedModal from "src/components/ThemedModal";
 // import { required, minLength2 } from "src/lib/formUtils";
-import { ElementDefinition } from "src/types";
 import useForm from "src/lib/useForm";
 import { Props, OnAddElement, UseDialog } from "./types";
+import { ElementDefinition } from "src/api/useElements/types";
 
 interface FormValues {
   newName: string;

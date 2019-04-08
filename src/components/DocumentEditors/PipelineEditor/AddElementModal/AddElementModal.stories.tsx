@@ -8,7 +8,7 @@ import Button from "src/components/Button";
 import JsonDebug from "src/testing/JsonDebug";
 import { NewElement } from "../types";
 import useElements from "src/api/useElements";
-import { ElementDefinition } from "src/types";
+import { ElementDefinition } from "src/api/useElements/types";
 import Select from "react-select";
 
 const PARENT_ID = uuidv4();

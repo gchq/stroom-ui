@@ -6,14 +6,15 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ElementCategory from "./ElementCategory";
 import { getBinItems } from "../pipelineUtils";
 import { DragDropTypes, DropCollectedProps } from "../types";
-import {
-  ElementDefinition,
-  ElementDefinitionsByCategory,
-  ElementDefinitionsByType,
-} from "src/types";
+
 import useElements from "src/api/useElements";
 import { groupByCategory, keyByType } from "../elementUtils";
 import { PipelineDocumentType } from "src/api/useDocumentApi/types/pipelineDoc";
+import {
+  ElementDefinitionsByCategory,
+  ElementDefinitionsByType,
+  ElementDefinition,
+} from "src/api/useElements/types";
 
 interface Props {
   pipeline: PipelineDocumentType;

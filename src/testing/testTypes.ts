@@ -1,9 +1,4 @@
-import {
-  ElementDefinition,
-  ElementPropertiesByElementIdType,
-  StreamTaskType,
-  StreamAttributeMapResult,
-} from "../types";
+import { StreamTaskType, StreamAttributeMapResult } from "../types";
 import { ResourcesByDocType } from "src/api/useDocumentApi/types/resourceUrls";
 import { DocRefTree, DocumentBase } from "src/api/useDocumentApi/types/base";
 import { DataSourceType } from "src/components/ExpressionBuilder/types";
@@ -13,6 +8,10 @@ import {
   IndexVolumeGroup,
   IndexVolumeGroupMembership,
 } from "src/api/indexVolumeGroup";
+import {
+  ElementDefinition,
+  ElementPropertiesByElementIdType,
+} from "src/api/useElements/types";
 
 export interface UserGroupMembership {
   userUuid: string;

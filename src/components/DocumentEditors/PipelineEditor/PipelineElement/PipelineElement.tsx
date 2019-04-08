@@ -33,7 +33,6 @@ import {
 } from "../types";
 import { isValidChildType } from "../elementUtils";
 import Button from "src/components/Button";
-import { ElementDefinition, ElementPropertiesType } from "src/types";
 
 import { ShowDialog } from "../AddElementModal";
 import { PipelineEditApi } from "../types";
@@ -42,6 +41,10 @@ import {
   PipelinePropertyType,
 } from "src/api/useDocumentApi/types/pipelineDoc";
 import { PipelineAsTreeType } from "../AddElementModal/types";
+import {
+  ElementPropertiesType,
+  ElementDefinition,
+} from "src/api/useElements/types";
 
 interface Props {
   pipelineId: string;

@@ -23,7 +23,7 @@ import {
   ElementPropertiesType,
   ElementDefinition,
   ElementPropertyType,
-} from "src/types";
+} from "src/api/useElements/types";
 import Loader from "src/components/Loader";
 import useElements from "src/api/useElements";
 import { PipelineEditApi } from "../types";
