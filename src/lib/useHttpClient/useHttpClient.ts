@@ -1,10 +1,11 @@
 import * as React from "react";
 
 import { HttpError } from "src/lib/ErrorTypes";
-import { useErrorReporting } from "src/components/ErrorPage";
+import cogoToast from "cogo-toast";
 
-import useAppNavigation from "src/components/AppChrome/useAppNavigation";
 import { useAuthenticationContext } from "src/startup/Authentication";
+import { useErrorReporting } from "src/components/ErrorPage";
+import useAppNavigation from "src/components/AppChrome/useAppNavigation";
 
 const useCheckStatus = (status: number) =>
   React.useCallback((response: Response): Promise<any> => {
@@ -58,12 +59,17 @@ export const useHttpClient = (): HttpClient => {
 
   const catchImpl = React.useCallback(
     (error: any) => {
-      reportError({
-        errorMessage: error.message,
-        stackTrace: error.stack,
-        httpErrorCode: error.status,
+      cogoToast.error(error.message, {
+        hideAfter: 5,
+        onClick: () => {
+          reportError({
+            errorMessage: error.message,
+            stackTrace: error.stack,
+            httpErrorCode: error.status,
+          });
+          goToError();
+        },
       });
-      goToError();
     },
     [reportError, goToError],
   );

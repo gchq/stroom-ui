@@ -2,7 +2,7 @@ import { HasUuid } from "src/types";
 
 export interface User extends HasUuid {
   name: string;
-  isGroup: boolean;
+  group: boolean;
 }
 
 export interface StoreState {

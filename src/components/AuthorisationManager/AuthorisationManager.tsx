@@ -120,7 +120,7 @@ const Authorisation: React.FunctionComponent<Props> = ({ isGroup }) => {
         <Button
           text="Add to Group"
           disabled={
-            selectedUsers.length === 0 || !!selectedUsers.find(u => u.isGroup)
+            selectedUsers.length === 0 || !!selectedUsers.find(u => u.group)
           }
           onClick={showGroupPicker}
         />

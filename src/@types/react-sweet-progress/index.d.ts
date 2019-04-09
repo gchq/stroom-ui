@@ -2,12 +2,12 @@ declare module "react-sweet-progress" {
   export enum Status {
     success,
     error,
-    active
+    active,
   }
 
   // Only specified when it's not linear
   export enum Type {
-    circle
+    circle,
   }
 
   export interface Props {

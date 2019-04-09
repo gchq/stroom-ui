@@ -26,7 +26,7 @@ import { User } from "src/api/userGroups";
 
 // Pick a group
 let aUser: User = fullTestData.usersAndGroups.users
-  .filter(u => !u.isGroup)
+  .filter(u => !u.group)
   .pop()!;
 
 const stories = storiesOf(

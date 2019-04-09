@@ -28,7 +28,7 @@ const COLUMNS = [
   {
     id: "isGroup",
     Header: "Is Group",
-    accessor: (u: User) => (u.isGroup ? "Group" : "User"),
+    accessor: (u: User) => (u.group ? "Group" : "User"),
   },
 ];
 

@@ -33,15 +33,15 @@ const resourceBuilder: ResourceBuilder = (
       )
       .filter(u => uuid === undefined || u.uuid === uuid)
       .filter(
-        u => isGroup === undefined || Boolean(u.isGroup).toString() === isGroup,
+        u => isGroup === undefined || Boolean(u.group).toString() === isGroup,
       );
     res.json(filtered);
   });
 
   // Create User
   server.post(resource).intercept((req: HttpRequest, res: HttpResponse) => {
-    const { name, isGroup } = JSON.parse(req.body);
-    let newUser = { name, isGroup, uuid: uuidv4() };
+    const { name, group } = JSON.parse(req.body);
+    let newUser = { name, group, uuid: uuidv4() };
 
     testCache.data!.usersAndGroups.users = testCache.data!.usersAndGroups.users.concat(
       [newUser],
@@ -77,7 +77,7 @@ const resourceBuilder: ResourceBuilder = (
         .map(ugm => ugm.userUuid)
         .map(userUuid =>
           testCache
-            .data!.usersAndGroups.users.filter(user => !user.isGroup)
+            .data!.usersAndGroups.users.filter(user => !user.group)
             .find(user => user.uuid === userUuid),
         );
 
@@ -95,7 +95,7 @@ const resourceBuilder: ResourceBuilder = (
         .map(ugm => ugm.groupUuid)
         .map(groupUuid =>
           testCache
-            .data!.usersAndGroups.users.filter(user => user.isGroup)
+            .data!.usersAndGroups.users.filter(user => user.group)
             .find(user => user.uuid === groupUuid),
         );
       res.json(users);
