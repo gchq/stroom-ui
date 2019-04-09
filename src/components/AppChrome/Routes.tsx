@@ -43,6 +43,8 @@ import DocumentPermissionEditor from "../AuthorisationManager/DocumentPermission
 import DocumentPermissionForUserEditor from "../AuthorisationManager/DocumentPermissionForUserEditor";
 import IndexVolumeEditor from "../IndexVolumes/IndexVolumeEditor";
 import { urlGenerator } from "./useAppNavigation";
+import { ResetPassword, ChangePassword } from "../password";
+import { UserSearch, UserCreate, UserEdit } from "../users";
 
 const renderWelcome = () => (
   <AppChrome activeMenuItem="welcome" content={<Welcome />} />
@@ -88,6 +90,9 @@ const Routes: React.FunctionComponent = () => {
       />
       <Route exact path="/error" component={ErrorPage} />
       <Route exact path="/openWelcome" component={Welcome} />
+      <Route exact path={"/resetPassword"} component={ResetPassword} />
+      <Route exact path={"/resetpassword"} component={ResetPassword} />
+      <Route exact path={"/changepassword"} component={ChangePassword} />
       <PrivateRoute exact path="/" render={renderWelcome} />
       <PrivateRoute exact path="/s/welcome" render={renderWelcome} />
       <PrivateRoute
@@ -220,16 +225,7 @@ const Routes: React.FunctionComponent = () => {
           />
         )}
       />
-      <PrivateRoute
-        exact
-        path={urlGenerator.goToUsers()}
-        render={() => (
-          <AppChrome
-            activeMenuItem="userIdentities"
-            content={<UsersIFrame />}
-          />
-        )}
-      />
+
       <PrivateRoute
         exact
         path={urlGenerator.goToApiKeys()}
@@ -258,6 +254,29 @@ const Routes: React.FunctionComponent = () => {
           />
         )}
       />
+
+      <PrivateRoute
+        exact
+        path={urlGenerator.goToUsers()}
+        render={() => (
+          <AppChrome activeMenuItem="userIdentities" content={<UserSearch />} />
+        )}
+      />
+      <PrivateRoute
+        exact
+        path={urlGenerator.goToUser("")}
+        render={() => (
+          <AppChrome activeMenuItem="userIdentities" content={<UserCreate />} />
+        )}
+      />
+      <PrivateRoute
+        exact
+        path={urlGenerator.goToUser(":userId")}
+        render={() => (
+          <AppChrome activeMenuItem="userIdentities" content={<UserEdit />} />
+        )}
+      />
+
       <PrivateRoute
         render={() => (
           <AppChrome activeMenuItem="welcome" content={<PathNotFound />} />

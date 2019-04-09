@@ -25,6 +25,7 @@ export const urlGenerator: NavigateApp<string> = {
   goToIndexVolumeGroup: (groupName: string) =>
     `/s/indexing/groups/${groupName}`,
   goToUsers: () => `/s/users`,
+  goToUser: () => `/s/user`,
   goToApiKeys: () => `/s/apikeys`,
   goToError: () => `/s/error`,
   goToEditDocRefByUuid: (docRefUuid: string) => `/s/doc/${docRefUuid}`,
@@ -57,6 +58,7 @@ const useAppNavigation = (): NavigateApp<any> => {
       goToIndexVolumeGroup: (groupName: string) =>
         h.push(u.goToIndexVolumeGroup(groupName)),
       goToUsers: () => h.push(u.goToUsers()),
+      goToUser: (userId: string) => h.push(u.goToUser(userId)),
       goToApiKeys: () => h.push(u.goToApiKeys()),
       goToError: () => h.push(u.goToError()),
       goToEditDocRefByUuid: (docRefUuid: string) =>
