@@ -9,16 +9,7 @@ export enum Directions {
   ascending = "ascending",
   descending = "descending",
 }
-export enum SortByOptions {
-  pipelineUuid = "pipelineUuid",
-  pipelineName = "pipelineName",
-  priority = "Priority",
-  progress = "progress",
-}
-
-export const sortByFromString = (asStr: string): SortByOptions => {
-  return SortByOptions.pipelineName;
-};
+export type SortByOptions = "Pipeline" | "Priority";
 
 export interface FetchParameters {
   pageOffset: number;
@@ -40,15 +31,7 @@ export interface UseStreamTasks {
   fetchTrackers: () => void;
   fetchMore: () => void;
   enableToggle: (filterId: number) => void;
-  addTrackers: (
-    streamTasks: StreamTaskType[],
-    totalStreamTasks: number,
-  ) => void;
   updateSort: (sortBy: SortByOptions, sortDirection: Directions) => void;
-  updateTrackers: (
-    streamTasks: StreamTaskType[],
-    totalStreamTasks: number,
-  ) => void;
   updateEnabled: (filterId: number, enabled: boolean) => void;
   updateSearchCriteria: (searchCriteria: string) => void;
   changePage: (pageOffset: number) => void;

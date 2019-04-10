@@ -16,10 +16,10 @@
 import * as React from "react";
 
 import ROExpressionOperator from "./ROExpressionOperator";
-import { ExpressionOperatorWithUuid } from "./types";
+import { ExpressionOperatorType } from "./types";
 
 interface Props {
-  expression: ExpressionOperatorWithUuid;
+  expression: ExpressionOperatorType;
 }
 
 const ROExpressionBuilder: React.FunctionComponent<Props> = ({
