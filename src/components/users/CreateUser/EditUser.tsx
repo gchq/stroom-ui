@@ -34,7 +34,7 @@ import { useConfig } from "src/startup/config";
 import { useAuthenticationContext } from "src/startup/Authentication";
 import { isEmpty } from "ramda";
 
-const UserEditForm = () => {
+const EditUser = () => {
   const { updateUser, fetchUser, user } = useUsers();
   const { history } = useRouter();
   const [showBackConfirmation, setShowBackConfirmation] = useState(false);
@@ -150,4 +150,4 @@ const UserEditForm = () => {
   }
 };
 
-export default UserEditForm;
+export default EditUser;

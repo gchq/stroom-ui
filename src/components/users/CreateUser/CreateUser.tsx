@@ -44,7 +44,7 @@ const initialValues = {
   forcePasswordChange: true,
 };
 
-const UserCreateForm = ({}) => {
+const CreateUser = ({}) => {
   const { createUser } = useUsers();
   const { history } = useRouter();
   const { authenticationServiceUrl } = useConfig();
@@ -116,4 +116,4 @@ const UserCreateForm = ({}) => {
   );
 };
 
-export default UserCreateForm;
+export default CreateUser;

@@ -30,15 +30,19 @@ import * as React from "react";
 Polly.register(FetchAdapter);
 
 const testConfig: Config = {
+  advertisedUrl: "/",
+  allowPasswordResets: true,
+  appClientId: "stroom-ui",
+  authTokensUiUrl:
+    "auth/tokens/because/they/are/loaded/in/an/iframe/which/is/beyond/scope/of/these/tests",
+  authUsersUiUrl:
+    "auth/users/because/they/are/loaded/in/an/iframe/which/is/beyond/scope/of/these/tests",
   authenticationServiceUrl: "http://localhost:9001",
   authorisationServiceUrl: "http://localhost:9001",
   stroomBaseServiceUrl: "http://localhost:9001",
-  authUsersUiUrl:
-    "auth/users/because/they/are/loaded/in/an/iframe/which/is/beyond/scope/of/these/tests",
-  authTokensUiUrl:
-    "auth/tokens/because/they/are/loaded/in/an/iframe/which/is/beyond/scope/of/these/tests",
-  advertisedUrl: "/",
-  appClientId: "stroom-ui",
+  stroomUiUrl: "http://localhost:8080/stroom",
+  tokenServiceUrl: "http://localhost:8099/token/v1",
+  userServiceUrl: "http://localhost:8099/user/v1",
 };
 
 // The server is created as a singular thing for the whole app

@@ -66,12 +66,12 @@ const UserFields = ({
         <div className="section__fields__row">
           <div className="field-container vertical">
             <label>First name</label>
-            <Field name="first_name" type="text" label="First name" />
+            <Field name="firstName" type="text" label="First name" />
           </div>
           <div className="field-container__spacer" />
           <div className="field-container vertical">
             <label>Last name</label>
-            <Field name="last_name" type="text" label="Last name" />
+            <Field name="lastName" type="text" label="Last name" />
           </div>
         </div>
 
@@ -122,12 +122,12 @@ const UserFields = ({
             <div className="field-container__spacer" />
             <div className="field-container--with-validation">
               <Field
-                name="never_expires"
-                label="never_expires"
+                name="neverExpires"
+                label="neverExpires"
                 component={CheckboxField}
               />
               <ErrorMessage
-                name="never_expire"
+                name="neverExpires"
                 render={msg => <div className="validation-error">{msg}</div>}
               />
             </div>
@@ -170,8 +170,8 @@ const UserFields = ({
             <div className="field-container__spacer" />
             <div className="field-container--with-validation">
               <Field
-                name="force_password_change"
-                label="force_password_change"
+                name="forcePasswordChange"
+                label="forcePasswordChange"
                 component={CheckboxField}
               />
             </div>
