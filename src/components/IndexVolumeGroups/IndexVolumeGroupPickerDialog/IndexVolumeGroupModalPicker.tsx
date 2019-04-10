@@ -57,6 +57,7 @@ export const IndexVolumeGroupModalPicker: React.FunctionComponent<Props> = ({
 
   const onConfirmLocal = React.useCallback(() => {
     if (isNewGroup) {
+      // Todo, the response to this is reported to an umounted component...
       createIndexVolumeGroup(newGroupName);
       onConfirm(newGroupName);
     } else if (!!volumeGroupName) {

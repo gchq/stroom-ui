@@ -57,7 +57,7 @@ import {
 } from "src/api/useDocumentApi/types/statistics";
 import { VisualisationDoc } from "src/api/useDocumentApi/types/visualisation";
 import { XMLSchemaDoc } from "src/api/useDocumentApi/types/xmlSchema";
-import { DictionaryDoc } from "src/api/useDocumentApi/types/dictionary";
+import { DictionaryDoc } from "src/api/useDocumentApi/types/dictionaryDoc";
 import { XsltDoc } from "src/api/useDocumentApi/types/xsltDoc";
 import { StreamTaskType } from "src/types";
 import { IndexDoc } from "src/api/useDocumentApi/types/indexDoc";

@@ -43,7 +43,5 @@ export interface IndexField {
 export interface IndexDoc extends DocumentBase<"Index"> {
   description?: string;
   volumeGroupName?: string;
-  data: {
-    fields: IndexField[];
-  };
+  fields?: IndexField[];
 }

@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import useApi from "./useApi";
-import { IndexVolume } from "./types";
+import { IndexVolume, NewIndexVolume } from "./types";
 
 /**
  * Convenience function for using Index Volume.
@@ -9,7 +9,7 @@ import { IndexVolume } from "./types";
  */
 interface UseIndexVolumes {
   indexVolumes: IndexVolume[];
-  createIndexVolume: (nodeName: string, path: string) => void;
+  createIndexVolume: (newIndexVolume: NewIndexVolume) => void;
   deleteIndexVolume: (id: string) => void;
   addVolumeToGroup: (indexVolumeId: string, groupName: string) => void;
 }
@@ -65,8 +65,8 @@ const useIndexVolumes = (): UseIndexVolumes => {
   return {
     indexVolumes,
     createIndexVolume: React.useCallback(
-      (nodeName: string, path: string) =>
-        createIndexVolume(nodeName, path).then(indexVolume =>
+      (newIndexVolume: NewIndexVolume) =>
+        createIndexVolume(newIndexVolume).then(indexVolume =>
           dispatch({
             type: "created",
             indexVolume,

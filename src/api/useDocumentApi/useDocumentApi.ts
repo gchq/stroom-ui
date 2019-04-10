@@ -5,6 +5,7 @@ import { useConfig } from "src/startup/config";
 import useHttpClient from "src/lib/useHttpClient";
 import { DocumentBase } from "./types/base";
 import { DocumentApi } from "./types/documentApi";
+import cogoToast from "cogo-toast";
 
 /**
  * This returns an API that can fetch/save a particular document type.
@@ -34,9 +35,9 @@ const useDocumentApi = <
       httpPostEmptyResponse(
         `${stroomBaseServiceUrl}${resourcePath}${docRefContents.uuid}`,
         {
-          body: docRefContents,
+          body: JSON.stringify(docRefContents),
         },
-      ),
+      ).then(() => cogoToast.info(`Document Saved ${docRefType}`)),
     [resourcePath, stroomBaseServiceUrl, httpPostEmptyResponse],
   );
 

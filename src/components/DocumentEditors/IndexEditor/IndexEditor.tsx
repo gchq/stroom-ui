@@ -53,7 +53,7 @@ const IndexEditor = ({ docRefUuid }: SwitchedDocRefEditorProps) => {
   );
 
   const { componentProps } = useFieldsTable(
-    docRefContents && docRefContents.data ? docRefContents.data.fields : [],
+    docRefContents && docRefContents.fields ? docRefContents.fields : [],
   );
   const {
     fields,
@@ -68,12 +68,9 @@ const IndexEditor = ({ docRefUuid }: SwitchedDocRefEditorProps) => {
       let fieldNamesToDelete = selectedItems.map(s => s.fieldName);
       if (!!docRefContents) {
         onDocumentChange({
-          data: {
-            ...docRefContents.data,
-            fields: docRefContents.data.fields.filter(
-              f => !fieldNamesToDelete.includes(f.fieldName),
-            ),
-          },
+          fields: (docRefContents.fields || []).filter(
+            f => !fieldNamesToDelete.includes(f.fieldName),
+          ),
         });
       }
     }, [onDocumentChange, docRefContents, selectedItems]),
@@ -95,17 +92,14 @@ const IndexEditor = ({ docRefUuid }: SwitchedDocRefEditorProps) => {
       (id: number, fieldUpdates: Partial<IndexField>) => {
         if (!!docRefContents) {
           let updatedIndex: Partial<IndexDoc> = {
-            data: {
-              ...docRefContents.data,
-              fields: fields.map((f, _id) =>
-                _id === id
-                  ? {
-                      ...f,
-                      ...fieldUpdates,
-                    }
-                  : f,
-              ),
-            },
+            fields: fields.map((f, _id) =>
+              _id === id
+                ? {
+                    ...f,
+                    ...fieldUpdates,
+                  }
+                : f,
+            ),
           };
           onDocumentChange(updatedIndex);
         }
@@ -115,25 +109,22 @@ const IndexEditor = ({ docRefUuid }: SwitchedDocRefEditorProps) => {
   );
 
   const onCreateClick = React.useCallback(() => {
-    if (!!docRefContents && !!docRefContents.data) {
+    if (!!docRefContents) {
       let updatedIndex: Partial<IndexDoc> = {
         ...docRefContents,
-        data: {
-          ...docRefContents.data,
-          fields: [
-            ...docRefContents.data.fields,
-            {
-              fieldName: `New Field ${docRefContents.data.fields.length}`,
-              fieldType: "ID",
-              stored: true,
-              indexed: true,
-              termPositions: false,
-              analyzerType: "KEYWORD",
-              caseSensitive: false,
-              conditions: [],
-            },
-          ],
-        },
+        fields: [
+          ...(docRefContents.fields || []),
+          {
+            fieldName: `New Field ${(docRefContents.fields || []).length}`,
+            fieldType: "ID",
+            stored: true,
+            indexed: true,
+            termPositions: false,
+            analyzerType: "KEYWORD",
+            caseSensitive: false,
+            conditions: [],
+          },
+        ],
       };
 
       onDocumentChange(updatedIndex);
@@ -163,10 +154,7 @@ const IndexEditor = ({ docRefUuid }: SwitchedDocRefEditorProps) => {
       newFields[lastSelectedIndex - 1] = f1;
 
       let updatedIndex: Partial<IndexDoc> = {
-        data: {
-          ...docRefContents.data,
-          fields: newFields,
-        },
+        fields: newFields,
       };
       onDocumentChange(updatedIndex);
     }
@@ -187,10 +175,7 @@ const IndexEditor = ({ docRefUuid }: SwitchedDocRefEditorProps) => {
       newFields[lastSelectedIndex] = f1;
 
       let updatedIndex: Partial<IndexDoc> = {
-        data: {
-          ...docRefContents.data,
-          fields: newFields,
-        },
+        fields: newFields,
       };
       onDocumentChange(updatedIndex);
     }
