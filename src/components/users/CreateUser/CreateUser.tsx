@@ -34,14 +34,14 @@ import { PasswordValidationRequest } from "src/api/authentication";
 // If we don't pass initialValues to Formik then they won't be controlled
 // and we'll get console errors when they're used.
 const initialValues = {
-  first_name: "",
-  last_name: "",
+  firstName: "",
+  lastName: "",
   email: "",
   state: "enabled",
   password: "",
   verifyPassword: "",
   comments: "",
-  force_password_change: true,
+  forcePasswordChange: true,
 };
 
 const UserCreateForm = ({}) => {

@@ -24,7 +24,7 @@ import { hasAnyProps } from "src/lib/lang";
 // import { validateAsync } from "src/components/users/validation";
 import { useConfig } from "src/startup/config";
 import { useAuthenticationContext } from "src/startup/Authentication";
-import { validateAsync } from "src/users/validation";
+import { validateAsync } from "src/components/users/validation";
 // import { useAuthenticationContext } from 'src/startup/authentication';
 
 const ChangePasswordFields = ({

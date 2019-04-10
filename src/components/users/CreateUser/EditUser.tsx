@@ -32,6 +32,7 @@ import { UserValidationSchema, validateAsync } from "../validation";
 import { useUsers } from "../api";
 import { useConfig } from "src/startup/config";
 import { useAuthenticationContext } from "src/startup/Authentication";
+import { isEmpty } from "ramda";
 
 const UserEditForm = () => {
   const { updateUser, fetchUser, user } = useUsers();
@@ -50,14 +51,14 @@ const UserEditForm = () => {
     let initialValues = {
       id: user.id || "",
       email: user.email || "",
-      first_name: user.first_name || "",
-      last_name: user.last_name || "",
+      firstName: user.firstName || "",
+      lastName: user.lastName || "",
       state: user.state || "enabled",
       password: "",
       verifyPassword: "",
       comments: user.comments || "",
-      never_expires: user.never_expires || false,
-      force_password_change: user.force_password_change || false,
+      neverExpires: user.neverExpires || false,
+      forcePasswordChange: user.forcePasswordChange || false,
     };
 
     const handleBack = (isPristine: boolean) => {
@@ -134,7 +135,7 @@ const UserEditForm = () => {
                     setShowBackConfirmation(false);
                     history.push("/userSearch");
                   }}
-                  errors={errors}
+                  hasErrors={!isEmpty(errors)}
                   onSaveAndGoBack={submitForm}
                   onContinueEditing={() => setShowBackConfirmation(false)}
                 />

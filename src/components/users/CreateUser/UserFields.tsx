@@ -197,17 +197,17 @@ const UserFields = ({
 
     {showCalculatedFields && !!userBeingEdited ? (
       <React.Fragment>
-        {!!userBeingEdited.login_count ? (
+        {!!userBeingEdited.loginCount ? (
           <div className="section">
             <div className="section__title">
               <h3>Recent activity</h3>
             </div>
             <div className="section__fields--copy-only">
               <div className="section__fields_row">
-                <LoginFailureCopy attemptCount={userBeingEdited.login_count} />
+                <LoginFailureCopy attemptCount={userBeingEdited.loginCount} />
                 <LoginStatsCopy
-                  lastLogin={userBeingEdited.last_login}
-                  loginCount={userBeingEdited.login_count}
+                  lastLogin={userBeingEdited.lastLogin}
+                  loginCount={userBeingEdited.loginCount}
                 />
               </div>
             </div>
@@ -223,10 +223,10 @@ const UserFields = ({
           <div className="section__fields--copy-only">
             <div className="section__fields__rows">
               <AuditCopy
-                createdOn={userBeingEdited.created_on}
-                createdBy={userBeingEdited.created_by_user}
-                updatedOn={userBeingEdited.updated_on}
-                updatedBy={userBeingEdited.updated_by_user}
+                createdOn={userBeingEdited.createdOn}
+                createdBy={userBeingEdited.createdByUser}
+                updatedOn={userBeingEdited.updatedOn}
+                updatedBy={userBeingEdited.updatedByUser}
               />
             </div>
           </div>

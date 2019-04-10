@@ -17,12 +17,9 @@
 import * as React from "react";
 import * as ReactModal from "react-modal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { FormikErrors } from "formik";
-import { isEmpty } from "ramda";
 
 import Button from "src/components/Button";
 
-import { User } from "../types";
 import "./BackConfirmation.css";
 
 const BackConfirmation = ({
@@ -30,13 +27,13 @@ const BackConfirmation = ({
   onGoBack,
   onContinueEditing,
   onSaveAndGoBack,
-  errors,
+  hasErrors,
 }: {
   isOpen: boolean;
   onGoBack: Function;
   onContinueEditing: Function;
   onSaveAndGoBack: Function;
-  errors: FormikErrors<User>;
+  hasErrors: boolean;
 }) => {
   return (
     <ReactModal
@@ -49,9 +46,9 @@ const BackConfirmation = ({
         changes!
       </h3>
       <p>Are you sure you want to go back?</p>
-      {!isEmpty(errors) ? (
+      {hasErrors ? (
         <p className="warning">
-          There are validation issues with this data and we can't save it.
+          There are validation issues with this data and we can&#39;t save it.
         </p>
       ) : (
         undefined
@@ -68,7 +65,7 @@ const BackConfirmation = ({
         <Button
           className="toolbar-button-large primary"
           type="button"
-          disabled={!isEmpty(errors)}
+          disabled={hasErrors}
           onClick={() => onSaveAndGoBack()}
           icon="save"
           text="Yes, save changes"

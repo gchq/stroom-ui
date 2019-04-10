@@ -25,6 +25,7 @@
     "@types/react-toggle": "^4.0.2",
     "@types/react-tooltip": "^3.3.6",
     "@types/sjcl": "^1.0.28",
+    "@types/storybook__addon-actions": "^3.4.2",
     "@types/uuid": "^3.4.4",
     "@types/yup": "^0.26.12",
     "cookies-js": "^1.2.3",

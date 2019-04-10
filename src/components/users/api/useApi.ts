@@ -1,3 +1,4 @@
+/* eslint camelcase: ["error", {properties: "never"}]*/
 /*
  * Copyright 2019 Crown Copyright
  *
@@ -13,7 +14,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 import { useCallback } from "react";
 import { useConfig } from "src/startup/config";
 import { User } from "../types";
@@ -22,7 +22,7 @@ import useHttpClient from "src/lib/useHttpClient";
 interface Api {
   add: (user: User) => Promise<void>;
   change: (user: User) => Promise<void>;
-  fetch: (userId: String) => Promise<User[]>;
+  fetch: (userId: string) => Promise<User[]>;
   fetchCurrentUser: () => Promise<User[]>;
   remove: (userId: string) => Promise<void>;
   search: () => Promise<User[]>;
@@ -44,12 +44,12 @@ export const useApi = (): Api => {
       body: JSON.stringify({
         email: user.email,
         password: user.password,
-        first_name: user.first_name,
-        last_name: user.last_name,
+        firstName: user.firstName,
+        lastName: user.lastName,
         comments: user.comments,
         state: user.state,
-        never_expires: user.never_expires,
-        force_password_change: user.force_password_change,
+        neverExpires: user.neverExpires,
+        forcePasswordChange: user.forcePasswordChange,
       }),
     });
   }, []);
@@ -60,12 +60,12 @@ export const useApi = (): Api => {
       body: JSON.stringify({
         email: user.email,
         password: user.password,
-        first_name: user.first_name,
-        last_name: user.last_name,
+        firstName: user.firstName,
+        lastName: user.lastName,
         comments: user.comments,
         state: user.state,
-        never_expires: user.never_expires,
-        force_password_change: user.force_password_change,
+        neverExpires: user.neverExpires,
+        forcePasswordChange: user.forcePasswordChange,
       }),
     });
   }, []);
@@ -81,7 +81,7 @@ export const useApi = (): Api => {
   /**
    * Fetch a user
    */
-  const fetch = useCallback((userId: String) => {
+  const fetch = useCallback((userId: string) => {
     const url = `${userServiceUrl}/${userId}`;
     return httpGetJson(url);
   }, []);
