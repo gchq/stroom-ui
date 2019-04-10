@@ -67,7 +67,7 @@ export interface DataItem {
 }
 
 export interface DataRow {
-  data: DataItem;
+  meta: DataItem;
   attributes?: {
     [key: string]: string;
   };

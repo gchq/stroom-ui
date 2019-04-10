@@ -1,15 +1,19 @@
 import * as React from "react";
-import { DataRow, StreamAttributeMapResult } from "src/types";
+import { DataRow, StreamAttributeMapResult, PageRequest } from "src/types";
 import useHttpClient from "src/lib/useHttpClient";
 import { useConfig } from "src/startup/config";
-import { SearchWithExpressionProps, PageProps } from "./types";
 import cleanExpression from "./cleanExpression";
-import { DataSourceType } from "src/components/ExpressionBuilder/types";
+import {
+  DataSourceType,
+  ExpressionOperatorType,
+  ExpressionOperatorWithUuid,
+} from "src/components/ExpressionBuilder/types";
 
 interface Api {
-  page: (props: PageProps) => Promise<StreamAttributeMapResult>;
+  page: (props: PageRequest) => Promise<StreamAttributeMapResult>;
   search: (
-    props: SearchWithExpressionProps,
+    expression: ExpressionOperatorType,
+    page: PageRequest,
   ) => Promise<StreamAttributeMapResult>;
   fetchDataSource: () => Promise<DataSourceType>;
   getDetailsForSelectedStream: (metaId: number) => Promise<DataRow>;
@@ -18,6 +22,22 @@ interface Api {
 export const useApi = (): Api => {
   const { stroomBaseServiceUrl } = useConfig();
   const { httpGetJson, httpPostJsonResponse } = useHttpClient();
+
+  const getPageUrl = React.useCallback(
+    (pageInfo: PageRequest) => {
+      var url = new URL(`${stroomBaseServiceUrl}/streamattributemap/v1/`);
+
+      if (!!pageInfo) {
+        const { pageOffset, pageSize } = pageInfo;
+        if (pageSize !== undefined)
+          url.searchParams.append("pageSize", pageSize.toString());
+        if (pageOffset !== undefined)
+          url.searchParams.append("pageOffset", pageOffset.toString());
+      }
+      return url.href;
+    },
+    [stroomBaseServiceUrl],
+  );
 
   return {
     fetchDataSource: React.useCallback(
@@ -39,40 +59,18 @@ export const useApi = (): Api => {
       [stroomBaseServiceUrl, httpGetJson],
     ),
     page: React.useCallback(
-      ({ pageInfo }: PageProps) => {
-        var url = new URL(`${stroomBaseServiceUrl}/streamattributemap/v1/`);
-
-        if (!!pageInfo) {
-          const { pageOffset, pageSize } = pageInfo;
-          if (!!pageSize)
-            url.searchParams.append("pageSize", pageSize.toString());
-          if (!!pageOffset)
-            url.searchParams.append("pageOffset", pageOffset.toString());
-        }
-
-        return httpGetJson(url.href);
-      },
-      [stroomBaseServiceUrl, httpGetJson],
+      (pageInfo: PageRequest) => httpGetJson(getPageUrl(pageInfo)),
+      [getPageUrl, httpGetJson],
     ),
     search: React.useCallback(
-      ({ pageInfo, expressionWithUuids }: SearchWithExpressionProps) => {
-        var url = new URL(`${stroomBaseServiceUrl}/streamattributemap/v1/`);
-
-        if (!!pageInfo) {
-          const { pageOffset, pageSize } = pageInfo;
-          if (!!pageSize)
-            url.searchParams.append("pageSize", pageSize.toString());
-          if (!!pageOffset)
-            url.searchParams.append("pageOffset", pageOffset.toString());
-        }
-
-        const expression = cleanExpression(expressionWithUuids);
-
-        return httpPostJsonResponse(url.href, {
-          body: JSON.stringify(expression),
-        });
-      },
-      [stroomBaseServiceUrl, httpPostJsonResponse],
+      (
+        expressionWithUuids: ExpressionOperatorWithUuid,
+        pageInfo: PageRequest,
+      ) =>
+        httpPostJsonResponse(getPageUrl(pageInfo), {
+          body: JSON.stringify(cleanExpression(expressionWithUuids)),
+        }),
+      [getPageUrl, httpPostJsonResponse],
     ),
   };
 };

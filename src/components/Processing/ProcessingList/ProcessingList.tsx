@@ -60,6 +60,14 @@ const ProcessingList: React.FunctionComponent<Props> = ({
     ? "All rows loaded"
     : "Load more rows";
 
+  const pipelineNameCellRenderer: TableCellRenderer = React.useCallback(
+    (row: RowInfo) =>
+      row.original.filterId !== undefined
+        ? row.original.pipelineName
+        : "UNKNOWN",
+    [],
+  );
+
   const priorityCellRenderer: TableCellRenderer = React.useCallback(
     (row: RowInfo) =>
       row.original.filterId !== undefined ? (
@@ -96,15 +104,12 @@ const ProcessingList: React.FunctionComponent<Props> = ({
     },
     {
       Header: "Pipeline name",
-      accessor: "pipelineName",
-      Cell: (row: RowInfo) =>
-        row.original.filterId !== undefined
-          ? row.original.pipelineName
-          : "UNKNOWN",
+      accessor: "Pipeline",
+      Cell: pipelineNameCellRenderer,
     },
     {
       Header: "Priority",
-      accessor: "priority",
+      accessor: "Priority",
       Cell: priorityCellRenderer,
     },
     {

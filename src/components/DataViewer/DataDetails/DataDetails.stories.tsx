@@ -23,5 +23,5 @@ import {
 } from "src/testing/data/data/DataDetails.testData";
 
 storiesOf("Sections/Data Viewer/Details", module)
-  .add("Showing errors", () => <DataDetails data={errorData} />)
-  .add("Showing events", () => <DataDetails data={eventData} />);
+  .add("Showing errors", () => <DataDetails meta={errorData} />)
+  .add("Showing events", () => <DataDetails meta={eventData} />);
