@@ -1,14 +1,14 @@
 import * as React from "react";
 
 import useApi from "./useApi";
-import { User } from "src/types";
+import { StroomUser } from "src/types";
 import useListReducer from "src/lib/useListReducer";
 
 interface ManageUsers {
-  users: User[];
+  users: StroomUser[];
   findUsers: (name?: string, isGroup?: boolean, uuid?: string) => void;
   addUserToGroup: (userUuid: string, groupUuid: string) => void;
-  createUser: (name: string, isGroup: boolean) => Promise<User>;
+  createUser: (name: string, isGroup: boolean) => Promise<StroomUser>;
   deleteUser: (userUuid: string) => void;
 }
 
@@ -18,7 +18,7 @@ const useManageUsers = (): ManageUsers => {
     itemAdded,
     itemRemoved,
     itemsReceived,
-  } = useListReducer<User>(u => u.uuid);
+  } = useListReducer<StroomUser>(u => u.uuid);
 
   const { createUser, deleteUser, addUserToGroup, findUsers } = useApi();
 

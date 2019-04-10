@@ -21,17 +21,17 @@ import { storiesOf } from "@storybook/react";
 import fullTestData from "src/testing/data";
 import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
 
-import { User } from "src/types";
+import { StroomUser } from "src/types";
 import UsersInGroup from "./UsersInGroup";
 
 // Pick a group
-let aGroup: User = fullTestData.usersAndGroups.users
+let aGroup: StroomUser = fullTestData.usersAndGroups.users
   .filter(u => u.isGroup)
   .pop()!;
 
 const stories = storiesOf(
   "Sections/Authorisation Manager/Users In Group",
-  module
+  module,
 );
 
 addThemedStories(stories, () => <UsersInGroup group={aGroup} />);

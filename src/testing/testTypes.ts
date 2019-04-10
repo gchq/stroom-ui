@@ -4,7 +4,7 @@ import {
   ElementPropertiesByElementIdType,
   DataSourceType,
   StreamTaskType,
-  User,
+  StroomUser,
   IndexVolume,
   IndexVolumeGroup,
   IndexVolumeGroupMembership,
@@ -12,6 +12,7 @@ import {
   DocumentType,
 } from "../types";
 import { ResourcesByDocType } from "src/api/useDocumentApi/types";
+import { User } from "src/components/users";
 
 export interface UserGroupMembership {
   userUuid: string;
@@ -36,7 +37,7 @@ export interface TestData {
   dataList: StreamAttributeMapResult;
   dataSource: DataSourceType;
   usersAndGroups: {
-    users: User[];
+    users: StroomUser[];
     userGroupMemberships: UserGroupMembership[];
   };
   indexVolumesAndGroups: {
@@ -51,5 +52,6 @@ export interface TestData {
   docPermissionByType: {
     [docType: string]: string[];
   };
+  users: User[];
   userDocPermission: UserDocPermission[];
 }

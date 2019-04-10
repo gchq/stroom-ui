@@ -22,14 +22,14 @@ import fullTestData from "src/testing/data";
 import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
 
 import DocumentPermissionForUserEditor from "./DocumentPermissionForUserEditor";
-import { DocRefType, User } from "src/types";
+import { DocRefType, StroomUser } from "src/types";
 
-const testUser: User = fullTestData.usersAndGroups.users[0];
+const testUser: StroomUser = fullTestData.usersAndGroups.users[0];
 const testDocRef: DocRefType = fullTestData.documentTree.children![0];
 
 const stories = storiesOf(
   "Sections/Authorisation Manager/Document Permission For User Editor",
-  module
+  module,
 );
 
 addThemedStories(stories, () => (

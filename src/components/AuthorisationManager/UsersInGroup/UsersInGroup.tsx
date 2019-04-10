@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { User } from "src/types";
+import { StroomUser } from "src/types";
 
 import UsersTable, { useTable as useUsersTable } from "../UsersTable";
 import Button from "src/components/Button";
@@ -13,7 +13,7 @@ import UserModalPicker, {
 } from "../UserModalPicker";
 
 interface Props {
-  group: User;
+  group: StroomUser;
 }
 
 const UsersInGroup = ({ group }: Props) => {

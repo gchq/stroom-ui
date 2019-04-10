@@ -46,6 +46,7 @@ import { generate as generateStroomStatsStore } from "./stroomStatsStore";
 import { generate as generateVisualisation } from "./visualisation";
 import { generate as generateXmlSchema } from "./xmlSchema";
 import { generate as generateXslt } from "./xslt";
+import { generate as generateUsers } from "./users";
 import { generateGenericTracker } from "./trackers";
 import { dataList, dataSource } from "./data";
 import { generateTestUser, generateTestGroup } from "./usersAndGroups";
@@ -55,7 +56,7 @@ import {
 } from "./indexVolumes";
 import {
   IndexVolumeGroupMembership,
-  User,
+  StroomUser,
   IndexVolumeGroup,
   IndexVolume,
 } from "src/types";
@@ -63,31 +64,32 @@ import allAppPermissions from "./appPermissions";
 import { UserGroupMembership, TestData, UserDocPermission } from "../testTypes";
 import { documentPermissionNames } from "./docPermissions";
 import { iterateNodes } from "src/lib/treeUtils";
+import { User } from "src/components/users";
 
 let docPermissionByType = testDocRefsTypes.reduce(
   (acc, curr) => ({ ...acc, [curr]: documentPermissionNames }),
   {},
 );
 
-let groups: User[] = Array(5)
+let groups: StroomUser[] = Array(5)
   .fill(1)
   .map(generateTestGroup);
-let users: User[] = Array(30)
+let stroomUsers: StroomUser[] = Array(30)
   .fill(1)
   .map(generateTestUser);
 let userGroupMemberships: UserGroupMembership[] = [];
 let userIndex = 0;
 groups.forEach(group => {
   for (let x = 0; x < 10; x++) {
-    var user: User = users[userIndex++];
-    userIndex %= users.length; // wrap
+    var user: StroomUser = stroomUsers[userIndex++];
+    userIndex %= stroomUsers.length; // wrap
     userGroupMemberships.push({
       userUuid: user.uuid,
       groupUuid: group.uuid,
     });
   }
 });
-const allUsers = users.concat(groups);
+const allUsers = stroomUsers.concat(groups);
 let permissionIndex = 0;
 const userAppPermissions = {};
 allUsers.forEach(u => {
@@ -164,6 +166,10 @@ let trackers: StreamTaskType[] = Array(10)
 let indexes: IndexDoc[] = Array(5)
   .fill(null)
   .map(generateIndex);
+
+// let users: User[] = Array(5)
+// .fill(null)
+// .map(generateUsers);
 
 const docTree = {
   uuid: "0",
@@ -324,6 +330,7 @@ export const fullTestData: TestData = {
   userAppPermissions,
   docPermissionByType,
   userDocPermission,
+  users: generateUsers,
 };
 
 export default fullTestData;

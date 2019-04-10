@@ -1,11 +1,11 @@
-import { User } from "src/types";
+import { StroomUser } from "src/types";
 
 export interface StoreState {
-  allUsers: User[];
+  allUsers: StroomUser[];
   usersInGroup: {
-    [s: string]: User[];
+    [s: string]: StroomUser[];
   };
   groupsForUser: {
-    [s: string]: User[];
+    [s: string]: StroomUser[];
   };
 }

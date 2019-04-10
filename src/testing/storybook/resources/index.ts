@@ -11,8 +11,9 @@ import indexVolumeResource from "./indexVolumeResource";
 import pipelineResource from "./pipelineResource";
 import streamAttributeMapResource from "./streamAttributeMapResource";
 import streamTaskResource from "./streamTaskResource";
-import userResource from "./userAndGroupsResource";
+import stroomUserResource from "./userAndGroupsResource";
 import documentResources from "./documentResources";
+import userResource from "./userResource";
 
 const resourceBuilders: ResourceBuilder[] = [
   appPermissionResource,
@@ -27,6 +28,7 @@ const resourceBuilders: ResourceBuilder[] = [
   pipelineResource,
   streamAttributeMapResource,
   streamTaskResource,
+  stroomUserResource,
   userResource,
 ];
 

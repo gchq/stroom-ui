@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { User } from "src/types";
+import { StroomUser } from "src/types";
 
 import { useGroupsForUser } from "src/api/userGroups";
 import UsersTable, { useTable as useUsersTable } from "../UsersTable";
@@ -14,7 +14,7 @@ import ThemedConfirm, {
 } from "src/components/ThemedConfirm";
 
 interface Props {
-  user: User;
+  user: StroomUser;
 }
 
 const GroupsForUser: React.FunctionComponent<Props> = ({ user }) => {

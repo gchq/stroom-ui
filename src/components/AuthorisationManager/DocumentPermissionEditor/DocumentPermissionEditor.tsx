@@ -2,7 +2,7 @@ import * as React from "react";
 
 import IconHeader from "src/components/IconHeader";
 import useDocumentPermissions from "src/api/docPermission/useDocumentPermissions";
-import { User } from "src/types";
+import { StroomUser } from "src/types";
 import Button from "src/components/Button";
 import ThemedConfirm, {
   useDialog as useThemedConfirm,
@@ -46,7 +46,7 @@ export const DocumentPermissionEditor: React.FunctionComponent<Props> = ({
   const {
     selectableTableProps: { selectedItems: selectedUsers, clearSelection },
   } = usersTableProps;
-  const selectedUser: User | undefined =
+  const selectedUser: StroomUser | undefined =
     selectedUsers.length > 0 ? selectedUsers[0] : undefined;
 
   const {

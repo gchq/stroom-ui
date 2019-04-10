@@ -9,7 +9,7 @@ export interface HasAuditInfo {
   updateUser: string;
 }
 
-export interface User extends HasUuid {
+export interface StroomUser extends HasUuid {
   name: string;
   isGroup: boolean;
 }
