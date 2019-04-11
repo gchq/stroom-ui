@@ -14,32 +14,41 @@
  * limitations under the License.
  */
 
-import "react-table/react-table.css";
-import "react-toggle/style.css";
 import * as React from "react";
-import ReactTable, { RowInfo } from "react-table";
-import Toggle from "react-toggle";
 import { useState } from "react";
-
-import "src/styles/from_auth/table-small.css";
+import ReactTable, { RowInfo } from "react-table";
+import "react-table/react-table.css";
+import Toggle from "react-toggle";
+import "react-toggle/style.css";
 import Button from "src/components/Button";
-
-import "./UserSearch.css";
-import useUserSearch from "./useUserSearch";
+import "src/styles/from_auth/table-small.css";
+import { User } from "..";
 import { getColumnFormat } from "./tableCustomisations";
-import useAppNavigation from "src/components/AppChrome/useAppNavigation";
+import "./UserSearch.css";
 
-const UserSearch = () => {
+interface UserSearchProps {
+  onNewUserClicked: () => void;
+  onUserOpen: (selectedUserId: string) => void;
+  users: User[];
+  onDeleteUser: (userId: string) => void;
+}
+
+const UserSearch: React.FunctionComponent<UserSearchProps> = ({
+  onNewUserClicked,
+  onUserOpen,
+  users,
+  onDeleteUser,
+}) => {
   const [isFilteringEnabled, setFilteringEnabled] = useState(false);
-  const { users, selectedUser, remove, changeSelectedUser } = useUserSearch();
+  const [selectedUser, setSelectedUser] = useState("");
+
   const deleteButtonDisabled = !selectedUser;
-  const { goToNewUser, goToUser } = useAppNavigation();
   return (
     <div className="UserSearch-main">
       <div className="header">
         <Button
           className="toolbar-button-small primary"
-          onClick={() => goToNewUser()}
+          onClick={() => onNewUserClicked()}
           icon="plus"
           text="Create"
         />
@@ -55,7 +64,7 @@ const UserSearch = () => {
         ) : (
           <Button
             className="toolbar-button-small primary"
-            onClick={() => goToUser(selectedUser)}
+            onClick={() => onUserOpen(selectedUser)}
             icon="edit"
             text="View/edit"
           />
@@ -66,7 +75,8 @@ const UserSearch = () => {
             disabled={deleteButtonDisabled}
             onClick={() => {
               if (!!selectedUser) {
-                remove(selectedUser);
+                onDeleteUser(selectedUser);
+                // remove(selectedUser);
               }
             }}
             className="toolbar-button-small primary"
@@ -121,8 +131,9 @@ const UserSearch = () => {
                 selected = rowInfo.row.id === selectedUser;
               }
               return {
-                onClick: (target: any, event: any) => {
-                  changeSelectedUser(rowInfo.row.id);
+                onClick: () => {
+                  setSelectedUser(rowInfo.row.id);
+                  // changeSelectedUser(rowInfo.row.id);
                 },
                 className: selected
                   ? "table-row-small table-row-selected"

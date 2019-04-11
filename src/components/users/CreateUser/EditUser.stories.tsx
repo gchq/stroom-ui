@@ -1,13 +1,15 @@
-import * as React from "react";
-import { storiesOf } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
-import EditUser from "./EditUser";
-import * as loremIpsum from "lorem-ipsum";
+import { storiesOf } from "@storybook/react";
+import * as React from "react";
 import { User } from "..";
-
-const lr = (count: number) => loremIpsum({ count, units: "words" });
-
-const stories = storiesOf("Users/EditUser", module);
+import {
+  disabledUser,
+  inactiveUser,
+  lockedUser,
+  newUser,
+  wellUsedUser,
+} from "../testData";
+import EditUser from "./EditUser";
 
 const getComponent = (user: User) => {
   return (
@@ -27,40 +29,9 @@ const getComponent = (user: User) => {
   );
 };
 
-const getUser = (): User => {
-  return {
-    email: lr(1),
-    state: "enabled",
-    firstName: lr(1),
-    lastName: lr(1),
-    comments: lr(20),
-    forcePasswordChange: true,
-    neverExpires: false,
-    loginCount: 0,
-    createdByUser: lr(1),
-    createdOn: "2019-01-01T23:01:01.111Z",
-  };
-};
-
-let newUser = getUser();
-stories.add("brand new", () => getComponent(newUser));
-
-let wellUsedUser = getUser();
-wellUsedUser.forcePasswordChange = false;
-wellUsedUser.loginCount = 99;
-wellUsedUser.updatedOn = "2019-02-02T23:01:01.111Z";
-wellUsedUser.updatedByUser = lr(1);
-wellUsedUser.lastLogin = "2019-04-03T23:01:01.222Z";
-stories.add("well used", () => getComponent(wellUsedUser));
-
-let disabledUser = getUser();
-disabledUser.state = "disabled";
-stories.add("disabled", () => getComponent(disabledUser));
-
-let inactiveUser = getUser();
-inactiveUser.state = "inactive";
-stories.add("inactive", () => getComponent(inactiveUser));
-
-let lockedUser = getUser();
-lockedUser.state = "locked";
-stories.add("locked", () => getComponent(lockedUser));
+const stories = storiesOf("Users/EditUser", module)
+  .add("brand new", () => getComponent(newUser))
+  .add("well used", () => getComponent(wellUsedUser))
+  .add("disabled", () => getComponent(disabledUser))
+  .add("inactive", () => getComponent(inactiveUser))
+  .add("locked", () => getComponent(lockedUser));

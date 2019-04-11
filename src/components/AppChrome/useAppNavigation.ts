@@ -26,7 +26,7 @@ export const urlGenerator: NavigateApp<string> = {
     `/s/indexing/groups/${groupName}`,
   goToUsers: () => `/s/users`,
   goToUser: (userId: string) => `/s/user/${userId}`,
-  goToNewUser: () => `/s/ser/new`,
+  goToNewUser: () => `/s/user/new`,
   goToApiKeys: () => `/s/apikeys`,
   goToError: () => `/s/error`,
   goToEditDocRefByUuid: (docRefUuid: string) => `/s/doc/${docRefUuid}`,
