@@ -77,6 +77,7 @@ const CreateUser: React.FunctionComponent<Props> = ({
                 icon="arrow-left"
                 onClick={onBack}
                 text="Back"
+                type="button"
               />
             </div>
             <UserFields
@@ -98,6 +99,7 @@ const CreateUser: React.FunctionComponent<Props> = ({
                 className="toolbar-button-small secondary"
                 icon="times"
                 onClick={onBack}
+                type="button"
                 text="Cancel"
               />
             </div>
