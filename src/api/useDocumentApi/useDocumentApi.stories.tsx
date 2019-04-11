@@ -11,7 +11,13 @@ import JsonDebug from "src/testing/JsonDebug";
 const TestHarness: React.FunctionComponent = () => {
   const { documentTree } = useDocumentTree();
   const [docRefContents, setDocRefContents] = React.useState<object>({});
-  const [docRefType, setDocRefType] = React.useState<string>("DictionaryDoc");
+  const [docRefType, setDocRefType] = React.useState<keyof ResourcesByDocType>(
+    "Dictionary",
+  );
+  const setDocRefTypeSafe = React.useCallback(
+    d => setDocRefType(d as keyof ResourcesByDocType),
+    [setDocRefType],
+  );
 
   const docRefUuid = React.useMemo(() => {
     let d;
@@ -44,7 +50,7 @@ const TestHarness: React.FunctionComponent = () => {
     <div>
       <DocRefTypePicker
         value={docRefType}
-        onChange={setDocRefType}
+        onChange={setDocRefTypeSafe}
         invalidTypes={["Folder"]}
       />
       <JsonDebug value={{ docRefType, docRefUuid, docRefContents }} />

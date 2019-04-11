@@ -40,7 +40,7 @@ const testTree: DocRefTree = {
           type: "Folder",
           name: "Stroom 101",
           children: [
-            createRandomItem("DictionaryDoc"),
+            createRandomItem("Dictionary"),
             createRandomItem("Pipeline"),
             createRandomItem("XSLT"),
             createRandomItem("Index"),
@@ -52,7 +52,7 @@ const testTree: DocRefTree = {
           type: "Folder",
           name: "Stroom Elastic Example",
           children: [
-            createRandomItem("DictionaryDoc"),
+            createRandomItem("Dictionary"),
             createRandomItem("Pipeline"),
             createRandomItem("TextConverter"),
             createRandomItem("ElasticIndex"),
@@ -71,7 +71,7 @@ const testTree: DocRefTree = {
           type: "Folder",
           name: "Stroom 102",
           children: [
-            createRandomItem("DictionaryDoc"),
+            createRandomItem("Dictionary"),
             createRandomItem("Pipeline"),
             createRandomItem("XSLT"),
             createRandomItem("Index"),
@@ -88,7 +88,7 @@ const testTree: DocRefTree = {
           type: "Folder",
           name: "Stroom Annotations Example",
           children: [
-            createRandomItem("DictionaryDoc"),
+            createRandomItem("Dictionary"),
             createRandomItem("Pipeline"),
             createRandomItem("TextConverter"),
             createRandomItem("AnnotationsIndex"),

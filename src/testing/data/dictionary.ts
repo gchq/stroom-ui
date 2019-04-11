@@ -3,7 +3,7 @@ import * as loremIpsum from "lorem-ipsum";
 import { DictionaryDoc } from "src/api/useDocumentApi/types/dictionaryDoc";
 
 export const generate = (): DictionaryDoc => ({
-  type: "DictionaryDoc",
+  type: "Dictionary",
   uuid: uuidv4(),
   name: loremIpsum({ count: 2, units: "words" }),
   description: loremIpsum({ count: 6, units: "words" }),

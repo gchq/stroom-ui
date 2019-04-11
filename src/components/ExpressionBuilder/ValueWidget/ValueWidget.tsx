@@ -47,7 +47,7 @@ const ValueWidget: React.FunctionComponent<Props> = ({
     case "IN_DICTIONARY": {
       return (
         <AppSearchBar
-          typeFilters={["DictionaryDoc"]}
+          typeFilters={["Dictionary"]}
           onChange={onChange}
           value={value}
         />

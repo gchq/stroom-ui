@@ -12,9 +12,7 @@ const DictionaryEditor: React.FunctionComponent<SwitchedDocRefEditorProps> = ({
   docRefUuid,
 }) => {
   // Get data from and subscribe to the store
-  const documentApi = useDocumentApi<"DictionaryDoc", DictionaryDoc>(
-    "DictionaryDoc",
-  );
+  const documentApi = useDocumentApi<"Dictionary", DictionaryDoc>("Dictionary");
 
   const { onDocumentChange, editorProps } = useDocRefEditor<DictionaryDoc>({
     docRefUuid,

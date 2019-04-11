@@ -3,7 +3,7 @@ export interface ResourcesByDocType {
   Pipeline: string;
   Index: string;
   Feed: string;
-  DictionaryDoc: string;
+  Dictionary: string;
   AnnotationsIndex: string;
   ElasticIndex: string;
   Dashboard: string;
@@ -19,7 +19,7 @@ export const DOCUMENT_RESOURCES: ResourcesByDocType = {
   Pipeline: "/pipelines/v1/",
   Index: "/index/v1/",
   Feed: "/feed/v1/",
-  DictionaryDoc: "/dictionary/v1/",
+  Dictionary: "/dictionary/v1/",
   AnnotationsIndex: "/annotationsIndex/v1/",
   ElasticIndex: "/elasticIndex/v1/",
   Dashboard: "/dashboard/v1/",

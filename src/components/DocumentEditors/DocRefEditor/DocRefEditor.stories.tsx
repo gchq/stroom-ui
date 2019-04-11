@@ -14,8 +14,14 @@ const stories = storiesOf("Document Editors", module);
 
 const TestHarness: React.FunctionComponent = () => {
   const { documentTree } = useDocumentTree();
-  const [docRefType, setDocRefType] = React.useState<string>("DictionaryDoc");
-  const documentApi = useDocumentApi(docRefType as keyof ResourcesByDocType);
+  const [docRefType, setDocRefType] = React.useState<keyof ResourcesByDocType>(
+    "Dictionary",
+  );
+  const setDocRefTypeSafe = React.useCallback(
+    d => setDocRefType(d as keyof ResourcesByDocType),
+    [setDocRefType],
+  );
+  const documentApi = useDocumentApi(docRefType);
 
   const docRefUuid = React.useMemo(() => {
     let d;
@@ -42,7 +48,7 @@ const TestHarness: React.FunctionComponent = () => {
   return !!docRefContents ? (
     <DocRefEditor {...editorProps}>
       <Button onClick={onClick} text="Print onDocumentChange" />
-      <DocRefTypePicker value={docRefType} onChange={setDocRefType} />
+      <DocRefTypePicker value={docRefType} onChange={setDocRefTypeSafe} />
       <JsonDebug
         value={{ documentApi: Object.keys(documentApi), docRefContents }}
       />

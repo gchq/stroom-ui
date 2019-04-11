@@ -2,7 +2,7 @@ const docRefTypes: string[] = [
   "AnnotationsIndex",
   "ElasticIndex",
   "Dashboard",
-  "DictionaryDoc",
+  "Dictionary",
   "Feed",
   "Folder",
   "Index",

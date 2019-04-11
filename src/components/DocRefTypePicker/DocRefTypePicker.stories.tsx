@@ -22,7 +22,7 @@ import DocRefTypePicker from "./DocRefTypePicker";
 import JsonDebug from "src/testing/JsonDebug";
 import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
 
-const invalidTypes: string[] = ["Folder", "DictionaryDoc", "XSLT"];
+const invalidTypes: string[] = ["Folder", "Dictionary", "XSLT"];
 
 const TestForm = () => {
   const [docRefType, setDocRefType] = React.useState<string>("");

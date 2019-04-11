@@ -294,7 +294,7 @@ export const fullTestData: TestData = {
   elementProperties,
   documents: {
     XSLT: Object.values(xslt),
-    DictionaryDoc: Object.values(dictionaries),
+    Dictionary: Object.values(dictionaries),
     Feed: feeds,
     Index: indexes,
     Pipeline: Object.values(testPipelines),

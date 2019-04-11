@@ -18,7 +18,7 @@ import { DictionaryDoc } from "src/api/useDocumentApi/types/dictionaryDoc";
 import { ExpressionOperatorWithUuid } from "../types";
 
 const colourDictionary: DictionaryDoc = {
-  type: "DictionaryDoc",
+  type: "Dictionary",
   uuid: "colourDict123",
   name: "Colours",
   description: "All the colours of the rainbow",

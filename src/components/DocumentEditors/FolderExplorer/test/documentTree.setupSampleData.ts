@@ -590,7 +590,7 @@ export default {
         },
         {
           uuid: "352082ae-5b7c-4105-8d34-39ec7c713523",
-          type: "DictionaryDoc",
+          type: "Dictionary",
           name: "Test DictionaryDoc",
           children: null,
         },

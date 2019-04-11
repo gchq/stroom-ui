@@ -102,7 +102,7 @@ export function useDocRefEditor<T extends object>({
   }, [fetchDocument, setDocRefContents, setIsDirty, docRefUuid]);
 
   // FIX
-  // console.log("docRefContents", docRefContents);
+  console.log("docRefContents", docRefContents);
 
   const onClickSave = React.useCallback(() => {
     if (!!docRefContents && documentApi && !!documentApi.saveDocument) {

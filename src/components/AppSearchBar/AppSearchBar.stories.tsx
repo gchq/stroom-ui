@@ -121,8 +121,8 @@ stories
   .add("Doc Ref Form (Pipeline)", () => (
     <AppSearchAsForm typeFilters={["Pipeline"]} />
   ))
-  .add("Doc Ref Picker (Feed AND DictionaryDoc)", () => (
-    <AppSearchAsPicker typeFilters={["Feed", "DictionaryDoc"]} />
+  .add("Doc Ref Picker (Feed AND Dictionary)", () => (
+    <AppSearchAsPicker typeFilters={["Feed", "Dictionary"]} />
   ))
   .add("Doc Ref Form (Folders)", () => (
     <AppSearchAsForm typeFilters={["Folder"]} />
