@@ -14,140 +14,93 @@
  * limitations under the License.
  */
 
-import * as React from "react";
-import { useEffect, useState } from "react";
-import { Formik, Form } from "formik";
-
-import Button from "src/components/Button";
-import Loader from "src/components/Loader";
-import useIdFromPath from "src/lib/useIdFromPath";
-import { PasswordValidationRequest } from "src/api/authentication/types";
-import { hasAnyProps } from "src/lib/lang";
-
-import "./EditUser.css";
-import BackConfirmation from "../BackConfirmation";
-import UserFields from "./UserFields";
-import { UserValidationSchema, validateAsync } from "../validation";
-import { useUsers } from "../api";
-import { useConfig } from "src/startup/config";
-import { useAuthenticationContext } from "src/startup/Authentication";
+import { Form, Formik } from "formik";
 import { isEmpty } from "ramda";
-import useAppNavigation from "src/components/AppChrome/useAppNavigation";
+import * as React from "react";
+import { useState } from "react";
+import Button from "src/components/Button";
+import { hasAnyProps } from "src/lib/lang";
+import BackConfirmation from "../BackConfirmation";
+import { UserValidationSchema } from "../validation";
+import "./EditUser.css";
+import EditUserFormProps from "./EditUserFormProps";
+import UserFields from "./UserFields";
 
-const EditUser = () => {
-  const { updateUser, fetchUser, user } = useUsers();
+const EditUser: React.FunctionComponent<EditUserFormProps> = ({
+  onSubmit,
+  onBack,
+  onCancel,
+  onValidate,
+  user,
+}) => {
   const [showBackConfirmation, setShowBackConfirmation] = useState(false);
-  const userId = useIdFromPath("user/");
-  const { idToken } = useAuthenticationContext();
-  const { authenticationServiceUrl } = useConfig();
-  const { goToUsers } = useAppNavigation();
-  if (!authenticationServiceUrl || !idToken)
-    throw Error("Configuration not ready or misconfigured!");
-  useEffect(() => {
-    if (!!userId && !user) fetchUser(userId);
-  }, [fetchUser]);
+  const handleBack = (isPristine: boolean) => {
+    if (isPristine) {
+      onBack();
+    } else {
+      setShowBackConfirmation(true);
+    }
+  };
 
-  if (!!user) {
-    let initialValues = {
-      id: user.id || "",
-      email: user.email || "",
-      firstName: user.firstName || "",
-      lastName: user.lastName || "",
-      state: user.state || "enabled",
-      password: "",
-      verifyPassword: "",
-      comments: user.comments || "",
-      neverExpires: user.neverExpires || false,
-      forcePasswordChange: user.forcePasswordChange || false,
-    };
-
-    const handleBack = (isPristine: boolean) => {
-      if (isPristine) {
-        goToUsers();
-      } else {
-        setShowBackConfirmation(true);
-      }
-    };
-
-    return (
-      <Formik
-        onSubmit={(values, actions) => {
-          //TODO: Add a form-to-user mapping function here
-          updateUser(values);
-        }}
-        initialValues={initialValues}
-        validateOnBlur
-        validate={values => {
-          const passwordValidationRequest: PasswordValidationRequest = {
-            newPassword: values.password,
-            verifyPassword: values.verifyPassword,
-            email: values.email,
-          };
-          validateAsync(
-            passwordValidationRequest,
-            idToken,
-            authenticationServiceUrl,
-          );
-        }}
-        validationSchema={UserValidationSchema}
-      >
-        {({ errors, touched, submitForm, setFieldTouched, setFieldValue }) => {
-          const isPristine = !hasAnyProps(touched);
-          const hasErrors = hasAnyProps(errors);
-          return (
-            <Form>
-              <div className="header">
+  return (
+    <Formik
+      onSubmit={values => onSubmit(values)}
+      initialValues={user}
+      validateOnBlur
+      validate={onValidate}
+      validationSchema={UserValidationSchema}
+    >
+      {({ errors, touched, submitForm, setFieldTouched, setFieldValue }) => {
+        const isPristine = !hasAnyProps(touched);
+        const hasErrors = hasAnyProps(errors);
+        return (
+          <Form>
+            <div className="header">
+              <Button
+                onClick={() => handleBack(isPristine)}
+                className="primary toolbar-button-small"
+                icon="arrow-left"
+                text="Back"
+              />
+            </div>
+            <div>
+              <UserFields
+                showCalculatedFields
+                userBeingEdited={user}
+                errors={errors}
+                touched={touched}
+                setFieldTouched={setFieldTouched}
+                setFieldValue={setFieldValue}
+              />
+              <div className="footer">
                 <Button
-                  onClick={() => handleBack(isPristine)}
-                  className="primary toolbar-button-small"
-                  icon="arrow-left"
-                  text="Back"
+                  type="submit"
+                  className="toolbar-button-small primary"
+                  disabled={isPristine || hasErrors}
+                  icon="save"
+                  text="Save"
+                  // isLoading={isSaving}
+                />
+                <Button
+                  className="toolbar-button-small secondary"
+                  icon="times"
+                  onClick={() => onCancel()}
+                  text="Cancel"
                 />
               </div>
-              <div>
-                <UserFields
-                  showCalculatedFields
-                  userBeingEdited={user}
-                  errors={errors}
-                  touched={touched}
-                  setFieldTouched={setFieldTouched}
-                  setFieldValue={setFieldValue}
-                />
-                <div className="footer">
-                  <Button
-                    type="submit"
-                    className="toolbar-button-small primary"
-                    disabled={isPristine || hasErrors}
-                    icon="save"
-                    text="Save"
-                    // isLoading={isSaving}
-                  />
-                  <Button
-                    className="toolbar-button-small secondary"
-                    icon="times"
-                    onClick={() => goToUsers()}
-                    text="Cancel"
-                  />
-                </div>
-                <BackConfirmation
-                  isOpen={showBackConfirmation}
-                  onGoBack={() => {
-                    setShowBackConfirmation(false);
-                    goToUsers();
-                  }}
-                  hasErrors={!isEmpty(errors)}
-                  onSaveAndGoBack={submitForm}
-                  onContinueEditing={() => setShowBackConfirmation(false)}
-                />
-              </div>
-            </Form>
-          );
-        }}
-      </Formik>
-    );
-  } else {
-    return <Loader message="" />;
-  }
+              <BackConfirmation
+                isOpen={showBackConfirmation}
+                onGoBack={() => onBack()}
+                hasErrors={!isEmpty(errors)}
+                onSaveAndGoBack={submitForm}
+                onContinueEditing={() => setShowBackConfirmation(false)}
+              />
+            </div>
+          </Form>
+        );
+      }}
+    </Formik>
+  );
 };
 
 export default EditUser;

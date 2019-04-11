@@ -6,18 +6,18 @@ export interface StoreState {
 }
 
 export interface User {
-  comments: string;
-  createdByUser?: any;
-  createdOn?: any;
   email: string;
+  state: string;
   firstName: string;
+  lastName: string;
+  comments: string;
   forcePasswordChange: boolean;
   id?: string;
   lastLogin?: any;
-  lastName: string;
   loginCount?: number;
   neverExpires?: boolean;
-  state: string;
+  createdByUser?: any;
+  createdOn?: any;
   updatedByUser?: any;
   updatedOn?: any;
 }

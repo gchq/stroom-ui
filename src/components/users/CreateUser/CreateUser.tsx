@@ -19,22 +19,11 @@ import * as React from "react";
 import Button from "src/components/Button";
 import { hasAnyProps } from "src/lib/lang";
 import "src/styles/from_auth/Layout.css";
-import { User } from "../types";
 import { NewUserValidationSchema } from "../validation";
 import "./CreateUserForm.css";
 import UserFields from "./UserFields";
-
-interface UserFormData {
-  firstName: string;
-  lastName: string;
-  email: string;
-  state: string;
-  password: string;
-  verifyPassword: string;
-  neverExpires: boolean;
-  comments: string;
-  forcePasswordChange: boolean;
-}
+import UserFormData from "./UserFormData";
+import CreateUserFormProps from "./CreateUserFormProps";
 
 // If we don't pass initialValues to Formik then they won't be controlled
 // and we'll get console errors when they're used.
@@ -49,20 +38,16 @@ const initialValues: UserFormData = {
   comments: "",
   forcePasswordChange: true,
 };
-interface Props {
-  onCreateUser: (user: User) => void;
-  onBack: () => void;
-  onValidate: (values: UserFormData) => Promise<void>;
-}
-const CreateUser: React.FunctionComponent<Props> = ({
-  onCreateUser,
+
+const CreateUser: React.FunctionComponent<CreateUserFormProps> = ({
+  onSubmit,
   onBack,
   onValidate,
 }) => {
   return (
     <Formik
       initialValues={initialValues}
-      onSubmit={values => onCreateUser(values)}
+      onSubmit={values => onSubmit(values)}
       validate={onValidate}
       validationSchema={NewUserValidationSchema}
     >

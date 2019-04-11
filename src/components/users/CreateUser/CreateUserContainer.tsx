@@ -25,6 +25,7 @@ import { validateAsync } from "../validation";
 import CreateUser from "./CreateUser";
 import "./CreateUserForm.css";
 import useAppNavigation from "src/components/AppChrome/useAppNavigation";
+import UserFormData from "./UserFormData";
 
 const CreateUserContainer = ({}) => {
   const { createUser } = useUsers();
@@ -37,9 +38,10 @@ const CreateUserContainer = ({}) => {
   const { goToUsers } = useAppNavigation();
   return (
     <CreateUser
-      onCreateUser={(user: User) => createUser(user)}
+      onSubmit={(user: User) => createUser(user)}
       onBack={() => goToUsers()}
-      onValidate={values => {
+      onCancel={() => goToUsers()}
+      onValidate={(values: UserFormData) => {
         const passwordValidationRequest: PasswordValidationRequest = {
           newPassword: values.password,
           verifyPassword: values.verifyPassword,

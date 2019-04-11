@@ -1,8 +1,5 @@
-import * as React from "react";
 import { storiesOf } from "@storybook/react";
-import { action } from "@storybook/addon-actions";
+import * as React from "react";
 import { UserSearch } from "..";
 
-storiesOf("General Purpose/User/Search", module).add("basic", () => (
-  <UserSearch />
-));
+storiesOf("Users/Search", module).add("basic", () => <UserSearch />);

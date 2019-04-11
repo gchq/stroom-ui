@@ -3,12 +3,13 @@ import { storiesOf } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
 import CreateUser from "./CreateUser";
 
-storiesOf("General Purpose/User/CreateUser", module).add("basic", () => (
+storiesOf("Users/CreateUser", module).add("basic", () => (
   <CreateUser
     onBack={action("onBack")}
-    onCreateUser={action("user")}
+    onSubmit={action("onSubmit")}
+    onCancel={action("onCancel")}
     onValidate={() => {
-      return new Promise(resolve => {
+      return new Promise(() => {
         action("onValidate");
       });
     }}
