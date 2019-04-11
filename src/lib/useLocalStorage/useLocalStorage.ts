@@ -1,8 +1,12 @@
 import * as React from "react";
 
+type ValueReducer<T> = (existingValue: T) => T;
+
 interface OutProps<T> {
   value: T;
-  setValue: (value: T) => void;
+  setValue: (newValue: T) => void;
+  reduceValue: (reducer: ValueReducer<T>) => void;
+  resetValue: () => void;
 }
 
 interface StringConversion<T> {
@@ -54,23 +58,48 @@ const useLocalStorage = function<T>(
 ): OutProps<T> {
   const [value, setStateValue] = React.useState<T>(noLocalStorageInitialState);
 
-  React.useEffect(() => {
+  const getFromStorage = React.useCallback(() => {
     const rawValue: string | null = localStorage.getItem(stateName);
     if (rawValue !== null) {
-      const value = stringConversion.fromString(rawValue);
-      setStateValue(value);
+      return stringConversion.fromString(rawValue);
+    }
+    return noLocalStorageInitialState;
+  }, [stateName, stringConversion, noLocalStorageInitialState]);
+
+  React.useEffect(() => {
+    const existingValue = getFromStorage();
+    if (existingValue !== undefined) {
+      setStateValue(existingValue);
     }
   }, [stateName, setStateValue]);
 
-  const setValue = (valueToSet: T) => {
-    const asString = stringConversion.toString(valueToSet);
-    localStorage.setItem(stateName, asString);
-    setStateValue(valueToSet);
-  };
+  const setValue = React.useCallback(
+    (valueToSet: T) => {
+      const asString = stringConversion.toString(valueToSet);
+      localStorage.setItem(stateName, asString);
+      setStateValue(valueToSet);
+    },
+    [stateName, stringConversion, setStateValue],
+  );
+
+  const reduceValue = React.useCallback(
+    (reducer: ValueReducer<T>) => {
+      const existingValue = getFromStorage();
+      const newValue = reducer(existingValue);
+      setValue(newValue);
+    },
+    [setValue, getFromStorage],
+  );
+
+  const resetValue = React.useCallback(() => {
+    setValue(noLocalStorageInitialState);
+  }, [setValue, noLocalStorageInitialState]);
 
   return {
     value,
     setValue,
+    reduceValue,
+    resetValue,
   };
 };
 

@@ -3,7 +3,7 @@ import { SwitchedDocRefEditorProps } from "../DocRefEditor/types";
 import DocRefEditor, { useDocRefEditor } from "../DocRefEditor";
 
 const DashboardEditor: React.FunctionComponent<SwitchedDocRefEditorProps> = ({
-  docRefUuid
+  docRefUuid,
 }) => {
   const { editorProps } = useDocRefEditor({ docRefUuid });
 

@@ -21,6 +21,11 @@ const TestHarness: React.FunctionComponent = () => {
     setDocumentIndex((documentIndex + 1) % documents.length);
   }, [documents, documentIndex, addRecentItem, setDocumentIndex]);
 
+  React.useEffect(() => {
+    addRecentItem(documents[documentIndex]);
+    setDocumentIndex((documentIndex + 1) % documents.length);
+  }, [addRecentItem]);
+
   return (
     <div>
       <Button onClick={onClickAddNext} text="Add" />

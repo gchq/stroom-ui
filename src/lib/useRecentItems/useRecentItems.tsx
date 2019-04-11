@@ -7,16 +7,22 @@ interface OutProps {
   addRecentItem: DocRefConsumer;
 }
 
+const DEFAULT_RECENT_ITEMS: DocRefType[] = [];
+
 export const useRecentItems = (): OutProps => {
-  const { setValue, value } = useLocalStorage<DocRefType[]>(
+  const { reduceValue, value } = useLocalStorage<DocRefType[]>(
     "recent-items",
-    [],
+    DEFAULT_RECENT_ITEMS,
     useStoreObjectFactory(),
   );
 
   const addRecentItem = React.useCallback(
-    (d: DocRefType) => setValue([d, ...value.filter(v => v.uuid !== d.uuid)]),
-    [value, setValue],
+    (d: DocRefType) =>
+      reduceValue(existingValue => [
+        d,
+        ...existingValue.filter(v => v.uuid !== d.uuid),
+      ]),
+    [reduceValue],
   );
 
   return {

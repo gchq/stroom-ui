@@ -20,6 +20,8 @@ let SwitchedDocRefEditor: React.FunctionComponent<
     addRecentItem(docRef);
   }, [docRefUuid, addRecentItem]);
 
+  console.log("Rendering Switched Doc Ref Editor");
+
   const EditorClass = docRefEditorClasses[docRef.type];
   if (!!EditorClass) {
     return <EditorClass docRefUuid={docRef.uuid} />;

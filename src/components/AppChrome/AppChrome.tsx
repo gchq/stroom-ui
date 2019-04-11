@@ -167,23 +167,30 @@ const AppChrome: React.FunctionComponent<AppChromeProps> = ({
 
   const {
     value: areMenuItemsOpen,
-    setValue: setOpenMenuItems,
+    reduceValue: modifyOpenMenuItems,
   } = useLocalStorage<MenuItemsOpenState>(
     "app-chrome-menu-items-open",
     {},
     useStoreObjectFactory<MenuItemsOpenState>(),
   );
-  const menuItemOpened: MenuItemOpened = (name: string, isOpen: boolean) => {
-    setOpenMenuItems({
-      ...areMenuItemsOpen,
-      [name]: isOpen,
-    });
-  };
+  const menuItemOpened: MenuItemOpened = React.useCallback(
+    (name: string, isOpen: boolean) => {
+      modifyOpenMenuItems(existing => ({
+        ...existing,
+        [name]: isOpen,
+      }));
+    },
+    [modifyOpenMenuItems],
+  );
 
-  const { value: isExpanded, setValue: setIsExpanded } = useLocalStorage(
+  const { value: isExpanded, reduceValue: setIsExpanded } = useLocalStorage(
     "isExpanded",
     true,
     storeBoolean,
+  );
+  const toggleIsExpanded = React.useCallback(
+    () => setIsExpanded(existingIsExpanded => !existingIsExpanded),
+    [setIsExpanded],
   );
 
   const {
@@ -372,7 +379,7 @@ const AppChrome: React.FunctionComponent<AppChromeProps> = ({
             <React.Fragment>
               <div
                 className="app-chrome__sidebar_header header"
-                onClick={() => setIsExpanded(!isExpanded)}
+                onClick={toggleIsExpanded}
               >
                 <FontAwesomeIcon
                   aria-label="Show/hide the sidebar"
