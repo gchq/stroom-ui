@@ -6,6 +6,7 @@ import { useRouter } from "src/lib/useRouter";
 import useUserState from "./useUserState";
 import { User } from "../types";
 import useApi from "../api/useApi";
+import useAppNavigation from "src/components/AppChrome/useAppNavigation";
 
 /**
  * This hook connects the REST API calls to the Redux Store.
@@ -16,6 +17,7 @@ const useUsers = () => {
 
   const { user, setUser, clearUser, setIsCreating } = useUserState();
 
+  const { goToUsers } = useAppNavigation();
   /**
    * Deletes the user and then refreshes our browser cache of users.
    */
@@ -29,7 +31,7 @@ const useUsers = () => {
   const updateUser = useCallback(
     (user: User) => {
       updateUserUsingApi(user).then(() => {
-        history.push("/userSearch");
+        goToUsers();
       });
     },
     [updateUserUsingApi, clearUser],
@@ -45,7 +47,7 @@ const useUsers = () => {
       createUserUsingApi(user).then(() => {
         createAuthorisationUser(user.email).then(() => {
           setIsCreating(false);
-          history.push("/userSearch");
+          goToUsers();
         });
       });
     },

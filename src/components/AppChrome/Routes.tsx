@@ -264,7 +264,7 @@ const Routes: React.FunctionComponent = () => {
       />
       <PrivateRoute
         exact
-        path={urlGenerator.goToUser("")}
+        path={urlGenerator.goToNewUser()}
         render={() => (
           <AppChrome activeMenuItem="userIdentities" content={<UserCreate />} />
         )}

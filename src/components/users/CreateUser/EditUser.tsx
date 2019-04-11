@@ -21,7 +21,6 @@ import { Formik, Form } from "formik";
 import Button from "src/components/Button";
 import Loader from "src/components/Loader";
 import useIdFromPath from "src/lib/useIdFromPath";
-import useRouter from "src/lib/useRouter";
 import { PasswordValidationRequest } from "src/api/authentication/types";
 import { hasAnyProps } from "src/lib/lang";
 
@@ -33,14 +32,15 @@ import { useUsers } from "../api";
 import { useConfig } from "src/startup/config";
 import { useAuthenticationContext } from "src/startup/Authentication";
 import { isEmpty } from "ramda";
+import useAppNavigation from "src/components/AppChrome/useAppNavigation";
 
 const EditUser = () => {
   const { updateUser, fetchUser, user } = useUsers();
-  const { history } = useRouter();
   const [showBackConfirmation, setShowBackConfirmation] = useState(false);
   const userId = useIdFromPath("user/");
   const { idToken } = useAuthenticationContext();
   const { authenticationServiceUrl } = useConfig();
+  const { goToUsers } = useAppNavigation();
   if (!authenticationServiceUrl || !idToken)
     throw Error("Configuration not ready or misconfigured!");
   useEffect(() => {
@@ -63,7 +63,7 @@ const EditUser = () => {
 
     const handleBack = (isPristine: boolean) => {
       if (isPristine) {
-        history.push("/userSearch");
+        goToUsers();
       } else {
         setShowBackConfirmation(true);
       }
@@ -125,7 +125,7 @@ const EditUser = () => {
                   <Button
                     className="toolbar-button-small secondary"
                     icon="times"
-                    onClick={() => history.push("/userSearch/")}
+                    onClick={() => goToUsers()}
                     text="Cancel"
                   />
                 </div>
@@ -133,7 +133,7 @@ const EditUser = () => {
                   isOpen={showBackConfirmation}
                   onGoBack={() => {
                     setShowBackConfirmation(false);
-                    history.push("/userSearch");
+                    goToUsers();
                   }}
                   hasErrors={!isEmpty(errors)}
                   onSaveAndGoBack={submitForm}

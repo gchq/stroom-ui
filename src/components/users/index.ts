@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import UserCreate from "./CreateUser/CreateUser";
+import UserCreate from "./CreateUser/CreateUserContainer";
 import UserEdit from "./CreateUser/EditUser";
 import UserSearch from "./SearchUsers";
 import AsyncUserSelect from "./UserSelect";

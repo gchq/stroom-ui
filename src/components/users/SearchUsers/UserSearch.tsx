@@ -23,24 +23,23 @@ import { useState } from "react";
 
 import "src/styles/from_auth/table-small.css";
 import Button from "src/components/Button";
-import useRouter from "src/lib/useRouter";
 
 import "./UserSearch.css";
 import useUserSearch from "./useUserSearch";
 import { getColumnFormat } from "./tableCustomisations";
+import useAppNavigation from "src/components/AppChrome/useAppNavigation";
 
 const UserSearch = () => {
   const [isFilteringEnabled, setFilteringEnabled] = useState(false);
   const { users, selectedUser, remove, changeSelectedUser } = useUserSearch();
-  const { history } = useRouter();
   const deleteButtonDisabled = !selectedUser;
-
+  const { goToNewUser, goToUser } = useAppNavigation();
   return (
     <div className="UserSearch-main">
       <div className="header">
         <Button
           className="toolbar-button-small primary"
-          onClick={() => history.push("/newUser")}
+          onClick={() => goToNewUser()}
           icon="plus"
           text="Create"
         />
@@ -56,7 +55,7 @@ const UserSearch = () => {
         ) : (
           <Button
             className="toolbar-button-small primary"
-            onClick={() => history.push(`/user/${selectedUser}`)}
+            onClick={() => goToUser(selectedUser)}
             icon="edit"
             text="View/edit"
           />

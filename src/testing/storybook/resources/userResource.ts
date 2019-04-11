@@ -16,6 +16,11 @@ const resourceBuilder: ResourceBuilder = (
   server.get(resource).intercept((req: HttpRequest, res: HttpResponse) => {
     res.json(testCache.data!.users);
   });
+  server
+    .get(`${resource}/isPasswordValid`)
+    .intercept((req: HttpRequest, res: HttpResponse) => {
+      res.json(true);
+    });
 };
 
 export default resourceBuilder;

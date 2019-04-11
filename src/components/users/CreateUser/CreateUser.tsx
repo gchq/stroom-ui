@@ -14,64 +14,56 @@
  * limitations under the License.
  */
 
+import { Form, Formik } from "formik";
 import * as React from "react";
-import { Formik, Form } from "formik";
-
-import "src/styles/from_auth/Layout.css";
 import Button from "src/components/Button";
-import useRouter from "src/lib/useRouter";
 import { hasAnyProps } from "src/lib/lang";
-
+import "src/styles/from_auth/Layout.css";
+import { User } from "../types";
+import { NewUserValidationSchema } from "../validation";
 import "./CreateUserForm.css";
 import UserFields from "./UserFields";
-import { NewUserValidationSchema, validateAsync } from "../validation";
-import { User } from "../types";
-import { useUsers } from "../api";
-import { useConfig } from "src/startup/config";
-import { useAuthenticationContext } from "src/startup/Authentication";
-import { PasswordValidationRequest } from "src/api/authentication";
+
+interface UserFormData {
+  firstName: string;
+  lastName: string;
+  email: string;
+  state: string;
+  password: string;
+  verifyPassword: string;
+  neverExpires: boolean;
+  comments: string;
+  forcePasswordChange: boolean;
+}
 
 // If we don't pass initialValues to Formik then they won't be controlled
 // and we'll get console errors when they're used.
-const initialValues = {
+const initialValues: UserFormData = {
   firstName: "",
   lastName: "",
   email: "",
   state: "enabled",
   password: "",
   verifyPassword: "",
+  neverExpires: false,
   comments: "",
   forcePasswordChange: true,
 };
-
-const CreateUser = ({}) => {
-  const { createUser } = useUsers();
-  const { history } = useRouter();
-  const { authenticationServiceUrl } = useConfig();
-  if (!authenticationServiceUrl)
-    throw Error("Configuration not ready or misconfigured!");
-  const { idToken } = useAuthenticationContext();
-  if (!idToken) throw Error("Not authenticated"); //FIXME: handle this. Show unauthorised page probably.
-
+interface Props {
+  onCreateUser: (user: User) => void;
+  onBack: () => void;
+  onValidate: (values: UserFormData) => Promise<void>;
+}
+const CreateUser: React.FunctionComponent<Props> = ({
+  onCreateUser,
+  onBack,
+  onValidate,
+}) => {
   return (
     <Formik
       initialValues={initialValues}
-      onSubmit={values => {
-        const user: User = values;
-        createUser(user);
-      }}
-      validate={values => {
-        const passwordValidationRequest: PasswordValidationRequest = {
-          newPassword: values.password,
-          verifyPassword: values.verifyPassword,
-          email: values.email,
-        };
-        return validateAsync(
-          passwordValidationRequest,
-          idToken,
-          authenticationServiceUrl,
-        );
-      }}
+      onSubmit={values => onCreateUser(values)}
+      validate={onValidate}
       validationSchema={NewUserValidationSchema}
     >
       {({ errors, touched, setFieldTouched, setFieldValue }) => {
@@ -83,7 +75,7 @@ const CreateUser = ({}) => {
               <Button
                 className="primary toolbar-button-small"
                 icon="arrow-left"
-                onClick={() => history.push("/userSearch")}
+                onClick={onBack}
                 text="Back"
               />
             </div>
@@ -105,7 +97,7 @@ const CreateUser = ({}) => {
               <Button
                 className="toolbar-button-small secondary"
                 icon="times"
-                onClick={() => history.push("/userSearch")}
+                onClick={onBack}
                 text="Cancel"
               />
             </div>

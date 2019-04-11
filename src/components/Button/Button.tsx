@@ -26,6 +26,7 @@ export const Button = ({
   groupPosition,
   circular,
   selected,
+  type,
   size,
   ...rest
 }: ButtonProps) => {
@@ -58,7 +59,7 @@ export const Button = ({
   }, [size]);
 
   return (
-    <button className={className} {...rest}>
+    <button className={className} type={type} {...rest}>
       {icon ? (
         <FontAwesomeIcon size={fontAwesomeSize} icon={icon} />
       ) : (

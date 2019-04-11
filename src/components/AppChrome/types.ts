@@ -51,6 +51,7 @@ export interface NavigateApp<T> {
   goToIndexVolumeGroup: (groupName: string) => T;
   goToUsers: () => T;
   goToUser: (userId: string) => T;
+  goToNewUser: () => T;
   goToApiKeys: () => T;
   goToError: () => T;
   goToEditDocRefByUuid: (docRefUuid: string) => T;
