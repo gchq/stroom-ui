@@ -1,7 +1,9 @@
 import * as React from "react";
-import DocumentTreeContext from "./DocumentTreeContext";
+import DocumentTreeContext, {
+  DocumentTreeContextValue,
+} from "./DocumentTreeContext";
 
-const useDocumentTree = () => {
+const useDocumentTree = (): DocumentTreeContextValue => {
   const context = React.useContext(DocumentTreeContext);
   const { fetchDocTree } = context;
 

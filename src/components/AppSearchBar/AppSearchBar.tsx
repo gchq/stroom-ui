@@ -9,19 +9,15 @@ import ModeOptionButtons, { SearchMode } from "./ModeOptionButton";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import useSelectableItemListing from "src/lib/useSelectableItemListing";
 import useRecentItems from "src/lib/useRecentItems";
-import { useDocumentTree } from "src/api/explorer";
 import {
   DocRefType,
   DocRefTree,
   DocRefWithLineage,
 } from "src/api/useDocumentApi/types/base";
-
-interface Props {
-  typeFilters?: string[];
-  onChange: (d: DocRefType) => any;
-  value?: DocRefType;
-  className?: string;
-}
+import { Props } from "./types";
+import useDocumentSearch from "src/api/explorer/useDocumentSearch";
+import { useDocumentTree } from "src/api/explorer";
+import { useModeOptionButtons } from "./ModeOptionButton/ModeOptionButtons";
 
 const AppSearchBar = ({
   className,
@@ -30,25 +26,20 @@ const AppSearchBar = ({
   value,
 }: Props) => {
   // Get data from and subscribe to the store
-  const [searchResults, setSearchResults] = React.useState<DocRefType[]>([]);
-
-  const { documentTree, searchApp } = useDocumentTree();
+  const { documentTree } = useDocumentTree();
+  const { searchResults, searchApp } = useDocumentSearch();
   const { recentItems } = useRecentItems();
-
-  const onSearch = React.useCallback(p => searchApp(p).then(setSearchResults), [
-    searchApp,
-    setSearchResults,
-  ]);
 
   let [textFocus, setTextFocus] = React.useState<boolean>(false);
   let [searchTerm, setSearchTerm] = React.useState<string>("");
-  let [searchMode, setSearchMode] = React.useState<SearchMode>(
-    SearchMode.NAVIGATION,
-  );
   let [navFolder, setNavFolder] = React.useState<DocRefType | undefined>(
     undefined,
   );
 
+  const {
+    searchMode,
+    componentProps: searchModeProps,
+  } = useModeOptionButtons();
   const onSearchFocus = React.useCallback(() => setTextFocus(true), []);
   const onSearchBlur = React.useCallback(() => setTextFocus(false), []);
 
@@ -182,17 +173,19 @@ const AppSearchBar = ({
       break;
   }
 
+  const { switchMode } = searchModeProps;
+
   const onSearchTermChange: React.ChangeEventHandler<
     HTMLInputElement
   > = React.useCallback(
     ({ target: { value } }) => {
       setSearchTerm(value);
-      setSearchMode(
+      switchMode(
         value.length > 0 ? SearchMode.GLOBAL_SEARCH : SearchMode.NAVIGATION,
       );
-      onSearch({ term: value });
+      searchApp({ term: value });
     },
-    [onSearch, setSearchTerm, setSearchMode],
+    [searchApp, setSearchTerm, switchMode],
   );
 
   return (
@@ -216,7 +209,7 @@ const AppSearchBar = ({
             <FontAwesomeIcon icon={headerIcon} size="lg" />
           </div>
           <div className="app-search-header__text">{headerTitle}</div>
-          <ModeOptionButtons switchMode={setSearchMode} />
+          <ModeOptionButtons {...searchModeProps} />
         </div>
         <div className="app-search-listing">
           {hasNoResults && (

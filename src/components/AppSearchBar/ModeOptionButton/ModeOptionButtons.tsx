@@ -39,7 +39,7 @@ const ModeOptionButtons: React.FunctionComponent<Props> = ({ switchMode }) => (
         key={modeOption.mode}
         icon={modeOption.icon}
         groupPosition={modeOption.position}
-        onClick={e => switchMode(modeOption.mode)}
+        onClick={() => switchMode(modeOption.mode)}
         onKeyDown={e => {
           if (e.key === " ") {
             switchMode(modeOption.mode);
@@ -50,5 +50,23 @@ const ModeOptionButtons: React.FunctionComponent<Props> = ({ switchMode }) => (
     ))}
   </React.Fragment>
 );
+
+interface UseModeOptionButtons {
+  searchMode: SearchMode;
+  componentProps: Props;
+}
+
+export const useModeOptionButtons = (): UseModeOptionButtons => {
+  let [searchMode, switchMode] = React.useState<SearchMode>(
+    SearchMode.NAVIGATION,
+  );
+
+  return {
+    searchMode,
+    componentProps: {
+      switchMode,
+    },
+  };
+};
 
 export default ModeOptionButtons;
