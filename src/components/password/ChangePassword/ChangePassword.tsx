@@ -24,10 +24,14 @@ import "src/styles/from_auth/Layout.css";
 import useRouter from "src/lib/useRouter";
 
 import ChangePasswordFields from "../ChangePasswordFields";
-import usePassword from './useChangePassword';
+import usePassword from "./useChangePassword";
 
 const ChangePassword = () => {
-  const { changePassword, errorMessages, showChangeConfirmation } = usePassword();
+  const {
+    changePassword,
+    errorMessages,
+    showChangeConfirmation,
+  } = usePassword();
   const { router } = useRouter();
   const [redirectUrl, setRedirectUrl] = useState("");
   const [email, setEmail] = useState("");
@@ -51,7 +55,7 @@ const ChangePassword = () => {
         setEmail(email);
       } else {
         console.error(
-          "Unable to display the change password page because we could not get the user's email address from either the query string or a cookie!"
+          "Unable to display the change password page because we could not get the user's email address from either the query string or a cookie!",
         );
       }
     }
@@ -67,21 +71,20 @@ const ChangePassword = () => {
   let content;
   if (errorMessages.length === 0) {
     if (!showChangeConfirmation) {
-      content =
+      content = (
         <ChangePasswordFields
           email={email}
           redirectUrl={redirectUrl}
           showOldPasswordField={true}
           onSubmit={changePassword}
-        // errorMessages={errorMessages}
+          // errorMessages={errorMessages}
         />
+      );
+    } else if (showChangeConfirmation && !redirectUrl) {
+      content = <p>Your password has been changed.</p>;
     }
-    else if (showChangeConfirmation && !redirectUrl) {
-      content = <p>Your password has been changed.</p>
-    }
-  }
-  else {
-    content = <p>There were the following errors: {errorMessages} </p>
+  } else {
+    content = <p>There were the following errors: {errorMessages} </p>;
   }
 
   return (

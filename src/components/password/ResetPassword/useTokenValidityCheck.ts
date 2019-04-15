@@ -1,10 +1,9 @@
-import { useEffect, useState } from 'react';
-import * as jwtDecode from 'jwt-decode';
+import { useEffect, useState } from "react";
+import * as jwtDecode from "jwt-decode";
 
 import useHttpQueryParam from "src/lib/useHttpQueryParam";
 
 export const useTokenValidityCheck = () => {
-
   const [isTokenMissing, setMissingToken] = useState(false);
   const [isTokenInvalid, setInvalidToken] = useState(false);
   const [isTokenExpired, setExpiredToken] = useState(false);
@@ -34,4 +33,4 @@ export const useTokenValidityCheck = () => {
     setExpiredToken(expiredToken);
   });
   return { isTokenMissing, isTokenInvalid, isTokenExpired };
-}
+};

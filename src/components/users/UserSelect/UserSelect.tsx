@@ -25,17 +25,17 @@ const loadOptions = (
   inputValue: string,
   callback: Function,
   idToken: string,
-  url: string
+  url: string,
 ) => {
   const email = inputValue || "";
   fetch(`${url}/search?email=${email}`, {
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
-      Authorization: "Bearer " + idToken
+      Authorization: "Bearer " + idToken,
     },
     method: "get",
-    mode: "cors"
+    mode: "cors",
   })
     .then(response => response.json())
     .then(body => {
@@ -49,25 +49,29 @@ const loadOptions = (
 const customStyles = {
   option: (provided: any) => ({
     ...provided,
-    fontSize: 14
+    fontSize: 14,
   }),
   placeholder: () => ({
-    fontSize: 14
+    fontSize: 14,
   }),
   input: (provided: any) => ({
     ...provided,
-    fontSize: 14
+    fontSize: 14,
   }),
   singleValue: (provided: any) => ({
     ...provided,
-    fontSize: 14
-  })
+    fontSize: 14,
+  }),
 };
 
 //TODO: Obviously this isn't a hook, and therefore it can't use useConfig.
-// I had a go at converting it when I was just getting started with hooks 
+// I had a go at converting it when I was just getting started with hooks
 // and ran into some problems. Still needs doing.
-const AsyncUserSelect = (props: { onChange: Function, idToken: string, userServiceUrl: string }) => {
+const AsyncUserSelect = (props: {
+  onChange: Function;
+  idToken: string;
+  userServiceUrl: string;
+}) => {
   const { onChange, idToken, userServiceUrl } = props;
   // eslint-disable-next-line
   const [_, setInputValue] = useState("");

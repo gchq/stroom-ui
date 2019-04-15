@@ -22,7 +22,7 @@ import Button from "src/components/Button";
 import { PasswordValidationRequest } from "src/api/authentication/types";
 import { hasAnyProps } from "src/lib/lang";
 // import { validateAsync } from "src/components/users/validation";
-import { useConfig } from 'src/startup/config';
+import { useConfig } from "src/startup/config";
 import { useAuthenticationContext } from "src/startup/Authentication";
 import { validateAsync } from "src/components/users/validation";
 // import { useAuthenticationContext } from 'src/startup/authentication';
@@ -32,8 +32,8 @@ const ChangePasswordFields = ({
   redirectUrl,
   showOldPasswordField,
   onSubmit,
-  // errorMessages: errorMessages
-}: {
+}: // errorMessages: errorMessages
+{
   email?: string;
   redirectUrl?: string;
   showOldPasswordField: boolean;
@@ -42,7 +42,8 @@ const ChangePasswordFields = ({
 }) => {
   const { authenticationServiceUrl } = useConfig();
   const { idToken } = useAuthenticationContext();
-  if (!authenticationServiceUrl || !idToken) throw Error("Config not ready or misconfigured!");
+  if (!authenticationServiceUrl || !idToken)
+    throw Error("Config not ready or misconfigured!");
   return (
     <Formik
       enableReinitialize={true}
@@ -51,7 +52,7 @@ const ChangePasswordFields = ({
         password: "",
         verifyPassword: "",
         email: email || "",
-        redirectUrl: redirectUrl || ""
+        redirectUrl: redirectUrl || "",
       }}
       onSubmit={values => {
         onSubmit(values);
@@ -61,12 +62,12 @@ const ChangePasswordFields = ({
           oldPassword: values.oldPassword,
           newPassword: values.password,
           verifyPassword: values.verifyPassword,
-          email: values.email
+          email: values.email,
         };
         return validateAsync(
           passwordValidationRequest,
           idToken,
-          authenticationServiceUrl
+          authenticationServiceUrl,
         );
       }}
     >
@@ -98,8 +99,8 @@ const ChangePasswordFields = ({
                     />
                   </div>
                 ) : (
-                    <div className="field-container vertical" />
-                  )}
+                  <div className="field-container vertical" />
+                )}
 
                 <div className="field-container__spacer" />
 

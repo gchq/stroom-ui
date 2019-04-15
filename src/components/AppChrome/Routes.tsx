@@ -32,7 +32,9 @@ import DataViewer from "../DataViewer";
 import UserSettings from "../UserSettings";
 import IFrame from "../IFrame";
 
-import AuthorisationManager, { UserAuthorisationEditor, } from "../AuthorisationManager";
+import AuthorisationManager, {
+  UserAuthorisationEditor,
+} from "../AuthorisationManager";
 import IndexVolumes from "../IndexVolumes";
 import IndexVolumeGroups from "../IndexVolumeGroups";
 import IndexVolumeGroupEditor from "../IndexVolumeGroups/IndexVolumeGroupEditor";
@@ -90,7 +92,7 @@ const Routes: React.FunctionComponent = () => {
       <Route exact path="/openWelcome" component={Welcome} />
       <Route exact path={"/resetPassword"} component={ResetPassword} />
       <Route exact path={"/resetpassword"} component={ResetPassword} />
-      <Route exact path={"/changepassword"} component={ChangePassword} /> 
+      <Route exact path={"/changepassword"} component={ChangePassword} />
       <PrivateRoute exact path="/" render={renderWelcome} />
       <PrivateRoute exact path="/s/welcome" render={renderWelcome} />
       <PrivateRoute
@@ -223,7 +225,7 @@ const Routes: React.FunctionComponent = () => {
           />
         )}
       />
-      
+
       <PrivateRoute
         exact
         path={urlGenerator.goToApiKeys()}
@@ -253,16 +255,13 @@ const Routes: React.FunctionComponent = () => {
         )}
       />
 
-     <PrivateRoute
-         exact
-         path={urlGenerator.goToUsers()}
-         render={() => (
-           <AppChrome
-             activeMenuItem="userIdentities"
-             content={<UserSearch />}
-           />
-         )}
-       />
+      <PrivateRoute
+        exact
+        path={urlGenerator.goToUsers()}
+        render={() => (
+          <AppChrome activeMenuItem="userIdentities" content={<UserSearch />} />
+        )}
+      />
       <PrivateRoute
         exact
         path={urlGenerator.goToUsers()}
@@ -280,7 +279,9 @@ const Routes: React.FunctionComponent = () => {
       <PrivateRoute
         exact
         path={urlGenerator.goToUser(":userId")}
-        render={() => <AppChrome activeMenuItem="userIdentities" content={<UserEdit />}/> }
+        render={() => (
+          <AppChrome activeMenuItem="userIdentities" content={<UserEdit />} />
+        )}
       />
 
       <PrivateRoute

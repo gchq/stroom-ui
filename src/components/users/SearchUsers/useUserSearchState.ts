@@ -11,30 +11,30 @@ interface UserSearchStateApi {
   setSelectedUser: (userId: string) => void;
 }
 
-type UserSearchState = {
+interface UserSearchState {
   users: User[];
   totalPages: number;
   selectedUser: string;
-};
+}
 
-type SetUsersAction = {
+interface SetUsersAction {
   type: "set_user";
   users: User[];
-};
+}
 
-type SetTotalPagesAction = {
+interface SetTotalPagesAction {
   type: "set_total_pages";
   totalPages: number;
-};
+}
 
-type ChangeSelectedUserAction = {
+interface ChangeSelectedUserAction {
   type: "change_selected_user";
   userId: string;
-};
+}
 
 const reducer = (
   state: UserSearchState,
-  action: SetUsersAction | SetTotalPagesAction | ChangeSelectedUserAction
+  action: SetUsersAction | SetTotalPagesAction | ChangeSelectedUserAction,
 ) => {
   switch (action.type) {
     case "set_user":
@@ -52,7 +52,7 @@ const useUserSearchState = (): UserSearchStateApi => {
   const [userState, dispatch] = useReducer(reducer, {
     users: [],
     totalPages: 0,
-    selectedUser: ""
+    selectedUser: "",
   });
   return {
     users: userState.users,
@@ -62,7 +62,7 @@ const useUserSearchState = (): UserSearchStateApi => {
     setTotalPages: (totalPages: number) =>
       dispatch({ type: "set_total_pages", totalPages }),
     setSelectedUser: (userId: string) =>
-      dispatch({ type: "change_selected_user", userId })
+      dispatch({ type: "change_selected_user", userId }),
   };
 };
 

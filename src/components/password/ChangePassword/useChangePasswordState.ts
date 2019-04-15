@@ -1,29 +1,35 @@
 import { useReducer } from "react";
 
-type PasswordState = {
+interface PasswordState {
   showChangeConfirmation: boolean;
   errorMessages: string[];
-};
+}
 
-type SetShowChangeConfirmationAction = {
+interface SetShowChangeConfirmationAction {
   type: "set_show_change_confirmation";
   showChangeConfirmation: boolean;
-};
+}
 
-type AddErrorMessageAction = {
+interface AddErrorMessageAction {
   type: "add_error_message";
   errorMessage: string;
 }
 
 const reducer = (
   state: PasswordState,
-  action: SetShowChangeConfirmationAction | AddErrorMessageAction
+  action: SetShowChangeConfirmationAction | AddErrorMessageAction,
 ) => {
   switch (action.type) {
     case "set_show_change_confirmation":
-      return { ...state, showChangeConfirmation: action.showChangeConfirmation };
+      return {
+        ...state,
+        showChangeConfirmation: action.showChangeConfirmation,
+      };
     case "add_error_message":
-      return { ...state, errorMessages: state.errorMessages.concat(action.errorMessage) }
+      return {
+        ...state,
+        errorMessages: state.errorMessages.concat(action.errorMessage),
+      };
     default:
       return state;
   }
@@ -43,8 +49,12 @@ const useChangePasswordState = (): {
     showChangeConfirmation: state.showChangeConfirmation,
     errorMessages: state.errorMessages,
     setShowChangeConfirmation: (showChangeConfirmation: boolean) =>
-      dispatch({ type: "set_show_change_confirmation", showChangeConfirmation }),
-    addErrorMessage: (errorMessage: string) => dispatch({ type: "add_error_message", errorMessage }),
+      dispatch({
+        type: "set_show_change_confirmation",
+        showChangeConfirmation,
+      }),
+    addErrorMessage: (errorMessage: string) =>
+      dispatch({ type: "add_error_message", errorMessage }),
   };
 };
 

@@ -17,13 +17,16 @@
 import * as React from "react";
 
 import ChangePasswordFields from "../ChangePasswordFields";
-import useResetPassword from './useResetPassword';
-import { useTokenValidityCheck } from './useTokenValidityCheck';
+import useResetPassword from "./useResetPassword";
+import { useTokenValidityCheck } from "./useTokenValidityCheck";
 
 const ResetPassword = () => {
-
   const { resetPassword } = useResetPassword();
-  const { isTokenMissing, isTokenInvalid, isTokenExpired } = useTokenValidityCheck();
+  const {
+    isTokenMissing,
+    isTokenInvalid,
+    isTokenExpired,
+  } = useTokenValidityCheck();
 
   const failure = (
     <div>
@@ -31,13 +34,13 @@ const ResetPassword = () => {
       {isTokenMissing || isTokenInvalid ? (
         <p>I'm afraid this password reset link is broken.</p>
       ) : (
-          undefined
-        )}
+        undefined
+      )}
       {isTokenExpired ? (
         <p>I'm afraid this password reset link has expired.</p>
       ) : (
-          undefined
-        )}
+        undefined
+      )}
     </div>
   );
 
@@ -54,11 +57,11 @@ const ResetPassword = () => {
           <ChangePasswordFields
             showOldPasswordField={false}
             onSubmit={resetPassword}
-          // errorMessages={errorMessages}
+            // errorMessages={errorMessages}
           />
         ) : (
-            undefined
-          )}
+          undefined
+        )}
       </div>
     </div>
   );

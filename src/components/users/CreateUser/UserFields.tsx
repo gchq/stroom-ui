@@ -47,7 +47,7 @@ const UserFields = ({
   showCalculatedFields,
   userBeingEdited,
   setFieldTouched,
-  setFieldValue
+  setFieldValue,
 }: {
   showCalculatedFields: boolean;
   errors: FormikErrors<User>;
@@ -122,10 +122,10 @@ const UserFields = ({
                 <option value="disabled">Disabled</option>
                 <option disabled value="inactive">
                   Inactive (because of disuse)
-              </option>
+                </option>
                 <option disabled value="locked">
                   Locked (because of failed logins)
-              </option>
+                </option>
               </Field>
             </div>
             <div className="field-container__spacer" />
@@ -203,47 +203,47 @@ const UserFields = ({
         </div>
       </div>
 
-    {showCalculatedFields && !!userBeingEdited ? (
-      <React.Fragment>
-        {!!userBeingEdited.loginCount ? (
+      {showCalculatedFields && !!userBeingEdited ? (
+        <React.Fragment>
+          {!!userBeingEdited.loginCount ? (
+            <div className="section">
+              <div className="section__title">
+                <h3>Audit</h3>
+              </div>
+              <div className="section__fields--copy-only">
+                <div className="section__fields_row">
+                  <LoginFailureCopy attemptCount={userBeingEdited.loginCount} />
+                  <LoginStatsCopy
+                    lastLogin={userBeingEdited.lastLogin}
+                    loginCount={userBeingEdited.loginCount}
+                  />
+                </div>
+              </div>
+            </div>
+          ) : (
+            undefined
+          )}
+
           <div className="section">
             <div className="section__title">
               <h3>Audit</h3>
             </div>
             <div className="section__fields--copy-only">
-              <div className="section__fields_row">
-                <LoginFailureCopy attemptCount={userBeingEdited.loginCount} />
-                <LoginStatsCopy
-                  lastLogin={userBeingEdited.lastLogin}
-                  loginCount={userBeingEdited.loginCount}
+              <div className="section__fields__rows">
+                <AuditCopy
+                  createdOn={userBeingEdited.createdOn}
+                  createdBy={userBeingEdited.createdByUser}
+                  updatedOn={userBeingEdited.updatedOn}
+                  updatedBy={userBeingEdited.updatedByUser}
                 />
               </div>
             </div>
           </div>
         </React.Fragment>
       ) : (
-          undefined
-        )}
-
-        <div className="section">
-          <div className="section__title">
-            <h3>Audit</h3>
-          </div>
-          <div className="section__fields--copy-only">
-            <div className="section__fields__rows">
-              <AuditCopy
-                createdOn={userBeingEdited.createdOn}
-                createdBy={userBeingEdited.createdByUser}
-                updatedOn={userBeingEdited.updatedOn}
-                updatedBy={userBeingEdited.updatedByUser}
-              />
-            </div>
-          </div>
-        </div>
-      </React.Fragment>
-    ) : (
-      undefined
-    )}
+        undefined
+      )}
+    </div>
   </div>
 );
 

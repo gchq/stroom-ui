@@ -7,19 +7,28 @@ import {
   ChangePasswordRequest,
   LoginResponse,
   PasswordValidationRequest,
-  PasswordValidationResponse
+  PasswordValidationResponse,
 } from "./types";
 import { FormikBag } from "formik";
-import { ChangePasswordResponse } from '.';
-import { useConfig } from 'src/startup/config';
+import { ChangePasswordResponse } from ".";
+import { useConfig } from "src/startup/config";
 import useHttpClient from "src/lib/useHttpClient";
 
 interface Api {
   apiLogin: (credentials: Credentials) => Promise<LoginResponse>;
-  resetPassword: (resetPasswordRequest: ResetPasswordRequest) => Promise<ChangePasswordResponse>;
-  changePassword: (changePasswordRequest: ChangePasswordRequest) => Promise<ChangePasswordResponse>;
-  submitPasswordChangeRequest: (formData: any, formikBag: FormikBag<any, any>) => Promise<void>;
-  isPasswordValid: (passwordValidationRequest: PasswordValidationRequest) => Promise<PasswordValidationResponse>;
+  resetPassword: (
+    resetPasswordRequest: ResetPasswordRequest,
+  ) => Promise<ChangePasswordResponse>;
+  changePassword: (
+    changePasswordRequest: ChangePasswordRequest,
+  ) => Promise<ChangePasswordResponse>;
+  submitPasswordChangeRequest: (
+    formData: any,
+    formikBag: FormikBag<any, any>,
+  ) => Promise<void>;
+  isPasswordValid: (
+    passwordValidationRequest: PasswordValidationRequest,
+  ) => Promise<PasswordValidationResponse>;
 }
 
 export const useApi = (): Api => {
@@ -44,55 +53,54 @@ export const useApi = (): Api => {
           email,
           password,
           sessionId,
-          requestingClientId: appClientId
+          requestingClientId: appClientId,
         }),
-      // }, false);
+        // }, false);
       });
     },
-    [httpPostJsonResponse]
+    [httpPostJsonResponse],
   );
 
   const changePassword = useCallback(
     (changePasswordRequest: ChangePasswordRequest) => {
       const url = `${authenticationServiceUrl}/changePassword/`;
-      const {
-        password,
-        oldPassword,
-        email,
-      } = changePasswordRequest;
+      const { password, oldPassword, email } = changePasswordRequest;
 
       return httpPostJsonResponse(url, {
-        body: JSON.stringify({ newPassword: password, oldPassword, email })
-      // }, false)
-      })
-    }, []
+        body: JSON.stringify({ newPassword: password, oldPassword, email }),
+        // }, false)
+      });
+    },
+    [],
   );
 
   const resetPassword = useCallback(
     (resetPasswordRequest: ResetPasswordRequest) => {
       const newPassword = resetPasswordRequest.password;
       const url = `${authenticationServiceUrl}/resetPassword/`;
-      return httpPostJsonResponse(url, { body: JSON.stringify({ newPassword }) }, 
-      // false);
+      return httpPostJsonResponse(
+        url,
+        { body: JSON.stringify({ newPassword }) },
+        // false);
       );
-    }, []
+    },
+    [],
   );
 
-  const submitPasswordChangeRequest = useCallback(
-    (formData: any) => {
-      const url = `${authenticationServiceUrl}/reset/${formData.email}`;
-      return httpGetJson(url, {}, false);
-    }, []
-  );
+  const submitPasswordChangeRequest = useCallback((formData: any) => {
+    const url = `${authenticationServiceUrl}/reset/${formData.email}`;
+    return httpGetJson(url, {}, false);
+  }, []);
 
   const isPasswordValid = useCallback(
     (passwordValidationRequest: PasswordValidationRequest) => {
       const url = `${authenticationServiceUrl}/isPasswordValid`;
       return httpPostJsonResponse(url, {
-        body: JSON.stringify(passwordValidationRequest)
+        body: JSON.stringify(passwordValidationRequest),
       });
       // }, false);
-    }, []
+    },
+    [],
   );
 
   return {
@@ -100,7 +108,7 @@ export const useApi = (): Api => {
     submitPasswordChangeRequest,
     resetPassword,
     changePassword,
-    isPasswordValid
+    isPasswordValid,
   };
 };
 

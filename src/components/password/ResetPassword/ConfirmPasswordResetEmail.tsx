@@ -18,7 +18,7 @@ import * as React from "react";
 
 import Button from "src/components/Button";
 import "src/styles/from_auth/Layout.css";
-import { useConfig } from 'src/startup/config';
+import { useConfig } from "src/startup/config";
 
 const ConfirmPasswordResetEmail = () => {
   const { stroomUiUrl } = useConfig();
