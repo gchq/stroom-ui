@@ -19,13 +19,13 @@ export const getColumnFormat = (selectedUserRowId: string | undefined) => {
         </div>
       ),
       filterable: false,
-      show: false,
+      show: false
     },
     {
       Header: "Email",
       accessor: "email",
       maxWidth: 190,
-      filterMethod: (filter: any, row: any) => filterRow(row, filter),
+      filterMethod: (filter: any, row: any) => filterRow(row, filter)
     },
     {
       Header: "Account status",
@@ -33,25 +33,25 @@ export const getColumnFormat = (selectedUserRowId: string | undefined) => {
       maxWidth: 100,
       Cell: (row: RowInfo) => renderStateCell(row.row.state),
       Filter: ({ filter, onChange }: FilterProps) =>
-        getStateCellFilter(filter, onChange),
+        getStateCellFilter(filter, onChange)
     },
     {
       Header: "Last login",
       accessor: "last_login",
       Cell: (row: RowInfo) => formatDate(row.row.value),
       maxWidth: 165,
-      filterable: false,
+      filterable: false
     },
     {
       Header: "Login failures",
       accessor: "login_failures",
-      maxWidth: 100,
+      maxWidth: 100
     },
     {
       Header: "Comments",
       accessor: "comments",
-      filterMethod: (filter: any, row: any) => filterRow(row, filter),
-    },
+      filterMethod: (filter: any, row: any) => filterRow(row, filter)
+    }
   ];
 };
 
@@ -88,7 +88,7 @@ export const renderStateCell = (state: string) => {
       <span
         style={{
           color: stateColour,
-          transition: "all .3s ease",
+          transition: "all .3s ease"
         }}
       >
         &#x25cf;

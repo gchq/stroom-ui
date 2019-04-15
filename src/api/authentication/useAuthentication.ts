@@ -8,7 +8,7 @@ import { Credentials, PasswordValidationRequest } from "./types";
 interface UseAuthentication {
   login: (
     credentials: Credentials,
-    formikActions: FormikActions<Credentials>,
+    formikActions: FormikActions<Credentials>
   ) => void;
 }
 
@@ -29,7 +29,7 @@ const useAuthentication = (): UseAuthentication => {
         return;
       });
     },
-    [apiLogin],
+    [apiLogin]
   );
 
   return { login };

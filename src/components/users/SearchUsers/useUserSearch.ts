@@ -2,7 +2,7 @@ import { useEffect, useCallback } from "react";
 
 import { User } from "../types";
 import { useApi } from "../api";
-import { useUserSearchState } from "./useUserSearchState";
+import { useUserSearchState } from './useUserSearchState';
 
 interface UserSearchApi {
   users: User[];
@@ -12,12 +12,7 @@ interface UserSearchApi {
 }
 
 const useUserSearch = (): UserSearchApi => {
-  const {
-    users,
-    selectedUser,
-    setSelectedUser,
-    setUsers,
-  } = useUserSearchState();
+  const { users, selectedUser, setSelectedUser, setUsers } = useUserSearchState();
   const { search } = useApi();
 
   useEffect(() => {
@@ -31,10 +26,10 @@ const useUserSearch = (): UserSearchApi => {
   const remove = useCallback(
     (userId: string) => {
       removeUserUsingApi(userId).then(() =>
-        search().then(users => setUsers(users)),
+        search().then(users => setUsers(users))
       );
     },
-    [removeUserUsingApi, search, setUsers],
+    [removeUserUsingApi, search, setUsers]
   );
 
   const changeSelectedUser = useCallback((userId: string) => {
@@ -45,7 +40,7 @@ const useUserSearch = (): UserSearchApi => {
     users,
     selectedUser,
     remove,
-    changeSelectedUser,
+    changeSelectedUser
   };
 };
 

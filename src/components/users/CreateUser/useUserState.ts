@@ -31,7 +31,7 @@ type SetIsCreatingAction = {
 
 const reducer = (
   state: UsersState,
-  action: SetUserAction | ClearUserAction | SetIsCreatingAction,
+  action: SetUserAction | ClearUserAction | SetIsCreatingAction
 ) => {
   switch (action.type) {
     case "set_user":
@@ -48,7 +48,7 @@ const reducer = (
 const useUserState = (): UserStateApi => {
   const [userState, dispatch] = useReducer(reducer, {
     userBeingEdited: undefined,
-    isCreating: true,
+    isCreating: true
   });
   return {
     user: userState.userBeingEdited,
@@ -56,7 +56,7 @@ const useUserState = (): UserStateApi => {
     setUser: (user: User | undefined) => dispatch({ type: "set_user", user }),
     clearUser: () => dispatch({ type: "clear_user" }),
     setIsCreating: (isCreating: boolean) =>
-      dispatch({ type: "set_is_creating", isCreating }),
+      dispatch({ type: "set_is_creating", isCreating })
   };
 };
 

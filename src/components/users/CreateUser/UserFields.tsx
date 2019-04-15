@@ -47,7 +47,7 @@ const UserFields = ({
   showCalculatedFields,
   userBeingEdited,
   setFieldTouched,
-  setFieldValue,
+  setFieldValue
 }: {
   showCalculatedFields: boolean;
   errors: FormikErrors<User>;
@@ -74,51 +74,60 @@ const UserFields = ({
             <Field name="lastName" type="text" label="Last name" />
           </div>
         </div>
+        <div className="section__fields">
+          <div className="section__fields__row">
+            <div className="field-container vertical">
+              <label>First name</label>
+              <Field name="first_name" type="text" label="First name" />
+            </div>
+            <div className="field-container__spacer" />
+            <div className="field-container vertical">
+              <label>Last name</label>
+              <Field name="last_name" type="text" label="Last name" />
+            </div>
+          </div>
 
-        <div className="section__fields__row">
-          <div className="field-container vertical">
-            <label>Email</label>
-            <div className="field-container--with-validation">
-              <Field name="email" label="Email" />
-              <ErrorMessage
-                name="email"
-                render={msg => <div className="validation-error">{msg}</div>}
-              />
+          <div className="section__fields__row">
+            <div className="field-container vertical">
+              <label>Email</label>
+              <div className="field-container--with-validation">
+                <Field name="email" label="Email" />
+                <ErrorMessage
+                  name="email"
+                  render={msg => <div className="validation-error">{msg}</div>}
+                />
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <div className="section">
-      <div className="section__title">
-        <h3>Status</h3>
-      </div>
-      <div className="section__fields">
-        <div className="section__fields__row">
-          <div className="field-container vertical">
-            <label>Account status</label>
-            <Field
-              name="state"
-              component="select"
-              onChange={(event: any) => {
-                setFieldValue("state", event.target.value);
-                setFieldTouched("state");
-              }}
-            >
-              <option value="enabled">Active</option>
-              <option value="disabled">Disabled</option>
-              <option disabled value="inactive">
-                Inactive (because of disuse)
+      <div className="section">
+        <div className="section__title">
+          <h3>Status</h3>
+        </div>
+        <div className="section__fields">
+          <div className="section__fields__row">
+            <div className="field-container vertical">
+              <label>Account status</label>
+              <Field
+                name="state"
+                component="select"
+                onChange={(event: any) => {
+                  setFieldValue("state", event.target.value);
+                  setFieldTouched("state");
+                }}
+              >
+                <option value="enabled">Active</option>
+                <option value="disabled">Disabled</option>
+                <option disabled value="inactive">
+                  Inactive (because of disuse)
               </option>
-              <option disabled value="locked">
-                Locked (because of failed logins)
+                <option disabled value="locked">
+                  Locked (because of failed logins)
               </option>
-            </Field>
-          </div>
-          <div className="field-container__spacer" />
-          <div className="field-container">
-            <label>Never expire</label>
+              </Field>
+            </div>
             <div className="field-container__spacer" />
             <div className="field-container--with-validation">
               <Field
@@ -134,33 +143,33 @@ const UserFields = ({
           </div>
         </div>
       </div>
-    </div>
 
-    <div className="section">
-      <div className="section__title">
-        <h3>Password</h3>
-      </div>
-      <div className="section__fields">
-        <div className="section__fields__row">
-          <div className="field-container vertical">
-            <label>Password</label>
-            <div className="field-container--with-validation">
-              <Field name="password" type="password" label="Password" />
-              <ErrorMessage
-                name="password"
-                render={msg => <div className="validation-error">{msg}</div>}
-              />
+      <div className="section">
+        <div className="section__title">
+          <h3>Password</h3>
+        </div>
+        <div className="section__fields">
+          <div className="section__fields__row">
+            <div className="field-container vertical">
+              <label>Password</label>
+              <div className="field-container--with-validation">
+                <Field name="password" type="password" label="Password" />
+                <ErrorMessage
+                  name="password"
+                  render={msg => <div className="validation-error">{msg}</div>}
+                />
+              </div>
             </div>
-          </div>
-          <div className="field-container__spacer" />
-          <div className="field-container vertical">
-            <label>Verify password</label>
-            <div className="field-container--with-validation">
-              <Field name="verifyPassword" type="password" />
-              <ErrorMessage
-                name="verifyPassword"
-                render={msg => <div className="validation-error">{msg}</div>}
-              />
+            <div className="field-container__spacer" />
+            <div className="field-container vertical">
+              <label>Verify password</label>
+              <div className="field-container--with-validation">
+                <Field name="verifyPassword" type="password" />
+                <ErrorMessage
+                  name="verifyPassword"
+                  render={msg => <div className="validation-error">{msg}</div>}
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -178,29 +187,28 @@ const UserFields = ({
           </div>
         </div>
       </div>
-    </div>
 
-    <div className="section">
-      <div className="section__title">
-        <h3>Comments</h3>
-      </div>
-      <div className="section__fields">
-        <div className="section__fields__row 1-column">
-          <Field
-            className="section__fields__comments"
-            name="comments"
-            component="textarea"
-          />
+      <div className="section">
+        <div className="section__title">
+          <h3>Comments</h3>
+        </div>
+        <div className="section__fields">
+          <div className="section__fields__row 1-column">
+            <Field
+              className="section__fields__comments"
+              name="comments"
+              component="textarea"
+            />
+          </div>
         </div>
       </div>
-    </div>
 
     {showCalculatedFields && !!userBeingEdited ? (
       <React.Fragment>
         {!!userBeingEdited.loginCount ? (
           <div className="section">
             <div className="section__title">
-              <h3>Recent activity</h3>
+              <h3>Audit</h3>
             </div>
             <div className="section__fields--copy-only">
               <div className="section__fields_row">
@@ -212,7 +220,8 @@ const UserFields = ({
               </div>
             </div>
           </div>
-        ) : (
+        </React.Fragment>
+      ) : (
           undefined
         )}
 

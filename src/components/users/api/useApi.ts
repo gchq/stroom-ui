@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 import { useCallback } from "react";
-import { useConfig } from "src/startup/config";
+import { useConfig } from 'src/startup/config';
 import { User } from "../types";
 import useHttpClient from "src/lib/useHttpClient";
 
@@ -33,7 +33,7 @@ export const useApi = (): Api => {
     httpPutEmptyResponse,
     httpGetJson,
     httpPostJsonResponse,
-    httpDeleteEmptyResponse,
+    httpDeleteEmptyResponse
   } = useHttpClient();
   const { userServiceUrl } = useConfig();
   if (!userServiceUrl) throw Error("Configuration not ready or misconfigured!");
@@ -92,7 +92,9 @@ export const useApi = (): Api => {
   }, []);
 
   const search = useCallback(() => {
-    const url = `${userServiceUrl}/?fromEmail=&usersPerPage=100&orderBy=id`;
+    const url = `${
+      userServiceUrl
+      }/?fromEmail=&usersPerPage=100&orderBy=id`;
     return httpGetJson(url);
   }, []);
 
@@ -102,7 +104,7 @@ export const useApi = (): Api => {
     fetchCurrentUser,
     remove,
     change,
-    search,
+    search
   };
 };
 

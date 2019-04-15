@@ -51,8 +51,8 @@ const BackConfirmation = ({
           There are validation issues with this data and we can&#39;t save it.
         </p>
       ) : (
-        undefined
-      )}
+          undefined
+        )}
       <div className="BackConfirmation__actions">
         <Button
           className="toolbar-button-large primary"

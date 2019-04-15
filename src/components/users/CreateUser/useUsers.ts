@@ -15,7 +15,12 @@ const useUsers = () => {
   // const { toggleIsSaving, toggleAlertVisibility } = useActionCreators();
   const { history } = useRouter();
 
-  const { user, setUser, clearUser, setIsCreating } = useUserState();
+  const {
+    user,
+    setUser,
+    clearUser,
+    setIsCreating
+  } = useUserState();
 
   const { goToUsers } = useAppNavigation();
   /**
@@ -34,7 +39,7 @@ const useUsers = () => {
         goToUsers();
       });
     },
-    [updateUserUsingApi, clearUser],
+    [updateUserUsingApi, clearUser]
   );
 
   /**
@@ -51,7 +56,7 @@ const useUsers = () => {
         });
       });
     },
-    [createUserUsingApi, createAuthorisationUser, setIsCreating],
+    [createUserUsingApi, createAuthorisationUser, setIsCreating]
   );
 
   /**
@@ -67,7 +72,7 @@ const useUsers = () => {
         // saveUserBeingEdited(users[0]);
       });
     },
-    [setIsCreating, setUser],
+    [setIsCreating, setUser]
   );
 
   /**
@@ -87,7 +92,7 @@ const useUsers = () => {
     createUser,
     fetchUser,
     // fetchCurrentUser,
-    user,
+    user
   };
 };
 export default useUsers;

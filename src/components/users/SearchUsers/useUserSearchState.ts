@@ -34,7 +34,7 @@ type ChangeSelectedUserAction = {
 
 const reducer = (
   state: UserSearchState,
-  action: SetUsersAction | SetTotalPagesAction | ChangeSelectedUserAction,
+  action: SetUsersAction | SetTotalPagesAction | ChangeSelectedUserAction
 ) => {
   switch (action.type) {
     case "set_user":
@@ -52,7 +52,7 @@ const useUserSearchState = (): UserSearchStateApi => {
   const [userState, dispatch] = useReducer(reducer, {
     users: [],
     totalPages: 0,
-    selectedUser: "",
+    selectedUser: ""
   });
   return {
     users: userState.users,
@@ -62,7 +62,7 @@ const useUserSearchState = (): UserSearchStateApi => {
     setTotalPages: (totalPages: number) =>
       dispatch({ type: "set_total_pages", totalPages }),
     setSelectedUser: (userId: string) =>
-      dispatch({ type: "change_selected_user", userId }),
+      dispatch({ type: "change_selected_user", userId })
   };
 };
 

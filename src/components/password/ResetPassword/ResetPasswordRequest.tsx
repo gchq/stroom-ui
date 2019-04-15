@@ -23,10 +23,10 @@ import "src/styles/from_auth/Layout.css";
 import { hasAnyProps } from "src/lib/lang";
 import "src/styles/from_auth/index.css";
 import { useApi } from "src/api/authentication";
-import { useConfig } from "src/startup/config";
+import { useConfig } from 'src/startup/config';
 
 const ValidationSchema = Yup.object().shape({
-  email: Yup.string().required("Required"),
+  email: Yup.string().required("Required")
 });
 
 const ResetPasswordRequest = () => {
@@ -37,7 +37,7 @@ const ResetPasswordRequest = () => {
     <Formik
       enableReinitialize={true}
       initialValues={{
-        email: "",
+        email: ""
       }}
       onSubmit={submitPasswordChangeRequest}
       validationSchema={ValidationSchema}

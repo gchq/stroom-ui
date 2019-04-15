@@ -21,11 +21,11 @@ import { PasswordValidationRequest } from "src/api/authentication/types";
 export const NewUserValidationSchema = Yup.object().shape({
   email: Yup.string().required("Required"),
   password: Yup.string().required("Required"),
-  verifyPassword: Yup.string().required("Required"),
+  verifyPassword: Yup.string().required("Required")
 });
 
 export const UserValidationSchema = Yup.object().shape({
-  email: Yup.string().required("Required"),
+  email: Yup.string().required("Required")
 });
 
 interface PasswordValidationErrors {

@@ -102,8 +102,8 @@ const UserSearch: React.FunctionComponent<UserSearchProps> = ({
             defaultSorted={[
               {
                 id: "email",
-                desc: true,
-              },
+                desc: true
+              }
             ]}
             filterable={isFilteringEnabled}
             showPagination
@@ -113,16 +113,16 @@ const UserSearch: React.FunctionComponent<UserSearchProps> = ({
               // We use 'calc' because we want full height but need
               // to account for the header. Obviously if the header height
               // changes this offset will need to change too.
-              height: "calc(100vh - 50px)",
+              height: "calc(100vh - 50px)"
             }}
             getTheadTrProps={() => {
               return {
-                className: "table-header-small",
+                className: "table-header-small"
               };
             }}
             getTheadProps={() => {
               return {
-                className: "table-row-small",
+                className: "table-row-small"
               };
             }}
             getTrProps={(state: any, rowInfo: RowInfo) => {
@@ -137,7 +137,7 @@ const UserSearch: React.FunctionComponent<UserSearchProps> = ({
                 },
                 className: selected
                   ? "table-row-small table-row-selected"
-                  : "table-row-small",
+                  : "table-row-small"
               };
             }}
           />

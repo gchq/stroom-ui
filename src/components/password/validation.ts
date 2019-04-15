@@ -14,17 +14,17 @@
  * limitations under the License.
  */
 
-import * as Yup from "yup";
+import * as Yup from 'yup';
 
 const changePasswordValidationSchema = Yup.object().shape({
-  oldPassword: Yup.string().required("Please enter your old password"),
-  password: Yup.string().required("Please enter your new password"),
-  verifyPassword: Yup.string().required("Please re-enter your new password"),
+  oldPassword: Yup.string().required('Please enter your old password'),
+  password: Yup.string().required('Please enter your new password'),
+  verifyPassword: Yup.string().required('Please re-enter your new password'),
 });
 
 const resetPasswordValidationSchema = Yup.object().shape({
-  password: Yup.string().required("Required"),
-  verifyPassword: Yup.string().required("Required"),
+  password: Yup.string().required('Required'),
+  verifyPassword: Yup.string().required('Required'),
 });
 
-export { changePasswordValidationSchema, resetPasswordValidationSchema };
+export {changePasswordValidationSchema, resetPasswordValidationSchema};

@@ -1,3 +1,4 @@
+
 export interface Credentials {
   email: String;
   password: String;
@@ -25,10 +26,10 @@ export interface LoginResponse {
 }
 
 export interface PasswordValidationRequest {
-  email: string;
-  newPassword: string;
-  oldPassword?: string;
-  verifyPassword: string;
+  email: string,
+  newPassword: string,
+  oldPassword?: string,
+  verifyPassword: string
 }
 
 export interface PasswordValidationResponse {

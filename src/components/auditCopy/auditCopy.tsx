@@ -21,7 +21,7 @@ const DISPLAY_DATE_TIME_FORMAT = "MMMM Do YYYY, h:mm:ss a";
 
 export const LoginStatsCopy = ({
   lastLogin,
-  loginCount,
+  loginCount
 }: {
   lastLogin: string;
   loginCount: number;
@@ -47,7 +47,7 @@ export const AuditCopy = ({
   createdBy,
   createdOn,
   updatedBy,
-  updatedOn,
+  updatedOn
 }: {
   createdBy: string;
   createdOn: string;
@@ -71,7 +71,7 @@ export const AuditCopy = ({
 export const OnCopy = ({
   on,
   verb,
-  fallbackCopy,
+  fallbackCopy
 }: {
   on: string;
   verb: string;
@@ -93,7 +93,7 @@ export const OnCopy = ({
 export const ByCopy = ({
   by,
   verb,
-  fallbackCopy,
+  fallbackCopy
 }: {
   by: string;
   verb: string;
