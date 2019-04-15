@@ -6,6 +6,9 @@ import { DocRefType } from "src/api/useDocumentApi/types/base";
 import { OptionProps } from "react-select/lib/components/Option";
 import DocRefImage from "../DocRefImage";
 import { SingleValueProps } from "react-select/lib/components/SingleValue";
+import ModeOptionButtons from "./ModeOptionButton";
+import { useModeOptionButtons } from "./ModeOptionButton/ModeOptionButtons";
+import { ContainerProps } from "react-select/lib/components/containers";
 
 const getDocRefValue = (d: DocRefType) => d.uuid;
 const getDocRefLabel = (d: DocRefType) => d.name || `${d.type} - ${d.uuid}`;
@@ -37,12 +40,27 @@ const Option: React.FunctionComponent<OptionProps<DocRefType>> = (
   </components.Option>
 );
 
+const SelectContainer: React.FunctionComponent<ContainerProps<DocRefType>> = ({
+  children,
+  ...props
+}) => {
+  return (
+    <React.Fragment>
+      <ModeOptionButtons {...props.selectProps.modeOptionProps} />
+      <components.SelectContainer {...props}>
+        {children}
+      </components.SelectContainer>
+    </React.Fragment>
+  );
+};
+
 const AppSelectBar: React.FunctionComponent<Props> = ({
   // typeFilters = [],
   onChange,
   value,
 }) => {
   const { searchResults, searchApp } = useDocumentSearch();
+  const { componentProps: modeOptionProps } = useModeOptionButtons();
 
   const onSearchTermChange = React.useCallback(
     (newValue: string) => {
@@ -53,10 +71,11 @@ const AppSelectBar: React.FunctionComponent<Props> = ({
 
   return (
     <Select
+      modeOptionProps={modeOptionProps} // passed through
       options={searchResults}
       value={value}
       onChange={onChange}
-      components={{ SingleValue, Option }}
+      components={{ SingleValue, Option, SelectContainer }}
       onInputChange={onSearchTermChange}
       getOptionValue={getDocRefValue}
       getOptionLabel={getDocRefLabel}

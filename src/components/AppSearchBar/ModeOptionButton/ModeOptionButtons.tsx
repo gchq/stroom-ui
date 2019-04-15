@@ -5,6 +5,7 @@ import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { SearchMode } from "./types";
 
 interface Props {
+  searchMode: SearchMode;
   switchMode: (m: SearchMode) => void;
 }
 
@@ -12,6 +13,7 @@ interface ModeOption {
   mode: SearchMode;
   icon: IconProp;
   position: "left" | "middle" | "right";
+  title: string;
 }
 
 const MODE_OPTIONS: ModeOption[] = [
@@ -19,20 +21,26 @@ const MODE_OPTIONS: ModeOption[] = [
     mode: SearchMode.GLOBAL_SEARCH,
     icon: "search",
     position: "left",
+    title: "Search",
   },
   {
     mode: SearchMode.NAVIGATION,
     icon: "folder",
     position: "middle",
+    title: "Navigation",
   },
   {
     mode: SearchMode.RECENT_ITEMS,
     icon: "history",
     position: "right",
+    title: "Recent Items",
   },
 ];
 
-const ModeOptionButtons: React.FunctionComponent<Props> = ({ switchMode }) => (
+const ModeOptionButtons: React.FunctionComponent<Props> = ({
+  searchMode,
+  switchMode,
+}) => (
   <React.Fragment>
     {MODE_OPTIONS.map(modeOption => (
       <Button
@@ -48,6 +56,7 @@ const ModeOptionButtons: React.FunctionComponent<Props> = ({ switchMode }) => (
         }}
       />
     ))}
+    {MODE_OPTIONS[searchMode].title}
   </React.Fragment>
 );
 
@@ -64,6 +73,7 @@ export const useModeOptionButtons = (): UseModeOptionButtons => {
   return {
     searchMode,
     componentProps: {
+      searchMode,
       switchMode,
     },
   };

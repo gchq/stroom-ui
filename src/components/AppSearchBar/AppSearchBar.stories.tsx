@@ -105,7 +105,6 @@ class AppSearchAsNavigator extends React.Component<
       <div style={{ height: "100%", width: "100%" }}>
         <this.props.Component
           onChange={d => {
-            console.log("App Search Bar Chose a Value", d);
             this.setState({ chosenDocRef: d });
             this.displayRef.current!.focus();
           }}
