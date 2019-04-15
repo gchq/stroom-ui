@@ -26,6 +26,7 @@ import CreateUser from "./CreateUser";
 import "./CreateUserForm.css";
 import useAppNavigation from "src/components/AppChrome/useAppNavigation";
 import UserFormData from "./UserFormData";
+import UserForm from "./UserForm";
 
 const CreateUserContainer = ({}) => {
   const { createUser } = useUsers();
@@ -36,8 +37,20 @@ const CreateUserContainer = ({}) => {
   if (!idToken) throw Error("Not authenticated"); //FIXME: handle this. Show unauthorised page probably.
 
   const { goToUsers } = useAppNavigation();
+  const initialValues: UserFormData = {
+    firstName: "",
+    lastName: "",
+    email: "",
+    state: "enabled",
+    password: "",
+    verifyPassword: "",
+    neverExpires: false,
+    comments: "",
+    forcePasswordChange: true,
+  };
   return (
-    <CreateUser
+    <UserForm
+      user={initialValues}
       onSubmit={(user: User) => createUser(user)}
       onBack={() => goToUsers()}
       onCancel={() => goToUsers()}

@@ -28,6 +28,7 @@ import { validateAsync } from "../validation";
 import EditUser from "./EditUser";
 import "./EditUser.css";
 import UserFormData from "./UserFormData";
+import UserForm from "./UserForm";
 
 const EditUserContainer = () => {
   const { updateUser, fetchUser, user } = useUsers();
@@ -43,7 +44,7 @@ const EditUserContainer = () => {
 
   if (!!user) {
     return (
-      <EditUser
+      <UserForm
         user={user}
         onBack={() => goToUsers()}
         onSubmit={(user: User) => updateUser(user)}
