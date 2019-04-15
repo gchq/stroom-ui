@@ -1,40 +1,67 @@
 import * as React from "react";
 
 import DocRefImage from "../DocRefImage";
-import { ControlledInput } from "src/types";
+import { ControlledInput, OptionType } from "src/types";
 import useDocRefTypes from "src/api/explorer/useDocRefTypes";
-import Select from "react-select";
+import Select, { components } from "react-select";
 import { OptionProps } from "react-select/lib/components/Option";
+import { SingleValueProps } from "react-select/lib/components/SingleValue";
 
 interface Props extends ControlledInput<string> {
   invalidTypes?: string[];
 }
 
-const DocRefTypeOption = ({
-  data,
-  innerProps: { onClick },
-}: OptionProps<string>) => (
-  // <div className={`hoverable ${inFocus ? "inFocus" : ""}`} onClick={onClick}>
-  <div onClick={onClick}>
-    <DocRefImage size="sm" docRefType={data} />
-    {data}
-  </div>
+const SingleValue: React.FunctionComponent<SingleValueProps<OptionType>> = ({
+  children,
+  ...props
+}) => {
+  if (!!props.data.value) {
+    return (
+      <div>
+        <DocRefImage
+          className="DocRefTypePicker--image"
+          size="sm"
+          docRefType={props.data.value}
+        />
+        {children}
+      </div>
+    );
+  } else {
+    return (
+      <components.SingleValue {...props}>{children}</components.SingleValue>
+    );
+  }
+};
+
+const Option: React.FunctionComponent<OptionProps<OptionType>> = (
+  props: OptionProps<{ value: string; label: string }>,
+) => (
+  <components.Option {...props}>
+    <DocRefImage
+      className="DocRefTypePicker--image"
+      size="sm"
+      docRefType={props.data.value}
+    />
+    {props.children}
+  </components.Option>
 );
 
 let DocRefTypePicker = ({ value, onChange, invalidTypes = [] }: Props) => {
   const docRefTypes: string[] = useDocRefTypes();
-  const options = React.useMemo(
-    () => docRefTypes.filter(d => !invalidTypes.includes(d)),
+  const options: { value: string; label: string }[] = React.useMemo(
+    () =>
+      docRefTypes
+        .filter(d => !invalidTypes.includes(d))
+        .map(d => ({ value: d, label: d })),
     [docRefTypes, invalidTypes],
   );
 
   return (
     <Select
-      value={value}
-      onChange={(d: string) => onChange(d)}
+      value={{ value, label: value }}
+      onChange={(d: OptionType) => onChange(d.value)}
       options={options}
-      getOptionLabel={d => d}
-      components={{ Option: DocRefTypeOption }}
+      components={{ SingleValue, Option }}
     />
   );
 };

@@ -29,7 +29,7 @@ export interface SelectOptionType {
 export type SelectOptionsType = SelectOptionType[];
 
 export interface OptionType {
-  text: string;
+  label: string;
   value: string;
 }
 
