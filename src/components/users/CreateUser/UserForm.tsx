@@ -42,7 +42,7 @@ const UserForm: React.FunctionComponent<EditUserFormProps> = ({
       setShowBackConfirmation(true);
     }
   };
-
+  user.password = "";
   return (
     <Formik
       onSubmit={values => onSubmit(values)}

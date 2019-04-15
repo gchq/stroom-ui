@@ -10,6 +10,7 @@ const getUser = (): User => {
     firstName: lr(1),
     lastName: lr(1),
     comments: lr(20),
+    password: "",
     forcePasswordChange: true,
     neverExpires: false,
     loginCount: 0,

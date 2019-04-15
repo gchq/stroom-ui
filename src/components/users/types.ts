@@ -11,6 +11,7 @@ export interface User {
   firstName: string;
   lastName: string;
   comments: string;
+  password: string;
   forcePasswordChange: boolean;
   id?: string;
   lastLogin?: any;

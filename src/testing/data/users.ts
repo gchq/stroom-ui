@@ -8,6 +8,7 @@ export const generate: User[] = [
     lastName: loremIpsum({ count: 1, units: "words" }),
     comments: loremIpsum({ count: 20, units: "words" }),
     email: loremIpsum({ count: 1, units: "words" }),
+    password: "",
     forcePasswordChange: false,
     loginCount: 3,
     neverExpires: false,
