@@ -25,6 +25,7 @@ import { UserValidationSchema } from "../validation";
 import "./EditUser.css";
 import EditUserFormProps from "./EditUserFormProps";
 import UserFields from "./UserFields";
+import "src/styles/from_auth/form.css";
 
 const UserForm: React.FunctionComponent<EditUserFormProps> = ({
   onSubmit,

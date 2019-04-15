@@ -77,18 +77,6 @@ const UserFields = ({
         <div className="section__fields">
           <div className="section__fields__row">
             <div className="field-container vertical">
-              <label>First name</label>
-              <Field name="first_name" type="text" label="First name" />
-            </div>
-            <div className="field-container__spacer" />
-            <div className="field-container vertical">
-              <label>Last name</label>
-              <Field name="last_name" type="text" label="Last name" />
-            </div>
-          </div>
-
-          <div className="section__fields__row">
-            <div className="field-container vertical">
               <label>Email</label>
               <div className="field-container--with-validation">
                 <Field name="email" label="Email" />

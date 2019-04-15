@@ -12,17 +12,9 @@ import useAppNavigation from "src/components/AppChrome/useAppNavigation";
  * This hook connects the REST API calls to the Redux Store.
  */
 const useUsers = () => {
-  // const { toggleIsSaving, toggleAlertVisibility } = useActionCreators();
-  const { history } = useRouter();
-
   const { user, setUser, clearUser, setIsCreating } = useUserState();
 
   const { goToUsers } = useAppNavigation();
-  /**
-   * Deletes the user and then refreshes our browser cache of users.
-   */
-  // const { updateResults } = useUserSearchActionCreators();
-  // const { remove: removeUserUsingApi, search } = useApi();
 
   /**
    * Updates the user
@@ -60,9 +52,9 @@ const useUsers = () => {
   const { fetch: fetchUserUsingApi } = useApi();
   const fetchUser = useCallback(
     (userId: string) => {
-      fetchUserUsingApi(userId).then(users => {
+      fetchUserUsingApi(userId).then(user => {
         setIsCreating(false);
-        setUser(users[0]);
+        setUser(user);
         // dispatch({type:"save_user_being_edited", user:users[0]})
         // saveUserBeingEdited(users[0]);
       });

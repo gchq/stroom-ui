@@ -51,15 +51,17 @@ const CreateUserContainer = ({}) => {
       onBack={() => goToUsers()}
       onCancel={() => goToUsers()}
       onValidate={(values: UserFormData) => {
-        const passwordValidationRequest: PasswordValidationRequest = {
-          newPassword: values.password,
-          verifyPassword: values.verifyPassword,
-          email: values.email,
-        };
-        return validateAsync(
-          passwordValidationRequest,
-          authenticationServiceUrl,
-        );
+        if (!!values.password && !!values.verifyPassword && !!values.email) {
+          const passwordValidationRequest: PasswordValidationRequest = {
+            newPassword: values.password,
+            verifyPassword: values.verifyPassword,
+            email: values.email,
+          };
+          return validateAsync(
+            passwordValidationRequest,
+            authenticationServiceUrl,
+          );
+        } else return Promise.resolve();
       }}
     />
   );

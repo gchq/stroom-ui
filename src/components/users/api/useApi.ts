@@ -22,8 +22,8 @@ import useHttpClient from "src/lib/useHttpClient";
 interface Api {
   add: (user: User) => Promise<void>;
   change: (user: User) => Promise<void>;
-  fetch: (userId: string) => Promise<User[]>;
-  fetchCurrentUser: () => Promise<User[]>;
+  fetch: (userId: string) => Promise<User>;
+  fetchCurrentUser: () => Promise<User>;
   remove: (userId: string) => Promise<void>;
   search: () => Promise<User[]>;
 }
@@ -38,63 +38,75 @@ export const useApi = (): Api => {
   const { userServiceUrl } = useConfig();
   if (!userServiceUrl) throw Error("Configuration not ready or misconfigured!");
 
-  const change = useCallback(user => {
-    const url = `${userServiceUrl}/${user.id}`;
-    return httpPutEmptyResponse(url, {
-      body: JSON.stringify({
-        email: user.email,
-        password: user.password,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        comments: user.comments,
-        state: user.state,
-        neverExpires: user.neverExpires,
-        forcePasswordChange: user.forcePasswordChange,
-      }),
-    });
-  }, []);
+  const change = useCallback(
+    user => {
+      const url = `${userServiceUrl}/${user.id}`;
+      return httpPutEmptyResponse(url, {
+        body: JSON.stringify({
+          email: user.email,
+          password: user.password,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          comments: user.comments,
+          state: user.state,
+          neverExpires: user.neverExpires,
+          forcePasswordChange: user.forcePasswordChange,
+        }),
+      });
+    },
+    [httpPutEmptyResponse],
+  );
 
-  const add = useCallback(user => {
-    const url = userServiceUrl;
-    return httpPostJsonResponse(url, {
-      body: JSON.stringify({
-        email: user.email,
-        password: user.password,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        comments: user.comments,
-        state: user.state,
-        neverExpires: user.neverExpires,
-        forcePasswordChange: user.forcePasswordChange,
-      }),
-    });
-  }, []);
+  const add = useCallback(
+    user => {
+      const url = userServiceUrl;
+      return httpPostJsonResponse(url, {
+        body: JSON.stringify({
+          email: user.email,
+          password: user.password,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          comments: user.comments,
+          state: user.state,
+          neverExpires: user.neverExpires,
+          forcePasswordChange: user.forcePasswordChange,
+        }),
+      });
+    },
+    [httpPostJsonResponse],
+  );
 
   /**
    * Delete user
    */
-  const remove = useCallback((userId: string) => {
-    const url = `${userServiceUrl}/${userId}`;
-    return httpDeleteEmptyResponse(url, {});
-  }, []);
+  const remove = useCallback(
+    (userId: string) => {
+      const url = `${userServiceUrl}/${userId}`;
+      return httpDeleteEmptyResponse(url, {});
+    },
+    [httpDeleteEmptyResponse],
+  );
 
   /**
    * Fetch a user
    */
-  const fetch = useCallback((userId: string) => {
-    const url = `${userServiceUrl}/${userId}`;
-    return httpGetJson(url);
-  }, []);
+  const fetch = useCallback(
+    (userId: string) => {
+      const url = `${userServiceUrl}/${userId}`;
+      return httpGetJson(url);
+    },
+    [httpGetJson],
+  );
 
   const fetchCurrentUser = useCallback(() => {
     const url = `${userServiceUrl}/me`;
     return httpGetJson(url);
-  }, []);
+  }, [httpGetJson]);
 
   const search = useCallback(() => {
     const url = `${userServiceUrl}/?fromEmail=&usersPerPage=100&orderBy=id`;
     return httpGetJson(url);
-  }, []);
+  }, [httpGetJson]);
 
   return {
     add,

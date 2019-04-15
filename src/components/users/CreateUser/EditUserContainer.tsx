@@ -37,7 +37,7 @@ const EditUserContainer = () => {
     throw Error("Configuration not ready or misconfigured!");
   useEffect(() => {
     if (!!userId && !user) fetchUser(userId);
-  }, [fetchUser]);
+  }, [fetchUser, userId, user]);
 
   if (!!user) {
     return (
@@ -47,15 +47,17 @@ const EditUserContainer = () => {
         onSubmit={(user: User) => updateUser(user)}
         onCancel={() => goToUsers()}
         onValidate={(values: UserFormData) => {
-          const passwordValidationRequest: PasswordValidationRequest = {
-            newPassword: values.password,
-            verifyPassword: values.verifyPassword,
-            email: values.email,
-          };
-          return validateAsync(
-            passwordValidationRequest,
-            authenticationServiceUrl,
-          );
+          if (!!values.password && !!values.verifyPassword && !!values.email) {
+            const passwordValidationRequest: PasswordValidationRequest = {
+              newPassword: values.password,
+              verifyPassword: values.verifyPassword,
+              email: values.email,
+            };
+            return validateAsync(
+              passwordValidationRequest,
+              authenticationServiceUrl,
+            );
+          } else return Promise.resolve();
         }}
       />
     );

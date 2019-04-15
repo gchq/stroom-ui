@@ -78,9 +78,6 @@ export const useHttpClient = (): HttpClient => {
       forceGet: boolean = true, // default to true, take care with settings this to false, old promises can override the updated picture with old information if this is mis-used
       addAuthentication: boolean = true, // most of the time we want authenticated requests, so we'll make that the default.
     ): Promise<T | void> => {
-      // console.group("HTTP GET");
-      // console.log("Fetching", { url, cacheKeys: Object.keys(cache) });
-
       if (!idToken && addAuthentication) {
         let p = Promise.reject();
         p.catch(() => console.log("Missing ID Token, not making request"));
@@ -99,7 +96,6 @@ export const useHttpClient = (): HttpClient => {
 
       // If we do not have an entry in the cache or we are forcing GET, create a new call
       if (!cache[url] || forceGet) {
-        // console.log("Making a Fresh Call");
         cache[url] = fetch(url, {
           method: "get",
           mode: "cors",
@@ -110,7 +106,6 @@ export const useHttpClient = (): HttpClient => {
           .then(r => r.json())
           .catch(catchImpl);
       }
-      // console.groupEnd();
 
       return cache[url];
     },

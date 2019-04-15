@@ -24,10 +24,11 @@ interface Api {
 
 export const useApi = (): Api => {
   const { httpPostEmptyResponse } = useHttpClient();
-  const { authorisationServiceUrl } = useConfig();
+  const { stroomBaseServiceUrl } = useConfig();
   const createUser = useCallback((userEmail: string) => {
-    const url = `${authorisationServiceUrl}/createUser?id=${userEmail}`;
-    return httpPostEmptyResponse(url, {});
+    return httpPostEmptyResponse(`${stroomBaseServiceUrl}/users/v1`, {
+      body: JSON.stringify({ name: userEmail, group: false }),
+    });
   }, []);
 
   return { createUser };

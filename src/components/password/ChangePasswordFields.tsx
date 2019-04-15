@@ -14,15 +14,14 @@
  * limitations under the License.
  */
 
+import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as React from "react";
-import { Formik, Form, Field, ErrorMessage } from "formik";
-
-import "src/styles/from_auth/Layout.css";
-import Button from "src/components/Button";
 import { PasswordValidationRequest } from "src/api/authentication/types";
+import Button from "src/components/Button";
+import { validateAsync } from "src/components/users/validation";
 import { hasAnyProps } from "src/lib/lang";
 import { useConfig } from "src/startup/config";
-import { validateAsync } from "src/components/users/validation";
+import "src/styles/from_auth/Layout.css";
 
 const ChangePasswordFields = ({
   email,
@@ -52,16 +51,23 @@ const ChangePasswordFields = ({
         onSubmit(values);
       }}
       validate={values => {
-        const passwordValidationRequest: PasswordValidationRequest = {
-          oldPassword: values.oldPassword,
-          newPassword: values.password,
-          verifyPassword: values.verifyPassword,
-          email: values.email,
-        };
-        return validateAsync(
-          passwordValidationRequest,
-          authenticationServiceUrl,
-        );
+        if (
+          !!values.oldPassword &&
+          !!values.password &&
+          !!values.verifyPassword &&
+          !!values.email
+        ) {
+          const passwordValidationRequest: PasswordValidationRequest = {
+            oldPassword: values.oldPassword,
+            newPassword: values.password,
+            verifyPassword: values.verifyPassword,
+            email: values.email,
+          };
+          return validateAsync(
+            passwordValidationRequest,
+            authenticationServiceUrl,
+          );
+        } else return Promise.resolve();
       }}
     >
       {({ errors, touched }) => {

@@ -55,7 +55,6 @@ export const useApi = (): Api => {
           sessionId,
           requestingClientId: appClientId,
         }),
-        // }, false);
       });
     },
     [httpPostJsonResponse],
@@ -79,11 +78,9 @@ export const useApi = (): Api => {
     (resetPasswordRequest: ResetPasswordRequest) => {
       const newPassword = resetPasswordRequest.password;
       const url = `${authenticationServiceUrl}/resetPassword/`;
-      return httpPostJsonResponse(
-        url,
-        { body: JSON.stringify({ newPassword }) },
-        // false);
-      );
+      return httpPostJsonResponse(url, {
+        body: JSON.stringify({ newPassword }),
+      });
     },
     [],
   );
@@ -99,7 +96,6 @@ export const useApi = (): Api => {
       return httpPostJsonResponse(url, {
         body: JSON.stringify(passwordValidationRequest),
       });
-      // }, false);
     },
     [],
   );
