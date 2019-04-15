@@ -44,8 +44,6 @@ const TestHarness: React.FunctionComponent = () => {
     }
   }, [fetchDocument, setDocRefContents, docRefUuid]);
 
-  console.log("Rendering useDocumentApi");
-
   return (
     <div>
       <DocRefTypePicker

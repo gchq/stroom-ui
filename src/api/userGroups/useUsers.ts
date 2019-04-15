@@ -23,9 +23,7 @@ const useUsers = (userUuids: string[]): User[] => {
     let userUuidsFound = allUsers.map(u => u.uuid);
     userUuids
       .filter(userUuid => !userUuidsFound.includes(userUuid))
-      .forEach(userUuid => {
-        fetchUser(userUuid).then(itemAdded);
-      });
+      .forEach(userUuid => fetchUser(userUuid).then(user => itemAdded(user)));
   }, [userUuids, fetchUser, itemAdded]);
 
   return users;
