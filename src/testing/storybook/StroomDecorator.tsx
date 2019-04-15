@@ -19,7 +19,7 @@ import { AuthenticationContext } from "src/startup/Authentication";
 import { DocumentTreeContextProvider } from "src/api/explorer";
 import { ErrorReportingContextProvider } from "src/components/ErrorPage";
 
-const B: React.FunctionComponent = ({ children }) => {
+const WithTestServer: React.FunctionComponent = ({ children }) => {
   useFontAwesome();
   useTestServer(testData);
 
@@ -32,7 +32,7 @@ const RouteWrapper: React.StatelessComponent<RouteComponentProps> = ({
 }) => {
   return (
     <CustomRouter history={history}>
-      <B>{children}</B>
+      <WithTestServer>{children}</WithTestServer>
     </CustomRouter>
   );
 };

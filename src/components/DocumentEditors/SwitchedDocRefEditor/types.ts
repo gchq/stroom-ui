@@ -12,6 +12,7 @@ import StroomStatsStoreEditor from "../StroomStatsStoreEditor";
 import StatisticStoreEditor from "../StatisticStoreEditor";
 import VisualisationEditor from "../VisualisationEditor";
 import XMLSchemaEditor from "../XMLSchemaEditor";
+import FeedEditor from "../FeedEditor";
 
 export interface DocRefEditorClasses {
   [docRefType: string]: React.FunctionComponent<SwitchedDocRefEditorProps>;
@@ -19,16 +20,18 @@ export interface DocRefEditorClasses {
 
 export const docRefEditorClasses: DocRefEditorClasses = {
   AnnotationsIndex: AnnotationsIndexEditor,
-  ElasticIndex: ElasticIndexEditor,
   Dashboard: DashboardEditor,
+  Dictionary: DictionaryEditor,
+  ElasticIndex: ElasticIndexEditor,
+  Feed: FeedEditor,
+  Folder: FolderExplorer,
+  Index: IndexEditor,
+  Pipeline: PipelineEditor,
   Script: ScriptEditor,
-  StroomStatsStore: StroomStatsStoreEditor,
   StatisticStore: StatisticStoreEditor,
+  StroomStatsStore: StroomStatsStoreEditor,
+  System: FolderExplorer,
   Visualisation: VisualisationEditor,
   XMLSchema: XMLSchemaEditor,
-  Folder: FolderExplorer,
   XSLT: XsltEditor,
-  Dictionary: DictionaryEditor,
-  Pipeline: PipelineEditor,
-  Index: IndexEditor,
 };

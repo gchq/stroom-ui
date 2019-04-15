@@ -13,58 +13,55 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import * as uuidv4 from "uuid/v4";
-
+import { AnnotationsIndexDoc } from "src/api/useDocumentApi/types/annotations";
+import { copyDocRef, DocRefTree } from "src/api/useDocumentApi/types/base";
+import { DashboardDoc } from "src/api/useDocumentApi/types/dashboard";
+import { DictionaryDoc } from "src/api/useDocumentApi/types/dictionaryDoc";
+import { ElasticIndexDoc } from "src/api/useDocumentApi/types/elastic";
+import { FeedDoc } from "src/api/useDocumentApi/types/feed";
+import { IndexDoc } from "src/api/useDocumentApi/types/indexDoc";
+import { ScriptDoc } from "src/api/useDocumentApi/types/scriptDoc";
 import {
-  DocRefTree,
-  copyDocRef,
-  Dictionary,
-  StreamTaskType,
-  IndexDoc,
-  XsltDoc,
-  XMLSchemaDoc,
-  VisualisationDoc,
   StatisticStoreDoc,
   StroomStatsStoreDoc,
-  ScriptDoc,
-  ElasticIndexDoc,
-  DashboardDoc,
-  AnnotationsIndexDoc,
-  FeedDoc,
+} from "src/api/useDocumentApi/types/statistics";
+import { VisualisationDoc } from "src/api/useDocumentApi/types/visualisation";
+import { XMLSchemaDoc } from "src/api/useDocumentApi/types/xmlSchema";
+import { XsltDoc } from "src/api/useDocumentApi/types/xsltDoc";
+import { iterateNodes } from "src/lib/treeUtils";
+import {
+  IndexVolume,
+  IndexVolumeGroup,
+  IndexVolumeGroupMembership,
+  StreamTaskType,
 } from "src/types";
-import { testPipelines, elements, elementProperties } from "./pipelines";
-import testDocRefsTypes from "./docRefTypes";
+import * as uuidv4 from "uuid/v4";
+import { TestData, UserDocPermission, UserGroupMembership } from "../testTypes";
 import { generate as generateAnnotationsIndex } from "./annotationsIndex";
+import allAppPermissions from "./appPermissions";
 import { generate as generateDashboard } from "./dashboard";
+import { dataList, dataSource } from "./data";
 import { generate as generateDictionary } from "./dictionary";
+import { documentPermissionNames } from "./docPermissions";
+import testDocRefsTypes from "./docRefTypes";
 import { generate as generateElasticIndex } from "./elasticIndex";
 import { generate as generateFeed } from "./feed";
 import { generate as generateIndex } from "./indexDocs";
+import {
+  generateTestIndexVolume,
+  generateTestIndexVolumeGroup,
+} from "./indexVolumes";
+import { elementProperties, elements, testPipelines } from "./pipelines";
 import { generate as generateScript } from "./script";
 import { generate as generateStatisticStore } from "./statisticStore";
 import { generate as generateStroomStatsStore } from "./stroomStatsStore";
+import { generateGenericTracker } from "./trackers";
+import { generate as generateUsers } from "./users";
+import { generateTestGroup, generateTestUser } from "./usersAndGroups";
 import { generate as generateVisualisation } from "./visualisation";
 import { generate as generateXmlSchema } from "./xmlSchema";
 import { generate as generateXslt } from "./xslt";
-import { generate as generateUsers } from "./users";
-import { generateGenericTracker } from "./trackers";
-import { dataList, dataSource } from "./data";
-import { generateTestUser, generateTestGroup } from "./usersAndGroups";
-import {
-  generateTestIndexVolumeGroup,
-  generateTestIndexVolume,
-} from "./indexVolumes";
-import {
-  IndexVolumeGroupMembership,
-  StroomUser,
-  IndexVolumeGroup,
-  IndexVolume,
-} from "src/types";
-import allAppPermissions from "./appPermissions";
-import { UserGroupMembership, TestData, UserDocPermission } from "../testTypes";
-import { documentPermissionNames } from "./docPermissions";
-import { iterateNodes } from "src/lib/treeUtils";
-import { User } from "src/components/users";
+import { StroomUser } from "src/api/userGroups";
 
 let docPermissionByType = testDocRefsTypes.reduce(
   (acc, curr) => ({ ...acc, [curr]: documentPermissionNames }),
@@ -151,7 +148,7 @@ indexVolumeGroups.forEach(group => {
   }
 });
 
-let dictionaries: Dictionary[] = Array(5)
+let dictionaries: DictionaryDoc[] = Array(5)
   .fill(null)
   .map(generateDictionary);
 

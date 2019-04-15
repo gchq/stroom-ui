@@ -19,14 +19,14 @@ import * as uuidv4 from "uuid/v4";
 
 import { processSearchString } from "./expressionSearchBarUtils";
 import Button from "../Button";
+import { StyledComponentProps } from "src/types";
+import { assignRandomUuids } from "src/lib/treeUtils";
+import { toString } from "../ExpressionBuilder/expressionUtils";
+import { ExpressionBuilder } from "../ExpressionBuilder";
 import {
   DataSourceType,
-  StyledComponentProps,
   ExpressionOperatorWithUuid,
-} from "src/types";
-import { assignRandomUuids } from "src/lib/treeUtils";
-import { toString } from "../ExpressionBuilder/expressionBuilderUtils";
-import { ExpressionBuilder } from "../ExpressionBuilder";
+} from "../ExpressionBuilder/types";
 
 interface Props extends StyledComponentProps {
   dataSource: DataSourceType;

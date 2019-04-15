@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import useApi from "./useApi";
-import { StreamTaskType } from "src/types";
+import { StreamTasksResponseType } from "src/types";
 import {
   SortByOptions,
   Directions,
@@ -17,7 +17,7 @@ const defaultPagedInfo: PagedTrackerInfo = {
 };
 
 const defaultFetchParameters: FetchParameters = {
-  sortBy: SortByOptions.pipelineUuid,
+  sortBy: "Pipeline",
   sortDirection: Directions.ascending,
   pageSize: 10,
   pageOffset: 0,
@@ -48,12 +48,15 @@ const useStreamTasks = (): UseStreamTasks => {
   );
 
   const addTrackers = React.useCallback(
-    (streamTasks: StreamTaskType[], totalStreamTasks: number) => {
-      setPagedTrackerInfo({
-        trackers: trackers.concat(streamTasks),
-        totalTrackers: totalStreamTasks,
-        numberOfPages: Math.ceil(totalStreamTasks / pageSize),
-      });
+    (streamTaskResponse: StreamTasksResponseType) => {
+      if (streamTaskResponse) {
+        const { streamTasks, totalStreamTasks } = streamTaskResponse;
+        setPagedTrackerInfo({
+          trackers: trackers.concat(streamTasks),
+          totalTrackers: totalStreamTasks,
+          numberOfPages: Math.ceil(totalStreamTasks / pageSize),
+        });
+      }
     },
     [setPagedTrackerInfo, trackers, pageSize],
   );
@@ -66,19 +69,23 @@ const useStreamTasks = (): UseStreamTasks => {
   );
 
   const updateTrackers = React.useCallback(
-    (streamTasks: StreamTaskType[], totalStreamTasks: number) =>
-      setPagedTrackerInfo({
-        trackers: streamTasks,
-        totalTrackers: totalStreamTasks,
-        numberOfPages: Math.ceil(totalStreamTasks / pageSize),
-      }),
+    (streamTaskResponse: StreamTasksResponseType) => {
+      if (streamTaskResponse) {
+        const { streamTasks, totalStreamTasks } = streamTaskResponse;
+        setPagedTrackerInfo({
+          trackers: streamTasks,
+          totalTrackers: totalStreamTasks,
+          numberOfPages: Math.ceil(totalStreamTasks / pageSize),
+        });
+      }
+    },
     [setPagedTrackerInfo],
   );
 
   const updateEnabled = React.useCallback(
     (filterId: number, enabled: boolean) => {
       setPagedTrackerInfo({
-        trackers: trackers.map((tracker, i) =>
+        trackers: trackers.map(tracker =>
           tracker.filterId === filterId
             ? { ...tracker, enabled: enabled }
             : tracker,
@@ -145,15 +152,11 @@ const useStreamTasks = (): UseStreamTasks => {
   }, [updateFetchParameters, pageOffset]);
 
   const fetchTrackersLocal = React.useCallback(() => {
-    fetchTrackers(fetchParameters).then(d =>
-      updateTrackers(d.streamTasks, d.totalStreamTasks),
-    );
+    fetchTrackers(fetchParameters).then(updateTrackers);
   }, [fetchParameters, fetchTrackers, updateTrackers]);
 
   const fetchMoreLocal = React.useCallback(() => {
-    fetchMore(fetchParameters).then(d =>
-      addTrackers(d.streamTasks, d.totalStreamTasks),
-    );
+    fetchMore(fetchParameters).then(addTrackers);
   }, [fetchMore, fetchParameters]);
 
   const enableToggleLocal = React.useCallback(
@@ -175,7 +178,6 @@ const useStreamTasks = (): UseStreamTasks => {
     fetchTrackers: fetchTrackersLocal,
     fetchMore: fetchMoreLocal,
     enableToggle: enableToggleLocal,
-    addTrackers,
     changePage,
     pageLeft,
     pageRight,
@@ -184,7 +186,6 @@ const useStreamTasks = (): UseStreamTasks => {
     updatePageSize,
     updateSearchCriteria,
     updateSort,
-    updateTrackers,
   };
 };
 

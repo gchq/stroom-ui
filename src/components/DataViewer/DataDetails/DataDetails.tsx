@@ -22,14 +22,14 @@ import EventView from "./EventView";
 import { StroomData } from "./types";
 
 interface Props {
-  data: StroomData;
+  meta: StroomData;
 }
 
-const DataDetails: React.FunctionComponent<Props> = ({ data }) => {
-  const streamType = path(["streamType", "path"], data);
-  if (streamType === "ERROR") return <ErrorTable errors={data.markers} />;
-  else if (streamType === "RAW_EVENTS") return <EventView events={data.data} />;
-  else if (streamType === "EVENTS") return <EventView events={data.data} />;
+const DataDetails: React.FunctionComponent<Props> = ({ meta }) => {
+  const streamType = path(["streamType", "path"], meta);
+  if (streamType === "ERROR") return <ErrorTable errors={meta.markers} />;
+  else if (streamType === "RAW_EVENTS") return <EventView events={meta.data} />;
+  else if (streamType === "EVENTS") return <EventView events={meta.data} />;
   return <div>TODO</div>;
 };
 

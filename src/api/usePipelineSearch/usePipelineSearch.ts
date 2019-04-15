@@ -1,9 +1,10 @@
 import * as React from "react";
-import {
-  PipelineSearchResultType,
-  PipelineSearchCriteriaType,
-} from "src/types";
+
 import useApi from "./useApi";
+import {
+  PipelineSearchCriteriaType,
+  PipelineSearchResultType,
+} from "../useDocumentApi/types/pipelineDoc";
 
 interface UsePipelineSearch {
   results: PipelineSearchResultType;

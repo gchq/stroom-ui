@@ -1,4 +1,5 @@
-import { PipelineAsTreeType, PipelineDocumentType } from "src/types";
+import { PipelineDocumentType } from "src/api/useDocumentApi/types/pipelineDoc";
+import { PipelineAsTreeType } from "../AddElementModal/types";
 
 export function getNext(
   selectedElementId?: string,

@@ -21,12 +21,12 @@ import { storiesOf } from "@storybook/react";
 import fullTestData from "src/testing/data";
 import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
 
-import { StroomUser } from "src/types";
 import GroupsForUser from "./GroupsForUser";
+import { StroomUser } from "src/api/userGroups";
 
 // Pick a group
 let aUser: StroomUser = fullTestData.usersAndGroups.users
-  .filter(u => !u.isGroup)
+  .filter(u => !u.group)
   .pop()!;
 
 const stories = storiesOf(

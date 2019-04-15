@@ -21,7 +21,7 @@ import ElementDetails from "./ElementDetails";
 
 import { fullTestData } from "src/testing/data";
 import usePipelineState from "../usePipelineState";
-import { PipelineDocumentType } from "src/types";
+import { PipelineDocumentType } from "src/api/useDocumentApi/types/pipelineDoc";
 
 interface Props {
   pipelineId: string;

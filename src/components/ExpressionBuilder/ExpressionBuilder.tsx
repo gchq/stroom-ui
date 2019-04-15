@@ -21,10 +21,9 @@ import DeleteExpressionItem, {
 } from "./DeleteExpressionItem/DeleteExpressionItem";
 import {
   DataSourceType,
-  StyledComponentProps,
   ExpressionOperatorWithUuid,
   ExpressionHasUuid,
-} from "src/types";
+} from "./types";
 import ROExpressionBuilder from "./ROExpressionBuilder";
 import {
   updateItemInTree,
@@ -33,7 +32,8 @@ import {
   moveItemsInTree,
 } from "src/lib/treeUtils";
 
-import { getNewTerm, getNewOperator } from "./expressionBuilderUtils";
+import { getNewTerm, getNewOperator } from "./expressionUtils";
+import { StyledComponentProps } from "src/types";
 
 interface Props extends StyledComponentProps {
   dataSource: DataSourceType;

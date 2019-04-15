@@ -1,11 +1,10 @@
 import * as React from "react";
 import Select from "react-select";
+import { SelectOptionType, SelectOptionsType } from "src/types";
 import {
-  SelectOptionType,
   IndexFieldType,
-  SelectOptionsType,
   IndexFieldTypeDisplayValues,
-} from "src/types";
+} from "src/api/useDocumentApi/types/indexDoc";
 
 interface Props {
   className?: string;

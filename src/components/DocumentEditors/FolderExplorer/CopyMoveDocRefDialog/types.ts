@@ -1,23 +1,21 @@
-import { DocRefType, PermissionInheritance } from "src/types";
+import { PermissionInheritance } from "src/types";
+import { DocRefType } from "src/api/useDocumentApi/types/base";
 
 export interface Props {
-  uuids: Array<string>;
+  uuids: string[];
   initialDestination?: DocRefType;
   isOpen: boolean;
   onConfirm: (
-    uuids: Array<string>,
+    uuids: string[],
     destination: DocRefType,
-    permissionInheritance: PermissionInheritance
+    permissionInheritance: PermissionInheritance,
   ) => void;
   onCloseDialog: () => void;
 }
 
-export type ShowDialog = (
-  uuids: Array<string>,
-  destination?: DocRefType
-) => void;
+export type ShowDialog = (uuids: string[], destination?: DocRefType) => void;
 
-export type UseDialog = {
+export interface UseDialog {
   showDialog: ShowDialog;
   componentProps: Props;
-};
+}

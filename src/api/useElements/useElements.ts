@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import useApi from "./useApi";
-import { ElementDefinition, ElementPropertiesByElementIdType } from "src/types";
+import { ElementDefinition, ElementPropertiesByElementIdType } from "./types";
 
 interface UseElements {
   elementDefinitions: ElementDefinition[];

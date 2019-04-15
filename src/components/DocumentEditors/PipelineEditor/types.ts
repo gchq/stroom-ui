@@ -1,12 +1,12 @@
 import { ConnectDropTarget, ConnectDragSource } from "react-dnd";
 
+import { UseDocRefEditorProps } from "../DocRefEditor";
 import {
   PipelineElementType,
-  ElementDefinition,
   PipelineDocumentType,
-  PipelineAsTreeType,
-} from "src/types";
-import { UseDocRefEditorProps } from "../DocRefEditor";
+} from "src/api/useDocumentApi/types/pipelineDoc";
+import { PipelineAsTreeType } from "./AddElementModal/types";
+import { ElementDefinition } from "src/api/useElements/types";
 
 export enum DragDropTypes {
   ELEMENT = "element",

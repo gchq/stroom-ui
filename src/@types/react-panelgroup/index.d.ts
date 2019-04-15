@@ -3,13 +3,13 @@ declare module "react-panelgroup" {
     size?: string | number;
     minSize?: number;
     resize?: "fixed" | "dynamic" | "stretch";
-    snap?: Array<number>;
+    snap?: number[];
   }
 
   export interface Props {
     direction: "column" | "row";
     className?: string;
-    panelWidths?: Array<PanelWidth>;
+    panelWidths?: PanelWidth[];
     spacing?: number;
     borderColor?: string;
     panelColour?: string;

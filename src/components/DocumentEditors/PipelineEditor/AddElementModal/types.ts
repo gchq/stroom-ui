@@ -1,5 +1,5 @@
-import { ElementDefinition } from "src/types";
 import { NewElement } from "../types";
+import { ElementDefinition } from "src/api/useElements/types";
 
 export type OnAddElement = (newElement: NewElement) => void;
 
@@ -21,4 +21,10 @@ export type ShowDialog = (
 export interface UseDialog {
   componentProps: Props;
   showDialog: ShowDialog;
+}
+
+export interface PipelineAsTreeType {
+  uuid: string;
+  type: string;
+  children: PipelineAsTreeType[];
 }

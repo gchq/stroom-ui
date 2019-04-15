@@ -22,7 +22,9 @@ import fullTestData from "src/testing/data";
 import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
 
 import DocumentPermissionForUserEditor from "./DocumentPermissionForUserEditor";
-import { DocRefType, StroomUser } from "src/types";
+//TODO: Move StroomUser to live with DocRefType
+import { DocRefType } from "src/api/useDocumentApi/types/base";
+import { StroomUser } from "src/api/userGroups";
 
 const testUser: StroomUser = fullTestData.usersAndGroups.users[0];
 const testDocRef: DocRefType = fullTestData.documentTree.children![0];

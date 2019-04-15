@@ -5,13 +5,13 @@ import ROExpressionTerm from "./ROExpressionTerm";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import {
-  ExpressionOperatorWithUuid,
-  ExpressionHasUuid,
-  ExpressionTermWithUuid,
-} from "src/types";
+  ExpressionOperatorType,
+  ExpressionTermType,
+  ExpressionItem,
+} from "./types";
 
 interface Props {
-  operator: ExpressionOperatorWithUuid;
+  operator: ExpressionOperatorType;
   isRoot?: boolean;
   isEnabled: boolean;
 }
@@ -43,16 +43,16 @@ const ROExpressionOperator: React.FunctionComponent<Props> = ({
       <div className="operator__children">
         {operator.children &&
           operator.children
-            .map((c: ExpressionHasUuid) => {
+            .map((c: ExpressionItem, i) => {
               let itemElement;
               const cIsEnabled = isEnabled && c.enabled;
               switch (c.type) {
                 case "term":
                   itemElement = (
-                    <div key={c.uuid}>
+                    <div key={i}>
                       <ROExpressionTerm
                         isEnabled={cIsEnabled}
-                        term={c as ExpressionTermWithUuid}
+                        term={c as ExpressionTermType}
                       />
                     </div>
                   );
@@ -61,7 +61,7 @@ const ROExpressionOperator: React.FunctionComponent<Props> = ({
                   itemElement = (
                     <ROExpressionOperator
                       isEnabled={cIsEnabled}
-                      operator={c as ExpressionOperatorWithUuid}
+                      operator={c as ExpressionOperatorType}
                     />
                   );
                   break;
@@ -70,7 +70,7 @@ const ROExpressionOperator: React.FunctionComponent<Props> = ({
               }
 
               // Wrap it with a line to
-              return <div key={c.uuid}>{itemElement}</div>;
+              return <div key={i}>{itemElement}</div>;
             })
             .filter(c => !!c) // null filter
         }

@@ -27,14 +27,14 @@ let ThemeContext: React.Context<ThemeContextValue> = React.createContext({
 });
 
 const ThemeContextProvider: React.StatelessComponent<{}> = ({ children }) => {
-  const { value, setValue } = useLocalStorage(
+  const { value, setValue: setTheme } = useLocalStorage(
     "theme",
     themeOptions[0].value,
     storeString,
   );
 
   return (
-    <ThemeContext.Provider value={{ theme: value, setTheme: setValue }}>
+    <ThemeContext.Provider value={{ theme: value, setTheme }}>
       {children}
     </ThemeContext.Provider>
   );

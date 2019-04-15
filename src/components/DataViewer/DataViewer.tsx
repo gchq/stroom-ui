@@ -25,22 +25,23 @@ import {
   useSelectableReactTable,
   SelectionBehaviour,
 } from "src/lib/useSelectableItemListing";
-import { DataRow, PageRequest, ExpressionOperatorWithUuid } from "src/types";
+import { DataRow, PageRequest } from "src/types";
 import IconHeader from "../IconHeader";
 import ExpressionSearchBar from "../ExpressionSearchBar";
 import HorizontalMainDetails from "../HorizontalMainDetails";
 import DetailsTabs from "./DetailsTabs";
+import { ExpressionOperatorWithUuid } from "../ExpressionBuilder/types";
 
 const COLUMNS: Column[] = [
   {
     id: "id",
     Header: "ID",
-    accessor: (u: DataRow) => u.data.id,
+    accessor: (u: DataRow) => u && u.meta && u.meta.id,
   },
   {
     id: "feedName",
     Header: "Feed",
-    accessor: (u: DataRow) => u.data.feedName,
+    accessor: (u: DataRow) => u && u.meta && u.meta.feedName,
   },
 ];
 
@@ -52,16 +53,13 @@ const defaultPageRequest: PageRequest = {
 const DataViewer = () => {
   const dataSource = useStreamDataSource();
   const { streams, search } = useStreamSearch();
-  const [isDetailOpen, setIsDetailsOpen] = React.useState<boolean>(false);
-  const onCloseDetails = React.useCallback(() => {
-    setIsDetailsOpen(false);
-  }, [setIsDetailsOpen]);
-  console.log(isDetailOpen);
 
-  const { tableProps, selectedItem } = useSelectableReactTable<DataRow>(
+  const { tableProps, selectedItem, clearSelection } = useSelectableReactTable<
+    DataRow
+  >(
     {
       items: !!streams ? streams.streamAttributeMaps : [],
-      getKey: d => `${d.data.id}`,
+      getKey: d => `${(d && d.meta && d.meta.id) || "none"}`,
       selectionBehaviour: SelectionBehaviour.SINGLE,
     },
     {
@@ -72,10 +70,7 @@ const DataViewer = () => {
   // The expression search bar will call this on mount
   const onSearch = React.useCallback(
     (expression: ExpressionOperatorWithUuid) => {
-      search({
-        expressionWithUuids: expression,
-        pageInfo: defaultPageRequest,
-      });
+      search(expression, defaultPageRequest);
     },
     [search],
   );
@@ -97,7 +92,7 @@ const DataViewer = () => {
           <HorizontalMainDetails
             storageKey="dataViewer"
             title=""
-            onClose={onCloseDetails}
+            onClose={clearSelection}
             isOpen={!!selectedItem}
             mainContent={<ReactTable {...tableProps} />}
             detailContent={

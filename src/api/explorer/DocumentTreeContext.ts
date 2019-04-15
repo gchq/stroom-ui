@@ -1,8 +1,12 @@
 import * as React from "react";
 
-import { DocRefTree, DocRefType, DocRefWithLineage } from "src/types";
 import { SearchProps } from "./types";
 import { DEFAULT_TREE, DEFAULT_DOC_REF_WITH_LINEAGE } from "./values";
+import {
+  DocRefTree,
+  DocRefType,
+  DocRefWithLineage,
+} from "../useDocumentApi/types/base";
 
 export interface DocumentTreeContextValue {
   documentTree: DocRefTree;

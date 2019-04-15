@@ -1,9 +1,13 @@
 import * as React from "react";
 
 import useHttpClient from "src/lib/useHttpClient";
-import { DocRefType, DocRefTree, DocRefInfoType } from "src/types";
 import { SearchProps } from "./types";
 import { useConfig } from "src/startup/config";
+import {
+  DocRefTree,
+  DocRefType,
+  DocRefInfoType,
+} from "../useDocumentApi/types/base";
 
 const stripDocRef = (docRef: DocRefType) => ({
   uuid: docRef.uuid,

@@ -13,11 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {ConnectDropTarget, ConnectDragSource} from 'react-dnd';
-import {DocRefType} from 'src/types';
+import { ConnectDropTarget, ConnectDragSource } from "react-dnd";
+import { DocRefType } from "src/api/useDocumentApi/types/base";
 
 export enum DragDropTypes {
-  DOC_REF_UUIDS = 'docRef',
+  DOC_REF_UUIDS = "docRef",
 }
 export interface DropCollectedProps {
   connectDropTarget: ConnectDropTarget;
@@ -31,6 +31,6 @@ export interface DragCollectedProps {
 }
 
 export interface DragObject {
-  docRefs: Array<DocRefType>;
+  docRefs: DocRefType[];
   isCopy: boolean;
 }

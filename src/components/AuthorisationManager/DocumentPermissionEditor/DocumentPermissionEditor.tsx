@@ -2,12 +2,11 @@ import * as React from "react";
 
 import IconHeader from "src/components/IconHeader";
 import useDocumentPermissions from "src/api/docPermission/useDocumentPermissions";
-import { StroomUser } from "src/types";
 import Button from "src/components/Button";
 import ThemedConfirm, {
   useDialog as useThemedConfirm,
 } from "src/components/ThemedConfirm";
-import { useUsers } from "src/api/userGroups";
+import { useUsers, StroomUser } from "src/api/userGroups";
 import UsersTable, { useTable as useUsersTable } from "../UsersTable";
 import useAppNavigation from "../../AppChrome/useAppNavigation";
 import useRouter from "src/lib/useRouter";

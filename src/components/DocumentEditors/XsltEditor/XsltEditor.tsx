@@ -23,7 +23,7 @@ import DocRefEditor, {
 import Loader from "../../Loader";
 import useDocumentApi from "src/api/useDocumentApi";
 import ThemedAceEditor from "../../ThemedAceEditor";
-import { XsltDoc } from "src/types";
+import { XsltDoc } from "src/api/useDocumentApi/types/xsltDoc";
 
 const XsltEditor: React.FunctionComponent<SwitchedDocRefEditorProps> = ({
   docRefUuid,
@@ -43,7 +43,7 @@ const XsltEditor: React.FunctionComponent<SwitchedDocRefEditorProps> = ({
         style={{ width: "100%", height: "100%", minHeight: "25rem" }}
         name={`${docRefUuid}-ace-editor`}
         mode="xml"
-        value={docRefContents.data}
+        value={docRefContents.data || ""}
         onChange={newValue => {
           if (newValue !== docRefContents.data) {
             onDocumentChange({ data: newValue });

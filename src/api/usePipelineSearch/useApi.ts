@@ -16,11 +16,12 @@
 import * as React from "react";
 
 import useHttpClient from "src/lib/useHttpClient";
+
+import { useConfig } from "src/startup/config";
 import {
   PipelineSearchCriteriaType,
   PipelineSearchResultType,
-} from "src/types";
-import { useConfig } from "src/startup/config";
+} from "../useDocumentApi/types/pipelineDoc";
 
 interface Api {
   searchPipelines: (

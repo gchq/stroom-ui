@@ -29,7 +29,6 @@ import {
 } from "./types";
 
 import useSelectableItemListing from "src/lib/useSelectableItemListing";
-import { DocRefType, DocRefConsumer, DocRefTree } from "src/types";
 import { KeyDownState } from "src/lib/useKeyIsDown";
 import {
   CopyMoveDocRefDialog,
@@ -40,12 +39,24 @@ import useLocalStorage, {
   storeBoolean,
   useStoreObjectFactory,
 } from "src/lib/useLocalStorage";
-import useRouter from "src/lib/useRouter";
 import { useDocumentTree } from "src/api/explorer";
 import useAppNavigation from "./useAppNavigation";
 import { useTheme } from "src/lib/theme";
+import {
+  DocRefConsumer,
+  DocRefType,
+  DocRefTree,
+} from "src/api/useDocumentApi/types/base";
+import {
+  WithChromeContext,
+  DEFAULT_CHROME_MODE,
+} from "src/lib/useRouter/BrowserRouter";
 
-const PATH_PREFIX = "/s";
+export interface AppChromeProps {
+  content: React.ReactNode;
+  urlPrefix: string;
+  activeMenuItem: ActiveMenuItem;
+}
 
 const getDocumentTreeMenuItems = (
   openDocRef: DocRefConsumer,
@@ -88,11 +99,6 @@ const getOpenMenuItems = function<
 
   return openMenuItems;
 };
-
-interface Props {
-  content: React.ReactNode;
-  activeMenuItem: ActiveMenuItem;
-}
 
 const getMenuItems = (
   isCollapsed: boolean = false,
@@ -146,33 +152,45 @@ const getMenuItems = (
     </React.Fragment>
   ));
 
-const AppChrome: React.FunctionComponent<Props> = ({ content }) => {
+const AppChrome: React.FunctionComponent<AppChromeProps> = ({
+  activeMenuItem,
+  urlPrefix,
+  content,
+}) => {
+  const { setUrlPrefix, urlPrefix: urlPrefixInUse } = React.useContext(
+    WithChromeContext,
+  );
+  React.useEffect(() => setUrlPrefix(urlPrefix), [urlPrefix, setUrlPrefix]);
   const { theme } = useTheme();
 
-  const {
-    router: { location },
-  } = useRouter();
   const { documentTree, copyDocuments, moveDocuments } = useDocumentTree();
 
   const {
     value: areMenuItemsOpen,
-    setValue: setOpenMenuItems,
+    reduceValue: modifyOpenMenuItems,
   } = useLocalStorage<MenuItemsOpenState>(
     "app-chrome-menu-items-open",
     {},
     useStoreObjectFactory<MenuItemsOpenState>(),
   );
-  const menuItemOpened: MenuItemOpened = (name: string, isOpen: boolean) => {
-    setOpenMenuItems({
-      ...areMenuItemsOpen,
-      [name]: isOpen,
-    });
-  };
+  const menuItemOpened: MenuItemOpened = React.useCallback(
+    (name: string, isOpen: boolean) => {
+      modifyOpenMenuItems(existing => ({
+        ...existing,
+        [name]: isOpen,
+      }));
+    },
+    [modifyOpenMenuItems],
+  );
 
-  const { value: isExpanded, setValue: setIsExpanded } = useLocalStorage(
+  const { value: isExpanded, reduceValue: setIsExpanded } = useLocalStorage(
     "isExpanded",
     true,
     storeBoolean,
+  );
+  const toggleIsExpanded = React.useCallback(
+    () => setIsExpanded(existingIsExpanded => !existingIsExpanded),
+    [setIsExpanded],
   );
 
   const {
@@ -195,8 +213,7 @@ const AppChrome: React.FunctionComponent<Props> = ({ content }) => {
       onClick: goToWelcome,
       icon: "home",
       style: "nav",
-      isActive:
-        !!location && location.pathname.includes(`${PATH_PREFIX}/welcome/`),
+      isActive: activeMenuItem === "welcome",
     },
     getDocumentTreeMenuItems(goToEditDocRef, undefined, documentTree),
     {
@@ -205,7 +222,7 @@ const AppChrome: React.FunctionComponent<Props> = ({ content }) => {
       onClick: goToDataViewer,
       icon: "database",
       style: "nav",
-      isActive: !!location && location.pathname.includes(`${PATH_PREFIX}/data`),
+      isActive: activeMenuItem === "data",
     },
     {
       key: "processing",
@@ -213,8 +230,7 @@ const AppChrome: React.FunctionComponent<Props> = ({ content }) => {
       onClick: goToProcessing,
       icon: "play",
       style: "nav",
-      isActive:
-        !!location && location.pathname.includes(`${PATH_PREFIX}/processing`),
+      isActive: activeMenuItem === "processing",
     },
     {
       key: "indexing",
@@ -226,10 +242,6 @@ const AppChrome: React.FunctionComponent<Props> = ({ content }) => {
       icon: "database",
       style: "nav",
       skipInContractedMenu: true,
-      isActive:
-        !!location &&
-        (location.pathname.includes(`${PATH_PREFIX}/indexing/volumes`) ||
-          location.pathname.includes(`${PATH_PREFIX}/indexing/groups`)),
       children: [
         {
           key: "indexing-volumes",
@@ -237,9 +249,7 @@ const AppChrome: React.FunctionComponent<Props> = ({ content }) => {
           onClick: goToIndexVolumes,
           icon: "database",
           style: "nav",
-          isActive:
-            !!location &&
-            location.pathname.includes(`${PATH_PREFIX}/indexing/volumes`),
+          isActive: activeMenuItem === "indexVolumes",
         },
         {
           key: "indexing-groups",
@@ -247,9 +257,7 @@ const AppChrome: React.FunctionComponent<Props> = ({ content }) => {
           onClick: goToIndexVolumeGroups,
           icon: "database",
           style: "nav",
-          isActive:
-            !!location &&
-            location.pathname.includes(`${PATH_PREFIX}/indexing/groups`),
+          isActive: activeMenuItem === "indexVolumeGroups",
         },
       ],
     },
@@ -263,11 +271,6 @@ const AppChrome: React.FunctionComponent<Props> = ({ content }) => {
       icon: "cogs",
       style: "nav",
       skipInContractedMenu: true,
-      isActive:
-        !!location &&
-        (location.pathname.includes("/s/me") ||
-          location.pathname.includes("/s/users") ||
-          location.pathname.includes("/s/apikeys")),
       children: [
         {
           key: "admin-me",
@@ -275,7 +278,7 @@ const AppChrome: React.FunctionComponent<Props> = ({ content }) => {
           onClick: goToUserSettings,
           icon: "user",
           style: "nav",
-          isActive: !!location && location.pathname.includes("/s/me"),
+          isActive: activeMenuItem === "userSettings",
         },
         {
           key: "adminPermissions",
@@ -293,12 +296,12 @@ const AppChrome: React.FunctionComponent<Props> = ({ content }) => {
           children: [true, false].map((isGroup: boolean) => ({
             key: `admin-permissions-${isGroup}`,
             title: isGroup ? "Group" : "User",
-            onClick: () => goToAuthorisationManager(isGroup),
+            onClick: () => goToAuthorisationManager(isGroup.toString()),
             icon: "user" as IconProp,
             style: "nav",
-            isActive:
-              !!location &&
-              location.pathname.includes(`/s/authorisationManager/${isGroup}`),
+            isActive: isGroup
+              ? activeMenuItem === "groupPermissions"
+              : activeMenuItem === "userPermissions",
           })) as MenuItemType[],
         },
         {
@@ -307,7 +310,7 @@ const AppChrome: React.FunctionComponent<Props> = ({ content }) => {
           onClick: goToUsers,
           icon: "users",
           style: "nav",
-          isActive: !!location && location.pathname.includes("/s/users"),
+          isActive: activeMenuItem === "userIdentities",
         },
         {
           key: "admin-apikeys",
@@ -315,7 +318,7 @@ const AppChrome: React.FunctionComponent<Props> = ({ content }) => {
           onClick: goToApiKeys,
           icon: "key",
           style: "nav",
-          isActive: !!location && location.pathname.includes("/s/apikeys"),
+          isActive: activeMenuItem === "apiKeys",
         },
       ],
     },
@@ -366,53 +369,57 @@ const AppChrome: React.FunctionComponent<Props> = ({ content }) => {
     : "app-chrome__sidebar--collapsed";
   return (
     <div className={`app-container ${theme}`}>
+      <CopyMoveDocRefDialog {...copyDialogComponentProps} />
+      <CopyMoveDocRefDialog {...moveDialogComponentProps} />
       <div className="app-chrome flat">
-        <CopyMoveDocRefDialog {...copyDialogComponentProps} />
-        <CopyMoveDocRefDialog {...moveDialogComponentProps} />
-        <div className={`app-chrome__sidebar raised-high ${sidebarClassName}`}>
-          <React.Fragment>
-            <div
-              className="app-chrome__sidebar_header header"
-              onClick={() => setIsExpanded(!isExpanded)}
-            >
-              <FontAwesomeIcon
-                aria-label="Show/hide the sidebar"
-                className="menu-item__menu-icon sidebar__toggle sidebar__menu-item borderless "
-                icon="bars"
-                size="2x"
-              />
-              {isExpanded ? (
-                <img
-                  className="sidebar__logo"
-                  alt="Stroom logo"
-                  src={require("../../images/logo.svg")}
+        {urlPrefixInUse === DEFAULT_CHROME_MODE && (
+          <div
+            className={`app-chrome__sidebar raised-high ${sidebarClassName}`}
+          >
+            <React.Fragment>
+              <div
+                className="app-chrome__sidebar_header header"
+                onClick={toggleIsExpanded}
+              >
+                <FontAwesomeIcon
+                  aria-label="Show/hide the sidebar"
+                  className="menu-item__menu-icon sidebar__toggle sidebar__menu-item borderless "
+                  icon="bars"
+                  size="2x"
                 />
-              ) : (
-                undefined
-              )}
-            </div>
-            <div
-              tabIndex={0}
-              onKeyDown={onKeyDownWithShortcuts}
-              className="app-chrome__sidebar-menu raised-high"
-              data-simplebar
-            >
-              <div className="app-chrome__sidebar-menu__container">
-                {getMenuItems(
-                  !isExpanded,
-                  menuItems,
-                  areMenuItemsOpen,
-                  menuItemOpened,
-                  keyIsDown,
-                  showCopyDialog,
-                  showMoveDialog,
-                  selectedItems,
-                  focussedItem,
+                {isExpanded ? (
+                  <img
+                    className="sidebar__logo"
+                    alt="Stroom logo"
+                    src={require("../../images/logo.svg")}
+                  />
+                ) : (
+                  undefined
                 )}
               </div>
-            </div>
-          </React.Fragment>
-        </div>
+              <div
+                tabIndex={0}
+                onKeyDown={onKeyDownWithShortcuts}
+                className="app-chrome__sidebar-menu raised-high"
+                data-simplebar
+              >
+                <div className="app-chrome__sidebar-menu__container">
+                  {getMenuItems(
+                    !isExpanded,
+                    menuItems,
+                    areMenuItemsOpen,
+                    menuItemOpened,
+                    keyIsDown,
+                    showCopyDialog,
+                    showMoveDialog,
+                    selectedItems,
+                    focussedItem,
+                  )}
+                </div>
+              </div>
+            </React.Fragment>
+          </div>
+        )}
         <div className="app-chrome__content">
           <div className="content-tabs">
             <div className="content-tabs__content">{content}</div>

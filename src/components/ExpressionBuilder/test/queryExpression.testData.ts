@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 import * as uuidv4 from "uuid/v4";
+import { DictionaryDoc } from "src/api/useDocumentApi/types/dictionaryDoc";
+import { ExpressionOperatorWithUuid } from "../types";
 
-import { Dictionary, ExpressionOperatorWithUuid } from "src/types";
-
-const colourDictionary: Dictionary = {
+const colourDictionary: DictionaryDoc = {
   type: "Dictionary",
   uuid: "colourDict123",
   name: "Colours",

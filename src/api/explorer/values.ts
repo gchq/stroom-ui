@@ -1,4 +1,4 @@
-import { DocRefTree, DocRefWithLineage } from "src/types";
+import { DocRefTree, DocRefWithLineage } from "../useDocumentApi/types/base";
 
 export const DEFAULT_TREE: DocRefTree = {
   uuid: "NONE",

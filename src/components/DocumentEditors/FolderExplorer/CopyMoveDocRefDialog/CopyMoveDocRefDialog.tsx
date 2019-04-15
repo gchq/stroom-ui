@@ -20,9 +20,10 @@ import DialogActionButtons from "../../../DialogActionButtons";
 import ThemedModal from "../../../ThemedModal";
 import AppSearchBar from "../../../AppSearchBar";
 import PermissionInheritancePicker from "../../../PermissionInheritancePicker";
-import { PermissionInheritance, DocRefType } from "src/types";
+import { PermissionInheritance } from "src/types";
 import useForm from "src/lib/useForm";
 import { UseDialog, Props } from "./types";
+import { DocRefType } from "src/api/useDocumentApi/types/base";
 
 interface FormValues {
   destination?: DocRefType;

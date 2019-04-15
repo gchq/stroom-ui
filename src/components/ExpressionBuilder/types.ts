@@ -13,12 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { ExpressionOperatorWithUuid, ExpressionTermWithUuid } from "src/types";
 import {
   DragSourceCollector,
   ConnectDragSource,
   ConnectDropTarget,
 } from "react-dnd";
+import { DictionaryDoc } from "src/api/useDocumentApi/types/dictionaryDoc";
+import { HasUuid } from "src/types";
 
 export enum DragDropTypes {
   OPERATOR = "operator",
@@ -47,3 +48,71 @@ export const dragCollect: DragSourceCollector<
     isDragging: monitor.isDragging(),
   };
 };
+
+export type ConditionType =
+  | "EQUALS"
+  | "IN"
+  | "IN_DICTIONARY"
+  | "IS_DOC_REF"
+  | "CONTAINS"
+  | "BETWEEN"
+  | "GREATER_THAN"
+  | "GREATER_THAN_OR_EQUAL_TO"
+  | "LESS_THAN"
+  | "LESS_THAN_OR_EQUAL_TO";
+
+export const ConditionDisplayValues = {
+  CONTAINS: "contains",
+  EQUALS: "=",
+  GREATER_THAN: ">",
+  GREATER_THAN_OR_EQUAL_TO: ">=",
+  LESS_THAN: "<",
+  LESS_THAN_OR_EQUAL_TO: "<=",
+  BETWEEN: "between",
+  IN: "in",
+  IN_DICTIONARY: "in dictionary",
+};
+
+export interface DataSourceFieldType {
+  type: "ID" | "FIELD" | "NUMERIC_FIELD" | "DATE_FIELD";
+  name: string;
+  queryable: boolean;
+  conditions: ConditionType[];
+}
+
+export interface DataSourceType {
+  fields: DataSourceFieldType[];
+}
+
+export interface ExpressionItem {
+  type: "operator" | "term";
+  enabled: boolean;
+}
+
+export type OperatorType = "AND" | "OR" | "NOT";
+export const OperatorTypeValues: OperatorType[] = ["AND", "OR", "NOT"];
+
+export interface ExpressionOperatorType extends ExpressionItem {
+  type: "operator";
+  op: OperatorType;
+  children: (ExpressionTermType | ExpressionOperatorType)[];
+}
+
+export interface ExpressionTermType extends ExpressionItem {
+  type: "term";
+  field?: string;
+  condition?: ConditionType;
+  value?: any;
+  dictionary?: DictionaryDoc | null;
+}
+
+export interface ExpressionHasUuid extends ExpressionItem, HasUuid {}
+
+export interface ExpressionOperatorWithUuid
+  extends ExpressionOperatorType,
+    HasUuid {
+  enabled: boolean;
+  children: (ExpressionOperatorWithUuid | ExpressionTermWithUuid)[];
+}
+
+export interface ExpressionTermWithUuid extends ExpressionTermType, HasUuid {}

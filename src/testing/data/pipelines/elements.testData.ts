@@ -1,4 +1,4 @@
-import { ElementDefinition } from "src/types";
+import { ElementDefinition } from "src/api/useElements/types";
 
 export default [
   {

@@ -1,8 +1,6 @@
 import * as React from "react";
 
-import { StroomUser } from "src/types";
-
-import { useGroupsForUser } from "src/api/userGroups";
+import { useGroupsForUser, StroomUser } from "src/api/userGroups";
 import UsersTable, { useTable as useUsersTable } from "../UsersTable";
 import Button from "src/components/Button";
 import {
@@ -12,6 +10,7 @@ import {
 import ThemedConfirm, {
   useDialog as useThemedConfirm,
 } from "src/components/ThemedConfirm";
+import useAppNavigation from "src/components/AppChrome/useAppNavigation";
 
 interface Props {
   user: StroomUser;
@@ -19,6 +18,7 @@ interface Props {
 
 const GroupsForUser: React.FunctionComponent<Props> = ({ user }) => {
   const { groups, addToGroup, removeFromGroup } = useGroupsForUser(user);
+  const { goToAuthorisationsForUser } = useAppNavigation();
 
   const { componentProps: tableProps } = useUsersTable(groups);
   const {
@@ -44,6 +44,12 @@ const GroupsForUser: React.FunctionComponent<Props> = ({ user }) => {
     ),
   });
 
+  const goToSelectedUser = React.useCallback(() => {
+    if (selectedItems.length === 1) {
+      goToAuthorisationsForUser(selectedItems[0].uuid);
+    }
+  }, [goToAuthorisationsForUser, selectedItems]);
+
   const {
     componentProps: userGroupPickerProps,
     showDialog: showUserGroupPicker,
@@ -62,6 +68,11 @@ const GroupsForUser: React.FunctionComponent<Props> = ({ user }) => {
         text="Remove from Group"
         disabled={selectedItems.length === 0}
         onClick={showDeleteGroupMembershipDialog}
+      />
+      <Button
+        text="View/Edit"
+        disabled={selectedItems.length !== 1}
+        onClick={goToSelectedUser}
       />
       <ThemedConfirm {...deleteGroupMembershipComponentProps} />
       <UsersTable {...tableProps} />

@@ -8,14 +8,19 @@ import { iterateNodes } from "src/lib/treeUtils";
 import DocRefTypePicker from "src/components/DocRefTypePicker";
 import useDocumentApi, { ResourcesByDocType } from "src/api/useDocumentApi";
 import JsonDebug from "src/testing/JsonDebug";
-import Button from "src/components/Button";
 
 const stories = storiesOf("Document Editors", module);
 
 const TestHarness: React.FunctionComponent = () => {
   const { documentTree } = useDocumentTree();
-  const [docRefType, setDocRefType] = React.useState<string>("Dictionary");
-  const documentApi = useDocumentApi(docRefType as keyof ResourcesByDocType);
+  const [docRefType, setDocRefType] = React.useState<keyof ResourcesByDocType>(
+    "Dictionary",
+  );
+  const setDocRefTypeSafe = React.useCallback(
+    d => setDocRefType(d as keyof ResourcesByDocType),
+    [setDocRefType],
+  );
+  const documentApi = useDocumentApi(docRefType);
 
   const docRefUuid = React.useMemo(() => {
     let d;
@@ -35,16 +40,16 @@ const TestHarness: React.FunctionComponent = () => {
     documentApi,
   });
   const { docRefContents } = editorProps;
-  const onClick = React.useCallback(
-    () => console.log("Clicked", onDocumentChange),
-    [onDocumentChange],
-  );
+
   return !!docRefContents ? (
     <DocRefEditor {...editorProps}>
-      <Button onClick={onClick} text="Print onDocumentChange" />
-      <DocRefTypePicker value={docRefType} onChange={setDocRefType} />
+      <DocRefTypePicker value={docRefType} onChange={setDocRefTypeSafe} />
       <JsonDebug
-        value={{ documentApi: Object.keys(documentApi), docRefContents }}
+        value={{
+          documentApi: Object.keys(documentApi),
+          docRefContents,
+          onDocumentChange: JSON.stringify(onDocumentChange),
+        }}
       />
     </DocRefEditor>
   ) : (

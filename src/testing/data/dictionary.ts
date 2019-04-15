@@ -1,8 +1,8 @@
 import * as uuidv4 from "uuid/v4";
 import * as loremIpsum from "lorem-ipsum";
-import { Dictionary } from "src/types";
+import { DictionaryDoc } from "src/api/useDocumentApi/types/dictionaryDoc";
 
-export const generate = (): Dictionary => ({
+export const generate = (): DictionaryDoc => ({
   type: "Dictionary",
   uuid: uuidv4(),
   name: loremIpsum({ count: 2, units: "words" }),

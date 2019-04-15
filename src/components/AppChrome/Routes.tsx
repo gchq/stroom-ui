@@ -42,12 +42,20 @@ import { useConfig } from "src/startup/config";
 import DocumentPermissionEditor from "../AuthorisationManager/DocumentPermissionEditor";
 import DocumentPermissionForUserEditor from "../AuthorisationManager/DocumentPermissionForUserEditor";
 import IndexVolumeEditor from "../IndexVolumes/IndexVolumeEditor";
-import { urlGenerator } from "./useAppNavigation";
 import { ResetPassword, ChangePassword } from "../password";
 import { UserSearch, UserCreate, UserEdit } from "../users";
+import useUrlGenerator from "./useUrlGenerator";
 
-const renderWelcome = () => (
-  <AppChrome activeMenuItem="welcome" content={<Welcome />} />
+const renderWelcome = ({
+  match: {
+    params: { urlPrefix },
+  },
+}: RouteComponentProps<{ urlPrefix: string }>) => (
+  <AppChrome
+    activeMenuItem="welcome"
+    urlPrefix={urlPrefix}
+    content={<Welcome />}
+  />
 );
 
 const UsersIFrame = () => {
@@ -81,6 +89,7 @@ const ApiTokensIFrame = () => {
 };
 
 const Routes: React.FunctionComponent = () => {
+  const urls = useUrlGenerator(":urlPrefix");
   return (
     <Switch>
       <Route
@@ -94,36 +103,65 @@ const Routes: React.FunctionComponent = () => {
       <Route exact path={"/resetpassword"} component={ResetPassword} />
       <Route exact path={"/changepassword"} component={ChangePassword} />
       <PrivateRoute exact path="/" render={renderWelcome} />
-      <PrivateRoute exact path="/s/welcome" render={renderWelcome} />
+      <PrivateRoute exact path={urls.goToWelcome()} render={renderWelcome} />
       <PrivateRoute
         exact
-        path={urlGenerator.goToDataViewer()}
-        render={() => (
-          <AppChrome activeMenuItem="data" content={<DataViewer />} />
+        path={urls.goToDataViewer()}
+        render={({
+          match: {
+            params: { urlPrefix },
+          },
+        }) => (
+          <AppChrome
+            activeMenuItem="data"
+            urlPrefix={urlPrefix}
+            content={<DataViewer />}
+          />
         )}
       />
       <PrivateRoute
         exact
-        path={urlGenerator.goToProcessing()}
-        render={() => (
-          <AppChrome activeMenuItem="processing" content={<Processing />} />
+        path={urls.goToProcessing()}
+        render={({
+          match: {
+            params: { urlPrefix },
+          },
+        }) => (
+          <AppChrome
+            activeMenuItem="processing"
+            urlPrefix={urlPrefix}
+            content={<Processing />}
+          />
         )}
       />
       <PrivateRoute
         exact
-        path={urlGenerator.goToUserSettings()}
-        render={() => (
-          <AppChrome activeMenuItem="userSettings" content={<UserSettings />} />
+        path={urls.goToUserSettings()}
+        render={({
+          match: {
+            params: { urlPrefix },
+          },
+        }) => (
+          <AppChrome
+            activeMenuItem="userSettings"
+            urlPrefix={urlPrefix}
+            content={<UserSettings />}
+          />
         )}
       />
       {[false, true].map(isGroup => (
         <PrivateRoute
           key={isGroup ? "Group" : "User"}
           exact
-          path={urlGenerator.goToAuthorisationManager(isGroup)}
-          render={() => (
+          path={urls.goToAuthorisationManager(isGroup.toString())}
+          render={({
+            match: {
+              params: { urlPrefix },
+            },
+          }) => (
             <AppChrome
               activeMenuItem={isGroup ? "groupPermissions" : "userPermissions"}
+              urlPrefix={urlPrefix}
               content={<AuthorisationManager isGroup={isGroup} />}
             />
           )}
@@ -132,45 +170,45 @@ const Routes: React.FunctionComponent = () => {
 
       <PrivateRoute
         exact
-        path={urlGenerator.goToAuthorisationsForUser(":userUuid")}
+        path={urls.goToAuthorisationsForUser()}
         render={({
           match: {
-            params: { userUuid },
+            params: { urlPrefix, userUuid },
           },
         }: RouteComponentProps<any>) => (
           <AppChrome
             activeMenuItem="userPermissions"
+            urlPrefix={urlPrefix}
             content={<UserAuthorisationEditor userUuid={userUuid} />}
           />
         )}
       />
       <PrivateRoute
         exact
-        path={urlGenerator.goToAuthorisationsForDocument(":docRefUuid")}
+        path={urls.goToAuthorisationsForDocument()}
         render={({
           match: {
-            params: { docRefUuid },
+            params: { urlPrefix, docRefUuid },
           },
         }: RouteComponentProps<any>) => (
           <AppChrome
             activeMenuItem="userPermissions"
+            urlPrefix={urlPrefix}
             content={<DocumentPermissionEditor docRefUuid={docRefUuid} />}
           />
         )}
       />
       <PrivateRoute
         exact
-        path={urlGenerator.goToAuthorisationsForDocumentForUser(
-          ":docRefUuid",
-          ":userUuid",
-        )}
+        path={urls.goToAuthorisationsForDocumentForUser()}
         render={({
           match: {
-            params: { userUuid, docRefUuid },
+            params: { urlPrefix, userUuid, docRefUuid },
           },
         }: RouteComponentProps<any>) => (
           <AppChrome
             activeMenuItem="userPermissions"
+            urlPrefix={urlPrefix}
             content={
               <DocumentPermissionForUserEditor
                 userUuid={userUuid}
@@ -182,45 +220,60 @@ const Routes: React.FunctionComponent = () => {
       />
       <PrivateRoute
         exact
-        path={urlGenerator.goToIndexVolumes()}
-        render={() => (
-          <AppChrome activeMenuItem="indexVolumes" content={<IndexVolumes />} />
+        path={urls.goToIndexVolumes()}
+        render={({
+          match: {
+            params: { urlPrefix },
+          },
+        }) => (
+          <AppChrome
+            activeMenuItem="indexVolumes"
+            urlPrefix={urlPrefix}
+            content={<IndexVolumes />}
+          />
         )}
       />
       <PrivateRoute
         exact
-        path={urlGenerator.goToIndexVolume(":volumeId")}
+        path={urls.goToIndexVolume()}
         render={({
           match: {
-            params: { volumeId },
+            params: { urlPrefix, volumeId },
           },
         }: RouteComponentProps<any>) => (
           <AppChrome
             activeMenuItem="indexVolumes"
+            urlPrefix={urlPrefix}
             content={<IndexVolumeEditor volumeId={volumeId} />}
           />
         )}
       />
       <PrivateRoute
         exact
-        path={urlGenerator.goToIndexVolumeGroups()}
-        render={() => (
+        path={urls.goToIndexVolumeGroups()}
+        render={({
+          match: {
+            params: { urlPrefix },
+          },
+        }) => (
           <AppChrome
             activeMenuItem="indexVolumeGroups"
+            urlPrefix={urlPrefix}
             content={<IndexVolumeGroups />}
           />
         )}
       />
       <PrivateRoute
         exact
-        path={urlGenerator.goToIndexVolumeGroup(":groupName")}
+        path={urls.goToIndexVolumeGroup()}
         render={({
           match: {
-            params: { groupName },
+            params: { urlPrefix, groupName },
           },
         }: RouteComponentProps<any>) => (
           <AppChrome
             activeMenuItem="indexVolumeGroups"
+            urlPrefix={urlPrefix}
             content={<IndexVolumeGroupEditor groupName={groupName} />}
           />
         )}
@@ -228,65 +281,122 @@ const Routes: React.FunctionComponent = () => {
 
       <PrivateRoute
         exact
-        path={urlGenerator.goToApiKeys()}
-        render={() => (
-          <AppChrome activeMenuItem="apiKeys" content={<ApiTokensIFrame />} />
+        path={urls.goToStroomUsers()}
+        render={({
+          match: {
+            params: { urlPrefix },
+          },
+        }) => (
+          <AppChrome
+            activeMenuItem="userIdentities"
+            urlPrefix={urlPrefix}
+            content={<UsersIFrame />}
+          />
         )}
       />
       <PrivateRoute
         exact
-        path={urlGenerator.goToError()}
-        render={() => (
-          <AppChrome activeMenuItem="welcome" content={<ErrorPage />} />
+        path={urls.goToApiKeys()}
+        render={({
+          match: {
+            params: { urlPrefix },
+          },
+        }) => (
+          <AppChrome
+            activeMenuItem="apiKeys"
+            urlPrefix={urlPrefix}
+            content={<ApiTokensIFrame />}
+          />
         )}
       />
       <PrivateRoute
         exact
-        path={urlGenerator.goToEditDocRefByUuid(":docRefUuid")}
-        render={(props: RouteComponentProps<any>) => (
+        path={urls.goToError()}
+        render={({
+          match: {
+            params: { urlPrefix },
+          },
+        }) => (
+          <AppChrome
+            activeMenuItem="welcome"
+            urlPrefix={urlPrefix}
+            content={<ErrorPage />}
+          />
+        )}
+      />
+      <PrivateRoute
+        exact
+        path={urls.goToEditDocRefByUuid()}
+        render={({
+          match: {
+            params: { urlPrefix, docRefUuid },
+          },
+        }: RouteComponentProps<any>) => (
           <AppChrome
             activeMenuItem="explorer"
-            content={
-              <SwitchedDocRefEditor
-                docRefUuid={props.match.params.docRefUuid}
-              />
-            }
+            urlPrefix={urlPrefix}
+            content={<SwitchedDocRefEditor docRefUuid={docRefUuid} />}
           />
         )}
       />
 
       <PrivateRoute
         exact
-        path={urlGenerator.goToUsers()}
-        render={() => (
-          <AppChrome activeMenuItem="userIdentities" content={<UserSearch />} />
+        path={urls.goToUsers()}
+        render={({
+          match: {
+            params: { urlPrefix },
+          },
+        }) => (
+          <AppChrome
+            urlPrefix={urlPrefix}
+            activeMenuItem="userIdentities"
+            content={<UserSearch />}
+          />
         )}
       />
       <PrivateRoute
         exact
-        path={urlGenerator.goToUsers()}
-        render={() => (
-          <AppChrome activeMenuItem="userIdentities" content={<UserSearch />} />
+        path={urls.goToNewUser()}
+        render={({
+          match: {
+            params: { urlPrefix },
+          },
+        }) => (
+          <AppChrome
+            urlPrefix={urlPrefix}
+            activeMenuItem="userIdentities"
+            content={<UserCreate />}
+          />
         )}
       />
       <PrivateRoute
         exact
-        path={urlGenerator.goToNewUser()}
-        render={() => (
-          <AppChrome activeMenuItem="userIdentities" content={<UserCreate />} />
-        )}
-      />
-      <PrivateRoute
-        exact
-        path={urlGenerator.goToUser(":userId")}
-        render={() => (
-          <AppChrome activeMenuItem="userIdentities" content={<UserEdit />} />
+        path={urls.goToUser(":userId")}
+        render={({
+          match: {
+            params: { urlPrefix },
+          },
+        }) => (
+          <AppChrome
+            urlPrefix={urlPrefix}
+            activeMenuItem="userIdentities"
+            content={<UserEdit />}
+          />
         )}
       />
 
       <PrivateRoute
-        render={() => (
-          <AppChrome activeMenuItem="welcome" content={<PathNotFound />} />
+        render={({
+          match: {
+            params: { urlPrefix },
+          },
+        }) => (
+          <AppChrome
+            activeMenuItem="welcome"
+            urlPrefix={urlPrefix}
+            content={<PathNotFound />}
+          />
         )}
       />
       {/* Default route */}

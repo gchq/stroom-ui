@@ -24,16 +24,15 @@ const HorizontalMainDetails: React.FunctionComponent<Props> = ({
   onClose,
   isOpen,
 }) => {
-  const { value: mainHeight, setValue: setMainHeight } = useLocalStorage(
+  const { value: mainHeight, reduceValue: setMainHeight } = useLocalStorage(
     `mainHeight_${storageKey}`,
     200,
     storeNumber,
   );
-  const { value: detailsHeight, setValue: setDetailsHeight } = useLocalStorage(
-    `detailsHeight_${storageKey}`,
-    200,
-    storeNumber,
-  );
+  const {
+    value: detailsHeight,
+    reduceValue: setDetailsHeight,
+  } = useLocalStorage(`detailsHeight_${storageKey}`, 200, storeNumber);
 
   React.useEffect(() => {
     Mousetrap.bind("esc", onClose);
@@ -42,6 +41,14 @@ const HorizontalMainDetails: React.FunctionComponent<Props> = ({
       Mousetrap.unbind("esc");
     };
   }, []);
+
+  const onPanelUpdate = React.useCallback(
+    (panelWidths: any[]) => {
+      setMainHeight(() => panelWidths[0].size);
+      setDetailsHeight(() => panelWidths[1].size);
+    },
+    [setMainHeight, setDetailsHeight],
+  );
 
   return (
     <PanelGroup
@@ -58,10 +65,7 @@ const HorizontalMainDetails: React.FunctionComponent<Props> = ({
           size: detailsHeight,
         },
       ]}
-      onUpdate={(panelWidths: any[]) => {
-        setMainHeight(panelWidths[0].size);
-        setDetailsHeight(panelWidths[1].size);
-      }}
+      onUpdate={onPanelUpdate}
     >
       {mainContent}
       {isOpen && (

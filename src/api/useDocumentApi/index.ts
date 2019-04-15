@@ -1,2 +1,2 @@
 export { default } from "./useDocumentApi";
-export * from "./types";
+export * from "./types/resourceUrls";

@@ -1,8 +1,8 @@
 import * as React from "react";
 
 import useApi from "./useApi";
-import { StroomUser } from "src/types";
 import useListReducer from "src/lib/useListReducer/useListReducer";
+import { StroomUser } from ".";
 
 interface UseGroupsForUser {
   groups: StroomUser[];

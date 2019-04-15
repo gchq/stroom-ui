@@ -1,8 +1,8 @@
 import * as React from "react";
 
 import useApi from "./useApi";
-import { StroomUser } from "src/types";
 import useListReducer from "src/lib/useListReducer";
+import { StroomUser } from ".";
 
 interface ManageUsers {
   users: StroomUser[];

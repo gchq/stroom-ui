@@ -29,7 +29,7 @@ const UserAuthorisationEditor: React.FunctionComponent<Props> = ({
     return <Loader message="Loading user..." />;
   }
 
-  const title = user.isGroup ? `Group ${user.name}` : `User ${user.name}`;
+  const title = user.group ? `Group ${user.name}` : `User ${user.name}`;
 
   return (
     <div>
@@ -43,7 +43,7 @@ const UserAuthorisationEditor: React.FunctionComponent<Props> = ({
         />
       </section>
 
-      {user.isGroup ? (
+      {user.group ? (
         <UsersInGroup group={user} />
       ) : (
         <GroupsForUser user={user} />

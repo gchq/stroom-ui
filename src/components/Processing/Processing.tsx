@@ -54,8 +54,6 @@ const ProcessingContainer: React.FunctionComponent = () => {
     setSelectedTracker(undefined);
   }, [setSelectedTracker]);
 
-  console.log("Selected Tracker", selectedTracker);
-
   const enableToggleSelected = React.useCallback(() => {
     if (!!selectedTracker && !!selectedTracker.filterId) {
       enableToggle(selectedTracker.filterId);
@@ -94,7 +92,8 @@ const ProcessingContainer: React.FunctionComponent = () => {
       </div>
       <HorizontalMainDetails
         storageKey="processing"
-        title="Processing Details"
+        title={`Processing Details ${selectedTracker &&
+          selectedTracker.pipelineName}`}
         isOpen={!!selectedTracker}
         onClose={onClearSelection}
         mainContent={

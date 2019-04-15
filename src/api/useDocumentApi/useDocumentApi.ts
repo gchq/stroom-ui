@@ -1,9 +1,11 @@
 import * as React from "react";
 
-import { DocumentApi, ResourcesByDocType, DOCUMENT_RESOURCES } from "./types";
-import { DocumentType } from "src/types";
+import { ResourcesByDocType, DOCUMENT_RESOURCES } from "./types/resourceUrls";
 import { useConfig } from "src/startup/config";
 import useHttpClient from "src/lib/useHttpClient";
+import { DocumentBase } from "./types/base";
+import { DocumentApi } from "./types/documentApi";
+import cogoToast from "cogo-toast";
 
 /**
  * This returns an API that can fetch/save a particular document type.
@@ -15,7 +17,7 @@ import useHttpClient from "src/lib/useHttpClient";
  */
 const useDocumentApi = <
   T extends keyof ResourcesByDocType,
-  D extends DocumentType<T>
+  D extends DocumentBase<T>
 >(
   docRefType: T,
 ): DocumentApi<D> => {
@@ -33,9 +35,9 @@ const useDocumentApi = <
       httpPostEmptyResponse(
         `${stroomBaseServiceUrl}${resourcePath}${docRefContents.uuid}`,
         {
-          body: docRefContents,
+          body: JSON.stringify(docRefContents),
         },
-      ),
+      ).then(() => cogoToast.info(`Document Saved ${docRefType}`)),
     [resourcePath, stroomBaseServiceUrl, httpPostEmptyResponse],
   );
 

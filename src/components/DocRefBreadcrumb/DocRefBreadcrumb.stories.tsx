@@ -20,10 +20,9 @@ import { storiesOf } from "@storybook/react";
 import DocRefBreadcrumb from "./DocRefBreadcrumb";
 import fullTestData from "src/testing/data";
 
-import { DocRefType } from "src/types";
-
 import JsonDebug from "src/testing/JsonDebug";
 import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
+import { DocRefType } from "src/api/useDocumentApi/types/base";
 
 const testDocRef = fullTestData.documentTree.children![0].children![0];
 

@@ -1,12 +1,12 @@
 import * as React from "react";
 
 import useApi from "./useApi";
-import { DocRefTree, DocRefType } from "src/types";
 import { updateItemInTree, findItem, findByUuids } from "src/lib/treeUtils";
 import DocumentTreeContext, {
   DocumentTreeContextValue,
 } from "./DocumentTreeContext";
 import { DEFAULT_TREE, DEFAULT_DOC_REF_WITH_LINEAGE } from "./values";
+import { DocRefTree, DocRefType } from "../useDocumentApi/types/base";
 
 const DocumentTreeContextProvider: React.FunctionComponent = ({ children }) => {
   const [documentTree, setDocumentTree] = React.useState<DocRefTree>(

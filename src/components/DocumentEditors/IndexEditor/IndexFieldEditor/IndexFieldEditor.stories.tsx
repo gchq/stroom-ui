@@ -20,15 +20,15 @@ import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
 
 import IndexFieldEditor, { useEditor } from "./IndexFieldEditor";
 import { generateTestField } from "src/testing/data/indexDocs";
-import { IndexField } from "src/types";
 import Button from "../../../Button";
 import JsonDebug from "src/testing/JsonDebug";
+import { IndexField } from "src/api/useDocumentApi/types/indexDoc";
 
 const stories = storiesOf("Document Editors/Index/Field Editor", module);
 
 const FIELD_ID = 1007;
 
-const B: React.FunctionComponent = () => {
+const TestHarness: React.FunctionComponent = () => {
   const testField = React.useMemo(generateTestField, []);
   const [indexField, setIndexField] = React.useState<IndexField>(testField);
   const [lastId, setLastId] = React.useState<number>(0);
@@ -51,4 +51,4 @@ const B: React.FunctionComponent = () => {
   );
 };
 
-addThemedStories(stories, () => <B />);
+addThemedStories(stories, () => <TestHarness />);

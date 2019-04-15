@@ -24,7 +24,7 @@ import DebuggerStep from "./DebuggerStep";
 import { getNext, getPrevious } from "./pipelineDebugger.utils";
 import useDocumentApi from "src/api/useDocumentApi";
 import usePipelineState from "../usePipelineState";
-import { PipelineDocumentType } from "src/types";
+import { PipelineDocumentType } from "src/api/useDocumentApi/types/pipelineDoc";
 
 interface Props {
   debuggerId: string;

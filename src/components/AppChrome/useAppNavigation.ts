@@ -2,47 +2,21 @@ import * as React from "react";
 
 import { NavigateApp } from "./types";
 import useRouter from "src/lib/useRouter";
-import { DocRefType } from "src/types";
-
-export const urlGenerator: NavigateApp<string> = {
-  goToWelcome: () => `/s/welcome`,
-  goToDataViewer: () => `/s/data`,
-  goToProcessing: () => `/s/processing`,
-  goToUserSettings: () => `/s/me`,
-  goToAuthorisationManager: (isGroup: boolean) =>
-    `/s/authorisationManager/${isGroup}`,
-  goToAuthorisationsForUser: (userUuid: string) =>
-    `/s/authorisationManager/${userUuid}`,
-  goToAuthorisationsForDocument: (docRefUuid: string) =>
-    `/s/authorisationManager/document/${docRefUuid}`,
-  goToAuthorisationsForDocumentForUser: (
-    docRefUuid: string,
-    userUuid: string,
-  ) => `/s/authorisationManager/document/${docRefUuid}/${userUuid}`,
-  goToIndexVolumes: () => `/s/indexing/volumes`,
-  goToIndexVolume: (volumeId: string) => `/s/indexing/volumes/${volumeId}`,
-  goToIndexVolumeGroups: () => `/s/indexing/groups`,
-  goToIndexVolumeGroup: (groupName: string) =>
-    `/s/indexing/groups/${groupName}`,
-  goToUsers: () => `/s/users`,
-  goToUser: (userId: string) => `/s/user/${userId}`,
-  goToNewUser: () => `/s/user/new`,
-  goToApiKeys: () => `/s/apikeys`,
-  goToError: () => `/s/error`,
-  goToEditDocRefByUuid: (docRefUuid: string) => `/s/doc/${docRefUuid}`,
-  goToEditDocRef: (docRef: DocRefType) => `/s/doc/${docRef.uuid}`,
-};
+import { DocRefType } from "src/api/useDocumentApi/types/base";
+import useUrlGenerator from "./useUrlGenerator";
+import { WithChromeContext } from "src/lib/useRouter/BrowserRouter";
 
 const useAppNavigation = (): NavigateApp<any> => {
   const { history: h } = useRouter();
-  const u = urlGenerator; // just to make all the following rote lines short
+  const { urlPrefix } = React.useContext(WithChromeContext);
+  const u = useUrlGenerator(urlPrefix); // just to make all the following rote lines short
   return React.useMemo(
     () => ({
       goToWelcome: () => h.push(u.goToWelcome()),
       goToDataViewer: () => h.push(u.goToDataViewer()),
       goToProcessing: () => h.push(u.goToProcessing()),
       goToUserSettings: () => h.push(u.goToUserSettings()),
-      goToAuthorisationManager: (isGroup: boolean) =>
+      goToAuthorisationManager: (isGroup: string) =>
         h.push(u.goToAuthorisationManager(isGroup)),
       goToAuthorisationsForUser: (userUuid: string) =>
         h.push(u.goToAuthorisationsForUser(userUuid)),
@@ -58,6 +32,7 @@ const useAppNavigation = (): NavigateApp<any> => {
       goToIndexVolumeGroups: () => h.push(u.goToIndexVolumeGroups()),
       goToIndexVolumeGroup: (groupName: string) =>
         h.push(u.goToIndexVolumeGroup(groupName)),
+      goToStroomUsers: () => h.push(u.goToStroomUsers()),
       goToUsers: () => h.push(u.goToUsers()),
       goToUser: (userId: string) => h.push(u.goToUser(userId)),
       goToNewUser: () => h.push(u.goToNewUser()),
@@ -67,7 +42,7 @@ const useAppNavigation = (): NavigateApp<any> => {
         h.push(u.goToEditDocRefByUuid(docRefUuid)),
       goToEditDocRef: (docRef: DocRefType) => h.push(u.goToEditDocRef(docRef)),
     }),
-    [h],
+    [h, u],
   );
 };
 

@@ -3,8 +3,8 @@ import { HttpRequest, HttpResponse } from "@pollyjs/adapter-fetch";
 import { TestCache } from "../PollyDecorator";
 import { Config } from "src/startup/config";
 import { ResourceBuilder } from "./types";
-import { DocumentType } from "src/types";
-import { DOCUMENT_RESOURCES } from "src/api/useDocumentApi/types";
+import { DOCUMENT_RESOURCES } from "src/api/useDocumentApi/types/resourceUrls";
+import { DocumentBase } from "src/api/useDocumentApi/types/base";
 
 const resourceBuilder: ResourceBuilder = (
   server: any,
@@ -23,7 +23,7 @@ const resourceBuilder: ResourceBuilder = (
         .get(`${resource}/:docRefUuid`)
         .intercept((req: HttpRequest, res: HttpResponse) => {
           const dict = testCache.data!.documents[docRefType].find(
-            (d: DocumentType<any>) => d.uuid === req.params.docRefUuid,
+            (d: DocumentBase<any>) => d.uuid === req.params.docRefUuid,
           );
           if (dict) {
             res.json(dict);

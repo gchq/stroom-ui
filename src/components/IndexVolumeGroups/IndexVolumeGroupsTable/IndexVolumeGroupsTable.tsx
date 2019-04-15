@@ -2,12 +2,12 @@ import * as React from "react";
 
 import ReactTable from "react-table";
 
-import { IndexVolumeGroup } from "src/types";
 import {
   useSelectableReactTable,
   SelectionBehaviour,
   TableOutProps,
 } from "src/lib/useSelectableItemListing";
+import { IndexVolumeGroup } from "src/api/indexVolumeGroup";
 
 interface Props {
   groups: IndexVolumeGroup[];

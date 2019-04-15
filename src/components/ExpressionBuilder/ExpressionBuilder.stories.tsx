@@ -21,7 +21,7 @@ import ExpressionBuilder from "./ExpressionBuilder";
 
 import { testExpression, testDataSource, simplestExpression } from "./test";
 
-import { ExpressionOperatorWithUuid } from "src/types";
+import { ExpressionOperatorWithUuid } from "./types";
 
 const PopulatedEditable = () => {
   const [expression, onChange] = React.useState<ExpressionOperatorWithUuid>(

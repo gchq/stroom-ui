@@ -1,8 +1,9 @@
 import * as React from "react";
 
-import { UseStreamSearch, PageProps, SearchWithExpressionProps } from "./types";
+import { UseStreamSearch } from "./types";
 import useApi from "./useApi";
-import { StreamAttributeMapResult } from "src/types";
+import { StreamAttributeMapResult, PageRequest } from "src/types";
+import { ExpressionOperatorWithUuid } from "src/components/ExpressionBuilder/types";
 
 const defaultStreams: StreamAttributeMapResult = {
   streamAttributeMaps: [],
@@ -23,10 +24,11 @@ const useStreamSearch = (): UseStreamSearch => {
   return {
     streams,
     search: React.useCallback(
-      (s: SearchWithExpressionProps) => search(s).then(setStreams),
+      (e: ExpressionOperatorWithUuid, p: PageRequest) =>
+        search(e, p).then(setStreams),
       [search, setStreams],
     ),
-    page: React.useCallback((s: PageProps) => page(s).then(setStreams), [
+    page: React.useCallback((s: PageRequest) => page(s).then(setStreams), [
       page,
       setStreams,
     ]),

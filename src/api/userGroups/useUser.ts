@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import useApi from "./useApi";
-import { StroomUser } from "src/types";
+import { StroomUser } from ".";
 
 const useUser = (userUuid: string): StroomUser | undefined => {
   const { fetchUser } = useApi();

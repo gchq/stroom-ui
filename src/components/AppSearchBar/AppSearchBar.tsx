@@ -2,7 +2,6 @@ import * as React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { findItem, filterTree } from "src/lib/treeUtils";
-import { DocRefType, DocRefTree, DocRefWithLineage } from "src/types";
 import { DocRefBreadcrumb } from "../DocRefBreadcrumb";
 import DocRefListingEntry from "../DocRefListingEntry";
 
@@ -11,6 +10,11 @@ import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import useSelectableItemListing from "src/lib/useSelectableItemListing";
 import useRecentItems from "src/lib/useRecentItems";
 import { useDocumentTree } from "src/api/explorer";
+import {
+  DocRefType,
+  DocRefTree,
+  DocRefWithLineage,
+} from "src/api/useDocumentApi/types/base";
 
 interface Props {
   typeFilters?: string[];

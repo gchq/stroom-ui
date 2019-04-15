@@ -3,19 +3,15 @@ import * as React from "react";
 import ThemedModal from "src/components/ThemedModal";
 import DialogActionButtons from "src/components/DialogActionButtons";
 import useForm from "src/lib/useForm";
+import { NewIndexVolume } from "src/api/indexVolume";
 
 interface Props {
   isOpen: boolean;
-  onConfirm: (nodeName: string, path: string) => void;
+  onConfirm: (newVolume: NewIndexVolume) => void;
   onCloseDialog: () => void;
 }
 
-interface FormValues {
-  nodeName: string;
-  path: string;
-}
-
-const initialValues: FormValues = {
+const initialValues: NewIndexVolume = {
   nodeName: "",
   path: "",
 };
@@ -28,7 +24,7 @@ const NewIndexVolumeDialog: React.FunctionComponent<Props> = ({
   const {
     value: { nodeName, path },
     useTextInput,
-  } = useForm<FormValues>({
+  } = useForm<NewIndexVolume>({
     initialValues,
   });
   const nodeNameProps = useTextInput("nodeName");
@@ -36,12 +32,12 @@ const NewIndexVolumeDialog: React.FunctionComponent<Props> = ({
 
   const onConfirmLocal = React.useCallback(() => {
     if (!!nodeName && !!path) {
-      onConfirm(nodeName, path);
+      onConfirm({ nodeName, path });
       onCloseDialog();
     } else {
       console.error("Form is invalid in some way", { nodeName, path });
     }
-  }, [onConfirm]);
+  }, [nodeName, path, onCloseDialog, onConfirm]);
 
   return (
     <ThemedModal
@@ -71,7 +67,7 @@ interface UseDialog {
 }
 
 export const useDialog = (
-  onConfirm: (nodeName: string, path: string) => void,
+  onConfirm: (newNode: NewIndexVolume) => void,
 ): UseDialog => {
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
 

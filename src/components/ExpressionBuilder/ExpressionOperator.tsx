@@ -41,7 +41,7 @@ import {
   OperatorTypeValues,
   ExpressionHasUuid,
   ExpressionTermWithUuid,
-} from "src/types";
+} from "./types";
 import { LineTo } from "../LineTo";
 
 interface Props {

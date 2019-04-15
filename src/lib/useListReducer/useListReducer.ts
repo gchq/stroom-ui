@@ -28,7 +28,9 @@ const createListReducer = <T extends {}>(getKey: (item: T) => string) => {
       case "itemsReceived":
         return action.items;
       case "itemAdded":
-        return state.concat([action.item]);
+        return state
+          .filter(d => getKey(d) !== getKey(action.item)) // remove any existing item with same key
+          .concat([action.item]);
       case "itemRemoved":
         return state.filter(u => getKey(u) !== action.itemKey);
     }

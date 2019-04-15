@@ -19,7 +19,7 @@ import { storiesOf } from "@storybook/react";
 import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
 
 import IndexFieldTypePicker from "./IndexFieldTypePicker";
-import { IndexFieldType } from "src/types";
+import { IndexFieldType } from "src/api/useDocumentApi/types/indexDoc";
 
 const stories = storiesOf("Pickers/Index Field Type", module);
 

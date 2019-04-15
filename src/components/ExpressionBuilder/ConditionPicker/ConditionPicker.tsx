@@ -1,11 +1,7 @@
 import * as React from "react";
 import Select from "react-select";
-import {
-  SelectOptionType,
-  ConditionType,
-  ConditionDisplayValues,
-  SelectOptionsType,
-} from "src/types";
+import { SelectOptionType, SelectOptionsType } from "src/types";
+import { ConditionType, ConditionDisplayValues } from "../types";
 
 interface Props {
   className?: string;

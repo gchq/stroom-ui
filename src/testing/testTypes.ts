@@ -1,18 +1,19 @@
+import { ResourcesByDocType } from "src/api/useDocumentApi";
+import { DocRefTree, DocumentBase } from "src/api/useDocumentApi/types/base";
 import {
-  DocRefTree,
   ElementDefinition,
   ElementPropertiesByElementIdType,
-  DataSourceType,
-  StreamTaskType,
-  StroomUser,
+} from "src/api/useElements/types";
+import { DataSourceType } from "src/components/ExpressionBuilder/types";
+import { User } from "src/components/users";
+import {
   IndexVolume,
   IndexVolumeGroup,
   IndexVolumeGroupMembership,
   StreamAttributeMapResult,
-  DocumentType,
-} from "../types";
-import { ResourcesByDocType } from "src/api/useDocumentApi/types";
-import { User } from "src/components/users";
+  StreamTaskType,
+} from "src/types";
+import { StroomUser } from "src/api/userGroups";
 
 export interface UserGroupMembership {
   userUuid: string;
@@ -31,7 +32,7 @@ export interface TestData {
   elements: ElementDefinition[];
   elementProperties: ElementPropertiesByElementIdType;
   documents: {
-    [docRefType in keyof ResourcesByDocType]: DocumentType<docRefType>[]
+    [docRefType in keyof ResourcesByDocType]: DocumentBase<docRefType>[]
   };
   trackers: StreamTaskType[];
   dataList: StreamAttributeMapResult;

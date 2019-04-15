@@ -2,12 +2,12 @@ import * as React from "react";
 
 import ReactTable from "react-table";
 
-import { StroomUser } from "src/types";
 import {
   useSelectableReactTable,
   SelectionBehaviour,
   TableOutProps,
 } from "src/lib/useSelectableItemListing";
+import { StroomUser } from "src/api/userGroups";
 
 interface Props {
   users: StroomUser[];
@@ -28,7 +28,7 @@ const COLUMNS = [
   {
     id: "isGroup",
     Header: "Is Group",
-    accessor: (u: StroomUser) => (u.isGroup ? "Group" : "User"),
+    accessor: (u: StroomUser) => (u.group ? "Group" : "User"),
   },
 ];
 

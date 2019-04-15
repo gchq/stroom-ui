@@ -6,26 +6,26 @@ import {
   DropTargetSpec,
   DragSourceSpec,
   DropTargetCollector,
-  DragSourceCollector
+  DragSourceCollector,
 } from "react-dnd";
 
 import { canMove } from "src/lib/treeUtils";
 import DocRefListingEntry, {
-  Props as DocRefListingEntryProps
+  Props as DocRefListingEntryProps,
 } from "../../DocRefListingEntry";
 import {
   DragDropTypes,
   DragCollectedProps,
   DropCollectedProps,
-  DragObject
+  DragObject,
 } from "./types";
-import { DocRefType } from "src/types";
 import { KeyDownState } from "src/lib/useKeyIsDown";
+import { DocRefType } from "src/api/useDocumentApi/types/base";
 
 interface Props extends DocRefListingEntryProps {
   keyIsDown: KeyDownState;
-  showCopyDialog: (docRefUuids: Array<string>, destination: DocRefType) => void;
-  showMoveDialog: (docRefUuids: Array<string>, destination: DocRefType) => void;
+  showCopyDialog: (docRefUuids: string[], destination: DocRefType) => void;
+  showMoveDialog: (docRefUuids: string[], destination: DocRefType) => void;
 }
 
 interface EnhancedProps extends Props, DragCollectedProps, DropCollectedProps {}
@@ -39,7 +39,7 @@ const dropTarget: DropTargetSpec<Props> = {
       docRef.type === "Folder" &&
       docRefs.reduce(
         (acc: boolean, curr: DocRefType) => acc && canMove(curr, docRef),
-        true
+        true,
       )
     );
   },
@@ -48,7 +48,7 @@ const dropTarget: DropTargetSpec<Props> = {
       docRefs,
       isCopy,
       showCopyDialog,
-      showMoveDialog
+      showMoveDialog,
     } = monitor.getItem();
     const docRefUuids = docRefs.map((d: DocRefType) => d.uuid);
 
@@ -57,22 +57,22 @@ const dropTarget: DropTargetSpec<Props> = {
     } else {
       showMoveDialog(docRefUuids, docRef.uuid);
     }
-  }
+  },
 };
 
 let dropCollect: DropTargetCollector<DropCollectedProps> = function dropCollect(
   connect,
-  monitor
+  monitor,
 ) {
   return {
     connectDropTarget: connect.dropTarget(),
     isOver: monitor.isOver(),
-    canDrop: monitor.canDrop()
+    canDrop: monitor.canDrop(),
   };
 };
 
 const dragSource: DragSourceSpec<Props, DragObject> = {
-  canDrag(props) {
+  canDrag() {
     return true;
   },
   beginDrag({ docRef, selectedDocRefs, keyIsDown: { Control, Meta } }) {
@@ -86,9 +86,9 @@ const dragSource: DragSourceSpec<Props, DragObject> = {
 
     return {
       docRefs,
-      isCopy: !!(Control || Meta)
+      isCopy: !!(Control || Meta),
     };
-  }
+  },
 };
 
 const dragCollect: DragSourceCollector<
@@ -96,13 +96,13 @@ const dragCollect: DragSourceCollector<
 > = function dragCollect(connect, monitor) {
   return {
     connectDragSource: connect.dragSource(),
-    isDragging: monitor.isDragging()
+    isDragging: monitor.isDragging(),
   };
 };
 
 const enhance = pipe(
   DropTarget([DragDropTypes.DOC_REF_UUIDS], dropTarget, dropCollect),
-  DragSource(DragDropTypes.DOC_REF_UUIDS, dragSource, dragCollect)
+  DragSource(DragDropTypes.DOC_REF_UUIDS, dragSource, dragCollect),
 );
 
 let DndDocRefListingEntry = ({
@@ -114,8 +114,8 @@ let DndDocRefListingEntry = ({
     connectDropTarget(
       <div>
         <DocRefListingEntry {...rest} />
-      </div>
-    )
+      </div>,
+    ),
   );
 
 export default enhance(DndDocRefListingEntry);

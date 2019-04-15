@@ -16,14 +16,18 @@
 
 import * as React from "react";
 import "react-sweet-progress/lib/style.css";
-import ReactTable, { RowInfo, SortingRule } from "react-table";
+import ReactTable, {
+  RowInfo,
+  SortingRule,
+  Column,
+  TableCellRenderer,
+} from "react-table";
 import { Progress } from "react-sweet-progress";
 
 import Button from "src/components/Button";
 import {
   Directions,
   SortByOptions,
-  sortByFromString,
   UseStreamTasks,
 } from "src/api/useStreamTasks/types";
 import { StreamTaskType } from "src/types";
@@ -56,6 +60,42 @@ const ProcessingList: React.FunctionComponent<Props> = ({
     ? "All rows loaded"
     : "Load more rows";
 
+  const pipelineNameCellRenderer: TableCellRenderer = React.useCallback(
+    (row: RowInfo) =>
+      row.original.filterId !== undefined
+        ? row.original.pipelineName
+        : "UNKNOWN",
+    [],
+  );
+
+  const priorityCellRenderer: TableCellRenderer = React.useCallback(
+    (row: RowInfo) =>
+      row.original.filterId !== undefined ? (
+        row.original.priority
+      ) : (
+        <Button
+          disabled={allRecordsRetrieved}
+          className="border hoverable processing-list__load-more-button"
+          onClick={fetchMore}
+          text={retrievalStave}
+        />
+      ),
+    [allRecordsRetrieved, fetchMore, retrievalStave],
+  );
+
+  const progressCellRenderer: TableCellRenderer = React.useCallback(
+    (row: RowInfo) =>
+      row.original.filterId !== undefined ? (
+        <Progress
+          percent={row.original.trackerPercent}
+          symbolClassName="flat-text"
+        />
+      ) : (
+        "UNKNOWN"
+      ),
+    [],
+  );
+
   const tableColumns = [
     {
       Header: "",
@@ -64,41 +104,20 @@ const ProcessingList: React.FunctionComponent<Props> = ({
     },
     {
       Header: "Pipeline name",
-      accessor: "pipelineName",
-      Cell: (row: RowInfo) =>
-        row.original.filterId !== undefined
-          ? row.original.pipelineName
-          : "UNKNOWN",
+      accessor: "Pipeline",
+      Cell: pipelineNameCellRenderer,
     },
     {
       Header: "Priority",
-      accessor: "priority",
-      Cell: (row: RowInfo) =>
-        row.original.filterId !== undefined ? (
-          row.original.priority
-        ) : (
-          <Button
-            disabled={allRecordsRetrieved}
-            className="border hoverable processing-list__load-more-button"
-            onClick={fetchMore}
-            text={retrievalStave}
-          />
-        ),
+      accessor: "Priority",
+      Cell: priorityCellRenderer,
     },
     {
       Header: "Progress",
       accessor: "progress",
-      Cell: (row: RowInfo) =>
-        row.original.filterId !== undefined ? (
-          <Progress
-            percent={row.original.trackerPercent}
-            symbolClassName="flat-text"
-          />
-        ) : (
-          "UNKNOWN"
-        ),
+      Cell: progressCellRenderer,
     },
-  ];
+  ] as Column[];
 
   const tableData = React.useMemo(
     () =>
@@ -140,7 +159,7 @@ const ProcessingList: React.FunctionComponent<Props> = ({
         const direction = sort.desc
           ? Directions.descending
           : Directions.ascending;
-        const sortBy: SortByOptions = sortByFromString(sort.id);
+        const sortBy: SortByOptions = sort.id as SortByOptions;
         updateSort(sortBy, direction);
         fetchTrackers();
       }
@@ -156,7 +175,7 @@ const ProcessingList: React.FunctionComponent<Props> = ({
       showPagination={false}
       pageSize={pageSize + 1}
       {...tableProps}
-      onFetchData={(state, instance) => onHandleSort(state.sorted[0])}
+      onFetchData={state => onHandleSort(state.sorted[0])}
     />
   );
 };
