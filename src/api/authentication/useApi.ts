@@ -66,10 +66,11 @@ export const useApi = (): Api => {
       const url = `${authenticationServiceUrl}/changePassword/`;
       const { password, oldPassword, email } = changePasswordRequest;
 
-      return httpPostJsonResponse(url, {
-        body: JSON.stringify({ newPassword: password, oldPassword, email }),
-        // }, false)
-      });
+      return httpPostJsonResponse(
+        url,
+        { body: JSON.stringify({ newPassword: password, oldPassword, email }) },
+        false,
+      );
     },
     [],
   );

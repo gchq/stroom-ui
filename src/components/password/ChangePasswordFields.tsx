@@ -21,28 +21,22 @@ import "src/styles/from_auth/Layout.css";
 import Button from "src/components/Button";
 import { PasswordValidationRequest } from "src/api/authentication/types";
 import { hasAnyProps } from "src/lib/lang";
-// import { validateAsync } from "src/components/users/validation";
 import { useConfig } from "src/startup/config";
-import { useAuthenticationContext } from "src/startup/Authentication";
 import { validateAsync } from "src/components/users/validation";
-// import { useAuthenticationContext } from 'src/startup/authentication';
 
 const ChangePasswordFields = ({
   email,
   redirectUrl,
   showOldPasswordField,
   onSubmit,
-}: // errorMessages: errorMessages
-{
+}: {
   email?: string;
   redirectUrl?: string;
   showOldPasswordField: boolean;
   onSubmit: Function;
-  // errorMessages?: string[];
 }) => {
   const { authenticationServiceUrl } = useConfig();
-  const { idToken } = useAuthenticationContext();
-  if (!authenticationServiceUrl || !idToken)
+  if (!authenticationServiceUrl)
     throw Error("Config not ready or misconfigured!");
   return (
     <Formik
@@ -66,7 +60,6 @@ const ChangePasswordFields = ({
         };
         return validateAsync(
           passwordValidationRequest,
-          idToken,
           authenticationServiceUrl,
         );
       }}

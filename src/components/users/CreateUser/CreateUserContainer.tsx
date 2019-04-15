@@ -16,13 +16,11 @@
 
 import * as React from "react";
 import { PasswordValidationRequest } from "src/api/authentication";
-import { useAuthenticationContext } from "src/startup/Authentication";
 import { useConfig } from "src/startup/config";
 import "src/styles/from_auth/Layout.css";
 import { useUsers } from "../api";
 import { User } from "../types";
 import { validateAsync } from "../validation";
-import CreateUser from "./CreateUser";
 import "./CreateUserForm.css";
 import useAppNavigation from "src/components/AppChrome/useAppNavigation";
 import UserFormData from "./UserFormData";
@@ -33,8 +31,6 @@ const CreateUserContainer = ({}) => {
   const { authenticationServiceUrl } = useConfig();
   if (!authenticationServiceUrl)
     throw Error("Configuration not ready or misconfigured!");
-  const { idToken } = useAuthenticationContext();
-  if (!idToken) throw Error("Not authenticated"); //FIXME: handle this. Show unauthorised page probably.
 
   const { goToUsers } = useAppNavigation();
   const initialValues: UserFormData = {
@@ -62,7 +58,6 @@ const CreateUserContainer = ({}) => {
         };
         return validateAsync(
           passwordValidationRequest,
-          idToken,
           authenticationServiceUrl,
         );
       }}

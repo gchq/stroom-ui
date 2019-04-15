@@ -36,14 +36,12 @@ interface PasswordValidationErrors {
 
 export const validateAsync = (
   passwordValidationRequest: PasswordValidationRequest,
-  idToken: string,
   url: string,
 ): Promise<void> => {
   return fetch(`${url}/isPasswordValid`, {
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
-      Authorization: "Bearer " + idToken,
     },
     method: "post",
     mode: "cors",

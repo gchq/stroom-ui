@@ -20,12 +20,10 @@ import { PasswordValidationRequest } from "src/api/authentication/types";
 import useAppNavigation from "src/components/AppChrome/useAppNavigation";
 import Loader from "src/components/Loader";
 import useIdFromPath from "src/lib/useIdFromPath";
-import { useAuthenticationContext } from "src/startup/Authentication";
 import { useConfig } from "src/startup/config";
 import { User } from "..";
 import { useUsers } from "../api";
 import { validateAsync } from "../validation";
-import EditUser from "./EditUser";
 import "./EditUser.css";
 import UserFormData from "./UserFormData";
 import UserForm from "./UserForm";
@@ -33,10 +31,9 @@ import UserForm from "./UserForm";
 const EditUserContainer = () => {
   const { updateUser, fetchUser, user } = useUsers();
   const userId = useIdFromPath("user/");
-  const { idToken } = useAuthenticationContext();
   const { authenticationServiceUrl } = useConfig();
   const { goToUsers } = useAppNavigation();
-  if (!authenticationServiceUrl || !idToken)
+  if (!authenticationServiceUrl)
     throw Error("Configuration not ready or misconfigured!");
   useEffect(() => {
     if (!!userId && !user) fetchUser(userId);
@@ -57,7 +54,6 @@ const EditUserContainer = () => {
           };
           return validateAsync(
             passwordValidationRequest,
-            idToken,
             authenticationServiceUrl,
           );
         }}
