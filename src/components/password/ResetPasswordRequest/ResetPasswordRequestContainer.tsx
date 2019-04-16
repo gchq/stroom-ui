@@ -15,7 +15,7 @@
  */
 
 import * as React from "react";
-import { useApi } from "src/api/authentication";
+import { useApi } from "src/components/authentication/useApi";
 import { useConfig } from "src/startup/config";
 import "src/styles/from_auth/index.css";
 import "src/styles/from_auth/Layout.css";

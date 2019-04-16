@@ -14,15 +14,12 @@
  * limitations under the License.
  */
 
-import * as React from "react";
-
 import { storiesOf } from "@storybook/react";
-
+import * as React from "react";
 import fullTestData from "src/testing/data";
 import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
-
+import { StroomUser } from "../api/userGroups";
 import UsersInGroup from "./UsersInGroup";
-import { StroomUser } from "src/api/userGroups";
 
 // Pick a group
 let aGroup: StroomUser = fullTestData.usersAndGroups.users

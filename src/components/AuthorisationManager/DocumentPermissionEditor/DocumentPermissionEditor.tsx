@@ -1,19 +1,21 @@
 import * as React from "react";
-
-import IconHeader from "src/components/IconHeader";
-import useDocumentPermissions from "src/api/docPermission/useDocumentPermissions";
+import useDocumentPermissions from "src/components/AuthorisationManager/api/docPermission/useDocumentPermissions";
+import {
+  StroomUser,
+  useUsers,
+} from "src/components/AuthorisationManager/api/userGroups";
 import Button from "src/components/Button";
+import { useDocumentTree } from "src/components/DocumentEditors/api/explorer";
+import IconHeader from "src/components/IconHeader";
 import ThemedConfirm, {
   useDialog as useThemedConfirm,
 } from "src/components/ThemedConfirm";
-import { useUsers, StroomUser } from "src/api/userGroups";
-import UsersTable, { useTable as useUsersTable } from "../UsersTable";
-import useAppNavigation from "../../AppChrome/useAppNavigation";
 import useRouter from "src/lib/useRouter";
-import { useDocumentTree } from "src/api/explorer";
+import useAppNavigation from "../../AppChrome/useAppNavigation";
 import UserModalPicker, {
   useDialog as useUserModalPicker,
 } from "../UserModalPicker";
+import UsersTable, { useTable as useUsersTable } from "../UsersTable";
 
 interface Props {
   docRefUuid: string;

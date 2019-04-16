@@ -30,12 +30,12 @@ import {
   addItemsToTree,
   deleteItemFromTree,
   moveItemsInTree,
-} from "src/lib/treeUtils";
+} from "src/lib/treeUtils/treeUtils";
 
 import { getNewTerm, getNewOperator } from "./expressionUtils";
-import { StyledComponentProps } from "src/types";
 
-interface Props extends StyledComponentProps {
+interface Props {
+  className?: string;
   dataSource: DataSourceType;
   showModeToggle?: boolean;
   editMode?: boolean;

@@ -22,9 +22,9 @@ import Loader from "src/components/Loader";
 
 import DebuggerStep from "./DebuggerStep";
 import { getNext, getPrevious } from "./pipelineDebugger.utils";
-import useDocumentApi from "src/api/useDocumentApi";
+import useDocumentApi from "src/components/DocumentEditors/useDocumentApi";
 import usePipelineState from "../usePipelineState";
-import { PipelineDocumentType } from "src/api/useDocumentApi/types/pipelineDoc";
+import { PipelineDocumentType } from "src/components/DocumentEditors/useDocumentApi/types/pipelineDoc";
 
 interface Props {
   debuggerId: string;

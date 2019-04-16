@@ -20,10 +20,10 @@ import IconHeader from "../../../IconHeader";
 import ThemedModal from "../../../ThemedModal";
 import DialogActionButtons from "../../../DialogActionButtons";
 import { DocRefTypePicker } from "../../../DocRefTypePicker";
-import PermissionInheritancePicker from "../../../PermissionInheritancePicker";
-import { PermissionInheritance } from "src/types";
+import PermissionInheritancePicker from "../PermissionInheritancePicker";
 import useForm from "src/lib/useForm";
-import { DocRefType } from "src/api/useDocumentApi/types/base";
+import { DocRefType } from "src/components/DocumentEditors/useDocumentApi/types/base";
+import { PermissionInheritance } from "../PermissionInheritancePicker/types";
 // import { required, minLength2 } from "src/lib/formUtils";
 
 interface Props {

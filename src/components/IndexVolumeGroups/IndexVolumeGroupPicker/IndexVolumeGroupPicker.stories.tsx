@@ -44,7 +44,7 @@ const TestHarness: React.FunctionComponent = () => {
   const groupPickerProps = useControlledInputProps<string>("groupName");
 
   return (
-    <form>
+    <div>
       <div>
         <label>Chosen Index Volume Group</label>
         <IndexVolumeGroupPicker
@@ -53,9 +53,9 @@ const TestHarness: React.FunctionComponent = () => {
         />
       </div>
       <JsonDebug value={value} />
-    </form>
+    </div>
   );
 };
 
-const stories = storiesOf("Pickers/Index Volume Group", module);
+const stories = storiesOf("Sections/Index Volume Groups/Group Picker", module);
 addThemedStories(stories, () => <TestHarness />);

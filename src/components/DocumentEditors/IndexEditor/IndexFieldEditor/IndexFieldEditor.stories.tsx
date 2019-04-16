@@ -22,7 +22,7 @@ import IndexFieldEditor, { useEditor } from "./IndexFieldEditor";
 import { generateTestField } from "src/testing/data/indexDocs";
 import Button from "../../../Button";
 import JsonDebug from "src/testing/JsonDebug";
-import { IndexField } from "src/api/useDocumentApi/types/indexDoc";
+import { IndexField } from "src/components/DocumentEditors/useDocumentApi/types/indexDoc";
 
 const stories = storiesOf("Document Editors/Index/Field Editor", module);
 

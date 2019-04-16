@@ -15,7 +15,10 @@
  */
 import * as loremIpsum from "lorem-ipsum";
 import * as uuidv4 from "uuid/v4";
-import { DocRefType, DocRefTree } from "src/api/useDocumentApi/types/base";
+import {
+  DocRefType,
+  DocRefTree,
+} from "src/components/DocumentEditors/useDocumentApi/types/base";
 
 function createRandomItem(docRefType: string): DocRefType {
   return {

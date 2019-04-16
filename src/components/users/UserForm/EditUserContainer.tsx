@@ -16,8 +16,8 @@
 
 import * as React from "react";
 import { useEffect } from "react";
-import { PasswordValidationRequest } from "src/api/authentication/types";
 import useAppNavigation from "src/components/AppChrome/useAppNavigation";
+import { PasswordValidationRequest } from "src/components/authentication/types";
 import Loader from "src/components/Loader";
 import useIdFromPath from "src/lib/useIdFromPath";
 import { useConfig } from "src/startup/config";

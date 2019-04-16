@@ -1,8 +1,11 @@
-import { ControlledInput } from "src/types";
-
 interface InputProps {
   onChange: React.ChangeEventHandler<HTMLElement>;
   value: string;
+}
+
+export interface ControlledInput<T> {
+  value: T;
+  onChange: (v: T) => void;
 }
 
 export interface Form<T> {

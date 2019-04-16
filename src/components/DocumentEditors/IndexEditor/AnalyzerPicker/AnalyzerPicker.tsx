@@ -1,10 +1,9 @@
 import * as React from "react";
 import Select from "react-select";
-import { SelectOptionType, SelectOptionsType } from "src/types";
 import {
   AnalyzerDisplayValues,
   AnalyzerType,
-} from "src/api/useDocumentApi/types/indexDoc";
+} from "src/components/DocumentEditors/useDocumentApi/types/indexDoc";
 
 interface Props {
   className?: string;
@@ -12,7 +11,12 @@ interface Props {
   onChange: (c: AnalyzerType) => any;
 }
 
-const OPTIONS: SelectOptionsType = Object.entries(AnalyzerDisplayValues).map(
+interface AnalyzerOption {
+  value: string;
+  label: string;
+}
+
+const OPTIONS: AnalyzerOption[] = Object.entries(AnalyzerDisplayValues).map(
   d => ({
     value: d[0],
     label: d[1],
@@ -28,7 +32,7 @@ const AnalyzerPicker: React.FunctionComponent<Props> = ({
     className={className}
     placeholder="Index Field Type"
     value={OPTIONS.find(o => o.value === value)}
-    onChange={(o: SelectOptionType) => onChange(o.value as AnalyzerType)}
+    onChange={(o: AnalyzerOption) => onChange(o.value as AnalyzerType)}
     options={OPTIONS}
   />
 );

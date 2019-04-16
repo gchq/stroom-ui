@@ -19,9 +19,9 @@ import { storiesOf } from "@storybook/react";
 import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
 
 import AnalyzerPicker from "./AnalyzerPicker";
-import { AnalyzerType } from "src/api/useDocumentApi/types/indexDoc";
+import { AnalyzerType } from "src/components/DocumentEditors/useDocumentApi/types/indexDoc";
 
-const stories = storiesOf("Pickers/Index Analyzer", module);
+const stories = storiesOf("Document Editors/Index/Analyzer Picker", module);
 
 const B: React.FunctionComponent = () => {
   const [value, onChange] = React.useState<AnalyzerType | undefined>(undefined);

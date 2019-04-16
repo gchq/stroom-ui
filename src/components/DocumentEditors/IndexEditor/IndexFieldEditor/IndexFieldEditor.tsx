@@ -9,7 +9,7 @@ import {
   IndexField,
   IndexFieldType,
   AnalyzerType,
-} from "src/api/useDocumentApi/types/indexDoc";
+} from "src/components/DocumentEditors/useDocumentApi/types/indexDoc";
 
 interface Props {
   id: number;

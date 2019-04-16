@@ -1,4 +1,4 @@
-import { StreamAttributeMapResult } from "src/types";
+import { StreamAttributeMapResult } from "src/components/DataViewer/types";
 
 export default {
   pageResponse: {

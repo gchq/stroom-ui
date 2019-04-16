@@ -22,7 +22,7 @@ import fullTestData from "src/testing/data";
 
 import JsonDebug from "src/testing/JsonDebug";
 import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
-import { DocRefType } from "src/api/useDocumentApi/types/base";
+import { DocRefType } from "src/components/DocumentEditors/useDocumentApi/types/base";
 
 const testDocRef = fullTestData.documentTree.children![0].children![0];
 

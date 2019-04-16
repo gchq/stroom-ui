@@ -14,7 +14,11 @@
  * limitations under the License.
  */
 
-import { findItem, itemIsInSubtree, iterateNodes } from "src/lib/treeUtils";
+import {
+  findItem,
+  itemIsInSubtree,
+  iterateNodes,
+} from "src/lib/treeUtils/treeUtils";
 import {
   RecycleBinItem,
   PipelineLayoutGrid,
@@ -29,12 +33,12 @@ import {
   PipelinePropertyType,
   AddRemove,
   PipelineLinkType,
-} from "src/api/useDocumentApi/types/pipelineDoc";
+} from "src/components/DocumentEditors/useDocumentApi/types/pipelineDoc";
 import { PipelineAsTreeType } from "./AddElementModal/types";
 import {
   ElementDefinitionsByType,
   ElementPropertiesType,
-} from "src/api/useElements/types";
+} from "src/components/DocumentEditors/PipelineEditor/useElements/types";
 
 export function getBinItems(
   pipeline: PipelineDocumentType,

@@ -18,11 +18,11 @@ import * as React from "react";
 import { storiesOf } from "@storybook/react";
 
 import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
-import AppSearchBar from "./AppSearchBar";
 
 import useForm from "src/lib/useForm";
 import JsonDebug from "src/testing/JsonDebug";
-import { DocRefType } from "src/api/useDocumentApi/types/base";
+import { DocRefType } from "src/components/DocumentEditors/useDocumentApi/types/base";
+import AppSearchBar from "./AppSearchBar";
 
 interface Props {
   typeFilters?: string[];
@@ -96,7 +96,6 @@ class AppSearchAsNavigator extends React.Component<
       <div style={{ height: "100%", width: "100%" }}>
         <AppSearchBar
           onChange={d => {
-            console.log("App Search Bar Chose a Value", d);
             this.setState({ chosenDocRef: d });
             this.displayRef.current!.focus();
           }}
@@ -112,7 +111,7 @@ class AppSearchAsNavigator extends React.Component<
   }
 }
 
-const stories = storiesOf("Doc Ref/App Search Bar", module);
+const stories = storiesOf(`Doc Ref/App Search Bar`, module);
 
 stories
   .add("Search Bar (global)", () => <AppSearchAsNavigator />)

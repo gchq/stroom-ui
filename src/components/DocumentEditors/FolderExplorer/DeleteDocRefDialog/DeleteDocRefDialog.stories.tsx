@@ -6,7 +6,7 @@ import DeleteDocRefDialog, { useDialog } from "./DeleteDocRefDialog";
 import { fromSetupSampleData } from "../test";
 
 import JsonDebug from "src/testing/JsonDebug";
-import { DocRefType } from "src/api/useDocumentApi/types/base";
+import { DocRefType } from "src/components/DocumentEditors/useDocumentApi/types/base";
 
 const testFolder2 = fromSetupSampleData.children![1];
 
@@ -28,8 +28,11 @@ const TestHarness: React.FunctionComponent<Props> = ({ testUuids }) => {
   );
 };
 
-storiesOf("Explorer/Delete Doc Ref Dialog", module).add("simple", () => (
-  <TestHarness
-    testUuids={testFolder2.children!.map((d: DocRefType) => d.uuid)}
-  />
-));
+storiesOf("Document Editors/Folder/Delete Doc Ref Dialog", module).add(
+  "simple",
+  () => (
+    <TestHarness
+      testUuids={testFolder2.children!.map((d: DocRefType) => d.uuid)}
+    />
+  ),
+);

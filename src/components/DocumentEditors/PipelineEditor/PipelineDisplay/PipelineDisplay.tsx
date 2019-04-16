@@ -23,9 +23,9 @@ import { PipelineLayoutGrid } from "../types";
 import { getAllElementNames } from "../pipelineUtils";
 import { ShowDialog as ShowAddElementDialog } from "../AddElementModal";
 import { PipelineProps } from "../types";
-import useElements from "src/api/useElements";
+import useElements from "src/components/DocumentEditors/PipelineEditor/useElements";
 import { LineContainer, LineTo } from "src/components/LineTo";
-import { PipelineElementType } from "src/api/useDocumentApi/types/pipelineDoc";
+import { PipelineElementType } from "src/components/DocumentEditors/useDocumentApi/types/pipelineDoc";
 
 interface Props {
   pipelineId: string;

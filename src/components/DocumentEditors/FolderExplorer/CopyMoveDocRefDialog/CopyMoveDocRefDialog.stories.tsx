@@ -7,9 +7,9 @@ import {
   useDialog as useCopyMoveDocRefDialog,
 } from "./CopyMoveDocRefDialog";
 
-import { PermissionInheritance } from "src/types";
 import JsonDebug from "src/testing/JsonDebug";
-import { DocRefType } from "src/api/useDocumentApi/types/base";
+import { DocRefType } from "src/components/DocumentEditors/useDocumentApi/types/base";
+import { PermissionInheritance } from "../PermissionInheritancePicker/types";
 
 const testFolder2 = fromSetupSampleData.children![1];
 
@@ -44,9 +44,12 @@ const TestHarness: React.FunctionComponent<Props> = ({
   );
 };
 
-storiesOf("Explorer/Copy Doc Ref Dialog", module).add("simple", () => (
-  <TestHarness
-    testUuids={testFolder2.children!.map(d => d.uuid)}
-    testDestination={testFolder2}
-  />
-));
+storiesOf("Document Editors/Folder/Copy Doc Ref Dialog", module).add(
+  "simple",
+  () => (
+    <TestHarness
+      testUuids={testFolder2.children!.map(d => d.uuid)}
+      testDestination={testFolder2}
+    />
+  ),
+);

@@ -1,6 +1,9 @@
 import * as React from "react";
 import useLocalStorage, { useStoreObjectFactory } from "../useLocalStorage";
-import { DocRefType, DocRefConsumer } from "src/api/useDocumentApi/types/base";
+import {
+  DocRefType,
+  DocRefConsumer,
+} from "src/components/DocumentEditors/useDocumentApi/types/base";
 
 interface OutProps {
   recentItems: DocRefType[];

@@ -15,16 +15,16 @@
  */
 
 import * as React from "react";
-import { PasswordValidationRequest } from "src/api/authentication";
+import useAppNavigation from "src/components/AppChrome/useAppNavigation";
+import { PasswordValidationRequest } from "src/components/authentication";
 import { useConfig } from "src/startup/config";
 import "src/styles/from_auth/Layout.css";
 import { useUsers } from "../api";
 import { User } from "../types";
 import { validateAsync } from "../validation";
 import "./CreateUserForm.css";
-import useAppNavigation from "src/components/AppChrome/useAppNavigation";
-import UserFormData from "./UserFormData";
 import UserForm from "./UserForm";
+import UserFormData from "./UserFormData";
 
 const CreateUserContainer = ({}) => {
   const { createUser } = useUsers();

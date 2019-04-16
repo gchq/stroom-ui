@@ -17,7 +17,7 @@
 import { ErrorMessage, Field, Form, Formik, FormikActions } from "formik";
 import * as React from "react";
 import { NavLink } from "react-router-dom";
-import { Credentials } from "src/api/authentication";
+import { Credentials } from "src/components/authentication";
 import Button from "src/components/Button";
 import { hasAnyProps } from "src/lib/lang";
 import "src/styles/from_auth/Layout.css";

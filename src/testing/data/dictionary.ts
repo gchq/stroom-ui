@@ -1,6 +1,6 @@
 import * as uuidv4 from "uuid/v4";
 import * as loremIpsum from "lorem-ipsum";
-import { DictionaryDoc } from "src/api/useDocumentApi/types/dictionaryDoc";
+import { DictionaryDoc } from "src/components/DocumentEditors/useDocumentApi/types/dictionaryDoc";
 
 export const generate = (): DictionaryDoc => ({
   type: "Dictionary",

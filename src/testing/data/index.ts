@@ -13,28 +13,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { AnnotationsIndexDoc } from "src/api/useDocumentApi/types/annotations";
-import { copyDocRef, DocRefTree } from "src/api/useDocumentApi/types/base";
-import { DashboardDoc } from "src/api/useDocumentApi/types/dashboard";
-import { DictionaryDoc } from "src/api/useDocumentApi/types/dictionaryDoc";
-import { ElasticIndexDoc } from "src/api/useDocumentApi/types/elastic";
-import { FeedDoc } from "src/api/useDocumentApi/types/feed";
-import { IndexDoc } from "src/api/useDocumentApi/types/indexDoc";
-import { ScriptDoc } from "src/api/useDocumentApi/types/scriptDoc";
+import { StroomUser } from "src/components/AuthorisationManager/api/userGroups";
+import { AnnotationsIndexDoc } from "src/components/DocumentEditors/useDocumentApi/types/annotations";
+import {
+  copyDocRef,
+  DocRefTree,
+} from "src/components/DocumentEditors/useDocumentApi/types/base";
+import { DashboardDoc } from "src/components/DocumentEditors/useDocumentApi/types/dashboard";
+import { DictionaryDoc } from "src/components/DocumentEditors/useDocumentApi/types/dictionaryDoc";
+import { ElasticIndexDoc } from "src/components/DocumentEditors/useDocumentApi/types/elastic";
+import { FeedDoc } from "src/components/DocumentEditors/useDocumentApi/types/feed";
+import { FolderDoc } from "src/components/DocumentEditors/useDocumentApi/types/folder";
+import { IndexDoc } from "src/components/DocumentEditors/useDocumentApi/types/indexDoc";
+import { ScriptDoc } from "src/components/DocumentEditors/useDocumentApi/types/scriptDoc";
 import {
   StatisticStoreDoc,
   StroomStatsStoreDoc,
-} from "src/api/useDocumentApi/types/statistics";
-import { VisualisationDoc } from "src/api/useDocumentApi/types/visualisation";
-import { XMLSchemaDoc } from "src/api/useDocumentApi/types/xmlSchema";
-import { XsltDoc } from "src/api/useDocumentApi/types/xsltDoc";
-import { iterateNodes } from "src/lib/treeUtils";
+} from "src/components/DocumentEditors/useDocumentApi/types/statistics";
+import { VisualisationDoc } from "src/components/DocumentEditors/useDocumentApi/types/visualisation";
+import { XMLSchemaDoc } from "src/components/DocumentEditors/useDocumentApi/types/xmlSchema";
+import { XsltDoc } from "src/components/DocumentEditors/useDocumentApi/types/xsltDoc";
 import {
-  IndexVolume,
   IndexVolumeGroup,
   IndexVolumeGroupMembership,
-  StreamTaskType,
-} from "src/types";
+} from "src/components/IndexVolumeGroups/api";
+import { IndexVolume } from "src/components/IndexVolumes/api";
+import { StreamTaskType } from "src/components/Processing/types";
+import { iterateNodes } from "src/lib/treeUtils";
 import * as uuidv4 from "uuid/v4";
 import { TestData, UserDocPermission, UserGroupMembership } from "../testTypes";
 import { generate as generateAnnotationsIndex } from "./annotationsIndex";
@@ -61,7 +66,6 @@ import { generateTestGroup, generateTestUser } from "./usersAndGroups";
 import { generate as generateVisualisation } from "./visualisation";
 import { generate as generateXmlSchema } from "./xmlSchema";
 import { generate as generateXslt } from "./xslt";
-import { StroomUser } from "src/api/userGroups";
 
 let docPermissionByType = testDocRefsTypes.reduce(
   (acc, curr) => ({ ...acc, [curr]: documentPermissionNames }),
@@ -275,9 +279,19 @@ const docTree = {
 } as DocRefTree;
 
 const userDocPermission: UserDocPermission[] = [];
+const allFolders: FolderDoc[] = [];
 
 // give first two users permissions to all documents
-iterateNodes(docTree, (_, { uuid: docRefUuid }) => {
+iterateNodes(docTree, (_, node) => {
+  if (node.type === "Folder") {
+    allFolders.push({
+      type: "Folder",
+      uuid: node.uuid,
+      name: node.name,
+      children: node.children || [],
+    });
+  }
+  const { uuid: docRefUuid } = node;
   allUsers.slice(0, 2).forEach(({ uuid: userUuid }) => {
     documentPermissionNames
       .filter(p => p !== "OWNER")
@@ -302,6 +316,7 @@ export const fullTestData: TestData = {
     Feed: feeds,
     Index: indexes,
     Pipeline: Object.values(testPipelines),
+    Folder: allFolders,
     AnnotationsIndex: annotationIndexes,
     Dashboard: dashboards,
     ElasticIndex: elasticIndexes,

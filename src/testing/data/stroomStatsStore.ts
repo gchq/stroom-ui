@@ -1,6 +1,6 @@
 import * as uuidv4 from "uuid/v4";
 import * as loremIpsum from "lorem-ipsum";
-import { StroomStatsStoreDoc } from "src/api/useDocumentApi/types/statistics";
+import { StroomStatsStoreDoc } from "src/components/DocumentEditors/useDocumentApi/types/statistics";
 
 export const generate = (): StroomStatsStoreDoc => ({
   type: "StroomStatsStore",

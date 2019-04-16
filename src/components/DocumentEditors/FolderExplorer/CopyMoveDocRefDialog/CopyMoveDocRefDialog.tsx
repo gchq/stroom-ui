@@ -19,11 +19,11 @@ import IconHeader from "../../../IconHeader";
 import DialogActionButtons from "../../../DialogActionButtons";
 import ThemedModal from "../../../ThemedModal";
 import AppSearchBar from "../../../AppSearchBar";
-import PermissionInheritancePicker from "../../../PermissionInheritancePicker";
-import { PermissionInheritance } from "src/types";
+import PermissionInheritancePicker from "../PermissionInheritancePicker";
 import useForm from "src/lib/useForm";
 import { UseDialog, Props } from "./types";
-import { DocRefType } from "src/api/useDocumentApi/types/base";
+import { DocRefType } from "src/components/DocumentEditors/useDocumentApi/types/base";
+import { PermissionInheritance } from "../PermissionInheritancePicker/types";
 
 interface FormValues {
   destination?: DocRefType;

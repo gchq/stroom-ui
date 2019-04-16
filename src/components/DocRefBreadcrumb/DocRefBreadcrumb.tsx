@@ -1,7 +1,7 @@
 import * as React from "react";
 
-import { useDocumentTree } from "src/api/explorer";
-import { DocRefConsumer } from "src/api/useDocumentApi/types/base";
+import { useDocumentTree } from "src/components/DocumentEditors/api/explorer";
+import { DocRefConsumer } from "src/components/DocumentEditors/useDocumentApi/types/base";
 
 interface Props {
   docRefUuid: string;
@@ -19,10 +19,10 @@ const DocRefBreadcrumb: React.FunctionComponent<Props> = ({
   className = "",
 }) => {
   const { findDocRefWithLineage } = useDocumentTree();
-  const { lineage } = React.useMemo(() => findDocRefWithLineage(docRefUuid), [
-    findDocRefWithLineage,
-    docRefUuid,
-  ]);
+  const { lineage, node } = React.useMemo(
+    () => findDocRefWithLineage(docRefUuid),
+    [findDocRefWithLineage, docRefUuid],
+  );
 
   return (
     <div className={`DocRefBreadcrumb ${className || ""}`}>
@@ -39,7 +39,7 @@ const DocRefBreadcrumb: React.FunctionComponent<Props> = ({
         </React.Fragment>
       ))}
       <Divider />
-      <div className="DocRefBreadcrumb__name">{name}</div>
+      <div className="DocRefBreadcrumb__name">{node.name}</div>
     </div>
   );
 };

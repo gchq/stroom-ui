@@ -1,13 +1,11 @@
 import * as React from "react";
-
 import ReactTable from "react-table";
-
 import {
-  useSelectableReactTable,
   SelectionBehaviour,
   TableOutProps,
+  useSelectableReactTable,
 } from "src/lib/useSelectableItemListing";
-import { StroomUser } from "src/api/userGroups";
+import { StroomUser } from "../api/userGroups";
 
 interface Props {
   users: StroomUser[];

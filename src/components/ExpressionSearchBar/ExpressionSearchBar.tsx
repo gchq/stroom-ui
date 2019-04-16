@@ -19,8 +19,7 @@ import * as uuidv4 from "uuid/v4";
 
 import { processSearchString } from "./expressionSearchBarUtils";
 import Button from "../Button";
-import { StyledComponentProps } from "src/types";
-import { assignRandomUuids } from "src/lib/treeUtils";
+import { assignRandomUuids } from "src/lib/treeUtils/treeUtils";
 import { toString } from "../ExpressionBuilder/expressionUtils";
 import { ExpressionBuilder } from "../ExpressionBuilder";
 import {
@@ -28,7 +27,8 @@ import {
   ExpressionOperatorWithUuid,
 } from "../ExpressionBuilder/types";
 
-interface Props extends StyledComponentProps {
+interface Props {
+  className?: string;
   dataSource: DataSourceType;
   onSearch: (e: ExpressionOperatorWithUuid) => void;
   initialSearchString?: string;

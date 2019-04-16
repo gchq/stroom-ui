@@ -5,7 +5,7 @@ import CreateDocRefDialog, { useDialog } from "./CreateDocRefDialog";
 import { fromSetupSampleData } from "../test";
 
 import JsonDebug from "src/testing/JsonDebug";
-import { DocRefType } from "src/api/useDocumentApi/types/base";
+import { DocRefType } from "src/components/DocumentEditors/useDocumentApi/types/base";
 
 const testFolder2 = fromSetupSampleData.children![1];
 
@@ -31,6 +31,7 @@ const TestHarness: React.FunctionComponent<Props> = ({ testDestination }) => {
   );
 };
 
-storiesOf("Explorer/Create Doc Ref Dialog", module).add("simple", () => (
-  <TestHarness testDestination={testFolder2} />
-));
+storiesOf("Document Editors/Folder/Create Doc Ref Dialog", module).add(
+  "simple",
+  () => <TestHarness testDestination={testFolder2} />,
+);

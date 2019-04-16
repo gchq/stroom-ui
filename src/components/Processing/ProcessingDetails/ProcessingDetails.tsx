@@ -17,8 +17,8 @@
 import * as React from "react";
 import * as moment from "moment";
 
-import { StreamTaskType } from "src/types";
 import ROExpressionBuilder from "src/components/ExpressionBuilder/ROExpressionBuilder";
+import { StreamTaskType } from "../types";
 
 interface Props {
   tracker?: StreamTaskType;

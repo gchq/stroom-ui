@@ -6,7 +6,7 @@ import ThemedModal from "src/components/ThemedModal";
 // import { required, minLength2 } from "src/lib/formUtils";
 import useForm from "src/lib/useForm";
 import { Props, OnAddElement, UseDialog } from "./types";
-import { ElementDefinition } from "src/api/useElements/types";
+import { ElementDefinition } from "src/components/DocumentEditors/PipelineEditor/useElements/types";
 
 interface FormValues {
   newName: string;

@@ -24,7 +24,7 @@ import { ExpressionOperatorWithUuid } from "src/components/ExpressionBuilder/typ
 // import "react-table/react-table.css";
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-// import useStreamAttributeMapApi from "src/api/streamAttributeMap/useApi";
+// import useStreamAttributeMapApi from "src/components/DataViewer/api/streamAttributeMap/useApi";
 // import useDataApi from "src/api/data/useApi";
 
 // import Loader from "src/components/Loader";

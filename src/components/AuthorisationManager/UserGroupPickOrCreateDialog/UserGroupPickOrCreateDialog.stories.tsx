@@ -26,7 +26,10 @@ import UserGroupPickOrCreateDialog, {
 import Button from "src/components/Button";
 import JsonDebug from "src/testing/JsonDebug";
 
-const stories = storiesOf("Pickers/User (or Create) Modal", module);
+const stories = storiesOf(
+  "Sections/Authorisation Manager/User Group Picker Modal",
+  module,
+);
 
 const TestHarness: React.FunctionComponent = () => {
   const [pickedUser, setPickedUser] = React.useState<string | undefined>(

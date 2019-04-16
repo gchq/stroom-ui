@@ -1,19 +1,22 @@
-import { ResourcesByDocType } from "src/api/useDocumentApi";
-import { DocRefTree, DocumentBase } from "src/api/useDocumentApi/types/base";
+import { StroomUser } from "src/components/AuthorisationManager/api/userGroups";
+import { StreamAttributeMapResult } from "src/components/DataViewer/types";
 import {
   ElementDefinition,
   ElementPropertiesByElementIdType,
-} from "src/api/useElements/types";
-import { DataSourceType } from "src/components/ExpressionBuilder/types";
-import { User } from "src/components/users";
+} from "src/components/DocumentEditors/PipelineEditor/useElements/types";
 import {
-  IndexVolume,
+  DocRefTree,
+  DocumentBase,
+} from "src/components/DocumentEditors/useDocumentApi/types/base";
+import { ResourcesByDocType } from "src/components/DocumentEditors/useDocumentApi/types/resourceUrls";
+import { DataSourceType } from "src/components/ExpressionBuilder/types";
+import {
   IndexVolumeGroup,
   IndexVolumeGroupMembership,
-  StreamAttributeMapResult,
-  StreamTaskType,
-} from "src/types";
-import { StroomUser } from "src/api/userGroups";
+} from "src/components/IndexVolumeGroups/api";
+import { IndexVolume } from "src/components/IndexVolumes/api";
+import { StreamTaskType } from "src/components/Processing/types";
+import { User } from "src/components/users";
 
 export interface UserGroupMembership {
   userUuid: string;

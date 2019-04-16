@@ -3,9 +3,9 @@ import * as React from "react";
 import IconHeader from "src/components/IconHeader";
 import Button from "src/components/Button";
 import useRouter from "src/lib/useRouter";
-import { useIndexVolume } from "src/api/indexVolume";
+import { useIndexVolume } from "src/components/IndexVolumes/api";
 import {
-  useTable as useIndexVolumeGroupNamesTable,
+  useTable as useIndexVolumeGroupTable,
   IndexVolumeGroupNamesTable,
 } from "../../IndexVolumeGroups/IndexVolumeGroupNamesTable";
 import {
@@ -31,9 +31,7 @@ const IndexVolumeEditor: React.FunctionComponent<Props> = ({ volumeId }) => {
     removeFromGroup,
   } = useIndexVolume(volumeId);
 
-  const { componentProps: tableProps } = useIndexVolumeGroupNamesTable(
-    groupNames,
-  );
+  const { componentProps: tableProps } = useIndexVolumeGroupTable(groupNames);
 
   const {
     selectableTableProps: { selectedItems },

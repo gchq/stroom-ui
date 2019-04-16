@@ -1,15 +1,14 @@
 import * as React from "react";
-
-import UsersTable, { useTable as useUsersTable } from "../UsersTable";
+import useAppNavigation from "src/components/AppChrome/useAppNavigation";
 import Button from "src/components/Button";
 import ThemedConfirm, {
   useDialog as useThemedConfirm,
 } from "src/components/ThemedConfirm";
-import { useUsersInGroup, StroomUser } from "src/api/userGroups";
+import { StroomUser, useUsersInGroup } from "../api/userGroups";
 import UserModalPicker, {
   useDialog as useUserModalPicker,
 } from "../UserModalPicker";
-import useAppNavigation from "src/components/AppChrome/useAppNavigation";
+import UsersTable, { useTable as useUsersTable } from "../UsersTable";
 
 interface Props {
   group: StroomUser;

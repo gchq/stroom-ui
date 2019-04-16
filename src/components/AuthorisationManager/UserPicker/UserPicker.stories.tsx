@@ -25,7 +25,7 @@ import Button from "src/components/Button";
 import JsonDebug from "src/testing/JsonDebug";
 import fullTestData from "src/testing/data";
 
-const stories = storiesOf("Pickers/User Picker", module);
+const stories = storiesOf("Sections/Authorisation Manager/User Picker", module);
 
 const TestHarness: React.FunctionComponent = () => {
   const { userNamesToFilterOut, valuesToFilterOut } = React.useMemo(() => {

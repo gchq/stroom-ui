@@ -1,9 +1,8 @@
 import * as React from "react";
 
-import Select from "react-select";
+import CreatableSelect from "react-select/lib/Creatable";
 
-import { useIndexVolumeGroupNames } from "src/api/indexVolumeGroup";
-import { SelectOptionType } from "src/types";
+import { useIndexVolumeGroups } from "src/components/IndexVolumeGroups/api";
 import { PickerProps, UsePickerProps, PickerBaseProps } from "./types";
 
 const IndexVolumeGroupPicker: React.FunctionComponent<PickerProps> = ({
@@ -11,24 +10,32 @@ const IndexVolumeGroupPicker: React.FunctionComponent<PickerProps> = ({
   onChange,
   valuesToFilterOut = [],
 }) => {
-  const groupNames = useIndexVolumeGroupNames();
+  const { groups, createIndexVolumeGroup } = useIndexVolumeGroups();
 
-  const options: SelectOptionType[] = React.useMemo(
-    () =>
-      groupNames
-        .filter(n => !valuesToFilterOut.includes(n))
-        .map(n => ({
-          value: n,
-          label: n,
-        })),
-    [groupNames, valuesToFilterOut],
+  const options: string[] = React.useMemo(
+    () => groups.map(g => g.name).filter(n => !valuesToFilterOut.includes(n)),
+    [groups, valuesToFilterOut],
+  );
+
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
+  const onCreateOption = React.useCallback(
+    d => {
+      setIsLoading(true);
+      createIndexVolumeGroup(d).then(() => {
+        onChange(d);
+        setIsLoading(false);
+      });
+    },
+    [isLoading],
   );
 
   return (
-    <Select
-      value={options.find(o => o.value === value)}
-      onChange={(o: SelectOptionType) => onChange(o.value)}
+    <CreatableSelect
+      isLoading={isLoading}
+      value={value}
+      onChange={onChange}
       placeholder="Index Volume Group"
+      onCreateOption={onCreateOption}
       options={options}
     />
   );

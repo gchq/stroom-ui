@@ -1,6 +1,6 @@
 import * as uuidv4 from "uuid/v4";
 import * as loremIpsum from "lorem-ipsum";
-import { DashboardDoc } from "src/api/useDocumentApi/types/dashboard";
+import { DashboardDoc } from "src/components/DocumentEditors/useDocumentApi/types/dashboard";
 
 export const generate = (): DashboardDoc => ({
   type: "Dashboard",

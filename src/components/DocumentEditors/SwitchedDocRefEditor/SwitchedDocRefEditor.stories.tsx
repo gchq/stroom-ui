@@ -10,7 +10,7 @@ import SwitchedDocRefEditor from ".";
 Object.keys(docRefEditorClasses).forEach(docRefType => {
   const stories = storiesOf(`Document Editors/${docRefType}`, module);
 
-  // Folder will not have a list in documents.
+  // 'System' will not have a list in documents.
   if (
     !!fullTestData.documents[docRefType] &&
     fullTestData.documents[docRefType].length > 0

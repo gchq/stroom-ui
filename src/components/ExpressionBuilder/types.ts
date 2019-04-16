@@ -18,7 +18,7 @@ import {
   ConnectDragSource,
   ConnectDropTarget,
 } from "react-dnd";
-import { DictionaryDoc } from "src/api/useDocumentApi/types/dictionaryDoc";
+import { DictionaryDoc } from "src/components/DocumentEditors/useDocumentApi/types/dictionaryDoc";
 import { HasUuid } from "src/types";
 
 export enum DragDropTypes {

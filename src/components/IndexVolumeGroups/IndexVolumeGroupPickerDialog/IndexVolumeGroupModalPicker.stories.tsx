@@ -49,5 +49,8 @@ const TestHarness: React.FunctionComponent = () => {
   );
 };
 
-const stories = storiesOf("Pickers/Index Volume Group (modal)", module);
+const stories = storiesOf(
+  "Sections/Index Volume Groups/Group Picker Modal",
+  module,
+);
 addThemedStories(stories, () => <TestHarness />);

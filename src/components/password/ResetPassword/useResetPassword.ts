@@ -1,12 +1,11 @@
-import { useCallback } from "react";
 import { FormikBag } from "formik";
-
-import { useApi } from "src/api/authentication";
-import { useRouter } from "src/lib/useRouter";
+import { useCallback } from "react";
 import {
-  ResetPasswordRequest,
   ChangePasswordResponse,
-} from "src/api/authentication/types";
+  ResetPasswordRequest,
+  useApi,
+} from "src/components/authentication";
+import { useRouter } from "src/lib/useRouter";
 import { useConfig } from "src/startup/config";
 
 const useResetPassword = (): {

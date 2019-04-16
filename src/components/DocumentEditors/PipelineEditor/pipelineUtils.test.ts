@@ -35,9 +35,9 @@ import {
   PipelineDocumentType,
   PipelinePropertyType,
   PipelinePropertyValue,
-} from "src/api/useDocumentApi/types/pipelineDoc";
+} from "src/components/DocumentEditors/useDocumentApi/types/pipelineDoc";
 import { PipelineAsTreeType } from "./AddElementModal/types";
-import { DocRefType } from "src/api/useDocumentApi/types/base";
+import { DocRefType } from "src/components/DocumentEditors/useDocumentApi/types/base";
 
 const elementsByType = keyByType(elements);
 

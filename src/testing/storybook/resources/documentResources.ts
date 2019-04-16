@@ -3,8 +3,8 @@ import { HttpRequest, HttpResponse } from "@pollyjs/adapter-fetch";
 import { TestCache } from "../PollyDecorator";
 import { Config } from "src/startup/config";
 import { ResourceBuilder } from "./types";
-import { DOCUMENT_RESOURCES } from "src/api/useDocumentApi/types/resourceUrls";
-import { DocumentBase } from "src/api/useDocumentApi/types/base";
+import { DOCUMENT_RESOURCES } from "src/components/DocumentEditors/useDocumentApi/types/resourceUrls";
+import { DocumentBase } from "src/components/DocumentEditors/useDocumentApi/types/base";
 
 const resourceBuilder: ResourceBuilder = (
   server: any,

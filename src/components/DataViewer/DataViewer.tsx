@@ -20,17 +20,17 @@ import ReactTable, { Column } from "react-table";
 import {
   useStreamSearch,
   useStreamDataSource,
-} from "src/api/streamAttributeMap";
+} from "src/components/DataViewer/api/streamAttributeMap";
 import {
   useSelectableReactTable,
   SelectionBehaviour,
 } from "src/lib/useSelectableItemListing";
-import { DataRow, PageRequest } from "src/types";
 import IconHeader from "../IconHeader";
 import ExpressionSearchBar from "../ExpressionSearchBar";
 import HorizontalMainDetails from "../HorizontalMainDetails";
 import DetailsTabs from "./DetailsTabs";
 import { ExpressionOperatorWithUuid } from "../ExpressionBuilder/types";
+import { DataRow, PageRequest } from "./types";
 
 const COLUMNS: Column[] = [
   {

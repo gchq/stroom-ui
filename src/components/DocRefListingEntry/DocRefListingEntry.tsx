@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import DocRefImage from "../DocRefImage";
 import { Props } from "./types";
-import { DocRefType } from "src/api/useDocumentApi/types/base";
+import { DocRefType } from "src/components/DocumentEditors/useDocumentApi/types/base";
 
 let DocRefListingEntry: React.FunctionComponent<Props> = ({
   docRef,

@@ -1,6 +1,6 @@
-import * as uuidv4 from "uuid/v4";
 import * as loremIpsum from "lorem-ipsum";
-import { StroomUser } from "src/api/userGroups";
+import { StroomUser } from "src/components/AuthorisationManager/api/userGroups";
+import * as uuidv4 from "uuid/v4";
 
 export const adminUser: StroomUser = {
   uuid: uuidv4(),

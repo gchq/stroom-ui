@@ -1,6 +1,6 @@
 import * as uuidv4 from "uuid/v4";
 import * as loremIpsum from "lorem-ipsum";
-import { AnnotationsIndexDoc } from "src/api/useDocumentApi/types/annotations";
+import { AnnotationsIndexDoc } from "src/components/DocumentEditors/useDocumentApi/types/annotations";
 
 export const generate = (): AnnotationsIndexDoc => ({
   type: "AnnotationsIndex",

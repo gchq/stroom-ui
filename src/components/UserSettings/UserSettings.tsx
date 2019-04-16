@@ -17,16 +17,22 @@
 import * as React from "react";
 
 import IconHeader from "src/components/IconHeader";
-import { themeOptions, useTheme } from "src/lib/theme";
+import { themeOptions, useTheme, ThemeOption } from "src/lib/useTheme/useTheme";
+import Select from "react-select";
 
 const UserSettings: React.FunctionComponent = () => {
   const { theme, setTheme } = useTheme();
 
-  const onThemeChanged: React.ChangeEventHandler<HTMLSelectElement> = ({
-    target: { value },
-  }) => {
-    setTheme(value);
-  };
+  const value: ThemeOption = React.useMemo(
+    () => themeOptions.find(t => t.value === theme) || themeOptions[0],
+    [theme],
+  );
+  const onChange = React.useCallback(
+    (d: ThemeOption) => {
+      setTheme(d.value);
+    },
+    [setTheme],
+  );
 
   return (
     <div className="UserSettings">
@@ -34,13 +40,13 @@ const UserSettings: React.FunctionComponent = () => {
       <div className="UserSettings__container">
         <div>
           <label>Theme:</label>
-          <select onChange={onThemeChanged} value={theme}>
-            {themeOptions.map(theme => (
-              <option key={theme.value} value={theme.value}>
-                {theme.text}
-              </option>
-            ))}
-          </select>
+          <Select
+            onChange={onChange}
+            value={value}
+            options={themeOptions}
+            getOptionLabel={d => d.text}
+            getOptionValue={d => d.value}
+          />
         </div>
       </div>
     </div>
