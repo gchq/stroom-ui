@@ -53,7 +53,6 @@ const useTokenSearch = () => {
       setLastUsedSearchConfig(lastUsedSearchConfig);
 
       performTokenSearchApi(searchConfig).then(data => {
-        // showSearchLoader(false);
         setResults(data.tokens);
         setTotalPages(data.totalPages);
       });
