@@ -37,10 +37,7 @@ const MODE_OPTIONS: ModeOption[] = [
   },
 ];
 
-const ModeOptionButtons: React.FunctionComponent<Props> = ({
-  searchMode,
-  switchMode,
-}) => (
+const ModeOptionButtons: React.FunctionComponent<Props> = ({ switchMode }) => (
   <React.Fragment>
     {MODE_OPTIONS.map(modeOption => (
       <Button
@@ -60,7 +57,6 @@ const ModeOptionButtons: React.FunctionComponent<Props> = ({
         }}
       />
     ))}
-    {MODE_OPTIONS[searchMode].title}
   </React.Fragment>
 );
 

@@ -18,16 +18,13 @@ import * as React from "react";
 import { storiesOf } from "@storybook/react";
 
 import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
-import AppSearchBar from "./AppSearchBar";
 
 import useForm from "src/lib/useForm";
 import JsonDebug from "src/testing/JsonDebug";
 import { DocRefType } from "src/components/DocumentEditors/useDocumentApi/types/base";
-import { Props as AppSearchProps } from "./types";
-import AppSelectBar from "./AppSelectBar";
+import AppSearchBar from "./AppSearchBar";
 
 interface Props {
-  Component: React.FunctionComponent<AppSearchProps>;
   typeFilters?: string[];
 }
 
@@ -40,10 +37,7 @@ const defaultValues: FormValues = {
   chosenDocRef: undefined,
 };
 
-let AppSearchAsForm: React.FunctionComponent<Props> = ({
-  Component,
-  typeFilters,
-}) => {
+let AppSearchAsForm: React.FunctionComponent<Props> = ({ typeFilters }) => {
   const { value, useControlledInputProps, useTextInput } = useForm<FormValues>({
     initialValues: defaultValues,
   });
@@ -59,7 +53,7 @@ let AppSearchAsForm: React.FunctionComponent<Props> = ({
       </div>
       <div>
         <label>Chosen Doc Ref</label>
-        <Component typeFilters={typeFilters} {...chosenDocRefProps} />
+        <AppSearchBar typeFilters={typeFilters} {...chosenDocRefProps} />
       </div>
 
       <JsonDebug value={value} />
@@ -67,17 +61,14 @@ let AppSearchAsForm: React.FunctionComponent<Props> = ({
   );
 };
 
-const AppSearchAsPicker: React.FunctionComponent<Props> = ({
-  Component,
-  typeFilters,
-}) => {
+const AppSearchAsPicker: React.FunctionComponent<Props> = ({ typeFilters }) => {
   const [pickedDocRef, setPickedDocRef] = React.useState<
     DocRefType | undefined
   >(undefined);
 
   return (
     <div>
-      <Component
+      <AppSearchBar
         typeFilters={typeFilters}
         onChange={setPickedDocRef}
         value={pickedDocRef}
@@ -103,7 +94,7 @@ class AppSearchAsNavigator extends React.Component<
   render() {
     return (
       <div style={{ height: "100%", width: "100%" }}>
-        <this.props.Component
+        <AppSearchBar
           onChange={d => {
             this.setState({ chosenDocRef: d });
             this.displayRef.current!.focus();
@@ -120,35 +111,20 @@ class AppSearchAsNavigator extends React.Component<
   }
 }
 
-interface AppSearchTest {
-  Component: React.FunctionComponent<AppSearchProps>;
-  name: string;
-}
+const stories = storiesOf(`Doc Ref/App Search Bar`, module);
 
-([
-  { name: "Search", Component: AppSearchBar },
-  { name: "Select", Component: AppSelectBar },
-] as AppSearchTest[]).forEach(({ name, Component }) => {
-  const stories = storiesOf(`Doc Ref/App ${name} Bar`, module);
+stories
+  .add("Search Bar (global)", () => <AppSearchAsNavigator />)
+  .add("Doc Ref Form", () => <AppSearchAsForm />)
+  .add("Doc Ref Picker", () => <AppSearchAsPicker />)
+  .add("Doc Ref Form (Pipeline)", () => (
+    <AppSearchAsForm typeFilters={["Pipeline"]} />
+  ))
+  .add("Doc Ref Picker (Feed AND Dictionary)", () => (
+    <AppSearchAsPicker typeFilters={["Feed", "Dictionary"]} />
+  ))
+  .add("Doc Ref Form (Folders)", () => (
+    <AppSearchAsForm typeFilters={["Folder"]} />
+  ));
 
-  stories
-    .add("Search Bar (global)", () => (
-      <AppSearchAsNavigator {...{ Component }} />
-    ))
-    .add("Doc Ref Form", () => <AppSearchAsForm {...{ Component }} />)
-    .add("Doc Ref Picker", () => <AppSearchAsPicker {...{ Component }} />)
-    .add("Doc Ref Form (Pipeline)", () => (
-      <AppSearchAsForm {...{ Component }} typeFilters={["Pipeline"]} />
-    ))
-    .add("Doc Ref Picker (Feed AND Dictionary)", () => (
-      <AppSearchAsPicker
-        {...{ Component }}
-        typeFilters={["Feed", "Dictionary"]}
-      />
-    ))
-    .add("Doc Ref Form (Folders)", () => (
-      <AppSearchAsForm {...{ Component }} typeFilters={["Folder"]} />
-    ));
-
-  addThemedStories(stories, () => <AppSearchAsNavigator {...{ Component }} />);
-});
+addThemedStories(stories, () => <AppSearchAsNavigator />);
