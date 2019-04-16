@@ -5,7 +5,7 @@ import DocRefTypePicker from "src/components/DocRefTypePicker";
 import useDocumentApi from "./useDocumentApi";
 import { ResourcesByDocType } from "./types/resourceUrls";
 import { useDocumentTree } from "src/components/DocumentEditors/api/explorer";
-import { iterateNodes } from "src/lib/treeUtils";
+import { iterateNodes } from "src/lib/treeUtils/treeUtils";
 import JsonDebug from "src/testing/JsonDebug";
 
 const TestHarness: React.FunctionComponent = () => {

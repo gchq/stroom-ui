@@ -4,7 +4,7 @@ import { storiesOf } from "@storybook/react";
 import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
 import DocRefEditor, { useDocRefEditor } from ".";
 import { useDocumentTree } from "src/components/DocumentEditors/api/explorer";
-import { iterateNodes } from "src/lib/treeUtils";
+import { iterateNodes } from "src/lib/treeUtils/treeUtils";
 import DocRefTypePicker from "src/components/DocRefTypePicker";
 import useDocumentApi, {
   ResourcesByDocType,

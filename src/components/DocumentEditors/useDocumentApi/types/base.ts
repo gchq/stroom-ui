@@ -1,4 +1,5 @@
-import { HasUuid, TWithLineage, Tree } from "src/types";
+import { HasUuid } from "src/types";
+import { Tree, TWithLineage } from "src/lib/treeUtils";
 
 export interface DocRefType extends HasUuid {
   type: string;

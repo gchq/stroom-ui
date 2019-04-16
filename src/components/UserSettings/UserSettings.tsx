@@ -17,7 +17,7 @@
 import * as React from "react";
 
 import IconHeader from "src/components/IconHeader";
-import { themeOptions, useTheme, ThemeOption } from "src/lib/theme";
+import { themeOptions, useTheme, ThemeOption } from "src/lib/useTheme/useTheme";
 import Select from "react-select";
 
 const UserSettings: React.FunctionComponent = () => {

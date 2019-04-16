@@ -23,7 +23,8 @@
  * @param {function} mapper Mapping function to apply to each value in the object
  */
 import * as uuidv4 from "uuid/v4";
-import { Tree, TWithLineage, HasUuid } from "../types";
+import { Tree, TWithLineage } from "./types";
+import { HasUuid } from "src/types";
 
 export function mapObject<IN, OUT>(
   input: { [id: string]: IN },

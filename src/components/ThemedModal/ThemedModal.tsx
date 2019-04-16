@@ -18,7 +18,7 @@ import * as React from "react";
 import * as ReactModal from "react-modal";
 
 import reactModalOptions from "./reactModalOptions";
-import { useTheme } from "src/lib/theme";
+import { useTheme } from "src/lib/useTheme/useTheme";
 
 interface ContentProps {
   header: JSX.Element;

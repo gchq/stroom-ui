@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import useLocalStorage, { storeString } from "./useLocalStorage";
+import useLocalStorage, { storeString } from "../useLocalStorage";
 
 export interface ThemeOption {
   text: string;
@@ -50,3 +50,5 @@ const useTheme = (): ThemeContextValue => {
 };
 
 export { ThemeContext, ThemeContextProvider, useTheme };
+
+export default useTheme;

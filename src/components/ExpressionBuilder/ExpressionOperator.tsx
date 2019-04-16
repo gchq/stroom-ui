@@ -24,7 +24,7 @@ import {
   DragSourceSpec,
 } from "react-dnd";
 
-import { canMove } from "src/lib/treeUtils";
+import { canMove } from "src/lib/treeUtils/treeUtils";
 import {
   DragDropTypes,
   DragObject,

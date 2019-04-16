@@ -9,7 +9,7 @@ import {
   DragSourceCollector,
 } from "react-dnd";
 
-import { canMove } from "src/lib/treeUtils";
+import { canMove } from "src/lib/treeUtils/treeUtils";
 import DocRefListingEntry, {
   Props as DocRefListingEntryProps,
 } from "../../DocRefListingEntry";

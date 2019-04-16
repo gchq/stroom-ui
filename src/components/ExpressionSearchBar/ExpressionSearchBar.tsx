@@ -19,7 +19,7 @@ import * as uuidv4 from "uuid/v4";
 
 import { processSearchString } from "./expressionSearchBarUtils";
 import Button from "../Button";
-import { assignRandomUuids } from "src/lib/treeUtils";
+import { assignRandomUuids } from "src/lib/treeUtils/treeUtils";
 import { toString } from "../ExpressionBuilder/expressionUtils";
 import { ExpressionBuilder } from "../ExpressionBuilder";
 import {

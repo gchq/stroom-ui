@@ -39,7 +39,7 @@ import {
 import allAppPermissions from "./appPermissions";
 import { UserGroupMembership, TestData, UserDocPermission } from "../testTypes";
 import { documentPermissionNames } from "./docPermissions";
-import { iterateNodes } from "src/lib/treeUtils";
+import { iterateNodes } from "src/lib/treeUtils/treeUtils";
 import { User } from "src/components/AuthorisationManager/api/userGroups";
 import { AnnotationsIndexDoc } from "src/components/DocumentEditors/useDocumentApi/types/annotations";
 import { IndexVolume } from "src/components/IndexVolumes/api";

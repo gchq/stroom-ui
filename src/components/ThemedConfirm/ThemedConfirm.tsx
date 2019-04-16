@@ -20,7 +20,7 @@ import * as ReactModal from "react-modal";
 import Button from "../Button";
 import IconHeader from "../IconHeader";
 import reactModalOptions from "../ThemedModal/reactModalOptions";
-import { useTheme } from "src/lib/theme";
+import { useTheme } from "src/lib/useTheme/useTheme";
 
 interface NewProps {
   getQuestion: () => string;

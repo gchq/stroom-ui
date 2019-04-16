@@ -1,7 +1,11 @@
 import * as React from "react";
 
 import useApi from "./useApi";
-import { updateItemInTree, findItem, findByUuids } from "src/lib/treeUtils";
+import {
+  updateItemInTree,
+  findItem,
+  findByUuids,
+} from "src/lib/treeUtils/treeUtils";
 import DocumentTreeContext, {
   DocumentTreeContextValue,
 } from "./DocumentTreeContext";

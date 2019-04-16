@@ -10,7 +10,7 @@ import {
 } from "react-dnd";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import { canMove } from "src/lib/treeUtils";
+import { canMove } from "src/lib/treeUtils/treeUtils";
 import {
   DragDropTypes,
   DragObject,

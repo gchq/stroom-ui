@@ -14,7 +14,11 @@
  * limitations under the License.
  */
 
-import { findItem, itemIsInSubtree, iterateNodes } from "src/lib/treeUtils";
+import {
+  findItem,
+  itemIsInSubtree,
+  iterateNodes,
+} from "src/lib/treeUtils/treeUtils";
 import {
   RecycleBinItem,
   PipelineLayoutGrid,

@@ -18,12 +18,12 @@ import {
   canMove,
   findItem,
   assignRandomUuids,
-} from "src/lib/treeUtils";
-import { Tree } from "../types";
+} from "src/lib/treeUtils/treeUtils";
 import {
   ExpressionOperatorWithUuid,
   ExpressionOperatorType,
 } from "src/components/ExpressionBuilder/types";
+import { Tree } from "src/lib/treeUtils";
 
 interface DocRef {
   uuid: string;
