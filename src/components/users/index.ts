@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-import UserCreate from "./CreateUser/CreateUserContainer";
-import UserEdit from "./CreateUser/EditUserContainer";
+import UserCreate from "./UserForm/CreateUserContainer";
+import UserEdit from "./UserForm/EditUserContainer";
 import UserSearch from "./SearchUsers";
 import AsyncUserSelect from "./UserSelect";
 import { User, StoreState } from "./types";

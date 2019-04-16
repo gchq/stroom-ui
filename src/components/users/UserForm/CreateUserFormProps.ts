@@ -6,4 +6,4 @@ export default interface CreateUserFormProps {
   onBack: () => void;
   onCancel: () => void;
   onValidate: (values: UserFormData) => Promise<void>;
-}
+};

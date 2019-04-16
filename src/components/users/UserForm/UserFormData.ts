@@ -8,4 +8,4 @@ export default interface UserFormData {
   neverExpires: boolean;
   comments: string;
   forcePasswordChange: boolean;
-}
+};

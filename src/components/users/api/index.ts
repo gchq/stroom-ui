@@ -1,4 +1,4 @@
 import useApi from "./useApi";
-import { useUsers } from "../CreateUser";
+import { useUsers } from "../UserForm";
 
 export { useApi, useUsers };
