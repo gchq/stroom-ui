@@ -15,27 +15,23 @@
  */
 
 import * as React from "react";
-import Button from "src/components/Button";
+import { useApi } from "src/api/authentication";
+import { useConfig } from "src/startup/config";
+import "src/styles/from_auth/index.css";
 import "src/styles/from_auth/Layout.css";
+import ResetPasswordRequest from "./ResetPasswordRequest";
 
-const ConfirmPasswordResetEmail: React.FunctionComponent<{
-  onBack: Function;
-}> = ({ onBack }) => (
-  <div className="container">
-    <h3>Password reset</h3>
-    <p>Please check your email. </p>
-    <p>
-      <strong>If the email address is registered</strong> you should shortly
-      receive a message with a link that will let you change your password.
-    </p>
-    <div className="footer">
-      <Button
-        className="toolbar-button-medium primary"
-        onClick={() => onBack()}
-        text="Back to Stroom"
-      />
-    </div>
-  </div>
-);
+const ResetPasswordRequestContainer = () => {
+  const { stroomUiUrl } = useConfig();
+  if (!stroomUiUrl) throw Error("Config not ready or misconfigured!");
+  const { submitPasswordChangeRequest } = useApi();
+  const onBack = () => (window.location.href = stroomUiUrl);
+  return (
+    <ResetPasswordRequest
+      onBack={onBack}
+      onSubmit={submitPasswordChangeRequest}
+    />
+  );
+};
 
-export default ConfirmPasswordResetEmail;
+export default ResetPasswordRequestContainer;

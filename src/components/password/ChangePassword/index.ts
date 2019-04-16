@@ -1,2 +1,1 @@
-import ChangePassword from "./ChangePasswordContainer";
-export default ChangePassword;
+export { default as ChangePassword } from "./ChangePasswordContainer";

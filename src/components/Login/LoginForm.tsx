@@ -29,18 +29,13 @@ const LoginValidationSchema = Yup.object().shape({
   password: Yup.string().required("Required"),
 });
 
-interface LoginFormProps {
+const LoginForm: React.FunctionComponent<{
   onSubmit: (
     credentials: Credentials,
     formikActions: FormikActions<Credentials>,
   ) => void;
   allowPasswordResets?: boolean;
-}
-
-const LoginForm: React.FunctionComponent<LoginFormProps> = ({
-  onSubmit,
-  allowPasswordResets,
-}) => (
+}> = ({ onSubmit, allowPasswordResets }) => (
   <Formik
     onSubmit={onSubmit}
     initialValues={{ email: "", password: "" }}

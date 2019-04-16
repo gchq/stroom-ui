@@ -1,2 +1,3 @@
-import ConfirmPasswordResetEmail from "./ConfirmPasswordResetEmailContainer";
-export { ConfirmPasswordResetEmail };
+export {
+  default as ConfirmPasswordResetEmail,
+} from "./ConfirmPasswordResetEmailContainer";

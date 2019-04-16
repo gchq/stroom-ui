@@ -35,7 +35,7 @@ import IndexVolumeGroups from "../IndexVolumeGroups";
 import IndexVolumeGroupEditor from "../IndexVolumeGroups/IndexVolumeGroupEditor";
 import IndexVolumes from "../IndexVolumes";
 import IndexVolumeEditor from "../IndexVolumes/IndexVolumeEditor";
-import Login from "../Login";
+import { Login } from "../Login";
 import {
   ChangePassword,
   ResetPassword,

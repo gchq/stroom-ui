@@ -18,14 +18,13 @@ import * as React from "react";
 import ChangePasswordFormData from "../ChangePassword/ChangePasswordFormData";
 import ChangePasswordFields from "../ChangePasswordFields";
 
-interface ResetPasswordProps {
+const ResetPassword: React.FunctionComponent<{
   isTokenMissing: boolean;
   isTokenInvalid: boolean;
   isTokenExpired: boolean;
   onSubmit: Function;
   onValidate: (values: ChangePasswordFormData) => Promise<void>;
-}
-const ResetPassword: React.FunctionComponent<ResetPasswordProps> = ({
+}> = ({
   isTokenExpired,
   isTokenInvalid,
   isTokenMissing,

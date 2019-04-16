@@ -20,21 +20,13 @@ import ChangePasswordFields from "../ChangePasswordFields";
 import "./ChangePassword.css";
 import ChangePasswordFormData from "./ChangePasswordFormData";
 
-interface ChangePasswordFormProps {
+const ChangePasswordForm: React.FunctionComponent<{
   email: string;
   onSubmit: Function;
   showChangeConfirmation?: boolean;
   redirectUrl?: string;
   onValidate: (values: ChangePasswordFormData) => Promise<void>;
-}
-
-const ChangePasswordForm: React.FunctionComponent<ChangePasswordFormProps> = ({
-  showChangeConfirmation,
-  redirectUrl,
-  email,
-  onSubmit,
-  onValidate,
-}) => {
+}> = ({ showChangeConfirmation, redirectUrl, email, onSubmit, onValidate }) => {
   let title = "Change your password";
   if (showChangeConfirmation && redirectUrl) {
     title = "Your password has been changed";
