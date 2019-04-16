@@ -25,7 +25,10 @@ import Button from "src/components/Button";
 import JsonDebug from "src/testing/JsonDebug";
 import fullTestData from "src/testing/data";
 
-const stories = storiesOf("Pickers/User Picker (Modal)", module);
+const stories = storiesOf(
+  "Sections/Authorisation Manager/User Picker Modal",
+  module,
+);
 
 const TestHarness: React.FunctionComponent = () => {
   const [pickedUser, setPickedUser] = React.useState<string | undefined>(

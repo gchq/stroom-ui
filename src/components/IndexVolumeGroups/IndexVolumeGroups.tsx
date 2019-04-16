@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { useIndexVolumeGroups } from "src/components/IndexVolumeGroups/api/indexVolumeGroup";
+import { useIndexVolumeGroups } from "src/components/IndexVolumeGroups/api";
 import IndexVolumeGroupsTable, {
   useTable,
 } from "./IndexVolumeGroupsTable/IndexVolumeGroupsTable";

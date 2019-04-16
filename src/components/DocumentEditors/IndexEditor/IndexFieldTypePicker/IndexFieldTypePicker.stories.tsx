@@ -21,7 +21,7 @@ import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
 import IndexFieldTypePicker from "./IndexFieldTypePicker";
 import { IndexFieldType } from "src/components/DocumentEditors/useDocumentApi/types/indexDoc";
 
-const stories = storiesOf("Pickers/Index Field Type", module);
+const stories = storiesOf("Document Editors/Index/Field Type Picker", module);
 
 const B: React.FunctionComponent = () => {
   const [value, onChange] = React.useState<IndexFieldType | undefined>(

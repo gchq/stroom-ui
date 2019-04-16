@@ -6,8 +6,8 @@ import { IndexVolumeGroup } from "./types";
 
 interface UseIndexVolumeGroups {
   groups: IndexVolumeGroup[];
-  createIndexVolumeGroup: (name: string) => void;
-  deleteIndexVolumeGroup: (name: string) => void;
+  createIndexVolumeGroup: (name: string) => Promise<void>;
+  deleteIndexVolumeGroup: (name: string) => Promise<void>;
 }
 
 const useIndexVolumeGroups = (): UseIndexVolumeGroups => {

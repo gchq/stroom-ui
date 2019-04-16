@@ -6,11 +6,11 @@ import {
 } from "src/components/DocumentEditors/useDocumentApi/types/base";
 import { DataSourceType } from "src/components/ExpressionBuilder/types";
 import { User } from "src/components/AuthorisationManager/api/userGroups";
-import { IndexVolume } from "src/components/IndexVolumes/api/indexVolume";
+import { IndexVolume } from "src/components/IndexVolumes/api";
 import {
   IndexVolumeGroup,
   IndexVolumeGroupMembership,
-} from "src/components/IndexVolumeGroups/api/indexVolumeGroup";
+} from "src/components/IndexVolumeGroups/api";
 import {
   ElementDefinition,
   ElementPropertiesByElementIdType,

@@ -30,6 +30,7 @@ const TestHarness: React.FunctionComponent<Props> = ({ testDocRef }) => {
   );
 };
 
-storiesOf("Explorer/Rename Doc Ref Dialog", module).add("simple", () => (
-  <TestHarness testDocRef={testDocRef} />
-));
+storiesOf("Document Editors/Folder/Rename Doc Ref Dialog", module).add(
+  "simple",
+  () => <TestHarness testDocRef={testDocRef} />,
+);

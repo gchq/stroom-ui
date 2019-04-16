@@ -20,7 +20,7 @@ import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
 import ConditionPicker from "./ConditionPicker";
 import { ConditionType } from "../types";
 
-const stories = storiesOf("Pickers/Condition", module);
+const stories = storiesOf("Expression/Condition Picker", module);
 
 const TestHarness: React.FunctionComponent = () => {
   const [value, onChange] = React.useState<ConditionType | undefined>(

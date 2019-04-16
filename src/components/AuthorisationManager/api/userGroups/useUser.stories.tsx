@@ -47,4 +47,7 @@ const TestHarness = () => {
   );
 };
 
-storiesOf("API/useUser", module).add("Sample 1", () => <TestHarness />);
+storiesOf("Sections/Authorisation Manager/useUser", module).add(
+  "Sample 1",
+  () => <TestHarness />,
+);

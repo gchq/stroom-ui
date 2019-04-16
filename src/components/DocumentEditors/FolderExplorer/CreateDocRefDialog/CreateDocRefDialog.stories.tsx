@@ -31,6 +31,7 @@ const TestHarness: React.FunctionComponent<Props> = ({ testDestination }) => {
   );
 };
 
-storiesOf("Explorer/Create Doc Ref Dialog", module).add("simple", () => (
-  <TestHarness testDestination={testFolder2} />
-));
+storiesOf("Document Editors/Folder/Create Doc Ref Dialog", module).add(
+  "simple",
+  () => <TestHarness testDestination={testFolder2} />,
+);

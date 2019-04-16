@@ -12,6 +12,7 @@ export interface ResourcesByDocType {
   StroomStatsStore: string;
   Visualisation: string;
   XMLSchema: string;
+  Folder?: string;
 }
 
 export const DOCUMENT_RESOURCES: ResourcesByDocType = {

@@ -3,7 +3,7 @@ import * as React from "react";
 import ThemedModal from "src/components/ThemedModal";
 import DialogActionButtons from "src/components/DialogActionButtons";
 import useForm from "src/lib/useForm";
-import { NewIndexVolume } from "src/components/IndexVolumes/api/indexVolume";
+import { NewIndexVolume } from "src/components/IndexVolumes/api";
 
 interface Props {
   isOpen: boolean;

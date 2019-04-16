@@ -3,7 +3,7 @@ import * as React from "react";
 import useHttpClient from "src/lib/useHttpClient";
 import { useConfig } from "src/startup/config";
 import { IndexVolume, NewIndexVolume } from "./types";
-import { IndexVolumeGroup } from "src/components/IndexVolumeGroups/api/indexVolumeGroup";
+import { IndexVolumeGroup } from "src/components/IndexVolumeGroups/api";
 
 interface Api {
   getIndexVolumes: () => Promise<IndexVolume[]>;

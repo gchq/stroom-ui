@@ -59,6 +59,9 @@ const TestForm = () => {
   );
 };
 
-const stories = storiesOf("Pickers/App Permissions", module);
+const stories = storiesOf(
+  "Sections/Authorisation Manager/App Permission Picker",
+  module,
+);
 
 addThemedStories(stories, () => <TestForm />);

@@ -59,4 +59,7 @@ const TestHarness = () => {
   );
 };
 
-storiesOf("API/useUsers", module).add("Sample 1", () => <TestHarness />);
+storiesOf("Sections/Authorisation Manager/useUsers", module).add(
+  "Sample 1",
+  () => <TestHarness />,
+);

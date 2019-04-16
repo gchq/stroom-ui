@@ -36,6 +36,6 @@ const TestForm = () => {
   );
 };
 
-const stories = storiesOf("Pickers/Doc Ref Type Filters", module);
+const stories = storiesOf("Doc Ref/Doc Ref Type Filters", module);
 
 addThemedStories(stories, () => <TestForm />);

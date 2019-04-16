@@ -44,9 +44,12 @@ const TestHarness: React.FunctionComponent<Props> = ({
   );
 };
 
-storiesOf("Explorer/Copy Doc Ref Dialog", module).add("simple", () => (
-  <TestHarness
-    testUuids={testFolder2.children!.map(d => d.uuid)}
-    testDestination={testFolder2}
-  />
-));
+storiesOf("Document Editors/Folder/Copy Doc Ref Dialog", module).add(
+  "simple",
+  () => (
+    <TestHarness
+      testUuids={testFolder2.children!.map(d => d.uuid)}
+      testDestination={testFolder2}
+    />
+  ),
+);

@@ -42,11 +42,11 @@ import { documentPermissionNames } from "./docPermissions";
 import { iterateNodes } from "src/lib/treeUtils";
 import { User } from "src/components/AuthorisationManager/api/userGroups";
 import { AnnotationsIndexDoc } from "src/components/DocumentEditors/useDocumentApi/types/annotations";
-import { IndexVolume } from "src/components/IndexVolumes/api/indexVolume";
+import { IndexVolume } from "src/components/IndexVolumes/api";
 import {
   IndexVolumeGroup,
   IndexVolumeGroupMembership,
-} from "src/components/IndexVolumeGroups/api/indexVolumeGroup";
+} from "src/components/IndexVolumeGroups/api";
 import { DashboardDoc } from "src/components/DocumentEditors/useDocumentApi/types/dashboard";
 import { ElasticIndexDoc } from "src/components/DocumentEditors/useDocumentApi/types/elastic";
 import { FeedDoc } from "src/components/DocumentEditors/useDocumentApi/types/feed";
@@ -65,6 +65,7 @@ import {
   copyDocRef,
   DocRefTree,
 } from "src/components/DocumentEditors/useDocumentApi/types/base";
+import { FolderDoc } from "src/components/DocumentEditors/useDocumentApi/types/folder";
 
 let docPermissionByType = testDocRefsTypes.reduce(
   (acc, curr) => ({ ...acc, [curr]: documentPermissionNames }),
@@ -274,9 +275,19 @@ const docTree = {
 } as DocRefTree;
 
 const userDocPermission: UserDocPermission[] = [];
+const allFolders: FolderDoc[] = [];
 
 // give first two users permissions to all documents
-iterateNodes(docTree, (_, { uuid: docRefUuid }) => {
+iterateNodes(docTree, (_, node) => {
+  if (node.type === "Folder") {
+    allFolders.push({
+      type: "Folder",
+      uuid: node.uuid,
+      name: node.name,
+      children: node.children || [],
+    });
+  }
+  const { uuid: docRefUuid } = node;
   allUsers.slice(0, 2).forEach(({ uuid: userUuid }) => {
     documentPermissionNames
       .filter(p => p !== "OWNER")
@@ -301,6 +312,7 @@ export const fullTestData: TestData = {
     Feed: feeds,
     Index: indexes,
     Pipeline: Object.values(testPipelines),
+    Folder: allFolders,
     AnnotationsIndex: annotationIndexes,
     Dashboard: dashboards,
     ElasticIndex: elasticIndexes,

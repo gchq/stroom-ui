@@ -20,7 +20,7 @@ import IconHeader from "../../../IconHeader";
 import ThemedModal from "../../../ThemedModal";
 import DialogActionButtons from "../../../DialogActionButtons";
 import { DocRefTypePicker } from "../../../DocRefTypePicker";
-import PermissionInheritancePicker from "../../../PermissionInheritancePicker";
+import PermissionInheritancePicker from "../PermissionInheritancePicker";
 import { PermissionInheritance } from "src/types";
 import useForm from "src/lib/useForm";
 import { DocRefType } from "src/components/DocumentEditors/useDocumentApi/types/base";

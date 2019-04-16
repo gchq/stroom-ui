@@ -28,8 +28,11 @@ const TestHarness: React.FunctionComponent<Props> = ({ testUuids }) => {
   );
 };
 
-storiesOf("Explorer/Delete Doc Ref Dialog", module).add("simple", () => (
-  <TestHarness
-    testUuids={testFolder2.children!.map((d: DocRefType) => d.uuid)}
-  />
-));
+storiesOf("Document Editors/Folder/Delete Doc Ref Dialog", module).add(
+  "simple",
+  () => (
+    <TestHarness
+      testUuids={testFolder2.children!.map((d: DocRefType) => d.uuid)}
+    />
+  ),
+);
