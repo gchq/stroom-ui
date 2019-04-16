@@ -1,7 +1,6 @@
-import { useEffect, useCallback } from "react";
-
-import { User } from "../types";
+import { useCallback, useEffect } from "react";
 import { useApi } from "../api";
+import { User } from "../types";
 import { useUserSearchState } from "./useUserSearchState";
 
 interface UserSearchApi {

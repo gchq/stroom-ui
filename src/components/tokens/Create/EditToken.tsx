@@ -14,22 +14,19 @@
  * limitations under the License.
  */
 
-import * as React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import * as React from "react";
 import * as CopyToClipboard from "react-copy-to-clipboard";
 import Toggle from "react-toggle";
 import "react-toggle/style.css";
-
-import "src/styles/from_auth/form.css";
-import Button from "src/components/Button";
-import useIdFromPath from "src/lib/useIdFromPath";
-import { OnCopy, ByCopy } from "src/components/auditCopy";
-import { useRouter } from "src/lib/useRouter";
-import useTokens from "./useTokens";
-
-import "./TokenEdit.css";
-import Loader from "src/components/Loader";
 import useAppNavigation from "src/components/AppChrome/useAppNavigation";
+import { ByCopy, OnCopy } from "src/components/auditCopy";
+import Button from "src/components/Button";
+import Loader from "src/components/Loader";
+import useIdFromPath from "src/lib/useIdFromPath";
+import "src/styles/from_auth/form.css";
+import "./TokenEdit.css";
+import useTokens from "./useTokens";
 
 const EditToken = () => {
   const { toggleEnabledState, fetchApiKey, token } = useTokens();

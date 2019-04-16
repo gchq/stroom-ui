@@ -14,9 +14,8 @@
  * limitations under the License.
  */
 
-import * as Yup from "yup";
-
 import { PasswordValidationRequest } from "src/api/authentication/types";
+import * as Yup from "yup";
 
 export const NewUserValidationSchema = Yup.object().shape({
   email: Yup.string().required("Required"),

@@ -107,7 +107,6 @@ const UserSearch: React.FunctionComponent<UserSearchProps> = ({
             ]}
             filterable={isFilteringEnabled}
             showPagination
-            // loading={showSearchLoader} //TODO
             defaultPageSize={50}
             style={{
               // We use 'calc' because we want full height but need

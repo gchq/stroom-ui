@@ -14,14 +14,12 @@
  * limitations under the License.
  */
 
+import { ErrorMessage, Field, FormikErrors, FormikTouched } from "formik";
 import * as React from "react";
-import { Field, ErrorMessage, FormikErrors, FormikTouched } from "formik";
 import Toggle from "react-toggle";
 import "react-toggle/style.css";
-
-import "src/styles/from_auth/form.css";
 import { AuditCopy, LoginStatsCopy } from "src/components/auditCopy";
-
+import "src/styles/from_auth/form.css";
 import { User } from "../types";
 
 const LoginFailureCopy = ({ attemptCount }: { attemptCount: number }) => (

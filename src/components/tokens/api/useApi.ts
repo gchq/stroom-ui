@@ -74,7 +74,7 @@ export const useApi = (): Api => {
 
     performTokenSearch: useCallback((searchConfig: SearchConfig) => {
       // // Default ordering and direction
-      let orderBy = "issued_on";
+      let orderBy = "issuedOn";
       let orderDirection = "desc";
 
       if (!!searchConfig.sorting) {

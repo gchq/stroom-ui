@@ -20,12 +20,12 @@ import * as React from "react";
 import { useState } from "react";
 import Button from "src/components/Button";
 import { hasAnyProps } from "src/lib/lang";
+import "src/styles/from_auth/form.css";
 import BackConfirmation from "../BackConfirmation";
 import { UserValidationSchema } from "../validation";
 import "./EditUser.css";
 import EditUserFormProps from "./EditUserFormProps";
 import UserFields from "./UserFields";
-import "src/styles/from_auth/form.css";
 
 const UserForm: React.FunctionComponent<EditUserFormProps> = ({
   onSubmit,

@@ -25,8 +25,8 @@ import { User } from "..";
 import { useUsers } from "../api";
 import { validateAsync } from "../validation";
 import "./EditUser.css";
-import UserFormData from "./UserFormData";
 import UserForm from "./UserForm";
+import UserFormData from "./UserFormData";
 
 const EditUserContainer = () => {
   const { updateUser, fetchUser, user } = useUsers();

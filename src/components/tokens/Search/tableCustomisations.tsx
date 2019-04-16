@@ -1,19 +1,17 @@
+import * as dateFormat from "dateformat";
 import * as React from "react";
-import "react-toggle/style.css";
 import {
-  RowRenderProps,
+  Column,
   ReactTableFunction,
   RowInfo,
-  Column,
+  RowRenderProps,
 } from "react-table";
 import "react-table/react-table.css";
-import * as dateFormat from "dateformat";
-
+import "react-toggle/style.css";
 import "src/styles/from_auth/index.css";
 import "src/styles/from_auth/table-small.css";
 import "src/styles/from_auth/toggle-small.css";
 import "src/styles/from_auth/toolbar-small.css";
-
 import "./TokenSearch.css";
 
 /** There is a corresponding react-table type but doing it like this is neater. */
