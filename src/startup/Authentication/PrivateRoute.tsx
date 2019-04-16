@@ -14,10 +14,9 @@
  * limitations under the License.
  */
 import * as React from "react";
-import { RouteProps, Route } from "react-router-dom";
-
-import AuthenticationRequest from "./AuthenticationRequest";
+import { Route, RouteProps } from "react-router-dom";
 import useConfig from "../config/useConfig";
+import AuthenticationRequest from "./AuthenticationRequest";
 import useAuthenticationContext from "./useAuthenticationContext";
 
 const PrivateRoute = ({ render, ...rest }: RouteProps) => {
@@ -48,7 +47,7 @@ const PrivateRoute = ({ render, ...rest }: RouteProps) => {
           render && render({ ...props })
         ) : (
           <AuthenticationRequest
-            referrer={props.match.url}
+            referrer={props.location.pathname}
             uiUrl={advertisedUrl}
             appClientId={appClientId}
             authenticationServiceUrl={authenticationServiceUrl}

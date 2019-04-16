@@ -15,39 +15,42 @@
  */
 
 import * as React from "react";
-import { Route, Switch, RouteComponentProps } from "react-router";
-
-import ErrorPage from "../ErrorPage";
-import { HandleAuthenticationResponse } from "src/startup/Authentication";
-
-import { PrivateRoute } from "src/startup/Authentication";
-import PathNotFound from "../PathNotFound";
-import Welcome from "../Welcome";
-
-import AppChrome from "./AppChrome";
-import { Processing } from "../Processing";
-import SwitchedDocRefEditor from "../DocumentEditors/SwitchedDocRefEditor";
-import IconHeader from "../IconHeader";
-import DataViewer from "../DataViewer";
-import UserSettings from "../UserSettings";
-import IFrame from "../IFrame";
-
+import { Route, RouteComponentProps, Switch } from "react-router";
+import {
+  HandleAuthenticationResponse,
+  PrivateRoute,
+} from "src/startup/Authentication";
+import { useConfig } from "src/startup/config";
 import AuthorisationManager, {
   UserAuthorisationEditor,
 } from "../AuthorisationManager";
-import IndexVolumes from "../IndexVolumes";
-import IndexVolumeGroups from "../IndexVolumeGroups";
-import IndexVolumeGroupEditor from "../IndexVolumeGroups/IndexVolumeGroupEditor";
-import { useConfig } from "src/startup/config";
 import DocumentPermissionEditor from "../AuthorisationManager/DocumentPermissionEditor";
 import DocumentPermissionForUserEditor from "../AuthorisationManager/DocumentPermissionForUserEditor";
+import DataViewer from "../DataViewer";
+import SwitchedDocRefEditor from "../DocumentEditors/SwitchedDocRefEditor";
+import ErrorPage from "../ErrorPage";
+import IconHeader from "../IconHeader";
+import IFrame from "../IFrame";
+import IndexVolumeGroups from "../IndexVolumeGroups";
+import IndexVolumeGroupEditor from "../IndexVolumeGroups/IndexVolumeGroupEditor";
+import IndexVolumes from "../IndexVolumes";
 import IndexVolumeEditor from "../IndexVolumes/IndexVolumeEditor";
-import { ResetPassword, ChangePassword } from "../password";
-import { UserSearch, UserCreate, UserEdit } from "../users";
-import useUrlGenerator from "./useUrlGenerator";
-import TokenSearch from "../tokens/Search/SearchToken";
+import Login from "../Login";
+import {
+  ChangePassword,
+  ResetPassword,
+  ResetPasswordRequest,
+} from "../password";
+import PathNotFound from "../PathNotFound";
+import { Processing } from "../Processing";
 import { CreateToken } from "../tokens";
 import { EditToken } from "../tokens/Create";
+import TokenSearch from "../tokens/Search/SearchToken";
+import { UserCreate, UserEdit, UserSearch } from "../users";
+import UserSettings from "../UserSettings";
+import Welcome from "../Welcome";
+import AppChrome from "./AppChrome";
+import useUrlGenerator from "./useUrlGenerator";
 
 const renderWelcome = ({
   match: {
@@ -88,7 +91,12 @@ const Routes: React.FunctionComponent = () => {
       <Route exact path="/error" component={ErrorPage} />
       <Route exact path="/openWelcome" component={Welcome} />
       <Route exact path={"/resetPassword"} component={ResetPassword} />
-      <Route exact path={"/resetpassword"} component={ResetPassword} />
+      <Route
+        exact
+        path={"/resetPasswordRequest"}
+        component={ResetPasswordRequest}
+      />
+      <Route exact path={"/login"} component={Login} />
       <Route exact path={"/changepassword"} component={ChangePassword} />
       <PrivateRoute exact path="/" render={renderWelcome} />
       <PrivateRoute exact path={urls.goToWelcome()} render={renderWelcome} />

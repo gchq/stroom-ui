@@ -1,18 +1,17 @@
 import * as Cookies from "cookies-js";
+import { FormikBag } from "formik";
 import { useCallback } from "react";
-
+import useHttpClient from "src/lib/useHttpClient";
+import { useConfig } from "src/startup/config";
+import { ChangePasswordResponse } from ".";
 import {
-  Credentials,
-  ResetPasswordRequest,
   ChangePasswordRequest,
+  Credentials,
   LoginResponse,
   PasswordValidationRequest,
   PasswordValidationResponse,
+  ResetPasswordRequest,
 } from "./types";
-import { FormikBag } from "formik";
-import { ChangePasswordResponse } from ".";
-import { useConfig } from "src/startup/config";
-import useHttpClient from "src/lib/useHttpClient";
 
 interface Api {
   apiLogin: (credentials: Credentials) => Promise<LoginResponse>;
@@ -48,14 +47,18 @@ export const useApi = (): Api => {
         sessionId = fullSessionId.slice(0, fullSessionId.indexOf("."));
       }
 
-      return httpPostJsonResponse(loginServiceUrl, {
-        body: JSON.stringify({
-          email,
-          password,
-          sessionId,
-          requestingClientId: appClientId,
-        }),
-      });
+      return httpPostJsonResponse(
+        loginServiceUrl,
+        {
+          body: JSON.stringify({
+            email,
+            password,
+            sessionId,
+            requestingClientId: appClientId,
+          }),
+        },
+        false,
+      );
     },
     [httpPostJsonResponse],
   );
