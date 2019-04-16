@@ -54,6 +54,8 @@ export interface NavigateApp<T> {
   goToUser: (userId: string) => T;
   goToNewUser: () => T;
   goToApiKeys: () => T;
+  goToApiKey: (id: string) => T;
+  goToNewApiKey: () => T;
   goToError: () => T;
   goToEditDocRefByUuid: (docRefUuid?: string) => T;
   goToEditDocRef: (docRef: DocRefType) => T;

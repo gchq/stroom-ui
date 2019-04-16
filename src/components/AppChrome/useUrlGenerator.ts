@@ -31,6 +31,8 @@ const useUrlGenerator = (urlPrefix: string): NavigateApp<string> => {
       goToNewUser: () => `/${urlPrefix}/user/new`,
       goToUsers: () => `/${urlPrefix}/users`,
       goToApiKeys: () => `/${urlPrefix}/apikeys`,
+      goToApiKey: (id: string) => `/${urlPrefix}/apikey/${id}`,
+      goToNewApiKey: () => `/${urlPrefix}/apikey/new`,
       goToError: () => `/${urlPrefix}/error`,
       goToEditDocRefByUuid: (docRefUuid: string = ":docRefUuid") =>
         `/${urlPrefix}/doc/${docRefUuid}`,

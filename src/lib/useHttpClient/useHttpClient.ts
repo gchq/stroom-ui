@@ -36,6 +36,7 @@ interface HttpClient {
     },
     forceGet?: boolean,
   ) => Promise<any>;
+  httpGetEmptyResponse: HttpCall;
   httpPostJsonResponse: HttpCall;
   httpPutJsonResponse: HttpCall;
   httpDeleteJsonResponse: HttpCall;
@@ -197,6 +198,7 @@ export const useHttpClient = (): HttpClient => {
 
   return {
     httpGetJson,
+    httpGetEmptyResponse: useFetchWithBodyAndEmptyResponse("get"),
     httpPostJsonResponse: useFetchWithBodyAndJsonResponse("post"),
     httpPutJsonResponse: useFetchWithBodyAndJsonResponse("put"),
     httpDeleteJsonResponse: useFetchWithBodyAndJsonResponse("delete"),

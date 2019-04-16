@@ -1,8 +1,12 @@
 import useRouter from "./useRouter";
+import { useContext } from "react";
+import { WithChromeContext } from "./useRouter/BrowserRouter";
 
 export const useIdFromPath = function<String>(
   pathBeforeId: string,
 ): string | undefined {
+  const { urlPrefix } = useContext(WithChromeContext);
+  pathBeforeId = `${urlPrefix}/${pathBeforeId}`;
   const { router } = useRouter();
   if (!!router.location) {
     const path = router.location.pathname;

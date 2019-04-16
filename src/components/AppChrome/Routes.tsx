@@ -45,6 +45,9 @@ import IndexVolumeEditor from "../IndexVolumes/IndexVolumeEditor";
 import { ResetPassword, ChangePassword } from "../password";
 import { UserSearch, UserCreate, UserEdit } from "../users";
 import useUrlGenerator from "./useUrlGenerator";
+import TokenSearch from "../tokens/Search/SearchToken";
+import { CreateToken } from "../tokens";
+import { EditToken } from "../tokens/Create";
 
 const renderWelcome = ({
   match: {
@@ -68,21 +71,6 @@ const UsersIFrame = () => {
         <IFrame key="users" url={authUsersUiUrl} />
       ) : (
         <div>No Users URL in Config</div>
-      )}
-    </React.Fragment>
-  );
-};
-
-const ApiTokensIFrame = () => {
-  const { authTokensUiUrl } = useConfig();
-
-  return (
-    <React.Fragment>
-      <IconHeader icon="key" text="API keys" />
-      {authTokensUiUrl ? (
-        <IFrame key="apikeys" url={authTokensUiUrl} />
-      ) : (
-        <div>No Api Keys URL in Config</div>
       )}
     </React.Fragment>
   );
@@ -296,21 +284,6 @@ const Routes: React.FunctionComponent = () => {
       />
       <PrivateRoute
         exact
-        path={urls.goToApiKeys()}
-        render={({
-          match: {
-            params: { urlPrefix },
-          },
-        }) => (
-          <AppChrome
-            activeMenuItem="apiKeys"
-            urlPrefix={urlPrefix}
-            content={<ApiTokensIFrame />}
-          />
-        )}
-      />
-      <PrivateRoute
-        exact
         path={urls.goToError()}
         render={({
           match: {
@@ -387,6 +360,54 @@ const Routes: React.FunctionComponent = () => {
       />
 
       <PrivateRoute
+        exact
+        path={urls.goToApiKeys()}
+        render={({
+          match: {
+            params: { urlPrefix },
+          },
+        }) => (
+          <AppChrome
+            activeMenuItem="apiKeys"
+            urlPrefix={urlPrefix}
+            content={<TokenSearch />}
+          />
+        )}
+      />
+
+      <PrivateRoute
+        exact
+        path={urls.goToNewApiKey()}
+        render={({
+          match: {
+            params: { urlPrefix },
+          },
+        }) => (
+          <AppChrome
+            urlPrefix={urlPrefix}
+            activeMenuItem="apiKeys"
+            content={<CreateToken />}
+          />
+        )}
+      />
+
+      <PrivateRoute
+        exact
+        path={urls.goToApiKey(":id")}
+        render={({
+          match: {
+            params: { urlPrefix },
+          },
+        }) => (
+          <AppChrome
+            urlPrefix={urlPrefix}
+            activeMenuItem="apiKeys"
+            content={<EditToken />}
+          />
+        )}
+      />
+
+      <PrivateRoute
         render={({
           match: {
             params: { urlPrefix },
@@ -399,6 +420,7 @@ const Routes: React.FunctionComponent = () => {
           />
         )}
       />
+
       {/* Default route */}
       <Route render={() => <PathNotFound message="Invalid path" />} />
     </Switch>

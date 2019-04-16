@@ -36,6 +36,8 @@ const useAppNavigation = (): NavigateApp<any> => {
       goToUsers: () => h.push(u.goToUsers()),
       goToUser: (userId: string) => h.push(u.goToUser(userId)),
       goToNewUser: () => h.push(u.goToNewUser()),
+      goToNewApiKey: () => h.push(u.goToNewApiKey()),
+      goToApiKey: (id: string) => h.push(u.goToApiKey(id)),
       goToApiKeys: () => h.push(u.goToApiKeys()),
       goToError: () => h.push(u.goToError()),
       goToEditDocRefByUuid: (docRefUuid: string) =>

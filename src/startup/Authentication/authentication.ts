@@ -67,7 +67,7 @@ export const handleAuthenticationResponse = (
   })
     .then(response => response.text())
     .then(idToken => {
-      const decodedToken = jwtDecode<{ nonce: string }>(idToken); // TODO - is this right?? I have added the typing
+      const decodedToken = jwtDecode<{ nonce: string }>(idToken);
       const nonce = localStorage.getItem("nonce");
       const nonceHashBytes = sjcl.hash.sha256.hash(nonce!);
       const nonceHash = sjcl.codec.hex.fromBits(nonceHashBytes);
