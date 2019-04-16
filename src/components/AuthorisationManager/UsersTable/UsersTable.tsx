@@ -7,7 +7,7 @@ import {
   SelectionBehaviour,
   TableOutProps,
 } from "src/lib/useSelectableItemListing";
-import { User } from "src/api/userGroups";
+import { User } from "src/components/AuthorisationManager/api/userGroups";
 
 interface Props {
   users: User[];

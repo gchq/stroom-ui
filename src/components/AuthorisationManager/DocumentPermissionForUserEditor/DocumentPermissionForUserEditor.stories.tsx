@@ -23,7 +23,7 @@ import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
 
 import DocumentPermissionForUserEditor from "./DocumentPermissionForUserEditor";
 import { DocRefType } from "src/components/DocumentEditors/useDocumentApi/types/base";
-import { User } from "src/api/userGroups";
+import { User } from "src/components/AuthorisationManager/api/userGroups";
 
 const testUser: User = fullTestData.usersAndGroups.users[0];
 const testDocRef: DocRefType = fullTestData.documentTree.children![0];

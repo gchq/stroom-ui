@@ -2,7 +2,7 @@ import * as React from "react";
 
 import { storiesOf } from "@storybook/react";
 import useRecentItems from ".";
-import { useDocumentTree } from "src/api/explorer";
+import { useDocumentTree } from "src/components/DocumentEditors/api/explorer";
 import { iterateNodes } from "../treeUtils";
 import Button from "src/components/Button";
 import {

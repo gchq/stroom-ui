@@ -2,7 +2,7 @@ import * as React from "react";
 
 import DocRefImage from "../DocRefImage";
 import { ControlledInput, OptionType } from "src/types";
-import useDocRefTypes from "src/api/explorer/useDocRefTypes";
+import useDocRefTypes from "src/components/DocumentEditors/api/explorer/useDocRefTypes";
 import Select, { components } from "react-select";
 import { OptionProps } from "react-select/lib/components/Option";
 import { SingleValueProps } from "react-select/lib/components/SingleValue";

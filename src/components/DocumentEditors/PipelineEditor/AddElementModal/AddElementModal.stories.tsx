@@ -7,8 +7,8 @@ import AddElementModal, { useDialog } from "./AddElementModal";
 import Button from "src/components/Button";
 import JsonDebug from "src/testing/JsonDebug";
 import { NewElement } from "../types";
-import useElements from "src/api/useElements";
-import { ElementDefinition } from "src/api/useElements/types";
+import useElements from "src/components/DocumentEditors/PipelineEditor/useElements";
+import { ElementDefinition } from "src/components/DocumentEditors/PipelineEditor/useElements/types";
 import Select from "react-select";
 
 const PARENT_ID = uuidv4();

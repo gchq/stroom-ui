@@ -1,6 +1,9 @@
 import * as React from "react";
 
-import { useGroupsForUser, User } from "src/api/userGroups";
+import {
+  useGroupsForUser,
+  User,
+} from "src/components/AuthorisationManager/api/userGroups";
 import UsersTable, { useTable as useUsersTable } from "../UsersTable";
 import Button from "src/components/Button";
 import {

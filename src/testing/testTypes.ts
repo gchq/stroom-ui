@@ -5,7 +5,7 @@ import {
   DocumentBase,
 } from "src/components/DocumentEditors/useDocumentApi/types/base";
 import { DataSourceType } from "src/components/ExpressionBuilder/types";
-import { User } from "src/api/userGroups";
+import { User } from "src/components/AuthorisationManager/api/userGroups";
 import { IndexVolume } from "src/components/IndexVolumes/api/indexVolume";
 import {
   IndexVolumeGroup,
@@ -14,7 +14,7 @@ import {
 import {
   ElementDefinition,
   ElementPropertiesByElementIdType,
-} from "src/api/useElements/types";
+} from "src/components/DocumentEditors/PipelineEditor/useElements/types";
 
 export interface UserGroupMembership {
   userUuid: string;

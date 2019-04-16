@@ -44,7 +44,7 @@ import { PipelineAsTreeType } from "../AddElementModal/types";
 import {
   ElementPropertiesType,
   ElementDefinition,
-} from "src/api/useElements/types";
+} from "src/components/DocumentEditors/PipelineEditor/useElements/types";
 
 interface Props {
   pipelineId: string;

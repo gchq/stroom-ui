@@ -1,5 +1,5 @@
 import { NewElement } from "../types";
-import { ElementDefinition } from "src/api/useElements/types";
+import { ElementDefinition } from "src/components/DocumentEditors/PipelineEditor/useElements/types";
 
 export type OnAddElement = (newElement: NewElement) => void;
 

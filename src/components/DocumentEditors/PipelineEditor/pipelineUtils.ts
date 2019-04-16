@@ -34,7 +34,7 @@ import { PipelineAsTreeType } from "./AddElementModal/types";
 import {
   ElementDefinitionsByType,
   ElementPropertiesType,
-} from "src/api/useElements/types";
+} from "src/components/DocumentEditors/PipelineEditor/useElements/types";
 
 export function getBinItems(
   pipeline: PipelineDocumentType,

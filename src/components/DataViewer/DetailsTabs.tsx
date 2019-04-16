@@ -18,7 +18,7 @@ import * as React from "react";
 import * as moment from "moment";
 
 import { DataRow } from "src/types";
-import { useStreamDataRow } from "src/api/streamAttributeMap";
+import { useStreamDataRow } from "src/components/DataViewer/api/streamAttributeMap";
 import Loader from "../Loader";
 
 interface Props {

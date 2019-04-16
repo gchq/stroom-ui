@@ -4,7 +4,7 @@ import IconHeader from "src/components/IconHeader";
 import Button from "src/components/Button";
 import UsersInGroup from "../UsersInGroup";
 import GroupsForUser from "../GroupsForUser";
-import { useUser } from "src/api/userGroups";
+import { useUser } from "src/components/AuthorisationManager/api/userGroups";
 import Loader from "src/components/Loader";
 import useRouter from "src/lib/useRouter";
 import { useAppPermissionsForUser } from "src/components/AuthorisationManager/api/appPermission";

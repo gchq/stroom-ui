@@ -29,7 +29,7 @@ import {
   Directions,
   SortByOptions,
   UseStreamTasks,
-} from "src/api/useStreamTasks/types";
+} from "src/components/Processing/useStreamTasks/types";
 import { StreamTaskType } from "src/types";
 import {
   useSelectableReactTable,

@@ -3,7 +3,7 @@ import * as React from "react";
 import { storiesOf } from "@storybook/react";
 import ProcessingList from "./ProcessingList";
 import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
-import useStreamTasks from "src/api/useStreamTasks";
+import useStreamTasks from "src/components/Processing/useStreamTasks";
 import JsonDebug from "src/testing/JsonDebug";
 import { StreamTaskType } from "src/types";
 

@@ -2,7 +2,7 @@ import * as React from "react";
 
 import Select from "react-select";
 
-import { useManageUsers } from "src/api/userGroups";
+import { useManageUsers } from "src/components/AuthorisationManager/api/userGroups";
 import { SelectOptionType } from "src/types";
 import { Props, BaseProps, UseProps } from "./types";
 

@@ -10,7 +10,7 @@ import AppSearchBar from "../../AppSearchBar";
 import DocRefIconHeader from "../../DocRefIconHeader";
 import DocRefBreadcrumb from "../../DocRefBreadcrumb";
 import Button, { ButtonProps } from "../../Button";
-import { useDocumentTree } from "src/api/explorer";
+import { useDocumentTree } from "src/components/DocumentEditors/api/explorer";
 import useAppNavigation from "../../AppChrome/useAppNavigation";
 import { DocumentApi } from "src/components/DocumentEditors/useDocumentApi/types/documentApi";
 

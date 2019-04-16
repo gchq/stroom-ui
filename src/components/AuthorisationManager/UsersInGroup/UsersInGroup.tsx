@@ -5,7 +5,10 @@ import Button from "src/components/Button";
 import ThemedConfirm, {
   useDialog as useThemedConfirm,
 } from "src/components/ThemedConfirm";
-import { useUsersInGroup, User } from "src/api/userGroups";
+import {
+  useUsersInGroup,
+  User,
+} from "src/components/AuthorisationManager/api/userGroups";
 import UserModalPicker, {
   useDialog as useUserModalPicker,
 } from "../UserModalPicker";

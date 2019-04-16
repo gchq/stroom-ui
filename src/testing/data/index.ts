@@ -40,7 +40,7 @@ import allAppPermissions from "./appPermissions";
 import { UserGroupMembership, TestData, UserDocPermission } from "../testTypes";
 import { documentPermissionNames } from "./docPermissions";
 import { iterateNodes } from "src/lib/treeUtils";
-import { User } from "src/api/userGroups";
+import { User } from "src/components/AuthorisationManager/api/userGroups";
 import { AnnotationsIndexDoc } from "src/components/DocumentEditors/useDocumentApi/types/annotations";
 import { IndexVolume } from "src/components/IndexVolumes/api/indexVolume";
 import {

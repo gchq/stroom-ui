@@ -5,7 +5,7 @@ import ThemedModal from "src/components/ThemedModal";
 import IconHeader from "src/components/IconHeader";
 import Button from "src/components/Button";
 import DialogActionButtons from "src/components/DialogActionButtons";
-import { useManageUsers } from "src/api/userGroups";
+import { useManageUsers } from "src/components/AuthorisationManager/api/userGroups";
 
 interface BaseProps {
   onConfirm: (groupUuid: string) => void;

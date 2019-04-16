@@ -22,7 +22,7 @@ import fullTestData from "src/testing/data";
 import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
 
 import UsersInGroup from "./UsersInGroup";
-import { User } from "src/api/userGroups";
+import { User } from "src/components/AuthorisationManager/api/userGroups";
 
 // Pick a group
 let aGroup: User = fullTestData.usersAndGroups.users

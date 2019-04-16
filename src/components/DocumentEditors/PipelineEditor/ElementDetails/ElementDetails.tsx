@@ -23,9 +23,9 @@ import {
   ElementPropertiesType,
   ElementDefinition,
   ElementPropertyType,
-} from "src/api/useElements/types";
+} from "src/components/DocumentEditors/PipelineEditor/useElements/types";
 import Loader from "src/components/Loader";
-import useElements from "src/api/useElements";
+import useElements from "src/components/DocumentEditors/PipelineEditor/useElements";
 import { PipelineEditApi } from "../types";
 import {
   PipelineDocumentType,

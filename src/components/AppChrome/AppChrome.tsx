@@ -39,7 +39,7 @@ import useLocalStorage, {
   storeBoolean,
   useStoreObjectFactory,
 } from "src/lib/useLocalStorage";
-import { useDocumentTree } from "src/api/explorer";
+import { useDocumentTree } from "src/components/DocumentEditors/api/explorer";
 import useAppNavigation from "./useAppNavigation";
 import { useTheme } from "src/lib/theme";
 import {

@@ -16,7 +16,7 @@ import { CustomRouter } from "src/lib/useRouter";
 import { ConfigProvider } from "src/startup/config";
 import { AuthorisationContextProvider } from "src/startup/Authorisation";
 import { AuthenticationContext } from "src/startup/Authentication";
-import { DocumentTreeContextProvider } from "src/api/explorer";
+import { DocumentTreeContextProvider } from "src/components/DocumentEditors/api/explorer";
 import { ErrorReportingContextProvider } from "src/components/ErrorPage";
 
 const WithTestServer: React.FunctionComponent = ({ children }) => {

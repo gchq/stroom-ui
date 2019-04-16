@@ -6,11 +6,14 @@ import Button from "src/components/Button";
 import ThemedConfirm, {
   useDialog as useThemedConfirm,
 } from "src/components/ThemedConfirm";
-import { useUsers, User } from "src/api/userGroups";
+import {
+  useUsers,
+  User,
+} from "src/components/AuthorisationManager/api/userGroups";
 import UsersTable, { useTable as useUsersTable } from "../UsersTable";
 import useAppNavigation from "../../AppChrome/useAppNavigation";
 import useRouter from "src/lib/useRouter";
-import { useDocumentTree } from "src/api/explorer";
+import { useDocumentTree } from "src/components/DocumentEditors/api/explorer";
 import UserModalPicker, {
   useDialog as useUserModalPicker,
 } from "../UserModalPicker";

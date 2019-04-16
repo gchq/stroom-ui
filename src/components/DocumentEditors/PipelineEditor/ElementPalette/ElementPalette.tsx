@@ -7,14 +7,14 @@ import ElementCategory from "./ElementCategory";
 import { getBinItems } from "../pipelineUtils";
 import { DragDropTypes, DropCollectedProps } from "../types";
 
-import useElements from "src/api/useElements";
+import useElements from "src/components/DocumentEditors/PipelineEditor/useElements";
 import { groupByCategory, keyByType } from "../elementUtils";
 import { PipelineDocumentType } from "src/components/DocumentEditors/useDocumentApi/types/pipelineDoc";
 import {
   ElementDefinitionsByCategory,
   ElementDefinitionsByType,
   ElementDefinition,
-} from "src/api/useElements/types";
+} from "src/components/DocumentEditors/PipelineEditor/useElements/types";
 
 interface Props {
   pipeline: PipelineDocumentType;

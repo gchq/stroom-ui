@@ -18,7 +18,7 @@ import "react-table/react-table.css";
 import "./styles/main.css";
 import { AuthorisationContextProvider } from "src/startup/Authorisation";
 import { AuthenticationContextProvider } from "src/startup/Authentication";
-import { DocumentTreeContextProvider } from "src/api/explorer";
+import { DocumentTreeContextProvider } from "src/components/DocumentEditors/api/explorer";
 import { ErrorReportingContextProvider } from "src/components/ErrorPage";
 
 const DndRoutes = DragDropContext(HTML5Backend)(Routes);

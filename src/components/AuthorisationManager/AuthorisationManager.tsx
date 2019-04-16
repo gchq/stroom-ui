@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { useManageUsers } from "src/api/userGroups";
+import { useManageUsers } from "src/components/AuthorisationManager/api/userGroups";
 import IconHeader from "src/components/IconHeader";
 import UsersTable, { useTable } from "./UsersTable";
 import Button from "src/components/Button";

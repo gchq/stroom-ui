@@ -1,7 +1,7 @@
 import * as React from "react";
 import Select, { components } from "react-select";
 import { Props } from "./types";
-import useDocumentSearch from "src/api/explorer/useDocumentSearch";
+import useDocumentSearch from "src/components/DocumentEditors/api/explorer/useDocumentSearch";
 import {
   DocRefType,
   DocRefTree,

@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { useDocumentTree } from "src/api/explorer";
+import { useDocumentTree } from "src/components/DocumentEditors/api/explorer";
 import { DocRefConsumer } from "src/components/DocumentEditors/useDocumentApi/types/base";
 
 interface Props {

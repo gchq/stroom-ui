@@ -4,7 +4,7 @@ import { storiesOf } from "@storybook/react";
 import DocRefTypePicker from "src/components/DocRefTypePicker";
 import useDocumentApi from "./useDocumentApi";
 import { ResourcesByDocType } from "./types/resourceUrls";
-import { useDocumentTree } from "src/api/explorer";
+import { useDocumentTree } from "src/components/DocumentEditors/api/explorer";
 import { iterateNodes } from "src/lib/treeUtils";
 import JsonDebug from "src/testing/JsonDebug";
 

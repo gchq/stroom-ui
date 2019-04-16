@@ -41,7 +41,7 @@ import useSelectableItemListing, {
   SelectionBehaviour,
 } from "src/lib/useSelectableItemListing";
 import { useDocRefInfoDialog } from "../../DocRefInfoModal/DocRefInfoModal";
-import { useDocumentTree } from "src/api/explorer";
+import { useDocumentTree } from "src/components/DocumentEditors/api/explorer";
 import useAppNavigation from "../../AppChrome/useAppNavigation";
 
 const FolderExplorer: React.FunctionComponent<SwitchedDocRefEditorProps> = ({
