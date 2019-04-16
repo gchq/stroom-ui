@@ -15,29 +15,33 @@
  */
 
 import * as React from "react";
-
+import ChangePasswordFormData from "../ChangePassword/ChangePasswordFormData";
 import ChangePasswordFields from "../ChangePasswordFields";
-import useResetPassword from "./useResetPassword";
-import { useTokenValidityCheck } from "./useTokenValidityCheck";
 
-const ResetPassword = () => {
-  const { resetPassword } = useResetPassword();
-  const {
-    isTokenMissing,
-    isTokenInvalid,
-    isTokenExpired,
-  } = useTokenValidityCheck();
-
+interface ResetPasswordProps {
+  isTokenMissing: boolean;
+  isTokenInvalid: boolean;
+  isTokenExpired: boolean;
+  onSubmit: Function;
+  onValidate: (values: ChangePasswordFormData) => Promise<void>;
+}
+const ResetPassword: React.FunctionComponent<ResetPasswordProps> = ({
+  isTokenExpired,
+  isTokenInvalid,
+  isTokenMissing,
+  onSubmit,
+  onValidate,
+}) => {
   const failure = (
     <div>
       <h4>Unable to reset password!</h4>
       {isTokenMissing || isTokenInvalid ? (
-        <p>I'm afraid this password reset link is broken.</p>
+        <p>I&apos;m afraid this password reset link is broken.</p>
       ) : (
         undefined
       )}
       {isTokenExpired ? (
-        <p>I'm afraid this password reset link has expired.</p>
+        <p>I&apos;m afraid this password reset link has expired.</p>
       ) : (
         undefined
       )}
@@ -56,8 +60,8 @@ const ResetPassword = () => {
         {showChangePasswordFields ? (
           <ChangePasswordFields
             showOldPasswordField={false}
-            onSubmit={resetPassword}
-            // errorMessages={errorMessages}
+            onSubmit={onSubmit}
+            onValidate={values => onValidate(values)}
           />
         ) : (
           undefined

@@ -16,27 +16,24 @@
 
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as React from "react";
-import { PasswordValidationRequest } from "src/api/authentication/types";
 import Button from "src/components/Button";
-import { validateAsync } from "src/components/users/validation";
 import { hasAnyProps } from "src/lib/lang";
-import { useConfig } from "src/startup/config";
 import "src/styles/from_auth/Layout.css";
+import ChangePasswordFormData from "./ChangePassword/ChangePasswordFormData";
 
 const ChangePasswordFields = ({
   email,
   redirectUrl,
   showOldPasswordField,
   onSubmit,
+  onValidate,
 }: {
   email?: string;
   redirectUrl?: string;
   showOldPasswordField: boolean;
   onSubmit: Function;
+  onValidate: (values: ChangePasswordFormData) => Promise<void>;
 }) => {
-  const { authenticationServiceUrl } = useConfig();
-  if (!authenticationServiceUrl)
-    throw Error("Config not ready or misconfigured!");
   return (
     <Formik
       enableReinitialize={true}
@@ -50,25 +47,7 @@ const ChangePasswordFields = ({
       onSubmit={values => {
         onSubmit(values);
       }}
-      validate={values => {
-        if (
-          !!values.oldPassword &&
-          !!values.password &&
-          !!values.verifyPassword &&
-          !!values.email
-        ) {
-          const passwordValidationRequest: PasswordValidationRequest = {
-            oldPassword: values.oldPassword,
-            newPassword: values.password,
-            verifyPassword: values.verifyPassword,
-            email: values.email,
-          };
-          return validateAsync(
-            passwordValidationRequest,
-            authenticationServiceUrl,
-          );
-        } else return Promise.resolve();
-      }}
+      validate={values => onValidate(values)}
     >
       {({ errors, touched }) => {
         const isPristine = !hasAnyProps(touched);
@@ -131,17 +110,6 @@ const ChangePasswordFields = ({
               </div>
 
               <div className="ChangePassword-controls">
-                <div>
-                  {/* {errorMessages.map(
-                    (error: string, index: number) => (
-                      <p key={index} className="ChangePassword-errorMessage">
-                        {error}
-                      </p>
-                    )
-                  )} */}
-                </div>
-                <br />
-
                 <div className="ChangePassword-actions">
                   <Button
                     className="ChangePassword-button primary"

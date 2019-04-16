@@ -15,31 +15,20 @@
  */
 
 import * as React from "react";
-
-import Button from "src/components/Button";
-import "src/styles/from_auth/Layout.css";
 import { useConfig } from "src/startup/config";
+import "src/styles/from_auth/Layout.css";
+import ConfirmPasswordResetEmail from "./ConfirmPasswordResetEmail";
 
-const ConfirmPasswordResetEmail = () => {
+const ConfirmPasswordResetEmailContainer = () => {
   const { stroomUiUrl } = useConfig();
   if (!stroomUiUrl) throw Error("Config not ready or misconfigured!");
   return (
-    <div className="container">
-      <h3>Password reset</h3>
-      <p>Please check your email. </p>
-      <p>
-        <strong>If the email address is registered</strong> you should shortly
-        receive a message with a link that will let you change your password.
-      </p>
-      <div className="footer">
-        <Button
-          className="toolbar-button-medium primary"
-          onClick={() => (window.location.href = stroomUiUrl)}
-          text="Back to Stroom"
-        />
-      </div>
-    </div>
+    <ConfirmPasswordResetEmail
+      onBack={() => {
+        window.location.href = stroomUiUrl;
+      }}
+    />
   );
 };
 
-export default ConfirmPasswordResetEmail;
+export default ConfirmPasswordResetEmailContainer;

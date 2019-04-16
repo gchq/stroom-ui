@@ -1,5 +1,4 @@
-import ResetPassword from "./ResetPassword";
+import ResetPassword from "./ResetPasswordContainer";
 import ResetPasswordRequest from "./ResetPasswordRequest";
-import ConfirmPasswordResetEmail from "./ConfirmPasswordResetEmail";
 
-export { ResetPassword, ResetPasswordRequest, ConfirmPasswordResetEmail };
+export { ResetPassword, ResetPasswordRequest };

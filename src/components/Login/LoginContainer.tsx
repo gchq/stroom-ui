@@ -13,6 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import Login from "./LoginContainer";
 
-export default Login;
+import * as React from "react";
+import useAuthentication from "src/api/authentication/useAuthentication";
+import { useConfig } from "src/startup/config";
+import "src/styles/from_auth/Layout.css";
+import "./Login.css";
+import LoginForm from "./LoginForm";
+
+const LoginContainer = () => {
+  const { allowPasswordResets } = useConfig();
+  const { login } = useAuthentication();
+  return (
+    <LoginForm allowPasswordResets={allowPasswordResets} onSubmit={login} />
+  );
+};
+
+export default LoginContainer;

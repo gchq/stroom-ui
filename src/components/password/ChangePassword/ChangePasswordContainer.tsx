@@ -14,27 +14,28 @@
  * limitations under the License.
  */
 
-import * as React from "react";
-import { useState, useEffect } from "react";
 import * as Cookies from "cookies-js";
 import * as queryString from "query-string";
-
-import "./ChangePassword.css";
-import "src/styles/from_auth/Layout.css";
+import * as React from "react";
+import { useEffect, useState } from "react";
+import { PasswordValidationRequest } from "src/api/authentication";
+import { validateAsync } from "src/components/users/validation";
 import useRouter from "src/lib/useRouter";
-
-import ChangePasswordFields from "../ChangePasswordFields";
+import { useConfig } from "src/startup/config";
+import "src/styles/from_auth/Layout.css";
+import "./ChangePassword.css";
+import ChangePasswordForm from "./ChangePasswordForm";
 import usePassword from "./useChangePassword";
 
-const ChangePassword = () => {
-  const {
-    changePassword,
-    errorMessages,
-    showChangeConfirmation,
-  } = usePassword();
+const ChangePasswordContainer = () => {
+  const { changePassword, showChangeConfirmation } = usePassword();
   const { router } = useRouter();
   const [redirectUrl, setRedirectUrl] = useState("");
   const [email, setEmail] = useState("");
+
+  const { authenticationServiceUrl } = useConfig();
+  if (!authenticationServiceUrl)
+    throw Error("Config not ready or misconfigured!");
 
   useEffect(() => {
     if (!!router.location) {
@@ -63,40 +64,33 @@ const ChangePassword = () => {
     // Try and get the user's email from the query string, and fall back on a cookie.
   }, [setRedirectUrl, setEmail]);
 
-  let title = "Change your password";
-  if (showChangeConfirmation && redirectUrl) {
-    title = "Your password has been changed";
-  }
-
-  let content;
-  if (errorMessages.length === 0) {
-    if (!showChangeConfirmation) {
-      content = (
-        <ChangePasswordFields
-          email={email}
-          redirectUrl={redirectUrl}
-          showOldPasswordField={true}
-          onSubmit={changePassword}
-          // errorMessages={errorMessages}
-        />
-      );
-    } else if (showChangeConfirmation && !redirectUrl) {
-      content = <p>Your password has been changed.</p>;
-    }
-  } else {
-    content = <p>There were the following errors: {errorMessages} </p>;
-  }
-
   return (
-    <div className="container">
-      <div className="section">
-        <div className="section__title">
-          <h3>{title} </h3>
-        </div>
-        {content}
-      </div>
-    </div>
+    <ChangePasswordForm
+      onSubmit={changePassword}
+      redirectUrl={redirectUrl}
+      email={email}
+      showChangeConfirmation={showChangeConfirmation}
+      onValidate={values => {
+        if (
+          !!values.oldPassword &&
+          !!values.password &&
+          !!values.verifyPassword &&
+          !!values.email
+        ) {
+          const passwordValidationRequest: PasswordValidationRequest = {
+            oldPassword: values.oldPassword,
+            newPassword: values.password,
+            verifyPassword: values.verifyPassword,
+            email: values.email,
+          };
+          return validateAsync(
+            passwordValidationRequest,
+            authenticationServiceUrl,
+          );
+        } else return Promise.resolve();
+      }}
+    />
   );
 };
 
-export default ChangePassword;
+export default ChangePasswordContainer;

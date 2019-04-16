@@ -26,7 +26,7 @@ export interface LoginResponse {
 
 export interface PasswordValidationRequest {
   email: string;
-  newPassword: string;
+  newPassword?: string;
   oldPassword?: string;
   verifyPassword: string;
 }
