@@ -1,7 +1,8 @@
-import { action } from "@storybook/addon-actions";
-import { storiesOf } from "@storybook/react";
 import * as React from "react";
-import { User } from "..";
+import { storiesOf } from "@storybook/react";
+import { action } from "@storybook/addon-actions";
+import UserForm from "./UserForm";
+
 import {
   disabledUser,
   inactiveUser,
@@ -9,11 +10,11 @@ import {
   newUser,
   wellUsedUser,
 } from "../testData";
-import EditUser from "./EditUser";
+import { User } from "..";
 
 const getComponent = (user: User) => {
   return (
-    <EditUser
+    <UserForm
       user={user}
       onBack={action("onBack")}
       onSubmit={action("onSubmit")}
@@ -29,7 +30,7 @@ const getComponent = (user: User) => {
   );
 };
 
-const stories = storiesOf("Users/EditUser", module)
+const stories = storiesOf("Users/UserForm", module)
   .add("brand new", () => getComponent(newUser))
   .add("well used", () => getComponent(wellUsedUser))
   .add("disabled", () => getComponent(disabledUser))
