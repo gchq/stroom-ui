@@ -1,6 +1,5 @@
 import * as React from "react";
 import Select from "react-select";
-import { SelectOptionType, SelectOptionsType } from "src/types";
 import {
   IndexFieldType,
   IndexFieldTypeDisplayValues,
@@ -12,10 +11,15 @@ interface Props {
   onChange: (c: IndexFieldType) => any;
 }
 
-const OPTIONS: SelectOptionsType = Object.entries(
+interface IndexFieldTypeOption {
+  value: IndexFieldType;
+  label: string;
+}
+
+const OPTIONS: IndexFieldTypeOption[] = Object.entries(
   IndexFieldTypeDisplayValues,
 ).map(d => ({
-  value: d[0],
+  value: d[0] as IndexFieldType,
   label: d[1],
 }));
 
@@ -28,7 +32,7 @@ const IndexFieldTypePicker: React.FunctionComponent<Props> = ({
     className={className}
     placeholder="Index Field Type"
     value={OPTIONS.find(o => o.value === value)}
-    onChange={(o: SelectOptionType) => onChange(o.value as IndexFieldType)}
+    onChange={(o: IndexFieldTypeOption) => onChange(o.value)}
     options={OPTIONS}
   />
 );

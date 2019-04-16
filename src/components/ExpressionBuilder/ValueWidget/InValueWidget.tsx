@@ -17,7 +17,7 @@
 import * as React from "react";
 
 import Button from "../../Button";
-import { ControlledInput } from "src/types";
+import { ControlledInput } from "src/lib/useForm/types";
 
 const InValueWidget: React.FunctionComponent<ControlledInput<any>> = ({
   value,
@@ -76,7 +76,7 @@ const InValueWidget: React.FunctionComponent<ControlledInput<any>> = ({
         {splitValues.map(k => (
           <div key={k}>
             {k}
-            <Button onClick={e => onTermDelete(k)} text="X" />
+            <Button onClick={() => onTermDelete(k)} text="X" />
           </div>
         ))}
       </div>

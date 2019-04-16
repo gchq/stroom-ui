@@ -1,6 +1,5 @@
 import * as React from "react";
-import { ControlledInput } from "src/types";
-import { Form } from "./types";
+import { Form, ControlledInput } from "./types";
 
 /**
  * The form can be given lists of field names for text and checkbox based HTML input elements.

@@ -3,7 +3,6 @@ import * as React from "react";
 import CreatableSelect from "react-select/lib/Creatable";
 
 import { useIndexVolumeGroups } from "src/components/IndexVolumeGroups/api";
-import { SelectOptionType } from "src/types";
 import { PickerProps, UsePickerProps, PickerBaseProps } from "./types";
 
 const IndexVolumeGroupPicker: React.FunctionComponent<PickerProps> = ({
@@ -13,15 +12,8 @@ const IndexVolumeGroupPicker: React.FunctionComponent<PickerProps> = ({
 }) => {
   const { groups, createIndexVolumeGroup } = useIndexVolumeGroups();
 
-  const options: SelectOptionType[] = React.useMemo(
-    () =>
-      groups
-        .map(g => g.name)
-        .filter(n => !valuesToFilterOut.includes(n))
-        .map(n => ({
-          value: n,
-          label: n,
-        })),
+  const options: string[] = React.useMemo(
+    () => groups.map(g => g.name).filter(n => !valuesToFilterOut.includes(n)),
     [groups, valuesToFilterOut],
   );
 
@@ -40,8 +32,8 @@ const IndexVolumeGroupPicker: React.FunctionComponent<PickerProps> = ({
   return (
     <CreatableSelect
       isLoading={isLoading}
-      value={options.find(o => o.value === value)}
-      onChange={(o: SelectOptionType) => onChange(o.value)}
+      value={value}
+      onChange={onChange}
       placeholder="Index Volume Group"
       onCreateOption={onCreateOption}
       options={options}

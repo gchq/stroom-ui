@@ -1,5 +1,4 @@
 import * as React from "react";
-import { DataRow, StreamAttributeMapResult, PageRequest } from "src/types";
 import useHttpClient from "src/lib/useHttpClient";
 import { useConfig } from "src/startup/config";
 import cleanExpression from "./cleanExpression";
@@ -8,6 +7,7 @@ import {
   ExpressionOperatorType,
   ExpressionOperatorWithUuid,
 } from "src/components/ExpressionBuilder/types";
+import { StreamAttributeMapResult, PageRequest, DataRow } from "../../types";
 
 interface Api {
   page: (props: PageRequest) => Promise<StreamAttributeMapResult>;

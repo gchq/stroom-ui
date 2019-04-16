@@ -21,8 +21,8 @@ import PermissionInheritancePicker from "./PermissionInheritancePicker";
 import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
 
 import useForm from "src/lib/useForm";
-import { PermissionInheritance } from "src/types";
 import JsonDebug from "src/testing/JsonDebug";
+import { PermissionInheritance } from "./types";
 
 interface FormValues {
   permissionInheritance?: PermissionInheritance;

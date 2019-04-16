@@ -14,7 +14,7 @@ const stories = storiesOf("Expression/Value Widgets", module);
 ].forEach(({ valueType, defaultValue }) => {
   stories
     .add(`Single ${valueType}`, () => {
-      const B: React.FunctionComponent = () => {
+      const TestHarness: React.FunctionComponent = () => {
         const [value, onChange] = React.useState(defaultValue);
         return (
           <div>
@@ -27,10 +27,10 @@ const stories = storiesOf("Expression/Value Widgets", module);
         );
       };
 
-      return <B />;
+      return <TestHarness />;
     })
     .add(`In ${valueType}`, () => {
-      const B: React.FunctionComponent = () => {
+      const TestHarness: React.FunctionComponent = () => {
         const [value, onChange] = React.useState(defaultValue);
 
         return (
@@ -39,10 +39,10 @@ const stories = storiesOf("Expression/Value Widgets", module);
           </div>
         );
       };
-      return <B />;
+      return <TestHarness />;
     })
     .add(`Between ${valueType}`, () => {
-      const B: React.FunctionComponent = () => {
+      const TestHarness: React.FunctionComponent = () => {
         const [value, onChange] = React.useState(defaultValue);
 
         return (
@@ -56,6 +56,6 @@ const stories = storiesOf("Expression/Value Widgets", module);
         );
       };
 
-      return <B />;
+      return <TestHarness />;
     });
 });

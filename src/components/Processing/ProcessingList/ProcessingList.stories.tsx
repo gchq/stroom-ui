@@ -5,7 +5,7 @@ import ProcessingList from "./ProcessingList";
 import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
 import useStreamTasks from "src/components/Processing/useStreamTasks";
 import JsonDebug from "src/testing/JsonDebug";
-import { StreamTaskType } from "src/types";
+import { StreamTaskType } from "../types";
 
 const stories = storiesOf("Sections/Processing/List", module);
 

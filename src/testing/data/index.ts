@@ -59,13 +59,13 @@ import { VisualisationDoc } from "src/components/DocumentEditors/useDocumentApi/
 import { XMLSchemaDoc } from "src/components/DocumentEditors/useDocumentApi/types/xmlSchema";
 import { DictionaryDoc } from "src/components/DocumentEditors/useDocumentApi/types/dictionaryDoc";
 import { XsltDoc } from "src/components/DocumentEditors/useDocumentApi/types/xsltDoc";
-import { StreamTaskType } from "src/types";
 import { IndexDoc } from "src/components/DocumentEditors/useDocumentApi/types/indexDoc";
 import {
   copyDocRef,
   DocRefTree,
 } from "src/components/DocumentEditors/useDocumentApi/types/base";
 import { FolderDoc } from "src/components/DocumentEditors/useDocumentApi/types/folder";
+import { StreamTaskType } from "src/components/Processing/types";
 
 let docPermissionByType = testDocRefsTypes.reduce(
   (acc, curr) => ({ ...acc, [curr]: documentPermissionNames }),

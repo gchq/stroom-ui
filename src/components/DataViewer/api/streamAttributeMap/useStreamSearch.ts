@@ -2,8 +2,8 @@ import * as React from "react";
 
 import { UseStreamSearch } from "./types";
 import useApi from "./useApi";
-import { StreamAttributeMapResult, PageRequest } from "src/types";
 import { ExpressionOperatorWithUuid } from "src/components/ExpressionBuilder/types";
+import { StreamAttributeMapResult, PageRequest } from "../../types";
 
 const defaultStreams: StreamAttributeMapResult = {
   streamAttributeMaps: [],

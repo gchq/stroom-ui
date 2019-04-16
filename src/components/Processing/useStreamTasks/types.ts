@@ -1,4 +1,4 @@
-import { StreamTaskType } from "src/types";
+import { StreamTaskType } from "../types";
 
 export enum TrackerSelection {
   first = "first",

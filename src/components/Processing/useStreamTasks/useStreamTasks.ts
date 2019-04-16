@@ -1,7 +1,6 @@
 import * as React from "react";
 
 import useApi from "./useApi";
-import { StreamTasksResponseType } from "src/types";
 import {
   SortByOptions,
   Directions,
@@ -9,6 +8,7 @@ import {
   PagedTrackerInfo,
   UseStreamTasks,
 } from "./types";
+import { StreamTasksResponseType } from "../types";
 
 const defaultPagedInfo: PagedTrackerInfo = {
   trackers: [],

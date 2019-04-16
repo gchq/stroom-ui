@@ -1,19 +1,13 @@
 import * as React from "react";
 
 import Select from "react-select";
-import {
-  PermissionInheritance,
-  SelectOptionType,
-  SelectOptionsType,
-  ControlledInput,
-} from "src/types";
+import { PermissionInheritance } from "./types";
+import { ControlledInput } from "src/lib/useForm/types";
 
-const options: SelectOptionsType = Object.values(PermissionInheritance).map(
-  o => ({
-    value: o,
-    label: o,
-  }),
-);
+const options = Object.values(PermissionInheritance).map(o => ({
+  value: o,
+  label: o,
+}));
 
 const PermissionInheritancePicker: React.FunctionComponent<
   ControlledInput<PermissionInheritance>
@@ -21,7 +15,7 @@ const PermissionInheritancePicker: React.FunctionComponent<
   <Select
     value={options.find(o => o.value === value)}
     onChange={React.useCallback(
-      (o: SelectOptionType) => onChange(o.value as PermissionInheritance),
+      o => onChange(o.value as PermissionInheritance),
       [onChange],
     )}
     placeholder="Permission Inheritance"

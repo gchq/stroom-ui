@@ -32,10 +32,8 @@ import {
   DataSourceType,
   ConditionType,
   DataSourceFieldType,
-  ConditionDisplayValues,
   ExpressionTermWithUuid,
 } from "./types";
-import { SelectOptionType, SelectOptionsType } from "src/types";
 import withValueType from "./withValueType";
 
 interface Props {
@@ -97,21 +95,13 @@ const ExpressionTerm: React.FunctionComponent<EnhancedProps> = ({
     classNames.push("expression-item--disabled");
   }
 
-  const fieldOptions = dataSource.fields.map((f: DataSourceFieldType) => ({
-    value: f.name,
-    label: f.name,
-  }));
-
   const thisField = dataSource.fields.find(
     (f: DataSourceFieldType) => f.name === term.field,
   );
 
-  let conditionOptions: SelectOptionsType = [];
+  let conditionOptions: ConditionType[] = [];
   if (thisField) {
-    conditionOptions = thisField.conditions.map((c: ConditionType) => ({
-      value: c,
-      label: ConditionDisplayValues[c],
-    }));
+    conditionOptions = thisField.conditions;
   }
 
   const className = classNames.join(" ");
@@ -128,9 +118,9 @@ const ExpressionTerm: React.FunctionComponent<EnhancedProps> = ({
       <Select
         className="expression-term__select"
         placeholder="Field"
-        value={fieldOptions.find(o => o.value === term.field)}
-        onChange={(o: SelectOptionType) => onFieldChange(o.value)}
-        options={fieldOptions}
+        value={dataSource.fields.find(o => o.name === term.field)}
+        onChange={(o: DataSourceFieldType) => onFieldChange(o.name)}
+        options={dataSource.fields}
       />
       <ConditionPicker
         className="expression-term__select"

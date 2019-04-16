@@ -195,7 +195,7 @@ const AppSearchBar: React.FunctionComponent<Props> = ({
 
   switch (searchMode) {
     case SearchMode.NAVIGATION: {
-      headerTitle = (
+      headerTitle = !!navFolderToUse && (
         <DocRefBreadcrumb
           docRefUuid={navFolderToUse.uuid}
           openDocRef={onOptionFocus}

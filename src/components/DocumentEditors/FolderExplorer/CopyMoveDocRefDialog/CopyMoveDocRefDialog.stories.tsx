@@ -7,9 +7,9 @@ import {
   useDialog as useCopyMoveDocRefDialog,
 } from "./CopyMoveDocRefDialog";
 
-import { PermissionInheritance } from "src/types";
 import JsonDebug from "src/testing/JsonDebug";
 import { DocRefType } from "src/components/DocumentEditors/useDocumentApi/types/base";
+import { PermissionInheritance } from "../PermissionInheritancePicker/types";
 
 const testFolder2 = fromSetupSampleData.children![1];
 

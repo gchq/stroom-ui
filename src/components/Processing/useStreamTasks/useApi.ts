@@ -1,10 +1,10 @@
 import * as React from "react";
 
 import useHttpClient from "src/lib/useHttpClient";
-import { StreamTasksResponseType } from "src/types";
 
 import { FetchParameters } from "./types";
 import { useConfig } from "src/startup/config";
+import { StreamTasksResponseType } from "../types";
 
 interface Api {
   fetchTrackers: (params: FetchParameters) => Promise<StreamTasksResponseType>;

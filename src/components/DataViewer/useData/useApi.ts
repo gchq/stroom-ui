@@ -1,8 +1,7 @@
 import * as React from "react";
 import useHttpClient from "src/lib/useHttpClient";
-import { AbstractFetchDataResult } from "src/types";
-import { FetchDataParams } from "./types";
 import { useConfig } from "src/startup/config";
+import { FetchDataParams, AbstractFetchDataResult } from "../types";
 
 interface Api {
   getDataForSelectedRow: (

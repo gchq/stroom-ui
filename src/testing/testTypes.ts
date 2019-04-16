@@ -1,4 +1,3 @@
-import { StreamTaskType, StreamAttributeMapResult } from "../types";
 import { ResourcesByDocType } from "src/components/DocumentEditors/useDocumentApi/types/resourceUrls";
 import {
   DocRefTree,
@@ -15,6 +14,8 @@ import {
   ElementDefinition,
   ElementPropertiesByElementIdType,
 } from "src/components/DocumentEditors/PipelineEditor/useElements/types";
+import { StreamTaskType } from "src/components/Processing/types";
+import { StreamAttributeMapResult } from "src/components/DataViewer/types";
 
 export interface UserGroupMembership {
   userUuid: string;
