@@ -7,7 +7,7 @@ import GroupsForUser from "../GroupsForUser";
 import { useUser } from "src/api/userGroups";
 import Loader from "src/components/Loader";
 import useRouter from "src/lib/useRouter";
-import { useAppPermissionsForUser } from "src/api/appPermission";
+import { useAppPermissionsForUser } from "src/components/AuthorisationManager/api/appPermission";
 import { AppPermissionPicker } from "../AppPermissionPicker";
 
 interface Props {

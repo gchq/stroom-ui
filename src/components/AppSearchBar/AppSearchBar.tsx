@@ -16,7 +16,6 @@ import {
 } from "src/api/useDocumentApi/types/base";
 import { Props } from "./types";
 import useDocumentSearch from "src/api/explorer/useDocumentSearch";
-import { useDocumentTree } from "src/api/explorer";
 import { useModeOptionButtons } from "./ModeOptionButton/ModeOptionButtons";
 
 const AppSearchBar = ({
@@ -26,8 +25,7 @@ const AppSearchBar = ({
   value,
 }: Props) => {
   // Get data from and subscribe to the store
-  const { documentTree } = useDocumentTree();
-  const { searchResults, searchApp } = useDocumentSearch();
+  const { documentTree, searchResults, searchApp } = useDocumentSearch();
   const { recentItems } = useRecentItems();
 
   let [textFocus, setTextFocus] = React.useState<boolean>(false);

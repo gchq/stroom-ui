@@ -3,11 +3,11 @@ import { ResourcesByDocType } from "src/api/useDocumentApi/types/resourceUrls";
 import { DocRefTree, DocumentBase } from "src/api/useDocumentApi/types/base";
 import { DataSourceType } from "src/components/ExpressionBuilder/types";
 import { User } from "src/api/userGroups";
-import { IndexVolume } from "src/api/indexVolume";
+import { IndexVolume } from "src/components/IndexVolumes/api/indexVolume";
 import {
   IndexVolumeGroup,
   IndexVolumeGroupMembership,
-} from "src/api/indexVolumeGroup";
+} from "src/components/IndexVolumeGroups/api/indexVolumeGroup";
 import {
   ElementDefinition,
   ElementPropertiesByElementIdType,

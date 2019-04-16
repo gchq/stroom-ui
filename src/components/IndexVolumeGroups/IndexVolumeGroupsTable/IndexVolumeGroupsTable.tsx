@@ -7,7 +7,7 @@ import {
   SelectionBehaviour,
   TableOutProps,
 } from "src/lib/useSelectableItemListing";
-import { IndexVolumeGroup } from "src/api/indexVolumeGroup";
+import { IndexVolumeGroup } from "src/components/IndexVolumeGroups/api/indexVolumeGroup";
 
 interface Props {
   groups: IndexVolumeGroup[];

@@ -2,8 +2,8 @@ import * as React from "react";
 import {
   useDocTypePermissions,
   useDocumentPermissionsForUser,
-} from "src/api/docPermission";
-import {} from "src/api/docPermission";
+} from "src/components/AuthorisationManager/api/docPermission";
+import {} from "src/components/AuthorisationManager/api/docPermission";
 import CheckboxSeries from "src/components/CheckboxSeries";
 import Button from "src/components/Button";
 import useRouter from "src/lib/useRouter";

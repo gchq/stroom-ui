@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useAllAppPermissions } from "src/api/appPermission";
+import { useAllAppPermissions } from "src/components/AuthorisationManager/api/appPermission";
 import CheckboxSeries from "src/components/CheckboxSeries";
 
 interface Props {

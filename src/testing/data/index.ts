@@ -42,11 +42,11 @@ import { documentPermissionNames } from "./docPermissions";
 import { iterateNodes } from "src/lib/treeUtils";
 import { User } from "src/api/userGroups";
 import { AnnotationsIndexDoc } from "src/api/useDocumentApi/types/annotations";
-import { IndexVolume } from "src/api/indexVolume";
+import { IndexVolume } from "src/components/IndexVolumes/api/indexVolume";
 import {
   IndexVolumeGroup,
   IndexVolumeGroupMembership,
-} from "src/api/indexVolumeGroup";
+} from "src/components/IndexVolumeGroups/api/indexVolumeGroup";
 import { DashboardDoc } from "src/api/useDocumentApi/types/dashboard";
 import { ElasticIndexDoc } from "src/api/useDocumentApi/types/elastic";
 import { FeedDoc } from "src/api/useDocumentApi/types/feed";

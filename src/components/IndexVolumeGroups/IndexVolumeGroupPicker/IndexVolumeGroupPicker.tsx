@@ -2,7 +2,7 @@ import * as React from "react";
 
 import Select from "react-select";
 
-import { useIndexVolumeGroupNames } from "src/api/indexVolumeGroup";
+import { useIndexVolumeGroupNames } from "src/components/IndexVolumeGroups/api/indexVolumeGroup";
 import { SelectOptionType } from "src/types";
 import { PickerProps, UsePickerProps, PickerBaseProps } from "./types";
 

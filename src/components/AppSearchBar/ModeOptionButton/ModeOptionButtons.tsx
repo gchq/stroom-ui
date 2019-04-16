@@ -47,7 +47,11 @@ const ModeOptionButtons: React.FunctionComponent<Props> = ({
         key={modeOption.mode}
         icon={modeOption.icon}
         groupPosition={modeOption.position}
-        onClick={() => switchMode(modeOption.mode)}
+        onClick={e => {
+          switchMode(modeOption.mode);
+          e.stopPropagation();
+          e.preventDefault();
+        }}
         onKeyDown={e => {
           if (e.key === " ") {
             switchMode(modeOption.mode);

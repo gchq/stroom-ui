@@ -3,7 +3,7 @@ import * as React from "react";
 import IconHeader from "src/components/IconHeader";
 import Button from "src/components/Button";
 import useRouter from "src/lib/useRouter";
-import { useIndexVolume } from "src/api/indexVolume";
+import { useIndexVolume } from "src/components/IndexVolumes/api/indexVolume";
 import {
   useTable as useIndexVolumeGroupNamesTable,
   IndexVolumeGroupNamesTable,

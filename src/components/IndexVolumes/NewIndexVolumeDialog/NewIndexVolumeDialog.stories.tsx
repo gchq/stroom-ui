@@ -5,7 +5,7 @@ import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
 import NewIndexVolumeDialog, { useDialog } from ".";
 import JsonDebug from "src/testing/JsonDebug";
 import Button from "src/components/Button";
-import { NewIndexVolume } from "src/api/indexVolume";
+import { NewIndexVolume } from "src/components/IndexVolumes/api/indexVolume";
 
 const stories = storiesOf("Sections/Index Volumes/New Index Volume", module);
 

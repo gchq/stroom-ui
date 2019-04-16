@@ -3,7 +3,7 @@ import { HttpRequest, HttpResponse } from "@pollyjs/adapter-fetch";
 import { TestCache } from "../PollyDecorator";
 import { Config } from "src/startup/config";
 import { ResourceBuilder } from "./types";
-import { DocumentPermissions } from "src/api/docPermission";
+import { DocumentPermissions } from "src/components/AuthorisationManager/api/docPermission";
 
 const resourceBuilder: ResourceBuilder = (
   server: any,

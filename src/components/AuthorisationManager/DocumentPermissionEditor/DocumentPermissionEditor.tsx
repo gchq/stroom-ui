@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import IconHeader from "src/components/IconHeader";
-import useDocumentPermissions from "src/api/docPermission/useDocumentPermissions";
+import useDocumentPermissions from "src/components/AuthorisationManager/api/docPermission/useDocumentPermissions";
 import Button from "src/components/Button";
 import ThemedConfirm, {
   useDialog as useThemedConfirm,
