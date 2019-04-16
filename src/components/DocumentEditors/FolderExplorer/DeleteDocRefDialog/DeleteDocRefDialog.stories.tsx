@@ -6,7 +6,7 @@ import DeleteDocRefDialog, { useDialog } from "./DeleteDocRefDialog";
 import { fromSetupSampleData } from "../test";
 
 import JsonDebug from "src/testing/JsonDebug";
-import { DocRefType } from "src/api/useDocumentApi/types/base";
+import { DocRefType } from "src/components/DocumentEditors/useDocumentApi/types/base";
 
 const testFolder2 = fromSetupSampleData.children![1];
 

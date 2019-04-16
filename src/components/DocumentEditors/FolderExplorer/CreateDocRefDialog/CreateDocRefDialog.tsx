@@ -23,7 +23,7 @@ import { DocRefTypePicker } from "../../../DocRefTypePicker";
 import PermissionInheritancePicker from "../../../PermissionInheritancePicker";
 import { PermissionInheritance } from "src/types";
 import useForm from "src/lib/useForm";
-import { DocRefType } from "src/api/useDocumentApi/types/base";
+import { DocRefType } from "src/components/DocumentEditors/useDocumentApi/types/base";
 // import { required, minLength2 } from "src/lib/formUtils";
 
 interface Props {

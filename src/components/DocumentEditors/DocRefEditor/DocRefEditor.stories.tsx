@@ -6,7 +6,9 @@ import DocRefEditor, { useDocRefEditor } from ".";
 import { useDocumentTree } from "src/api/explorer";
 import { iterateNodes } from "src/lib/treeUtils";
 import DocRefTypePicker from "src/components/DocRefTypePicker";
-import useDocumentApi, { ResourcesByDocType } from "src/api/useDocumentApi";
+import useDocumentApi, {
+  ResourcesByDocType,
+} from "src/components/DocumentEditors/useDocumentApi";
 import JsonDebug from "src/testing/JsonDebug";
 
 const stories = storiesOf("Document Editors", module);

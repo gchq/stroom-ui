@@ -4,7 +4,7 @@ import { SelectOptionType, SelectOptionsType } from "src/types";
 import {
   AnalyzerDisplayValues,
   AnalyzerType,
-} from "src/api/useDocumentApi/types/indexDoc";
+} from "src/components/DocumentEditors/useDocumentApi/types/indexDoc";
 
 interface Props {
   className?: string;

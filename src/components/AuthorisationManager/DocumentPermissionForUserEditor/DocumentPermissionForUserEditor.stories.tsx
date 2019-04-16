@@ -22,7 +22,7 @@ import fullTestData from "src/testing/data";
 import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
 
 import DocumentPermissionForUserEditor from "./DocumentPermissionForUserEditor";
-import { DocRefType } from "src/api/useDocumentApi/types/base";
+import { DocRefType } from "src/components/DocumentEditors/useDocumentApi/types/base";
 import { User } from "src/api/userGroups";
 
 const testUser: User = fullTestData.usersAndGroups.users[0];

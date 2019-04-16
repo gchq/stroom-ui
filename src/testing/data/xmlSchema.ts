@@ -1,6 +1,6 @@
 import * as uuidv4 from "uuid/v4";
 import * as loremIpsum from "lorem-ipsum";
-import { XMLSchemaDoc } from "src/api/useDocumentApi/types/xmlSchema";
+import { XMLSchemaDoc } from "src/components/DocumentEditors/useDocumentApi/types/xmlSchema";
 
 export const generate = (): XMLSchemaDoc => ({
   type: "XMLSchema",

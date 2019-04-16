@@ -30,7 +30,7 @@ import { PipelineEditApi } from "../types";
 import {
   PipelineDocumentType,
   PipelineElementType,
-} from "src/api/useDocumentApi/types/pipelineDoc";
+} from "src/components/DocumentEditors/useDocumentApi/types/pipelineDoc";
 
 interface Props {
   pipeline: PipelineDocumentType;

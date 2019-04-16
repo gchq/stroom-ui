@@ -1,7 +1,10 @@
 import * as React from "react";
 
 import useApi from "./useApi";
-import { DocRefType, DocRefInfoType } from "../useDocumentApi/types/base";
+import {
+  DocRefType,
+  DocRefInfoType,
+} from "src/components/DocumentEditors/useDocumentApi/types/base";
 
 const useDocRefInfo = (docRef?: DocRefType): DocRefInfoType | undefined => {
   const [docRefInfo, setDocRefInfo] = React.useState<

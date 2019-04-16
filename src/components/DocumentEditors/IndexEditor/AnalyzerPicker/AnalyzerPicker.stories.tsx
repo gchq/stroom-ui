@@ -19,7 +19,7 @@ import { storiesOf } from "@storybook/react";
 import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
 
 import AnalyzerPicker from "./AnalyzerPicker";
-import { AnalyzerType } from "src/api/useDocumentApi/types/indexDoc";
+import { AnalyzerType } from "src/components/DocumentEditors/useDocumentApi/types/indexDoc";
 
 const stories = storiesOf("Pickers/Index Analyzer", module);
 

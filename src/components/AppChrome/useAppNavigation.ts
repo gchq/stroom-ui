@@ -2,7 +2,7 @@ import * as React from "react";
 
 import { NavigateApp } from "./types";
 import useRouter from "src/lib/useRouter";
-import { DocRefType } from "src/api/useDocumentApi/types/base";
+import { DocRefType } from "src/components/DocumentEditors/useDocumentApi/types/base";
 import useUrlGenerator from "./useUrlGenerator";
 import { WithChromeContext } from "src/lib/useRouter/BrowserRouter";
 

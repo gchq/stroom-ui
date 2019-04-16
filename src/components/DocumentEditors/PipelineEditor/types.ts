@@ -4,7 +4,7 @@ import { UseDocRefEditorProps } from "../DocRefEditor";
 import {
   PipelineElementType,
   PipelineDocumentType,
-} from "src/api/useDocumentApi/types/pipelineDoc";
+} from "src/components/DocumentEditors/useDocumentApi/types/pipelineDoc";
 import { PipelineAsTreeType } from "./AddElementModal/types";
 import { ElementDefinition } from "src/api/useElements/types";
 

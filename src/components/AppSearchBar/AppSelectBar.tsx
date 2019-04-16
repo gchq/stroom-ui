@@ -6,7 +6,7 @@ import {
   DocRefType,
   DocRefTree,
   DocRefWithLineage,
-} from "src/api/useDocumentApi/types/base";
+} from "src/components/DocumentEditors/useDocumentApi/types/base";
 import { OptionProps } from "react-select/lib/components/Option";
 import DocRefImage from "../DocRefImage";
 import { SingleValueProps } from "react-select/lib/components/SingleValue";

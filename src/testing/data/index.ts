@@ -41,27 +41,30 @@ import { UserGroupMembership, TestData, UserDocPermission } from "../testTypes";
 import { documentPermissionNames } from "./docPermissions";
 import { iterateNodes } from "src/lib/treeUtils";
 import { User } from "src/api/userGroups";
-import { AnnotationsIndexDoc } from "src/api/useDocumentApi/types/annotations";
+import { AnnotationsIndexDoc } from "src/components/DocumentEditors/useDocumentApi/types/annotations";
 import { IndexVolume } from "src/components/IndexVolumes/api/indexVolume";
 import {
   IndexVolumeGroup,
   IndexVolumeGroupMembership,
 } from "src/components/IndexVolumeGroups/api/indexVolumeGroup";
-import { DashboardDoc } from "src/api/useDocumentApi/types/dashboard";
-import { ElasticIndexDoc } from "src/api/useDocumentApi/types/elastic";
-import { FeedDoc } from "src/api/useDocumentApi/types/feed";
-import { ScriptDoc } from "src/api/useDocumentApi/types/scriptDoc";
+import { DashboardDoc } from "src/components/DocumentEditors/useDocumentApi/types/dashboard";
+import { ElasticIndexDoc } from "src/components/DocumentEditors/useDocumentApi/types/elastic";
+import { FeedDoc } from "src/components/DocumentEditors/useDocumentApi/types/feed";
+import { ScriptDoc } from "src/components/DocumentEditors/useDocumentApi/types/scriptDoc";
 import {
   StatisticStoreDoc,
   StroomStatsStoreDoc,
-} from "src/api/useDocumentApi/types/statistics";
-import { VisualisationDoc } from "src/api/useDocumentApi/types/visualisation";
-import { XMLSchemaDoc } from "src/api/useDocumentApi/types/xmlSchema";
-import { DictionaryDoc } from "src/api/useDocumentApi/types/dictionaryDoc";
-import { XsltDoc } from "src/api/useDocumentApi/types/xsltDoc";
+} from "src/components/DocumentEditors/useDocumentApi/types/statistics";
+import { VisualisationDoc } from "src/components/DocumentEditors/useDocumentApi/types/visualisation";
+import { XMLSchemaDoc } from "src/components/DocumentEditors/useDocumentApi/types/xmlSchema";
+import { DictionaryDoc } from "src/components/DocumentEditors/useDocumentApi/types/dictionaryDoc";
+import { XsltDoc } from "src/components/DocumentEditors/useDocumentApi/types/xsltDoc";
 import { StreamTaskType } from "src/types";
-import { IndexDoc } from "src/api/useDocumentApi/types/indexDoc";
-import { copyDocRef, DocRefTree } from "src/api/useDocumentApi/types/base";
+import { IndexDoc } from "src/components/DocumentEditors/useDocumentApi/types/indexDoc";
+import {
+  copyDocRef,
+  DocRefTree,
+} from "src/components/DocumentEditors/useDocumentApi/types/base";
 
 let docPermissionByType = testDocRefsTypes.reduce(
   (acc, curr) => ({ ...acc, [curr]: documentPermissionNames }),

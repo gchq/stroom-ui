@@ -16,7 +16,7 @@ import {
   DocRefType,
   DocRefTree,
   DocRefWithLineage,
-} from "src/api/useDocumentApi/types/base";
+} from "src/components/DocumentEditors/useDocumentApi/types/base";
 
 const resourceBuilder: ResourceBuilder = (
   server: any,

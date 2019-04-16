@@ -1,6 +1,9 @@
 import { StreamTaskType, StreamAttributeMapResult } from "../types";
-import { ResourcesByDocType } from "src/api/useDocumentApi/types/resourceUrls";
-import { DocRefTree, DocumentBase } from "src/api/useDocumentApi/types/base";
+import { ResourcesByDocType } from "src/components/DocumentEditors/useDocumentApi/types/resourceUrls";
+import {
+  DocRefTree,
+  DocumentBase,
+} from "src/components/DocumentEditors/useDocumentApi/types/base";
 import { DataSourceType } from "src/components/ExpressionBuilder/types";
 import { User } from "src/api/userGroups";
 import { IndexVolume } from "src/components/IndexVolumes/api/indexVolume";

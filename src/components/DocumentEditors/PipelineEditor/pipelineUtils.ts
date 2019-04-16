@@ -29,7 +29,7 @@ import {
   PipelinePropertyType,
   AddRemove,
   PipelineLinkType,
-} from "src/api/useDocumentApi/types/pipelineDoc";
+} from "src/components/DocumentEditors/useDocumentApi/types/pipelineDoc";
 import { PipelineAsTreeType } from "./AddElementModal/types";
 import {
   ElementDefinitionsByType,

@@ -21,7 +21,7 @@ import { useConfig } from "src/startup/config";
 import {
   PipelineSearchCriteriaType,
   PipelineSearchResultType,
-} from "../useDocumentApi/types/pipelineDoc";
+} from "src/components/DocumentEditors/useDocumentApi/types/pipelineDoc";
 
 interface Api {
   searchPipelines: (

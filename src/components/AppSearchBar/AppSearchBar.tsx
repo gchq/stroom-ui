@@ -13,7 +13,7 @@ import {
   DocRefType,
   DocRefTree,
   DocRefWithLineage,
-} from "src/api/useDocumentApi/types/base";
+} from "src/components/DocumentEditors/useDocumentApi/types/base";
 import { Props } from "./types";
 import useDocumentSearch from "src/api/explorer/useDocumentSearch";
 import { useModeOptionButtons } from "./ModeOptionButton/ModeOptionButtons";

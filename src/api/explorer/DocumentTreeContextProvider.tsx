@@ -6,7 +6,10 @@ import DocumentTreeContext, {
   DocumentTreeContextValue,
 } from "./DocumentTreeContext";
 import { DEFAULT_TREE, DEFAULT_DOC_REF_WITH_LINEAGE } from "./values";
-import { DocRefTree, DocRefType } from "../useDocumentApi/types/base";
+import {
+  DocRefTree,
+  DocRefType,
+} from "src/components/DocumentEditors/useDocumentApi/types/base";
 
 const DocumentTreeContextProvider: React.FunctionComponent = ({ children }) => {
   const [documentTree, setDocumentTree] = React.useState<DocRefTree>(

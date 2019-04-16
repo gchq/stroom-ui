@@ -46,7 +46,7 @@ import {
   DocRefConsumer,
   DocRefType,
   DocRefTree,
-} from "src/api/useDocumentApi/types/base";
+} from "src/components/DocumentEditors/useDocumentApi/types/base";
 import {
   WithChromeContext,
   DEFAULT_CHROME_MODE,

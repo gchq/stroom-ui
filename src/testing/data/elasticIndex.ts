@@ -1,6 +1,6 @@
 import * as uuidv4 from "uuid/v4";
 import * as loremIpsum from "lorem-ipsum";
-import { ElasticIndexDoc } from "src/api/useDocumentApi/types/elastic";
+import { ElasticIndexDoc } from "src/components/DocumentEditors/useDocumentApi/types/elastic";
 
 export const generate = (): ElasticIndexDoc => ({
   type: "ElasticIndex",

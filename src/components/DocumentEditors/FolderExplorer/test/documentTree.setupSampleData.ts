@@ -1,4 +1,4 @@
-import { DocRefTree } from "src/api/useDocumentApi/types/base";
+import { DocRefTree } from "src/components/DocumentEditors/useDocumentApi/types/base";
 
 /*
  * Copyright 2018 Crown Copyright

@@ -39,7 +39,7 @@ import { PipelineEditApi } from "../types";
 import {
   PipelineDocumentType,
   PipelinePropertyType,
-} from "src/api/useDocumentApi/types/pipelineDoc";
+} from "src/components/DocumentEditors/useDocumentApi/types/pipelineDoc";
 import { PipelineAsTreeType } from "../AddElementModal/types";
 import {
   ElementPropertiesType,

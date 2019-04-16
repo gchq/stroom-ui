@@ -7,7 +7,7 @@ import {
   DocRefTree,
   DocRefType,
   DocRefInfoType,
-} from "../useDocumentApi/types/base";
+} from "src/components/DocumentEditors/useDocumentApi/types/base";
 
 const stripDocRef = (docRef: DocRefType) => ({
   uuid: docRef.uuid,

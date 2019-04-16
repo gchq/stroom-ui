@@ -9,7 +9,7 @@ import { DragDropTypes, DropCollectedProps } from "../types";
 
 import useElements from "src/api/useElements";
 import { groupByCategory, keyByType } from "../elementUtils";
-import { PipelineDocumentType } from "src/api/useDocumentApi/types/pipelineDoc";
+import { PipelineDocumentType } from "src/components/DocumentEditors/useDocumentApi/types/pipelineDoc";
 import {
   ElementDefinitionsByCategory,
   ElementDefinitionsByType,

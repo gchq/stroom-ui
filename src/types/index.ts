@@ -1,4 +1,4 @@
-import { DocRefType } from "src/api/useDocumentApi/types/base";
+import { DocRefType } from "src/components/DocumentEditors/useDocumentApi/types/base";
 import { ExpressionOperatorType } from "src/components/ExpressionBuilder/types";
 
 export interface HasUuid {

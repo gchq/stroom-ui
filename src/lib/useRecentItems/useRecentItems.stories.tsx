@@ -5,7 +5,10 @@ import useRecentItems from ".";
 import { useDocumentTree } from "src/api/explorer";
 import { iterateNodes } from "../treeUtils";
 import Button from "src/components/Button";
-import { DocRefType, copyDocRef } from "src/api/useDocumentApi/types/base";
+import {
+  DocRefType,
+  copyDocRef,
+} from "src/components/DocumentEditors/useDocumentApi/types/base";
 
 const TestHarness: React.FunctionComponent = () => {
   const { recentItems, addRecentItem } = useRecentItems();
