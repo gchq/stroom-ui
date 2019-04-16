@@ -99,6 +99,7 @@ const AppSearchBar: React.FunctionComponent<Props> = ({
   typeFilters = [],
   onChange,
   value,
+  className,
 }) => {
   const [searchTerm, setSearchTerm] = React.useState<string>("");
   const { documentTree, searchResults, searchApp } = useDocumentSearch();
@@ -238,6 +239,7 @@ const AppSearchBar: React.FunctionComponent<Props> = ({
 
   return (
     <Select
+      className={className}
       {...{
         onOptionFocus,
         modeOptionProps,

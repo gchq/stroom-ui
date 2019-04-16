@@ -2,7 +2,12 @@ import * as React from "react";
 
 import useLocalStorage, { storeString } from "./useLocalStorage";
 
-export const themeOptions = [
+export interface ThemeOption {
+  text: string;
+  value: string;
+}
+
+export const themeOptions: ThemeOption[] = [
   {
     text: "Light",
     value: "theme-light",
