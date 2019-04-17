@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [v1.0-alpha.4] - 2019-04-17
+
+- Bring in Users, Tokens, and Login
+
 ## [v1.0-alpha.3] - 2019-02-20
 
 - Fixed routing
@@ -19,6 +23,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Experimental first tag
 
-[unreleased]: https://github.com/gchq/stroom-auth/compare/v1.0-alpha.3...master
+[unreleased]: https://github.com/gchq/stroom-auth/compare/v1.0-alpha.4...master
+[v1.0-alpha.4]: https://github.com/gchq/stroom-auth/compare/v1.0-alpha.3...v1.0-alpha.4
 [v1.0-alpha.3]: https://github.com/gchq/stroom-auth/compare/v1.0-alpha.2...v1.0-alpha.3
 [v1.0-alpha.2]: https://github.com/gchq/stroom-auth/compare/v1.0-alpha.1...v1.0-alpha.2
