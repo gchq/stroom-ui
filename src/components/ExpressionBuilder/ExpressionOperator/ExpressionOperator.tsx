@@ -31,9 +31,9 @@ import {
   dragCollect,
   DragCollectedProps,
   DropCollectedProps,
-} from "./types";
-import ExpressionTerm from "./ExpressionTerm";
-import Button from "../Button";
+} from "../types";
+import ExpressionTerm from "src/components/ExpressionBuilder/ExpressionTerm/ExpressionTerm";
+import Button from "src/components/Button";
 import {
   DataSourceType,
   OperatorType,
@@ -41,8 +41,8 @@ import {
   OperatorTypeValues,
   ExpressionHasUuid,
   ExpressionTermWithUuid,
-} from "./types";
-import { LineTo } from "../LineTo";
+} from "../types";
+import { LineTo } from "src/components/LineTo";
 
 interface Props {
   dataSource: DataSourceType;

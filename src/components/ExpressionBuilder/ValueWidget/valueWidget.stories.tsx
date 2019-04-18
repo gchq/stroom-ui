@@ -4,6 +4,7 @@ import { storiesOf } from "@storybook/react";
 import SingleValueWidget from "./SingleValueWidget";
 import InValueWidget from "./InValueWidget";
 import BetweenValueWidget from "./BetweenValueWidget";
+import JsonDebug from "src/testing/JsonDebug";
 
 const stories = storiesOf("Expression/Value Widgets", module);
 
@@ -23,6 +24,7 @@ const stories = storiesOf("Expression/Value Widgets", module);
               onChange={onChange}
               valueType={valueType}
             />
+            <JsonDebug value={{ value }} />
           </div>
         );
       };
@@ -36,6 +38,7 @@ const stories = storiesOf("Expression/Value Widgets", module);
         return (
           <div>
             <InValueWidget value={value} onChange={onChange} />
+            <JsonDebug value={{ value }} />
           </div>
         );
       };
@@ -52,6 +55,7 @@ const stories = storiesOf("Expression/Value Widgets", module);
               onChange={onChange}
               valueType={valueType}
             />
+            <JsonDebug value={{ value }} />
           </div>
         );
       };

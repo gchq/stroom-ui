@@ -1,6 +1,5 @@
-import { HasUuid } from "src/types";
-
-export interface User extends HasUuid {
+export interface User {
+  uuid: string;
   name: string;
   group: boolean;
 }

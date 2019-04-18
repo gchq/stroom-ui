@@ -1,4 +1,4 @@
-import { HasAuditInfo } from "src/types";
+import { HasAuditInfo } from "src/components/DocumentEditors/api/explorer/types";
 
 export interface IndexVolumeGroup extends HasAuditInfo {
   name: string;

@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import ROExpressionTerm from "./ROExpressionTerm";
+import ReadOnlyExpressionTerm from "../ReadOnlyExpressionTerm";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -8,7 +8,7 @@ import {
   ExpressionOperatorType,
   ExpressionTermType,
   ExpressionItem,
-} from "./types";
+} from "../../types";
 
 interface Props {
   operator: ExpressionOperatorType;
@@ -19,7 +19,7 @@ interface Props {
 /**
  * Read only expression operator
  */
-const ROExpressionOperator: React.FunctionComponent<Props> = ({
+const ReadOnlyExpressionOperator: React.FunctionComponent<Props> = ({
   operator,
   isRoot,
   isEnabled,
@@ -50,7 +50,7 @@ const ROExpressionOperator: React.FunctionComponent<Props> = ({
                 case "term":
                   itemElement = (
                     <div key={i}>
-                      <ROExpressionTerm
+                      <ReadOnlyExpressionTerm
                         isEnabled={cIsEnabled}
                         term={c as ExpressionTermType}
                       />
@@ -59,7 +59,7 @@ const ROExpressionOperator: React.FunctionComponent<Props> = ({
                   break;
                 case "operator":
                   itemElement = (
-                    <ROExpressionOperator
+                    <ReadOnlyExpressionOperator
                       isEnabled={cIsEnabled}
                       operator={c as ExpressionOperatorType}
                     />
@@ -79,4 +79,4 @@ const ROExpressionOperator: React.FunctionComponent<Props> = ({
   );
 };
 
-export default ROExpressionOperator;
+export default ReadOnlyExpressionOperator;
