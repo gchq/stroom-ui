@@ -39,16 +39,18 @@ const resourceBuilder: ResourceBuilder = (
   });
 
   // Create User
-  server.post(resource).intercept((req: HttpRequest, res: HttpResponse) => {
-    const { name, group } = JSON.parse(req.body);
-    let newUser = { name, group, uuid: uuidv4() };
+  server
+    .post(`${resource}/create/:name/:isGroup`)
+    .intercept((req: HttpRequest, res: HttpResponse) => {
+      const { name, group } = req.params;
+      let newUser = { name, group, uuid: uuidv4() };
 
-    testCache.data!.usersAndGroups.users = testCache.data!.usersAndGroups.users.concat(
-      [newUser],
-    );
+      testCache.data!.usersAndGroups.users = testCache.data!.usersAndGroups.users.concat(
+        [newUser],
+      );
 
-    res.json(newUser);
-  });
+      res.json(newUser);
+    });
   // Delete User
   server
     .delete(`${resource}/:userUuid`)

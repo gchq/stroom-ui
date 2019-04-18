@@ -24,12 +24,17 @@ import UserPicker, { usePicker } from "./UserPicker";
 import Button from "src/components/Button";
 import JsonDebug from "src/testing/JsonDebug";
 import fullTestData from "src/testing/data";
+import { User } from "../api/userGroups";
 
-const stories = storiesOf("Sections/Authorisation Manager/User Picker", module);
+interface Props {
+  isGroup: boolean;
+}
 
-const TestHarness: React.FunctionComponent = () => {
+const TestHarness: React.FunctionComponent<Props> = ({ isGroup }) => {
   const { userNamesToFilterOut, valuesToFilterOut } = React.useMemo(() => {
-    let usersToFilterOut = fullTestData.usersAndGroups.users.slice(0, 3);
+    let usersToFilterOut = fullTestData.usersAndGroups.users
+      .filter((u: User) => u.group === isGroup)
+      .slice(0, 3);
     let valuesToFilterOut = usersToFilterOut.map(u => u.uuid);
     let userNamesToFilterOut = usersToFilterOut.map(u => u.name);
     return {
@@ -39,7 +44,7 @@ const TestHarness: React.FunctionComponent = () => {
   }, []);
 
   const { pickerProps, reset } = usePicker({
-    isGroup: undefined,
+    isGroup,
     valuesToFilterOut,
   });
   const { value } = pickerProps;
@@ -53,4 +58,10 @@ const TestHarness: React.FunctionComponent = () => {
   );
 };
 
-addThemedStories(stories, () => <TestHarness />);
+[true, false].forEach(isGroup => {
+  const stories = storiesOf(
+    `Sections/Authorisation Manager/User Picker/${isGroup ? "Group" : "User"}`,
+    module,
+  );
+  addThemedStories(stories, () => <TestHarness {...{ isGroup }} />);
+});

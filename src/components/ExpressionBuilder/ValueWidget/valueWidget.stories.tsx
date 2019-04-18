@@ -9,9 +9,9 @@ import JsonDebug from "src/testing/JsonDebug";
 const stories = storiesOf("Expression/Value Widgets", module);
 
 [
-  { valueType: "text", defaultValue: "" },
-  { valueType: "number", defaultValue: 10 },
-  { valueType: "datetime-local", defaultValue: Date.now() },
+  { valueType: "text", defaultValue: "Some Value" },
+  { valueType: "number", defaultValue: "10" },
+  { valueType: "datetime-local", defaultValue: `${Date.now()}` },
 ].forEach(({ valueType, defaultValue }) => {
   stories
     .add(`Single ${valueType}`, () => {

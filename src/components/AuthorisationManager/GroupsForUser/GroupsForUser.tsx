@@ -7,9 +7,9 @@ import {
 import UsersTable, { useTable as useUsersTable } from "../UsersTable";
 import Button from "src/components/Button";
 import {
-  UserGroupPickOrCreateDialog,
-  useDialog as useUserGroupModalPicker,
-} from "../UserGroupPickOrCreateDialog";
+  UserPickerDialog,
+  useDialog as useUserPickerDialog,
+} from "../UserPickerDialog";
 import ThemedConfirm, {
   useDialog as useThemedConfirm,
 } from "src/components/ThemedConfirm";
@@ -56,11 +56,13 @@ const GroupsForUser: React.FunctionComponent<Props> = ({ user }) => {
   const {
     componentProps: userGroupPickerProps,
     showDialog: showUserGroupPicker,
-  } = useUserGroupModalPicker({
+  } = useUserPickerDialog({
     onConfirm: React.useCallback((groupUuid: string) => addToGroup(groupUuid), [
       addToGroup,
     ]),
-    valuesToFilterOut: React.useMemo(() => groups.map(g => g.uuid), [groups]),
+    pickerBaseProps: {
+      valuesToFilterOut: React.useMemo(() => groups.map(g => g.uuid), [groups]),
+    },
   });
 
   return (
@@ -79,7 +81,7 @@ const GroupsForUser: React.FunctionComponent<Props> = ({ user }) => {
       />
       <ThemedConfirm {...deleteGroupMembershipComponentProps} />
       <UsersTable {...tableProps} />
-      <UserGroupPickOrCreateDialog {...userGroupPickerProps} />
+      <UserPickerDialog {...userGroupPickerProps} />
     </div>
   );
 };

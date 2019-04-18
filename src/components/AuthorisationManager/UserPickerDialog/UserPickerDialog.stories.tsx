@@ -20,43 +20,42 @@ import { storiesOf } from "@storybook/react";
 
 import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
 
-import UserModalPicker, { useDialog } from "./UserModalPicker";
+import UserPickerDialog, { useDialog } from "./UserPickerDialog";
 import Button from "src/components/Button";
 import JsonDebug from "src/testing/JsonDebug";
-import fullTestData from "src/testing/data";
 
-const stories = storiesOf(
-  "Sections/Authorisation Manager/User Picker Modal",
-  module,
-);
+interface Props {
+  isGroup: boolean;
+}
 
-const TestHarness: React.FunctionComponent = () => {
+const TestHarness: React.FunctionComponent<Props> = ({ isGroup }) => {
   const [pickedUser, setPickedUser] = React.useState<string | undefined>(
     undefined,
   );
 
-  const { userNamesToFilterOut, valuesToFilterOut } = React.useMemo(() => {
-    let usersToFilterOut = fullTestData.usersAndGroups.users.slice(0, 3);
-    let valuesToFilterOut = usersToFilterOut.map(u => u.uuid);
-    let userNamesToFilterOut = usersToFilterOut.map(u => u.name);
-    return {
-      userNamesToFilterOut,
-      valuesToFilterOut,
-    };
-  }, []);
   const { componentProps, showDialog } = useDialog({
-    isGroup: undefined,
+    pickerBaseProps: {
+      isGroup,
+    },
     onConfirm: setPickedUser,
-    valuesToFilterOut,
   });
 
   return (
     <div>
       <Button text="Show Dialog" onClick={showDialog} />
-      <JsonDebug value={{ pickedUser, userNamesToFilterOut }} />
-      <UserModalPicker {...componentProps} />
+      <JsonDebug value={{ pickedUser }} />
+      <UserPickerDialog {...componentProps} />
     </div>
   );
 };
 
-addThemedStories(stories, () => <TestHarness />);
+[true, false].forEach(isGroup => {
+  const stories = storiesOf(
+    `Sections/Authorisation Manager/User Picker Dialog/${
+      isGroup ? "Group" : "User"
+    }`,
+    module,
+  );
+
+  addThemedStories(stories, () => <TestHarness {...{ isGroup }} />);
+});

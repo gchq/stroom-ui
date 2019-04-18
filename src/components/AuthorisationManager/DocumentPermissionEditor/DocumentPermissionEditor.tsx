@@ -14,9 +14,9 @@ import UsersTable, { useTable as useUsersTable } from "../UsersTable";
 import useAppNavigation from "../../AppChrome/useAppNavigation";
 import useRouter from "src/lib/useRouter";
 import { useDocumentTree } from "src/components/DocumentEditors/api/explorer";
-import UserModalPicker, {
-  useDialog as useUserModalPicker,
-} from "../UserModalPicker";
+import UserPickerDialog, {
+  useDialog as userUserPickerDialog,
+} from "src/components/AuthorisationManager/UserPickerDialog";
 
 interface Props {
   docRefUuid: string;
@@ -54,8 +54,8 @@ export const DocumentPermissionEditor: React.FunctionComponent<Props> = ({
   const {
     componentProps: userPickerProps,
     showDialog: showUserPicker,
-  } = useUserModalPicker({
-    isGroup: undefined, // either,
+  } = userUserPickerDialog({
+    pickerBaseProps: { isGroup: undefined },
     onConfirm: preparePermissionsForUser,
   });
 
@@ -123,7 +123,7 @@ export const DocumentPermissionEditor: React.FunctionComponent<Props> = ({
         <UsersTable {...usersTableProps} />
 
         <ThemedConfirm {...confirmClearProps} />
-        <UserModalPicker {...userPickerProps} />
+        <UserPickerDialog {...userPickerProps} />
       </div>
     </div>
   );

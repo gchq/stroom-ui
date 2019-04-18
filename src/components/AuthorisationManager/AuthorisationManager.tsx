@@ -12,9 +12,9 @@ import ThemedConfirm, {
 } from "src/components/ThemedConfirm";
 import useForm from "src/lib/useForm";
 import {
-  UserGroupPickOrCreateDialog,
-  useDialog as useGroupModalDialog,
-} from "./UserGroupPickOrCreateDialog";
+  UserPickerDialog,
+  useDialog as useUserPickerDialog,
+} from "./UserPickerDialog";
 import useAppNavigation from "../AppChrome/useAppNavigation";
 
 interface Props {
@@ -80,7 +80,7 @@ const Authorisation: React.FunctionComponent<Props> = ({ isGroup }) => {
   const {
     componentProps: userGroupPickerProps,
     showDialog: showGroupPicker,
-  } = useGroupModalDialog({
+  } = useUserPickerDialog({
     onConfirm: React.useCallback(
       (groupUuid: string) =>
         selectedUsers.forEach(u => {
@@ -133,7 +133,7 @@ const Authorisation: React.FunctionComponent<Props> = ({ isGroup }) => {
         <UsersTable {...tableProps} />
       </div>
 
-      <UserGroupPickOrCreateDialog {...userGroupPickerProps} />
+      <UserPickerDialog {...userGroupPickerProps} />
       <ThemedConfirm {...deleteDialogProps} />
       <NewUserDialog {...newDialogComponentProps} />
     </div>

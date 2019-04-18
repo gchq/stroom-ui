@@ -9,9 +9,9 @@ import {
   useUsersInGroup,
   User,
 } from "src/components/AuthorisationManager/api/userGroups";
-import UserModalPicker, {
-  useDialog as useUserModalPicker,
-} from "../UserModalPicker";
+import UserPickerDialog, {
+  useDialog as useUserPickerDialog,
+} from "../UserPickerDialog";
 import useAppNavigation from "src/components/AppChrome/useAppNavigation";
 
 interface Props {
@@ -55,8 +55,8 @@ const UsersInGroup = ({ group }: Props) => {
   const {
     componentProps: userPickerProps,
     showDialog: showUserPicker,
-  } = useUserModalPicker({
-    isGroup: false,
+  } = useUserPickerDialog({
+    pickerBaseProps: { isGroup: false },
     onConfirm: addToGroup,
   });
 
@@ -75,7 +75,7 @@ const UsersInGroup = ({ group }: Props) => {
         onClick={goToSelectedUser}
       />
       <UsersTable {...tableProps} />
-      <UserModalPicker {...userPickerProps} />
+      <UserPickerDialog {...userPickerProps} />
       <ThemedConfirm {...deleteGroupMembershipComponentProps} />
     </div>
   );
