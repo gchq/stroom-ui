@@ -16,15 +16,9 @@
 import * as React from "react";
 
 import ExpressionOperator from "./ExpressionOperator";
-import DeleteExpressionItem, {
-  useDialog as useDeleteItemDialog,
-} from "./DeleteExpressionItem/DeleteExpressionItem";
-import {
-  DataSourceType,
-  ExpressionItem,
-  ExpressionOperatorType,
-} from "./types";
+import { DataSourceType, ExpressionOperatorType } from "./types";
 import ReadOnlyExpressionBuilder from "./ReadOnlyExpressionBuilder/ReadOnlyExpressionBuilder";
+import { LineContainer } from "../LineTo";
 
 interface Props {
   className?: string;
@@ -46,38 +40,19 @@ const ExpressionBuilder: React.FunctionComponent<Props> = ({
 
   console.log("Expression Builder Render", onChange);
 
-  const onChildChange = (updates: object) => {
-    // const e = updateItemInTree(
-    //   expression,
-    //   "FOO",
-    //   updates,
-    // ) as ExpressionOperatorWithUuid;
-    // onChange(e);
-    console.log("TODO Expression Item Updated", updates);
-  };
-  const expressionItemDeleted = (expressionItem: ExpressionItem) => {
-    // const e = deleteItemFromTree(
-    //   expression,
-    //   itemId,
-    // ) as ExpressionOperatorWithUuid;
-    console.log("TODO Expression Item Deleted", expressionItem);
-    //onChange(e);
-  };
+  const onThisChange = React.useCallback(
+    (_index: number, _value: ExpressionOperatorType) => onChange(_value),
+    [onChange],
+  );
 
   React.useEffect(() => {
     setEditableByUser(editMode || false);
   }, []);
 
-  const {
-    showDialog: showDeleteItemDialog,
-    componentProps: deleteDialogComponentProps,
-  } = useDeleteItemDialog(e => expressionItemDeleted(e));
-
   const showModeToggle = smtRaw && !!dataSource;
 
   return (
-    <div>
-      <DeleteExpressionItem {...deleteDialogComponentProps} />
+    <LineContainer>
       {showModeToggle ? (
         <React.Fragment>
           <label>Edit Mode</label>
@@ -92,17 +67,15 @@ const ExpressionBuilder: React.FunctionComponent<Props> = ({
       )}
       {inEditMode ? (
         <ExpressionOperator
-          showDeleteItemDialog={showDeleteItemDialog}
           dataSource={dataSource}
-          isRoot
           isEnabled
           value={expression}
-          onChange={onChildChange}
+          onChange={onThisChange}
         />
       ) : (
         <ReadOnlyExpressionBuilder expression={expression} />
       )}
-    </div>
+    </LineContainer>
   );
 };
 

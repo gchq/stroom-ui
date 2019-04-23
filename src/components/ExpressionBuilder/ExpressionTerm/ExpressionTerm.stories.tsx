@@ -9,29 +9,43 @@ import { ExpressionTermType } from "../types";
 import { getNewTerm } from "../expressionUtils";
 import JsonDebug from "src/testing/JsonDebug";
 import Button from "src/components/Button";
+import useToggle from "src/lib/useToggle";
 
 const stories = storiesOf("Expression/Term", module);
 
 const newTerm: ExpressionTermType = getNewTerm();
 
 const TestHarness: React.FunctionComponent = () => {
-  const [value, onChange] = React.useState<ExpressionTermType>(newTerm);
-  const [deleteRequest, showDeleteItemDialog] = React.useState<
-    ExpressionTermType | undefined
-  >(undefined);
+  const [index, onIndexChange] = React.useState<number>(67);
+  const [value, onValueChange] = React.useState<ExpressionTermType>(newTerm);
+  const [deletedId, onDelete] = React.useState<number | undefined>(undefined);
 
-  const resetDelete = React.useCallback(() => showDeleteItemDialog(undefined), [
-    showDeleteItemDialog,
-  ]);
+  const resetDelete = React.useCallback(() => onDelete(undefined), [onDelete]);
+  const onChange = React.useCallback(
+    (_index: number, _value: ExpressionTermType) => {
+      onIndexChange(_index);
+      onValueChange(_value);
+    },
+    [onIndexChange, onValueChange],
+  );
+
+  const { value: isEnabled, toggle: toggleIsEnabled } = useToggle();
 
   return (
     <div>
       <ExpressionTerm
-        isEnabled
-        {...{ dataSource, showDeleteItemDialog, value, onChange }}
+        {...{
+          index,
+          isEnabled,
+          dataSource,
+          onDelete,
+          value,
+          onChange,
+        }}
       />
+      <Button text="Toggle Parent Enable" onClick={toggleIsEnabled} />
       <Button text="Reset Delete" onClick={resetDelete} />
-      <JsonDebug value={{ value, deleteRequest }} />
+      <JsonDebug value={{ index, value, isEnabled, deletedId }} />
     </div>
   );
 };

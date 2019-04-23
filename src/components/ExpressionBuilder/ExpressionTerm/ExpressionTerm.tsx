@@ -35,12 +35,14 @@ import {
 } from "../types";
 import withValueType from "../withValueType";
 import DataSourceFieldPicker from "../DataSourceFieldPicker/DataSourceFieldPicker";
-import { ControlledInput } from "src/lib/useForm/types";
 
-interface Props extends ControlledInput<ExpressionTermType> {
+interface Props {
+  index: number;
   dataSource: DataSourceType;
   isEnabled: boolean;
-  showDeleteItemDialog: (e: ExpressionTermType) => void;
+  onDelete: (index: number) => void;
+  value: ExpressionTermType;
+  onChange: (index: number, e: ExpressionTermType) => void;
 }
 
 interface EnhancedProps extends Props, DragCollectedProps {}
@@ -56,39 +58,49 @@ const dragSource: DragSourceSpec<Props, DragObject> = {
 const enhance = DragSource(DragDropTypes.TERM, dragSource, dragCollect);
 
 const ExpressionTerm: React.FunctionComponent<EnhancedProps> = ({
-  showDeleteItemDialog,
+  onDelete,
   connectDragSource,
   value,
   isEnabled,
   onChange,
   dataSource,
+  index,
 }) => {
-  const onRequestDeleteTerm = () => {
-    showDeleteItemDialog(value);
-  };
+  const onDeleteThis = React.useCallback(() => {
+    onDelete(index);
+  }, [index, onDelete]);
 
-  const onEnabledToggled = () => {
-    onChange({
+  const onEnabledToggled = React.useCallback(() => {
+    onChange(index, {
       ...value,
       enabled: !value.enabled,
     });
-  };
+  }, [index, value, onChange]);
 
-  const onFieldChange = (field: string) => {
-    onChange({
-      ...value,
-      field,
-    });
-  };
+  const onFieldChange = React.useCallback(
+    (field: string) => {
+      onChange(index, {
+        ...value,
+        field,
+      });
+    },
+    [index, value, onChange],
+  );
 
-  const onConditionChange = (condition: ConditionType) => {
-    onChange({
-      ...value,
-      condition,
-    });
-  };
+  const onConditionChange = React.useCallback(
+    (condition: ConditionType) => {
+      onChange(index, {
+        ...value,
+        condition,
+      });
+    },
+    [index, value, onChange],
+  );
 
-  const onValueChange = (v: string) => onChange({ ...value, value: v });
+  const onValueChange = React.useCallback(
+    (v: string) => onChange(index, { ...value, value: v }),
+    [index, value, onChange],
+  );
 
   const classNames = ["expression-item", "expression-term"];
 
@@ -140,11 +152,7 @@ const ExpressionTerm: React.FunctionComponent<EnhancedProps> = ({
           disabled={value.enabled}
           onClick={onEnabledToggled}
         />
-        <Button
-          icon="trash"
-          groupPosition="right"
-          onClick={onRequestDeleteTerm}
-        />
+        <Button icon="trash" groupPosition="right" onClick={onDeleteThis} />
       </div>
     </div>
   );

@@ -41,13 +41,14 @@ import { DataSourceType, OperatorType, OperatorTypeValues } from "../types";
 import { LineTo } from "src/components/LineTo";
 
 import { getNewTerm, getNewOperator } from "../expressionUtils";
-import { ControlledInput } from "src/lib/useForm/types";
 
-interface Props extends ControlledInput<ExpressionOperatorType> {
+interface Props {
+  index?: number; // If this is undefined, assume this is the root
   dataSource: DataSourceType;
-  isRoot?: boolean;
   isEnabled: boolean;
-  showDeleteItemDialog: (e: ExpressionItem) => void;
+  value: ExpressionOperatorType;
+  onChange: (i: number | undefined, e: ExpressionOperatorType) => void;
+  onDelete?: (i: number) => void;
 }
 
 interface EnhancedProps extends Props, DragCollectedProps, DropCollectedProps {}
@@ -99,61 +100,77 @@ const enhance = pipe(
 
 const ExpressionOperator: React.FunctionComponent<EnhancedProps> = ({
   value,
-  isRoot,
+  index,
   isEnabled,
   dataSource,
-  showDeleteItemDialog,
+  onChange,
+  onDelete,
 
   connectDropTarget,
   isOver,
   canDrop,
   connectDragSource,
-
-  onChange,
 }) => {
+  const isRoot = index === undefined;
+
+  const onDeleteThis = React.useCallback(() => {
+    if (!!index && onDelete) {
+      onDelete(index);
+    }
+  }, [index, onDelete]);
+
   const onAddOperator = React.useCallback(() => {
-    onChange({
+    onChange(index, {
       ...value,
       children: [...value.children, getNewOperator()],
     });
-  }, [value, onChange]);
+  }, [index, value, onChange]);
 
   const onAddTerm = React.useCallback(() => {
-    onChange({
+    onChange(index, {
       ...value,
       children: [...value.children, getNewTerm()],
     });
-  }, [value, onChange]);
+  }, [index, value, onChange]);
 
   const onOpChange = React.useCallback(
     (op: OperatorType) => {
-      onChange({
+      onChange(index, {
         ...value,
         op,
       });
     },
-    [onChange],
+    [index, onChange],
   );
 
   const onEnabledToggled = React.useCallback(() => {
-    if (!isRoot) {
-      onChange({
+    if (!!index) {
+      onChange(index, {
         ...value,
         enabled: !value.enabled,
       });
     }
-  }, [isRoot, value, onChange]);
+  }, [index, value, onChange]);
 
-  const onExpressionTermUpdated = React.useCallback(
-    (updated: ExpressionTermType) => {
-      console.log("Term Updated Within Expression", updated);
+  const onChildUpdated = React.useCallback(
+    (_index: number, _value: ExpressionTermType | ExpressionOperatorType) => {
+      onChange(index, {
+        ...value,
+        children: value.children.map((c, i) => (i === _index ? _value : c)),
+      });
     },
-    [],
+    [index, value, onChange],
   );
 
-  const onRequestDeleteOperator = React.useCallback(() => {
-    showDeleteItemDialog(value);
-  }, [value, showDeleteItemDialog]);
+  const onChildDeleted = React.useCallback(
+    (_index: number) => {
+      onChange(index, {
+        ...value,
+        children: value.children.filter((c, i) => i !== _index),
+      });
+    },
+    [index, value, onChange],
+  );
 
   let dndBarColour = "grey";
   if (isOver) {
@@ -225,7 +242,7 @@ const ExpressionOperator: React.FunctionComponent<EnhancedProps> = ({
                 <Button
                   icon="trash"
                   groupPosition="right"
-                  onClick={onRequestDeleteOperator}
+                  onClick={onDeleteThis}
                 />
               </React.Fragment>
             )}
@@ -238,20 +255,19 @@ const ExpressionOperator: React.FunctionComponent<EnhancedProps> = ({
           <div className="operator__placeholder" />
         )}
         {value.children &&
-          value.children.map((c: ExpressionItem, i) => {
+          value.children.map((c: ExpressionItem, i: number) => {
             let itemElement;
             switch (c.type) {
               case "term":
                 itemElement = (
                   <div>
                     <ExpressionTerm
+                      index={i}
+                      dataSource={dataSource}
                       isEnabled={isEnabled && c.enabled}
                       value={c as ExpressionTermType}
-                      onChange={onExpressionTermUpdated}
-                      {...{
-                        showDeleteItemDialog,
-                        dataSource,
-                      }}
+                      onDelete={onChildDeleted}
+                      onChange={(i, e) => onChildUpdated(i, e)}
                     />
                   </div>
                 );
@@ -259,13 +275,12 @@ const ExpressionOperator: React.FunctionComponent<EnhancedProps> = ({
               case "operator":
                 itemElement = (
                   <EnhancedExpressionOperator
+                    index={i}
+                    dataSource={dataSource}
                     isEnabled={isEnabled && c.enabled}
                     value={c as ExpressionOperatorType}
-                    {...{
-                      showDeleteItemDialog,
-                      dataSource,
-                      onChange,
-                    }}
+                    onDelete={onChildDeleted}
+                    onChange={(_, e) => onChildUpdated(i, e)}
                   />
                 );
                 break;
