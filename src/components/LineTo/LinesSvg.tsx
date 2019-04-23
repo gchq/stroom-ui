@@ -1,8 +1,8 @@
 import * as React from "react";
-import * as uuidv4 from "uuid/v4";
 
 import { LineType, LineElementCreator, LineDefinition } from "./types";
 import useInterval from "src/lib/useInterval";
+import LineContext from "./LineContext";
 
 interface Props {
   LineElementCreator: LineElementCreator;
@@ -45,7 +45,7 @@ const LinesSvg: React.FunctionComponent<Props> = ({
   rawLines,
   LineElementCreator,
 }) => {
-  const lineContextId = React.useMemo(() => uuidv4(), []);
+  const { lineContextId, getEndpointId } = React.useContext(LineContext);
 
   const thisRect: DOMRect | undefined = React.useMemo(() => {
     const thisElement = document.getElementById(lineContextId);
@@ -58,10 +58,15 @@ const LinesSvg: React.FunctionComponent<Props> = ({
   const lines: LineDefinition[] = React.useMemo(
     () =>
       rawLines
+        .map(({ lineId, fromId, toId }) => ({
+          lineId,
+          fromId: getEndpointId(fromId),
+          toId: getEndpointId(toId),
+        }))
         .map(calculateLine)
         .filter(e => e !== undefined)
         .map(e => e as LineDefinition),
-    [rawLines],
+    [rawLines, getEndpointId],
   );
 
   // If the SVG has been scrolled, we need to translate the generated lines to cancel out that effect

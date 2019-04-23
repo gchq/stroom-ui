@@ -17,30 +17,34 @@ import * as React from "react";
 
 import ExpressionOperator from "./ExpressionOperator";
 import { DataSourceType, ExpressionOperatorType } from "./types";
-import ReadOnlyExpressionBuilder from "./ReadOnlyExpressionBuilder/ReadOnlyExpressionBuilder";
 import { LineContainer } from "../LineTo";
 import useToggle from "src/lib/useToggle";
+import ReadOnlyExpressionOperator from "./ReadOnlyExpressionOperator";
+import ElbowDown from "../LineTo/lineCreators/ElbowDown";
 
 interface Props {
   className?: string;
-  dataSource: DataSourceType;
+  dataSource?: DataSourceType;
   showModeToggle?: boolean;
   editMode?: boolean;
-  expression: ExpressionOperatorType;
-  onChange: (e: ExpressionOperatorType) => void;
+  value: ExpressionOperatorType;
+  onChange?: (e: ExpressionOperatorType) => void;
 }
+
+const defaultOnChange = (e: ExpressionOperatorType) =>
+  console.error("Cannot edit expression without valid onChange", e);
 
 const ExpressionBuilder: React.FunctionComponent<Props> = ({
   dataSource,
   showModeToggle,
   editMode,
-  expression,
-  onChange,
+  value,
+  onChange = defaultOnChange,
 }) => {
   const { value: inEditMode, toggle: toggleEditMode } = useToggle(editMode);
 
   return (
-    <LineContainer>
+    <LineContainer LineElementCreator={ElbowDown}>
       {showModeToggle && !!dataSource && (
         <React.Fragment>
           <label>Edit Mode</label>
@@ -51,15 +55,10 @@ const ExpressionBuilder: React.FunctionComponent<Props> = ({
           />
         </React.Fragment>
       )}
-      {inEditMode ? (
-        <ExpressionOperator
-          dataSource={dataSource}
-          isEnabled
-          value={expression}
-          onChange={onChange}
-        />
+      {inEditMode && !!dataSource ? (
+        <ExpressionOperator {...{ dataSource, value, onChange }} />
       ) : (
-        <ReadOnlyExpressionBuilder expression={expression} />
+        <ReadOnlyExpressionOperator {...{ value }} />
       )}
     </LineContainer>
   );

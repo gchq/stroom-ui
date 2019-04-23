@@ -23,7 +23,7 @@ interface Props {
   toId: string;
 }
 
-const LineTo: React.FunctionComponent<Props> = ({ toId, fromId }) => {
+const LineTo: React.FunctionComponent<Props> = ({ fromId, toId }) => {
   const { lineCreated, lineDestroyed } = React.useContext(LineContext);
   const lineId = React.useMemo(() => uuidv4(), []);
 

@@ -1,8 +1,9 @@
 import * as React from "react";
-import { ExpressionTermType } from "../../types";
+import { ExpressionTermType } from "../types";
 
 interface Props {
-  term: ExpressionTermType;
+  idWithinExpression: string;
+  value: ExpressionTermType;
   isEnabled: boolean;
 }
 
@@ -10,21 +11,21 @@ interface Props {
  * Read only expression operator
  */
 const ReadOnlyExpressionTerm: React.FunctionComponent<Props> = ({
-  term,
+  value,
   isEnabled,
 }) => {
   let className = "expression-item expression-item--readonly";
   if (!isEnabled) {
     className += " expression-item--disabled";
   }
-  let value = term.value;
-  if (term.condition === "IN_DICTIONARY" && term.value) {
-    value = term.value.name;
+  let valueStr: string = value.value;
+  if (value.condition === "IN_DICTIONARY" && value.value) {
+    valueStr = value.value.name;
   }
 
   return (
     <div className={className}>
-      {term.field} {term.condition} {value}
+      {value.field} {value.condition} {valueStr}
     </div>
   );
 };

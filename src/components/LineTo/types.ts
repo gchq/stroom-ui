@@ -13,6 +13,8 @@ export interface LineType {
 }
 
 export interface LineContextApi {
+  lineContextId: string;
+  getEndpointId: (identity: string) => string;
   lineCreated: (line: LineType) => void;
   lineDestroyed: (lineId: string) => void;
 }

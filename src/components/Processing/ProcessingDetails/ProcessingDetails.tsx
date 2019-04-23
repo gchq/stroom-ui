@@ -17,7 +17,7 @@
 import * as React from "react";
 import * as moment from "moment";
 
-import ReadOnlyExpressionBuilder from "src/components/ExpressionBuilder/ReadOnlyExpressionBuilder/ReadOnlyExpressionBuilder";
+import ExpressionBuilder from "src/components/ExpressionBuilder";
 import { StreamTaskType } from "../types";
 
 interface Props {
@@ -43,7 +43,11 @@ const ProcessingDetails: React.FunctionComponent<Props> = ({
   return (
     <div className="processing-details__content">
       <div className="processing-details__content__expression-builder">
-        <ReadOnlyExpressionBuilder expression={tracker.filter.expression} />
+        <ExpressionBuilder
+          editMode={false}
+          showModeToggle={false}
+          value={tracker.filter.expression}
+        />
       </div>
       <div className="processing-details__content__properties">
         This tracker:

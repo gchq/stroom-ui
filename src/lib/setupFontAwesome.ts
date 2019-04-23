@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-import * as React from "react";
 import { library } from "@fortawesome/fontawesome-svg-core";
 
 import {
@@ -63,54 +62,49 @@ import {
   faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
 
-const useFontAwesome = () => {
-  React.useEffect(() => {
-    library.add(
-      faFolder,
-      faFolderOpen,
-      faFolderPlus,
-      faAngleRight,
-      faAngleUp,
-      faAngleDown,
-      faArrowLeft,
-      faSearch,
-      faHistory,
-      faExclamationCircle,
-      faExclamationTriangle,
-      faBars,
-      faPlus,
-      faCircle,
-      faTimes,
-      faCogs,
-      faCog,
-      faTrash,
-      faTasks,
-      faUsers,
-      faUser,
-      faHome,
-      faKey,
-      faCaretDown,
-      faCaretRight,
-      faInfoCircle,
-      faInfo,
-      faBomb,
-      faFile,
-      faDatabase,
-      faPlay,
-      faQuestionCircle,
-      faQuestion,
-      faRecycle,
-      faBan,
-      faCheck,
-      faCopy,
-      faEdit,
-      faArrowsAlt,
-      faICursor,
-      faSave,
-      faChevronLeft,
-      faChevronRight,
-    );
-  }, []);
-};
-
-export default useFontAwesome;
+export default () =>
+  library.add(
+    faFolder,
+    faFolderOpen,
+    faFolderPlus,
+    faAngleRight,
+    faAngleUp,
+    faAngleDown,
+    faArrowLeft,
+    faSearch,
+    faHistory,
+    faExclamationCircle,
+    faExclamationTriangle,
+    faBars,
+    faPlus,
+    faCircle,
+    faTimes,
+    faCogs,
+    faCog,
+    faTrash,
+    faTasks,
+    faUsers,
+    faUser,
+    faHome,
+    faKey,
+    faCaretDown,
+    faCaretRight,
+    faInfoCircle,
+    faInfo,
+    faBomb,
+    faFile,
+    faDatabase,
+    faPlay,
+    faQuestionCircle,
+    faQuestion,
+    faRecycle,
+    faBan,
+    faCheck,
+    faCopy,
+    faEdit,
+    faArrowsAlt,
+    faICursor,
+    faSave,
+    faChevronLeft,
+    faChevronRight,
+  );

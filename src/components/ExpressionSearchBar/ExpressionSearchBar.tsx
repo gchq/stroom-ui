@@ -149,7 +149,7 @@ const ExpressionSearchBar: React.FunctionComponent<Props> = ({
             showModeToggle={false}
             editMode
             dataSource={dataSource}
-            expression={expression}
+            value={expression}
             onChange={setExpression}
           />
         ) : (

@@ -24,13 +24,13 @@ import { testExpression, testDataSource, simplestExpression } from "./test";
 import { ExpressionOperatorType } from "./types";
 
 const PopulatedEditable = () => {
-  const [expression, onChange] = React.useState<ExpressionOperatorType>(
+  const [value, onChange] = React.useState<ExpressionOperatorType>(
     testExpression,
   );
 
   return (
     <ExpressionBuilder
-      expression={expression}
+      value={value}
       onChange={onChange}
       showModeToggle
       editMode
@@ -40,28 +40,28 @@ const PopulatedEditable = () => {
 };
 
 const PopulatedReadOnly = () => {
-  const [expression, onChange] = React.useState<ExpressionOperatorType>(
+  const [value, onChange] = React.useState<ExpressionOperatorType>(
     testExpression,
   );
 
   return (
     <ExpressionBuilder
       onChange={onChange}
-      expression={expression}
+      value={value}
       dataSource={testDataSource}
     />
   );
 };
 
 const SimplestEditable = () => {
-  const [expression, onChange] = React.useState<ExpressionOperatorType>(
+  const [value, onChange] = React.useState<ExpressionOperatorType>(
     simplestExpression,
   );
 
   return (
     <ExpressionBuilder
       onChange={onChange}
-      expression={expression}
+      value={value}
       showModeToggle
       dataSource={testDataSource}
     />
@@ -69,28 +69,28 @@ const SimplestEditable = () => {
 };
 
 const MissingDataSource = () => {
-  const [expression, onChange] = React.useState<ExpressionOperatorType>(
+  const [value, onChange] = React.useState<ExpressionOperatorType>(
     testExpression,
   );
 
   return (
     <ExpressionBuilder
       onChange={onChange}
-      expression={expression}
+      value={value}
       dataSource={testDataSource}
     />
   );
 };
 
 const HideModeToggle = () => {
-  const [expression, onChange] = React.useState<ExpressionOperatorType>(
+  const [value, onChange] = React.useState<ExpressionOperatorType>(
     testExpression,
   );
 
   return (
     <ExpressionBuilder
       onChange={onChange}
-      expression={expression}
+      value={value}
       showModeToggle={false}
       dataSource={testDataSource}
     />
@@ -98,14 +98,14 @@ const HideModeToggle = () => {
 };
 
 const HideModeButEdit = () => {
-  const [expression, onChange] = React.useState<ExpressionOperatorType>(
+  const [value, onChange] = React.useState<ExpressionOperatorType>(
     testExpression,
   );
 
   return (
     <ExpressionBuilder
       onChange={onChange}
-      expression={expression}
+      value={value}
       showModeToggle={false}
       editMode
       dataSource={testDataSource}

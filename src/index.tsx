@@ -5,7 +5,7 @@ import { DragDropContext } from "react-dnd";
 import HTML5Backend from "react-dnd-html5-backend";
 
 import { Routes } from "src/components/AppChrome";
-import useFontAwesome from "./lib/useFontAwesome/useFontAwesome";
+import setupFontAwesome from "./lib/setupFontAwesome";
 
 import { ThemeContextProvider } from "./lib/useTheme/useTheme";
 import { CustomRouter } from "./lib/useRouter";
@@ -23,25 +23,24 @@ import { ErrorReportingContextProvider } from "src/components/ErrorPage";
 
 const DndRoutes = DragDropContext(HTML5Backend)(Routes);
 
-const App: React.FunctionComponent = () => {
-  useFontAwesome();
-  return (
-    <ErrorReportingContextProvider>
-      <ConfigProvider>
-        <AuthenticationContextProvider>
-          <AuthorisationContextProvider>
-            <ThemeContextProvider>
-              <CustomRouter history={history}>
-                <DocumentTreeContextProvider>
-                  <DndRoutes />
-                </DocumentTreeContextProvider>
-              </CustomRouter>
-            </ThemeContextProvider>
-          </AuthorisationContextProvider>
-        </AuthenticationContextProvider>
-      </ConfigProvider>
-    </ErrorReportingContextProvider>
-  );
-};
+setupFontAwesome();
+
+const App: React.FunctionComponent = () => (
+  <ErrorReportingContextProvider>
+    <ConfigProvider>
+      <AuthenticationContextProvider>
+        <AuthorisationContextProvider>
+          <ThemeContextProvider>
+            <CustomRouter history={history}>
+              <DocumentTreeContextProvider>
+                <DndRoutes />
+              </DocumentTreeContextProvider>
+            </CustomRouter>
+          </ThemeContextProvider>
+        </AuthorisationContextProvider>
+      </AuthenticationContextProvider>
+    </ConfigProvider>
+  </ErrorReportingContextProvider>
+);
 
 ReactDOM.render(<App />, document.getElementById("root") as HTMLElement);

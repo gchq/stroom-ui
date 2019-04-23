@@ -19,6 +19,8 @@ import { storiesOf } from "@storybook/react";
 import { LineContainer, LineTo } from ".";
 
 import Curve from "./lineCreators/Curve";
+import ElbowDown from "./lineCreators/ElbowDown";
+import LineEndpoint from "./LineEndpoint";
 
 let testBlockStyle: React.CSSProperties = {
   position: "absolute",
@@ -32,8 +34,8 @@ const DefaultLineTest: React.FunctionComponent = () => {
   return (
     <div>
       <LineContainer>
-        <div
-          id="myFirst"
+        <LineEndpoint
+          lineEndpointId="myFirst"
           style={{
             ...testBlockStyle,
             top: "50px",
@@ -41,9 +43,9 @@ const DefaultLineTest: React.FunctionComponent = () => {
           }}
         >
           From
-        </div>
-        <div
-          id="mySecond"
+        </LineEndpoint>
+        <LineEndpoint
+          lineEndpointId="mySecond"
           style={{
             ...testBlockStyle,
             top: "250px",
@@ -51,7 +53,7 @@ const DefaultLineTest: React.FunctionComponent = () => {
           }}
         >
           To
-        </div>
+        </LineEndpoint>
         <LineTo fromId="myFirst" toId="mySecond" />
       </LineContainer>
     </div>
@@ -62,8 +64,8 @@ const CurveTest: React.FunctionComponent = () => {
   return (
     <div>
       <LineContainer LineElementCreator={Curve}>
-        <div
-          id="myFirst"
+        <LineEndpoint
+          lineEndpointId="myFirst"
           style={{
             ...testBlockStyle,
             top: "50px",
@@ -71,9 +73,9 @@ const CurveTest: React.FunctionComponent = () => {
           }}
         >
           From
-        </div>
-        <div
-          id="mySecond"
+        </LineEndpoint>
+        <LineEndpoint
+          lineEndpointId="mySecond"
           style={{
             ...testBlockStyle,
             top: "250px",
@@ -81,9 +83,9 @@ const CurveTest: React.FunctionComponent = () => {
           }}
         >
           Mid1
-        </div>
-        <div
-          id="myThird"
+        </LineEndpoint>
+        <LineEndpoint
+          lineEndpointId="myThird"
           style={{
             ...testBlockStyle,
             top: "150px",
@@ -91,7 +93,7 @@ const CurveTest: React.FunctionComponent = () => {
           }}
         >
           End
-        </div>
+        </LineEndpoint>
         <LineTo fromId="myFirst" toId="mySecond" />
         <LineTo fromId="mySecond" toId="myThird" />
       </LineContainer>
@@ -99,6 +101,37 @@ const CurveTest: React.FunctionComponent = () => {
   );
 };
 
+const ElbowDownTest: React.FunctionComponent = () => {
+  return (
+    <div>
+      <LineContainer LineElementCreator={ElbowDown}>
+        <LineEndpoint
+          lineEndpointId="myFirst"
+          style={{
+            ...testBlockStyle,
+            top: "50px",
+            left: "50px",
+          }}
+        >
+          From
+        </LineEndpoint>
+        <LineEndpoint
+          lineEndpointId="mySecond"
+          style={{
+            ...testBlockStyle,
+            top: "250px",
+            left: "150px",
+          }}
+        >
+          To
+        </LineEndpoint>
+        <LineTo fromId="myFirst" toId="mySecond" />
+      </LineContainer>
+    </div>
+  );
+};
+
 storiesOf("General Purpose/Line To SVG", module)
   .add("Default Line", () => <DefaultLineTest />)
-  .add("Custom Curve", () => <CurveTest />);
+  .add("Elbow Down", () => <ElbowDownTest />)
+  .add("Curve", () => <CurveTest />);

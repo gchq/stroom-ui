@@ -8,7 +8,7 @@ import * as ReactModal from "react-modal";
 
 import { useTestServer } from "./PollyDecorator";
 
-import useFontAwesome from "src/lib/useFontAwesome/useFontAwesome";
+import setupFontAwesome from "src/lib/setupFontAwesome";
 import testData from "../data";
 import { ThemeContextProvider } from "src/lib/useTheme/useTheme";
 import { withRouter, RouteComponentProps } from "react-router";
@@ -20,7 +20,6 @@ import { DocumentTreeContextProvider } from "src/components/DocumentEditors/api/
 import { ErrorReportingContextProvider } from "src/components/ErrorPage";
 
 const WithTestServer: React.FunctionComponent = ({ children }) => {
-  useFontAwesome();
   useTestServer(testData);
 
   return <div>{children}</div>;
@@ -42,6 +41,8 @@ const DragDropRouted = pipe(
 )(RouteWrapper);
 
 ReactModal.setAppElement("#root");
+
+setupFontAwesome();
 
 export default (storyFn: RenderFunction) =>
   StoryRouter()(() => (

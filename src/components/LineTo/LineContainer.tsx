@@ -15,6 +15,7 @@
  */
 
 import * as React from "react";
+import * as uuidv4 from "uuid/v4";
 
 import LineContext from "./LineContext";
 import { LineType, LineElementCreator } from "./types";
@@ -38,9 +39,17 @@ const LineContainer: React.FunctionComponent<Props> = ({
     itemRemoved: lineDestroyed,
   } = useListReducer<LineType>(l => l.lineId);
 
+  const lineContextId = React.useMemo(() => uuidv4(), []);
+  const getEndpointId = React.useCallback(
+    (identity: string) => `${lineContextId}-${identity}`,
+    [lineContextId],
+  );
+
   return (
     <LineContext.Provider
       value={{
+        lineContextId,
+        getEndpointId,
         lineCreated,
         lineDestroyed,
       }}

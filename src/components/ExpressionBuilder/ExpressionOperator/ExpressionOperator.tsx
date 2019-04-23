@@ -45,7 +45,7 @@ import { getNewTerm, getNewOperator } from "../expressionUtils";
 interface Props {
   index?: number; // If this is undefined, assume this is the root
   dataSource: DataSourceType;
-  isEnabled: boolean;
+  isEnabled?: boolean;
   value: ExpressionOperatorType;
   onChange: (e: ExpressionOperatorType, i: number | undefined) => void;
   onDelete?: (i: number) => void;
@@ -101,7 +101,7 @@ const enhance = pipe(
 const ExpressionOperator: React.FunctionComponent<EnhancedProps> = ({
   value,
   index,
-  isEnabled,
+  isEnabled = true,
   dataSource,
   onChange,
   onDelete,

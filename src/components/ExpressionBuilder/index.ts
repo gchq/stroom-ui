@@ -18,3 +18,5 @@ import ExpressionBuilder from "./ExpressionBuilder";
 import { toString as expressionToString } from "./expressionUtils";
 
 export { ExpressionBuilder, expressionToString };
+
+export default ExpressionBuilder;

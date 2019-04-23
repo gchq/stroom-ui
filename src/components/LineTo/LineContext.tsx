@@ -20,6 +20,8 @@ const defaultFunction = () =>
   console.error("Could not create line without Line Context");
 
 const LineContext = React.createContext<LineContextApi>({
+  lineContextId: "DEFAULT",
+  getEndpointId: () => "DEFAULT",
   lineCreated: defaultFunction,
   lineDestroyed: defaultFunction,
 });

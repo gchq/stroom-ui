@@ -8,21 +8,18 @@ import {
   ExpressionOperatorType,
   ExpressionTermType,
   ExpressionItem,
-} from "../../types";
-
-interface Props {
-  operator: ExpressionOperatorType;
-  isRoot?: boolean;
-  isEnabled: boolean;
-}
+} from "../types";
+import { LineEndpoint, LineTo } from "src/components/LineTo";
+import { Props } from "./types";
 
 /**
  * Read only expression operator
  */
 const ReadOnlyExpressionOperator: React.FunctionComponent<Props> = ({
-  operator,
+  idWithinExpression = "root",
+  value,
   isRoot,
-  isEnabled,
+  isEnabled = true,
 }) => {
   let className = "expression-item expression-item--readonly";
   if (isRoot) {
@@ -38,21 +35,23 @@ const ReadOnlyExpressionOperator: React.FunctionComponent<Props> = ({
         <span>
           <FontAwesomeIcon icon="circle" />
         </span>
-        <span>{operator.op}</span>
+        <span>{value.op}</span>
       </div>
       <div className="operator__children">
-        {operator.children &&
-          operator.children
+        {value.children &&
+          value.children
             .map((c: ExpressionItem, i) => {
               let itemElement;
+              let itemLineEndpointId = `${idWithinExpression}-${i}`;
               const cIsEnabled = isEnabled && c.enabled;
               switch (c.type) {
                 case "term":
                   itemElement = (
                     <div key={i}>
                       <ReadOnlyExpressionTerm
+                        idWithinExpression={itemLineEndpointId}
                         isEnabled={cIsEnabled}
-                        term={c as ExpressionTermType}
+                        value={c as ExpressionTermType}
                       />
                     </div>
                   );
@@ -60,8 +59,9 @@ const ReadOnlyExpressionOperator: React.FunctionComponent<Props> = ({
                 case "operator":
                   itemElement = (
                     <ReadOnlyExpressionOperator
+                      idWithinExpression={itemLineEndpointId}
                       isEnabled={cIsEnabled}
-                      operator={c as ExpressionOperatorType}
+                      value={c as ExpressionOperatorType}
                     />
                   );
                   break;
@@ -70,7 +70,17 @@ const ReadOnlyExpressionOperator: React.FunctionComponent<Props> = ({
               }
 
               // Wrap it with a line to
-              return <div key={i}>{itemElement}</div>;
+              return (
+                <React.Fragment key={i}>
+                  <LineEndpoint lineEndpointId={itemLineEndpointId}>
+                    {itemElement}
+                  </LineEndpoint>
+                  <LineTo
+                    fromId={idWithinExpression}
+                    toId={itemLineEndpointId}
+                  />
+                </React.Fragment>
+              );
             })
             .filter(c => !!c) // null filter
         }
