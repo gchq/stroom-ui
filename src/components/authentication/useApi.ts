@@ -1,7 +1,9 @@
 import * as Cookies from "cookies-js";
 import { FormikBag } from "formik";
+import * as queryString from "query-string";
 import { useCallback } from "react";
 import useHttpClient from "src/lib/useHttpClient";
+import useRouter from "src/lib/useRouter";
 import { useConfig } from "src/startup/config";
 import { ChangePasswordResponse } from ".";
 import {
@@ -32,7 +34,17 @@ interface Api {
 
 export const useApi = (): Api => {
   const { httpGetJson, httpPostJsonResponse } = useHttpClient();
-  const { authenticationServiceUrl, appClientId } = useConfig();
+  let { authenticationServiceUrl, appClientId } = useConfig();
+
+  // If we have a clientId on the URL we'll use that. It means we're logging
+  // in on behalf of a relying party so we need to identify as them.
+  const { router } = useRouter();
+  if (!!router && !!router.location) {
+    const query = queryString.parse(router.location.search);
+    if (!!query.clientId) {
+      appClientId = query.clientId + "";
+    }
+  }
 
   const apiLogin = useCallback(
     (credentials: Credentials) => {
