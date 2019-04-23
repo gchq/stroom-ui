@@ -24,7 +24,6 @@
  */
 import * as uuidv4 from "uuid/v4";
 import { Tree, TWithLineage } from "./types";
-import { HasUuid } from "src/types";
 
 export function mapObject<IN, OUT>(
   input: { [id: string]: IN },
@@ -37,6 +36,10 @@ export function mapObject<IN, OUT>(
     }
     return previous;
   }, {});
+}
+
+interface HasUuid {
+  uuid: string;
 }
 
 export type Filter<T extends HasUuid> = (t: Tree<T> & T) => boolean;

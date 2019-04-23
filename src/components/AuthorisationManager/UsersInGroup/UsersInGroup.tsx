@@ -5,9 +5,9 @@ import ThemedConfirm, {
   useDialog as useThemedConfirm,
 } from "src/components/ThemedConfirm";
 import { StroomUser, useUsersInGroup } from "../api/userGroups";
-import UserModalPicker, {
-  useDialog as useUserModalPicker,
-} from "../UserModalPicker";
+import UserPickerDialog, {
+  useDialog as useUserPickerDialog,
+} from "../UserPickerDialog";
 import UsersTable, { useTable as useUsersTable } from "../UsersTable";
 
 interface Props {
@@ -51,8 +51,8 @@ const UsersInGroup = ({ group }: Props) => {
   const {
     componentProps: userPickerProps,
     showDialog: showUserPicker,
-  } = useUserModalPicker({
-    isGroup: false,
+  } = useUserPickerDialog({
+    pickerBaseProps: { isGroup: false },
     onConfirm: addToGroup,
   });
 
@@ -71,7 +71,7 @@ const UsersInGroup = ({ group }: Props) => {
         onClick={goToSelectedUser}
       />
       <UsersTable {...tableProps} />
-      <UserModalPicker {...userPickerProps} />
+      <UserPickerDialog {...userPickerProps} />
       <ThemedConfirm {...deleteGroupMembershipComponentProps} />
     </div>
   );

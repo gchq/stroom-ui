@@ -15,15 +15,15 @@
  */
 import * as React from "react";
 
-import ROExpressionOperator from "./ROExpressionOperator";
-import { ExpressionOperatorType } from "./types";
+import ReadOnlyExpressionOperator from "./ReadOnlyExpressionOperator";
+import { ExpressionOperatorType } from "../types";
 
 interface Props {
   expression: ExpressionOperatorType;
 }
 
-const ROExpressionBuilder: React.FunctionComponent<Props> = ({
+const ReadOnlyExpressionBuilder: React.FunctionComponent<Props> = ({
   expression,
-}) => <ROExpressionOperator isEnabled operator={expression} />;
+}) => <ReadOnlyExpressionOperator isEnabled operator={expression} />;
 
-export default ROExpressionBuilder;
+export default ReadOnlyExpressionBuilder;

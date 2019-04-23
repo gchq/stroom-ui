@@ -19,6 +19,7 @@ import { storiesOf } from "@storybook/react";
 import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
 import ConditionPicker from "./ConditionPicker";
 import { ConditionType } from "../types";
+import JsonDebug from "src/testing/JsonDebug";
 
 const stories = storiesOf("Expression/Condition Picker", module);
 
@@ -27,7 +28,12 @@ const TestHarness: React.FunctionComponent = () => {
     undefined,
   );
 
-  return <ConditionPicker value={value} onChange={onChange} />;
+  return (
+    <div>
+      <ConditionPicker value={value} onChange={onChange} />
+      <JsonDebug value={{ value }} />
+    </div>
+  );
 };
 
 addThemedStories(stories, () => <TestHarness />);

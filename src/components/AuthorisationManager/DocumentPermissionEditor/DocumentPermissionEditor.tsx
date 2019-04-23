@@ -4,6 +4,9 @@ import {
   StroomUser,
   useUsers,
 } from "src/components/AuthorisationManager/api/userGroups";
+import UserPickerDialog, {
+  useDialog as userUserPickerDialog,
+} from "src/components/AuthorisationManager/UserPickerDialog";
 import Button from "src/components/Button";
 import { useDocumentTree } from "src/components/DocumentEditors/api/explorer";
 import IconHeader from "src/components/IconHeader";
@@ -12,9 +15,6 @@ import ThemedConfirm, {
 } from "src/components/ThemedConfirm";
 import useRouter from "src/lib/useRouter";
 import useAppNavigation from "../../AppChrome/useAppNavigation";
-import UserModalPicker, {
-  useDialog as useUserModalPicker,
-} from "../UserModalPicker";
 import UsersTable, { useTable as useUsersTable } from "../UsersTable";
 
 interface Props {
@@ -53,8 +53,8 @@ export const DocumentPermissionEditor: React.FunctionComponent<Props> = ({
   const {
     componentProps: userPickerProps,
     showDialog: showUserPicker,
-  } = useUserModalPicker({
-    isGroup: undefined, // either,
+  } = userUserPickerDialog({
+    pickerBaseProps: { isGroup: undefined },
     onConfirm: preparePermissionsForUser,
   });
 
@@ -122,7 +122,7 @@ export const DocumentPermissionEditor: React.FunctionComponent<Props> = ({
         <UsersTable {...usersTableProps} />
 
         <ThemedConfirm {...confirmClearProps} />
-        <UserModalPicker {...userPickerProps} />
+        <UserPickerDialog {...userPickerProps} />
       </div>
     </div>
   );

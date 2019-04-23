@@ -24,7 +24,7 @@ import {
   ExpressionOperatorWithUuid,
   ExpressionHasUuid,
 } from "./types";
-import ROExpressionBuilder from "./ROExpressionBuilder";
+import ReadOnlyExpressionBuilder from "./ReadOnlyExpressionBuilder/ReadOnlyExpressionBuilder";
 import {
   updateItemInTree,
   addItemsToTree,
@@ -128,7 +128,7 @@ const ExpressionBuilder: React.FunctionComponent<Props> = ({
           expressionItemMoved={expressionItemMoved}
         />
       ) : (
-        <ROExpressionBuilder expression={expression} />
+        <ReadOnlyExpressionBuilder expression={expression} />
       )}
     </div>
   );

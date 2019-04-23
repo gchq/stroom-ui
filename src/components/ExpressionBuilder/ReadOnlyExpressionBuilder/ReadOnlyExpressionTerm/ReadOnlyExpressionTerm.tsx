@@ -1,5 +1,5 @@
 import * as React from "react";
-import { ExpressionTermType } from "./types";
+import { ExpressionTermType } from "../../types";
 
 interface Props {
   term: ExpressionTermType;
@@ -9,7 +9,7 @@ interface Props {
 /**
  * Read only expression operator
  */
-const ROExpressionTerm: React.FunctionComponent<Props> = ({
+const ReadOnlyExpressionTerm: React.FunctionComponent<Props> = ({
   term,
   isEnabled,
 }) => {
@@ -29,4 +29,4 @@ const ROExpressionTerm: React.FunctionComponent<Props> = ({
   );
 };
 
-export default ROExpressionTerm;
+export default ReadOnlyExpressionTerm;

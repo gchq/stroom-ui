@@ -1,6 +1,10 @@
 import * as React from "react";
 import Select from "react-select";
-import { ConditionType, ConditionDisplayValues } from "../types";
+import {
+  ConditionType,
+  ConditionDisplayValues,
+  conditionTypes,
+} from "../types";
 
 interface Props {
   className?: string;
@@ -10,33 +14,31 @@ interface Props {
 }
 
 interface ConditionOption {
-  value: ConditionType;
+  value: string;
   label: string;
 }
 
-const DEFAULT_OPTIONS: ConditionType[] = Object.keys(
-  ConditionDisplayValues,
-) as ConditionType[];
-
 const ConditionPicker: React.FunctionComponent<Props> = ({
   className,
-  conditionOptions = DEFAULT_OPTIONS,
+  conditionOptions = conditionTypes,
   value,
   onChange,
 }) => {
-  const options = React.useMemo(() => {
-    return conditionOptions.map(d => ({
-      value: d[0] as ConditionType,
-      label: d[1],
-    }));
-  }, [conditionOptions]);
+  const options: ConditionOption[] = React.useMemo(
+    () =>
+      conditionOptions.map(c => ({
+        value: c,
+        label: ConditionDisplayValues[c],
+      })),
+    [conditionOptions],
+  );
 
   return (
     <Select
       className={className}
       placeholder="Condition"
       value={options.find(o => o.value === value)}
-      onChange={(o: ConditionOption) => onChange(o.value)}
+      onChange={(o: ConditionOption) => onChange(o.value as ConditionType)}
       options={options}
     />
   );

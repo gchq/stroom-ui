@@ -1,7 +1,7 @@
-import { HasUuid } from "src/types";
 import { Tree, TWithLineage } from "src/lib/treeUtils";
 
-export interface DocRefType extends HasUuid {
+export interface DocRefType {
+  uuid: string;
   type: string;
   name?: string;
 }
@@ -29,7 +29,8 @@ export type DocRefWithLineage = TWithLineage<DocRefType>;
 
 export type DocRefConsumer = (d: DocRefType) => void;
 
-export interface DocumentBase<T extends string> extends HasUuid {
+export interface DocumentBase<T extends string> {
+  uuid: string;
   type: T;
   name?: string;
 }

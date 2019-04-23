@@ -1,8 +1,12 @@
 import * as React from "react";
 
 import Select from "react-select";
+import CreatableSelect from "react-select/lib/Creatable";
 
-import { useManageUsers } from "src/components/AuthorisationManager/api/userGroups";
+import {
+  useManageUsers,
+  User,
+} from "src/components/AuthorisationManager/api/userGroups";
 import { Props, BaseProps, UseProps } from "./types";
 
 const DEFAULT_USER_UUIDS_TO_FILTER_OUT: string[] = [];
@@ -18,10 +22,24 @@ const UserPicker: React.FunctionComponent<Props> = ({
   isGroup,
   valuesToFilterOut = DEFAULT_USER_UUIDS_TO_FILTER_OUT,
 }) => {
-  const { findUsers, users } = useManageUsers();
+  const { findUsers, users, createUser } = useManageUsers();
   React.useEffect(() => {
     findUsers(undefined, isGroup, undefined);
   }, [findUsers]);
+
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
+  const onCreateOption = React.useCallback(
+    d => {
+      setIsLoading(true);
+      createUser(d, isGroup !== undefined ? isGroup : false).then(
+        (newUser: User) => {
+          onChange(newUser.uuid);
+          setIsLoading(false);
+        },
+      );
+    },
+    [isLoading],
+  );
 
   const options: UserOption[] = React.useMemo(
     () =>
@@ -33,8 +51,16 @@ const UserPicker: React.FunctionComponent<Props> = ({
         })),
     [users, valuesToFilterOut],
   );
-
-  return (
+  return isGroup ? (
+    <CreatableSelect
+      isLoading={isLoading}
+      value={options.find(o => o.value === value)}
+      onChange={(o: UserOption) => onChange(o.value)}
+      placeholder="Index Volume Group"
+      onCreateOption={onCreateOption}
+      options={options}
+    />
+  ) : (
     <Select
       value={options.find(o => o.value === value)}
       onChange={(o: UserOption) => onChange(o.value)}

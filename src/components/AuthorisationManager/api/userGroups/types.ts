@@ -1,6 +1,5 @@
-import { HasUuid } from "src/types";
-
-export interface StroomUser extends HasUuid {
+export interface StroomUser {
+  uuid: string;
   name: string;
   group: boolean;
 }

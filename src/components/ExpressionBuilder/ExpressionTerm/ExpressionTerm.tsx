@@ -19,22 +19,22 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import Select from "react-select";
 import { DragSourceSpec, DragSource } from "react-dnd";
-import Button from "../Button";
-import ConditionPicker from "./ConditionPicker/ConditionPicker";
+import Button from "../../Button";
+import ConditionPicker from "../ConditionPicker/ConditionPicker";
 import {
   DragDropTypes,
   DragObject,
   dragCollect,
   DragCollectedProps,
-} from "./types";
-import ValueWidget from "./ValueWidget";
+} from "../types";
+import ValueWidget from "../ValueWidget";
 import {
   DataSourceType,
   ConditionType,
   DataSourceFieldType,
   ExpressionTermWithUuid,
-} from "./types";
-import withValueType from "./withValueType";
+} from "../types";
+import withValueType from "../withValueType";
 
 interface Props {
   dataSource: DataSourceType;

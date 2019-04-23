@@ -19,7 +19,6 @@ import {
   ConnectDropTarget,
 } from "react-dnd";
 import { DictionaryDoc } from "src/components/DocumentEditors/useDocumentApi/types/dictionaryDoc";
-import { HasUuid } from "src/types";
 
 export enum DragDropTypes {
   OPERATOR = "operator",
@@ -49,29 +48,36 @@ export const dragCollect: DragSourceCollector<
   };
 };
 
-export type ConditionType =
-  | "EQUALS"
-  | "IN"
-  | "IN_DICTIONARY"
-  | "IS_DOC_REF"
-  | "CONTAINS"
-  | "BETWEEN"
-  | "GREATER_THAN"
-  | "GREATER_THAN_OR_EQUAL_TO"
-  | "LESS_THAN"
-  | "LESS_THAN_OR_EQUAL_TO";
+interface ConditionTypes<T> {
+  EQUALS: T;
+  IN: T;
+  IN_DICTIONARY: T;
+  IS_DOC_REF: T;
+  CONTAINS: T;
+  BETWEEN: T;
+  GREATER_THAN: T;
+  GREATER_THAN_OR_EQUAL_TO: T;
+  LESS_THAN: T;
+  LESS_THAN_OR_EQUAL_TO: T;
+}
 
-export const ConditionDisplayValues = {
-  CONTAINS: "contains",
+export const ConditionDisplayValues: ConditionTypes<string> = {
   EQUALS: "=",
+  IN: "in",
+  IN_DICTIONARY: "in dictionary",
+  IS_DOC_REF: "is DocRef",
+  CONTAINS: "contains",
+  BETWEEN: "between",
   GREATER_THAN: ">",
   GREATER_THAN_OR_EQUAL_TO: ">=",
   LESS_THAN: "<",
   LESS_THAN_OR_EQUAL_TO: "<=",
-  BETWEEN: "between",
-  IN: "in",
-  IN_DICTIONARY: "in dictionary",
 };
+
+export type ConditionType = keyof ConditionTypes<any>;
+export const conditionTypes: ConditionType[] = Object.keys(
+  ConditionDisplayValues,
+).map(d => d as ConditionType);
 
 export interface DataSourceFieldType {
   type: "ID" | "FIELD" | "NUMERIC_FIELD" | "DATE_FIELD";
@@ -106,13 +112,16 @@ export interface ExpressionTermType extends ExpressionItem {
   dictionary?: DictionaryDoc | null;
 }
 
-export interface ExpressionHasUuid extends ExpressionItem, HasUuid {}
+export interface ExpressionHasUuid extends ExpressionItem {
+  uuid: string;
+}
 
-export interface ExpressionOperatorWithUuid
-  extends ExpressionOperatorType,
-    HasUuid {
+export interface ExpressionOperatorWithUuid extends ExpressionOperatorType {
+  uuid: string;
   enabled: boolean;
   children: (ExpressionOperatorWithUuid | ExpressionTermWithUuid)[];
 }
 
-export interface ExpressionTermWithUuid extends ExpressionTermType, HasUuid {}
+export interface ExpressionTermWithUuid extends ExpressionTermType {
+  uuid: string;
+}

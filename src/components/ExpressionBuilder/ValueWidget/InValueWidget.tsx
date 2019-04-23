@@ -16,72 +16,40 @@
 
 import * as React from "react";
 
-import Button from "../../Button";
 import { ControlledInput } from "src/lib/useForm/types";
+import CreatableSelect from "react-select/lib/Creatable";
 
+interface InOption {
+  value: string;
+  label: string;
+}
+
+/**
+ * Capture multiple values for comparison. The value and onChange transact in CSV
+ */
 const InValueWidget: React.FunctionComponent<ControlledInput<any>> = ({
   value,
   onChange,
 }) => {
-  const [inputHasFocus, setInputHasFocus] = React.useState(false);
-  const [composingValue, setComposingValue] = React.useState("");
-
-  const hasValues = !!value && value.length > 0;
-  const splitValues: string[] = hasValues ? value.split(",") : [];
-
-  const valueToShow = inputHasFocus ? composingValue : value;
-
-  const onInputFocus = () => {
-    setInputHasFocus(true);
-  };
-  const onInputBlur = () => {
-    setInputHasFocus(false);
-  };
-  const onInputChange: React.ChangeEventHandler<HTMLInputElement> = ({
-    target: { value },
-  }: React.ChangeEvent<HTMLInputElement>) => {
-    setComposingValue(value);
-  };
-  const onInputSubmit = () => {
-    const newValue = splitValues
-      .filter(s => s !== composingValue)
-      .concat([composingValue])
-      .join();
-    onChange(newValue);
-
-    setComposingValue("");
-  };
-
-  const onInputKeyDown: React.KeyboardEventHandler<HTMLInputElement> = e => {
-    if (e.key === "Enter") {
-      onInputSubmit();
-    }
-  };
-
-  const onTermDelete = (term: string) => {
-    const newValue = splitValues.filter(s => s !== term).join();
-    onChange(newValue);
-  };
-  return (
-    <div className="dropdown">
-      <input
-        placeholder="Type and hit 'Enter'"
-        value={valueToShow}
-        onFocus={onInputFocus}
-        onBlur={onInputBlur}
-        onChange={onInputChange}
-        onKeyDown={onInputKeyDown}
-      />
-      <div className="dropdown__content">
-        {splitValues.map(k => (
-          <div key={k}>
-            {k}
-            <Button onClick={() => onTermDelete(k)} text="X" />
-          </div>
-        ))}
-      </div>
-    </div>
+  const splitValues: string[] = React.useMemo(
+    () => (!!value && value.length > 0 ? value.split(",") : []),
+    [value],
   );
+  const options: InOption[] = React.useMemo(
+    () =>
+      splitValues.map(c => ({
+        value: c,
+        label: c,
+      })),
+    [splitValues],
+  );
+
+  const handleChange = React.useCallback(
+    (newValue: InOption[]) => onChange(newValue.map(i => i.value).join(",")),
+    [onChange],
+  );
+
+  return <CreatableSelect isMulti options={options} onChange={handleChange} />;
 };
 
 export default InValueWidget;
