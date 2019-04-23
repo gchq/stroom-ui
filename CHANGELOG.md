@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [v1.0-alpha.7] - 2019-04-23
+
+- Add SCSS for auth
+
 ## [v1.0-alpha.6] - 2019-04-23
 
 - Build fixes
@@ -31,7 +35,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Experimental first tag
 
-[unreleased]: https://github.com/gchq/stroom-auth/compare/v1.0-alpha.5...master
+[unreleased]: https://github.com/gchq/stroom-auth/compare/v1.0-alpha.7...master
+[v1.0-alpha.7]: https://github.com/gchq/stroom-auth/compare/v1.0-alpha.6...v1.0-alpha.7
 [v1.0-alpha.6]: https://github.com/gchq/stroom-auth/compare/v1.0-alpha.5...v1.0-alpha.6
 [v1.0-alpha.5]: https://github.com/gchq/stroom-auth/compare/v1.0-alpha.4...v1.0-alpha.5
 [v1.0-alpha.4]: https://github.com/gchq/stroom-auth/compare/v1.0-alpha.3...v1.0-alpha.4
