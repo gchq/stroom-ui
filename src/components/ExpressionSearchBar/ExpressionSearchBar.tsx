@@ -15,7 +15,6 @@
  */
 
 import * as React from "react";
-import * as uuidv4 from "uuid/v4";
 
 import { processSearchString } from "./expressionSearchBarUtils";
 import Button from "../Button";
@@ -24,22 +23,21 @@ import { toString } from "../ExpressionBuilder/expressionUtils";
 import { ExpressionBuilder } from "../ExpressionBuilder";
 import {
   DataSourceType,
-  ExpressionOperatorWithUuid,
+  ExpressionOperatorType,
 } from "../ExpressionBuilder/types";
 
 interface Props {
   className?: string;
   dataSource: DataSourceType;
-  onSearch: (e: ExpressionOperatorWithUuid) => void;
+  onSearch: (e: ExpressionOperatorType) => void;
   initialSearchString?: string;
-  initialSearchExpression?: ExpressionOperatorWithUuid;
+  initialSearchExpression?: ExpressionOperatorType;
 }
 
-const defaultSearchExpression: ExpressionOperatorWithUuid = {
+const defaultSearchExpression: ExpressionOperatorType = {
   type: "operator",
   op: "AND",
   enabled: true,
-  uuid: uuidv4(),
   children: [],
 };
 
@@ -50,9 +48,9 @@ const ExpressionSearchBar: React.FunctionComponent<Props> = ({
   onSearch,
 }) => {
   const [isExpression, setIsExpression] = React.useState<boolean>(false);
-  const [expression, setExpression] = React.useState<
-    ExpressionOperatorWithUuid
-  >(initialSearchExpression || defaultSearchExpression);
+  const [expression, setExpression] = React.useState<ExpressionOperatorType>(
+    initialSearchExpression || defaultSearchExpression,
+  );
   const [searchString, setSearchString] = React.useState<string>(
     initialSearchString || "",
   );
@@ -69,7 +67,7 @@ const ExpressionSearchBar: React.FunctionComponent<Props> = ({
       const parsedExpression = processSearchString(dataSource, "");
       const e = assignRandomUuids(
         parsedExpression.expression,
-      ) as ExpressionOperatorWithUuid;
+      ) as ExpressionOperatorType;
       setExpression(e);
     }
 
@@ -79,8 +77,8 @@ const ExpressionSearchBar: React.FunctionComponent<Props> = ({
   const onChange: React.ChangeEventHandler<HTMLInputElement> = ({
     target: { value },
   }) => {
-    const expression = processSearchString(dataSource, value);
-    const invalidFields = expression.fields.filter(
+    const { fields, expression } = processSearchString(dataSource, value);
+    const invalidFields = fields.filter(
       field =>
         !field.conditionIsValid || !field.fieldIsValid || !field.valueIsValid,
     );
@@ -97,12 +95,7 @@ const ExpressionSearchBar: React.FunctionComponent<Props> = ({
     setIsSearchStringValid(invalidFields.length === 0);
     setSearchStringValidationMessages(searchStringValidationMessages);
     setSearchString(value);
-
-    const parsedExpression = processSearchString(dataSource, searchString);
-    const e = assignRandomUuids(
-      parsedExpression.expression,
-    ) as ExpressionOperatorWithUuid;
-    setExpression(e);
+    setExpression(expression);
   };
 
   const onClickSearch = React.useCallback(() => {
@@ -113,11 +106,8 @@ const ExpressionSearchBar: React.FunctionComponent<Props> = ({
   }, [setIsExpression]);
   const onClickSetExpressionSearch = React.useCallback(() => {
     if (!isExpression) {
-      const parsedExpression = processSearchString(dataSource, searchString);
-      const e = assignRandomUuids(
-        parsedExpression.expression,
-      ) as ExpressionOperatorWithUuid;
-      setExpression(e);
+      const { expression } = processSearchString(dataSource, searchString);
+      setExpression(expression);
       setIsExpression(true);
     }
   }, [dataSource, searchString, setExpression, setIsExpression]);

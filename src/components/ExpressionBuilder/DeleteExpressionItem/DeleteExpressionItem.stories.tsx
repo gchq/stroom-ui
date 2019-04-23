@@ -6,15 +6,17 @@ import DeleteExpressionItem, { useDialog } from "./DeleteExpressionItem";
 import JsonDebug from "src/testing/JsonDebug";
 import Button from "../../Button";
 import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
+import { getNewOperator } from "../expressionUtils";
+import { ExpressionItem } from "../types";
 
-const EXPRESSION_ITEM_ID = "SomeItemID";
+const EXPRESSION_ITEM: ExpressionItem = getNewOperator();
 
 const stories = storiesOf("Expression/Delete Expression Item", module);
 
 const TestHarness: React.FunctionComponent = () => {
-  const [itemDeleted, setItemDeleted] = React.useState<string | undefined>(
-    undefined,
-  );
+  const [itemDeleted, setItemDeleted] = React.useState<
+    ExpressionItem | undefined
+  >(undefined);
 
   const { showDialog, componentProps } = useDialog(setItemDeleted);
 
@@ -23,7 +25,7 @@ const TestHarness: React.FunctionComponent = () => {
   }, [setItemDeleted]);
 
   const showDialogForTestItem = React.useCallback(() => {
-    showDialog(EXPRESSION_ITEM_ID);
+    showDialog(EXPRESSION_ITEM);
   }, [showDialog]);
 
   return (

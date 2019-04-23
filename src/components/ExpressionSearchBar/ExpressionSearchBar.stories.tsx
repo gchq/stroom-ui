@@ -23,13 +23,13 @@ import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
 
 import JsonDebug from "src/testing/JsonDebug";
 import Button from "../Button";
-import { ExpressionOperatorWithUuid } from "../ExpressionBuilder/types";
+import { ExpressionOperatorType } from "../ExpressionBuilder/types";
 
 const stories = storiesOf("Expression/Search Bar", module);
 
 const TestHarness: React.FunctionComponent = () => {
   const [lastSearch, setLastSearch] = React.useState<
-    ExpressionOperatorWithUuid | undefined
+    ExpressionOperatorType | undefined
   >(undefined);
 
   return (

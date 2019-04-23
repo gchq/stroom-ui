@@ -1,28 +1,29 @@
 import * as React from "react";
 
 import { ThemedConfirm } from "src/components/ThemedConfirm";
+import { ExpressionItem } from "../types";
 
 interface Props {
   isOpen: boolean;
   onCloseDialog: () => void;
-  expressionItemId?: string;
-  onDeleteExpressionItem: (expressionItemId: string) => void;
+  expressionItem?: ExpressionItem;
+  onDeleteExpressionItem: (expressionItem: ExpressionItem) => void;
 }
 
 const DeletePipelineExpressionItem: React.FunctionComponent<Props> = ({
   isOpen,
   onCloseDialog,
-  expressionItemId,
+  expressionItem,
   onDeleteExpressionItem,
 }) => {
   return (
     <ThemedConfirm
       isOpen={isOpen}
-      question={`Delete ${expressionItemId} from expression?`}
+      question={`Delete ${expressionItem} from expression?`}
       onCloseDialog={onCloseDialog}
       onConfirm={() => {
-        if (!!expressionItemId) {
-          onDeleteExpressionItem(expressionItemId);
+        if (!!expressionItem) {
+          onDeleteExpressionItem(expressionItem);
         }
         onCloseDialog();
       }}
@@ -32,30 +33,30 @@ const DeletePipelineExpressionItem: React.FunctionComponent<Props> = ({
 
 interface UseDialog {
   componentProps: Props;
-  showDialog: (_expressionItemId: string) => void;
+  showDialog: (_expressionItem: ExpressionItem) => void;
 }
 
 export const useDialog = (
-  onDeleteExpressionItem: (e: string) => void,
+  onDeleteExpressionItem: (e: ExpressionItem) => void,
 ): UseDialog => {
-  const [expressionItemId, setExpressionItemId] = React.useState<
-    string | undefined
+  const [expressionItem, setExpressionItem] = React.useState<
+    ExpressionItem | undefined
   >(undefined);
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
 
   return {
     componentProps: {
       onDeleteExpressionItem,
-      expressionItemId,
+      expressionItem,
       isOpen,
       onCloseDialog: () => {
         setIsOpen(false);
-        setExpressionItemId(undefined);
+        setExpressionItem(undefined);
       },
     },
-    showDialog: _expressionItemId => {
+    showDialog: _expressionItem => {
       setIsOpen(true);
-      setExpressionItemId(_expressionItemId);
+      setExpressionItem(_expressionItem);
     },
   };
 };

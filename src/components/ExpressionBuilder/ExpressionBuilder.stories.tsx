@@ -21,10 +21,10 @@ import ExpressionBuilder from "./ExpressionBuilder";
 
 import { testExpression, testDataSource, simplestExpression } from "./test";
 
-import { ExpressionOperatorWithUuid } from "./types";
+import { ExpressionOperatorType } from "./types";
 
 const PopulatedEditable = () => {
-  const [expression, onChange] = React.useState<ExpressionOperatorWithUuid>(
+  const [expression, onChange] = React.useState<ExpressionOperatorType>(
     testExpression,
   );
 
@@ -40,7 +40,7 @@ const PopulatedEditable = () => {
 };
 
 const PopulatedReadOnly = () => {
-  const [expression, onChange] = React.useState<ExpressionOperatorWithUuid>(
+  const [expression, onChange] = React.useState<ExpressionOperatorType>(
     testExpression,
   );
 
@@ -54,7 +54,7 @@ const PopulatedReadOnly = () => {
 };
 
 const SimplestEditable = () => {
-  const [expression, onChange] = React.useState<ExpressionOperatorWithUuid>(
+  const [expression, onChange] = React.useState<ExpressionOperatorType>(
     simplestExpression,
   );
 
@@ -69,7 +69,7 @@ const SimplestEditable = () => {
 };
 
 const MissingDataSource = () => {
-  const [expression, onChange] = React.useState<ExpressionOperatorWithUuid>(
+  const [expression, onChange] = React.useState<ExpressionOperatorType>(
     testExpression,
   );
 
@@ -83,7 +83,7 @@ const MissingDataSource = () => {
 };
 
 const HideModeToggle = () => {
-  const [expression, onChange] = React.useState<ExpressionOperatorWithUuid>(
+  const [expression, onChange] = React.useState<ExpressionOperatorType>(
     testExpression,
   );
 
@@ -98,7 +98,7 @@ const HideModeToggle = () => {
 };
 
 const HideModeButEdit = () => {
-  const [expression, onChange] = React.useState<ExpressionOperatorWithUuid>(
+  const [expression, onChange] = React.useState<ExpressionOperatorType>(
     testExpression,
   );
 

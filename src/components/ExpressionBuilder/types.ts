@@ -36,7 +36,7 @@ export interface DropCollectedProps {
 }
 
 export interface DragObject {
-  expressionItem: ExpressionOperatorWithUuid | ExpressionTermWithUuid;
+  expressionItem: ExpressionOperatorType | ExpressionTermType;
 }
 
 export const dragCollect: DragSourceCollector<

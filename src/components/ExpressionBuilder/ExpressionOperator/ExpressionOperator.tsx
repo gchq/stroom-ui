@@ -31,32 +31,23 @@ import {
   dragCollect,
   DragCollectedProps,
   DropCollectedProps,
+  ExpressionOperatorType,
+  ExpressionItem,
+  ExpressionTermType,
 } from "../types";
 import ExpressionTerm from "src/components/ExpressionBuilder/ExpressionTerm/ExpressionTerm";
 import Button from "src/components/Button";
-import {
-  DataSourceType,
-  OperatorType,
-  ExpressionOperatorWithUuid,
-  OperatorTypeValues,
-  ExpressionHasUuid,
-  ExpressionTermWithUuid,
-} from "../types";
+import { DataSourceType, OperatorType, OperatorTypeValues } from "../types";
 import { LineTo } from "src/components/LineTo";
 
-interface Props {
+import { getNewTerm, getNewOperator } from "../expressionUtils";
+import { ControlledInput } from "src/lib/useForm/types";
+
+interface Props extends ControlledInput<ExpressionOperatorType> {
   dataSource: DataSourceType;
-  operator: ExpressionOperatorWithUuid;
   isRoot?: boolean;
   isEnabled: boolean;
-  showDeleteItemDialog: (itemId: string) => void;
-  expressionTermAdded: (itemId: string) => void;
-  expressionOperatorAdded: (itemId: string) => void;
-  expressionItemUpdated: (itemId: string, updates: object) => void;
-  expressionItemMoved: (
-    destination: ExpressionHasUuid,
-    itemToMove: ExpressionHasUuid,
-  ) => void;
+  showDeleteItemDialog: (e: ExpressionItem) => void;
 }
 
 interface EnhancedProps extends Props, DragCollectedProps, DropCollectedProps {}
@@ -67,17 +58,22 @@ const dragSource: DragSourceSpec<Props, DragObject> = {
   },
   beginDrag(props) {
     return {
-      expressionItem: props.operator,
+      expressionItem: props.value,
     };
   },
 };
 
 const dropTarget: DropTargetSpec<Props> = {
   canDrop(props, monitor) {
-    return canMove(monitor.getItem(), props.operator);
+    return canMove(monitor.getItem(), props.value);
   },
   drop(props, monitor) {
-    props.expressionItemMoved(monitor.getItem().expressionItem, props.operator);
+    //TODO fix drag and drop
+    console.log("Drag and Drop", {
+      item: monitor.getItem().expressionItem,
+      operator: props.value,
+    });
+    //props.expressionItemMoved(monitor.getItem().expressionItem, props.operator);
   },
 };
 
@@ -102,7 +98,7 @@ const enhance = pipe(
 );
 
 const ExpressionOperator: React.FunctionComponent<EnhancedProps> = ({
-  operator,
+  value,
   isRoot,
   isEnabled,
   dataSource,
@@ -113,36 +109,51 @@ const ExpressionOperator: React.FunctionComponent<EnhancedProps> = ({
   canDrop,
   connectDragSource,
 
-  expressionOperatorAdded,
-  expressionTermAdded,
-  expressionItemUpdated,
-  expressionItemMoved,
+  onChange,
 }) => {
-  const onAddOperator = () => {
-    expressionOperatorAdded(operator.uuid);
-  };
-
-  const onAddTerm = () => {
-    expressionTermAdded(operator.uuid);
-  };
-
-  const onOpChange = (op: OperatorType) => {
-    expressionItemUpdated(operator.uuid, {
-      op,
+  const onAddOperator = React.useCallback(() => {
+    onChange({
+      ...value,
+      children: [...value.children, getNewOperator()],
     });
-  };
+  }, [value, onChange]);
 
-  const onRequestDeleteOperator = () => {
-    showDeleteItemDialog(operator.uuid);
-  };
+  const onAddTerm = React.useCallback(() => {
+    onChange({
+      ...value,
+      children: [...value.children, getNewTerm()],
+    });
+  }, [value, onChange]);
 
-  const onEnabledToggled = () => {
+  const onOpChange = React.useCallback(
+    (op: OperatorType) => {
+      onChange({
+        ...value,
+        op,
+      });
+    },
+    [onChange],
+  );
+
+  const onEnabledToggled = React.useCallback(() => {
     if (!isRoot) {
-      expressionItemUpdated(operator.uuid, {
-        enabled: !operator.enabled,
+      onChange({
+        ...value,
+        enabled: !value.enabled,
       });
     }
-  };
+  }, [isRoot, value, onChange]);
+
+  const onExpressionTermUpdated = React.useCallback(
+    (updated: ExpressionTermType) => {
+      console.log("Term Updated Within Expression", updated);
+    },
+    [],
+  );
+
+  const onRequestDeleteOperator = React.useCallback(() => {
+    showDeleteItemDialog(value);
+  }, [value, showDeleteItemDialog]);
 
   let dndBarColour = "grey";
   if (isOver) {
@@ -158,7 +169,7 @@ const ExpressionOperator: React.FunctionComponent<EnhancedProps> = ({
   }
 
   let enabledColour = "grey";
-  if (operator.enabled) {
+  if (value.enabled) {
     enabledColour = "blue";
   }
 
@@ -176,7 +187,7 @@ const ExpressionOperator: React.FunctionComponent<EnhancedProps> = ({
 
           {OperatorTypeValues.map((l, i) => (
             <Button
-              selected={operator.op === l}
+              selected={value.op === l}
               key={l}
               groupPosition={
                 i === 0
@@ -226,23 +237,20 @@ const ExpressionOperator: React.FunctionComponent<EnhancedProps> = ({
         {isOver && dropTarget.canDrop && (
           <div className="operator__placeholder" />
         )}
-        {operator.children &&
-          operator.children.map((c: ExpressionHasUuid) => {
+        {value.children &&
+          value.children.map((c: ExpressionItem, i) => {
             let itemElement;
             switch (c.type) {
               case "term":
                 itemElement = (
-                  <div key={c.uuid}>
+                  <div>
                     <ExpressionTerm
                       isEnabled={isEnabled && c.enabled}
-                      term={c as ExpressionTermWithUuid}
+                      value={c as ExpressionTermType}
+                      onChange={onExpressionTermUpdated}
                       {...{
                         showDeleteItemDialog,
                         dataSource,
-                        expressionTermAdded,
-                        expressionOperatorAdded,
-                        expressionItemUpdated,
-                        expressionItemMoved,
                       }}
                     />
                   </div>
@@ -252,14 +260,11 @@ const ExpressionOperator: React.FunctionComponent<EnhancedProps> = ({
                 itemElement = (
                   <EnhancedExpressionOperator
                     isEnabled={isEnabled && c.enabled}
-                    operator={c as ExpressionOperatorWithUuid}
+                    value={c as ExpressionOperatorType}
                     {...{
                       showDeleteItemDialog,
                       dataSource,
-                      expressionTermAdded,
-                      expressionOperatorAdded,
-                      expressionItemUpdated,
-                      expressionItemMoved,
+                      onChange,
                     }}
                   />
                 );
@@ -270,8 +275,8 @@ const ExpressionOperator: React.FunctionComponent<EnhancedProps> = ({
 
             // Wrap it with a line to
             return (
-              <div key={c.uuid} className="operator__child">
-                <LineTo fromId={operator.uuid} toId={c.uuid} />
+              <div key={i} className="operator__child">
+                <LineTo fromId="TODOFROM" toId="TODOTO" />
                 {itemElement}
               </div>
             );

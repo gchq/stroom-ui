@@ -21,26 +21,18 @@ import DeleteExpressionItem, {
 } from "./DeleteExpressionItem/DeleteExpressionItem";
 import {
   DataSourceType,
-  ExpressionOperatorWithUuid,
-  ExpressionHasUuid,
+  ExpressionItem,
+  ExpressionOperatorType,
 } from "./types";
 import ReadOnlyExpressionBuilder from "./ReadOnlyExpressionBuilder/ReadOnlyExpressionBuilder";
-import {
-  updateItemInTree,
-  addItemsToTree,
-  deleteItemFromTree,
-  moveItemsInTree,
-} from "src/lib/treeUtils/treeUtils";
-
-import { getNewTerm, getNewOperator } from "./expressionUtils";
 
 interface Props {
   className?: string;
   dataSource: DataSourceType;
   showModeToggle?: boolean;
   editMode?: boolean;
-  expression: ExpressionOperatorWithUuid;
-  onChange: (e: ExpressionOperatorWithUuid) => void;
+  expression: ExpressionOperatorType;
+  onChange: (e: ExpressionOperatorType) => void;
 }
 
 const ExpressionBuilder: React.FunctionComponent<Props> = ({
@@ -52,41 +44,24 @@ const ExpressionBuilder: React.FunctionComponent<Props> = ({
 }) => {
   const [inEditMode, setEditableByUser] = React.useState<boolean>(false);
 
-  const expressionTermAdded = (itemId: string) => {
-    const e = addItemsToTree(expression, itemId, [
-      getNewTerm(),
-    ]) as ExpressionOperatorWithUuid;
-    onChange(e);
+  console.log("Expression Builder Render", onChange);
+
+  const onChildChange = (updates: object) => {
+    // const e = updateItemInTree(
+    //   expression,
+    //   "FOO",
+    //   updates,
+    // ) as ExpressionOperatorWithUuid;
+    // onChange(e);
+    console.log("TODO Expression Item Updated", updates);
   };
-  const expressionOperatorAdded = (itemId: string) => {
-    const e = addItemsToTree(expression, itemId, [
-      getNewOperator(),
-    ]) as ExpressionOperatorWithUuid;
-    onChange(e);
-  };
-  const expressionItemUpdated = (itemId: string, updates: object) => {
-    const e = updateItemInTree(
-      expression,
-      itemId,
-      updates,
-    ) as ExpressionOperatorWithUuid;
-    onChange(e);
-  };
-  const expressionItemDeleted = (itemId: string) => {
-    const e = deleteItemFromTree(
-      expression,
-      itemId,
-    ) as ExpressionOperatorWithUuid;
-    onChange(e);
-  };
-  const expressionItemMoved = (
-    destination: ExpressionHasUuid,
-    itemToMove: ExpressionHasUuid,
-  ) => {
-    const e = moveItemsInTree(expression, destination, [
-      itemToMove,
-    ]) as ExpressionOperatorWithUuid;
-    onChange(e);
+  const expressionItemDeleted = (expressionItem: ExpressionItem) => {
+    // const e = deleteItemFromTree(
+    //   expression,
+    //   itemId,
+    // ) as ExpressionOperatorWithUuid;
+    console.log("TODO Expression Item Deleted", expressionItem);
+    //onChange(e);
   };
 
   React.useEffect(() => {
@@ -96,7 +71,7 @@ const ExpressionBuilder: React.FunctionComponent<Props> = ({
   const {
     showDialog: showDeleteItemDialog,
     componentProps: deleteDialogComponentProps,
-  } = useDeleteItemDialog(itemId => expressionItemDeleted(itemId));
+  } = useDeleteItemDialog(e => expressionItemDeleted(e));
 
   const showModeToggle = smtRaw && !!dataSource;
 
@@ -121,11 +96,8 @@ const ExpressionBuilder: React.FunctionComponent<Props> = ({
           dataSource={dataSource}
           isRoot
           isEnabled
-          operator={expression}
-          expressionTermAdded={expressionTermAdded}
-          expressionOperatorAdded={expressionOperatorAdded}
-          expressionItemUpdated={expressionItemUpdated}
-          expressionItemMoved={expressionItemMoved}
+          value={expression}
+          onChange={onChildChange}
         />
       ) : (
         <ReadOnlyExpressionBuilder expression={expression} />
