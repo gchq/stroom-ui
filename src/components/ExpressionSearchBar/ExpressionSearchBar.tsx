@@ -18,7 +18,6 @@ import * as React from "react";
 
 import { processSearchString } from "./expressionSearchBarUtils";
 import Button from "../Button";
-import { assignRandomUuids } from "src/lib/treeUtils/treeUtils";
 import { toString } from "../ExpressionBuilder/expressionUtils";
 import { ExpressionBuilder } from "../ExpressionBuilder";
 import {
@@ -64,11 +63,8 @@ const ExpressionSearchBar: React.FunctionComponent<Props> = ({
 
   React.useEffect(() => {
     if (!expression) {
-      const parsedExpression = processSearchString(dataSource, "");
-      const e = assignRandomUuids(
-        parsedExpression.expression,
-      ) as ExpressionOperatorType;
-      setExpression(e);
+      const { expression } = processSearchString(dataSource, "");
+      setExpression(expression);
     }
 
     onSearch(expression);

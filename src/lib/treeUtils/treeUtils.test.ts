@@ -17,12 +17,7 @@ import {
   itemIsInSubtree,
   canMove,
   findItem,
-  assignRandomUuids,
 } from "src/lib/treeUtils/treeUtils";
-import {
-  ExpressionOperatorWithUuid,
-  ExpressionOperatorType,
-} from "src/components/ExpressionBuilder/types";
 import { Tree } from "src/lib/treeUtils";
 
 interface DocRef {
@@ -111,20 +106,7 @@ const testTree: Folder = {
   children: [oneOne, oneTwo, oneThree, oneFour, oneFive],
 };
 
-const testExpression: ExpressionOperatorType = {
-  type: "operator",
-  op: "AND",
-  enabled: true,
-  children: [],
-};
-
 describe("Tree Utils", () => {
-  describe("#assignRandomUuids()", () => {
-    const withUuids: ExpressionOperatorWithUuid = assignRandomUuids(
-      testExpression,
-    ) as ExpressionOperatorWithUuid;
-    expect(withUuids.uuid).toBeDefined();
-  });
   describe("#itemIsInSubtree()", () => {
     test("should find a match when is root", () => {
       const found = itemIsInSubtree(testTree, testTree);

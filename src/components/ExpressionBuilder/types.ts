@@ -111,17 +111,3 @@ export interface ExpressionTermType extends ExpressionItem {
   value?: any;
   dictionary?: DictionaryDoc | null;
 }
-
-export interface ExpressionHasUuid extends ExpressionItem {
-  uuid: string;
-}
-
-export interface ExpressionOperatorWithUuid extends ExpressionOperatorType {
-  uuid: string;
-  enabled: boolean;
-  children: (ExpressionOperatorWithUuid | ExpressionTermWithUuid)[];
-}
-
-export interface ExpressionTermWithUuid extends ExpressionTermType {
-  uuid: string;
-}
