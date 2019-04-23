@@ -1,13 +1,11 @@
 import * as React from "react";
-
 import Select from "react-select";
 import CreatableSelect from "react-select/lib/Creatable";
-
 import {
+  StroomUser,
   useManageUsers,
-  User,
 } from "src/components/AuthorisationManager/api/userGroups";
-import { Props, BaseProps, UseProps } from "./types";
+import { BaseProps, Props, UseProps } from "./types";
 
 const DEFAULT_USER_UUIDS_TO_FILTER_OUT: string[] = [];
 
@@ -32,7 +30,7 @@ const UserPicker: React.FunctionComponent<Props> = ({
     d => {
       setIsLoading(true);
       createUser(d, isGroup !== undefined ? isGroup : false).then(
-        (newUser: User) => {
+        (newUser: StroomUser) => {
           onChange(newUser.uuid);
           setIsLoading(false);
         },
