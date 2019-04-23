@@ -21,9 +21,6 @@ import Button from "src/components/Button";
 import { AsyncUserSelect } from "src/components/users";
 import { useAuthenticationContext } from "src/startup/Authentication";
 import { useConfig } from "src/startup/config";
-import "src/styles/from_auth/form.css";
-import "src/styles/from_auth/Layout.css";
-import "./CreateTokenForm.css";
 import useTokens from "./useTokens";
 
 interface DropDownValues {

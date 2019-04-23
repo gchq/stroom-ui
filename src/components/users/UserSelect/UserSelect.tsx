@@ -18,7 +18,6 @@ import * as React from "react";
 import { useState } from "react";
 import AsyncSelect from "react-select/lib/Async";
 import { User } from "../types";
-import "./asyncUserSelect.css";
 
 const loadOptions = (
   inputValue: string,

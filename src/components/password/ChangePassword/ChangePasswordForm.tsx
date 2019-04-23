@@ -15,9 +15,7 @@
  */
 
 import * as React from "react";
-import "src/styles/from_auth/Layout.css";
 import ChangePasswordFields from "../ChangePasswordFields";
-import "./ChangePassword.css";
 import ChangePasswordFormData from "./ChangePasswordFormData";
 
 const ChangePasswordForm: React.FunctionComponent<{

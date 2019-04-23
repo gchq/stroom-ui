@@ -14,20 +14,10 @@
  * limitations under the License.
  */
 
-import * as React from "react";
-import { useConfig } from "src/startup/config";
-import ConfirmPasswordResetEmail from "./ConfirmPasswordResetEmail";
+.CreateTokenForm-field {
+  width: 400px;
+}
 
-const ConfirmPasswordResetEmailContainer = () => {
-  const { stroomUiUrl } = useConfig();
-  if (!stroomUiUrl) throw Error("Config not ready or misconfigured!");
-  return (
-    <ConfirmPasswordResetEmail
-      onBack={() => {
-        window.location.href = stroomUiUrl;
-      }}
-    />
-  );
-};
-
-export default ConfirmPasswordResetEmailContainer;
+.CreateTokenForm-errorMessage {
+  color: rgb(250, 62, 62);
+}

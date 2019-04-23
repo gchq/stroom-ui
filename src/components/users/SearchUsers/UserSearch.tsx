@@ -21,10 +21,8 @@ import "react-table/react-table.css";
 import Toggle from "react-toggle";
 import "react-toggle/style.css";
 import Button from "src/components/Button";
-import "src/styles/from_auth/table-small.css";
 import { User } from "..";
 import { getColumnFormat } from "./tableCustomisations";
-import "./UserSearch.css";
 
 interface UserSearchProps {
   onNewUserClicked: () => void;

@@ -18,9 +18,7 @@ import * as React from "react";
 import "react-table/react-table.css";
 import "react-toggle/style.css";
 import useAppNavigation from "src/components/AppChrome/useAppNavigation";
-import "src/styles/from_auth/table-small.css";
 import UserSearch from "./UserSearch";
-import "./UserSearch.css";
 import useUserSearch from "./useUserSearch";
 
 const UserSearchContainer = () => {

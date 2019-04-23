@@ -22,8 +22,6 @@ import { PasswordValidationRequest } from "src/components/authentication";
 import { validateAsync } from "src/components/users/validation";
 import useRouter from "src/lib/useRouter";
 import { useConfig } from "src/startup/config";
-import "src/styles/from_auth/Layout.css";
-import "./ChangePassword.css";
 import ChangePasswordForm from "./ChangePasswordForm";
 import usePassword from "./useChangePassword";
 

@@ -14,20 +14,29 @@
  * limitations under the License.
  */
 
-import * as React from "react";
-import { useConfig } from "src/startup/config";
-import ConfirmPasswordResetEmail from "./ConfirmPasswordResetEmail";
+.content-floating-without-appbar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
 
-const ConfirmPasswordResetEmailContainer = () => {
-  const { stroomUiUrl } = useConfig();
-  if (!stroomUiUrl) throw Error("Config not ready or misconfigured!");
-  return (
-    <ConfirmPasswordResetEmail
-      onBack={() => {
-        window.location.href = stroomUiUrl;
-      }}
-    />
-  );
-};
+.content-floating-with-appbar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 85vh;
+}
 
-export default ConfirmPasswordResetEmailContainer;
+.content-fullHeight {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /*height: 100vh;*/
+}
+
+.content-expandableHeight {
+  display: flex;
+  align-items: center;
+  /*justify-content: center;*/
+}

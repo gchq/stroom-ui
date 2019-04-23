@@ -22,12 +22,7 @@ import Toggle from "react-toggle";
 import "react-toggle/style.css";
 import useAppNavigation from "src/components/AppChrome/useAppNavigation";
 import Button from "src/components/Button";
-import "src/styles/from_auth/index.css";
-import "src/styles/from_auth/table-small.css";
-import "src/styles/from_auth/toggle-small.css";
-import "src/styles/from_auth/toolbar-small.css";
 import { getColumnFormat } from "./tableCustomisations";
-import "./TokenSearch.css";
 import useTokenSearch from "./useTokenSearch";
 
 const TokenSearch = () => {

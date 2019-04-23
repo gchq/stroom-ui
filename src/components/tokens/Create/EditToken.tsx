@@ -24,8 +24,6 @@ import { ByCopy, OnCopy } from "src/components/auditCopy";
 import Button from "src/components/Button";
 import Loader from "src/components/Loader";
 import useIdFromPath from "src/lib/useIdFromPath";
-import "src/styles/from_auth/form.css";
-import "./TokenEdit.css";
 import useTokens from "./useTokens";
 
 const EditToken = () => {

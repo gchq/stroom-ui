@@ -18,7 +18,6 @@ import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as React from "react";
 import Button from "src/components/Button";
 import { hasAnyProps } from "src/lib/lang";
-import "src/styles/from_auth/Layout.css";
 import ChangePasswordFormData from "./ChangePassword/ChangePasswordFormData";
 
 const ChangePasswordFields = ({

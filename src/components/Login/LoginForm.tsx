@@ -20,9 +20,7 @@ import { NavLink } from "react-router-dom";
 import { Credentials } from "src/components/authentication";
 import Button from "src/components/Button";
 import { hasAnyProps } from "src/lib/lang";
-import "src/styles/from_auth/Layout.css";
 import * as Yup from "yup";
-import "./Login.css";
 
 const LoginValidationSchema = Yup.object().shape({
   email: Yup.string().required("Required"),

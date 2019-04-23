@@ -18,11 +18,9 @@ import * as React from "react";
 import useAppNavigation from "src/components/AppChrome/useAppNavigation";
 import { PasswordValidationRequest } from "src/components/authentication";
 import { useConfig } from "src/startup/config";
-import "src/styles/from_auth/Layout.css";
 import { useUsers } from "../api";
 import { User } from "../types";
 import { validateAsync } from "../validation";
-import "./CreateUserForm.css";
 import UserForm from "./UserForm";
 import UserFormData from "./UserFormData";
 

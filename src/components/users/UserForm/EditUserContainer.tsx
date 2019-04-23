@@ -24,7 +24,6 @@ import { useConfig } from "src/startup/config";
 import { User } from "..";
 import { useUsers } from "../api";
 import { validateAsync } from "../validation";
-import "./EditUser.css";
 import UserForm from "./UserForm";
 import UserFormData from "./UserFormData";
 

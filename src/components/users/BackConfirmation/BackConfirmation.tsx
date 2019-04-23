@@ -14,13 +14,10 @@
  * limitations under the License.
  */
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import * as React from "react";
 import * as ReactModal from "react-modal";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
 import Button from "src/components/Button";
-
-import "./BackConfirmation.css";
 
 const BackConfirmation = ({
   isOpen,
