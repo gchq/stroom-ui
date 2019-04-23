@@ -22,14 +22,14 @@ const TestHarness: React.FunctionComponent = () => {
 
   const resetDelete = React.useCallback(() => onDelete(undefined), [onDelete]);
   const onChange = React.useCallback(
-    (_index: number, _value: ExpressionTermType) => {
+    (_value: ExpressionTermType, _index: number) => {
       onIndexChange(_index);
       onValueChange(_value);
     },
     [onIndexChange, onValueChange],
   );
 
-  const { value: isEnabled, toggle: toggleIsEnabled } = useToggle();
+  const { value: isEnabled, toggle: toggleIsEnabled } = useToggle(true);
 
   return (
     <div>

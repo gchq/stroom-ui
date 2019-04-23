@@ -42,7 +42,7 @@ interface Props {
   isEnabled: boolean;
   onDelete: (index: number) => void;
   value: ExpressionTermType;
-  onChange: (index: number, e: ExpressionTermType) => void;
+  onChange: (e: ExpressionTermType, index: number) => void;
 }
 
 interface EnhancedProps extends Props, DragCollectedProps {}
@@ -71,34 +71,43 @@ const ExpressionTerm: React.FunctionComponent<EnhancedProps> = ({
   }, [index, onDelete]);
 
   const onEnabledToggled = React.useCallback(() => {
-    onChange(index, {
-      ...value,
-      enabled: !value.enabled,
-    });
+    onChange(
+      {
+        ...value,
+        enabled: !value.enabled,
+      },
+      index,
+    );
   }, [index, value, onChange]);
 
   const onFieldChange = React.useCallback(
     (field: string) => {
-      onChange(index, {
-        ...value,
-        field,
-      });
+      onChange(
+        {
+          ...value,
+          field,
+        },
+        index,
+      );
     },
     [index, value, onChange],
   );
 
   const onConditionChange = React.useCallback(
     (condition: ConditionType) => {
-      onChange(index, {
-        ...value,
-        condition,
-      });
+      onChange(
+        {
+          ...value,
+          condition,
+        },
+        index,
+      );
     },
     [index, value, onChange],
   );
 
   const onValueChange = React.useCallback(
-    (v: string) => onChange(index, { ...value, value: v }),
+    (v: string) => onChange({ ...value, value: v }, index),
     [index, value, onChange],
   );
 

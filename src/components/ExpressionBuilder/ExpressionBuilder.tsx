@@ -19,6 +19,7 @@ import ExpressionOperator from "./ExpressionOperator";
 import { DataSourceType, ExpressionOperatorType } from "./types";
 import ReadOnlyExpressionBuilder from "./ReadOnlyExpressionBuilder/ReadOnlyExpressionBuilder";
 import { LineContainer } from "../LineTo";
+import useToggle from "src/lib/useToggle";
 
 interface Props {
   className?: string;
@@ -31,46 +32,31 @@ interface Props {
 
 const ExpressionBuilder: React.FunctionComponent<Props> = ({
   dataSource,
-  showModeToggle: smtRaw,
+  showModeToggle,
   editMode,
   expression,
   onChange,
 }) => {
-  const [inEditMode, setEditableByUser] = React.useState<boolean>(false);
-
-  console.log("Expression Builder Render", onChange);
-
-  const onThisChange = React.useCallback(
-    (_index: number, _value: ExpressionOperatorType) => onChange(_value),
-    [onChange],
-  );
-
-  React.useEffect(() => {
-    setEditableByUser(editMode || false);
-  }, []);
-
-  const showModeToggle = smtRaw && !!dataSource;
+  const { value: inEditMode, toggle: toggleEditMode } = useToggle(editMode);
 
   return (
     <LineContainer>
-      {showModeToggle ? (
+      {showModeToggle && !!dataSource && (
         <React.Fragment>
           <label>Edit Mode</label>
           <input
             type="checkbox"
             checked={inEditMode}
-            onChange={() => setEditableByUser(!inEditMode)}
+            onChange={toggleEditMode}
           />
         </React.Fragment>
-      ) : (
-        undefined
       )}
       {inEditMode ? (
         <ExpressionOperator
           dataSource={dataSource}
           isEnabled
           value={expression}
-          onChange={onThisChange}
+          onChange={onChange}
         />
       ) : (
         <ReadOnlyExpressionBuilder expression={expression} />

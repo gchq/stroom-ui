@@ -47,7 +47,7 @@ interface Props {
   dataSource: DataSourceType;
   isEnabled: boolean;
   value: ExpressionOperatorType;
-  onChange: (i: number | undefined, e: ExpressionOperatorType) => void;
+  onChange: (e: ExpressionOperatorType, i: number | undefined) => void;
   onDelete?: (i: number) => void;
 }
 
@@ -120,54 +120,72 @@ const ExpressionOperator: React.FunctionComponent<EnhancedProps> = ({
   }, [index, onDelete]);
 
   const onAddOperator = React.useCallback(() => {
-    onChange(index, {
-      ...value,
-      children: [...value.children, getNewOperator()],
-    });
+    onChange(
+      {
+        ...value,
+        children: [...value.children, getNewOperator()],
+      },
+      index,
+    );
   }, [index, value, onChange]);
 
   const onAddTerm = React.useCallback(() => {
-    onChange(index, {
-      ...value,
-      children: [...value.children, getNewTerm()],
-    });
+    onChange(
+      {
+        ...value,
+        children: [...value.children, getNewTerm()],
+      },
+      index,
+    );
   }, [index, value, onChange]);
 
   const onOpChange = React.useCallback(
     (op: OperatorType) => {
-      onChange(index, {
-        ...value,
-        op,
-      });
+      onChange(
+        {
+          ...value,
+          op,
+        },
+        index,
+      );
     },
     [index, onChange],
   );
 
   const onEnabledToggled = React.useCallback(() => {
     if (!!index) {
-      onChange(index, {
-        ...value,
-        enabled: !value.enabled,
-      });
+      onChange(
+        {
+          ...value,
+          enabled: !value.enabled,
+        },
+        index,
+      );
     }
   }, [index, value, onChange]);
 
   const onChildUpdated = React.useCallback(
-    (_index: number, _value: ExpressionTermType | ExpressionOperatorType) => {
-      onChange(index, {
-        ...value,
-        children: value.children.map((c, i) => (i === _index ? _value : c)),
-      });
+    (_value: ExpressionTermType | ExpressionOperatorType, _index: number) => {
+      onChange(
+        {
+          ...value,
+          children: value.children.map((c, i) => (i === _index ? _value : c)),
+        },
+        index,
+      );
     },
     [index, value, onChange],
   );
 
   const onChildDeleted = React.useCallback(
     (_index: number) => {
-      onChange(index, {
-        ...value,
-        children: value.children.filter((c, i) => i !== _index),
-      });
+      onChange(
+        {
+          ...value,
+          children: value.children.filter((c, i) => i !== _index),
+        },
+        index,
+      );
     },
     [index, value, onChange],
   );
@@ -267,7 +285,7 @@ const ExpressionOperator: React.FunctionComponent<EnhancedProps> = ({
                       isEnabled={isEnabled && c.enabled}
                       value={c as ExpressionTermType}
                       onDelete={onChildDeleted}
-                      onChange={(i, e) => onChildUpdated(i, e)}
+                      onChange={onChildUpdated}
                     />
                   </div>
                 );
@@ -280,7 +298,7 @@ const ExpressionOperator: React.FunctionComponent<EnhancedProps> = ({
                     isEnabled={isEnabled && c.enabled}
                     value={c as ExpressionOperatorType}
                     onDelete={onChildDeleted}
-                    onChange={(_, e) => onChildUpdated(i, e)}
+                    onChange={onChildUpdated}
                   />
                 );
                 break;

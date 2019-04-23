@@ -23,10 +23,10 @@ const TestHarness: React.FunctionComponent = () => {
   const [deletedId, onDelete] = React.useState<number | undefined>(undefined);
 
   const resetDelete = React.useCallback(() => onDelete(undefined), [onDelete]);
-  const { value: isEnabled, toggle: toggleIsEnabled } = useToggle();
+  const { value: isEnabled, toggle: toggleIsEnabled } = useToggle(true);
 
   const onChange = React.useCallback(
-    (_index: number, _value: ExpressionOperatorType) => {
+    (_value: ExpressionOperatorType, _index: number) => {
       onIndexChange(_index);
       onValueChange(_value);
     },

@@ -5,8 +5,8 @@ interface UseToggle {
   toggle: () => void;
 }
 
-const useToggle = (): UseToggle => {
-  const [value, setValue] = React.useState<boolean>(true);
+const useToggle = (defaultValue: boolean = false): UseToggle => {
+  const [value, setValue] = React.useState<boolean>(defaultValue);
   const toggle = React.useCallback(() => {
     setValue(!value);
   }, [value, setValue]);
