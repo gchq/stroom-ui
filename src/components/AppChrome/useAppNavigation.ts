@@ -32,7 +32,12 @@ const useAppNavigation = (): NavigateApp<any> => {
       goToIndexVolumeGroups: () => h.push(u.goToIndexVolumeGroups()),
       goToIndexVolumeGroup: (groupName: string) =>
         h.push(u.goToIndexVolumeGroup(groupName)),
+      goToStroomUsers: () => h.push(u.goToStroomUsers()),
       goToUsers: () => h.push(u.goToUsers()),
+      goToUser: (userId: string) => h.push(u.goToUser(userId)),
+      goToNewUser: () => h.push(u.goToNewUser()),
+      goToNewApiKey: () => h.push(u.goToNewApiKey()),
+      goToApiKey: (id: string) => h.push(u.goToApiKey(id)),
       goToApiKeys: () => h.push(u.goToApiKeys()),
       goToError: () => h.push(u.goToError()),
       goToEditDocRefByUuid: (docRefUuid: string) =>

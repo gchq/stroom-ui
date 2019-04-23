@@ -26,8 +26,13 @@ const useUrlGenerator = (urlPrefix: string): NavigateApp<string> => {
       goToIndexVolumeGroups: () => `/${urlPrefix}/indexing/groups`,
       goToIndexVolumeGroup: (groupName: string = ":groupName") =>
         `/${urlPrefix}/indexing/groups/${groupName}`,
+      goToStroomUsers: () => `/${urlPrefix}/stroomUsers`,
+      goToUser: (userId: string) => `/${urlPrefix}/user/${userId}`,
+      goToNewUser: () => `/${urlPrefix}/user/new`,
       goToUsers: () => `/${urlPrefix}/users`,
       goToApiKeys: () => `/${urlPrefix}/apikeys`,
+      goToApiKey: (id: string) => `/${urlPrefix}/apikey/${id}`,
+      goToNewApiKey: () => `/${urlPrefix}/apikey/new`,
       goToError: () => `/${urlPrefix}/error`,
       goToEditDocRefByUuid: (docRefUuid: string = ":docRefUuid") =>
         `/${urlPrefix}/doc/${docRefUuid}`,

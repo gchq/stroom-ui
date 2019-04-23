@@ -1,21 +1,22 @@
-import { ResourcesByDocType } from "src/components/DocumentEditors/useDocumentApi/types/resourceUrls";
-import {
-  DocRefTree,
-  DocumentBase,
-} from "src/components/DocumentEditors/useDocumentApi/types/base";
-import { DataSourceType } from "src/components/ExpressionBuilder/types";
-import { User } from "src/components/AuthorisationManager/api/userGroups";
-import { IndexVolume } from "src/components/IndexVolumes/api";
-import {
-  IndexVolumeGroup,
-  IndexVolumeGroupMembership,
-} from "src/components/IndexVolumeGroups/api";
+import { StroomUser } from "src/components/AuthorisationManager/api/userGroups";
+import { StreamAttributeMapResult } from "src/components/DataViewer/types";
 import {
   ElementDefinition,
   ElementPropertiesByElementIdType,
 } from "src/components/DocumentEditors/PipelineEditor/useElements/types";
+import {
+  DocRefTree,
+  DocumentBase,
+} from "src/components/DocumentEditors/useDocumentApi/types/base";
+import { ResourcesByDocType } from "src/components/DocumentEditors/useDocumentApi/types/resourceUrls";
+import { DataSourceType } from "src/components/ExpressionBuilder/types";
+import {
+  IndexVolumeGroup,
+  IndexVolumeGroupMembership,
+} from "src/components/IndexVolumeGroups/api";
+import { IndexVolume } from "src/components/IndexVolumes/api";
 import { StreamTaskType } from "src/components/Processing/types";
-import { StreamAttributeMapResult } from "src/components/DataViewer/types";
+import { User } from "src/components/users";
 
 export interface UserGroupMembership {
   userUuid: string;
@@ -40,7 +41,7 @@ export interface TestData {
   dataList: StreamAttributeMapResult;
   dataSource: DataSourceType;
   usersAndGroups: {
-    users: User[];
+    users: StroomUser[];
     userGroupMemberships: UserGroupMembership[];
   };
   indexVolumesAndGroups: {
@@ -55,5 +56,6 @@ export interface TestData {
   docPermissionByType: {
     [docType: string]: string[];
   };
+  users: User[];
   userDocPermission: UserDocPermission[];
 }

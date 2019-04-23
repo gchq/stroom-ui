@@ -38,7 +38,7 @@ export interface NavigateApp<T> {
   goToDataViewer: () => T;
   goToProcessing: () => T;
   goToUserSettings: () => T;
-  goToAuthorisationManager: (isGroup?: string) => T;
+  goToAuthorisationManager: (isGroup: string) => T;
   goToAuthorisationsForUser: (userUuid?: string) => T;
   goToAuthorisationsForDocument: (docRefUuid?: string) => T;
   goToAuthorisationsForDocumentForUser: (
@@ -49,8 +49,13 @@ export interface NavigateApp<T> {
   goToIndexVolume: (volumeId?: T) => T;
   goToIndexVolumeGroups: () => T;
   goToIndexVolumeGroup: (groupName?: string) => T;
+  goToStroomUsers: () => T;
   goToUsers: () => T;
+  goToUser: (userId: string) => T;
+  goToNewUser: () => T;
   goToApiKeys: () => T;
+  goToApiKey: (id: string) => T;
+  goToNewApiKey: () => T;
   goToError: () => T;
   goToEditDocRefByUuid: (docRefUuid?: string) => T;
   goToEditDocRef: (docRef: DocRefType) => T;

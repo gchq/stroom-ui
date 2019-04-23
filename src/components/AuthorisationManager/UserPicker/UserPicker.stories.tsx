@@ -14,17 +14,14 @@
  * limitations under the License.
  */
 
-import * as React from "react";
-
 import { storiesOf } from "@storybook/react";
-
-import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
-
-import UserPicker, { usePicker } from "./UserPicker";
+import * as React from "react";
 import Button from "src/components/Button";
-import JsonDebug from "src/testing/JsonDebug";
 import fullTestData from "src/testing/data";
-import { User } from "../api/userGroups";
+import JsonDebug from "src/testing/JsonDebug";
+import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
+import { StroomUser } from "../api/userGroups";
+import UserPicker, { usePicker } from "./UserPicker";
 
 interface Props {
   isGroup: boolean;
@@ -33,7 +30,7 @@ interface Props {
 const TestHarness: React.FunctionComponent<Props> = ({ isGroup }) => {
   const { userNamesToFilterOut, valuesToFilterOut } = React.useMemo(() => {
     let usersToFilterOut = fullTestData.usersAndGroups.users
-      .filter((u: User) => u.group === isGroup)
+      .filter((u: StroomUser) => u.group === isGroup)
       .slice(0, 3);
     let valuesToFilterOut = usersToFilterOut.map(u => u.uuid);
     let userNamesToFilterOut = usersToFilterOut.map(u => u.name);

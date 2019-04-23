@@ -1,22 +1,21 @@
 import * as React from "react";
-
-import IconHeader from "src/components/IconHeader";
 import useDocumentPermissions from "src/components/AuthorisationManager/api/docPermission/useDocumentPermissions";
-import Button from "src/components/Button";
-import ThemedConfirm, {
-  useDialog as useThemedConfirm,
-} from "src/components/ThemedConfirm";
 import {
+  StroomUser,
   useUsers,
-  User,
 } from "src/components/AuthorisationManager/api/userGroups";
-import UsersTable, { useTable as useUsersTable } from "../UsersTable";
-import useAppNavigation from "../../AppChrome/useAppNavigation";
-import useRouter from "src/lib/useRouter";
-import { useDocumentTree } from "src/components/DocumentEditors/api/explorer";
 import UserPickerDialog, {
   useDialog as userUserPickerDialog,
 } from "src/components/AuthorisationManager/UserPickerDialog";
+import Button from "src/components/Button";
+import { useDocumentTree } from "src/components/DocumentEditors/api/explorer";
+import IconHeader from "src/components/IconHeader";
+import ThemedConfirm, {
+  useDialog as useThemedConfirm,
+} from "src/components/ThemedConfirm";
+import useRouter from "src/lib/useRouter";
+import useAppNavigation from "../../AppChrome/useAppNavigation";
+import UsersTable, { useTable as useUsersTable } from "../UsersTable";
 
 interface Props {
   docRefUuid: string;
@@ -48,7 +47,7 @@ export const DocumentPermissionEditor: React.FunctionComponent<Props> = ({
   const {
     selectableTableProps: { selectedItems: selectedUsers, clearSelection },
   } = usersTableProps;
-  const selectedUser: User | undefined =
+  const selectedUser: StroomUser | undefined =
     selectedUsers.length > 0 ? selectedUsers[0] : undefined;
 
   const {

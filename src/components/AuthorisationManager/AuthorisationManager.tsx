@@ -1,21 +1,20 @@
 import * as React from "react";
-
 import { useManageUsers } from "src/components/AuthorisationManager/api/userGroups";
-import IconHeader from "src/components/IconHeader";
-import UsersTable, { useTable } from "./UsersTable";
 import Button from "src/components/Button";
-import NewUserDialog, {
-  useDialog as useNewUserDialog,
-} from "./NewUserDialog/NewUserDialog";
+import IconHeader from "src/components/IconHeader";
 import ThemedConfirm, {
   useDialog as useThemedConfim,
 } from "src/components/ThemedConfirm";
 import useForm from "src/lib/useForm";
-import {
-  UserPickerDialog,
-  useDialog as useUserPickerDialog,
-} from "./UserPickerDialog";
 import useAppNavigation from "../AppChrome/useAppNavigation";
+import NewUserDialog, {
+  useDialog as useNewUserDialog,
+} from "./NewUserDialog/NewUserDialog";
+import {
+  useDialog as useUserPickerDialog,
+  UserPickerDialog,
+} from "./UserPickerDialog";
+import UsersTable, { useTable } from "./UsersTable";
 
 interface Props {
   isGroup: boolean;

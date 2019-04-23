@@ -25,6 +25,7 @@ type HttpCall = (
   options?: {
     [s: string]: any;
   },
+  addAuthentication?: boolean,
 ) => Promise<any>;
 
 interface HttpClient {
@@ -35,6 +36,7 @@ interface HttpClient {
     },
     forceGet?: boolean,
   ) => Promise<any>;
+  httpGetEmptyResponse: HttpCall;
   httpPostJsonResponse: HttpCall;
   httpPutJsonResponse: HttpCall;
   httpDeleteJsonResponse: HttpCall;
@@ -81,35 +83,36 @@ export const useHttpClient = (): HttpClient => {
         [s: string]: any;
       } = {},
       forceGet: boolean = true, // default to true, take care with settings this to false, old promises can override the updated picture with old information if this is mis-used
+      addAuthentication: boolean = true, // most of the time we want authenticated requests, so we'll make that the default.
     ): Promise<T | void> => {
-      // console.group("HTTP GET");
-      // console.log("Fetching", { url, cacheKeys: Object.keys(cache) });
-
-      if (!idToken) {
+      if (!idToken && addAuthentication) {
         let p = Promise.reject();
         p.catch(() => console.log("Missing ID Token, not making request"));
         return p;
       }
 
+      let headers = {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        ...(options ? options.headers : {}),
+      };
+
+      if (addAuthentication) {
+        headers.Authorization = `Bearer ${idToken}`;
+      }
+
       // If we do not have an entry in the cache or we are forcing GET, create a new call
       if (!cache[url] || forceGet) {
-        // console.log("Making a Fresh Call");
         cache[url] = fetch(url, {
           method: "get",
           mode: "cors",
           ...options,
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${idToken}`,
-            ...(options ? options.headers : {}),
-          },
+          headers,
         })
           .then(handle200)
           .then(r => r.json())
           .catch(catchImpl);
       }
-      // console.groupEnd();
 
       return cache[url];
     },
@@ -123,8 +126,10 @@ export const useHttpClient = (): HttpClient => {
         options?: {
           [s: string]: any;
         },
+        // forceGet: boolean = true, // default to true, take care with settings this to false, old promises can override the updated picture with old information if this is mis-used
+        addAuthentication: boolean = true, // most of the time we want authenticated requests, so we'll make that the default.
       ): Promise<T | void> => {
-        if (!idToken) {
+        if (!idToken && addAuthentication) {
           let p = Promise.reject();
           p.catch(() => console.log("Missing ID Token, not making request"));
           return p;
@@ -133,9 +138,12 @@ export const useHttpClient = (): HttpClient => {
         const headers = {
           Accept: "application/json",
           "Content-Type": "application/json",
-          Authorization: `Bearer ${idToken}`,
           ...(options ? options.headers : {}),
         };
+
+        if (addAuthentication) {
+          headers.Authorization = `Bearer ${idToken}`;
+        }
 
         return fetch(url, {
           mode: "cors",
@@ -157,8 +165,10 @@ export const useHttpClient = (): HttpClient => {
         options?: {
           [s: string]: any;
         },
+        forceGet: boolean = true, // default to true, take care with settings this to false, old promises can override the updated picture with old information if this is mis-used
+        addAuthentication: boolean = true, // most of the time we want authenticated requests, so we'll make that the default.
       ): Promise<string | void> => {
-        if (!idToken) {
+        if (!idToken && addAuthentication) {
           let p = Promise.reject();
           p.catch(() => console.log("Missing ID Token, not making request"));
           return p;
@@ -166,9 +176,12 @@ export const useHttpClient = (): HttpClient => {
 
         const headers = {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${idToken}`,
           ...(options ? options.headers : {}),
         };
+
+        if (addAuthentication) {
+          headers.Authorization = `Bearer ${idToken}`;
+        }
 
         return fetch(url, {
           mode: "cors",
@@ -185,6 +198,7 @@ export const useHttpClient = (): HttpClient => {
 
   return {
     httpGetJson,
+    httpGetEmptyResponse: useFetchWithBodyAndEmptyResponse("get"),
     httpPostJsonResponse: useFetchWithBodyAndJsonResponse("post"),
     httpPutJsonResponse: useFetchWithBodyAndJsonResponse("put"),
     httpDeleteJsonResponse: useFetchWithBodyAndJsonResponse("delete"),

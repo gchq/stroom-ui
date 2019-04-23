@@ -1,15 +1,15 @@
-export interface User {
+export interface StroomUser {
   uuid: string;
   name: string;
   group: boolean;
 }
 
 export interface StoreState {
-  allUsers: User[];
+  allUsers: StroomUser[];
   usersInGroup: {
-    [s: string]: User[];
+    [s: string]: StroomUser[];
   };
   groupsForUser: {
-    [s: string]: User[];
+    [s: string]: StroomUser[];
   };
 }

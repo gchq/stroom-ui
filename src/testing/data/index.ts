@@ -13,43 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import * as uuidv4 from "uuid/v4";
-
-import { testPipelines, elements, elementProperties } from "./pipelines";
-import testDocRefsTypes from "./docRefTypes";
-import { generate as generateAnnotationsIndex } from "./annotationsIndex";
-import { generate as generateDashboard } from "./dashboard";
-import { generate as generateDictionary } from "./dictionary";
-import { generate as generateElasticIndex } from "./elasticIndex";
-import { generate as generateFeed } from "./feed";
-import { generate as generateIndex } from "./indexDocs";
-import { generate as generateScript } from "./script";
-import { generate as generateStatisticStore } from "./statisticStore";
-import { generate as generateStroomStatsStore } from "./stroomStatsStore";
-import { generate as generateVisualisation } from "./visualisation";
-import { generate as generateXmlSchema } from "./xmlSchema";
-import { generate as generateXslt } from "./xslt";
-import { generateGenericTracker } from "./trackers";
-import { dataList, dataSource } from "./data";
-import { generateTestUser, generateTestGroup } from "./usersAndGroups";
-import {
-  generateTestIndexVolumeGroup,
-  generateTestIndexVolume,
-} from "./indexVolumes";
-import allAppPermissions from "./appPermissions";
-import { UserGroupMembership, TestData, UserDocPermission } from "../testTypes";
-import { documentPermissionNames } from "./docPermissions";
-import { iterateNodes } from "src/lib/treeUtils/treeUtils";
-import { User } from "src/components/AuthorisationManager/api/userGroups";
+import { StroomUser } from "src/components/AuthorisationManager/api/userGroups";
 import { AnnotationsIndexDoc } from "src/components/DocumentEditors/useDocumentApi/types/annotations";
-import { IndexVolume } from "src/components/IndexVolumes/api";
 import {
-  IndexVolumeGroup,
-  IndexVolumeGroupMembership,
-} from "src/components/IndexVolumeGroups/api";
+  copyDocRef,
+  DocRefTree,
+} from "src/components/DocumentEditors/useDocumentApi/types/base";
 import { DashboardDoc } from "src/components/DocumentEditors/useDocumentApi/types/dashboard";
+import { DictionaryDoc } from "src/components/DocumentEditors/useDocumentApi/types/dictionaryDoc";
 import { ElasticIndexDoc } from "src/components/DocumentEditors/useDocumentApi/types/elastic";
 import { FeedDoc } from "src/components/DocumentEditors/useDocumentApi/types/feed";
+import { FolderDoc } from "src/components/DocumentEditors/useDocumentApi/types/folder";
+import { IndexDoc } from "src/components/DocumentEditors/useDocumentApi/types/indexDoc";
 import { ScriptDoc } from "src/components/DocumentEditors/useDocumentApi/types/scriptDoc";
 import {
   StatisticStoreDoc,
@@ -57,40 +32,65 @@ import {
 } from "src/components/DocumentEditors/useDocumentApi/types/statistics";
 import { VisualisationDoc } from "src/components/DocumentEditors/useDocumentApi/types/visualisation";
 import { XMLSchemaDoc } from "src/components/DocumentEditors/useDocumentApi/types/xmlSchema";
-import { DictionaryDoc } from "src/components/DocumentEditors/useDocumentApi/types/dictionaryDoc";
 import { XsltDoc } from "src/components/DocumentEditors/useDocumentApi/types/xsltDoc";
-import { IndexDoc } from "src/components/DocumentEditors/useDocumentApi/types/indexDoc";
 import {
-  copyDocRef,
-  DocRefTree,
-} from "src/components/DocumentEditors/useDocumentApi/types/base";
-import { FolderDoc } from "src/components/DocumentEditors/useDocumentApi/types/folder";
+  IndexVolumeGroup,
+  IndexVolumeGroupMembership,
+} from "src/components/IndexVolumeGroups/api";
+import { IndexVolume } from "src/components/IndexVolumes/api";
 import { StreamTaskType } from "src/components/Processing/types";
+import { iterateNodes } from "src/lib/treeUtils";
+import * as uuidv4 from "uuid/v4";
+import { TestData, UserDocPermission, UserGroupMembership } from "../testTypes";
+import { generate as generateAnnotationsIndex } from "./annotationsIndex";
+import allAppPermissions from "./appPermissions";
+import { generate as generateDashboard } from "./dashboard";
+import { dataList, dataSource } from "./data";
+import { generate as generateDictionary } from "./dictionary";
+import { documentPermissionNames } from "./docPermissions";
+import testDocRefsTypes from "./docRefTypes";
+import { generate as generateElasticIndex } from "./elasticIndex";
+import { generate as generateFeed } from "./feed";
+import { generate as generateIndex } from "./indexDocs";
+import {
+  generateTestIndexVolume,
+  generateTestIndexVolumeGroup,
+} from "./indexVolumes";
+import { elementProperties, elements, testPipelines } from "./pipelines";
+import { generate as generateScript } from "./script";
+import { generate as generateStatisticStore } from "./statisticStore";
+import { generate as generateStroomStatsStore } from "./stroomStatsStore";
+import { generateGenericTracker } from "./trackers";
+import { generate as generateUsers } from "./users";
+import { generateTestGroup, generateTestUser } from "./usersAndGroups";
+import { generate as generateVisualisation } from "./visualisation";
+import { generate as generateXmlSchema } from "./xmlSchema";
+import { generate as generateXslt } from "./xslt";
 
 let docPermissionByType = testDocRefsTypes.reduce(
   (acc, curr) => ({ ...acc, [curr]: documentPermissionNames }),
   {},
 );
 
-let groups: User[] = Array(5)
+let groups: StroomUser[] = Array(5)
   .fill(1)
   .map(generateTestGroup);
-let users: User[] = Array(30)
+let stroomUsers: StroomUser[] = Array(30)
   .fill(1)
   .map(generateTestUser);
 let userGroupMemberships: UserGroupMembership[] = [];
 let userIndex = 0;
 groups.forEach(group => {
   for (let x = 0; x < 10; x++) {
-    var user: User = users[userIndex++];
-    userIndex %= users.length; // wrap
+    var user: StroomUser = stroomUsers[userIndex++];
+    userIndex %= stroomUsers.length; // wrap
     userGroupMemberships.push({
       userUuid: user.uuid,
       groupUuid: group.uuid,
     });
   }
 });
-const allUsers = users.concat(groups);
+const allUsers = stroomUsers.concat(groups);
 let permissionIndex = 0;
 const userAppPermissions = {};
 allUsers.forEach(u => {
@@ -167,6 +167,10 @@ let trackers: StreamTaskType[] = Array(10)
 let indexes: IndexDoc[] = Array(5)
   .fill(null)
   .map(generateIndex);
+
+// let users: User[] = Array(5)
+// .fill(null)
+// .map(generateUsers);
 
 const docTree = {
   uuid: "0",
@@ -338,6 +342,7 @@ export const fullTestData: TestData = {
   userAppPermissions,
   docPermissionByType,
   userDocPermission,
+  users: generateUsers,
 };
 
 export default fullTestData;

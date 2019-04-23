@@ -14,18 +14,15 @@
  * limitations under the License.
  */
 
-import * as React from "react";
-
 import { storiesOf } from "@storybook/react";
-
+import * as React from "react";
+import { DocRefType } from "src/components/DocumentEditors/useDocumentApi/types/base";
 import fullTestData from "src/testing/data";
 import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
-
+import { StroomUser } from "../api/userGroups";
 import DocumentPermissionForUserEditor from "./DocumentPermissionForUserEditor";
-import { DocRefType } from "src/components/DocumentEditors/useDocumentApi/types/base";
-import { User } from "src/components/AuthorisationManager/api/userGroups";
 
-const testUser: User = fullTestData.usersAndGroups.users[0];
+const testUser: StroomUser = fullTestData.usersAndGroups.users[0];
 const testDocRef: DocRefType = fullTestData.documentTree.children![0];
 
 const stories = storiesOf(

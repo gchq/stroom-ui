@@ -2,18 +2,18 @@ import * as React from "react";
 
 import useHttpClient from "src/lib/useHttpClient";
 import { useConfig } from "src/startup/config";
-import { User } from "./types";
+import { StroomUser } from ".";
 
 interface Api {
-  fetchUser: (uuid: string) => Promise<User>;
+  fetchUser: (uuid: string) => Promise<StroomUser>;
   findUsers: (
     name?: string,
     isGroup?: boolean,
     uuid?: string,
-  ) => Promise<User[]>;
-  findUsersInGroup: (groupUuid: string) => Promise<User[]>;
-  findGroupsForUser: (userUuid: string) => Promise<User[]>;
-  createUser: (name: string, isGroup: boolean) => Promise<User>;
+  ) => Promise<StroomUser[]>;
+  findUsersInGroup: (groupUuid: string) => Promise<StroomUser[]>;
+  findGroupsForUser: (userUuid: string) => Promise<StroomUser[]>;
+  createUser: (name: string, isGroup: boolean) => Promise<StroomUser>;
   deleteUser: (uuid: string) => Promise<void>;
   addUserToGroup: (userUuid: string, groupUuid: string) => Promise<void>;
   removeUserFromGroup: (userUuid: string, groupUuid: string) => Promise<void>;
@@ -30,7 +30,7 @@ export const useApi = (): Api => {
 
   return {
     fetchUser: React.useCallback(
-      (userUuid: string): Promise<User> =>
+      (userUuid: string): Promise<StroomUser> =>
         httpGetJson(`${stroomBaseServiceUrl}/users/v1/${userUuid}`, {}, false),
       [stroomBaseServiceUrl, httpGetJson],
     ),

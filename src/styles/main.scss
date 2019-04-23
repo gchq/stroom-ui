@@ -27,6 +27,10 @@
 @import "../components/ThemedModal/ThemedModal";
 @import "../components/PathNotFound/PathNotFound";
 @import "../components/DocRefInfoModal/DocRefInfoModal";
+@import "../components/Login/Login";
+@import "../components/tokens/Tokens";
+@import "../components/password/Password";
+@import "../components/users/Users";
 
 @import "../components/DataViewer/DataViewer";
 @import "../components/Welcome/Welcome";
@@ -36,3 +40,5 @@
 
 @import "./themes";
 @import "./theme_styling";
+
+@import "./from_auth/Auth";

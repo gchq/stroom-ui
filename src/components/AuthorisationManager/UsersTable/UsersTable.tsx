@@ -1,34 +1,32 @@
 import * as React from "react";
-
 import ReactTable from "react-table";
-
 import {
-  useSelectableReactTable,
   SelectionBehaviour,
   TableOutProps,
+  useSelectableReactTable,
 } from "src/lib/useSelectableItemListing";
-import { User } from "src/components/AuthorisationManager/api/userGroups";
+import { StroomUser } from "../api/userGroups";
 
 interface Props {
-  users: User[];
-  selectableTableProps: TableOutProps<User>;
+  users: StroomUser[];
+  selectableTableProps: TableOutProps<StroomUser>;
 }
 
 const COLUMNS = [
   {
     id: "uuid",
     Header: "UUID",
-    accessor: (u: User) => u.uuid,
+    accessor: (u: StroomUser) => u.uuid,
   },
   {
     id: "name",
     Header: "Name",
-    accessor: (u: User) => u.name,
+    accessor: (u: StroomUser) => u.name,
   },
   {
     id: "isGroup",
     Header: "Is Group",
-    accessor: (u: User) => (u.group ? "Group" : "User"),
+    accessor: (u: StroomUser) => (u.group ? "Group" : "User"),
   },
 ];
 
@@ -44,8 +42,8 @@ interface UseTable {
   componentProps: Props;
 }
 
-export const useTable = (users: User[]): UseTable => {
-  const selectableTableProps = useSelectableReactTable<User>(
+export const useTable = (users: StroomUser[]): UseTable => {
+  const selectableTableProps = useSelectableReactTable<StroomUser>(
     {
       getKey: v => v.uuid,
       items: users,

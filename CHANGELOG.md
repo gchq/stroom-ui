@@ -7,6 +7,26 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [v1.0-alpha.8] - 2019-04-23
+
+- Merge auth_incoming to master
+
+## [v1.0-alpha.7] - 2019-04-23
+
+- Add SCSS for auth
+
+## [v1.0-alpha.6] - 2019-04-23
+
+- Build fixes
+
+## [v1.0-alpha.5] - 2019-04-23
+
+- Fix issues with authentication flow
+
+## [v1.0-alpha.4] - 2019-04-17
+
+- Bring in Users, Tokens, and Login
+
 ## [v1.0-alpha.3] - 2019-02-20
 
 - Fixed routing
@@ -19,6 +39,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Experimental first tag
 
-[unreleased]: https://github.com/gchq/stroom-auth/compare/v1.0-alpha.3...master
+[unreleased]: https://github.com/gchq/stroom-auth/compare/v1.0-alpha.8...master
+[v1.0-alpha.8]: https://github.com/gchq/stroom-auth/compare/v1.0-alpha.7...v1.0-alpha.8
+[v1.0-alpha.7]: https://github.com/gchq/stroom-auth/compare/v1.0-alpha.6...v1.0-alpha.7
+[v1.0-alpha.6]: https://github.com/gchq/stroom-auth/compare/v1.0-alpha.5...v1.0-alpha.6
+[v1.0-alpha.5]: https://github.com/gchq/stroom-auth/compare/v1.0-alpha.4...v1.0-alpha.5
+[v1.0-alpha.4]: https://github.com/gchq/stroom-auth/compare/v1.0-alpha.3...v1.0-alpha.4
 [v1.0-alpha.3]: https://github.com/gchq/stroom-auth/compare/v1.0-alpha.2...v1.0-alpha.3
 [v1.0-alpha.2]: https://github.com/gchq/stroom-auth/compare/v1.0-alpha.1...v1.0-alpha.2

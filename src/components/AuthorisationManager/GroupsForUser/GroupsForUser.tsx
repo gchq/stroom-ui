@@ -1,22 +1,21 @@
 import * as React from "react";
-
+import useAppNavigation from "src/components/AppChrome/useAppNavigation";
 import {
+  StroomUser,
   useGroupsForUser,
-  User,
 } from "src/components/AuthorisationManager/api/userGroups";
-import UsersTable, { useTable as useUsersTable } from "../UsersTable";
 import Button from "src/components/Button";
-import {
-  UserPickerDialog,
-  useDialog as useUserPickerDialog,
-} from "../UserPickerDialog";
 import ThemedConfirm, {
   useDialog as useThemedConfirm,
 } from "src/components/ThemedConfirm";
-import useAppNavigation from "src/components/AppChrome/useAppNavigation";
+import {
+  useDialog as useUserPickerDialog,
+  UserPickerDialog,
+} from "../UserPickerDialog";
+import UsersTable, { useTable as useUsersTable } from "../UsersTable";
 
 interface Props {
-  user: User;
+  user: StroomUser;
 }
 
 const GroupsForUser: React.FunctionComponent<Props> = ({ user }) => {
