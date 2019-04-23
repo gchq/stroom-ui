@@ -4,11 +4,11 @@ import SingleValueWidget from "./SingleValueWidget";
 import BetweenValueWidget from "./BetweenValueWidget";
 import InValueWidget from "./InValueWidget";
 import AppSearchBar from "../../AppSearchBar";
-import { ExpressionTermWithUuid } from "../types";
+import { ExpressionTermType } from "../types";
 
 interface Props {
   onChange: (value: any) => any;
-  term: ExpressionTermWithUuid;
+  term: ExpressionTermType;
   valueType: string;
 }
 

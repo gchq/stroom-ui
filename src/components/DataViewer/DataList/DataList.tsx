@@ -15,7 +15,7 @@
  */
 
 import * as React from "react";
-import { ExpressionOperatorWithUuid } from "src/components/ExpressionBuilder/types";
+import { ExpressionOperatorType } from "src/components/ExpressionBuilder/types";
 
 // import * as moment from "moment";
 // import { path } from "ramda";
@@ -29,13 +29,13 @@ import { ExpressionOperatorWithUuid } from "src/components/ExpressionBuilder/typ
 
 // import Loader from "src/components/Loader";
 // import Button from "src/components/Button";
-// import { Direction, ExpressionOperatorWithUuid, DataRow } from "src/types";
+// import { Direction, ExpressionOperatorType, DataRow } from "src/types";
 
 // import useReduxState from "src/lib/useReduxState";
 
 interface Props {
   dataViewerId: string;
-  expression?: ExpressionOperatorWithUuid;
+  expression?: ExpressionOperatorType;
 }
 
 // interface TableData {

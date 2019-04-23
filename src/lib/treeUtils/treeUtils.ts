@@ -164,26 +164,6 @@ export function canMove<T extends HasUuid>(
 }
 
 /**
- * Used to assign UUID's to a tree of items, used where the UUID is only required for UI purposes.
- *
- * @param {treeNode} tree The input tree, will not be modified
- * @return {treeNode} the copied tree plus the UUID values
- */
-export function assignRandomUuids<T>(
-  tree: Tree<T> & T,
-): T & HasUuid & Tree<T & HasUuid> {
-  return tree
-    ? {
-        uuid: uuidv4(), // assign a UUID if there isn't already one
-        ...(tree as any),
-        children: tree.children
-          ? tree.children.map(c => assignRandomUuids(c))
-          : undefined,
-      }
-    : undefined;
-}
-
-/**
  * Used to create a copy of a tree that has the UUID's stripped.
  * This is useful when the UUID's were only added for the UI in the first place.
  *

@@ -2,7 +2,7 @@ import * as React from "react";
 
 import { UseStreamSearch } from "./types";
 import useApi from "./useApi";
-import { ExpressionOperatorWithUuid } from "src/components/ExpressionBuilder/types";
+import { ExpressionOperatorType } from "src/components/ExpressionBuilder/types";
 import { StreamAttributeMapResult, PageRequest } from "../../types";
 
 const defaultStreams: StreamAttributeMapResult = {
@@ -24,7 +24,7 @@ const useStreamSearch = (): UseStreamSearch => {
   return {
     streams,
     search: React.useCallback(
-      (e: ExpressionOperatorWithUuid, p: PageRequest) =>
+      (e: ExpressionOperatorType, p: PageRequest) =>
         search(e, p).then(setStreams),
       [search, setStreams],
     ),

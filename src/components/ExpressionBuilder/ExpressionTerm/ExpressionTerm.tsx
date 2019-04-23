@@ -17,7 +17,6 @@
 import * as React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import Select from "react-select";
 import { DragSourceSpec, DragSource } from "react-dnd";
 import Button from "../../Button";
 import ConditionPicker from "../ConditionPicker/ConditionPicker";
@@ -32,16 +31,18 @@ import {
   DataSourceType,
   ConditionType,
   DataSourceFieldType,
-  ExpressionTermWithUuid,
+  ExpressionTermType,
 } from "../types";
 import withValueType from "../withValueType";
+import DataSourceFieldPicker from "../DataSourceFieldPicker/DataSourceFieldPicker";
 
 interface Props {
+  index: number;
   dataSource: DataSourceType;
-  term: ExpressionTermWithUuid;
   isEnabled: boolean;
-  showDeleteItemDialog: (itemId: string) => void;
-  expressionItemUpdated: (itemId: string, updates: object) => void;
+  onDelete: (index: number) => void;
+  value: ExpressionTermType;
+  onChange: (e: ExpressionTermType, index: number) => void;
 }
 
 interface EnhancedProps extends Props, DragCollectedProps {}
@@ -49,7 +50,7 @@ interface EnhancedProps extends Props, DragCollectedProps {}
 const dragSource: DragSourceSpec<Props, DragObject> = {
   beginDrag(props) {
     return {
-      expressionItem: props.term,
+      expressionItem: props.value,
     };
   },
 };
@@ -57,37 +58,58 @@ const dragSource: DragSourceSpec<Props, DragObject> = {
 const enhance = DragSource(DragDropTypes.TERM, dragSource, dragCollect);
 
 const ExpressionTerm: React.FunctionComponent<EnhancedProps> = ({
-  showDeleteItemDialog,
+  onDelete,
   connectDragSource,
-  term,
+  value,
   isEnabled,
-  expressionItemUpdated,
+  onChange,
   dataSource,
+  index,
 }) => {
-  const onRequestDeleteTerm = () => {
-    showDeleteItemDialog(term.uuid);
-  };
+  const onDeleteThis = React.useCallback(() => {
+    onDelete(index);
+  }, [index, onDelete]);
 
-  const onEnabledToggled = () => {
-    expressionItemUpdated(term.uuid, {
-      enabled: !term.enabled,
-    });
-  };
+  const onEnabledToggled = React.useCallback(() => {
+    onChange(
+      {
+        ...value,
+        enabled: !value.enabled,
+      },
+      index,
+    );
+  }, [index, value, onChange]);
 
-  const onFieldChange = (value: string) => {
-    expressionItemUpdated(term.uuid, {
-      field: value,
-    });
-  };
+  const onFieldChange = React.useCallback(
+    (field: string) => {
+      onChange(
+        {
+          ...value,
+          field,
+        },
+        index,
+      );
+    },
+    [index, value, onChange],
+  );
 
-  const onConditionChange = (value: ConditionType) => {
-    expressionItemUpdated(term.uuid, {
-      condition: value,
-    });
-  };
+  const onConditionChange = React.useCallback(
+    (condition: ConditionType) => {
+      onChange(
+        {
+          ...value,
+          condition,
+        },
+        index,
+      );
+    },
+    [index, value, onChange],
+  );
 
-  const onValueChange = (value: string) =>
-    expressionItemUpdated(term.uuid, { value });
+  const onValueChange = React.useCallback(
+    (v: string) => onChange({ ...value, value: v }, index),
+    [index, value, onChange],
+  );
 
   const classNames = ["expression-item", "expression-term"];
 
@@ -96,7 +118,7 @@ const ExpressionTerm: React.FunctionComponent<EnhancedProps> = ({
   }
 
   const thisField = dataSource.fields.find(
-    (f: DataSourceFieldType) => f.name === term.field,
+    (f: DataSourceFieldType) => f.name === value.field,
   );
 
   let conditionOptions: ConditionType[] = [];
@@ -106,7 +128,7 @@ const ExpressionTerm: React.FunctionComponent<EnhancedProps> = ({
 
   const className = classNames.join(" ");
 
-  const valueType = withValueType(term, dataSource);
+  const valueType = withValueType(value, dataSource);
 
   return (
     <div className={className}>
@@ -115,33 +137,31 @@ const ExpressionTerm: React.FunctionComponent<EnhancedProps> = ({
           <FontAwesomeIcon icon="bars" />
         </span>,
       )}
-      <Select
-        className="expression-term__select"
-        placeholder="Field"
-        value={dataSource.fields.find(o => o.name === term.field)}
-        onChange={(o: DataSourceFieldType) => onFieldChange(o.name)}
-        options={dataSource.fields}
+      <DataSourceFieldPicker
+        dataSource={dataSource}
+        value={value.field}
+        onChange={onFieldChange}
       />
       <ConditionPicker
         className="expression-term__select"
-        value={term.condition}
+        value={value.condition}
         onChange={onConditionChange}
         conditionOptions={conditionOptions}
       />
-      <ValueWidget valueType={valueType} term={term} onChange={onValueChange} />
+      <ValueWidget
+        valueType={valueType}
+        term={value}
+        onChange={onValueChange}
+      />
 
       <div className="expression-term__actions">
         <Button
           icon="check"
           groupPosition="left"
-          disabled={term.enabled}
+          disabled={value.enabled}
           onClick={onEnabledToggled}
         />
-        <Button
-          icon="trash"
-          groupPosition="right"
-          onClick={onRequestDeleteTerm}
-        />
+        <Button icon="trash" groupPosition="right" onClick={onDeleteThis} />
       </div>
     </div>
   );

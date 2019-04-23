@@ -1,11 +1,9 @@
 import * as React from "react";
 import useHttpClient from "src/lib/useHttpClient";
 import { useConfig } from "src/startup/config";
-import cleanExpression from "./cleanExpression";
 import {
   DataSourceType,
   ExpressionOperatorType,
-  ExpressionOperatorWithUuid,
 } from "src/components/ExpressionBuilder/types";
 import { StreamAttributeMapResult, PageRequest, DataRow } from "../../types";
 
@@ -63,12 +61,9 @@ export const useApi = (): Api => {
       [getPageUrl, httpGetJson],
     ),
     search: React.useCallback(
-      (
-        expressionWithUuids: ExpressionOperatorWithUuid,
-        pageInfo: PageRequest,
-      ) =>
+      (expression: ExpressionOperatorType, pageInfo: PageRequest) =>
         httpPostJsonResponse(getPageUrl(pageInfo), {
-          body: JSON.stringify(cleanExpression(expressionWithUuids)),
+          body: JSON.stringify(expression),
         }),
       [getPageUrl, httpPostJsonResponse],
     ),

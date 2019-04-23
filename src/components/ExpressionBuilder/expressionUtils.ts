@@ -1,23 +1,17 @@
-import * as uuidv4 from "uuid/v4";
-
 import {
   ExpressionItem,
   ExpressionTermType,
   ExpressionOperatorType,
   ConditionDisplayValues,
-  ExpressionTermWithUuid,
-  ExpressionOperatorWithUuid,
 } from "./types";
 
-export const getNewTerm = (): ExpressionTermWithUuid => ({
-  uuid: uuidv4(),
+export const getNewTerm = (): ExpressionTermType => ({
   type: "term",
   condition: "EQUALS",
   enabled: true,
 });
 
-export const getNewOperator = (): ExpressionOperatorWithUuid => ({
-  uuid: uuidv4(),
+export const getNewOperator = (): ExpressionOperatorType => ({
   type: "operator",
   op: "AND",
   enabled: true,

@@ -1,11 +1,11 @@
 import {
-  ExpressionTermWithUuid,
+  ExpressionTermType,
   DataSourceType,
   DataSourceFieldType,
 } from "./types";
 
 const withValueType = (
-  term: ExpressionTermWithUuid,
+  term: ExpressionTermType,
   dataSource: DataSourceType,
 ): string => {
   let valueType = "text";

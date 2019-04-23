@@ -29,7 +29,7 @@ import IconHeader from "../IconHeader";
 import ExpressionSearchBar from "../ExpressionSearchBar";
 import HorizontalMainDetails from "../HorizontalMainDetails";
 import DetailsTabs from "./DetailsTabs";
-import { ExpressionOperatorWithUuid } from "../ExpressionBuilder/types";
+import { ExpressionOperatorType } from "../ExpressionBuilder/types";
 import { DataRow, PageRequest } from "./types";
 
 const COLUMNS: Column[] = [
@@ -69,7 +69,7 @@ const DataViewer = () => {
 
   // The expression search bar will call this on mount
   const onSearch = React.useCallback(
-    (expression: ExpressionOperatorWithUuid) => {
+    (expression: ExpressionOperatorType) => {
       search(expression, defaultPageRequest);
     },
     [search],

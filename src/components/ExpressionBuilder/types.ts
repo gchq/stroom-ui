@@ -36,7 +36,7 @@ export interface DropCollectedProps {
 }
 
 export interface DragObject {
-  expressionItem: ExpressionOperatorWithUuid | ExpressionTermWithUuid;
+  expressionItem: ExpressionOperatorType | ExpressionTermType;
 }
 
 export const dragCollect: DragSourceCollector<
@@ -110,18 +110,4 @@ export interface ExpressionTermType extends ExpressionItem {
   condition?: ConditionType;
   value?: any;
   dictionary?: DictionaryDoc | null;
-}
-
-export interface ExpressionHasUuid extends ExpressionItem {
-  uuid: string;
-}
-
-export interface ExpressionOperatorWithUuid extends ExpressionOperatorType {
-  uuid: string;
-  enabled: boolean;
-  children: (ExpressionOperatorWithUuid | ExpressionTermWithUuid)[];
-}
-
-export interface ExpressionTermWithUuid extends ExpressionTermType {
-  uuid: string;
 }
