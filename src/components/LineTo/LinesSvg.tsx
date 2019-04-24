@@ -13,8 +13,6 @@ function calculateLine({ fromId, toId }: LineType): LineDefinition | undefined {
   const fromElement = document.getElementById(fromId);
   const toElement = document.getElementById(toId);
 
-  console.log("Drawing Line from ", { fromId, toId, fromElement, toElement });
-
   if (fromElement && toElement) {
     const fromRect = fromElement.getBoundingClientRect() as DOMRect;
     const toRect = toElement.getBoundingClientRect() as DOMRect;
