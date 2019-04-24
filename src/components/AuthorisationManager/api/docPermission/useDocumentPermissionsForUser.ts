@@ -28,7 +28,7 @@ const useDocumentPermissionsForUser = (
 
   React.useEffect(() => {
     getPermissionsForDocumentForUser(docRefUuid, userUuid).then(itemsReceived);
-  }, [docRefUuid, userUuid, getPermissionsForDocumentForUser]);
+  }, [docRefUuid, userUuid, getPermissionsForDocumentForUser, itemsReceived]);
 
   const addPermission = React.useCallback(
     (permissionName: string) => {
@@ -36,7 +36,7 @@ const useDocumentPermissionsForUser = (
         itemAdded(permissionName),
       );
     },
-    [docRefUuid, userUuid, addDocPermission],
+    [docRefUuid, userUuid, addDocPermission, itemAdded],
   );
   const removePermission = React.useCallback(
     (permissionName: string) => {
@@ -44,7 +44,7 @@ const useDocumentPermissionsForUser = (
         itemRemoved(permissionName),
       );
     },
-    [docRefUuid, userUuid, removeDocPermission],
+    [docRefUuid, userUuid, removeDocPermission, itemRemoved],
   );
 
   return {

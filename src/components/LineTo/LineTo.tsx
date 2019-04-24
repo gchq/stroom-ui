@@ -31,7 +31,7 @@ const LineTo: React.FunctionComponent<Props> = ({ fromId, toId }) => {
     lineCreated({ lineId, fromId, toId });
 
     return () => lineDestroyed(lineId);
-  }, [toId, fromId, lineCreated, lineDestroyed]);
+  }, [lineId, toId, fromId, lineCreated, lineDestroyed]);
 
   return null;
 };

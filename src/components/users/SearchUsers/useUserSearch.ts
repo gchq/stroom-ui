@@ -23,7 +23,7 @@ const useUserSearch = (): UserSearchApi => {
     search().then(users => {
       setUsers(users);
     });
-  }, [search]);
+  }, [search, setUsers]);
 
   const { remove: removeUserUsingApi } = useApi();
 
@@ -36,9 +36,12 @@ const useUserSearch = (): UserSearchApi => {
     [removeUserUsingApi, search, setUsers],
   );
 
-  const changeSelectedUser = useCallback((userId: string) => {
-    setSelectedUser(userId);
-  }, []);
+  const changeSelectedUser = useCallback(
+    (userId: string) => {
+      setSelectedUser(userId);
+    },
+    [setSelectedUser],
+  );
 
   return {
     users,

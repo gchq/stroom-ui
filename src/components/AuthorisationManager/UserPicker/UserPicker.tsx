@@ -23,7 +23,7 @@ const UserPicker: React.FunctionComponent<Props> = ({
   const { findUsers, users, createUser } = useManageUsers();
   React.useEffect(() => {
     findUsers(undefined, isGroup, undefined);
-  }, [findUsers]);
+  }, [isGroup, findUsers]);
 
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const onCreateOption = React.useCallback(
@@ -36,7 +36,7 @@ const UserPicker: React.FunctionComponent<Props> = ({
         },
       );
     },
-    [isLoading],
+    [isGroup, setIsLoading, onChange, createUser],
   );
 
   const options: UserOption[] = React.useMemo(

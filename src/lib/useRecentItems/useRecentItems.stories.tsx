@@ -27,7 +27,7 @@ const TestHarness: React.FunctionComponent = () => {
   React.useEffect(() => {
     addRecentItem(documents[documentIndex]);
     setDocumentIndex((documentIndex + 1) % documents.length);
-  }, [addRecentItem]);
+  }, [documents, documentIndex, addRecentItem, setDocumentIndex]);
 
   return (
     <div>

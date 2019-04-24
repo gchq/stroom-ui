@@ -184,7 +184,7 @@ const PipelineElement: React.FunctionComponent<EnhancedProps> = ({
   canDrop,
   isDragging,
   draggingItemType,
-  pipelineEditApi,
+  pipelineEditApi: { elementSelected, selectedElementId },
   elementDefinition,
   elementProperties,
   pipeline,
@@ -199,8 +199,8 @@ const PipelineElement: React.FunctionComponent<EnhancedProps> = ({
       elementProperties,
       thisElementProperties,
     );
-    return pipelineEditApi.elementSelected(elementId, initialValues);
-  }, [pipelineId, elementId, elementProperties, pipeline]);
+    return elementSelected(elementId, initialValues);
+  }, [elementId, elementProperties, pipeline, elementSelected]);
 
   const className = React.useMemo(() => {
     const classNames = ["Pipeline-element"];
@@ -220,7 +220,7 @@ const PipelineElement: React.FunctionComponent<EnhancedProps> = ({
         classNames.push("cannot_drop");
       }
 
-      if (pipelineEditApi.selectedElementId === elementId) {
+      if (selectedElementId === elementId) {
         classNames.push("selected");
       }
     } else {
@@ -232,8 +232,9 @@ const PipelineElement: React.FunctionComponent<EnhancedProps> = ({
     draggingItemType,
     isDragging,
     canDrop,
-    pipelineEditApi.selectedElementId,
+    selectedElementId,
     elementId,
+    isOver,
   ]);
 
   return connectDragSource(

@@ -34,7 +34,7 @@ const PipelineSettings: React.FunctionComponent<Props> = ({
     } else {
       console.error("Form invalid", { description });
     }
-  }, [description]);
+  }, [description, onCloseDialog, updateValues]);
 
   return (
     <ThemedModal

@@ -31,7 +31,7 @@ const useKeyIsDown = function(
       document.removeEventListener("keydown", onkeydown);
       document.removeEventListener("keyup", onkeyup);
     };
-  }, []); // empty array prevents this code re-running for state changes
+  }, [filters, keysDown]); // empty array prevents this code re-running for state changes
 
   return keysDown;
 };

@@ -31,7 +31,7 @@ export const HandleAuthenticationResponse: React.FunctionComponent = () => {
 
   const accessCode = React.useMemo(() => {
     let query = location!.search;
-    if (query[0] == "?") {
+    if (query[0] === "?") {
       query = query.substring(1);
     }
     return queryString.parse(query).accessCode;

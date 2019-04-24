@@ -34,7 +34,7 @@ const GroupsForUser: React.FunctionComponent<Props> = ({ user }) => {
     onConfirm: React.useCallback(
       () =>
         selectedItems.map(g => g.uuid).forEach(gUuid => removeFromGroup(gUuid)),
-      [removeFromGroup, user, selectedItems],
+      [removeFromGroup, selectedItems],
     ),
     getQuestion: React.useCallback(
       () => "Are you sure you want to remove the user from these groups?",

@@ -106,7 +106,7 @@ const ExpressionSearchBar: React.FunctionComponent<Props> = ({
       setExpression(expression);
       setIsExpression(true);
     }
-  }, [dataSource, searchString, setExpression, setIsExpression]);
+  }, [dataSource, searchString, isExpression, setExpression, setIsExpression]);
 
   return (
     <div className="dropdown search-bar borderless">

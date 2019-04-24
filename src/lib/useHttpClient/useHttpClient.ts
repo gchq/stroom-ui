@@ -8,12 +8,17 @@ import { useErrorReporting } from "components/ErrorPage";
 import useAppNavigation from "components/AppChrome/useAppNavigation";
 
 const useCheckStatus = (status: number) =>
-  React.useCallback((response: Response): Promise<any> => {
-    if (response.status === status) {
-      return Promise.resolve(response);
-    }
-    return Promise.reject(new HttpError(response.status, response.statusText));
-  }, []);
+  React.useCallback(
+    (response: Response): Promise<any> => {
+      if (response.status === status) {
+        return Promise.resolve(response);
+      }
+      return Promise.reject(
+        new HttpError(response.status, response.statusText),
+      );
+    },
+    [status],
+  );
 
 /**
  * A wrapper around HTTP fetch that allows us to plop in idTokens, CORS specifications,
@@ -116,7 +121,7 @@ export const useHttpClient = (): HttpClient => {
 
       return cache[url];
     },
-    [catchImpl, idToken],
+    [catchImpl, idToken, handle200],
   );
 
   const useFetchWithBodyAndJsonResponse = (method: string) =>
@@ -155,7 +160,7 @@ export const useHttpClient = (): HttpClient => {
           .then(r => r.json())
           .catch(catchImpl);
       },
-      [catchImpl, idToken],
+      [method],
     );
 
   const useFetchWithBodyAndEmptyResponse = (method: string) =>
@@ -193,7 +198,7 @@ export const useHttpClient = (): HttpClient => {
           .then(r => r.text())
           .catch(catchImpl);
       },
-      [catchImpl, idToken],
+      [method],
     );
 
   return {

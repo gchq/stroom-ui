@@ -31,7 +31,7 @@ const TestHarness: React.FunctionComponent = () => {
 
   const onClick = React.useCallback(() => {
     showDialog(PARENT_ID, selectedElementDefinition, existingNames);
-  }, [showDialog]);
+  }, [selectedElementDefinition, existingNames, showDialog]);
 
   return (
     <div>

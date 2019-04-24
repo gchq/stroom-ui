@@ -37,14 +37,14 @@ export const useApi = (): Api => {
         httpPostEmptyResponse(
           `${stroomBaseServiceUrl}/appPermissions/v1/${userUuid}/${permissionName}`,
         ),
-      [httpPostEmptyResponse],
+      [stroomBaseServiceUrl, httpPostEmptyResponse],
     ),
     removeAppPermission: React.useCallback(
       (userUuid: string, permissionName: string): Promise<void> =>
         httpDeleteEmptyResponse(
           `${stroomBaseServiceUrl}/appPermissions/v1/${userUuid}/${permissionName}`,
         ),
-      [httpDeleteEmptyResponse],
+      [stroomBaseServiceUrl, httpDeleteEmptyResponse],
     ),
   };
 };

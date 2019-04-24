@@ -26,7 +26,7 @@ const IndexVolumeGroupPicker: React.FunctionComponent<PickerProps> = ({
         setIsLoading(false);
       });
     },
-    [isLoading],
+    [createIndexVolumeGroup, onChange, setIsLoading],
   );
 
   return (

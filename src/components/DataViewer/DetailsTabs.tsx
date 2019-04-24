@@ -32,7 +32,7 @@ const DetailsTabs: React.FunctionComponent<Props> = ({ data }) => {
     () => (
       <div className="tab-pane">{/* <DataDetails meta={dataRow} /> */}</div>
     ),
-    [dataRow],
+    [], // dataRow
   );
 
   const renderDetails = React.useCallback(() => {

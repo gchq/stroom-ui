@@ -9,7 +9,7 @@ import useUserState from "./useUserState";
  * This hook connects the REST API calls to the Redux Store.
  */
 const useUsers = () => {
-  const { user, setUser, clearUser, setIsCreating } = useUserState();
+  const { user, setUser, setIsCreating } = useUserState();
 
   const { goToUsers } = useAppNavigation();
 
@@ -23,7 +23,7 @@ const useUsers = () => {
         goToUsers();
       });
     },
-    [updateUserUsingApi, clearUser],
+    [updateUserUsingApi, goToUsers],
   );
 
   /**
@@ -40,7 +40,7 @@ const useUsers = () => {
         });
       });
     },
-    [createUserUsingApi, createAuthorisationUser, setIsCreating],
+    [goToUsers, createUserUsingApi, createAuthorisationUser, setIsCreating],
   );
 
   /**
@@ -54,7 +54,7 @@ const useUsers = () => {
         setUser(user);
       });
     },
-    [setIsCreating, setUser],
+    [fetchUserUsingApi, setIsCreating, setUser],
   );
 
   return {

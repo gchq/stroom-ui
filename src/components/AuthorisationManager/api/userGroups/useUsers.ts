@@ -21,12 +21,13 @@ const useUsers = (userUuids: string[]): StroomUser[] => {
   );
 
   // Don't feed 'users' into the [], otherwise it will re-run this as users come in
+  // THIS NEEDS RETHINKING
   React.useEffect(() => {
     let userUuidsFound = allUsers.map(u => u.uuid);
     userUuids
       .filter(userUuid => !userUuidsFound.includes(userUuid))
       .forEach(userUuid => fetchUser(userUuid).then(user => itemAdded(user)));
-  }, [userUuids, fetchUser, itemAdded]);
+  }, [allUsers, userUuids, fetchUser, itemAdded]);
 
   return users;
 };

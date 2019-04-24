@@ -38,9 +38,9 @@ const reducer = (
       return state.concat([action.indexVolume]);
     case "deleted":
       return state.filter(v => v.id !== action.id);
+    default:
+      return state;
   }
-
-  return state;
 };
 
 const useIndexVolumes = (): UseIndexVolumes => {

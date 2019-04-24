@@ -33,9 +33,9 @@ const createListReducer = <T extends {}>(getKey: (item: T) => string) => {
           .concat([action.item]);
       case "itemRemoved":
         return state.filter(u => getKey(u) !== action.itemKey);
+      default:
+        return state;
     }
-
-    return state;
   };
 };
 

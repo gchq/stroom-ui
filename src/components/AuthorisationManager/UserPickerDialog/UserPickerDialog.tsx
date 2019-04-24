@@ -35,7 +35,7 @@ export const UserPickerDialog: React.FunctionComponent<Props> = ({
       onConfirm(userGroupUuid);
       onClose();
     }
-  }, [onConfirm, onClose]);
+  }, [userGroupUuid, onConfirm, onClose]);
 
   return (
     <ThemedModal

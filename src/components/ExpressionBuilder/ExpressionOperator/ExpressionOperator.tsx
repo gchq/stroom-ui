@@ -151,7 +151,7 @@ const ExpressionOperator: React.FunctionComponent<EnhancedProps> = ({
         index,
       );
     },
-    [index, onChange],
+    [value, index, onChange],
   );
 
   const onEnabledToggled = React.useCallback(() => {

@@ -88,6 +88,9 @@ export function useDocRefEditor<T extends object>({
     undefined,
   );
 
+  const saveDocument: DocumentApi<T>["saveDocument"] | undefined = !!documentApi
+    ? documentApi.saveDocument
+    : undefined;
   const fetchDocument:
     | DocumentApi<T>["fetchDocument"]
     | undefined = !!documentApi ? documentApi.fetchDocument : undefined;
@@ -102,12 +105,12 @@ export function useDocRefEditor<T extends object>({
   }, [fetchDocument, setDocRefContents, setIsDirty, docRefUuid]);
 
   const onClickSave = React.useCallback(() => {
-    if (!!docRefContents && documentApi && !!documentApi.saveDocument) {
-      documentApi.saveDocument((docRefContents as unknown) as T).then(() => {
+    if (!!docRefContents && !!saveDocument) {
+      saveDocument((docRefContents as unknown) as T).then(() => {
         setIsDirty(false);
       });
     }
-  }, [!!documentApi ? documentApi.saveDocument : undefined, docRefContents]);
+  }, [saveDocument, docRefContents, setIsDirty]);
 
   return {
     onDocumentChange: React.useCallback(

@@ -26,7 +26,7 @@ const useResetPassword = (): {
         history.push("/confirmPasswordResetEmail"),
       );
     },
-    [],
+    [history, submitPasswordChangeRequestUsingApi],
   );
 
   const { stroomUiUrl } = useConfig();
@@ -54,7 +54,7 @@ const useResetPassword = (): {
         },
       );
     },
-    [],
+    [resetPasswordUsingApi, stroomUiUrl],
   );
 
   return { submitPasswordChangeRequest, resetPassword };

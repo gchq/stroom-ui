@@ -35,7 +35,7 @@ const EditToken = () => {
     if (!!tokenId) {
       fetchApiKey(tokenId);
     }
-  }, [tokenId]);
+  }, [tokenId, fetchApiKey]);
 
   return (
     <form>

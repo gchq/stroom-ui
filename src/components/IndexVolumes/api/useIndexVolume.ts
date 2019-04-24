@@ -34,13 +34,19 @@ const useIndexVolume = (volumeId: string): UseIndexVolume => {
     getGroupsForIndexVolume(volumeId).then(groups =>
       itemsReceived(groups.map(g => g.name)),
     );
-  }, [volumeId, getIndexVolumeById, setIndexVolume, getGroupsForIndexVolume]);
+  }, [
+    volumeId,
+    getIndexVolumeById,
+    setIndexVolume,
+    getGroupsForIndexVolume,
+    itemsReceived,
+  ]);
 
   const addToGroup = React.useCallback(
     (groupName: string) => {
       addVolumeToGroup(volumeId, groupName).then(() => itemAdded(groupName));
     },
-    [volumeId, addVolumeToGroup],
+    [volumeId, addVolumeToGroup, itemAdded],
   );
   const removeFromGroup = React.useCallback(
     (groupName: string) => {
@@ -48,7 +54,7 @@ const useIndexVolume = (volumeId: string): UseIndexVolume => {
         itemRemoved(groupName),
       );
     },
-    [volumeId, removeVolumeFromGroup],
+    [volumeId, removeVolumeFromGroup, itemRemoved],
   );
 
   return { indexVolume, groupNames, addToGroup, removeFromGroup };

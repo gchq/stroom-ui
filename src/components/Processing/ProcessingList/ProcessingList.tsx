@@ -134,7 +134,7 @@ const ProcessingList: React.FunctionComponent<Props> = ({
       fetchMore();
       return false;
     }
-  }, [totalTrackers, trackers]);
+  }, [totalTrackers, trackers, fetchMore]);
 
   const { tableProps, selectedItem } = useSelectableReactTable<StreamTaskType>(
     {

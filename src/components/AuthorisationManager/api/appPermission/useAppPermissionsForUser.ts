@@ -34,14 +34,14 @@ const useAppPermissionsForUser = (userUuid: string): UserAppPermissionApi => {
 
   React.useEffect(() => {
     getPermissionsForUser(userUuid).then(itemsReceived);
-  }, [userUuid, getPermissionsForUser]);
+  }, [userUuid, getPermissionsForUser, itemsReceived]);
 
   const addPermission = React.useCallback(
     (permissionName: string) =>
       addAppPermission(userUuid, permissionName).then(() =>
         itemAdded(permissionName),
       ),
-    [userUuid, addAppPermission],
+    [userUuid, addAppPermission, itemAdded],
   );
 
   const removePermission = React.useCallback(
@@ -49,7 +49,7 @@ const useAppPermissionsForUser = (userUuid: string): UserAppPermissionApi => {
       removeAppPermission(userUuid, permissionName).then(() =>
         itemRemoved(permissionName),
       ),
-    [userUuid, removeAppPermission],
+    [userUuid, removeAppPermission, itemRemoved],
   );
 
   return {

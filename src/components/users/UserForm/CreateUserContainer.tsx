@@ -24,7 +24,7 @@ import { validateAsync } from "../validation";
 import UserForm from "./UserForm";
 import UserFormData from "./UserFormData";
 
-const CreateUserContainer = ({}) => {
+const CreateUserContainer = () => {
   const { createUser } = useUsers();
   const { authenticationServiceUrl } = useConfig();
   if (!authenticationServiceUrl)

@@ -11,7 +11,7 @@ const useTokens = () => {
     (tokenId: string, nextState: boolean) => {
       toggleStateApi(tokenId, nextState).then(() => setEnabled(nextState));
     },
-    [toggleStateApi],
+    [toggleStateApi, setEnabled],
   );
 
   const { fetchApiKey: fetchApiKeyApi } = useApi();
@@ -21,7 +21,7 @@ const useTokens = () => {
         setToken(apiKey);
       });
     },
-    [fetchApiKeyApi],
+    [fetchApiKeyApi, setToken],
   );
 
   const { createToken: createTokenApi } = useApi();
@@ -32,7 +32,7 @@ const useTokens = () => {
         goToApiKey(newToken.id);
       });
     },
-    [createTokenApi],
+    [createTokenApi, goToApiKey],
   );
 
   return {

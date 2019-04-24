@@ -125,22 +125,28 @@ export const usePipelineState = (pipelineId: string): PipelineProps => {
       ),
       elementPropertyRevertToDefault: React.useCallback<
         PipelineEditApi["elementPropertyRevertToDefault"]
-      >((elementId, name) => {
-        if (!!docRefContents) {
-          onDocumentChange(
-            revertPropertyToDefault(docRefContents, elementId, name),
-          );
-        }
-      }, []),
+      >(
+        (elementId, name) => {
+          if (!!docRefContents) {
+            onDocumentChange(
+              revertPropertyToDefault(docRefContents, elementId, name),
+            );
+          }
+        },
+        [docRefContents, onDocumentChange],
+      ),
       elementPropertyRevertToParent: React.useCallback<
         PipelineEditApi["elementPropertyRevertToParent"]
-      >((elementId, name) => {
-        if (!!docRefContents) {
-          onDocumentChange(
-            revertPropertyToParent(docRefContents, elementId, name),
-          );
-        }
-      }, []),
+      >(
+        (elementId, name) => {
+          if (!!docRefContents) {
+            onDocumentChange(
+              revertPropertyToParent(docRefContents, elementId, name),
+            );
+          }
+        },
+        [docRefContents, onDocumentChange],
+      ),
     },
   };
 };

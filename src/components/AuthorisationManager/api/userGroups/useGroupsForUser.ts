@@ -27,7 +27,7 @@ const useGroupsForUser = (user: StroomUser): UseGroupsForUser => {
 
   React.useEffect(() => {
     findGroupsForUser(user.uuid).then(itemsReceived);
-  }, [user]);
+  }, [user, findGroupsForUser, itemsReceived]);
 
   const addToGroup = React.useCallback(
     (groupUuid: string) => {
@@ -35,7 +35,7 @@ const useGroupsForUser = (user: StroomUser): UseGroupsForUser => {
         .then(() => fetchUser(groupUuid))
         .then(itemAdded);
     },
-    [user, fetchUser, addUserToGroup],
+    [user, fetchUser, addUserToGroup, itemAdded],
   );
   const removeFromGroup = React.useCallback(
     (groupUuid: string) => {
@@ -43,7 +43,7 @@ const useGroupsForUser = (user: StroomUser): UseGroupsForUser => {
         itemRemoved(groupUuid),
       );
     },
-    [user, removeUserFromGroup],
+    [user, removeUserFromGroup, itemRemoved],
   );
 
   return {

@@ -1,4 +1,3 @@
-import * as uuidv4 from "uuid/v4";
 import { HttpRequest, HttpResponse } from "@pollyjs/adapter-fetch";
 
 import { TestCache } from "../PollyDecorator";

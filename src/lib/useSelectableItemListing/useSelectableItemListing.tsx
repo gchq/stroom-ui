@@ -37,7 +37,14 @@ const useFocusChanged = <T extends {}>({
       setFocusIndex(nextIndex);
       setFocussedItem(items[nextIndex]);
     }
-  }, [items, focusIndex, direction, setFocussedItem, preFocusWrap]);
+  }, [
+    items,
+    focusIndex,
+    direction,
+    setFocusIndex,
+    setFocussedItem,
+    preFocusWrap,
+  ]);
 
 const useSelectableItemListing = <TItem extends {}>({
   getKey,

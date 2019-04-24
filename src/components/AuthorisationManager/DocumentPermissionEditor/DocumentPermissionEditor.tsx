@@ -100,7 +100,7 @@ export const DocumentPermissionEditor: React.FunctionComponent<Props> = ({
     if (!!selectedUser) {
       goToAuthorisationsForDocumentForUser(docRefUuid, selectedUser.uuid);
     }
-  }, [docRefUuid, history, docRef, selectedUser]);
+  }, [docRefUuid, selectedUser, goToAuthorisationsForDocumentForUser]);
 
   return (
     <div>

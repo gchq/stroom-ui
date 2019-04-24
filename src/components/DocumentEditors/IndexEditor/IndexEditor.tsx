@@ -107,7 +107,7 @@ const IndexEditor = ({ docRefUuid }: SwitchedDocRefEditorProps) => {
           onDocumentChange(updatedIndex);
         }
       },
-      [docRefContents, onDocumentChange],
+      [fields, docRefContents, onDocumentChange],
     ),
   );
 
@@ -161,7 +161,13 @@ const IndexEditor = ({ docRefUuid }: SwitchedDocRefEditorProps) => {
       };
       onDocumentChange(updatedIndex);
     }
-  }, [lastSelectedIndex, docRefContents]);
+  }, [
+    selectedItems.length,
+    fields,
+    lastSelectedIndex,
+    docRefContents,
+    onDocumentChange,
+  ]);
 
   const onMoveDownClick = React.useCallback(() => {
     if (
@@ -182,7 +188,13 @@ const IndexEditor = ({ docRefUuid }: SwitchedDocRefEditorProps) => {
       };
       onDocumentChange(updatedIndex);
     }
-  }, [lastSelectedIndex, docRefContents]);
+  }, [
+    selectedItems.length,
+    fields,
+    lastSelectedIndex,
+    docRefContents,
+    onDocumentChange,
+  ]);
 
   if (!docRefContents) {
     return <Loader message="Loading Index..." />;

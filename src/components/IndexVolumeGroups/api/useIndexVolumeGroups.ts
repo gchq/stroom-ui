@@ -26,18 +26,18 @@ const useIndexVolumeGroups = (): UseIndexVolumeGroups => {
 
   React.useEffect(() => {
     getIndexVolumeGroups().then(itemsReceived);
-  }, [getIndexVolumeGroups]);
+  }, [getIndexVolumeGroups, itemsReceived]);
 
   return {
     groups,
     createIndexVolumeGroup: React.useCallback(
       (groupName: string) => createIndexVolumeGroup(groupName).then(itemAdded),
-      [groups, createIndexVolumeGroup],
+      [createIndexVolumeGroup, itemAdded],
     ),
     deleteIndexVolumeGroup: React.useCallback(
       (groupName: string) =>
         deleteIndexVolumeGroup(groupName).then(() => itemRemoved(groupName)),
-      [groups, deleteIndexVolumeGroup],
+      [deleteIndexVolumeGroup, itemRemoved],
     ),
   };
 };

@@ -18,7 +18,7 @@ let SwitchedDocRefEditor: React.FunctionComponent<
 
   React.useEffect(() => {
     addRecentItem(docRef);
-  }, [docRefUuid, addRecentItem]);
+  }, [docRef, addRecentItem]);
 
   const EditorClass = docRefEditorClasses[docRef.type];
   if (!!EditorClass) {
