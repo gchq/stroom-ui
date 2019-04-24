@@ -38,12 +38,13 @@ import {
 import ExpressionTerm from "src/components/ExpressionBuilder/ExpressionTerm/ExpressionTerm";
 import Button from "src/components/Button";
 import { DataSourceType, OperatorType, OperatorTypeValues } from "../types";
-import { LineTo } from "src/components/LineTo";
+import { LineTo, LineEndpoint } from "src/components/LineTo";
 
 import { getNewTerm, getNewOperator } from "../expressionUtils";
 
 interface Props {
   index?: number; // If this is undefined, assume this is the root
+  idWithinExpression?: string;
   dataSource: DataSourceType;
   isEnabled?: boolean;
   value: ExpressionOperatorType;
@@ -101,6 +102,7 @@ const enhance = pipe(
 const ExpressionOperator: React.FunctionComponent<EnhancedProps> = ({
   value,
   index,
+  idWithinExpression = "root",
   isEnabled = true,
   dataSource,
   onChange,
@@ -215,9 +217,14 @@ const ExpressionOperator: React.FunctionComponent<EnhancedProps> = ({
       {connectDropTarget(
         <div>
           {connectDragSource(
-            <span>
-              <FontAwesomeIcon color={dndBarColour} icon="bars" />
-            </span>,
+            <div className="expression-operator-circle">
+              <LineEndpoint
+                className="expression-operator-circle"
+                lineEndpointId={idWithinExpression}
+              >
+                <FontAwesomeIcon color={dndBarColour} icon="bars" />
+              </LineEndpoint>
+            </div>,
           )}
 
           {OperatorTypeValues.map((l, i) => (
@@ -275,12 +282,14 @@ const ExpressionOperator: React.FunctionComponent<EnhancedProps> = ({
         {value.children &&
           value.children.map((c: ExpressionItem, i: number) => {
             let itemElement;
+            let itemLineEndpointId = `${idWithinExpression}-${i}`;
             switch (c.type) {
               case "term":
                 itemElement = (
                   <div>
                     <ExpressionTerm
                       index={i}
+                      idWithinExpression={itemLineEndpointId}
                       dataSource={dataSource}
                       isEnabled={isEnabled && c.enabled}
                       value={c as ExpressionTermType}
@@ -294,6 +303,7 @@ const ExpressionOperator: React.FunctionComponent<EnhancedProps> = ({
                 itemElement = (
                   <EnhancedExpressionOperator
                     index={i}
+                    idWithinExpression={itemLineEndpointId}
                     dataSource={dataSource}
                     isEnabled={isEnabled && c.enabled}
                     value={c as ExpressionOperatorType}
@@ -309,7 +319,7 @@ const ExpressionOperator: React.FunctionComponent<EnhancedProps> = ({
             // Wrap it with a line to
             return (
               <div key={i} className="operator__child">
-                <LineTo fromId="TODOFROM" toId="TODOTO" />
+                <LineTo fromId={idWithinExpression} toId={itemLineEndpointId} />
                 {itemElement}
               </div>
             );

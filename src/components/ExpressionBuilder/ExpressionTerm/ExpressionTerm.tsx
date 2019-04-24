@@ -35,9 +35,11 @@ import {
 } from "../types";
 import withValueType from "../withValueType";
 import DataSourceFieldPicker from "../DataSourceFieldPicker/DataSourceFieldPicker";
+import { LineEndpoint } from "src/components/LineTo";
 
 interface Props {
   index: number;
+  idWithinExpression: string;
   dataSource: DataSourceType;
   isEnabled: boolean;
   onDelete: (index: number) => void;
@@ -65,6 +67,7 @@ const ExpressionTerm: React.FunctionComponent<EnhancedProps> = ({
   onChange,
   dataSource,
   index,
+  idWithinExpression,
 }) => {
   const onDeleteThis = React.useCallback(() => {
     onDelete(index);
@@ -133,9 +136,14 @@ const ExpressionTerm: React.FunctionComponent<EnhancedProps> = ({
   return (
     <div className={className}>
       {connectDragSource(
-        <span>
-          <FontAwesomeIcon icon="bars" />
-        </span>,
+        <div className="expression-operator-circle">
+          <LineEndpoint
+            lineEndpointId={idWithinExpression}
+            className="expression-operator-circle"
+          >
+            <FontAwesomeIcon icon="bars" />
+          </LineEndpoint>
+        </div>,
       )}
       <DataSourceFieldPicker
         dataSource={dataSource}

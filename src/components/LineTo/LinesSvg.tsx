@@ -56,7 +56,7 @@ const LinesSvg: React.FunctionComponent<Props> = ({
       : undefined;
   }, []);
 
-  const refresh = useRefreshCounter();
+  //const refresh = useRefreshCounter();
   const lines: LineDefinition[] = React.useMemo(
     () =>
       rawLines
@@ -68,7 +68,7 @@ const LinesSvg: React.FunctionComponent<Props> = ({
         .map(calculateLine)
         .filter(e => e !== undefined)
         .map(e => e as LineDefinition),
-    [refresh, rawLines, getEndpointId],
+    [rawLines, getEndpointId],
   );
 
   // If the SVG has been scrolled, we need to translate the generated lines to cancel out that effect

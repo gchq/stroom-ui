@@ -36,6 +36,7 @@ const TestHarness: React.FunctionComponent = () => {
       <ExpressionTerm
         {...{
           index,
+          idWithinExpression: "none",
           isEnabled,
           dataSource,
           onDelete,
