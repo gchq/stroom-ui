@@ -19,9 +19,6 @@
 .operator__child {
   display: flex;
 }
-.operator__child .ElbowLine {
-  width: 2rem;
-}
 
 .expression-item__root {
   margin-right: 0.5rem;
@@ -48,6 +45,10 @@
 .input-between__divider {
   margin-right: 1rem;
   margin-left: 1rem;
+}
+
+.expression-operator-circle {
+  display: inline;
 }
 
 .operator__placeholder {

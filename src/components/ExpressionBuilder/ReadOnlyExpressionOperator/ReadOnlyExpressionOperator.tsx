@@ -32,9 +32,12 @@ const ReadOnlyExpressionOperator: React.FunctionComponent<Props> = ({
   return (
     <div className={className}>
       <div>
-        <span>
+        <LineEndpoint
+          className="expression-operator-circle"
+          lineEndpointId={idWithinExpression}
+        >
           <FontAwesomeIcon icon="circle" />
-        </span>
+        </LineEndpoint>
         <span>{value.op}</span>
       </div>
       <div className="operator__children">
@@ -72,9 +75,7 @@ const ReadOnlyExpressionOperator: React.FunctionComponent<Props> = ({
               // Wrap it with a line to
               return (
                 <React.Fragment key={i}>
-                  <LineEndpoint lineEndpointId={itemLineEndpointId}>
-                    {itemElement}
-                  </LineEndpoint>
+                  {itemElement}
                   <LineTo
                     fromId={idWithinExpression}
                     toId={itemLineEndpointId}

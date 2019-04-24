@@ -1,5 +1,6 @@
 import * as React from "react";
 import { ExpressionTermType } from "../types";
+import { LineEndpoint } from "src/components/LineTo";
 
 interface Props {
   idWithinExpression: string;
@@ -13,6 +14,7 @@ interface Props {
 const ReadOnlyExpressionTerm: React.FunctionComponent<Props> = ({
   value,
   isEnabled,
+  idWithinExpression,
 }) => {
   let className = "expression-item expression-item--readonly";
   if (!isEnabled) {
@@ -24,9 +26,9 @@ const ReadOnlyExpressionTerm: React.FunctionComponent<Props> = ({
   }
 
   return (
-    <div className={className}>
+    <LineEndpoint lineEndpointId={idWithinExpression} className={className}>
       {value.field} {value.condition} {valueStr}
-    </div>
+    </LineEndpoint>
   );
 };
 
