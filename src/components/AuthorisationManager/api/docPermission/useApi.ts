@@ -1,8 +1,8 @@
 import * as React from "react";
 
-import useHttpClient from "src/lib/useHttpClient";
+import useHttpClient from "lib/useHttpClient";
 import { DocumentPermissions } from "./types";
-import { useConfig } from "src/startup/config";
+import { useConfig } from "startup/config";
 
 interface Api {
   // Server Side Constant

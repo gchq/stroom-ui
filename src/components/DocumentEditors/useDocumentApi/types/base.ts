@@ -1,4 +1,4 @@
-import { Tree, TWithLineage } from "src/lib/treeUtils";
+import { Tree, TWithLineage } from "lib/treeUtils";
 
 export interface DocRefType {
   uuid: string;

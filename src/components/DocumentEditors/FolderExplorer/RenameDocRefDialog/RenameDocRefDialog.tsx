@@ -18,9 +18,9 @@ import * as React from "react";
 import DialogActionButtons from "../../../DialogActionButtons";
 import IconHeader from "../../../IconHeader";
 import ThemedModal from "../../../ThemedModal";
-// import { required, minLength2 } from "src/lib/formUtils";
-import useForm from "src/lib/useForm";
-import { DocRefType } from "src/components/DocumentEditors/useDocumentApi/types/base";
+// import { required, minLength2 } from "lib/formUtils";
+import useForm from "lib/useForm";
+import { DocRefType } from "components/DocumentEditors/useDocumentApi/types/base";
 
 interface Props {
   isOpen: boolean;

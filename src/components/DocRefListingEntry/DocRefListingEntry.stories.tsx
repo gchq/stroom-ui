@@ -16,16 +16,16 @@
 import * as React from "react";
 import { storiesOf } from "@storybook/react";
 
-import fullTestData from "src/testing/data";
+import fullTestData from "testing/data";
 import useSelectableItemListing, {
   SelectionBehaviour,
-} from "src/lib/useSelectableItemListing";
+} from "lib/useSelectableItemListing";
 import DocRefListingEntry from "./DocRefListingEntry";
 
 import { DocRefBreadcrumb } from "../DocRefBreadcrumb";
-import JsonDebug from "src/testing/JsonDebug";
+import JsonDebug from "testing/JsonDebug";
 import Button from "../Button";
-import { DocRefType } from "src/components/DocumentEditors/useDocumentApi/types/base";
+import { DocRefType } from "components/DocumentEditors/useDocumentApi/types/base";
 
 const testFolder = fullTestData.documentTree;
 const testDocRef = fullTestData.documentTree.children![0].children![0];

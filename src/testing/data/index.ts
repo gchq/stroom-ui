@@ -13,33 +13,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { StroomUser } from "src/components/AuthorisationManager/api/userGroups";
-import { AnnotationsIndexDoc } from "src/components/DocumentEditors/useDocumentApi/types/annotations";
+import { StroomUser } from "components/AuthorisationManager/api/userGroups";
+import { AnnotationsIndexDoc } from "components/DocumentEditors/useDocumentApi/types/annotations";
 import {
   copyDocRef,
   DocRefTree,
-} from "src/components/DocumentEditors/useDocumentApi/types/base";
-import { DashboardDoc } from "src/components/DocumentEditors/useDocumentApi/types/dashboard";
-import { DictionaryDoc } from "src/components/DocumentEditors/useDocumentApi/types/dictionaryDoc";
-import { ElasticIndexDoc } from "src/components/DocumentEditors/useDocumentApi/types/elastic";
-import { FeedDoc } from "src/components/DocumentEditors/useDocumentApi/types/feed";
-import { FolderDoc } from "src/components/DocumentEditors/useDocumentApi/types/folder";
-import { IndexDoc } from "src/components/DocumentEditors/useDocumentApi/types/indexDoc";
-import { ScriptDoc } from "src/components/DocumentEditors/useDocumentApi/types/scriptDoc";
+} from "components/DocumentEditors/useDocumentApi/types/base";
+import { DashboardDoc } from "components/DocumentEditors/useDocumentApi/types/dashboard";
+import { DictionaryDoc } from "components/DocumentEditors/useDocumentApi/types/dictionaryDoc";
+import { ElasticIndexDoc } from "components/DocumentEditors/useDocumentApi/types/elastic";
+import { FeedDoc } from "components/DocumentEditors/useDocumentApi/types/feed";
+import { FolderDoc } from "components/DocumentEditors/useDocumentApi/types/folder";
+import { IndexDoc } from "components/DocumentEditors/useDocumentApi/types/indexDoc";
+import { ScriptDoc } from "components/DocumentEditors/useDocumentApi/types/scriptDoc";
 import {
   StatisticStoreDoc,
   StroomStatsStoreDoc,
-} from "src/components/DocumentEditors/useDocumentApi/types/statistics";
-import { VisualisationDoc } from "src/components/DocumentEditors/useDocumentApi/types/visualisation";
-import { XMLSchemaDoc } from "src/components/DocumentEditors/useDocumentApi/types/xmlSchema";
-import { XsltDoc } from "src/components/DocumentEditors/useDocumentApi/types/xsltDoc";
+} from "components/DocumentEditors/useDocumentApi/types/statistics";
+import { VisualisationDoc } from "components/DocumentEditors/useDocumentApi/types/visualisation";
+import { XMLSchemaDoc } from "components/DocumentEditors/useDocumentApi/types/xmlSchema";
+import { XsltDoc } from "components/DocumentEditors/useDocumentApi/types/xsltDoc";
 import {
   IndexVolumeGroup,
   IndexVolumeGroupMembership,
-} from "src/components/IndexVolumeGroups/api";
-import { IndexVolume } from "src/components/IndexVolumes/api";
-import { StreamTaskType } from "src/components/Processing/types";
-import { iterateNodes } from "src/lib/treeUtils";
+} from "components/IndexVolumeGroups/api";
+import { IndexVolume } from "components/IndexVolumes/api";
+import { StreamTaskType } from "components/Processing/types";
+import { iterateNodes } from "lib/treeUtils";
 import * as uuidv4 from "uuid/v4";
 import { TestData, UserDocPermission, UserGroupMembership } from "../testTypes";
 import { generate as generateAnnotationsIndex } from "./annotationsIndex";

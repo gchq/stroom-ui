@@ -2,9 +2,9 @@ import * as React from "react";
 
 import { storiesOf } from "@storybook/react";
 
-import fullTestData from "src/testing/data";
+import fullTestData from "testing/data";
 import { docRefEditorClasses } from "./types";
-import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
+import { addThemedStories } from "testing/storybook/themedStoryGenerator";
 import SwitchedDocRefEditor from ".";
 
 Object.keys(docRefEditorClasses).forEach(docRefType => {

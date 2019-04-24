@@ -17,7 +17,7 @@
 import * as React from "react";
 import * as moment from "moment";
 
-import { useStreamDataRow } from "src/components/DataViewer/api/streamAttributeMap";
+import { useStreamDataRow } from "components/DataViewer/api/streamAttributeMap";
 import Loader from "../Loader";
 import { DataRow } from "./types";
 

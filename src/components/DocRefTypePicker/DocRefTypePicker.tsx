@@ -1,11 +1,11 @@
 import * as React from "react";
 
 import DocRefImage from "../DocRefImage";
-import useDocRefTypes from "src/components/DocumentEditors/api/explorer/useDocRefTypes";
+import useDocRefTypes from "components/DocumentEditors/api/explorer/useDocRefTypes";
 import Select, { components } from "react-select";
 import { OptionProps } from "react-select/lib/components/Option";
 import { SingleValueProps } from "react-select/lib/components/SingleValue";
-import { ControlledInput } from "src/lib/useForm/types";
+import { ControlledInput } from "lib/useForm/types";
 
 interface Props extends ControlledInput<string> {
   invalidTypes?: string[];

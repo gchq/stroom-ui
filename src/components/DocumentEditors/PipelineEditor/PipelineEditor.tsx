@@ -17,11 +17,11 @@
 import * as React from "react";
 import PanelGroup from "react-panelgroup";
 
-import Loader from "src/components/Loader";
+import Loader from "components/Loader";
 import AddElementModal, {
   useDialog as useAddElementDialog,
 } from "./AddElementModal/AddElementModal";
-import { ButtonProps } from "src/components/Button";
+import { ButtonProps } from "components/Button";
 import PipelineSettings, {
   useDialog as usePipelineSettingsDialog,
 } from "./PipelineSettings/PipelineSettings";

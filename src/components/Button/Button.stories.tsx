@@ -17,7 +17,7 @@
 import * as React from "react";
 import { storiesOf } from "@storybook/react";
 
-import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
+import { addThemedStories } from "testing/storybook/themedStoryGenerator";
 import Button from "./Button";
 
 const stories = storiesOf("General Purpose/Button", module);
@@ -131,5 +131,5 @@ stories.add("many buttons", () => (
 addThemedStories(
   stories,
   () => <Button className="raised-low" icon="angle-up" />,
-  true
+  true,
 );

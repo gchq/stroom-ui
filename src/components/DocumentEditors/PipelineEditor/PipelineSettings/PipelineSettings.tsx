@@ -1,9 +1,9 @@
 import * as React from "react";
 
-import Button from "src/components/Button";
-import IconHeader from "src/components/IconHeader";
-import ThemedModal from "src/components/ThemedModal";
-import useForm from "src/lib/useForm";
+import Button from "components/Button";
+import IconHeader from "components/IconHeader";
+import ThemedModal from "components/ThemedModal";
+import useForm from "lib/useForm";
 import { PipelineSettingsValues } from "../types";
 
 interface Props {

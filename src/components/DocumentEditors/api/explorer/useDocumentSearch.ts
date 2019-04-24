@@ -2,7 +2,7 @@ import * as React from "react";
 import {
   DocRefType,
   DocRefTree,
-} from "src/components/DocumentEditors/useDocumentApi/types/base";
+} from "components/DocumentEditors/useDocumentApi/types/base";
 import DocumentTreeContext from "./DocumentTreeContext";
 import { SearchProps } from "./types";
 

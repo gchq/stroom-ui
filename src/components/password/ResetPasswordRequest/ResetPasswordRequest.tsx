@@ -16,8 +16,8 @@
 
 import { ErrorMessage, Field, Form, Formik, FormikActions } from "formik";
 import * as React from "react";
-import Button from "src/components/Button";
-import { hasAnyProps } from "src/lib/lang";
+import Button from "components/Button";
+import { hasAnyProps } from "lib/lang";
 import * as Yup from "yup";
 
 const ValidationSchema = Yup.object().shape({

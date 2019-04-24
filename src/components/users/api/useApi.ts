@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 import { useCallback } from "react";
-import { useConfig } from "src/startup/config";
+import { useConfig } from "startup/config";
 import { User } from "../types";
-import useHttpClient from "src/lib/useHttpClient";
+import useHttpClient from "lib/useHttpClient";
 
 interface Api {
   add: (user: User) => Promise<void>;

@@ -19,9 +19,9 @@ import { storiesOf } from "@storybook/react";
 
 import ElementDetails from "./ElementDetails";
 
-import { fullTestData } from "src/testing/data";
+import { fullTestData } from "testing/data";
 import usePipelineState from "../usePipelineState";
-import { PipelineDocumentType } from "src/components/DocumentEditors/useDocumentApi/types/pipelineDoc";
+import { PipelineDocumentType } from "components/DocumentEditors/useDocumentApi/types/pipelineDoc";
 
 interface Props {
   pipelineId: string;

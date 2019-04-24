@@ -1,5 +1,5 @@
 import * as React from "react";
-import { ControlledInput } from "src/lib/useForm/types";
+import { ControlledInput } from "lib/useForm/types";
 
 interface Props extends ControlledInput<any> {
   valueType: string;

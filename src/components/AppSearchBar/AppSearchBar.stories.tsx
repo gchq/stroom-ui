@@ -17,11 +17,11 @@ import * as React from "react";
 
 import { storiesOf } from "@storybook/react";
 
-import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
+import { addThemedStories } from "testing/storybook/themedStoryGenerator";
 
-import useForm from "src/lib/useForm";
-import JsonDebug from "src/testing/JsonDebug";
-import { DocRefType } from "src/components/DocumentEditors/useDocumentApi/types/base";
+import useForm from "lib/useForm";
+import JsonDebug from "testing/JsonDebug";
+import { DocRefType } from "components/DocumentEditors/useDocumentApi/types/base";
 import AppSearchBar from "./AppSearchBar";
 
 interface Props {

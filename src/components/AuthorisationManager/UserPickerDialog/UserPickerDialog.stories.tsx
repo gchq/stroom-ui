@@ -18,11 +18,11 @@ import * as React from "react";
 
 import { storiesOf } from "@storybook/react";
 
-import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
+import { addThemedStories } from "testing/storybook/themedStoryGenerator";
 
 import UserPickerDialog, { useDialog } from "./UserPickerDialog";
-import Button from "src/components/Button";
-import JsonDebug from "src/testing/JsonDebug";
+import Button from "components/Button";
+import JsonDebug from "testing/JsonDebug";
 
 interface Props {
   isGroup: boolean;

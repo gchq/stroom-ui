@@ -1,12 +1,12 @@
 import * as React from "react";
 
 import { storiesOf } from "@storybook/react";
-import DocRefTypePicker from "src/components/DocRefTypePicker";
+import DocRefTypePicker from "components/DocRefTypePicker";
 import useDocumentApi from "./useDocumentApi";
 import { ResourcesByDocType } from "./types/resourceUrls";
-import { useDocumentTree } from "src/components/DocumentEditors/api/explorer";
-import { iterateNodes } from "src/lib/treeUtils/treeUtils";
-import JsonDebug from "src/testing/JsonDebug";
+import { useDocumentTree } from "components/DocumentEditors/api/explorer";
+import { iterateNodes } from "lib/treeUtils/treeUtils";
+import JsonDebug from "testing/JsonDebug";
 
 const TestHarness: React.FunctionComponent = () => {
   const { documentTree } = useDocumentTree();

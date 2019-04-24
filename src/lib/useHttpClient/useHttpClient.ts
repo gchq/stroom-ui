@@ -1,11 +1,11 @@
 import * as React from "react";
 
-import { HttpError } from "src/lib/ErrorTypes";
+import { HttpError } from "lib/ErrorTypes";
 import cogoToast from "cogo-toast";
 
-import { useAuthenticationContext } from "src/startup/Authentication";
-import { useErrorReporting } from "src/components/ErrorPage";
-import useAppNavigation from "src/components/AppChrome/useAppNavigation";
+import { useAuthenticationContext } from "startup/Authentication";
+import { useErrorReporting } from "components/ErrorPage";
+import useAppNavigation from "components/AppChrome/useAppNavigation";
 
 const useCheckStatus = (status: number) =>
   React.useCallback((response: Response): Promise<any> => {

@@ -16,10 +16,10 @@
 import * as React from "react";
 import { storiesOf } from "@storybook/react";
 
-import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
+import { addThemedStories } from "testing/storybook/themedStoryGenerator";
 
 import IndexFieldTypePicker from "./IndexFieldTypePicker";
-import { IndexFieldType } from "src/components/DocumentEditors/useDocumentApi/types/indexDoc";
+import { IndexFieldType } from "components/DocumentEditors/useDocumentApi/types/indexDoc";
 
 const stories = storiesOf("Document Editors/Index/Field Type Picker", module);
 

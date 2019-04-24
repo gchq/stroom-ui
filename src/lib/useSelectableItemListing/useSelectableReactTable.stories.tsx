@@ -20,8 +20,8 @@ import useSelectableReactTable from "./useSelectableReactTable";
 import { SelectionBehaviour } from "./enums";
 import ReactTable from "react-table";
 import useForm from "../useForm";
-import Button from "src/components/Button";
-import JsonDebug from "src/testing/JsonDebug";
+import Button from "components/Button";
+import JsonDebug from "testing/JsonDebug";
 import useTestAnimals, { Animal } from "./useTestAnimals";
 
 const COLUMNS = [

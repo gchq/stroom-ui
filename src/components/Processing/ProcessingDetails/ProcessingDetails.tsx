@@ -17,7 +17,7 @@
 import * as React from "react";
 import * as moment from "moment";
 
-import ExpressionBuilder from "src/components/ExpressionBuilder";
+import ExpressionBuilder from "components/ExpressionBuilder";
 import { StreamTaskType } from "../types";
 
 interface Props {

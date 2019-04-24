@@ -1,8 +1,8 @@
 import * as React from "react";
 
 import { ResourcesByDocType, DOCUMENT_RESOURCES } from "./types/resourceUrls";
-import { useConfig } from "src/startup/config";
-import useHttpClient from "src/lib/useHttpClient";
+import { useConfig } from "startup/config";
+import useHttpClient from "lib/useHttpClient";
 import { DocumentBase } from "./types/base";
 import { DocumentApi } from "./types/documentApi";
 import cogoToast from "cogo-toast";

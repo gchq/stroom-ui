@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { DictionaryDoc } from "src/components/DocumentEditors/useDocumentApi/types/dictionaryDoc";
+import { DictionaryDoc } from "components/DocumentEditors/useDocumentApi/types/dictionaryDoc";
 import { ExpressionOperatorType } from "../types";
 
 const colourDictionary: DictionaryDoc = {

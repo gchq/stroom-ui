@@ -3,8 +3,8 @@ import * as React from "react";
 import { storiesOf } from "@storybook/react";
 
 import ModeOptionButtons, { useModeOptionButtons } from "./ModeOptionButtons";
-import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
-import JsonDebug from "src/testing/JsonDebug";
+import { addThemedStories } from "testing/storybook/themedStoryGenerator";
+import JsonDebug from "testing/JsonDebug";
 
 const stories = storiesOf("Doc Ref/App Search Bar/Mode Option", module);
 

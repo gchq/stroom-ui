@@ -1,4 +1,4 @@
-import { HasAuditInfo } from "src/components/DocumentEditors/api/explorer/types";
+import { HasAuditInfo } from "components/DocumentEditors/api/explorer/types";
 
 export interface NewIndexVolume {
   path: string;

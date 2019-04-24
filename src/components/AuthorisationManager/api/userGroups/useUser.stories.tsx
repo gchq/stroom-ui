@@ -18,9 +18,9 @@ import * as React from "react";
 
 import { storiesOf } from "@storybook/react";
 
-import fullTestData from "src/testing/data";
+import fullTestData from "testing/data";
 import useUser from "./useUser";
-import Button from "src/components/Button";
+import Button from "components/Button";
 
 const users = fullTestData.usersAndGroups.users;
 

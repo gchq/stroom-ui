@@ -1,9 +1,9 @@
 import * as React from "react";
-import useAppNavigation from "src/components/AppChrome/useAppNavigation";
-import Button from "src/components/Button";
+import useAppNavigation from "components/AppChrome/useAppNavigation";
+import Button from "components/Button";
 import ThemedConfirm, {
   useDialog as useThemedConfirm,
-} from "src/components/ThemedConfirm";
+} from "components/ThemedConfirm";
 import { StroomUser, useUsersInGroup } from "../api/userGroups";
 import UserPickerDialog, {
   useDialog as useUserPickerDialog,

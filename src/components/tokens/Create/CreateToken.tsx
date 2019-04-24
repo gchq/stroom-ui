@@ -16,11 +16,11 @@
 
 import { Formik } from "formik";
 import * as React from "react";
-import useAppNavigation from "src/components/AppChrome/useAppNavigation";
-import Button from "src/components/Button";
-import { AsyncUserSelect } from "src/components/users";
-import { useAuthenticationContext } from "src/startup/Authentication";
-import { useConfig } from "src/startup/config";
+import useAppNavigation from "components/AppChrome/useAppNavigation";
+import Button from "components/Button";
+import { AsyncUserSelect } from "components/users";
+import { useAuthenticationContext } from "startup/Authentication";
+import { useConfig } from "startup/config";
 import useTokens from "./useTokens";
 
 interface DropDownValues {

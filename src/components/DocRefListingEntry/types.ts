@@ -1,7 +1,7 @@
 import {
   DocRefType,
   DocRefConsumer,
-} from "src/components/DocumentEditors/useDocumentApi/types/base";
+} from "components/DocumentEditors/useDocumentApi/types/base";
 
 export interface Props {
   docRef: DocRefType;

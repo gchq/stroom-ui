@@ -4,7 +4,7 @@ import useApi from "./useApi";
 import {
   PipelineSearchCriteriaType,
   PipelineSearchResultType,
-} from "src/components/DocumentEditors/useDocumentApi/types/pipelineDoc";
+} from "components/DocumentEditors/useDocumentApi/types/pipelineDoc";
 
 interface UsePipelineSearch {
   results: PipelineSearchResultType;

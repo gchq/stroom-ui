@@ -15,8 +15,8 @@
  */
 
 import { useCallback } from "react";
-import useHttpClient from "src/lib/useHttpClient";
-import { useConfig } from "src/startup/config";
+import useHttpClient from "lib/useHttpClient";
+import { useConfig } from "startup/config";
 
 interface Api {
   createUser: (userEmail: string) => Promise<void>;

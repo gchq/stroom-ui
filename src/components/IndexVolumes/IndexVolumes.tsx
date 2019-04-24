@@ -1,13 +1,13 @@
 import * as React from "react";
 
-import IconHeader from "src/components/IconHeader";
-import Button from "src/components/Button";
+import IconHeader from "components/IconHeader";
+import Button from "components/Button";
 import NewIndexVolumeDialog, {
   useDialog as useCreateNewIndexVolumeDialog,
 } from "./NewIndexVolumeDialog/NewIndexVolumeDialog";
 import ThemedConfirm, {
   useDialog as useThemedConfirmDialog,
-} from "src/components/ThemedConfirm";
+} from "components/ThemedConfirm";
 import IndexVolumesTable, {
   useTable,
 } from "./IndexVolumesTable/IndexVolumesTable";
@@ -15,7 +15,7 @@ import {
   IndexVolumeGroupModalPicker,
   useIndexVolumeGroupModalPicker,
 } from "../IndexVolumeGroups/IndexVolumeGroupPickerDialog";
-import { useIndexVolumes } from "src/components/IndexVolumes/api";
+import { useIndexVolumes } from "components/IndexVolumes/api";
 import useAppNavigation from "../AppChrome/useAppNavigation";
 
 const IndexVolumes: React.FunctionComponent = () => {

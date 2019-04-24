@@ -24,7 +24,7 @@ import {
   DragSourceSpec,
 } from "react-dnd";
 
-import { canMove } from "src/lib/treeUtils/treeUtils";
+import { canMove } from "lib/treeUtils/treeUtils";
 import {
   DragDropTypes,
   DragObject,
@@ -35,10 +35,10 @@ import {
   ExpressionItem,
   ExpressionTermType,
 } from "../types";
-import ExpressionTerm from "src/components/ExpressionBuilder/ExpressionTerm/ExpressionTerm";
-import Button from "src/components/Button";
+import ExpressionTerm from "components/ExpressionBuilder/ExpressionTerm/ExpressionTerm";
+import Button from "components/Button";
 import { DataSourceType, OperatorType, OperatorTypeValues } from "../types";
-import { LineTo, LineEndpoint } from "src/components/LineTo";
+import { LineTo, LineEndpoint } from "components/LineTo";
 
 import { getNewTerm, getNewOperator } from "../expressionUtils";
 

@@ -1,19 +1,19 @@
 import * as React from "react";
-import useDocumentPermissions from "src/components/AuthorisationManager/api/docPermission/useDocumentPermissions";
+import useDocumentPermissions from "components/AuthorisationManager/api/docPermission/useDocumentPermissions";
 import {
   StroomUser,
   useUsers,
-} from "src/components/AuthorisationManager/api/userGroups";
+} from "components/AuthorisationManager/api/userGroups";
 import UserPickerDialog, {
   useDialog as userUserPickerDialog,
-} from "src/components/AuthorisationManager/UserPickerDialog";
-import Button from "src/components/Button";
-import { useDocumentTree } from "src/components/DocumentEditors/api/explorer";
-import IconHeader from "src/components/IconHeader";
+} from "components/AuthorisationManager/UserPickerDialog";
+import Button from "components/Button";
+import { useDocumentTree } from "components/DocumentEditors/api/explorer";
+import IconHeader from "components/IconHeader";
 import ThemedConfirm, {
   useDialog as useThemedConfirm,
-} from "src/components/ThemedConfirm";
-import useRouter from "src/lib/useRouter";
+} from "components/ThemedConfirm";
+import useRouter from "lib/useRouter";
 import useAppNavigation from "../../AppChrome/useAppNavigation";
 import UsersTable, { useTable as useUsersTable } from "../UsersTable";
 

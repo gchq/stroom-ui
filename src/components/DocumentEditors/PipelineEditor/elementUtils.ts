@@ -18,7 +18,7 @@ import {
   ElementDefinition,
   ElementDefinitionsByCategory,
   ElementDefinitionsByType,
-} from "src/components/DocumentEditors/PipelineEditor/useElements/types";
+} from "components/DocumentEditors/PipelineEditor/useElements/types";
 
 /**
  * This will take in the map of element types and return a new map

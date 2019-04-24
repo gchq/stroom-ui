@@ -17,10 +17,7 @@ import * as React from "react";
 import { storiesOf } from "@storybook/react";
 
 import DataDetails from "./DataDetails";
-import {
-  errorData,
-  eventData,
-} from "src/testing/data/data/DataDetails.testData";
+import { errorData, eventData } from "testing/data/data/DataDetails.testData";
 
 storiesOf("Sections/Data Viewer/Details", module)
   .add("Showing errors", () => <DataDetails meta={errorData} />)

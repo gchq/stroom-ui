@@ -1,22 +1,22 @@
-import { StroomUser } from "src/components/AuthorisationManager/api/userGroups";
-import { StreamAttributeMapResult } from "src/components/DataViewer/types";
+import { StroomUser } from "components/AuthorisationManager/api/userGroups";
+import { StreamAttributeMapResult } from "components/DataViewer/types";
 import {
   ElementDefinition,
   ElementPropertiesByElementIdType,
-} from "src/components/DocumentEditors/PipelineEditor/useElements/types";
+} from "components/DocumentEditors/PipelineEditor/useElements/types";
 import {
   DocRefTree,
   DocumentBase,
-} from "src/components/DocumentEditors/useDocumentApi/types/base";
-import { ResourcesByDocType } from "src/components/DocumentEditors/useDocumentApi/types/resourceUrls";
-import { DataSourceType } from "src/components/ExpressionBuilder/types";
+} from "components/DocumentEditors/useDocumentApi/types/base";
+import { ResourcesByDocType } from "components/DocumentEditors/useDocumentApi/types/resourceUrls";
+import { DataSourceType } from "components/ExpressionBuilder/types";
 import {
   IndexVolumeGroup,
   IndexVolumeGroupMembership,
-} from "src/components/IndexVolumeGroups/api";
-import { IndexVolume } from "src/components/IndexVolumes/api";
-import { StreamTaskType } from "src/components/Processing/types";
-import { User } from "src/components/users";
+} from "components/IndexVolumeGroups/api";
+import { IndexVolume } from "components/IndexVolumes/api";
+import { StreamTaskType } from "components/Processing/types";
+import { User } from "components/users";
 
 export interface UserGroupMembership {
   userUuid: string;

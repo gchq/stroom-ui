@@ -2,9 +2,9 @@ import * as React from "react";
 
 import { BaseProps as UserPickerBaseProps } from "../UserPicker/types";
 import UserPicker, { usePicker } from "../UserPicker";
-import ThemedModal from "src/components/ThemedModal";
-import IconHeader from "src/components/IconHeader";
-import DialogActionButtons from "src/components/DialogActionButtons";
+import ThemedModal from "components/ThemedModal";
+import IconHeader from "components/IconHeader";
+import DialogActionButtons from "components/DialogActionButtons";
 
 interface BaseProps {
   pickerBaseProps?: UserPickerBaseProps;

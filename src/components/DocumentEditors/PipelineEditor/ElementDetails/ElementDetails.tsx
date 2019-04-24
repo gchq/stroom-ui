@@ -17,20 +17,20 @@
 import * as React from "react";
 
 import ElementImage from "../ElementImage";
-import HorizontalPanel from "src/components/HorizontalPanel";
+import HorizontalPanel from "components/HorizontalPanel";
 import ElementProperty from "./ElementProperty";
 import {
   ElementPropertiesType,
   ElementDefinition,
   ElementPropertyType,
-} from "src/components/DocumentEditors/PipelineEditor/useElements/types";
-import Loader from "src/components/Loader";
-import useElements from "src/components/DocumentEditors/PipelineEditor/useElements";
+} from "components/DocumentEditors/PipelineEditor/useElements/types";
+import Loader from "components/Loader";
+import useElements from "components/DocumentEditors/PipelineEditor/useElements";
 import { PipelineEditApi } from "../types";
 import {
   PipelineDocumentType,
   PipelineElementType,
-} from "src/components/DocumentEditors/useDocumentApi/types/pipelineDoc";
+} from "components/DocumentEditors/useDocumentApi/types/pipelineDoc";
 
 interface Props {
   pipeline: PipelineDocumentType;

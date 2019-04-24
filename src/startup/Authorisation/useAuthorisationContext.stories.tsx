@@ -3,8 +3,8 @@ import * as React from "react";
 import { storiesOf } from "@storybook/react";
 import useAuthorisationContext from "./useAuthorisationContext";
 
-import fullTestData from "src/testing/data";
-import JsonDebug from "src/testing/JsonDebug";
+import fullTestData from "testing/data";
+import JsonDebug from "testing/JsonDebug";
 
 interface Props {
   permissionName: string;

@@ -1,5 +1,5 @@
 import { DocumentBase } from "./base";
-import { ConditionType } from "src/components/ExpressionBuilder/types";
+import { ConditionType } from "components/ExpressionBuilder/types";
 
 export type IndexFieldType = "FIELD" | "NUMERIC_FIELD" | "DATE_FIELD" | "ID";
 

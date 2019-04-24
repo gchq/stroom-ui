@@ -9,7 +9,7 @@ import {
   DragSourceCollector,
 } from "react-dnd";
 
-import { canMove } from "src/lib/treeUtils/treeUtils";
+import { canMove } from "lib/treeUtils/treeUtils";
 import DocRefListingEntry, {
   Props as DocRefListingEntryProps,
 } from "../../DocRefListingEntry";
@@ -19,8 +19,8 @@ import {
   DropCollectedProps,
   DragObject,
 } from "./types";
-import { KeyDownState } from "src/lib/useKeyIsDown";
-import { DocRefType } from "src/components/DocumentEditors/useDocumentApi/types/base";
+import { KeyDownState } from "lib/useKeyIsDown";
+import { DocRefType } from "components/DocumentEditors/useDocumentApi/types/base";
 
 interface Props extends DocRefListingEntryProps {
   keyIsDown: KeyDownState;

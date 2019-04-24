@@ -19,8 +19,8 @@ import { storiesOf } from "@storybook/react";
 
 import DocRefTypePicker from "./DocRefTypePicker";
 
-import JsonDebug from "src/testing/JsonDebug";
-import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
+import JsonDebug from "testing/JsonDebug";
+import { addThemedStories } from "testing/storybook/themedStoryGenerator";
 
 const invalidTypes: string[] = ["Folder", "Dictionary", "XSLT"];
 

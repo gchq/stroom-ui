@@ -1,9 +1,9 @@
 import * as React from "react";
 
-import ThemedModal from "src/components/ThemedModal";
-import DialogActionButtons from "src/components/DialogActionButtons";
-import useForm from "src/lib/useForm";
-import { NewIndexVolume } from "src/components/IndexVolumes/api";
+import ThemedModal from "components/ThemedModal";
+import DialogActionButtons from "components/DialogActionButtons";
+import useForm from "lib/useForm";
+import { NewIndexVolume } from "components/IndexVolumes/api";
 
 interface Props {
   isOpen: boolean;

@@ -1,13 +1,13 @@
 import * as React from "react";
-import useAppNavigation from "src/components/AppChrome/useAppNavigation";
+import useAppNavigation from "components/AppChrome/useAppNavigation";
 import {
   StroomUser,
   useGroupsForUser,
-} from "src/components/AuthorisationManager/api/userGroups";
-import Button from "src/components/Button";
+} from "components/AuthorisationManager/api/userGroups";
+import Button from "components/Button";
 import ThemedConfirm, {
   useDialog as useThemedConfirm,
-} from "src/components/ThemedConfirm";
+} from "components/ThemedConfirm";
 import {
   useDialog as useUserPickerDialog,
   UserPickerDialog,

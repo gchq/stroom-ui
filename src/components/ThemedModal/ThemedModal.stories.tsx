@@ -20,7 +20,7 @@ import { storiesOf } from "@storybook/react";
 import Button from "../Button";
 import ThemedModal from "./ThemedModal";
 
-import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
+import { addThemedStories } from "testing/storybook/themedStoryGenerator";
 
 const TestHarness: React.FunctionComponent = () => {
   const [isOpen, setIsOpen] = React.useState<boolean>(false);

@@ -18,8 +18,8 @@ import { storiesOf } from "@storybook/react";
 
 import useSelectableItemListing from "./useSelectableItemListing";
 import { SelectionBehaviour } from "./enums";
-import JsonDebug from "src/testing/JsonDebug";
-import Button from "src/components/Button";
+import JsonDebug from "testing/JsonDebug";
+import Button from "components/Button";
 import useTestAnimals, { Animal } from "./useTestAnimals";
 
 const TestList = () => {

@@ -1,6 +1,6 @@
 import * as React from "react";
 import { ExpressionTermType } from "../types";
-import { LineEndpoint } from "src/components/LineTo";
+import { LineEndpoint } from "components/LineTo";
 
 interface Props {
   idWithinExpression: string;

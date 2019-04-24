@@ -16,8 +16,8 @@
 
 import * as React from "react";
 
-import IconHeader from "src/components/IconHeader";
-import useStreamTasks from "src/components/Processing/useStreamTasks";
+import IconHeader from "components/IconHeader";
+import useStreamTasks from "components/Processing/useStreamTasks";
 import ProcessingList from "./ProcessingList";
 import { StreamTaskType } from "./types";
 import ProcessingDetails from "./ProcessingDetails";

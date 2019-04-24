@@ -19,8 +19,8 @@ import { Route, RouteComponentProps, Switch } from "react-router";
 import {
   HandleAuthenticationResponse,
   PrivateRoute,
-} from "src/startup/Authentication";
-import { useConfig } from "src/startup/config";
+} from "startup/Authentication";
+import { useConfig } from "startup/config";
 import AuthorisationManager, {
   UserAuthorisationEditor,
 } from "../AuthorisationManager";

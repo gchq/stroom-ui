@@ -4,9 +4,9 @@ import { UseDocRefEditorProps } from "../DocRefEditor";
 import {
   PipelineElementType,
   PipelineDocumentType,
-} from "src/components/DocumentEditors/useDocumentApi/types/pipelineDoc";
+} from "components/DocumentEditors/useDocumentApi/types/pipelineDoc";
 import { PipelineAsTreeType } from "./AddElementModal/types";
-import { ElementDefinition } from "src/components/DocumentEditors/PipelineEditor/useElements/types";
+import { ElementDefinition } from "components/DocumentEditors/PipelineEditor/useElements/types";
 
 export enum DragDropTypes {
   ELEMENT = "element",

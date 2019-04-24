@@ -17,7 +17,7 @@
 import * as React from "react";
 import { DragSourceSpec, DragSourceCollector, DragSource } from "react-dnd";
 
-import Button from "src/components/Button";
+import Button from "components/Button";
 import { DragDropTypes, DragObject, DragCollectedProps } from "../types";
 import { RecycleBinItem } from "../types";
 import ElementImage from "../ElementImage";

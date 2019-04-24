@@ -1,23 +1,23 @@
 import * as React from "react";
 import Select, { components } from "react-select";
-import useDocumentSearch from "src/components/DocumentEditors/api/explorer/useDocumentSearch";
+import useDocumentSearch from "components/DocumentEditors/api/explorer/useDocumentSearch";
 import {
   DocRefType,
   DocRefTree,
   DocRefWithLineage,
-} from "src/components/DocumentEditors/useDocumentApi/types/base";
+} from "components/DocumentEditors/useDocumentApi/types/base";
 import { OptionProps } from "react-select/lib/components/Option";
 import DocRefImage from "../DocRefImage";
 import { SingleValueProps } from "react-select/lib/components/SingleValue";
 import ModeOptionButtons, { SearchMode } from "./ModeOptionButton";
 import { useModeOptionButtons } from "./ModeOptionButton/ModeOptionButtons";
-import { filterTree, findItem } from "src/lib/treeUtils/treeUtils";
-import useRecentItems from "src/lib/useRecentItems";
+import { filterTree, findItem } from "lib/treeUtils/treeUtils";
+import useRecentItems from "lib/useRecentItems";
 import { KeyboardEventHandler } from "react-select/lib/types";
 import { MenuProps } from "react-select/lib/components/Menu";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import DocRefBreadcrumb from "src/components/DocRefBreadcrumb";
+import DocRefBreadcrumb from "components/DocRefBreadcrumb";
 
 export interface Props {
   typeFilters?: string[];

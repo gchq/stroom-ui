@@ -1,9 +1,9 @@
 import * as React from "react";
 
-import useHttpClient from "src/lib/useHttpClient";
-import { useConfig } from "src/startup/config";
+import useHttpClient from "lib/useHttpClient";
+import { useConfig } from "startup/config";
 import { IndexVolume, NewIndexVolume } from "./types";
-import { IndexVolumeGroup } from "src/components/IndexVolumeGroups/api";
+import { IndexVolumeGroup } from "components/IndexVolumeGroups/api";
 
 interface Api {
   getIndexVolumes: () => Promise<IndexVolume[]>;

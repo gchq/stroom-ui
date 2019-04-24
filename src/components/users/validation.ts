@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { PasswordValidationRequest } from "src/components/authentication/types";
+import { PasswordValidationRequest } from "components/authentication/types";
 import * as Yup from "yup";
 
 export const NewUserValidationSchema = Yup.object().shape({

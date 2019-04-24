@@ -2,7 +2,7 @@ import * as React from "react";
 
 import ConfigContext from "./ConfigContext";
 import { Config } from "./types";
-import Loader from "src/components/Loader";
+import Loader from "components/Loader";
 
 const ConfigProvider: React.FunctionComponent = ({ children }) => {
   const [isReady, setIsReady] = React.useState<boolean>(false);

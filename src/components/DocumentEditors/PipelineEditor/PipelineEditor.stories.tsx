@@ -18,7 +18,7 @@ import { storiesOf } from "@storybook/react";
 
 import PipelineEditor from "./PipelineEditor";
 
-import { testPipelines } from "src/testing/data/pipelines";
+import { testPipelines } from "testing/data/pipelines";
 
 const stories = storiesOf("Document Editors/Pipeline/Topologies", module);
 

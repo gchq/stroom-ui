@@ -21,13 +21,13 @@ import DocRefEditor, {
   SwitchedDocRefEditorProps,
 } from "../DocRefEditor";
 import Loader from "../../Loader";
-import useDocumentApi from "src/components/DocumentEditors/useDocumentApi";
+import useDocumentApi from "components/DocumentEditors/useDocumentApi";
 import IndexFieldsTable, {
   useTable as useFieldsTable,
 } from "./IndexFieldsTable";
 import ThemedConfirm, {
   useDialog as useThemedConfirm,
-} from "src/components/ThemedConfirm";
+} from "components/ThemedConfirm";
 import Button from "../../Button";
 import IndexFieldEditor, {
   useEditor as useFieldEditor,
@@ -36,7 +36,7 @@ import { IndexVolumeGroupPicker } from "../../IndexVolumeGroups/IndexVolumeGroup
 import {
   IndexDoc,
   IndexField,
-} from "src/components/DocumentEditors/useDocumentApi/types/indexDoc";
+} from "components/DocumentEditors/useDocumentApi/types/indexDoc";
 
 const IndexEditor = ({ docRefUuid }: SwitchedDocRefEditorProps) => {
   const documentApi = useDocumentApi<"Index", IndexDoc>("Index");

@@ -16,9 +16,9 @@
 
 import { storiesOf } from "@storybook/react";
 import * as React from "react";
-import { DocRefType } from "src/components/DocumentEditors/useDocumentApi/types/base";
-import fullTestData from "src/testing/data";
-import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
+import { DocRefType } from "components/DocumentEditors/useDocumentApi/types/base";
+import fullTestData from "testing/data";
+import { addThemedStories } from "testing/storybook/themedStoryGenerator";
 import { StroomUser } from "../api/userGroups";
 import DocumentPermissionForUserEditor from "./DocumentPermissionForUserEditor";
 

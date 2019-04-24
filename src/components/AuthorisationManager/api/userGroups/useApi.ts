@@ -1,7 +1,7 @@
 import * as React from "react";
 
-import useHttpClient from "src/lib/useHttpClient";
-import { useConfig } from "src/startup/config";
+import useHttpClient from "lib/useHttpClient";
+import { useConfig } from "startup/config";
 import { StroomUser } from ".";
 
 interface Api {

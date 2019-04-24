@@ -1,13 +1,13 @@
 import * as React from "react";
 
-import IconHeader from "src/components/IconHeader";
-import Button from "src/components/Button";
+import IconHeader from "components/IconHeader";
+import Button from "components/Button";
 import UsersInGroup from "../UsersInGroup";
 import GroupsForUser from "../GroupsForUser";
-import { useUser } from "src/components/AuthorisationManager/api/userGroups";
-import Loader from "src/components/Loader";
-import useRouter from "src/lib/useRouter";
-import { useAppPermissionsForUser } from "src/components/AuthorisationManager/api/appPermission";
+import { useUser } from "components/AuthorisationManager/api/userGroups";
+import Loader from "components/Loader";
+import useRouter from "lib/useRouter";
+import { useAppPermissionsForUser } from "components/AuthorisationManager/api/appPermission";
 import { AppPermissionPicker } from "../AppPermissionPicker";
 
 interface Props {

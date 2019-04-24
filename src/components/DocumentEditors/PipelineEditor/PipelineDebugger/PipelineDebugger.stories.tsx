@@ -19,7 +19,7 @@ import { storiesOf } from "@storybook/react";
 
 import PipelineDebugger from "./PipelineDebugger";
 
-import { testPipelines } from "src/testing/data/pipelines";
+import { testPipelines } from "testing/data/pipelines";
 
 const pipelineStories = storiesOf("Document Editors/Pipeline/Debugger", module);
 

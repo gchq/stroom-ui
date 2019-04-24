@@ -24,16 +24,16 @@ import ReactTable, {
 } from "react-table";
 import { Progress } from "react-sweet-progress";
 
-import Button from "src/components/Button";
+import Button from "components/Button";
 import {
   Directions,
   SortByOptions,
   UseStreamTasks,
-} from "src/components/Processing/useStreamTasks/types";
+} from "components/Processing/useStreamTasks/types";
 import {
   useSelectableReactTable,
   SelectionBehaviour,
-} from "src/lib/useSelectableItemListing";
+} from "lib/useSelectableItemListing";
 import { StreamTaskType } from "../types";
 
 interface Props {

@@ -15,7 +15,7 @@
  */
 
 import * as React from "react";
-import Button from "src/components/Button";
+import Button from "components/Button";
 
 const ConfirmPasswordResetEmail: React.FunctionComponent<{
   onBack: Function;

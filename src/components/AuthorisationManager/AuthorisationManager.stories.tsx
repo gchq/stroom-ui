@@ -21,7 +21,7 @@ import { Switch, Route, RouteComponentProps } from "react-router";
 
 import AuthorisationManager from ".";
 
-import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
+import { addThemedStories } from "testing/storybook/themedStoryGenerator";
 
 import UserAuthorisationEditor from "./UserAuthorisationEditor";
 interface Props {

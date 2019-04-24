@@ -6,7 +6,7 @@ import {
   DocRefTree,
   DocRefType,
   DocRefWithLineage,
-} from "src/components/DocumentEditors/useDocumentApi/types/base";
+} from "components/DocumentEditors/useDocumentApi/types/base";
 
 export interface DocumentTreeContextValue {
   documentTree: DocRefTree;

@@ -8,15 +8,15 @@ import {
   findByUuids,
   deleteItemsFromTree,
   iterateNodes,
-} from "src/lib/treeUtils/treeUtils";
+} from "lib/treeUtils/treeUtils";
 import { TestCache } from "../PollyDecorator";
-import { Config } from "src/startup/config";
+import { Config } from "startup/config";
 import { ResourceBuilder } from "./types";
 import {
   DocRefType,
   DocRefTree,
   DocRefWithLineage,
-} from "src/components/DocumentEditors/useDocumentApi/types/base";
+} from "components/DocumentEditors/useDocumentApi/types/base";
 
 const resourceBuilder: ResourceBuilder = (
   server: any,

@@ -20,7 +20,7 @@ import * as uuidv4 from "uuid/v4";
 import LineContext from "./LineContext";
 import { LineType, LineElementCreator } from "./types";
 import StraightLine from "./lineCreators/StraightLine";
-import useListReducer from "src/lib/useListReducer";
+import useListReducer from "lib/useListReducer";
 import LinesSvg from "./LinesSvg";
 
 export interface Props {

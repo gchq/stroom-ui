@@ -16,15 +16,15 @@
 
 import * as React from "react";
 
-import Button from "src/components/Button";
+import Button from "components/Button";
 import PipelineDisplay from "../PipelineDisplay";
-import Loader from "src/components/Loader";
+import Loader from "components/Loader";
 
 import DebuggerStep from "./DebuggerStep";
 import { getNext, getPrevious } from "./pipelineDebugger.utils";
-import useDocumentApi from "src/components/DocumentEditors/useDocumentApi";
+import useDocumentApi from "components/DocumentEditors/useDocumentApi";
 import usePipelineState from "../usePipelineState";
-import { PipelineDocumentType } from "src/components/DocumentEditors/useDocumentApi/types/pipelineDoc";
+import { PipelineDocumentType } from "components/DocumentEditors/useDocumentApi/types/pipelineDoc";
 
 interface Props {
   debuggerId: string;

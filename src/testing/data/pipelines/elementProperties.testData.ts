@@ -1,4 +1,4 @@
-import { ElementPropertiesByElementIdType } from "src/components/DocumentEditors/PipelineEditor/useElements/types";
+import { ElementPropertiesByElementIdType } from "components/DocumentEditors/PipelineEditor/useElements/types";
 
 export default {
   JSONWriter: {

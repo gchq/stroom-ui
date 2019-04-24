@@ -1,9 +1,9 @@
 import * as React from "react";
 
 import { storiesOf } from "@storybook/react";
-import JsonDebug from "src/testing/JsonDebug";
+import JsonDebug from "testing/JsonDebug";
 import { useAppPermissionsForUser } from ".";
-import fullTestData from "src/testing/data";
+import fullTestData from "testing/data";
 
 const userUuid = fullTestData.usersAndGroups.users[0].uuid;
 

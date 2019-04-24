@@ -1,8 +1,8 @@
 import * as React from "react";
 
-import ThemedModal from "src/components/ThemedModal";
-import DialogActionButtons from "src/components/DialogActionButtons";
-import useForm from "src/lib/useForm";
+import ThemedModal from "components/ThemedModal";
+import DialogActionButtons from "components/DialogActionButtons";
+import useForm from "lib/useForm";
 
 interface FormValues {
   name: string;

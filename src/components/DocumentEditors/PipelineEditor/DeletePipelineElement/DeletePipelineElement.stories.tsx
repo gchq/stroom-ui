@@ -2,11 +2,11 @@ import * as React from "react";
 import { useState } from "react";
 
 import { storiesOf } from "@storybook/react";
-import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
+import { addThemedStories } from "testing/storybook/themedStoryGenerator";
 
 import DeletePipelineElement, { useDialog } from ".";
-import Button from "src/components/Button";
-import JsonDebug from "src/testing/JsonDebug";
+import Button from "components/Button";
+import JsonDebug from "testing/JsonDebug";
 
 const stories = storiesOf("Document Editors/Pipeline/Delete Element", module);
 

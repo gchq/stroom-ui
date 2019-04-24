@@ -17,7 +17,7 @@ import * as queryString from "qs";
 import * as React from "react";
 
 import { handleAuthenticationResponse } from "./authentication";
-import useRouter from "src/lib/useRouter";
+import useRouter from "lib/useRouter";
 import useAuthenticationContext from "./useAuthenticationContext";
 import { useConfig } from "../config";
 

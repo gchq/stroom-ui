@@ -2,7 +2,7 @@ import * as React from "react";
 
 import { storiesOf } from "@storybook/react";
 import useUrlGenerator from "./useUrlGenerator";
-import JsonDebug from "src/testing/JsonDebug";
+import JsonDebug from "testing/JsonDebug";
 
 const TestHarness: React.FunctionComponent = () => {
   const [prefix, setPrefix] = React.useState<string>(":stuff");

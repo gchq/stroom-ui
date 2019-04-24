@@ -1,6 +1,5 @@
-import * as uuidv4 from "uuid/v4";
 import * as loremIpsum from "lorem-ipsum";
-import { User } from "src/components/users";
+import { User } from "components/users";
 
 export const generate: User[] = [
   {

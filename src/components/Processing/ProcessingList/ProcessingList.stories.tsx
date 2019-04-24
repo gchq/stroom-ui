@@ -2,9 +2,9 @@ import * as React from "react";
 
 import { storiesOf } from "@storybook/react";
 import ProcessingList from "./ProcessingList";
-import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
-import useStreamTasks from "src/components/Processing/useStreamTasks";
-import JsonDebug from "src/testing/JsonDebug";
+import { addThemedStories } from "testing/storybook/themedStoryGenerator";
+import useStreamTasks from "components/Processing/useStreamTasks";
+import JsonDebug from "testing/JsonDebug";
 import { StreamTaskType } from "../types";
 
 const stories = storiesOf("Sections/Processing/List", module);

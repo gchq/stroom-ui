@@ -1,4 +1,4 @@
-import { DocRefType } from "src/components/DocumentEditors/useDocumentApi/types/base";
+import { DocRefType } from "components/DocumentEditors/useDocumentApi/types/base";
 import { PermissionInheritance } from "../PermissionInheritancePicker/types";
 
 export interface Props {

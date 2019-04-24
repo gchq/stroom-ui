@@ -4,7 +4,7 @@ import {
   SelectionBehaviour,
   TableOutProps,
   useSelectableReactTable,
-} from "src/lib/useSelectableItemListing";
+} from "lib/useSelectableItemListing";
 import { StroomUser } from "../api/userGroups";
 
 interface Props {

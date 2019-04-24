@@ -4,8 +4,8 @@ import { storiesOf } from "@storybook/react";
 import SingleValueWidget from "./SingleValueWidget";
 import InValueWidget from "./InValueWidget";
 import BetweenValueWidget from "./BetweenValueWidget";
-import JsonDebug from "src/testing/JsonDebug";
-import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
+import JsonDebug from "testing/JsonDebug";
+import { addThemedStories } from "testing/storybook/themedStoryGenerator";
 
 [
   { valueType: "text", defaultValue: "Red" },

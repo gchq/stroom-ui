@@ -18,11 +18,11 @@ import * as React from "react";
 import { storiesOf } from "@storybook/react";
 
 import DocRefBreadcrumb from "./DocRefBreadcrumb";
-import fullTestData from "src/testing/data";
+import fullTestData from "testing/data";
 
-import JsonDebug from "src/testing/JsonDebug";
-import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
-import { DocRefType } from "src/components/DocumentEditors/useDocumentApi/types/base";
+import JsonDebug from "testing/JsonDebug";
+import { addThemedStories } from "testing/storybook/themedStoryGenerator";
+import { DocRefType } from "components/DocumentEditors/useDocumentApi/types/base";
 
 const testDocRef = fullTestData.documentTree.children![0].children![0];
 

@@ -21,7 +21,7 @@ import { DocRefInfoModal } from ".";
 
 import { useDocRefInfoDialog } from "./DocRefInfoModal";
 import Button from "../Button";
-import fullTestData from "src/testing/data";
+import fullTestData from "testing/data";
 
 const testFolder1 = fullTestData.documentTree.children![0];
 

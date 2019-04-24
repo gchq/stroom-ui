@@ -13,12 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {
-  itemIsInSubtree,
-  canMove,
-  findItem,
-} from "src/lib/treeUtils/treeUtils";
-import { Tree } from "src/lib/treeUtils";
+import { itemIsInSubtree, canMove, findItem } from "lib/treeUtils/treeUtils";
+import { Tree } from "lib/treeUtils";
 
 interface DocRef {
   uuid: string;

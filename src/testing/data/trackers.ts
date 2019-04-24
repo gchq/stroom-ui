@@ -1,5 +1,5 @@
 import * as loremIpsum from "lorem-ipsum";
-import { StreamTaskType, QueryDataType } from "src/components/Processing/types";
+import { StreamTaskType, QueryDataType } from "components/Processing/types";
 
 const getRandomInt = (min: number, max: number) =>
   Math.floor(Math.random() * (max - min)) + min;

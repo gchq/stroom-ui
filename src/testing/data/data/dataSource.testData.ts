@@ -1,4 +1,4 @@
-import { DataSourceType } from "src/components/ExpressionBuilder/types";
+import { DataSourceType } from "components/ExpressionBuilder/types";
 
 export default {
   fields: [

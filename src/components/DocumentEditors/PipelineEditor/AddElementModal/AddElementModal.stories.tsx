@@ -2,13 +2,13 @@ import * as React from "react";
 import * as uuidv4 from "uuid/v4";
 
 import { storiesOf } from "@storybook/react";
-import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
+import { addThemedStories } from "testing/storybook/themedStoryGenerator";
 import AddElementModal, { useDialog } from "./AddElementModal";
-import Button from "src/components/Button";
-import JsonDebug from "src/testing/JsonDebug";
+import Button from "components/Button";
+import JsonDebug from "testing/JsonDebug";
 import { NewElement } from "../types";
-import useElements from "src/components/DocumentEditors/PipelineEditor/useElements";
-import { ElementDefinition } from "src/components/DocumentEditors/PipelineEditor/useElements/types";
+import useElements from "components/DocumentEditors/PipelineEditor/useElements";
+import { ElementDefinition } from "components/DocumentEditors/PipelineEditor/useElements/types";
 import Select from "react-select";
 
 const PARENT_ID = uuidv4();

@@ -2,9 +2,9 @@ import * as Cookies from "cookies-js";
 import { FormikBag } from "formik";
 import * as queryString from "query-string";
 import { useCallback } from "react";
-import useHttpClient from "src/lib/useHttpClient";
-import useRouter from "src/lib/useRouter";
-import { useConfig } from "src/startup/config";
+import useHttpClient from "lib/useHttpClient";
+import useRouter from "lib/useRouter";
+import { useConfig } from "startup/config";
 import { ChangePasswordResponse } from ".";
 import {
   ChangePasswordRequest,

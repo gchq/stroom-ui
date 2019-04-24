@@ -28,29 +28,29 @@ import {
   ActiveMenuItem,
 } from "./types";
 
-import useSelectableItemListing from "src/lib/useSelectableItemListing";
-import { KeyDownState } from "src/lib/useKeyIsDown";
+import useSelectableItemListing from "lib/useSelectableItemListing";
+import { KeyDownState } from "lib/useKeyIsDown";
 import {
   CopyMoveDocRefDialog,
   useDialog as useCopyMoveDocRefDialog,
   ShowDialog as ShowCopyDocRefDialog,
-} from "src/components/DocumentEditors/FolderExplorer/CopyMoveDocRefDialog";
+} from "components/DocumentEditors/FolderExplorer/CopyMoveDocRefDialog";
 import useLocalStorage, {
   storeBoolean,
   useStoreObjectFactory,
-} from "src/lib/useLocalStorage";
-import { useDocumentTree } from "src/components/DocumentEditors/api/explorer";
+} from "lib/useLocalStorage";
+import { useDocumentTree } from "components/DocumentEditors/api/explorer";
 import useAppNavigation from "./useAppNavigation";
-import { useTheme } from "src/lib/useTheme/useTheme";
+import { useTheme } from "lib/useTheme/useTheme";
 import {
   DocRefConsumer,
   DocRefType,
   DocRefTree,
-} from "src/components/DocumentEditors/useDocumentApi/types/base";
+} from "components/DocumentEditors/useDocumentApi/types/base";
 import {
   WithChromeContext,
   DEFAULT_CHROME_MODE,
-} from "src/lib/useRouter/BrowserRouter";
+} from "lib/useRouter/BrowserRouter";
 
 export interface AppChromeProps {
   content: React.ReactNode;

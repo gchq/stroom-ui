@@ -1,4 +1,4 @@
-import { ExpressionOperatorType } from "src/components/ExpressionBuilder/types";
+import { ExpressionOperatorType } from "components/ExpressionBuilder/types";
 import { PageRequest, StreamAttributeMapResult } from "../../types";
 
 export interface UseStreamSearch {

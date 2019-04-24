@@ -19,12 +19,12 @@ import * as React from "react";
 import { storiesOf } from "@storybook/react";
 
 import IndexVolumeGroupModalPicker from "./IndexVolumeGroupModalPicker";
-import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
+import { addThemedStories } from "testing/storybook/themedStoryGenerator";
 
 import { useDialog } from "./IndexVolumeGroupModalPicker";
-import Button from "src/components/Button";
-import JsonDebug from "src/testing/JsonDebug";
-import fullTestData from "src/testing/data";
+import Button from "components/Button";
+import JsonDebug from "testing/JsonDebug";
+import fullTestData from "testing/data";
 
 const TestHarness: React.FunctionComponent = () => {
   const [picked, setPicked] = React.useState<string>("");

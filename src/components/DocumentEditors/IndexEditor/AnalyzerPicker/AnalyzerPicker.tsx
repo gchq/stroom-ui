@@ -3,7 +3,7 @@ import Select from "react-select";
 import {
   AnalyzerDisplayValues,
   AnalyzerType,
-} from "src/components/DocumentEditors/useDocumentApi/types/indexDoc";
+} from "components/DocumentEditors/useDocumentApi/types/indexDoc";
 
 interface Props {
   className?: string;

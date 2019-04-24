@@ -1,6 +1,6 @@
 import * as React from "react";
-import useHttpClient from "src/lib/useHttpClient";
-import { useConfig } from "src/startup/config";
+import useHttpClient from "lib/useHttpClient";
+import { useConfig } from "startup/config";
 import { FetchDataParams, AbstractFetchDataResult } from "../types";
 
 interface Api {

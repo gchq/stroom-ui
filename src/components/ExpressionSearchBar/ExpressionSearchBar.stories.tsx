@@ -19,9 +19,9 @@ import { storiesOf } from "@storybook/react";
 
 import { testDataSource as dataSource } from "../ExpressionBuilder/test";
 import ExpressionSearchBar from "./ExpressionSearchBar";
-import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
+import { addThemedStories } from "testing/storybook/themedStoryGenerator";
 
-import JsonDebug from "src/testing/JsonDebug";
+import JsonDebug from "testing/JsonDebug";
 import Button from "../Button";
 import { ExpressionOperatorType } from "../ExpressionBuilder/types";
 

@@ -15,7 +15,7 @@
  */
 
 import * as React from "react";
-import { ExpressionOperatorType } from "src/components/ExpressionBuilder/types";
+import { ExpressionOperatorType } from "components/ExpressionBuilder/types";
 
 // import * as moment from "moment";
 // import { path } from "ramda";
@@ -24,14 +24,14 @@ import { ExpressionOperatorType } from "src/components/ExpressionBuilder/types";
 // import "react-table/react-table.css";
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-// import useStreamAttributeMapApi from "src/components/DataViewer/api/streamAttributeMap/useApi";
-// import useDataApi from "src/api/data/useApi";
+// import useStreamAttributeMapApi from "components/DataViewer/api/streamAttributeMap/useApi";
+// import useDataApi from "api/data/useApi";
 
-// import Loader from "src/components/Loader";
-// import Button from "src/components/Button";
-// import { Direction, ExpressionOperatorType, DataRow } from "src/types";
+// import Loader from "components/Loader";
+// import Button from "components/Button";
+// import { Direction, ExpressionOperatorType, DataRow } from "types";
 
-// import useReduxState from "src/lib/useReduxState";
+// import useReduxState from "lib/useReduxState";
 
 interface Props {
   dataViewerId: string;

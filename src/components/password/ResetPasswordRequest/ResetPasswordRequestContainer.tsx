@@ -15,8 +15,8 @@
  */
 
 import * as React from "react";
-import { useApi } from "src/components/authentication/useApi";
-import { useConfig } from "src/startup/config";
+import { useApi } from "components/authentication/useApi";
+import { useConfig } from "startup/config";
 import ResetPasswordRequest from "./ResetPasswordRequest";
 
 const ResetPasswordRequestContainer = () => {

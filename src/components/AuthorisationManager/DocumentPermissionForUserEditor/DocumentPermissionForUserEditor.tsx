@@ -2,13 +2,13 @@ import * as React from "react";
 import {
   useDocTypePermissions,
   useDocumentPermissionsForUser,
-} from "src/components/AuthorisationManager/api/docPermission";
-import {} from "src/components/AuthorisationManager/api/docPermission";
-import CheckboxSeries from "src/components/CheckboxSeries";
-import Button from "src/components/Button";
-import useRouter from "src/lib/useRouter";
-import { useUser } from "src/components/AuthorisationManager/api/userGroups";
-import { useDocumentTree } from "src/components/DocumentEditors/api/explorer";
+} from "components/AuthorisationManager/api/docPermission";
+import {} from "components/AuthorisationManager/api/docPermission";
+import CheckboxSeries from "components/CheckboxSeries";
+import Button from "components/Button";
+import useRouter from "lib/useRouter";
+import { useUser } from "components/AuthorisationManager/api/userGroups";
+import { useDocumentTree } from "components/DocumentEditors/api/explorer";
 
 interface Props {
   docRefUuid: string;

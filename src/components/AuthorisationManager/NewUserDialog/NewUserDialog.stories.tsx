@@ -16,12 +16,12 @@
 import * as React from "react";
 import { storiesOf } from "@storybook/react";
 
-import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
+import { addThemedStories } from "testing/storybook/themedStoryGenerator";
 
 import NewUserDialog, { useDialog } from "./NewUserDialog";
-import Button from "src/components/Button";
+import Button from "components/Button";
 
-import JsonDebug from "src/testing/JsonDebug";
+import JsonDebug from "testing/JsonDebug";
 
 const stories = storiesOf(
   "Sections/Authorisation Manager/New User Dialog",

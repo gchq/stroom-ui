@@ -10,7 +10,7 @@ import {
 } from "react-dnd";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import { canMove } from "src/lib/treeUtils/treeUtils";
+import { canMove } from "lib/treeUtils/treeUtils";
 import {
   DragDropTypes,
   DragObject,
@@ -18,9 +18,9 @@ import {
   DropCollectedProps,
 } from "../DocumentEditors/FolderExplorer/types";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
-import { KeyDownState } from "src/lib/useKeyIsDown";
+import { KeyDownState } from "lib/useKeyIsDown";
 import { MenuItemOpened, MenuItemType, MenuItemsOpenState } from "./types";
-import { DocRefType } from "src/components/DocumentEditors/useDocumentApi/types/base";
+import { DocRefType } from "components/DocumentEditors/useDocumentApi/types/base";
 
 interface Props {
   className?: string;

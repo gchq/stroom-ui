@@ -20,7 +20,7 @@ import { storiesOf } from "@storybook/react";
 import Button from "../Button";
 import ThemedConfirm, { useDialog } from "./ThemedConfirm";
 
-import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
+import { addThemedStories } from "testing/storybook/themedStoryGenerator";
 
 let TestHarness: React.FunctionComponent = () => {
   const [confirmCount, setConfirmCount] = React.useState<number>(0);

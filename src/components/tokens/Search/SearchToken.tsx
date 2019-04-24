@@ -20,8 +20,8 @@ import ReactTable, { RowInfo } from "react-table";
 import "react-table/react-table.css";
 import Toggle from "react-toggle";
 import "react-toggle/style.css";
-import useAppNavigation from "src/components/AppChrome/useAppNavigation";
-import Button from "src/components/Button";
+import useAppNavigation from "components/AppChrome/useAppNavigation";
+import Button from "components/Button";
 import { getColumnFormat } from "./tableCustomisations";
 import useTokenSearch from "./useTokenSearch";
 

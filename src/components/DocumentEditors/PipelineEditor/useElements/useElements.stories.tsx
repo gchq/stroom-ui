@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import { storiesOf } from "@storybook/react";
-import JsonDebug from "src/testing/JsonDebug";
+import JsonDebug from "testing/JsonDebug";
 import useElements from "./useElements";
 
 const TestHarness: React.FunctionComponent = () => {

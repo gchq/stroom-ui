@@ -16,7 +16,7 @@
 
 import * as React from "react";
 
-import IconHeader from "src/components/IconHeader";
+import IconHeader from "components/IconHeader";
 
 const Welcome: React.FunctionComponent = () => (
   <div className="welcome">

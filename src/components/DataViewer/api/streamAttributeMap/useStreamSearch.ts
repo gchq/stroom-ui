@@ -2,7 +2,7 @@ import * as React from "react";
 
 import { UseStreamSearch } from "./types";
 import useApi from "./useApi";
-import { ExpressionOperatorType } from "src/components/ExpressionBuilder/types";
+import { ExpressionOperatorType } from "components/ExpressionBuilder/types";
 import { StreamAttributeMapResult, PageRequest } from "../../types";
 
 const defaultStreams: StreamAttributeMapResult = {

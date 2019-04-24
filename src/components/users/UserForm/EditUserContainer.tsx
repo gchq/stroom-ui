@@ -16,11 +16,11 @@
 
 import * as React from "react";
 import { useEffect } from "react";
-import useAppNavigation from "src/components/AppChrome/useAppNavigation";
-import { PasswordValidationRequest } from "src/components/authentication/types";
-import Loader from "src/components/Loader";
-import useIdFromPath from "src/lib/useIdFromPath";
-import { useConfig } from "src/startup/config";
+import useAppNavigation from "components/AppChrome/useAppNavigation";
+import { PasswordValidationRequest } from "components/authentication/types";
+import Loader from "components/Loader";
+import useIdFromPath from "lib/useIdFromPath";
+import { useConfig } from "startup/config";
 import { User } from "..";
 import { useUsers } from "../api";
 import { validateAsync } from "../validation";

@@ -4,7 +4,7 @@ import CreatableSelect from "react-select/lib/Creatable";
 import {
   StroomUser,
   useManageUsers,
-} from "src/components/AuthorisationManager/api/userGroups";
+} from "components/AuthorisationManager/api/userGroups";
 import { BaseProps, Props, UseProps } from "./types";
 
 const DEFAULT_USER_UUIDS_TO_FILTER_OUT: string[] = [];

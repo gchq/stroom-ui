@@ -2,7 +2,7 @@ import * as React from "react";
 
 import { storiesOf } from "@storybook/react";
 import useLocalStorage, { useStoreObjectFactory } from "./useLocalStorage";
-import JsonDebug from "src/testing/JsonDebug";
+import JsonDebug from "testing/JsonDebug";
 
 interface TestStore1 {
   name: string;

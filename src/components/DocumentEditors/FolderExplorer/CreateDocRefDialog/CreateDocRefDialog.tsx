@@ -21,10 +21,10 @@ import ThemedModal from "../../../ThemedModal";
 import DialogActionButtons from "../../../DialogActionButtons";
 import { DocRefTypePicker } from "../../../DocRefTypePicker";
 import PermissionInheritancePicker from "../PermissionInheritancePicker";
-import useForm from "src/lib/useForm";
-import { DocRefType } from "src/components/DocumentEditors/useDocumentApi/types/base";
+import useForm from "lib/useForm";
+import { DocRefType } from "components/DocumentEditors/useDocumentApi/types/base";
 import { PermissionInheritance } from "../PermissionInheritancePicker/types";
-// import { required, minLength2 } from "src/lib/formUtils";
+// import { required, minLength2 } from "lib/formUtils";
 
 interface Props {
   destination?: DocRefType;

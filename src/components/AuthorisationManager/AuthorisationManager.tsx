@@ -1,11 +1,11 @@
 import * as React from "react";
-import { useManageUsers } from "src/components/AuthorisationManager/api/userGroups";
-import Button from "src/components/Button";
-import IconHeader from "src/components/IconHeader";
+import { useManageUsers } from "components/AuthorisationManager/api/userGroups";
+import Button from "components/Button";
+import IconHeader from "components/IconHeader";
 import ThemedConfirm, {
   useDialog as useThemedConfim,
-} from "src/components/ThemedConfirm";
-import useForm from "src/lib/useForm";
+} from "components/ThemedConfirm";
+import useForm from "lib/useForm";
 import useAppNavigation from "../AppChrome/useAppNavigation";
 import NewUserDialog, {
   useDialog as useNewUserDialog,

@@ -1,15 +1,15 @@
 import * as React from "react";
 
 import { storiesOf } from "@storybook/react";
-import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
+import { addThemedStories } from "testing/storybook/themedStoryGenerator";
 import DocRefEditor, { useDocRefEditor } from ".";
-import { useDocumentTree } from "src/components/DocumentEditors/api/explorer";
-import { iterateNodes } from "src/lib/treeUtils/treeUtils";
-import DocRefTypePicker from "src/components/DocRefTypePicker";
+import { useDocumentTree } from "components/DocumentEditors/api/explorer";
+import { iterateNodes } from "lib/treeUtils/treeUtils";
+import DocRefTypePicker from "components/DocRefTypePicker";
 import useDocumentApi, {
   ResourcesByDocType,
-} from "src/components/DocumentEditors/useDocumentApi";
-import JsonDebug from "src/testing/JsonDebug";
+} from "components/DocumentEditors/useDocumentApi";
+import JsonDebug from "testing/JsonDebug";
 
 const stories = storiesOf("Document Editors", module);
 

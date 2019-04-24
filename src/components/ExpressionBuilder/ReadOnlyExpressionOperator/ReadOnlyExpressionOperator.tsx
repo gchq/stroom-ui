@@ -9,7 +9,7 @@ import {
   ExpressionTermType,
   ExpressionItem,
 } from "../types";
-import { LineEndpoint, LineTo } from "src/components/LineTo";
+import { LineEndpoint, LineTo } from "components/LineTo";
 import { Props } from "./types";
 
 /**

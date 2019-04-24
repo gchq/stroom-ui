@@ -3,7 +3,7 @@ import * as loremIpsum from "lorem-ipsum";
 import {
   IndexField,
   IndexDoc,
-} from "src/components/DocumentEditors/useDocumentApi/types/indexDoc";
+} from "components/DocumentEditors/useDocumentApi/types/indexDoc";
 
 export const generateTestField = (): IndexField => ({
   fieldName: loremIpsum({ count: 2, units: "words" }),

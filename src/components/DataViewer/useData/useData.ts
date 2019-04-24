@@ -2,7 +2,7 @@ import * as React from "react";
 
 import useApi from "./useApi";
 import { UseData, PagedData, FetchDataParams } from "../types";
-import useUpdateableState from "src/lib/useUpdateableState";
+import useUpdateableState from "lib/useUpdateableState";
 
 const defaultPagedData: PagedData = {
   streamAttributeMaps: [],

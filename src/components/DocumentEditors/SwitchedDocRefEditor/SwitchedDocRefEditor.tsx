@@ -1,8 +1,8 @@
 import * as React from "react";
 
 import PathNotFound from "../../PathNotFound";
-import useRecentItems from "src/lib/useRecentItems";
-import { useDocumentTree } from "src/components/DocumentEditors/api/explorer";
+import useRecentItems from "lib/useRecentItems";
+import { useDocumentTree } from "components/DocumentEditors/api/explorer";
 import { SwitchedDocRefEditorProps } from "../DocRefEditor";
 import { docRefEditorClasses } from "./types";
 

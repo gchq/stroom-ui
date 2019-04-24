@@ -17,7 +17,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import * as React from "react";
 import * as ReactModal from "react-modal";
-import Button from "src/components/Button";
+import Button from "components/Button";
 
 const BackConfirmation = ({
   isOpen,

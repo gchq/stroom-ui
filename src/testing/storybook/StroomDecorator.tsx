@@ -8,16 +8,16 @@ import * as ReactModal from "react-modal";
 
 import { useTestServer } from "./PollyDecorator";
 
-import setupFontAwesome from "src/lib/setupFontAwesome";
+import setupFontAwesome from "lib/setupFontAwesome";
 import testData from "../data";
-import { ThemeContextProvider } from "src/lib/useTheme/useTheme";
+import { ThemeContextProvider } from "lib/useTheme/useTheme";
 import { withRouter, RouteComponentProps } from "react-router";
-import { CustomRouter } from "src/lib/useRouter";
-import { ConfigProvider } from "src/startup/config";
-import { AuthorisationContextProvider } from "src/startup/Authorisation";
-import { AuthenticationContext } from "src/startup/Authentication";
-import { DocumentTreeContextProvider } from "src/components/DocumentEditors/api/explorer";
-import { ErrorReportingContextProvider } from "src/components/ErrorPage";
+import { CustomRouter } from "lib/useRouter";
+import { ConfigProvider } from "startup/config";
+import { AuthorisationContextProvider } from "startup/Authorisation";
+import { AuthenticationContext } from "startup/Authentication";
+import { DocumentTreeContextProvider } from "components/DocumentEditors/api/explorer";
+import { ErrorReportingContextProvider } from "components/ErrorPage";
 
 const WithTestServer: React.FunctionComponent = ({ children }) => {
   useTestServer(testData);

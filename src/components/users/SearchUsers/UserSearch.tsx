@@ -20,7 +20,7 @@ import ReactTable, { RowInfo } from "react-table";
 import "react-table/react-table.css";
 import Toggle from "react-toggle";
 import "react-toggle/style.css";
-import Button from "src/components/Button";
+import Button from "components/Button";
 import { User } from "..";
 import { getColumnFormat } from "./tableCustomisations";
 

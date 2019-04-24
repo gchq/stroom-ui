@@ -18,7 +18,7 @@ import {
   ConnectDragSource,
   ConnectDropTarget,
 } from "react-dnd";
-import { DictionaryDoc } from "src/components/DocumentEditors/useDocumentApi/types/dictionaryDoc";
+import { DictionaryDoc } from "components/DocumentEditors/useDocumentApi/types/dictionaryDoc";
 
 export enum DragDropTypes {
   OPERATOR = "operator",

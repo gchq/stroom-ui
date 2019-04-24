@@ -20,11 +20,11 @@ import ReactTable, { Column } from "react-table";
 import {
   useStreamSearch,
   useStreamDataSource,
-} from "src/components/DataViewer/api/streamAttributeMap";
+} from "components/DataViewer/api/streamAttributeMap";
 import {
   useSelectableReactTable,
   SelectionBehaviour,
-} from "src/lib/useSelectableItemListing";
+} from "lib/useSelectableItemListing";
 import IconHeader from "../IconHeader";
 import ExpressionSearchBar from "../ExpressionSearchBar";
 import HorizontalMainDetails from "../HorizontalMainDetails";

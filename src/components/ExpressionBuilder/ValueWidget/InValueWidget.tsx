@@ -16,7 +16,7 @@
 
 import * as React from "react";
 
-import { ControlledInput } from "src/lib/useForm/types";
+import { ControlledInput } from "lib/useForm/types";
 import CreatableSelect from "react-select/lib/Creatable";
 
 interface InOption {

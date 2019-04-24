@@ -18,7 +18,7 @@ import * as uuidv4 from "uuid/v4";
 import {
   DocRefType,
   DocRefTree,
-} from "src/components/DocumentEditors/useDocumentApi/types/base";
+} from "components/DocumentEditors/useDocumentApi/types/base";
 
 function createRandomItem(docRefType: string): DocRefType {
   return {

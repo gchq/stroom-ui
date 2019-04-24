@@ -1,11 +1,11 @@
 import * as React from "react";
 
 import { storiesOf } from "@storybook/react";
-import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
+import { addThemedStories } from "testing/storybook/themedStoryGenerator";
 import NewIndexVolumeDialog, { useDialog } from ".";
-import JsonDebug from "src/testing/JsonDebug";
-import Button from "src/components/Button";
-import { NewIndexVolume } from "src/components/IndexVolumes/api";
+import JsonDebug from "testing/JsonDebug";
+import Button from "components/Button";
+import { NewIndexVolume } from "components/IndexVolumes/api";
 
 const stories = storiesOf("Sections/Index Volumes/New Index Volume", module);
 

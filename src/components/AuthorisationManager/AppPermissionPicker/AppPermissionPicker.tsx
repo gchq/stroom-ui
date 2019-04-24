@@ -1,6 +1,6 @@
 import * as React from "react";
-import { useAllAppPermissions } from "src/components/AuthorisationManager/api/appPermission";
-import CheckboxSeries from "src/components/CheckboxSeries";
+import { useAllAppPermissions } from "components/AuthorisationManager/api/appPermission";
+import CheckboxSeries from "components/CheckboxSeries";
 
 interface Props {
   value: string[];

@@ -1,17 +1,17 @@
 import * as React from "react";
 
-import IconHeader from "src/components/IconHeader";
-import Button from "src/components/Button";
-import useRouter from "src/lib/useRouter";
-import { useIndexVolumeGroup } from "src/components/IndexVolumeGroups/api";
+import IconHeader from "components/IconHeader";
+import Button from "components/Button";
+import useRouter from "lib/useRouter";
+import { useIndexVolumeGroup } from "components/IndexVolumeGroups/api";
 import {
   useTable as useIndexVolumesTable,
   IndexVolumesTable,
 } from "../../IndexVolumes/IndexVolumesTable";
 import ThemedConfirm, {
   useDialog as useConfirmDialog,
-} from "src/components/ThemedConfirm";
-import Loader from "src/components/Loader";
+} from "components/ThemedConfirm";
+import Loader from "components/Loader";
 
 interface Props {
   groupName: string;

@@ -1,6 +1,6 @@
 import * as React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Tooltip from "src/components/Tooltip";
+import Tooltip from "components/Tooltip";
 
 export const ProcessingSearchHelp = () => (
   <div className="processing__search__help">

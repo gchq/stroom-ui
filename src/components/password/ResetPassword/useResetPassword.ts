@@ -4,9 +4,9 @@ import {
   ChangePasswordResponse,
   ResetPasswordRequest,
   useApi,
-} from "src/components/authentication";
-import { useRouter } from "src/lib/useRouter";
-import { useConfig } from "src/startup/config";
+} from "components/authentication";
+import { useRouter } from "lib/useRouter";
+import { useConfig } from "startup/config";
 
 const useResetPassword = (): {
   submitPasswordChangeRequest: (

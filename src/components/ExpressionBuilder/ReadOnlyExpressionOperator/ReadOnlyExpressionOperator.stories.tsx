@@ -1,10 +1,10 @@
 import * as React from "react";
 import { storiesOf } from "@storybook/react";
-import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
+import { addThemedStories } from "testing/storybook/themedStoryGenerator";
 import ReadOnlyExpressionOperator from ".";
 import { testExpression } from "../test";
-import { LineContainer } from "src/components/LineTo";
-import ElbowDown from "src/components/LineTo/lineCreators/ElbowDown";
+import { LineContainer } from "components/LineTo";
+import ElbowDown from "components/LineTo/lineCreators/ElbowDown";
 
 const TestHarness: React.FunctionComponent = () => {
   return (

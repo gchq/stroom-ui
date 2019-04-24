@@ -19,11 +19,11 @@ import * as React from "react";
 import * as CopyToClipboard from "react-copy-to-clipboard";
 import Toggle from "react-toggle";
 import "react-toggle/style.css";
-import useAppNavigation from "src/components/AppChrome/useAppNavigation";
-import { ByCopy, OnCopy } from "src/components/auditCopy";
-import Button from "src/components/Button";
-import Loader from "src/components/Loader";
-import useIdFromPath from "src/lib/useIdFromPath";
+import useAppNavigation from "components/AppChrome/useAppNavigation";
+import { ByCopy, OnCopy } from "components/auditCopy";
+import Button from "components/Button";
+import Loader from "components/Loader";
+import useIdFromPath from "lib/useIdFromPath";
 import useTokens from "./useTokens";
 
 const EditToken = () => {

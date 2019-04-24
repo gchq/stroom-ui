@@ -15,13 +15,13 @@
  */
 import * as React from "react";
 
-import fullTestData from "src/testing/data";
+import fullTestData from "testing/data";
 import { storiesOf } from "@storybook/react";
 
 import AppPermissionPicker from "./AppPermissionPicker";
 
-import JsonDebug from "src/testing/JsonDebug";
-import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
+import JsonDebug from "testing/JsonDebug";
+import { addThemedStories } from "testing/storybook/themedStoryGenerator";
 
 const TestForm = () => {
   const [value, setAppPermissions] = React.useState<string[]>(

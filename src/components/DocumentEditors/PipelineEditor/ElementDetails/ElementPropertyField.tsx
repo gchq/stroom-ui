@@ -16,7 +16,7 @@
 
 import * as React from "react";
 
-import AppSearchBar from "src/components/AppSearchBar";
+import AppSearchBar from "components/AppSearchBar";
 import { PipelineEditApi } from "../types";
 
 interface Props {

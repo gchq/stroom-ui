@@ -1,10 +1,10 @@
 import * as React from "react";
 
 import { NavigateApp } from "./types";
-import useRouter from "src/lib/useRouter";
-import { DocRefType } from "src/components/DocumentEditors/useDocumentApi/types/base";
+import useRouter from "lib/useRouter";
+import { DocRefType } from "components/DocumentEditors/useDocumentApi/types/base";
 import useUrlGenerator from "./useUrlGenerator";
-import { WithChromeContext } from "src/lib/useRouter/BrowserRouter";
+import { WithChromeContext } from "lib/useRouter/BrowserRouter";
 
 const useAppNavigation = (): NavigateApp<any> => {
   const { history: h } = useRouter();

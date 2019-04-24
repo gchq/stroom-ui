@@ -19,11 +19,11 @@ import * as React from "react";
 import { storiesOf } from "@storybook/react";
 
 import Routes from "./Routes";
-import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
+import { addThemedStories } from "testing/storybook/themedStoryGenerator";
 import useAppNavigation from "./useAppNavigation";
-import { WithChromeContext } from "src/lib/useRouter/BrowserRouter";
-import Button from "src/components/Button";
-import useRouter from "src/lib/useRouter";
+import { WithChromeContext } from "lib/useRouter/BrowserRouter";
+import Button from "components/Button";
+import useRouter from "lib/useRouter";
 
 const storiesWithChrome = storiesOf("App Chrome/With Chrome", module);
 addThemedStories(storiesWithChrome, () => <Routes />);

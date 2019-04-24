@@ -1,9 +1,9 @@
 import { HttpRequest, HttpResponse } from "@pollyjs/adapter-fetch";
 
 import { TestCache } from "../PollyDecorator";
-import { Config } from "src/startup/config";
+import { Config } from "startup/config";
 import { ResourceBuilder } from "./types";
-import { onlyUnique } from "src/lib/formUtils";
+import { onlyUnique } from "lib/formUtils";
 
 const resourceBuilder: ResourceBuilder = (
   server: any,

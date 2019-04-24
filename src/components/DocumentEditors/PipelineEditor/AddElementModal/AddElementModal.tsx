@@ -1,12 +1,12 @@
 import * as React from "react";
 
-import IconHeader from "src/components/IconHeader";
-import Button from "src/components/Button";
-import ThemedModal from "src/components/ThemedModal";
-// import { required, minLength2 } from "src/lib/formUtils";
-import useForm from "src/lib/useForm";
+import IconHeader from "components/IconHeader";
+import Button from "components/Button";
+import ThemedModal from "components/ThemedModal";
+// import { required, minLength2 } from "lib/formUtils";
+import useForm from "lib/useForm";
 import { Props, OnAddElement, UseDialog } from "./types";
-import { ElementDefinition } from "src/components/DocumentEditors/PipelineEditor/useElements/types";
+import { ElementDefinition } from "components/DocumentEditors/PipelineEditor/useElements/types";
 
 interface FormValues {
   newName: string;

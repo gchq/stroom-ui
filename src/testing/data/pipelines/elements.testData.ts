@@ -1,4 +1,4 @@
-import { ElementDefinition } from "src/components/DocumentEditors/PipelineEditor/useElements/types";
+import { ElementDefinition } from "components/DocumentEditors/PipelineEditor/useElements/types";
 
 export default [
   {

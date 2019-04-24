@@ -32,19 +32,19 @@ import {
   DropCollectedProps,
 } from "../types";
 import { isValidChildType } from "../elementUtils";
-import Button from "src/components/Button";
+import Button from "components/Button";
 
 import { ShowDialog } from "../AddElementModal";
 import { PipelineEditApi } from "../types";
 import {
   PipelineDocumentType,
   PipelinePropertyType,
-} from "src/components/DocumentEditors/useDocumentApi/types/pipelineDoc";
+} from "components/DocumentEditors/useDocumentApi/types/pipelineDoc";
 import { PipelineAsTreeType } from "../AddElementModal/types";
 import {
   ElementPropertiesType,
   ElementDefinition,
-} from "src/components/DocumentEditors/PipelineEditor/useElements/types";
+} from "components/DocumentEditors/PipelineEditor/useElements/types";
 
 interface Props {
   pipelineId: string;

@@ -6,7 +6,7 @@ import {
   useSelectableReactTable,
   SelectionBehaviour,
   TableOutProps,
-} from "src/lib/useSelectableItemListing";
+} from "lib/useSelectableItemListing";
 
 interface Props {
   groupNames: string[];

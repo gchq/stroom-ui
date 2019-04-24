@@ -16,7 +16,7 @@
 
 import * as React from "react";
 
-import Button from "src/components/Button";
+import Button from "components/Button";
 
 import { PipelineEditApi } from "../types";
 

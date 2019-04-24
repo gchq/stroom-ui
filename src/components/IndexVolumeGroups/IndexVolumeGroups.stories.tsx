@@ -21,7 +21,7 @@ import { Switch, Route, RouteComponentProps } from "react-router";
 
 import IndexVolumeGroups from "./IndexVolumeGroups";
 import IndexVolumeGroupEditor from "./IndexVolumeGroupEditor";
-import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
+import { addThemedStories } from "testing/storybook/themedStoryGenerator";
 
 const TestHarness = () => (
   <Switch>

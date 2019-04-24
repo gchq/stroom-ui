@@ -35,7 +35,7 @@ import {
 } from "../types";
 import withValueType from "../withValueType";
 import DataSourceFieldPicker from "../DataSourceFieldPicker/DataSourceFieldPicker";
-import { LineEndpoint } from "src/components/LineTo";
+import { LineEndpoint } from "components/LineTo";
 
 interface Props {
   index: number;

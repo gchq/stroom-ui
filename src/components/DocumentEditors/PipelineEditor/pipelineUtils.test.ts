@@ -30,14 +30,14 @@ import {
 
 import { keyByType } from "./elementUtils";
 
-import { testPipelines, elements } from "src/testing/data/pipelines";
+import { testPipelines, elements } from "testing/data/pipelines";
 import {
   PipelineDocumentType,
   PipelinePropertyType,
   PipelinePropertyValue,
-} from "src/components/DocumentEditors/useDocumentApi/types/pipelineDoc";
+} from "components/DocumentEditors/useDocumentApi/types/pipelineDoc";
 import { PipelineAsTreeType } from "./AddElementModal/types";
-import { DocRefType } from "src/components/DocumentEditors/useDocumentApi/types/base";
+import { DocRefType } from "components/DocumentEditors/useDocumentApi/types/base";
 
 const elementsByType = keyByType(elements);
 

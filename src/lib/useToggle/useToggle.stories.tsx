@@ -1,8 +1,8 @@
 import * as React from "react";
 import { storiesOf } from "@storybook/react";
-import JsonDebug from "src/testing/JsonDebug";
+import JsonDebug from "testing/JsonDebug";
 import useToggle from "./useToggle";
-import Button from "src/components/Button";
+import Button from "components/Button";
 
 const TestHarness: React.FunctionComponent = () => {
   const { value, toggle } = useToggle();

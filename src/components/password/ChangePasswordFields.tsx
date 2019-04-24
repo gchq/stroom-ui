@@ -16,8 +16,8 @@
 
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as React from "react";
-import Button from "src/components/Button";
-import { hasAnyProps } from "src/lib/lang";
+import Button from "components/Button";
+import { hasAnyProps } from "lib/lang";
 import ChangePasswordFormData from "./ChangePassword/ChangePasswordFormData";
 
 const ChangePasswordFields = ({

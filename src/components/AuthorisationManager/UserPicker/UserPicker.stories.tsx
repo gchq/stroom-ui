@@ -16,10 +16,10 @@
 
 import { storiesOf } from "@storybook/react";
 import * as React from "react";
-import Button from "src/components/Button";
-import fullTestData from "src/testing/data";
-import JsonDebug from "src/testing/JsonDebug";
-import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
+import Button from "components/Button";
+import fullTestData from "testing/data";
+import JsonDebug from "testing/JsonDebug";
+import { addThemedStories } from "testing/storybook/themedStoryGenerator";
 import { StroomUser } from "../api/userGroups";
 import UserPicker, { usePicker } from "./UserPicker";
 

@@ -4,12 +4,12 @@ import ThemedModal from "../../../ThemedModal";
 import { DialogActionButtons } from "../../../DialogActionButtons";
 import IndexFieldTypePicker from "../IndexFieldTypePicker/IndexFieldTypePicker";
 import AnalyzerPicker from "../AnalyzerPicker";
-import useForm from "src/lib/useForm";
+import useForm from "lib/useForm";
 import {
   IndexField,
   IndexFieldType,
   AnalyzerType,
-} from "src/components/DocumentEditors/useDocumentApi/types/indexDoc";
+} from "components/DocumentEditors/useDocumentApi/types/indexDoc";
 
 interface Props {
   id: number;

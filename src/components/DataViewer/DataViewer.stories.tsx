@@ -18,7 +18,7 @@ import * as React from "react";
 import { storiesOf } from "@storybook/react";
 
 import DataViewer from "./DataViewer";
-import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
+import { addThemedStories } from "testing/storybook/themedStoryGenerator";
 
 const stories = storiesOf("Sections/Data Viewer", module);
 

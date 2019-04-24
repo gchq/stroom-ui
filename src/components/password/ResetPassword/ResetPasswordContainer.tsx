@@ -15,9 +15,9 @@
  */
 
 import * as React from "react";
-import { PasswordValidationRequest } from "src/components/authentication";
-import { validateAsync } from "src/components/users/validation";
-import { useConfig } from "src/startup/config";
+import { PasswordValidationRequest } from "components/authentication";
+import { validateAsync } from "components/users/validation";
+import { useConfig } from "startup/config";
 import ChangePasswordFormData from "../ChangePassword/ChangePasswordFormData";
 import ResetPassword from "./ResetPassword";
 import useResetPassword from "./useResetPassword";

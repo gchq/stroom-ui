@@ -22,63 +22,61 @@ import ReactTable, { RowInfo } from "react-table";
 
 import { ErrorData } from "../types";
 
-import Tooltip from "src/components/Tooltip";
+import Tooltip from "components/Tooltip";
 
 interface Props {
   errors: ErrorData[];
 }
+
+const SeverityCell = (row: RowInfo): React.ReactNode => {
+  const location = (
+    <React.Fragment>
+      <p>Stream: {row.original.stream}</p>
+      <p>Line: {row.original.line}</p>
+      <p>Column: {row.original.col}</p>
+    </React.Fragment>
+  );
+
+  switch (row.original.severity) {
+    case "INFO":
+      return (
+        <Tooltip
+          trigger={<FontAwesomeIcon color="blue" icon="info-circle" />}
+          content={location}
+        />
+      );
+    case "WARNING":
+      return (
+        <Tooltip
+          trigger={<FontAwesomeIcon color="orange" icon="exclamation-circle" />}
+          content={location}
+        />
+      );
+    case "ERROR":
+      return (
+        <Tooltip
+          trigger={<FontAwesomeIcon color="red" icon="exclamation-circle" />}
+          content={location}
+        />
+      );
+    case "FATAL":
+      return (
+        <Tooltip
+          trigger={<FontAwesomeIcon color="red" icon="bomb" />}
+          content={location}
+        />
+      );
+    default:
+      return <div>{`Unknown ${row.rowValues}`}</div>;
+  }
+};
 
 const ErrorTable: React.FunctionComponent<Props> = ({ errors }) => {
   const tableColumns = [
     {
       Header: "",
       accessor: "severity",
-      Cell: (row: RowInfo): React.ReactNode => {
-        const location = (
-          <React.Fragment>
-            <p>Stream: {row.original.stream}</p>
-            <p>Line: {row.original.line}</p>
-            <p>Column: {row.original.col}</p>
-          </React.Fragment>
-        );
-
-        switch (row.original.severity) {
-          case "INFO":
-            return (
-              <Tooltip
-                trigger={<FontAwesomeIcon color="blue" icon="info-circle" />}
-                content={location}
-              />
-            );
-          case "WARNING":
-            return (
-              <Tooltip
-                trigger={
-                  <FontAwesomeIcon color="orange" icon="exclamation-circle" />
-                }
-                content={location}
-              />
-            );
-          case "ERROR":
-            return (
-              <Tooltip
-                trigger={
-                  <FontAwesomeIcon color="red" icon="exclamation-circle" />
-                }
-                content={location}
-              />
-            );
-          case "FATAL":
-            return (
-              <Tooltip
-                trigger={<FontAwesomeIcon color="red" icon="bomb" />}
-                content={location}
-              />
-            );
-          default:
-            return <div>{`Unknown ${row.rowValues}`}</div>;
-        }
-      },
+      Cell: SeverityCell,
       width: 35,
     },
     {

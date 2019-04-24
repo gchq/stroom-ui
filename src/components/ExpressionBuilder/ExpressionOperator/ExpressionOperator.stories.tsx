@@ -1,15 +1,15 @@
 import * as React from "react";
 
 import { storiesOf } from "@storybook/react";
-import { addThemedStories } from "src/testing/storybook/themedStoryGenerator";
-import JsonDebug from "src/testing/JsonDebug";
+import { addThemedStories } from "testing/storybook/themedStoryGenerator";
+import JsonDebug from "testing/JsonDebug";
 import ExpressionOperator from ".";
 import { getNewOperator } from "../expressionUtils";
 import { ExpressionOperatorType } from "../types";
 import { testDataSource as dataSource } from "../test";
-import Button from "src/components/Button";
-import useToggle from "src/lib/useToggle";
-import { LineContainer } from "src/components/LineTo";
+import Button from "components/Button";
+import useToggle from "lib/useToggle";
+import { LineContainer } from "components/LineTo";
 
 const stories = storiesOf("Expression/Operator", module);
 

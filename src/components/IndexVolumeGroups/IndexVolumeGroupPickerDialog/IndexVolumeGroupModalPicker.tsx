@@ -3,9 +3,9 @@ import * as React from "react";
 import IndexVolumeGroupPicker, {
   usePicker,
 } from "../IndexVolumeGroupPicker/IndexVolumeGroupPicker";
-import ThemedModal from "src/components/ThemedModal";
-import IconHeader from "src/components/IconHeader";
-import DialogActionButtons from "src/components/DialogActionButtons";
+import ThemedModal from "components/ThemedModal";
+import IconHeader from "components/IconHeader";
+import DialogActionButtons from "components/DialogActionButtons";
 import { PickerBaseProps } from "../IndexVolumeGroupPicker/types";
 
 interface BaseProps extends PickerBaseProps {

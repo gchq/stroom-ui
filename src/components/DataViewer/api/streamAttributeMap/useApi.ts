@@ -1,10 +1,10 @@
 import * as React from "react";
-import useHttpClient from "src/lib/useHttpClient";
-import { useConfig } from "src/startup/config";
+import useHttpClient from "lib/useHttpClient";
+import { useConfig } from "startup/config";
 import {
   DataSourceType,
   ExpressionOperatorType,
-} from "src/components/ExpressionBuilder/types";
+} from "components/ExpressionBuilder/types";
 import { StreamAttributeMapResult, PageRequest, DataRow } from "../../types";
 
 interface Api {

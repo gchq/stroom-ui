@@ -1,7 +1,7 @@
 import { useTokenState } from "./useTokenState";
 import { useApi, Token } from "../api/";
 import { useCallback } from "react";
-import useAppNavigation from "src/components/AppChrome/useAppNavigation";
+import useAppNavigation from "components/AppChrome/useAppNavigation";
 
 const useTokens = () => {
   const { token, setEnabled, setToken } = useTokenState();

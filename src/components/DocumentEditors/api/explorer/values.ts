@@ -1,7 +1,7 @@
 import {
   DocRefTree,
   DocRefWithLineage,
-} from "src/components/DocumentEditors/useDocumentApi/types/base";
+} from "components/DocumentEditors/useDocumentApi/types/base";
 
 export const DEFAULT_TREE: DocRefTree = {
   uuid: "NONE",

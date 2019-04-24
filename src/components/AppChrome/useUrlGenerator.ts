@@ -1,6 +1,6 @@
 import * as React from "react";
 import { NavigateApp } from "./types";
-import { DocRefType } from "src/components/DocumentEditors/useDocumentApi/types/base";
+import { DocRefType } from "components/DocumentEditors/useDocumentApi/types/base";
 
 const useUrlGenerator = (urlPrefix: string): NavigateApp<string> => {
   return React.useMemo(

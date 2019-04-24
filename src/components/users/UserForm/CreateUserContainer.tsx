@@ -15,9 +15,9 @@
  */
 
 import * as React from "react";
-import useAppNavigation from "src/components/AppChrome/useAppNavigation";
-import { PasswordValidationRequest } from "src/components/authentication";
-import { useConfig } from "src/startup/config";
+import useAppNavigation from "components/AppChrome/useAppNavigation";
+import { PasswordValidationRequest } from "components/authentication";
+import { useConfig } from "startup/config";
 import { useUsers } from "../api";
 import { User } from "../types";
 import { validateAsync } from "../validation";
