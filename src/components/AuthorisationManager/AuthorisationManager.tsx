@@ -59,18 +59,18 @@ const Authorisation: React.FunctionComponent<Props> = ({ isGroup }) => {
     ),
     getDetails: React.useCallback(
       () => selectedUsers.map(v => v.name).join(", "),
-      [selectedUsers.map(v => v.uuid)],
+      [selectedUsers],
     ),
     onConfirm: React.useCallback(() => {
       selectedUsers.forEach(v => deleteUser(v.uuid));
-    }, [selectedUsers.map(v => v.uuid)]),
+    }, [selectedUsers, deleteUser]),
   });
 
   const { useTextInput } = useForm({
     initialValues: defaultValues,
     onValidate: React.useCallback(
       ({ name, uuid }: Values) => findUsers(name, isGroup, uuid),
-      [findUsers],
+      [isGroup, findUsers],
     ),
   });
   const nameProps = useTextInput("name");
@@ -93,7 +93,7 @@ const Authorisation: React.FunctionComponent<Props> = ({ isGroup }) => {
     if (selectedUsers.length === 1) {
       goToAuthorisationsForUser(selectedUsers[0].uuid);
     }
-  }, [history, selectedUsers]);
+  }, [selectedUsers, goToAuthorisationsForUser]);
 
   return (
     <div className="Authorisation">

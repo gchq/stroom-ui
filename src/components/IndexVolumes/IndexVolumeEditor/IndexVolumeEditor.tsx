@@ -59,7 +59,6 @@ const IndexVolumeEditor: React.FunctionComponent<Props> = ({ volumeId }) => {
     showDialog: showIndexVolumeGroupPicker,
   } = useIndexVolumeGroupModalPicker({
     onConfirm: React.useCallback((groupName: string) => addToGroup(groupName), [
-      volumeId,
       addToGroup,
     ]),
   });

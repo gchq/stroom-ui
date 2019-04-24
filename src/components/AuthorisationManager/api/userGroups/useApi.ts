@@ -90,7 +90,7 @@ export const useApi = (): Api => {
         httpDeleteEmptyResponse(
           `${stroomBaseServiceUrl}/users/v1/${userUuid}/${groupUuid}`,
         ),
-      [httpDeleteEmptyResponse],
+      [stroomBaseServiceUrl, httpDeleteEmptyResponse],
     ),
   };
 };

@@ -67,7 +67,8 @@ const TestHarness: React.FunctionComponent = () => {
   }, [newValue2, reduceValue2]);
 
   const resetStorage = React.useCallback(() => {
-    resetValue1(), resetValue2();
+    resetValue1();
+    resetValue2();
   }, [resetValue1, resetValue2]);
 
   return (

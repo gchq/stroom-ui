@@ -58,7 +58,7 @@ const ProcessingContainer: React.FunctionComponent = () => {
     if (!!selectedTracker && !!selectedTracker.filterId) {
       enableToggle(selectedTracker.filterId);
     }
-  }, [enableToggle]);
+  }, [selectedTracker, enableToggle]);
 
   React.useEffect(() => {
     fetchTrackers();

@@ -72,47 +72,43 @@ export const useApi = (): Api => {
         false,
       );
     },
-    [httpPostJsonResponse],
+    [authenticationServiceUrl, appClientId, httpPostJsonResponse],
   );
 
   const changePassword = useCallback(
-    (changePasswordRequest: ChangePasswordRequest) => {
-      const url = `${authenticationServiceUrl}/changePassword/`;
-      const { password, oldPassword, email } = changePasswordRequest;
-
-      return httpPostJsonResponse(
-        url,
+    ({ password, oldPassword, email }: ChangePasswordRequest) =>
+      httpPostJsonResponse(
+        `${authenticationServiceUrl}/changePassword/`,
         { body: JSON.stringify({ newPassword: password, oldPassword, email }) },
         false,
-      );
-    },
-    [],
+      ),
+    [authenticationServiceUrl, httpPostJsonResponse],
   );
 
   const resetPassword = useCallback(
-    (resetPasswordRequest: ResetPasswordRequest) => {
-      const newPassword = resetPasswordRequest.password;
-      const url = `${authenticationServiceUrl}/resetPassword/`;
-      return httpPostJsonResponse(url, {
-        body: JSON.stringify({ newPassword }),
-      });
-    },
-    [],
+    ({ password }: ResetPasswordRequest) =>
+      httpPostJsonResponse(`${authenticationServiceUrl}/resetPassword/`, {
+        body: JSON.stringify({ password }),
+      }),
+    [authenticationServiceUrl, httpPostJsonResponse],
   );
 
-  const submitPasswordChangeRequest = useCallback((formData: any) => {
-    const url = `${authenticationServiceUrl}/reset/${formData.email}`;
-    return httpGetJson(url, {}, false);
-  }, []);
+  const submitPasswordChangeRequest = useCallback(
+    (formData: any) =>
+      httpGetJson(
+        `${authenticationServiceUrl}/reset/${formData.email}`,
+        {},
+        false,
+      ),
+    [authenticationServiceUrl, httpGetJson],
+  );
 
   const isPasswordValid = useCallback(
-    (passwordValidationRequest: PasswordValidationRequest) => {
-      const url = `${authenticationServiceUrl}/isPasswordValid`;
-      return httpPostJsonResponse(url, {
+    (passwordValidationRequest: PasswordValidationRequest) =>
+      httpPostJsonResponse(`${authenticationServiceUrl}/isPasswordValid`, {
         body: JSON.stringify(passwordValidationRequest),
-      });
-    },
-    [],
+      }),
+    [authenticationServiceUrl, httpPostJsonResponse],
   );
 
   return {

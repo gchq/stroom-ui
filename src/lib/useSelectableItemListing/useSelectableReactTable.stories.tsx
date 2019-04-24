@@ -67,7 +67,7 @@ const TestTable = () => {
       }
       e.preventDefault();
     },
-    [animals, name, species, addAnimal],
+    [name, species, addAnimal],
   );
 
   const {

@@ -71,7 +71,7 @@ export const usePipelineState = (pipelineId: string): PipelineProps => {
             );
           }
         },
-        [docRefContents],
+        [docRefContents, onDocumentChange],
       ),
       elementReinstated: React.useCallback<
         PipelineEditApi["elementReinstated"]
@@ -83,7 +83,7 @@ export const usePipelineState = (pipelineId: string): PipelineProps => {
             );
           }
         },
-        [docRefContents],
+        [docRefContents, onDocumentChange],
       ),
       elementAdded: React.useCallback<PipelineEditApi["elementAdded"]>(
         newElement => {
@@ -103,23 +103,26 @@ export const usePipelineState = (pipelineId: string): PipelineProps => {
             );
           }
         },
-        [],
+        [docRefContents, onDocumentChange],
       ),
       elementPropertyUpdated: React.useCallback<
         PipelineEditApi["elementPropertyUpdated"]
-      >((element, name, propertyType, propertyValue) => {
-        if (!!docRefContents) {
-          onDocumentChange(
-            setElementPropertyValueInPipeline(
-              docRefContents,
-              element,
-              name,
-              propertyType,
-              propertyValue,
-            ),
-          );
-        }
-      }, []),
+      >(
+        (element, name, propertyType, propertyValue) => {
+          if (!!docRefContents) {
+            onDocumentChange(
+              setElementPropertyValueInPipeline(
+                docRefContents,
+                element,
+                name,
+                propertyType,
+                propertyValue,
+              ),
+            );
+          }
+        },
+        [docRefContents, onDocumentChange],
+      ),
       elementPropertyRevertToDefault: React.useCallback<
         PipelineEditApi["elementPropertyRevertToDefault"]
       >((elementId, name) => {

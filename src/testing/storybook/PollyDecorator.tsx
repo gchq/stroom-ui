@@ -83,5 +83,5 @@ export const useTestServer = (testData: TestData) => {
     clearCache();
     // Make a deep copy so that each test gets it's own data
     testCache.data = JSON.parse(JSON.stringify(testData));
-  }, []);
+  }, [testData, clearCache]);
 };

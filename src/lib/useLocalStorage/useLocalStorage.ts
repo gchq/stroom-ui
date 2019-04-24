@@ -71,7 +71,7 @@ const useLocalStorage = function<T>(
     if (existingValue !== undefined) {
       setStateValue(existingValue);
     }
-  }, [stateName, setStateValue]);
+  }, [stateName, setStateValue, getFromStorage]);
 
   const setValue = React.useCallback(
     (valueToSet: T) => {

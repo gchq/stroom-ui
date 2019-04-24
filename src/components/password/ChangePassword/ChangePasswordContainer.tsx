@@ -60,7 +60,7 @@ const ChangePasswordContainer = () => {
     }
 
     // Try and get the user's email from the query string, and fall back on a cookie.
-  }, [setRedirectUrl, setEmail]);
+  }, [router.location, setRedirectUrl, setEmail]);
 
   return (
     <ChangePasswordForm

@@ -125,7 +125,7 @@ const FolderExplorer: React.FunctionComponent<SwitchedDocRefEditorProps> = ({
     if (!!folder) {
       showCreateDialog(folder.node);
     }
-  }, [showCreateDialog]);
+  }, [folder, showCreateDialog]);
 
   const additionalActionBarItems: ButtonProps[] = [
     {

@@ -21,7 +21,6 @@ import { addThemedStories } from "testing/storybook/themedStoryGenerator";
 import Button from "./Button";
 
 const stories = storiesOf("General Purpose/Button", module);
-stories;
 
 stories.add("button group - icon only", () => (
   <div>

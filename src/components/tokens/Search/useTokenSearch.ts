@@ -57,7 +57,13 @@ const useTokenSearch = () => {
         setTotalPages(data.totalPages);
       });
     },
-    [performTokenSearchApi, setResults],
+    [
+      lastUsedSearchConfig,
+      performTokenSearchApi,
+      setResults,
+      setLastUsedSearchConfig,
+      setTotalPages,
+    ],
   );
 
   const { deleteToken: deleteTokenApi } = useApi();
@@ -70,7 +76,12 @@ const useTokenSearch = () => {
         });
       } else console.error("Tried to delete a token when none was provided!");
     },
-    [selectedTokenRowId],
+    [
+      deleteTokenApi,
+      lastUsedSearchConfig,
+      performTokenSearch,
+      setSelectedTokenRowId,
+    ],
   );
 
   const { toggleState: toggleStateApi } = useApi();
@@ -78,7 +89,7 @@ const useTokenSearch = () => {
     (tokenId: string, nextState: boolean) => {
       toggleStateApi(tokenId, nextState).then(() => toggleEnabled(tokenId));
     },
-    [toggleStateApi],
+    [toggleStateApi, toggleEnabled],
   );
 
   return {

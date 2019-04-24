@@ -79,7 +79,7 @@ const useStreamTasks = (): UseStreamTasks => {
         });
       }
     },
-    [setPagedTrackerInfo],
+    [pageSize, setPagedTrackerInfo],
   );
 
   const updateEnabled = React.useCallback(
@@ -109,7 +109,7 @@ const useStreamTasks = (): UseStreamTasks => {
         searchCriteria,
       });
     },
-    [sortBy, setFetchParameters],
+    [sortBy, updateFetchParameters],
   );
 
   const changePage = React.useCallback(
@@ -157,7 +157,7 @@ const useStreamTasks = (): UseStreamTasks => {
 
   const fetchMoreLocal = React.useCallback(() => {
     fetchMore(fetchParameters).then(addTrackers);
-  }, [fetchMore, fetchParameters]);
+  }, [fetchMore, fetchParameters, addTrackers]);
 
   const enableToggleLocal = React.useCallback(
     (filterId: number) => {

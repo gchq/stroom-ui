@@ -39,9 +39,8 @@ export const useApi = (): Api => {
   if (!userServiceUrl) throw Error("Configuration not ready or misconfigured!");
 
   const change = useCallback(
-    user => {
-      const url = `${userServiceUrl}/${user.id}`;
-      return httpPutEmptyResponse(url, {
+    user =>
+      httpPutEmptyResponse(`${userServiceUrl}/${user.id}`, {
         body: JSON.stringify({
           email: user.email,
           password: user.password,
@@ -52,15 +51,13 @@ export const useApi = (): Api => {
           neverExpires: user.neverExpires,
           forcePasswordChange: user.forcePasswordChange,
         }),
-      });
-    },
-    [httpPutEmptyResponse],
+      }),
+    [userServiceUrl, httpPutEmptyResponse],
   );
 
   const add = useCallback(
-    user => {
-      const url = userServiceUrl;
-      return httpPostJsonResponse(url, {
+    user =>
+      httpPostJsonResponse(userServiceUrl, {
         body: JSON.stringify({
           email: user.email,
           password: user.password,
@@ -71,42 +68,37 @@ export const useApi = (): Api => {
           neverExpires: user.neverExpires,
           forcePasswordChange: user.forcePasswordChange,
         }),
-      });
-    },
-    [httpPostJsonResponse],
+      }),
+    [userServiceUrl, httpPostJsonResponse],
   );
 
   /**
    * Delete user
    */
   const remove = useCallback(
-    (userId: string) => {
-      const url = `${userServiceUrl}/${userId}`;
-      return httpDeleteEmptyResponse(url, {});
-    },
-    [httpDeleteEmptyResponse],
+    (userId: string) =>
+      httpDeleteEmptyResponse(`${userServiceUrl}/${userId}`, {}),
+    [userServiceUrl, httpDeleteEmptyResponse],
   );
 
   /**
    * Fetch a user
    */
   const fetch = useCallback(
-    (userId: string) => {
-      const url = `${userServiceUrl}/${userId}`;
-      return httpGetJson(url);
-    },
-    [httpGetJson],
+    (userId: string) => httpGetJson(`${userServiceUrl}/${userId}`),
+    [userServiceUrl, httpGetJson],
   );
 
-  const fetchCurrentUser = useCallback(() => {
-    const url = `${userServiceUrl}/me`;
-    return httpGetJson(url);
-  }, [httpGetJson]);
+  const fetchCurrentUser = useCallback(
+    () => httpGetJson(`${userServiceUrl}/me`),
+    [userServiceUrl, httpGetJson],
+  );
 
-  const search = useCallback(() => {
-    const url = `${userServiceUrl}/?fromEmail=&usersPerPage=100&orderBy=id`;
-    return httpGetJson(url);
-  }, [httpGetJson]);
+  const search = useCallback(
+    () =>
+      httpGetJson(`${userServiceUrl}/?fromEmail=&usersPerPage=100&orderBy=id`),
+    [userServiceUrl, httpGetJson],
+  );
 
   return {
     add,

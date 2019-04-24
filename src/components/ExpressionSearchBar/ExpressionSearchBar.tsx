@@ -68,7 +68,7 @@ const ExpressionSearchBar: React.FunctionComponent<Props> = ({
     }
 
     onSearch(expression);
-  }, [onSearch, setExpression]);
+  }, [dataSource, expression, onSearch, setExpression]);
 
   const onChange: React.ChangeEventHandler<HTMLInputElement> = ({
     target: { value },

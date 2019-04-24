@@ -78,7 +78,7 @@ export const DocumentPermissionEditor: React.FunctionComponent<Props> = ({
           selectedUsers.map(u => u.name).join(", ")
         );
       }
-    }, [docRef, selectedUsers]),
+    }, [docRefUuid, docRef, selectedUsers]),
     onConfirm: React.useCallback(() => {
       if (selectedUsers.length !== 0) {
         selectedUsers.forEach(user => clearPermissionForUser(user.uuid));
@@ -100,7 +100,7 @@ export const DocumentPermissionEditor: React.FunctionComponent<Props> = ({
     if (!!selectedUser) {
       goToAuthorisationsForDocumentForUser(docRefUuid, selectedUser.uuid);
     }
-  }, [history, docRef, selectedUser]);
+  }, [docRefUuid, history, docRef, selectedUser]);
 
   return (
     <div>

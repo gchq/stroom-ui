@@ -3,7 +3,7 @@ import { FormikActions } from "formik";
 import { useCallback } from "react";
 
 import useApi from "./useApi";
-import { Credentials, PasswordValidationRequest } from "./types";
+import { Credentials } from "./types";
 
 interface UseAuthentication {
   login: (
