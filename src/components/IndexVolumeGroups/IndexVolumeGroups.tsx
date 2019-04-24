@@ -43,11 +43,11 @@ const IndexVolumeGroups: React.FunctionComponent = () => {
     ),
     getDetails: React.useCallback(
       () => selectedGroups.map(v => v.name).join(", "),
-      [selectedGroups.map(v => v.name)],
+      [selectedGroups],
     ),
     onConfirm: React.useCallback(() => {
       selectedGroups.forEach(g => deleteIndexVolumeGroup(g.name));
-    }, [deleteIndexVolumeGroup, selectedGroups.map(v => v.name)]),
+    }, [deleteIndexVolumeGroup, selectedGroups]),
   });
 
   const onViewEditClick = React.useCallback(() => {

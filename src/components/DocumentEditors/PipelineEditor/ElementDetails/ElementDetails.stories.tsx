@@ -40,9 +40,10 @@ const TestHarness: React.FunctionComponent<Props> = ({
       editorProps: { docRefContents },
     },
   } = usePipelineState(pipelineId);
+  const { elementSelected } = pipelineEditApi;
   React.useEffect(() => {
-    pipelineEditApi.elementSelected(testElementId, testElementConfig);
-  }, [pipelineId]);
+    elementSelected(testElementId, testElementConfig);
+  }, [elementSelected, pipelineId, testElementId, testElementConfig]);
 
   if (!docRefContents) {
     return null;
@@ -60,8 +61,8 @@ const stories = storiesOf("Document Editors/Pipeline/Element Details", module);
 
 Object.values(fullTestData.documents.Pipeline)
   .map(p => p as PipelineDocumentType)
-  .map(pipeline => {
-    pipeline.merged.elements.add!.map(element => {
+  .forEach(pipeline => {
+    pipeline.merged.elements.add!.forEach(element => {
       stories.add(`${pipeline.uuid} - ${element.id}`, () => (
         <TestHarness
           pipelineId={pipeline.uuid}

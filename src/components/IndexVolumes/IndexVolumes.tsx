@@ -48,11 +48,11 @@ const IndexVolumes: React.FunctionComponent = () => {
     ),
     getDetails: React.useCallback(
       () => selectedIndexVolumes.map(v => v.id).join(", "),
-      [selectedIndexVolumes.map(v => v.id)],
+      [selectedIndexVolumes],
     ),
     onConfirm: React.useCallback(() => {
       selectedIndexVolumes.forEach(v => deleteIndexVolume(v.id));
-    }, [selectedIndexVolumes.map(v => v.id)]),
+    }, [selectedIndexVolumes, deleteIndexVolume]),
   });
 
   const {
@@ -88,7 +88,7 @@ const IndexVolumes: React.FunctionComponent = () => {
       />
       <Button
         text="Add to Group"
-        disabled={selectedIndexVolumes.length == 0}
+        disabled={selectedIndexVolumes.length === 0}
         onClick={showAddToGroupDialog}
       />
       <Button

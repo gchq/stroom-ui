@@ -40,7 +40,7 @@ const HorizontalMainDetails: React.FunctionComponent<Props> = ({
     return () => {
       Mousetrap.unbind("esc");
     };
-  }, []);
+  }, [onClose]);
 
   const onPanelUpdate = React.useCallback(
     (panelWidths: any[]) => {

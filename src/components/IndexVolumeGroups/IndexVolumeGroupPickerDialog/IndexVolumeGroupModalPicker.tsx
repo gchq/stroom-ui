@@ -39,7 +39,7 @@ export const IndexVolumeGroupModalPicker: React.FunctionComponent<Props> = ({
       onConfirm(volumeGroupName);
     }
     onClose();
-  }, [onClose, onConfirm]);
+  }, [volumeGroupName, onClose, onConfirm]);
 
   return (
     <ThemedModal

@@ -38,7 +38,7 @@ const useDocumentApi = <
           body: JSON.stringify(docRefContents),
         },
       ).then(() => cogoToast.info(`Document Saved ${docRefType}`)),
-    [resourcePath, stroomBaseServiceUrl, httpPostEmptyResponse],
+    [docRefType, resourcePath, stroomBaseServiceUrl, httpPostEmptyResponse],
   );
 
   if (!resourcePath) {

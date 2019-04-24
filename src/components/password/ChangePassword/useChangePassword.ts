@@ -45,7 +45,7 @@ const useChangePassword = (): {
         }
       });
     },
-    [changePasswordUsingApi, setShowChangeConfirmation],
+    [changePasswordUsingApi, setShowChangeConfirmation, addErrorMessage],
   );
 
   return { changePassword, errorMessages, showChangeConfirmation };

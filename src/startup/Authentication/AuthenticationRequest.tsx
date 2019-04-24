@@ -41,7 +41,7 @@ const AuthenticationRequest: React.FunctionComponent<Props> = ({
       authenticationServiceUrl,
       appPermission,
     );
-  }, []);
+  }, [referrer, uiUrl, appClientId, authenticationServiceUrl, appPermission]);
 
   return null;
 };

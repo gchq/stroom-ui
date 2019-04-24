@@ -53,7 +53,7 @@ const Option: React.FunctionComponent<OptionProps<DocRefType>> = (
     if (props.isFocused) {
       onOptionFocus(props.data);
     }
-  }, [props.isFocused]);
+  }, [props.isFocused, props.data, onOptionFocus]);
   return (
     <components.Option {...props}>
       <DocRefImage
@@ -124,7 +124,7 @@ const AppSearchBar: React.FunctionComponent<Props> = ({
       searchApp({ term: newValue });
       setSearchTerm(newValue);
     },
-    [searchApp],
+    [searchApp, switchMode, setSearchTerm],
   );
 
   const onThisChange = React.useCallback(
@@ -143,7 +143,7 @@ const AppSearchBar: React.FunctionComponent<Props> = ({
         onChange(docRef);
       }
     },
-    [typeFilters],
+    [typeFilters, onChange, setNavFolder],
   );
 
   const documentTreeToUse: DocRefTree = React.useMemo(() => {

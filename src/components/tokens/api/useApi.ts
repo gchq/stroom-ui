@@ -47,66 +47,74 @@ export const useApi = (): Api => {
     throw Error("Configuration not ready or misconfigured!");
 
   return {
-    deleteToken: useCallback(tokenId => {
-      const url = `${tokenServiceUrl}/${tokenId}`;
-      return httpDeleteEmptyResponse(url);
-    }, []),
+    deleteToken: useCallback(
+      tokenId => httpDeleteEmptyResponse(`${tokenServiceUrl}/${tokenId}`),
+      [httpDeleteEmptyResponse, tokenServiceUrl],
+    ),
 
-    createToken: useCallback((email: string) => {
-      return httpPostJsonResponse(tokenServiceUrl, {
-        body: JSON.stringify({
-          userEmail: email,
-          tokenType: "api",
-          enabled: true,
+    createToken: useCallback(
+      (email: string) =>
+        httpPostJsonResponse(tokenServiceUrl, {
+          body: JSON.stringify({
+            userEmail: email,
+            tokenType: "api",
+            enabled: true,
+          }),
         }),
-      });
-    }, []),
+      [tokenServiceUrl, httpPostJsonResponse],
+    ),
 
-    fetchApiKey: useCallback((apiKeyId: string) => {
-      const url = `${tokenServiceUrl}/${apiKeyId}`;
-      return httpGetJson(url);
-    }, []),
+    fetchApiKey: useCallback(
+      (apiKeyId: string) => httpGetJson(`${tokenServiceUrl}/${apiKeyId}`),
+      [tokenServiceUrl, httpGetJson],
+    ),
 
-    toggleState: useCallback((tokenId: string, nextState: boolean) => {
-      const url = `${tokenServiceUrl}/${tokenId}/state/?enabled=${nextState}`;
-      return httpGetEmptyResponse(url);
-    }, []),
+    toggleState: useCallback(
+      (tokenId: string, nextState: boolean) =>
+        httpGetEmptyResponse(
+          `${tokenServiceUrl}/${tokenId}/state/?enabled=${nextState}`,
+        ),
+      [httpGetEmptyResponse, tokenServiceUrl],
+    ),
 
-    performTokenSearch: useCallback((searchConfig: SearchConfig) => {
-      // // Default ordering and direction
-      let orderBy = "issuedOn";
-      let orderDirection = "desc";
+    performTokenSearch: useCallback(
+      (searchConfig: SearchConfig) => {
+        // // Default ordering and direction
+        let orderBy = "issuedOn";
+        let orderDirection = "desc";
 
-      if (!!searchConfig.sorting) {
-        if (searchConfig.sorting.length > 0) {
-          orderBy = searchConfig.sorting[0].id;
-          orderDirection = searchConfig.sorting[0].desc ? "desc" : "asc";
+        if (!!searchConfig.sorting) {
+          if (searchConfig.sorting.length > 0) {
+            orderBy = searchConfig.sorting[0].id;
+            orderDirection = searchConfig.sorting[0].desc ? "desc" : "asc";
+          }
         }
-      }
 
-      let filters = {} as { tokenType: string };
-      if (!!searchConfig.filters) {
-        if (searchConfig.filters.length > 0) {
-          searchConfig.filters.forEach((filter: Filter) => {
-            filters[filter.id] = filter.value;
-          });
+        let filters = {} as { tokenType: string };
+        if (!!searchConfig.filters) {
+          if (searchConfig.filters.length > 0) {
+            searchConfig.filters.forEach((filter: Filter) => {
+              filters[filter.id] = filter.value;
+            });
+          }
         }
-      }
 
-      // We only want to see API keys, not user keys.
-      filters.tokenType = "API";
+        // We only want to see API keys, not user keys.
+        filters.tokenType = "API";
 
-      const url = `${tokenServiceUrl}/search`;
-      return httpPostJsonResponse(url, {
-        body: JSON.stringify({
-          page: searchConfig.page,
-          limit: searchConfig.pageSize,
-          orderBy,
-          orderDirection,
-          filters,
-        }),
-      });
-    }, []),
+        const url = `${tokenServiceUrl}/search`;
+        return httpPostJsonResponse(url, {
+          body: JSON.stringify({
+            page: searchConfig.page,
+            limit: searchConfig.pageSize,
+            orderBy,
+            orderDirection,
+            filters,
+          }),
+        });
+      },
+      [httpPostJsonResponse, tokenServiceUrl],
+    ),
   };
 };
 

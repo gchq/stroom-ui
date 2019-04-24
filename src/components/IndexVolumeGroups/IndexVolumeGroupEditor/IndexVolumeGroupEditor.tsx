@@ -43,7 +43,7 @@ const IndexVolumeGroupEditor: React.FunctionComponent<Props> = ({
     ),
     getDetails: React.useCallback(
       () => selectedItems.map(s => s.id).join(", "),
-      [selectedItems.map(s => s.id)],
+      [selectedItems],
     ),
   });
 

@@ -51,9 +51,9 @@ const reducer = (
     case "clearedForUser":
       let { [action.userUuid]: omit, ...newState } = state;
       return newState;
+    default:
+      return state;
   }
-
-  return state;
 };
 
 const useDocumentPermissions = (

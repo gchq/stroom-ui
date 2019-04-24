@@ -42,7 +42,7 @@ export const CopyMoveDocRefDialog: React.FunctionComponent<Props> = ({
       permissionInheritance: PermissionInheritance.NONE,
       destination: initialDestination,
     }),
-    [initialDestination, uuids],
+    [initialDestination],
   );
 
   const {

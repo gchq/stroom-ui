@@ -48,7 +48,7 @@ const AuthorisationContextProvider: React.FunctionComponent = ({
         }
       });
     },
-    [authorisationServiceUrl, setHasAppPermission],
+    [idToken, authorisationServiceUrl, setHasAppPermission],
   );
 
   return (

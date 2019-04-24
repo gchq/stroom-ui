@@ -52,7 +52,7 @@ const LinesSvg: React.FunctionComponent<Props> = ({
     return thisElement
       ? (thisElement.getBoundingClientRect() as DOMRect)
       : undefined;
-  }, []);
+  }, [lineContextId]);
 
   //const refresh = useRefreshCounter();
   const lines: LineDefinition[] = React.useMemo(

@@ -45,7 +45,7 @@ export const useForm = function<T>({
     type: "text",
     onChange: React.useCallback(
       ({ target: { value } }) => onUpdate({ [s]: value } as T),
-      [onUpdate],
+      [s],
     ),
     value: `${value[s]}`,
   });
@@ -57,7 +57,7 @@ export const useForm = function<T>({
       onUpdate(({
         [s]: !value[s],
       } as unknown) as Partial<T>);
-    }, [value[s], onUpdate]),
+    }, [s]),
   });
 
   const useControlledInputProps = <FIELD_TYPE>(
@@ -65,7 +65,7 @@ export const useForm = function<T>({
   ): ControlledInput<FIELD_TYPE> => ({
     value: (value[s] as unknown) as FIELD_TYPE,
     onChange: React.useCallback(v => onUpdate(({ [s]: v } as unknown) as T), [
-      onUpdate,
+      s,
     ]),
   });
 

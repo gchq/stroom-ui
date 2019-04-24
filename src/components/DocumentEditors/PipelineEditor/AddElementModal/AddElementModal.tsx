@@ -41,9 +41,12 @@ export const AddElementModal: React.FunctionComponent<Props> = ({
     useTextInput,
   } = useForm<FormValues>({
     initialValues,
-    onValidate: React.useCallback(v => {
-      onUniqueNameCheck(v.newName);
-    }, []),
+    onValidate: React.useCallback(
+      v => {
+        onUniqueNameCheck(v.newName);
+      },
+      [onUniqueNameCheck],
+    ),
   });
   const newNameProps = useTextInput("newName");
 

@@ -38,7 +38,7 @@ const TestHarness: React.FunctionComponent<Props> = ({ isGroup }) => {
       userNamesToFilterOut,
       valuesToFilterOut,
     };
-  }, []);
+  }, [isGroup]);
 
   const { pickerProps, reset } = usePicker({
     isGroup,
