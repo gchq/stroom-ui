@@ -1,3 +1,4 @@
+/* eslint no-template-curly-in-string: 0 */
 import { ElementPropertiesByElementIdType } from "components/DocumentEditors/PipelineEditor/useElements/types";
 
 export default {
