@@ -166,7 +166,7 @@ const Routes: React.FunctionComponent = () => {
 
       <PrivateRoute
         exact
-        path={urls.goToAuthorisationsForUser()}
+        path={urls.goToAuthorisationsForUser(undefined)}
         render={({
           match: {
             params: { urlPrefix, userUuid },
@@ -181,7 +181,7 @@ const Routes: React.FunctionComponent = () => {
       />
       <PrivateRoute
         exact
-        path={urls.goToAuthorisationsForDocument()}
+        path={urls.goToAuthorisationsForDocument(undefined)}
         render={({
           match: {
             params: { urlPrefix, docRefUuid },
@@ -196,7 +196,7 @@ const Routes: React.FunctionComponent = () => {
       />
       <PrivateRoute
         exact
-        path={urls.goToAuthorisationsForDocumentForUser()}
+        path={urls.goToAuthorisationsForDocumentForUser(undefined, undefined)}
         render={({
           match: {
             params: { urlPrefix, userUuid, docRefUuid },
@@ -231,7 +231,7 @@ const Routes: React.FunctionComponent = () => {
       />
       <PrivateRoute
         exact
-        path={urls.goToIndexVolume()}
+        path={urls.goToIndexVolume(undefined)}
         render={({
           match: {
             params: { urlPrefix, volumeId },
@@ -261,7 +261,7 @@ const Routes: React.FunctionComponent = () => {
       />
       <PrivateRoute
         exact
-        path={urls.goToIndexVolumeGroup()}
+        path={urls.goToIndexVolumeGroup(undefined)}
         render={({
           match: {
             params: { urlPrefix, groupName },
@@ -307,7 +307,7 @@ const Routes: React.FunctionComponent = () => {
       />
       <PrivateRoute
         exact
-        path={urls.goToEditDocRefByUuid()}
+        path={urls.goToEditDocRefByUuid(undefined)}
         render={({
           match: {
             params: { urlPrefix, docRefUuid },

@@ -2,7 +2,9 @@ import * as React from "react";
 import { NavigateApp } from "./types";
 import { DocRefType } from "components/DocumentEditors/useDocumentApi/types/base";
 
-const useUrlGenerator = (urlPrefix: string): NavigateApp<string> => {
+const useUrlGenerator = (
+  urlPrefix: string,
+): NavigateApp<string | undefined, string> => {
   return React.useMemo(
     () => ({
       goToWelcome: () => `/${urlPrefix}/welcome`,

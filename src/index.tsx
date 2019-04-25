@@ -12,7 +12,6 @@ import { CustomRouter } from "./lib/useRouter";
 
 import { createBrowserHistory as createHistory } from "history";
 import { ConfigProvider } from "startup/config";
-export const history = createHistory();
 
 import "react-table/react-table.css";
 import "./styles/main.css";
@@ -20,6 +19,8 @@ import { AuthorisationContextProvider } from "startup/Authorisation";
 import { AuthenticationContextProvider } from "startup/Authentication";
 import { DocumentTreeContextProvider } from "components/DocumentEditors/api/explorer";
 import { ErrorReportingContextProvider } from "components/ErrorPage";
+
+export const history = createHistory();
 
 const DndRoutes = DragDropContext(HTML5Backend)(Routes);
 
