@@ -37,6 +37,11 @@ const XsltEditor: React.FunctionComponent<SwitchedDocRefEditorProps> = ({
 
   const { docRefContents } = editorProps;
 
+  const onDataChange = React.useCallback(
+    value => onDocumentChange({ data: value }),
+    [onDocumentChange],
+  );
+
   return !!docRefContents ? (
     <DocRefEditor {...editorProps}>
       <ThemedAceEditor
@@ -44,11 +49,7 @@ const XsltEditor: React.FunctionComponent<SwitchedDocRefEditorProps> = ({
         name={`${docRefUuid}-ace-editor`}
         mode="xml"
         value={docRefContents.data || ""}
-        onChange={newValue => {
-          if (newValue !== docRefContents.data) {
-            onDocumentChange({ data: newValue });
-          }
-        }}
+        onChange={onDataChange}
       />
     </DocRefEditor>
   ) : (

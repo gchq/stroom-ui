@@ -6,6 +6,7 @@ import DocRefEditor, {
   SwitchedDocRefEditorProps,
 } from "../DocRefEditor";
 import useDocumentApi from "src/components/DocumentEditors/useDocumentApi";
+import ThemedAceEditor from "src/components/ThemedAceEditor";
 import { DictionaryDoc } from "src/components/DocumentEditors/useDocumentApi/types/dictionaryDoc";
 
 const DictionaryEditor: React.FunctionComponent<SwitchedDocRefEditorProps> = ({
@@ -20,14 +21,20 @@ const DictionaryEditor: React.FunctionComponent<SwitchedDocRefEditorProps> = ({
   });
   const { docRefContents } = editorProps;
 
-  const onTextAreaChange = React.useCallback(
-    ({ target: { value } }) => onDocumentChange({ data: value }),
+  const onDataChange = React.useCallback(
+    value => onDocumentChange({ data: value }),
     [onDocumentChange],
   );
 
   return !!docRefContents ? (
     <DocRefEditor {...editorProps}>
-      <textarea value={docRefContents.data} onChange={onTextAreaChange} />
+      <ThemedAceEditor
+        style={{ width: "100%", height: "100%", minHeight: "25rem" }}
+        name={`${docRefUuid}-ace-editor`}
+        mode="xml"
+        value={docRefContents.data || ""}
+        onChange={onDataChange}
+      />
     </DocRefEditor>
   ) : (
     <Loader message={`Loading DictionaryDoc ${docRefUuid}`} />
