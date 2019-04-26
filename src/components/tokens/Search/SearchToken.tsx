@@ -115,7 +115,7 @@ const TokenSearch = () => {
                     className: "table-header-small",
                   };
                 }}
-                getTrProps={(state: any, rowInfo: RowInfo) => {
+                getTrProps={(state: any, rowInfo: RowInfo | undefined) => {
                   let selected = false;
                   let enabled = true;
                   if (rowInfo) {
@@ -128,7 +128,9 @@ const TokenSearch = () => {
                   className += enabled ? "" : " table-row-dimmed";
                   return {
                     onClick: () => {
-                      setSelectedTokenRowId(rowInfo.row.id);
+                      if (!!rowInfo) {
+                        setSelectedTokenRowId(rowInfo.row.id);
+                      }
                     },
                     className,
                   };

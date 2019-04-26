@@ -1,9 +1,11 @@
-import { User } from "..";
+import { User } from "../types";
 import UserFormData from "./UserFormData";
 
-export default interface CreateUserFormProps {
+interface CreateUserFormProps {
   onSubmit: (user: User) => void;
   onBack: () => void;
   onCancel: () => void;
   onValidate: (values: UserFormData) => Promise<void>;
-};
+}
+
+export default CreateUserFormProps;

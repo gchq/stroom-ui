@@ -21,7 +21,7 @@ import { PasswordValidationRequest } from "components/authentication/types";
 import Loader from "components/Loader";
 import useIdFromPath from "lib/useIdFromPath";
 import useConfig from "startup/config/useConfig";
-import { User } from "..";
+import { User } from "../types";
 import { useUsers } from "../api";
 import { validateAsync } from "../validation";
 import UserForm from "./UserForm";

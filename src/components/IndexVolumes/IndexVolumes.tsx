@@ -15,7 +15,7 @@ import {
   IndexVolumeGroupModalPicker,
   useIndexVolumeGroupModalPicker,
 } from "../IndexVolumeGroups/IndexVolumeGroupPickerDialog";
-import { useIndexVolumes } from "components/IndexVolumes/api";
+import { useIndexVolumes, IndexVolume } from "components/IndexVolumes/api";
 import useAppNavigation from "../AppChrome/useAppNavigation";
 
 const IndexVolumes: React.FunctionComponent = () => {
@@ -47,11 +47,11 @@ const IndexVolumes: React.FunctionComponent = () => {
       [],
     ),
     getDetails: React.useCallback(
-      () => selectedIndexVolumes.map(v => v.id).join(", "),
+      () => selectedIndexVolumes.map((v: IndexVolume) => v.id).join(", "),
       [selectedIndexVolumes],
     ),
     onConfirm: React.useCallback(() => {
-      selectedIndexVolumes.forEach(v => deleteIndexVolume(v.id));
+      selectedIndexVolumes.forEach((v: IndexVolume) => deleteIndexVolume(v.id));
     }, [selectedIndexVolumes, deleteIndexVolume]),
   });
 
@@ -62,8 +62,8 @@ const IndexVolumes: React.FunctionComponent = () => {
     onConfirm: React.useCallback(
       groupName =>
         selectedIndexVolumes
-          .map(v => v.id)
-          .forEach(vId => addVolumeToGroup(vId, groupName)),
+          .map((v: IndexVolume) => v.id)
+          .forEach((vId: string) => addVolumeToGroup(vId, groupName)),
       [addVolumeToGroup, selectedIndexVolumes],
     ),
   });

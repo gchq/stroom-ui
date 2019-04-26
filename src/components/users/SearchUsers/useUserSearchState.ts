@@ -1,5 +1,5 @@
 import { useReducer } from "react";
-import { User } from "..";
+import { User } from "../types";
 
 interface UserSearchStateApi {
   users: User[];

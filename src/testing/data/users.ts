@@ -1,5 +1,5 @@
 import * as loremIpsum from "lorem-ipsum";
-import { User } from "components/users";
+import { User } from "components/users/types";
 
 export const generate: User[] = [
   {

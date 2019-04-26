@@ -17,7 +17,7 @@
 import { ErrorMessage, Field, Form, Formik, FormikActions } from "formik";
 import * as React from "react";
 import { NavLink } from "react-router-dom";
-import { Credentials } from "components/authentication";
+import { Credentials } from "components/authentication/types";
 import Button from "components/Button";
 import { hasAnyProps } from "lib/lang";
 import * as Yup from "yup";

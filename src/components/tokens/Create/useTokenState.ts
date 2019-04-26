@@ -1,5 +1,5 @@
 import { useReducer } from "react";
-import { Token } from "../api";
+import { Token } from "../api/types";
 
 interface TokenState {
   token: Token;

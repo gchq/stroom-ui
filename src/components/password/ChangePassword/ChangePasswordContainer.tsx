@@ -18,7 +18,7 @@ import * as Cookies from "cookies-js";
 import * as queryString from "query-string";
 import * as React from "react";
 import { useEffect, useState } from "react";
-import { PasswordValidationRequest } from "components/authentication";
+import { PasswordValidationRequest } from "components/authentication/types";
 import { validateAsync } from "components/users/validation";
 import useRouter from "lib/useRouter";
 import useConfig from "startup/config/useConfig";

@@ -1,5 +1,6 @@
 import { useTokenState } from "./useTokenState";
-import { useApi, Token } from "../api/";
+import { useApi } from "../api/";
+import { Token } from "../api/types";
 import { useCallback } from "react";
 import useAppNavigation from "components/AppChrome/useAppNavigation";
 

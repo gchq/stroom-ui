@@ -1,5 +1,5 @@
 import * as loremIpsum from "lorem-ipsum";
-import { User } from ".";
+import { User } from "./types";
 
 const lr = (count: number) => loremIpsum({ count, units: "words" });
 const getUser = (): User => {

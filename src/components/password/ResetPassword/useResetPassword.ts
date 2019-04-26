@@ -3,8 +3,8 @@ import { useCallback } from "react";
 import {
   ChangePasswordResponse,
   ResetPasswordRequest,
-  useApi,
-} from "components/authentication";
+} from "components/authentication/types";
+import useApi from "components/authentication";
 import { useRouter } from "lib/useRouter";
 import useConfig from "startup/config/useConfig";
 

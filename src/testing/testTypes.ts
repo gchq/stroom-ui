@@ -16,7 +16,7 @@ import {
 } from "components/IndexVolumeGroups/api";
 import { IndexVolume } from "components/IndexVolumes/api";
 import { StreamTaskType } from "components/Processing/types";
-import { User } from "components/users";
+import { User } from "components/users/types";
 
 export interface UserGroupMembership {
   userUuid: string;

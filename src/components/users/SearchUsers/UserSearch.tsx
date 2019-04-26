@@ -21,7 +21,7 @@ import "react-table/react-table.css";
 import Toggle from "react-toggle";
 import "react-toggle/style.css";
 import Button from "components/Button";
-import { User } from "..";
+import { User } from "../types";
 import { getColumnFormat } from "./tableCustomisations";
 
 interface UserSearchProps {
