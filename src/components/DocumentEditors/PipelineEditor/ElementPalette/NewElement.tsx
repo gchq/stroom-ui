@@ -37,7 +37,7 @@ const dragSource: DragSourceSpec<Props, DragObject> = {
   },
 };
 
-const dragCollect: DragSourceCollector<DragCollectedProps> = (
+const dragCollect: DragSourceCollector<DragCollectedProps, Props> = (
   connect,
   monitor,
 ) => ({
