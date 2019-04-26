@@ -119,7 +119,7 @@ const resourceBuilder: ResourceBuilder = (
         uuid: uuidv4(),
         type: docRefType,
         name: docRefName,
-        children: docRefType === "Folder" ? [] : undefined,
+        children: docRefType === "Folder" ? ([] as DocRefType[]) : undefined,
       };
       testCache.data!.documentTree = addItemsToTree(
         testCache.data!.documentTree,
