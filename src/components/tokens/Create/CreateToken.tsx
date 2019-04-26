@@ -20,7 +20,7 @@ import useAppNavigation from "components/AppChrome/useAppNavigation";
 import Button from "components/Button";
 import { AsyncUserSelect } from "components/users";
 import { useAuthenticationContext } from "startup/Authentication";
-import { useConfig } from "startup/config";
+import useConfig from "startup/config/useConfig";
 import useTokens from "./useTokens";
 
 interface DropDownValues {

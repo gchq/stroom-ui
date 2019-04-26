@@ -4,7 +4,7 @@ import * as queryString from "query-string";
 import { useCallback } from "react";
 import useHttpClient from "lib/useHttpClient";
 import useRouter from "lib/useRouter";
-import { useConfig } from "startup/config";
+import useConfig from "startup/config/useConfig";
 import { ChangePasswordResponse } from ".";
 import {
   ChangePasswordRequest,

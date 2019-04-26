@@ -2,7 +2,7 @@ import * as React from "react";
 
 import useHttpClient from "lib/useHttpClient";
 import { ElementDefinition, ElementPropertiesByElementIdType } from "./types";
-import { useConfig } from "startup/config";
+import useConfig from "startup/config/useConfig";
 
 interface Api {
   fetchElements: () => Promise<ElementDefinition[]>;

@@ -20,7 +20,7 @@ import useAppNavigation from "components/AppChrome/useAppNavigation";
 import { PasswordValidationRequest } from "components/authentication/types";
 import Loader from "components/Loader";
 import useIdFromPath from "lib/useIdFromPath";
-import { useConfig } from "startup/config";
+import useConfig from "startup/config/useConfig";
 import { User } from "..";
 import { useUsers } from "../api";
 import { validateAsync } from "../validation";

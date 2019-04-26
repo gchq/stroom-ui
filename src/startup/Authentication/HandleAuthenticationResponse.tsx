@@ -19,7 +19,7 @@ import * as React from "react";
 import { handleAuthenticationResponse } from "./authentication";
 import useRouter from "lib/useRouter";
 import useAuthenticationContext from "./useAuthenticationContext";
-import { useConfig } from "../config";
+import useConfig from "startup/config/useConfig";
 
 export const HandleAuthenticationResponse: React.FunctionComponent = () => {
   const { authenticationServiceUrl, authorisationServiceUrl } = useConfig();

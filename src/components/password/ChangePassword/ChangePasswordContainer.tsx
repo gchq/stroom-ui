@@ -21,7 +21,7 @@ import { useEffect, useState } from "react";
 import { PasswordValidationRequest } from "components/authentication";
 import { validateAsync } from "components/users/validation";
 import useRouter from "lib/useRouter";
-import { useConfig } from "startup/config";
+import useConfig from "startup/config/useConfig";
 import ChangePasswordForm from "./ChangePasswordForm";
 import usePassword from "./useChangePassword";
 

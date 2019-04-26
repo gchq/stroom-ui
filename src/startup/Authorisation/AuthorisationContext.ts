@@ -10,8 +10,11 @@ const AuthorisationContext: React.Context<
   AuthorisationContextApi
 > = React.createContext({
   appPermissions: {},
-  fetchAppPermission: () => {
-    console.error("Default Implementation for Authorisation Context");
+  fetchAppPermission: (appPermission: string) => {
+    console.error(
+      "Default Implementation for Authorisation Context",
+      appPermission,
+    );
   },
 });
 

@@ -17,7 +17,7 @@ import useHttpClient from "lib/useHttpClient";
 import * as React from "react";
 import { Config } from "./types";
 
-interface Api {
+export interface Api {
   fetchConfig: () => Promise<Config>;
 }
 
@@ -31,6 +31,6 @@ const useApi = (): Api => {
   return { fetchConfig };
 };
 
-export { Api, useApi };
+export { useApi };
 
 export default useApi;

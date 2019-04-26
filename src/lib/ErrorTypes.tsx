@@ -14,13 +14,7 @@
  * limitations under the License.
  */
 
-export class IHttpError {
-  status: number;
-  message: string;
-  stack: string;
-}
-
-export class HttpError implements IHttpError {
+export class HttpError {
   status: number;
   message: string;
   stack: string;

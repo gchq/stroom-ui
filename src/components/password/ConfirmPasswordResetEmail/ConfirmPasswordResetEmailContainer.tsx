@@ -15,7 +15,7 @@
  */
 
 import * as React from "react";
-import { useConfig } from "startup/config";
+import useConfig from "startup/config/useConfig";
 import ConfirmPasswordResetEmail from "./ConfirmPasswordResetEmail";
 
 const ConfirmPasswordResetEmailContainer = () => {

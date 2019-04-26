@@ -126,7 +126,7 @@
     "react-docgen-typescript-webpack-plugin": "^1.1.0",
     "storybook-react-router": "^1.0.1",
     "tslint-react-hooks": "^2.0.0",
-    "typescript": "^3.3.3333"
+    "typescript": "3.4.5"
   },
   "browserslist": [
     ">0.2%",

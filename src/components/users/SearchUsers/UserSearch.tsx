@@ -16,7 +16,7 @@
 
 import * as React from "react";
 import { useState } from "react";
-import ReactTable, { RowInfo } from "react-table";
+import ReactTable, { RowInfo, ComponentPropsGetterR } from "react-table";
 import "react-table/react-table.css";
 import Toggle from "react-toggle";
 import "react-toggle/style.css";
@@ -41,6 +41,28 @@ const UserSearch: React.FunctionComponent<UserSearchProps> = ({
   const [selectedUser, setSelectedUser] = useState("");
 
   const deleteButtonDisabled = !selectedUser;
+
+  const getTrProps: ComponentPropsGetterR = React.useCallback(
+    (state: any, rowInfo: RowInfo | undefined) => {
+      let selected = false;
+      if (rowInfo) {
+        selected = rowInfo.row.id === selectedUser;
+      }
+      return {
+        onClick: () => {
+          if (!!rowInfo) {
+            setSelectedUser(rowInfo.row.id);
+          }
+          // changeSelectedUser(rowInfo.row.id);
+        },
+        className: selected
+          ? "table-row-small table-row-selected"
+          : "table-row-small",
+      };
+    },
+    [setSelectedUser],
+  );
+
   return (
     <div className="UserSearch-main">
       <div className="header">
@@ -122,21 +144,7 @@ const UserSearch: React.FunctionComponent<UserSearchProps> = ({
                 className: "table-row-small",
               };
             }}
-            getTrProps={(state: any, rowInfo: RowInfo) => {
-              let selected = false;
-              if (rowInfo) {
-                selected = rowInfo.row.id === selectedUser;
-              }
-              return {
-                onClick: () => {
-                  setSelectedUser(rowInfo.row.id);
-                  // changeSelectedUser(rowInfo.row.id);
-                },
-                className: selected
-                  ? "table-row-small table-row-selected"
-                  : "table-row-small",
-              };
-            }}
+            getTrProps={getTrProps}
           />
         </div>
       </div>

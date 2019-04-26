@@ -20,7 +20,7 @@ import {
   HandleAuthenticationResponse,
   PrivateRoute,
 } from "startup/Authentication";
-import { useConfig } from "startup/config";
+import useConfig from "startup/config/useConfig";
 import AuthorisationManager, {
   UserAuthorisationEditor,
 } from "../AuthorisationManager";

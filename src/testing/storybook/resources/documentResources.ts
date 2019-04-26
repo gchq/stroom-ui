@@ -1,7 +1,7 @@
 import { HttpRequest, HttpResponse } from "@pollyjs/adapter-fetch";
 
 import { TestCache } from "../PollyDecorator";
-import { Config } from "startup/config";
+import { Config } from "startup/config/types";
 import { ResourceBuilder } from "./types";
 import { DOCUMENT_RESOURCES } from "components/DocumentEditors/useDocumentApi/types/resourceUrls";
 import { DocumentBase } from "components/DocumentEditors/useDocumentApi/types/base";

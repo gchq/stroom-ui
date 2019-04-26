@@ -60,10 +60,10 @@ const dropTarget: DropTargetSpec<Props> = {
   },
 };
 
-let dropCollect: DropTargetCollector<DropCollectedProps> = function dropCollect(
-  connect,
-  monitor,
-) {
+let dropCollect: DropTargetCollector<
+  DropCollectedProps,
+  Props
+> = function dropCollect(connect, monitor) {
   return {
     connectDropTarget: connect.dropTarget(),
     isOver: monitor.isOver(),
@@ -92,7 +92,8 @@ const dragSource: DragSourceSpec<Props, DragObject> = {
 };
 
 const dragCollect: DragSourceCollector<
-  DragCollectedProps
+  DragCollectedProps,
+  Props
 > = function dragCollect(connect, monitor) {
   return {
     connectDragSource: connect.dragSource(),

@@ -1,6 +1,6 @@
 import * as React from "react";
 import useHttpClient from "lib/useHttpClient";
-import { useConfig } from "startup/config";
+import useConfig from "startup/config/useConfig";
 import {
   DataSourceType,
   ExpressionOperatorType,

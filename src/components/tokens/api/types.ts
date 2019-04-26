@@ -26,13 +26,6 @@ export interface SearchConfig {
   sorting: SortingRule[];
 }
 
-export interface TokenSearchRequest {
-  filtered?: Filter[];
-  page?: number;
-  pageSize?: number;
-  sorted?: SortingRule[];
-}
-
 export interface TokenSearchResponse {
   tokens: Token[];
   totalPages: number;

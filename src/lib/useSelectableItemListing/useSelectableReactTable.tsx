@@ -1,5 +1,5 @@
 import * as React from "react";
-import { TableProps, RowInfo } from "react-table";
+import { TableProps, RowInfo, ComponentPropsGetterR } from "react-table";
 import { TableOutProps, InProps } from "./types";
 import useSelectableItemListing from ".";
 
@@ -11,8 +11,8 @@ function useSelectableReactTable<TItem>(
   const { getKey, items } = props;
   const { toggleSelection, selectedItems, focussedItem } = selectableItemProps;
 
-  const getTdProps = React.useCallback(
-    (state: any, rowInfo: RowInfo) => {
+  const getTdProps: ComponentPropsGetterR = React.useCallback(
+    (state: any, rowInfo: RowInfo | undefined) => {
       return {
         onClick: (_: any, handleOriginal: () => void) => {
           if (!!rowInfo && !!rowInfo.original) {
@@ -28,8 +28,8 @@ function useSelectableReactTable<TItem>(
     [toggleSelection, getKey],
   );
 
-  const getTrProps = React.useCallback(
-    (_: any, rowInfo: RowInfo) => {
+  const getTrProps: ComponentPropsGetterR = React.useCallback(
+    (_: any, rowInfo: RowInfo | undefined) => {
       // We don't want to see a hover on a row without data.
       // If a row is selected we want to see the selected color.
       let rowId =

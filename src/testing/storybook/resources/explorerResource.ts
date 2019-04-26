@@ -10,7 +10,7 @@ import {
   iterateNodes,
 } from "lib/treeUtils/treeUtils";
 import { TestCache } from "../PollyDecorator";
-import { Config } from "startup/config";
+import { Config } from "startup/config/types";
 import { ResourceBuilder } from "./types";
 import {
   DocRefType,

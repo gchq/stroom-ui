@@ -79,10 +79,10 @@ const dropTarget: DropTargetSpec<Props> = {
   },
 };
 
-let dropCollect: DropTargetCollector<DropCollectedProps> = function dropCollect(
-  connect,
-  monitor,
-) {
+let dropCollect: DropTargetCollector<
+  DropCollectedProps,
+  Props
+> = function dropCollect(connect, monitor) {
   return {
     connectDropTarget: connect.dropTarget(),
     isOver: monitor.isOver(),
