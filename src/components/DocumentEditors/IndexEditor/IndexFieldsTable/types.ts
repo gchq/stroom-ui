@@ -1,5 +1,5 @@
-import { TableOutProps } from "lib/useSelectableItemListing";
 import { IndexField } from "components/DocumentEditors/useDocumentApi/types/indexDoc";
+import { TableOutProps } from "lib/useSelectableItemListing/types";
 
 export interface Props {
   fields: IndexField[];

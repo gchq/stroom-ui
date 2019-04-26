@@ -21,7 +21,6 @@ import Loader from "components/Loader";
 import AddElementModal, {
   useDialog as useAddElementDialog,
 } from "./AddElementModal/AddElementModal";
-import { ButtonProps } from "components/Button";
 import PipelineSettings, {
   useDialog as usePipelineSettingsDialog,
 } from "./PipelineSettings/PipelineSettings";
@@ -33,6 +32,7 @@ import { ElementDetails } from "./ElementDetails";
 import PipelineDisplay from "./PipelineDisplay";
 import DocRefEditor, { SwitchedDocRefEditorProps } from "../DocRefEditor";
 import usePipelineState from "./usePipelineState";
+import { ButtonProps } from "components/Button/types";
 
 const PipelineEditor = ({ docRefUuid }: SwitchedDocRefEditorProps) => {
   const piplineStateProps = usePipelineState(docRefUuid);
