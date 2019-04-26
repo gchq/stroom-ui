@@ -60,7 +60,7 @@ const UserSearch: React.FunctionComponent<UserSearchProps> = ({
           : "table-row-small",
       };
     },
-    [setSelectedUser],
+    [setSelectedUser, selectedUser],
   );
 
   return (
