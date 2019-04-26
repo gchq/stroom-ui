@@ -1,4 +1,4 @@
-[
+const data: any = [
   {
     StreamType: "Events",
     RecWarn: "10",
@@ -2100,3 +2100,5 @@
     Until: "Forever",
   },
 ];
+
+export default data;

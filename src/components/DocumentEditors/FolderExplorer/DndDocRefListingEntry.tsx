@@ -10,9 +10,8 @@ import {
 } from "react-dnd";
 
 import { canMove } from "lib/treeUtils/treeUtils";
-import DocRefListingEntry, {
-  Props as DocRefListingEntryProps,
-} from "../../DocRefListingEntry";
+import DocRefListingEntry from "../../DocRefListingEntry";
+import { Props as DocRefListingEntryProps } from "../../DocRefListingEntry/types";
 import {
   DragDropTypes,
   DragCollectedProps,

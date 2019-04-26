@@ -21,7 +21,7 @@ import PipelineElement from "../PipelineElement/PipelineElement";
 import { getPipelineLayoutGrid } from "../pipelineUtils";
 import { PipelineLayoutGrid } from "../types";
 import { getAllElementNames } from "../pipelineUtils";
-import { ShowDialog as ShowAddElementDialog } from "../AddElementModal";
+import { ShowDialog as ShowAddElementDialog } from "../AddElementModal/types";
 import { PipelineProps } from "../types";
 import useElements from "components/DocumentEditors/PipelineEditor/useElements";
 import { LineContainer, LineTo } from "components/LineTo";
@@ -79,7 +79,7 @@ export const Pipeline: React.FunctionComponent<Props> = ({
                 pipeline.merged.elements.add &&
                 pipeline.merged.elements.add
                   .filter((e: PipelineElementType) => e.id === column.uuid)
-                  .map(element => {
+                  .map((element: PipelineElementType) => {
                     let elementDefinition = Object.values(
                       elementDefinitions,
                     ).find(e => e.type === element.type)!;

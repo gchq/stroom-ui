@@ -34,7 +34,7 @@ import {
 import { isValidChildType } from "../elementUtils";
 import Button from "components/Button";
 
-import { ShowDialog } from "../AddElementModal";
+import { ShowDialog } from "../AddElementModal/types";
 import { PipelineEditApi } from "../types";
 import {
   PipelineDocumentType,

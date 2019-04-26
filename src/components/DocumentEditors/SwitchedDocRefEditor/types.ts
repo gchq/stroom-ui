@@ -1,4 +1,4 @@
-import { SwitchedDocRefEditorProps } from "../DocRefEditor";
+import { SwitchedDocRefEditorProps } from "../DocRefEditor/types";
 import FolderExplorer from "../FolderExplorer";
 import XsltEditor from "../XsltEditor";
 import DictionaryEditor from "../DictionaryEditor";

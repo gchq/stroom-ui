@@ -21,7 +21,6 @@
     "strict": false,
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": false,
-    "isolatedModules": false,
     "esModuleInterop": false
   },
   "include": ["src/**/*"],

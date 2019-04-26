@@ -30,7 +30,8 @@ import DeletePipelineElement, {
 } from "./DeletePipelineElement";
 import { ElementDetails } from "./ElementDetails";
 import PipelineDisplay from "./PipelineDisplay";
-import DocRefEditor, { SwitchedDocRefEditorProps } from "../DocRefEditor";
+import DocRefEditor from "../DocRefEditor";
+import { SwitchedDocRefEditorProps } from "../DocRefEditor/types";
 import usePipelineState from "./usePipelineState";
 import { ButtonProps } from "components/Button/types";
 
