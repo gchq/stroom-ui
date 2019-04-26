@@ -181,7 +181,7 @@ const createTestFilter = (): QueryDataType => ({
   //limits: true, this should be LimitsType?
 });
 
-const minimalTrackerUndefinedLastPollAge = {
+const minimalTrackerUndefinedLastPollAge: StreamTaskType = {
   filterId: 1,
   enabled: true,
   lastPollAge: undefined,
@@ -192,9 +192,16 @@ const minimalTrackerUndefinedLastPollAge = {
   filter: createTestFilter(),
   createUser: "tester",
   createdOn: 87134234234,
+
+  trackerPercent: getRandomInt(0, 100),
+  taskCount: 1,
+  trackerMs: 87834234234,
+  status: "Active",
+  streamCount: 3,
+  eventCount: 1,
 };
 
-const minimalTrackerNullLastPollAge = {
+const minimalTrackerNullLastPollAge: StreamTaskType = {
   filterId: 2,
   enabled: true,
   lastPollAge: null,
@@ -205,6 +212,13 @@ const minimalTrackerNullLastPollAge = {
   filter: createTestFilter(),
   createUser: "tester",
   createdOn: 87134234234,
+
+  trackerPercent: getRandomInt(0, 100),
+  taskCount: 1,
+  trackerMs: 87834234234,
+  status: "Active",
+  streamCount: 3,
+  eventCount: 1,
 };
 
 const minimalTrackerEmptyLastPollAge = {
@@ -220,7 +234,7 @@ const minimalTrackerEmptyLastPollAge = {
   createdOn: 87134234234,
 };
 
-const maximalTracker = {
+const maximalTracker: StreamTaskType = {
   filterId: 4,
   enabled: true,
   pipelineId: 1,
@@ -241,7 +255,7 @@ const maximalTracker = {
   updatedOn: 87934234234,
 };
 
-const maximalTrackerWithLongName = {
+const maximalTrackerWithLongName: StreamTaskType = {
   filterId: 5,
   enabled: true,
   pipelineId: 1,
