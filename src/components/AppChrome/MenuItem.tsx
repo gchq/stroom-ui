@@ -1,5 +1,4 @@
 import * as React from "react";
-import { pipe } from "ramda";
 import {
   DropTarget,
   DropTargetSpec,
@@ -65,7 +64,8 @@ const dropTarget: DropTargetSpec<Props> = {
 };
 
 const dropCollect: DropTargetCollector<
-  DropCollectedProps
+  DropCollectedProps,
+  Props
 > = function dropCollect(connect, monitor) {
   return {
     connectDropTarget: connect.dropTarget(),
@@ -87,7 +87,8 @@ const dragSource: DragSourceSpec<Props, DragObject> = {
 };
 
 const dragCollect: DragSourceCollector<
-  DragCollectedProps
+  DragCollectedProps,
+  Props
 > = function dragCollect(connect, monitor) {
   return {
     connectDragSource: connect.dragSource(),
@@ -95,12 +96,7 @@ const dragCollect: DragSourceCollector<
   };
 };
 
-const enhance = pipe(
-  DropTarget([DragDropTypes.DOC_REF_UUIDS], dropTarget, dropCollect),
-  DragSource(DragDropTypes.DOC_REF_UUIDS, dragSource, dragCollect),
-);
-
-let MenuItem = ({
+const MenuItem: React.FunctionComponent<EnhancedProps> = ({
   menuItem,
   isOver,
   canDrop,
@@ -113,7 +109,7 @@ let MenuItem = ({
   selectedItems,
   menuItemOpened,
   focussedItem,
-}: EnhancedProps) => {
+}) => {
   const isSelected: boolean = selectedItems
     .map((d: MenuItemType) => d.key)
     .includes(menuItem.key);
@@ -200,4 +196,11 @@ let MenuItem = ({
   );
 };
 
-export default enhance(MenuItem);
+const enhance = (d: React.FunctionComponent<EnhancedProps>) =>
+  DropTarget<Props>([DragDropTypes.DOC_REF_UUIDS], dropTarget, dropCollect)(
+    DragSource<Props>(DragDropTypes.DOC_REF_UUIDS, dragSource, dragCollect)(d),
+  );
+
+const EnhancedMenuItem: React.FunctionComponent<Props> = enhance(MenuItem);
+
+export default EnhancedMenuItem;

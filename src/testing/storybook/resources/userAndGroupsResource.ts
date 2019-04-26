@@ -2,7 +2,7 @@ import * as uuidv4 from "uuid/v4";
 import { HttpRequest, HttpResponse } from "@pollyjs/adapter-fetch";
 
 import { TestCache } from "../PollyDecorator";
-import { Config } from "startup/config";
+import { Config } from "startup/config/types";
 import { ResourceBuilder } from "./types";
 
 const resourceBuilder: ResourceBuilder = (

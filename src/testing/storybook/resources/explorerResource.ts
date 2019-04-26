@@ -10,7 +10,7 @@ import {
   iterateNodes,
 } from "lib/treeUtils/treeUtils";
 import { TestCache } from "../PollyDecorator";
-import { Config } from "startup/config";
+import { Config } from "startup/config/types";
 import { ResourceBuilder } from "./types";
 import {
   DocRefType,
@@ -119,7 +119,7 @@ const resourceBuilder: ResourceBuilder = (
         uuid: uuidv4(),
         type: docRefType,
         name: docRefName,
-        children: docRefType === "Folder" ? [] : undefined,
+        children: docRefType === "Folder" ? ([] as DocRefType[]) : undefined,
       };
       testCache.data!.documentTree = addItemsToTree(
         testCache.data!.documentTree,

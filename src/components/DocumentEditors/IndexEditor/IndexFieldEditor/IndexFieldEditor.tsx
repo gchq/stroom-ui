@@ -1,7 +1,7 @@
 import * as React from "react";
 
-import ThemedModal from "../../../ThemedModal";
-import { DialogActionButtons } from "../../../DialogActionButtons";
+import ThemedModal from "components/ThemedModal";
+import DialogActionButtons from "components/DialogActionButtons";
 import IndexFieldTypePicker from "../IndexFieldTypePicker/IndexFieldTypePicker";
 import AnalyzerPicker from "../AnalyzerPicker";
 import useForm from "lib/useForm";

@@ -1,4 +1,4 @@
-import { Config } from "startup/config";
+import { Config } from "startup/config/types";
 import { TestCache } from "../PollyDecorator";
 
 export type ResourceBuilder = (

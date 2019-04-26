@@ -1,11 +1,11 @@
 import * as Cookies from "cookies-js";
-import { FormikBag } from "formik";
+import { FormikActions } from "formik";
 import * as queryString from "query-string";
 import { useCallback } from "react";
 import useHttpClient from "lib/useHttpClient";
 import useRouter from "lib/useRouter";
-import { useConfig } from "startup/config";
-import { ChangePasswordResponse } from ".";
+import useConfig from "startup/config/useConfig";
+import { ChangePasswordResponse } from "./types";
 import {
   ChangePasswordRequest,
   Credentials,
@@ -25,7 +25,7 @@ interface Api {
   ) => Promise<ChangePasswordResponse>;
   submitPasswordChangeRequest: (
     formData: any,
-    formikBag: FormikBag<any, any>,
+    formikBag: FormikActions<any>,
   ) => Promise<void>;
   isPasswordValid: (
     passwordValidationRequest: PasswordValidationRequest,

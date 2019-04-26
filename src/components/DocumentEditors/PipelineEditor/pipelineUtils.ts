@@ -15,30 +15,31 @@
  */
 
 import {
+  ElementDefinitionsByType,
+  ElementPropertiesType,
+} from "components/DocumentEditors/PipelineEditor/useElements/types";
+import {
+  AddRemove,
+  PipelineDataType,
+  PipelineDocumentType,
+  PipelineElementType,
+  PipelineLinkType,
+  PipelinePropertyType,
+  PipelinePropertyValue,
+} from "components/DocumentEditors/useDocumentApi/types/pipelineDoc";
+import {
   findItem,
   itemIsInSubtree,
   iterateNodes,
 } from "lib/treeUtils/treeUtils";
+import { PipelineAsTreeType } from "./AddElementModal/types";
 import {
-  RecycleBinItem,
+  NewElement,
   PipelineLayoutGrid,
   PipelineLayoutInfoById,
   PipelineLayoutRow,
-  NewElement,
+  RecycleBinItem,
 } from "./types";
-import {
-  PipelineDocumentType,
-  PipelineElementType,
-  PipelineDataType,
-  PipelinePropertyType,
-  AddRemove,
-  PipelineLinkType,
-} from "components/DocumentEditors/useDocumentApi/types/pipelineDoc";
-import { PipelineAsTreeType } from "./AddElementModal/types";
-import {
-  ElementDefinitionsByType,
-  ElementPropertiesType,
-} from "components/DocumentEditors/PipelineEditor/useElements/types";
 
 export function getBinItems(
   pipeline: PipelineDocumentType,
@@ -317,7 +318,7 @@ export function setElementPropertyValueInPipeline(
   propertyValue: any,
 ): PipelineDocumentType {
   // Create the 'value' property.
-  const value = {
+  const value: PipelinePropertyValue = {
     boolean: null,
     entity: null,
     integer: null,

@@ -13,7 +13,7 @@ import testData from "../data";
 import { ThemeContextProvider } from "lib/useTheme/useTheme";
 import { withRouter, RouteComponentProps } from "react-router";
 import { CustomRouter } from "lib/useRouter";
-import { ConfigProvider } from "startup/config";
+import ConfigProvider from "startup/config/ConfigProvider";
 import { AuthorisationContextProvider } from "startup/Authorisation";
 import { AuthenticationContext } from "startup/Authentication";
 import { DocumentTreeContextProvider } from "components/DocumentEditors/api/explorer";

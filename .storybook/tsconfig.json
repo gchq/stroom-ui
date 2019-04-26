@@ -14,12 +14,15 @@
     "noImplicitReturns": true,
     "noImplicitThis": true,
     "noImplicitAny": true,
-    "strictNullChecks": true,
+    "strictNullChecks": false,
     "suppressImplicitAnyIndexErrors": true,
-    "noUnusedLocals": true,
+    "noUnusedLocals": false,
     "declaration": true,
-    "allowSyntheticDefaultImports": true,
-    "experimentalDecorators": true
+    "strict": false,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": false,
+    "isolatedModules": false,
+    "esModuleInterop": false
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "build", "scripts"]

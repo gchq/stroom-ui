@@ -16,7 +16,7 @@
 
 import * as React from "react";
 import useAuthentication from "components/authentication/useAuthentication";
-import { useConfig } from "startup/config";
+import useConfig from "startup/config/useConfig";
 import LoginForm from "./LoginForm";
 
 const LoginContainer = () => {

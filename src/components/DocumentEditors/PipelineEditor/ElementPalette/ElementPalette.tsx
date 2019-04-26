@@ -24,7 +24,7 @@ interface Props {
 interface EnhancedProps extends Props, DropCollectedProps {}
 
 const dropTarget: DropTargetSpec<Props> = {
-  canDrop(props, monitor) {
+  canDrop() {
     return true;
   },
   drop({ showDeleteElementDialog }, monitor) {
@@ -33,7 +33,7 @@ const dropTarget: DropTargetSpec<Props> = {
   },
 };
 
-const dropCollect: DropTargetCollector<DropCollectedProps> = (
+const dropCollect: DropTargetCollector<DropCollectedProps, Props> = (
   connect,
   monitor,
 ) => ({

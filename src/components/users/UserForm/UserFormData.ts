@@ -1,4 +1,4 @@
-export default interface UserFormData {
+interface UserFormData {
   firstName: string;
   lastName: string;
   email: string;
@@ -8,4 +8,6 @@ export default interface UserFormData {
   neverExpires: boolean;
   comments: string;
   forcePasswordChange: boolean;
-};
+}
+
+export default UserFormData;

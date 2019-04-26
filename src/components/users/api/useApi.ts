@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 import { useCallback } from "react";
-import { useConfig } from "startup/config";
+import useConfig from "startup/config/useConfig";
 import { User } from "../types";
 import useHttpClient from "lib/useHttpClient";
 

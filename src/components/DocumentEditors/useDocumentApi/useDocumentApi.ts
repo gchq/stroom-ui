@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import { ResourcesByDocType, DOCUMENT_RESOURCES } from "./types/resourceUrls";
-import { useConfig } from "startup/config";
+import useConfig from "startup/config/useConfig";
 import useHttpClient from "lib/useHttpClient";
 import { DocumentBase } from "./types/base";
 import { DocumentApi } from "./types/documentApi";

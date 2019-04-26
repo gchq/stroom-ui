@@ -80,7 +80,7 @@ const dragSource: DragSourceSpec<Props, DragObject> = {
   },
 };
 
-const dragCollect: DragSourceCollector<DragCollectedProps> = (
+const dragCollect: DragSourceCollector<DragCollectedProps, Props> = (
   connect,
   monitor,
 ) => ({
@@ -156,7 +156,7 @@ const dropTarget: DropTargetSpec<Props> = {
   },
 };
 
-const dropCollect: DropTargetCollector<DropCollectedProps> = (
+const dropCollect: DropTargetCollector<DropCollectedProps, Props> = (
   connect,
   monitor,
 ) => ({
@@ -176,7 +176,6 @@ const enhance = pipe(
 );
 
 const PipelineElement: React.FunctionComponent<EnhancedProps> = ({
-  pipelineId,
   elementId,
   connectDragSource,
   connectDropTarget,

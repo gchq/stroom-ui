@@ -1,6 +1,6 @@
 import * as React from "react";
-import { useAuthenticationContext } from "../Authentication";
-import { useConfig } from "../config";
+import { useAuthenticationContext } from "startup/Authentication";
+import useConfig from "startup/config/useConfig";
 import { AppPermissions } from "./types";
 import AuthorisationContext from "./AuthorisationContext";
 

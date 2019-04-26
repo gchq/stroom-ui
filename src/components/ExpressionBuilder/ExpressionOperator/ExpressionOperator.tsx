@@ -22,13 +22,13 @@ import {
   DropTargetCollector,
   DropTargetSpec,
   DragSourceSpec,
+  DragSourceCollector,
 } from "react-dnd";
 
 import { canMove } from "lib/treeUtils/treeUtils";
 import {
   DragDropTypes,
   DragObject,
-  dragCollect,
   DragCollectedProps,
   DropCollectedProps,
   ExpressionOperatorType,
@@ -79,14 +79,24 @@ const dropTarget: DropTargetSpec<Props> = {
   },
 };
 
-let dropCollect: DropTargetCollector<DropCollectedProps> = function dropCollect(
-  connect,
-  monitor,
-) {
+let dropCollect: DropTargetCollector<
+  DropCollectedProps,
+  Props
+> = function dropCollect(connect, monitor) {
   return {
     connectDropTarget: connect.dropTarget(),
     isOver: monitor.isOver(),
     canDrop: monitor.canDrop(),
+  };
+};
+
+export const dragCollect: DragSourceCollector<
+  DragCollectedProps,
+  Props
+> = function dragCollect(connect, monitor) {
+  return {
+    connectDragSource: connect.dragSource(),
+    isDragging: monitor.isDragging(),
   };
 };
 

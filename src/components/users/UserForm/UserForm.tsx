@@ -44,7 +44,11 @@ const UserForm: React.FunctionComponent<EditUserFormProps> = ({
   return (
     <Formik
       onSubmit={values => onSubmit(values)}
-      initialValues={user}
+      initialValues={{
+        ...user,
+        verifyPassword: user.password,
+        neverExpires: user.neverExpires || false,
+      }}
       validateOnBlur
       validate={onValidate}
       validationSchema={UserValidationSchema}

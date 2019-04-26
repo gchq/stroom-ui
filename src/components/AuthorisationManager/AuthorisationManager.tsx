@@ -69,7 +69,7 @@ const Authorisation: React.FunctionComponent<Props> = ({ isGroup }) => {
   const { useTextInput } = useForm({
     initialValues: defaultValues,
     onValidate: React.useCallback(
-      ({ name, uuid }: Values) => findUsers(name, isGroup, uuid),
+      ({ name, uuid }: Partial<Values>) => findUsers(name, isGroup, uuid),
       [isGroup, findUsers],
     ),
   });

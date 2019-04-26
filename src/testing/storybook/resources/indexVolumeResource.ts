@@ -1,7 +1,7 @@
 import { HttpRequest, HttpResponse } from "@pollyjs/adapter-fetch";
 
 import { TestCache } from "../PollyDecorator";
-import { Config } from "startup/config";
+import { Config } from "startup/config/types";
 import { ResourceBuilder } from "./types";
 import { IndexVolume } from "components/IndexVolumes/api";
 import { IndexVolumeGroup } from "components/IndexVolumeGroups/api";

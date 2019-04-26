@@ -40,5 +40,6 @@
       "language": "javascript",
       "autoFix": true
     }
-  ]
+  ],
+  "typescript.tsdk": "node_modules/typescript/lib"
 }

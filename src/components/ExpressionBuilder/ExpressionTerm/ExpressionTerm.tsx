@@ -17,15 +17,10 @@
 import * as React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import { DragSourceSpec, DragSource } from "react-dnd";
+import { DragSourceSpec, DragSource, DragSourceCollector } from "react-dnd";
 import Button from "../../Button";
 import ConditionPicker from "../ConditionPicker/ConditionPicker";
-import {
-  DragDropTypes,
-  DragObject,
-  dragCollect,
-  DragCollectedProps,
-} from "../types";
+import { DragDropTypes, DragObject, DragCollectedProps } from "../types";
 import ValueWidget from "../ValueWidget";
 import {
   DataSourceType,
@@ -55,6 +50,16 @@ const dragSource: DragSourceSpec<Props, DragObject> = {
       expressionItem: props.value,
     };
   },
+};
+
+export const dragCollect: DragSourceCollector<
+  DragCollectedProps,
+  Props
+> = function dragCollect(connect, monitor) {
+  return {
+    connectDragSource: connect.dragSource(),
+    isDragging: monitor.isDragging(),
+  };
 };
 
 const enhance = DragSource(DragDropTypes.TERM, dragSource, dragCollect);

@@ -15,9 +15,8 @@
  */
 
 import UserSearch from "./SearchUsers";
-import { StoreState, User } from "./types";
 import UserCreate from "./UserForm/CreateUserContainer";
 import UserEdit from "./UserForm/EditUserContainer";
 import AsyncUserSelect from "./UserSelect";
 
-export { User, StoreState, UserCreate, UserEdit, UserSearch, AsyncUserSelect };
+export { UserCreate, UserEdit, UserSearch, AsyncUserSelect };

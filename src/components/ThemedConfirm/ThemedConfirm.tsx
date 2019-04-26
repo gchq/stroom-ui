@@ -90,7 +90,7 @@ export const useDialog = (props: NewProps): UseDialog => {
   const [question, setQuestion] = React.useState<string>("No Question");
   const [details, setDetails] = React.useState<string | undefined>(undefined);
 
-  const { getQuestion, getDetails = () => undefined } = props;
+  const { getQuestion, getDetails = (): string => undefined } = props;
 
   return {
     componentProps: {

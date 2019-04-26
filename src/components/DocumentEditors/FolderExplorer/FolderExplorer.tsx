@@ -36,13 +36,13 @@ import DeleteDocRefDialog, {
   useDialog as useDeleteDialog,
 } from "./DeleteDocRefDialog/DeleteDocRefDialog";
 import DocRefInfoModal from "../../DocRefInfoModal";
-import { ButtonProps } from "../../Button";
 import useSelectableItemListing, {
   SelectionBehaviour,
 } from "lib/useSelectableItemListing";
 import { useDocRefInfoDialog } from "../../DocRefInfoModal/DocRefInfoModal";
 import { useDocumentTree } from "components/DocumentEditors/api/explorer";
 import useAppNavigation from "../../AppChrome/useAppNavigation";
+import { ButtonProps } from "components/Button/types";
 
 const FolderExplorer: React.FunctionComponent<SwitchedDocRefEditorProps> = ({
   docRefUuid,

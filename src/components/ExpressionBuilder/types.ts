@@ -13,11 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {
-  DragSourceCollector,
-  ConnectDragSource,
-  ConnectDropTarget,
-} from "react-dnd";
+import { ConnectDragSource, ConnectDropTarget } from "react-dnd";
 import { DictionaryDoc } from "components/DocumentEditors/useDocumentApi/types/dictionaryDoc";
 
 export enum DragDropTypes {
@@ -38,15 +34,6 @@ export interface DropCollectedProps {
 export interface DragObject {
   expressionItem: ExpressionOperatorType | ExpressionTermType;
 }
-
-export const dragCollect: DragSourceCollector<
-  DragCollectedProps
-> = function dragCollect(connect, monitor) {
-  return {
-    connectDragSource: connect.dragSource(),
-    isDragging: monitor.isDragging(),
-  };
-};
 
 interface ConditionTypes<T> {
   EQUALS: T;

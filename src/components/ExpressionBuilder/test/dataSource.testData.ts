@@ -70,6 +70,6 @@ const testDataSource: DataSourceType = {
   ],
 };
 
-const emptyDataSource = { fields: [] };
+const emptyDataSource: DataSourceType = { fields: [] };
 
 export { testDataSource, emptyDataSource };

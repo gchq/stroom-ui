@@ -17,20 +17,15 @@
 import { useCallback } from "react";
 import { Filter } from "react-table";
 import useHttpClient from "lib/useHttpClient";
-import { useConfig } from "startup/config";
-import {
-  SearchConfig,
-  Token,
-  TokenSearchRequest,
-  TokenSearchResponse,
-} from "./types";
+import useConfig from "startup/config/useConfig";
+import { SearchConfig, Token, TokenSearchResponse } from "./types";
 
 interface Api {
   deleteToken: (tokenId: string) => Promise<void>;
   createToken: (email: string) => Promise<Token>;
   fetchApiKey: (tokenId: string) => Promise<Token>;
   performTokenSearch: (
-    tokenSearchRequest: TokenSearchRequest,
+    tokenSearchRequest: Partial<SearchConfig>,
   ) => Promise<TokenSearchResponse>;
   toggleState: (tokenId: string, nextState: boolean) => Promise<void>;
 }
@@ -78,7 +73,7 @@ export const useApi = (): Api => {
     ),
 
     performTokenSearch: useCallback(
-      (searchConfig: SearchConfig) => {
+      (searchConfig: Partial<SearchConfig>) => {
         // // Default ordering and direction
         let orderBy = "issuedOn";
         let orderDirection = "desc";

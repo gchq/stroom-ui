@@ -45,8 +45,8 @@
     "react": "^16.8.0",
     "react-ace": "^6.1.4",
     "react-copy-to-clipboard": "^5.0.1",
-    "react-dnd": "^5.0.0",
-    "react-dnd-html5-backend": "^5.0.1",
+    "react-dnd": "^7.4.5",
+    "react-dnd-html5-backend": "^7.4.4",
     "react-dom": "^16.8.0",
     "react-loader": "^2.4.5",
     "react-modal": "^3.5.1",
@@ -60,7 +60,9 @@
     "react-tooltip": "^3.8.4",
     "simplebar": "^3.0.0-beta.5",
     "sjcl": "^1.0.7",
-    "uuid": "^3.3.2"
+    "ts-loader": "^5.4.3",
+    "uuid": "^3.3.2",
+    "typescript": "3.4.5"
   },
   "lint-staged": {
     "*.{ts,tsx,js,jsx}": [
@@ -99,8 +101,8 @@
     "@types/node": "^11.10.5",
     "@types/react": "^16.8.2",
     "@types/react-dom": "^16.8.0",
-    "@types/storybook__react": "^4.0.1",
     "@types/storybook__addon-info": "^4.1.0",
+    "@types/storybook__react": "^4.0.1",
     "@typescript-eslint/eslint-plugin": "^1.5.0",
     "@typescript-eslint/parser": "^1.5.0",
     "awesome-typescript-loader": "^5.2.1",
@@ -124,8 +126,7 @@
     "react-docgen-typescript-loader": "^3.0.0",
     "react-docgen-typescript-webpack-plugin": "^1.1.0",
     "storybook-react-router": "^1.0.1",
-    "tslint-react-hooks": "^2.0.0",
-    "typescript": "^3.3.3333"
+    "tslint-react-hooks": "^2.0.0"
   },
   "browserslist": [
     ">0.2%",

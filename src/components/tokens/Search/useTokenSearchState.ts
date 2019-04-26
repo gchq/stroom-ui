@@ -1,6 +1,5 @@
 import { useReducer } from "react";
-import { Token } from "../api";
-import { SearchConfig } from "../api/types";
+import { Token, SearchConfig } from "../api/types";
 
 interface TokenSearchState {
   tokens: Token[];

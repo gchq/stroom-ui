@@ -3,7 +3,7 @@ import * as React from "react";
 import useHttpClient from "lib/useHttpClient";
 
 import { FetchParameters } from "./types";
-import { useConfig } from "startup/config";
+import useConfig from "startup/config/useConfig";
 import { StreamTasksResponseType } from "../types";
 
 interface Api {
