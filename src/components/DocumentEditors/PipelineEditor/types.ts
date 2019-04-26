@@ -1,6 +1,6 @@
 import { ConnectDropTarget, ConnectDragSource } from "react-dnd";
 
-import { UseDocRefEditorProps } from "../DocRefEditor";
+import { UseDocRefEditorProps } from "../DocRefEditor/types";
 import {
   PipelineElementType,
   PipelineDocumentType,

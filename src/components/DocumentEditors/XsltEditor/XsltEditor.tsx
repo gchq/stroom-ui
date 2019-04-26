@@ -16,10 +16,8 @@
 
 import * as React from "react";
 
-import DocRefEditor, {
-  useDocRefEditor,
-  SwitchedDocRefEditorProps,
-} from "../DocRefEditor";
+import DocRefEditor, { useDocRefEditor } from "../DocRefEditor";
+import { SwitchedDocRefEditorProps } from "../DocRefEditor/types";
 import Loader from "../../Loader";
 import useDocumentApi from "components/DocumentEditors/useDocumentApi";
 import ThemedAceEditor from "../../ThemedAceEditor";

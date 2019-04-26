@@ -21,8 +21,7 @@
     "esModuleInterop": false,
     "allowSyntheticDefaultImports": false,
     "strict": false,
-    "resolveJsonModule": true,
-    "isolatedModules": false
+    "resolveJsonModule": true
   },
   "exclude": ["node_modules", "build", "scripts", "acceptance-tests", "webpack", "jest", "src/setupTests.ts"],
   "include": ["node_modules/@pollyjs/adapter-fetch/dist/umd", "src"]

@@ -33,8 +33,8 @@ import { KeyDownState } from "lib/useKeyIsDown";
 import {
   CopyMoveDocRefDialog,
   useDialog as useCopyMoveDocRefDialog,
-  ShowDialog as ShowCopyDocRefDialog,
 } from "components/DocumentEditors/FolderExplorer/CopyMoveDocRefDialog";
+import { ShowDialog as ShowCopyDocRefDialog } from "components/DocumentEditors/FolderExplorer/CopyMoveDocRefDialog/types";
 import useLocalStorage, {
   storeBoolean,
   useStoreObjectFactory,
