@@ -61,7 +61,8 @@
     "simplebar": "^3.0.0-beta.5",
     "sjcl": "^1.0.7",
     "ts-loader": "^5.4.3",
-    "uuid": "^3.3.2"
+    "uuid": "^3.3.2",
+    "typescript": "3.4.5"
   },
   "lint-staged": {
     "*.{ts,tsx,js,jsx}": [
@@ -125,8 +126,7 @@
     "react-docgen-typescript-loader": "^3.0.0",
     "react-docgen-typescript-webpack-plugin": "^1.1.0",
     "storybook-react-router": "^1.0.1",
-    "tslint-react-hooks": "^2.0.0",
-    "typescript": "3.4.5"
+    "tslint-react-hooks": "^2.0.0"
   },
   "browserslist": [
     ">0.2%",
