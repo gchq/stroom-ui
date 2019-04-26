@@ -1,6 +1,8 @@
 import * as React from "react";
 import { DataSourceType } from "../types";
 import Select from "react-select";
+import { ValueType } from "react-select/lib/types";
+import useReactSelect from "lib/useReactSelect";
 
 interface Props {
   dataSource: DataSourceType;
@@ -8,7 +10,7 @@ interface Props {
   onChange: (e: string) => void;
 }
 
-interface DataSourceFieldOption {
+interface MyOption {
   value: string;
   label: string;
 }
@@ -18,21 +20,22 @@ const DataSourceFieldPicker: React.FunctionComponent<Props> = ({
   value,
   onChange,
 }) => {
-  const options: DataSourceFieldOption[] = React.useMemo(
-    () =>
-      dataSource.fields.map(({ name }) => ({
-        value: name,
-        label: name,
-      })),
+  const options: string[] = React.useMemo(
+    () => dataSource.fields.map(({ name }) => name),
     [dataSource],
   );
+  const { _options, _onChange, _value } = useReactSelect({
+    options,
+    onChange,
+    value,
+  });
 
   return (
     <Select
       placeholder="Field"
-      options={options}
-      value={options.find(o => o.value === value)}
-      onChange={(o: DataSourceFieldOption) => onChange(o.value)}
+      options={_options}
+      value={_value}
+      onChange={_onChange}
     />
   );
 };
