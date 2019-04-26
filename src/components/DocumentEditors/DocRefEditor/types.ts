@@ -1,5 +1,5 @@
-import { ButtonProps } from "../../Button";
 import { DocumentApi } from "components/DocumentEditors/useDocumentApi/types/documentApi";
+import { ButtonProps } from "components/Button/types";
 
 export interface DocRefEditorProps<T> {
   docRefUuid: string;
