@@ -1,7 +1,6 @@
 import * as React from "react";
 
 import ThemedModal from "../../../ThemedModal";
-import { DialogActionButtons } from "../../../DialogActionButtons";
 import IndexFieldTypePicker from "../IndexFieldTypePicker/IndexFieldTypePicker";
 import AnalyzerPicker from "../AnalyzerPicker";
 import useForm from "lib/useForm";
@@ -10,6 +9,7 @@ import {
   IndexFieldType,
   AnalyzerType,
 } from "components/DocumentEditors/useDocumentApi/types/indexDoc";
+import DialogActionButtons from "components/DialogActionButtons";
 
 interface Props {
   id: number;
