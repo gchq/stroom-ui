@@ -10,6 +10,6 @@ const TestHarness: React.FunctionComponent = () => {
   return <JsonDebug value={elements} />;
 };
 
-storiesOf("Document Editors/Pipeline//useElements", module).add("test", () => (
+storiesOf("Document Editors/Pipeline/useElements", module).add("test", () => (
   <TestHarness />
 ));

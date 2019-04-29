@@ -45,7 +45,6 @@ export interface NewElement {
 
 export interface PipelineEditApi {
   selectedElementId?: string;
-  elementInitialValues: object;
   settingsUpdated: (p: PipelineSettingsValues) => void;
   elementSelected: (elementId: string, initialValues?: object) => void;
   elementSelectionCleared: () => void;
@@ -54,7 +53,7 @@ export interface PipelineEditApi {
   elementDeleted: (elementId: string) => void;
   elementReinstated: (
     parentId: string,
-    recycleData: PipelineElementType,
+    recycleData: PipelineElementType, // hmm
   ) => void;
   elementPropertyUpdated: (
     element: string,

@@ -1,6 +1,11 @@
 .DocRefBreadcrumb__link {
   display: inline-block;
   cursor: pointer;
+  background:none!important;
+  color:inherit;
+  border:none; 
+  padding:0!important;
+  font: inherit;
 }
 
 .DocRefBreadcrumb__divider {

@@ -25,7 +25,7 @@ import {
 } from "react-dnd";
 
 import ElementImage from "../ElementImage";
-import { canMovePipelineElement, getInitialValues } from "../pipelineUtils";
+import { canMovePipelineElement } from "../pipelineUtils";
 import {
   DragDropTypes,
   DragCollectedProps,
@@ -36,15 +36,9 @@ import Button from "components/Button";
 
 import { ShowDialog } from "../AddElementModal/types";
 import { PipelineEditApi } from "../types";
-import {
-  PipelineDocumentType,
-  PipelinePropertyType,
-} from "components/DocumentEditors/useDocumentApi/types/pipelineDoc";
+import { PipelineDocumentType } from "components/DocumentEditors/useDocumentApi/types/pipelineDoc";
 import { PipelineAsTreeType } from "../AddElementModal/types";
-import {
-  ElementPropertiesType,
-  ElementDefinition,
-} from "components/DocumentEditors/PipelineEditor/useElements/types";
+import { ElementDefinition } from "components/DocumentEditors/PipelineEditor/useElements/types";
 
 interface Props {
   pipelineId: string;
@@ -56,7 +50,6 @@ interface Props {
   pipeline: PipelineDocumentType;
   asTree: PipelineAsTreeType;
   elementDefinition: ElementDefinition;
-  elementProperties: ElementPropertiesType;
 }
 
 interface DragObject {
@@ -185,21 +178,11 @@ const PipelineElement: React.FunctionComponent<EnhancedProps> = ({
   draggingItemType,
   pipelineEditApi: { elementSelected, selectedElementId },
   elementDefinition,
-  elementProperties,
-  pipeline,
 }) => {
-  const onElementClick = React.useCallback(() => {
-    // We need to get the initial values for this element and make sure they go into the state
-    // TODO THIS MUST SURELY BE FIXED
-    const thisElementProperties = pipeline.merged.properties.add!.filter(
-      (property: PipelinePropertyType) => property.element === elementId,
-    );
-    const initialValues = getInitialValues(
-      elementProperties,
-      thisElementProperties,
-    );
-    return elementSelected(elementId, initialValues);
-  }, [elementId, elementProperties, pipeline, elementSelected]);
+  const onElementClick = React.useCallback(() => elementSelected(elementId), [
+    elementId,
+    elementSelected,
+  ]);
 
   const className = React.useMemo(() => {
     const classNames = ["Pipeline-element"];

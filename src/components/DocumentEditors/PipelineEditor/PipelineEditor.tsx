@@ -15,7 +15,6 @@
  */
 
 import * as React from "react";
-import PanelGroup from "react-panelgroup";
 
 import Loader from "components/Loader";
 import AddElementModal, {
@@ -34,6 +33,7 @@ import DocRefEditor from "../DocRefEditor";
 import { SwitchedDocRefEditorProps } from "../DocRefEditor/types";
 import usePipelineState from "./usePipelineState";
 import { ButtonProps } from "components/Button/types";
+import HorizontalMainDetails from "components/HorizontalMainDetails";
 
 const PipelineEditor = ({ docRefUuid }: SwitchedDocRefEditorProps) => {
   const piplineStateProps = usePipelineState(docRefUuid);
@@ -48,6 +48,7 @@ const PipelineEditor = ({ docRefUuid }: SwitchedDocRefEditorProps) => {
     elementAdded,
     elementDeleted,
     selectedElementId,
+    elementSelectionCleared,
   } = pipelineEditApi;
 
   const {
@@ -108,34 +109,25 @@ const PipelineEditor = ({ docRefUuid }: SwitchedDocRefEditorProps) => {
             showDeleteElementDialog={showDeleteElementDialog}
           />
         </div>
-
-        <PanelGroup
-          direction="column"
-          className="Pipeline-editor__content"
-          panelWidths={[
-            {},
-            {
-              resize: "dynamic",
-              size: selectedElementId !== undefined ? "50%" : 0,
-            },
-          ]}
-        >
-          <div className="Pipeline-editor__topPanel">
+        <HorizontalMainDetails
+          storageKey="pipelineEditor"
+          title="Element Properties"
+          onClose={elementSelectionCleared}
+          isOpen={selectedElementId !== undefined}
+          mainContent={
             <PipelineDisplay
               pipelineId={docRefUuid}
               pipelineStateProps={piplineStateProps}
               showAddElementDialog={showAddElementDialog}
             />
-          </div>
-          {selectedElementId !== undefined ? (
+          }
+          detailContent={
             <ElementDetails
               pipeline={pipeline}
               pipelineEditApi={pipelineEditApi}
             />
-          ) : (
-            <div />
-          )}
-        </PanelGroup>
+          }
+        />
       </div>
     </DocRefEditor>
   );

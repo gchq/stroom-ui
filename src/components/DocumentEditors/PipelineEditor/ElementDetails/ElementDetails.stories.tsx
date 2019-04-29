@@ -26,13 +26,11 @@ import { PipelineDocumentType } from "components/DocumentEditors/useDocumentApi/
 interface Props {
   pipelineId: string;
   testElementId: string;
-  testElementConfig: object;
 }
 
 const TestHarness: React.FunctionComponent<Props> = ({
   pipelineId,
   testElementId,
-  testElementConfig,
 }) => {
   const {
     pipelineEditApi,
@@ -42,8 +40,8 @@ const TestHarness: React.FunctionComponent<Props> = ({
   } = usePipelineState(pipelineId);
   const { elementSelected } = pipelineEditApi;
   React.useEffect(() => {
-    elementSelected(testElementId, testElementConfig);
-  }, [elementSelected, pipelineId, testElementId, testElementConfig]);
+    elementSelected(testElementId);
+  }, [elementSelected, pipelineId, testElementId]);
 
   if (!docRefContents) {
     return null;
@@ -59,16 +57,22 @@ const TestHarness: React.FunctionComponent<Props> = ({
 
 const stories = storiesOf("Document Editors/Pipeline/Element Details", module);
 
+const elementTypesSeen: string[] = [];
+
 Object.values(fullTestData.documents.Pipeline)
   .map(p => p as PipelineDocumentType)
   .forEach(pipeline => {
-    pipeline.merged.elements.add!.forEach(element => {
-      stories.add(`${pipeline.uuid} - ${element.id}`, () => (
-        <TestHarness
-          pipelineId={pipeline.uuid}
-          testElementId={element.id}
-          testElementConfig={{ splitDepth: 10, splitCount: 10 }}
-        />
-      ));
-    });
+    pipeline.merged.elements
+      .add!.filter(element => {
+        if (!elementTypesSeen.includes(element.type)) {
+          elementTypesSeen.push(element.type);
+          return true;
+        }
+        return false;
+      })
+      .forEach(element => {
+        stories.add(element.type, () => (
+          <TestHarness pipelineId={pipeline.uuid} testElementId={element.id} />
+        ));
+      });
   });

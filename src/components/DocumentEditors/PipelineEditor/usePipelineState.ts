@@ -23,7 +23,6 @@ export const usePipelineState = (pipelineId: string): PipelineProps => {
   const [selectedElementId, setSelectedElementId] = React.useState<
     string | undefined
   >(undefined);
-  const [elementInitialValues, setInitialValues] = React.useState<object>({});
 
   const useEditorProps = useDocRefEditor({
     docRefUuid: pipelineId,
@@ -42,7 +41,6 @@ export const usePipelineState = (pipelineId: string): PipelineProps => {
     asTree,
     useEditorProps,
     pipelineEditApi: {
-      elementInitialValues,
       selectedElementId,
       settingsUpdated: React.useCallback<PipelineEditApi["settingsUpdated"]>(
         ({ description }) => {
@@ -50,19 +48,12 @@ export const usePipelineState = (pipelineId: string): PipelineProps => {
         },
         [onDocumentChange],
       ),
-      elementSelected: React.useCallback<PipelineEditApi["elementReinstated"]>(
-        (elementId, initialValues) => {
-          setSelectedElementId(elementId);
-          setInitialValues(initialValues);
-        },
-        [setSelectedElementId, setInitialValues],
-      ),
+      elementSelected: setSelectedElementId,
       elementSelectionCleared: React.useCallback<
         PipelineEditApi["elementSelectionCleared"]
       >(() => {
         setSelectedElementId(undefined);
-        setInitialValues({});
-      }, [setSelectedElementId, setInitialValues]),
+      }, [setSelectedElementId]),
       elementDeleted: React.useCallback<PipelineEditApi["elementDeleted"]>(
         elementId => {
           if (!!docRefContents) {

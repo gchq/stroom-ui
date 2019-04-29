@@ -21,8 +21,7 @@ import PipelineDisplay from "./PipelineDisplay";
 import { testPipelines } from "testing/data/pipelines";
 
 import usePipelineState from "../usePipelineState";
-
-const pipelineStories = storiesOf("Document Editors/Pipeline/Display", module);
+import { addThemedStories } from "testing/storybook/themedStoryGenerator";
 
 interface TestProps {
   pipelineId: string;
@@ -42,5 +41,6 @@ const TestHarness: React.FunctionComponent<TestProps> = ({
 };
 
 Object.entries(testPipelines).forEach(k => {
-  pipelineStories.add(k[0], () => <TestHarness pipelineId={k[1].uuid} />);
+  const s = storiesOf(`Document Editors/Pipeline/Display/${k[0]}`, module);
+  addThemedStories(s, () => <TestHarness pipelineId={k[1].uuid} />);
 });
