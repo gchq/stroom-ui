@@ -23,6 +23,7 @@ import AddElementModal, {
 import PipelineSettings, {
   useDialog as usePipelineSettingsDialog,
 } from "./PipelineSettings/PipelineSettings";
+import ElementImage from "./ElementImage";
 import ElementPalette from "./ElementPalette";
 import DeletePipelineElement, {
   useDialog as useDeleteElementDialog,
@@ -31,7 +32,7 @@ import { ElementDetails } from "./ElementDetails";
 import PipelineDisplay from "./PipelineDisplay";
 import DocRefEditor from "../DocRefEditor";
 import { SwitchedDocRefEditorProps } from "../DocRefEditor/types";
-import usePipelineState from "./usePipelineState";
+import usePipelineState from "./usePipelineState/usePipelineState";
 import { ButtonProps } from "components/Button/types";
 import HorizontalMainDetails from "components/HorizontalMainDetails";
 
@@ -48,6 +49,7 @@ const PipelineEditor = ({ docRefUuid }: SwitchedDocRefEditorProps) => {
     elementAdded,
     elementDeleted,
     selectedElementId,
+    selectedElementDefinition,
     elementSelectionCleared,
   } = pipelineEditApi;
 
@@ -111,22 +113,25 @@ const PipelineEditor = ({ docRefUuid }: SwitchedDocRefEditorProps) => {
         </div>
         <HorizontalMainDetails
           storageKey="pipelineEditor"
-          title="Element Properties"
+          title={
+            <div className="element-details__title">
+              {selectedElementDefinition && (
+                <ElementImage icon={selectedElementDefinition.icon} />
+              )}
+              <div>
+                <h3>{selectedElementId}</h3>
+              </div>
+            </div>
+          }
           onClose={elementSelectionCleared}
           isOpen={selectedElementId !== undefined}
           mainContent={
             <PipelineDisplay
-              pipelineId={docRefUuid}
               pipelineStateProps={piplineStateProps}
               showAddElementDialog={showAddElementDialog}
             />
           }
-          detailContent={
-            <ElementDetails
-              pipeline={pipeline}
-              pipelineEditApi={pipelineEditApi}
-            />
-          }
+          detailContent={<ElementDetails pipelineEditApi={pipelineEditApi} />}
         />
       </div>
     </DocRefEditor>

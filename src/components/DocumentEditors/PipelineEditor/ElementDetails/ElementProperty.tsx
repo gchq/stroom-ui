@@ -25,22 +25,20 @@ import {
 import ElementPropertyFieldDetails from "./ElementPropertyInheritanceInfo";
 import ElementPropertyField from "./ElementPropertyField";
 import { PipelineEditApi } from "../types";
-import { PipelineDocumentType } from "components/DocumentEditors/useDocumentApi/types/pipelineDoc";
 import { ElementPropertyType } from "components/DocumentEditors/PipelineEditor/useElements/types";
 
 interface Props {
-  pipeline: PipelineDocumentType;
   pipelineEditApi: PipelineEditApi;
   elementId: string;
   elementPropertyType: ElementPropertyType;
 }
 
 const ElementProperty: React.FunctionComponent<Props> = ({
-  pipeline,
   pipelineEditApi,
   elementId,
   elementPropertyType,
 }) => {
+  const { pipeline } = pipelineEditApi;
   const value = getElementValue(pipeline, elementId, elementPropertyType.name);
   const childValue = getChildValue(
     pipeline,

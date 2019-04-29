@@ -20,7 +20,7 @@ import { storiesOf } from "@storybook/react";
 import ElementDetails from "./ElementDetails";
 
 import { fullTestData } from "testing/data";
-import usePipelineState from "../usePipelineState";
+import usePipelineState from "../usePipelineState/usePipelineState";
 import { PipelineDocumentType } from "components/DocumentEditors/useDocumentApi/types/pipelineDoc";
 
 interface Props {
@@ -32,27 +32,13 @@ const TestHarness: React.FunctionComponent<Props> = ({
   pipelineId,
   testElementId,
 }) => {
-  const {
-    pipelineEditApi,
-    useEditorProps: {
-      editorProps: { docRefContents },
-    },
-  } = usePipelineState(pipelineId);
+  const { pipelineEditApi } = usePipelineState(pipelineId);
   const { elementSelected } = pipelineEditApi;
   React.useEffect(() => {
     elementSelected(testElementId);
   }, [elementSelected, pipelineId, testElementId]);
 
-  if (!docRefContents) {
-    return null;
-  }
-
-  return (
-    <ElementDetails
-      pipeline={docRefContents}
-      pipelineEditApi={pipelineEditApi}
-    />
-  );
+  return <ElementDetails pipelineEditApi={pipelineEditApi} />;
 };
 
 const stories = storiesOf("Document Editors/Pipeline/Element Details", module);

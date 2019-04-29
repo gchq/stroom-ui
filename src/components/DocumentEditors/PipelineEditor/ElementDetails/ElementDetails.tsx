@@ -16,37 +16,24 @@
 
 import * as React from "react";
 
-import ElementImage from "../ElementImage";
 import ElementProperty from "./ElementProperty";
 import { ElementPropertyType } from "components/DocumentEditors/PipelineEditor/useElements/types";
 import Loader from "components/Loader";
-import useElement from "components/DocumentEditors/PipelineEditor/useElement";
 import { PipelineEditApi } from "../types";
-import {
-  PipelineDocumentType,
-  PipelineElementType,
-} from "components/DocumentEditors/useDocumentApi/types/pipelineDoc";
 
 interface Props {
-  pipeline: PipelineDocumentType;
   pipelineEditApi: PipelineEditApi;
 }
 
 const ElementDetails: React.FunctionComponent<Props> = ({
-  pipeline,
   pipelineEditApi,
 }) => {
-  const { selectedElementId } = pipelineEditApi;
-  const elementType: string =
-    (pipeline &&
-      selectedElementId &&
-      pipeline.merged.elements.add &&
-      pipeline.merged.elements.add.find(
-        (element: PipelineElementType) => element.id === selectedElementId,
-      )!.type) ||
-    "";
-
-  const { definition, properties } = useElement(elementType);
+  const {
+    selectedElementId,
+    selectedElementType,
+    selectedElementDefinition,
+    selectedElementProperties,
+  } = pipelineEditApi;
 
   if (!selectedElementId) {
     return (
@@ -56,43 +43,34 @@ const ElementDetails: React.FunctionComponent<Props> = ({
     );
   }
 
-  if (!properties) {
-    return <Loader message={`Element Properties Unknown for ${elementType}`} />;
-  }
-
-  if (!definition) {
+  if (!selectedElementDefinition) {
     return (
       <Loader
-        message={`Could not find element definition for ${elementType}`}
+        message={`Could not find element definition for ${selectedElementType}`}
       />
     );
   }
 
   return (
     <React.Fragment>
-      <div className="element-details__title">
-        <ElementImage icon={definition.icon} />
-        <div>
-          <h3>{selectedElementId}</h3>
-        </div>
-      </div>
       <p className="element-details__summary">
-        This element is a <strong>{elementType}</strong>.
+        This element is a <strong>{selectedElementType}</strong>.
       </p>
       <form className="element-details__form">
-        {Object.keys(properties).length === 0 ? (
+        {Object.keys(selectedElementProperties).length === 0 ? (
           <p>There is nothing to configure for this element </p>
         ) : (
           !!selectedElementId &&
-          properties.map((elementTypeProperty: ElementPropertyType) => (
-            <ElementProperty
-              key={elementTypeProperty.name}
-              pipeline={pipeline}
-              pipelineEditApi={pipelineEditApi}
-              elementId={selectedElementId!}
-              elementPropertyType={elementTypeProperty}
-            />
-          ))
+          selectedElementProperties.map(
+            (elementPropertyType: ElementPropertyType) => (
+              <ElementProperty
+                key={elementPropertyType.name}
+                pipelineEditApi={pipelineEditApi}
+                elementId={selectedElementId!}
+                elementPropertyType={elementPropertyType}
+              />
+            ),
+          )
         )}
       </form>
     </React.Fragment>

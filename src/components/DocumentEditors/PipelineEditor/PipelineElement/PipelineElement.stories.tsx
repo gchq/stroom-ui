@@ -5,7 +5,7 @@ import PipelineElement from "./PipelineElement";
 import { testPipelines } from "testing/data/pipelines";
 import { addThemedStories } from "testing/storybook/themedStoryGenerator";
 import { PipelineDocumentType } from "components/DocumentEditors/useDocumentApi/types/pipelineDoc";
-import usePipelineState from "../usePipelineState";
+import usePipelineState from "../usePipelineState/usePipelineState";
 import JsonDebug from "testing/JsonDebug";
 
 interface Props {

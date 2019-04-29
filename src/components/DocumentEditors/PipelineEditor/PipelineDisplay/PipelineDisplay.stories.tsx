@@ -20,7 +20,7 @@ import { storiesOf } from "@storybook/react";
 import PipelineDisplay from "./PipelineDisplay";
 import { testPipelines } from "testing/data/pipelines";
 
-import usePipelineState from "../usePipelineState";
+import usePipelineState from "../usePipelineState/usePipelineState";
 import { addThemedStories } from "testing/storybook/themedStoryGenerator";
 
 interface TestProps {
@@ -33,7 +33,6 @@ const TestHarness: React.FunctionComponent<TestProps> = ({
   const pipelineStateProps = usePipelineState(pipelineId);
   return (
     <PipelineDisplay
-      pipelineId={pipelineId}
       pipelineStateProps={pipelineStateProps}
       showAddElementDialog={() => console.log("Add Element")}
     />

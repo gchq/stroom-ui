@@ -40,6 +40,7 @@ const TestHarness: React.FunctionComponent = () => {
         value={selectedElementDefinition}
         onChange={x => setSeletedElementDefinition(x as ElementDefinition)}
         getOptionLabel={d => d.type}
+        getOptionValue={d => d.type}
       />
       <Button onClick={onClick} text="Show" />
       <JsonDebug

@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import useDocumentApi from "components/DocumentEditors/useDocumentApi";
-import { useDocRefEditor } from "../DocRefEditor";
+import { useDocRefEditor } from "../../DocRefEditor";
 import {
   getPipelineAsTree,
   moveElementInPipeline,
@@ -11,9 +11,14 @@ import {
   setElementPropertyValueInPipeline,
   revertPropertyToParent,
   revertPropertyToDefault,
-} from "./pipelineUtils";
-import { PipelineEditApi, PipelineProps } from "./types";
-import { PipelineDocumentType } from "components/DocumentEditors/useDocumentApi/types/pipelineDoc";
+  getAllElementNames,
+} from "../pipelineUtils";
+import { PipelineEditApi, PipelineProps } from "../types";
+import {
+  PipelineDocumentType,
+  PipelineElementType,
+} from "components/DocumentEditors/useDocumentApi/types/pipelineDoc";
+import useElement from "../useElement";
 
 export const usePipelineState = (pipelineId: string): PipelineProps => {
   const documentApi = useDocumentApi<"Pipeline", PipelineDocumentType>(
@@ -37,11 +42,35 @@ export const usePipelineState = (pipelineId: string): PipelineProps => {
     docRefContents,
   ]);
 
+  const selectedElementType: string | undefined = React.useMemo(
+    () =>
+      (docRefContents &&
+        selectedElementId &&
+        docRefContents.merged.elements.add &&
+        docRefContents.merged.elements.add.find(
+          (element: PipelineElementType) => element.id === selectedElementId,
+        )!.type) ||
+      undefined,
+    [selectedElementId, docRefContents],
+  );
+
+  const {
+    definition: selectedElementDefinition,
+    properties: selectedElementProperties,
+  } = useElement(selectedElementType);
+
   return {
-    asTree,
     useEditorProps,
     pipelineEditApi: {
+      pipelineId,
       selectedElementId,
+      selectedElementType,
+      selectedElementDefinition,
+      selectedElementProperties,
+      pipeline: docRefContents,
+      asTree,
+      existingElementNames:
+        docRefContents !== undefined ? getAllElementNames(docRefContents) : [],
       settingsUpdated: React.useCallback<PipelineEditApi["settingsUpdated"]>(
         ({ description }) => {
           onDocumentChange({ description });

@@ -6,7 +6,10 @@ import {
   PipelineDocumentType,
 } from "components/DocumentEditors/useDocumentApi/types/pipelineDoc";
 import { PipelineAsTreeType } from "./AddElementModal/types";
-import { ElementDefinition } from "components/DocumentEditors/PipelineEditor/useElements/types";
+import {
+  ElementDefinition,
+  ElementPropertyType,
+} from "components/DocumentEditors/PipelineEditor/useElements/types";
 
 export enum DragDropTypes {
   ELEMENT = "element",
@@ -32,7 +35,6 @@ export interface PipelineSettingsValues {
 }
 
 export interface PipelineProps {
-  asTree?: PipelineAsTreeType;
   pipelineEditApi: PipelineEditApi;
   useEditorProps: UseDocRefEditorProps<PipelineDocumentType>;
 }
@@ -44,7 +46,14 @@ export interface NewElement {
 }
 
 export interface PipelineEditApi {
+  pipelineId: string;
+  pipeline: PipelineDocumentType;
   selectedElementId?: string;
+  selectedElementType?: string;
+  selectedElementDefinition?: ElementDefinition;
+  selectedElementProperties: ElementPropertyType[];
+  asTree?: PipelineAsTreeType;
+  existingElementNames: string[];
   settingsUpdated: (p: PipelineSettingsValues) => void;
   elementSelected: (elementId: string, initialValues?: object) => void;
   elementSelectionCleared: () => void;

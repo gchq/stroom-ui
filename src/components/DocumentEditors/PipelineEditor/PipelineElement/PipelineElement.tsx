@@ -36,19 +36,13 @@ import Button from "components/Button";
 
 import { ShowDialog } from "../AddElementModal/types";
 import { PipelineEditApi } from "../types";
-import { PipelineDocumentType } from "components/DocumentEditors/useDocumentApi/types/pipelineDoc";
-import { PipelineAsTreeType } from "../AddElementModal/types";
 import { ElementDefinition } from "components/DocumentEditors/PipelineEditor/useElements/types";
 
 interface Props {
-  pipelineId: string;
+  pipelineEditApi: PipelineEditApi;
   elementId: string;
   className?: string;
   showAddElementDialog: ShowDialog;
-  existingNames: string[];
-  pipelineEditApi: PipelineEditApi;
-  pipeline: PipelineDocumentType;
-  asTree: PipelineAsTreeType;
   elementDefinition: ElementDefinition;
 }
 
@@ -66,7 +60,7 @@ const dragSource: DragSourceSpec<Props, DragObject> = {
   },
   beginDrag(props) {
     return {
-      pipelineId: props.pipelineId,
+      pipelineId: props.pipelineEditApi.pipelineId,
       elementId: props.elementId,
       elementDefinition: props.elementDefinition,
     };
@@ -83,7 +77,11 @@ const dragCollect: DragSourceCollector<DragCollectedProps, Props> = (
 
 const dropTarget: DropTargetSpec<Props> = {
   canDrop(props, monitor) {
-    const { pipeline, elementId, asTree, elementDefinition } = props;
+    const {
+      elementId,
+      elementDefinition,
+      pipelineEditApi: { pipeline, asTree },
+    } = props;
 
     switch (monitor.getItemType()) {
       case DragDropTypes.ELEMENT:
@@ -122,24 +120,27 @@ const dropTarget: DropTargetSpec<Props> = {
   drop(props, monitor) {
     const {
       elementId,
-      pipelineEditApi,
+      pipelineEditApi: {
+        elementMoved,
+        elementReinstated,
+        existingElementNames,
+      },
       showAddElementDialog,
-      existingNames,
     } = props;
 
     switch (monitor.getItemType()) {
       case DragDropTypes.ELEMENT: {
         const newElementId = monitor.getItem().elementId;
-        pipelineEditApi.elementMoved(newElementId, elementId);
+        elementMoved(newElementId, elementId);
         break;
       }
       case DragDropTypes.PALLETE_ELEMENT: {
         const { element, recycleData } = monitor.getItem();
 
         if (recycleData) {
-          pipelineEditApi.elementReinstated(elementId, recycleData);
+          elementReinstated(elementId, recycleData);
         } else {
-          showAddElementDialog(elementId, element, existingNames);
+          showAddElementDialog(elementId, element, existingElementNames);
         }
         break;
       }

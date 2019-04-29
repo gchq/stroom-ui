@@ -2,11 +2,11 @@ import useElements from "../useElements";
 import { ElementDefinition, ElementPropertyType } from "../useElements/types";
 
 interface UseElement {
-  definition: ElementDefinition;
+  definition?: ElementDefinition;
   properties: ElementPropertyType[];
 }
 
-const useElement = (type: string): UseElement => {
+const useElement = (type?: string): UseElement => {
   const { elementDefinitions, elementProperties } = useElements();
 
   return {
