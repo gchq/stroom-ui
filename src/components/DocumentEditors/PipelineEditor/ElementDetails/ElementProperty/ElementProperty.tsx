@@ -21,42 +21,51 @@ import {
   getChildValue,
   getCurrentValue,
   getElementValue,
-} from "../pipelineUtils";
-import ElementPropertyFieldDetails from "./ElementPropertyInheritanceInfo";
-import ElementPropertyField from "./ElementPropertyField";
-import { PipelineEditApi } from "../types";
+} from "../../pipelineUtils";
+import ElementPropertyFieldDetails from "../ElementPropertyInheritanceInfo/ElementPropertyInheritanceInfo";
+import ElementPropertyField from "../ElementPropertyField/ElementPropertyField";
+import { PipelineEditApi } from "../../types";
 import { ElementPropertyType } from "components/DocumentEditors/PipelineEditor/useElements/types";
 
 interface Props {
   pipelineEditApi: PipelineEditApi;
-  elementId: string;
   elementPropertyType: ElementPropertyType;
 }
 
 const ElementProperty: React.FunctionComponent<Props> = ({
   pipelineEditApi,
-  elementId,
   elementPropertyType,
 }) => {
-  const { pipeline } = pipelineEditApi;
-  const value = getElementValue(pipeline, elementId, elementPropertyType.name);
+  const { pipeline, selectedElementId } = pipelineEditApi;
+  const value = getElementValue(
+    pipeline,
+    selectedElementId,
+    elementPropertyType.name,
+  );
   const childValue = getChildValue(
     pipeline,
-    elementId,
+    selectedElementId,
     elementPropertyType.name,
   );
   const parentValue = getParentProperty(
     pipeline.configStack,
-    elementId,
+    selectedElementId,
     elementPropertyType.name,
   );
-
   const currentValue = getCurrentValue(
     value,
     parentValue,
     elementPropertyType.defaultValue,
     elementPropertyType.type,
   );
+  console.log("Element Property", {
+    elementPropertyType,
+    value,
+    childValue,
+    parentValue,
+    currentValue,
+    pipeline,
+  });
 
   let type: string = elementPropertyType.type.toLowerCase();
 
@@ -73,7 +82,6 @@ const ElementProperty: React.FunctionComponent<Props> = ({
           value: currentValue,
           name,
           pipelineEditApi,
-          elementId,
           type,
           docRefTypes,
         }}
@@ -84,7 +92,6 @@ const ElementProperty: React.FunctionComponent<Props> = ({
         </p>
         <ElementPropertyFieldDetails
           pipelineEditApi={pipelineEditApi}
-          elementId={elementId}
           name={name}
           value={value}
           defaultValue={defaultValue}

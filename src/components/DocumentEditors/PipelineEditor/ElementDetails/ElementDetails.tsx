@@ -16,7 +16,7 @@
 
 import * as React from "react";
 
-import ElementProperty from "./ElementProperty";
+import ElementProperty from "./ElementProperty/ElementProperty";
 import { ElementPropertyType } from "components/DocumentEditors/PipelineEditor/useElements/types";
 import Loader from "components/Loader";
 import { PipelineEditApi } from "../types";
@@ -66,7 +66,6 @@ const ElementDetails: React.FunctionComponent<Props> = ({
               <ElementProperty
                 key={elementPropertyType.name}
                 pipelineEditApi={pipelineEditApi}
-                elementId={selectedElementId!}
                 elementPropertyType={elementPropertyType}
               />
             ),
