@@ -1,12 +1,22 @@
 .DocRefBreadcrumb__link {
   display: inline-block;
   cursor: pointer;
+  color: rgba(0,0,0,0.7);
+  text-decoration: none;
+}
+
+.DocRefBreadcrumb__link:hover {
+  text-decoration: underline;
 }
 
 .DocRefBreadcrumb__divider {
   display: inline-block;
+  padding-left: 0.2rem;
+  padding-right: 0.2rem;
+  color: rgba(0,0,0,0.3);
 }
 
 .DocRefBreadcrumb__name {
   display: inline-block;
+  color: rgba(0,0,0,0.7);
 }

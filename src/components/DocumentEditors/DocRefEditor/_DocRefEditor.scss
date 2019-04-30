@@ -2,7 +2,7 @@
   display: grid;
   align-items: center;
   grid-template-columns: auto 30rem;
-  grid-template-rows: 2rem 2rem auto 1fr;
+  grid-template-rows: 2.7rem 1.5rem auto 1fr;
   grid-template-areas:
     "header actionButtons"
     "breadcrumb breadcrumb"
@@ -23,7 +23,7 @@
 
 .DocRefEditor__breadcrumb {
   grid-area: breadcrumb;
-  padding: 0.7rem;
+  padding: 0.4rem;
 }
 
 .DocRefEditor__actionButtons {
