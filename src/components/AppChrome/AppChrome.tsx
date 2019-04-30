@@ -373,20 +373,9 @@ const AppChrome: React.FunctionComponent<AppChromeProps> = ({
       <CopyMoveDocRefDialog {...moveDialogComponentProps} />
       <div className="app-chrome flat">
         {urlPrefixInUse === DEFAULT_CHROME_MODE && (
-          <div
-            className={`app-chrome__sidebar raised-high ${sidebarClassName}`}
-          >
+          <div className={`app-chrome__sidebar ${sidebarClassName}`}>
             <React.Fragment>
-              <div
-                className="app-chrome__sidebar_header header"
-                onClick={toggleIsExpanded}
-              >
-                <FontAwesomeIcon
-                  aria-label="Show/hide the sidebar"
-                  className="menu-item__menu-icon sidebar__toggle sidebar__menu-item borderless "
-                  icon="bars"
-                  size="2x"
-                />
+              <div className="app-chrome__sidebar_header">
                 {isExpanded ? (
                   <img
                     className="sidebar__logo"
@@ -396,11 +385,22 @@ const AppChrome: React.FunctionComponent<AppChromeProps> = ({
                 ) : (
                   undefined
                 )}
+                <div
+                  className="app-chrome__sidebar_header_icon"
+                  onClick={toggleIsExpanded}
+                >
+                  <FontAwesomeIcon
+                    aria-label="Show/hide the sidebar"
+                    className="menu-item__menu-icon sidebar__toggle sidebar__menu-item borderless "
+                    icon="bars"
+                    size="2x"
+                  />
+                </div>
               </div>
               <div
                 tabIndex={0}
                 onKeyDown={onKeyDownWithShortcuts}
-                className="app-chrome__sidebar-menu raised-high"
+                className="app-chrome__sidebar-menu"
                 data-simplebar
               >
                 <div className="app-chrome__sidebar-menu__container">

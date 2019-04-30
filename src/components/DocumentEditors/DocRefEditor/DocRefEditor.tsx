@@ -51,11 +51,6 @@ const DocRefEditor = <T extends {}>({
 
   return (
     <div className="DocRefEditor">
-      <AppSearchBar
-        className="DocRefEditor__searchBar"
-        onChange={goToEditDocRef}
-      />
-
       <DocRefIconHeader
         docRefType={docRef.type}
         className="DocRefEditor__header"
@@ -66,6 +61,11 @@ const DocRefEditor = <T extends {}>({
         className="DocRefEditor__breadcrumb"
         docRefUuid={docRef.uuid}
         openDocRef={goToEditDocRef}
+      />
+
+      <AppSearchBar
+        className="DocRefEditor__searchBar"
+        onChange={goToEditDocRef}
       />
 
       <div className="DocRefEditor__actionButtons">

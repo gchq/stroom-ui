@@ -1,6 +1,6 @@
 .icon-header {
   display: inline-flex;
-  margin: 5px 5px 5px 5px;
+  margin: .36rem;
   align-items: center;
 }
 
@@ -11,4 +11,9 @@
 
 .icon-header__icon {
   padding-right: 5px;
+}
+
+.icon-header__text {
+  padding-right: 5px;
+  font-size: 18pt;
 }

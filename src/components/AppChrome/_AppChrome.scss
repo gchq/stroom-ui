@@ -33,6 +33,10 @@
   width: 100%;
 }
 
+.app-chrome__sidebar-menu:focus {
+  outline: none;
+}
+
 .app-chrome__sidebar-menu__container {
   outline: none;
   position: relative;
@@ -45,8 +49,12 @@
 }
 
 .app-chrome__sidebar_header {
-  position: relative;
-  height: 2.2rem;
+  padding-left: 0.7rem;
+  height: 2.7rem;
+}
+
+.app-chrome__sidebar_header_icon {
+  cursor: pointer;
 }
 
 .sidebar__menu-item {
@@ -56,7 +64,7 @@
 }
 
 .sidebar__menu-item.nav {
-  padding: 0.35rem 0 0.35rem 0.1rem;
+  // padding: 0.35rem 0 0.35rem 0.1rem;
   color: white;
   outline: inherit;
   white-space: nowrap;
@@ -73,6 +81,10 @@
   text-overflow: ellipsis;
   overflow-x: hidden;
 }
+
+// .sidebar__menu-item.doc {
+//   font-size: 0.85rem;
+// }
 
 .sidebar__menu-item.selected {
   font-weight: bold;
@@ -80,10 +92,6 @@
 
 .sidebar__menu-item.doc.dnd-over {
   font-weight: italic;
-}
-
-.sidebar__menu-item.doc {
-  font-size: 0.85rem;
 }
 
 .sidebar__menu-item.doc.collapsed {
@@ -104,12 +112,14 @@
   color: red;
 }
 .sidebar__toggle {
-  width: 1.5rem;
+  position: absolute;
+  right: .5rem;
+  top: .25rem;
 }
 
-.sidebar__children {
-  margin-bottom: 0.4rem;
-}
+// .sidebar__children {
+//   margin-bottom: 0.4rem;
+// }
 
 .app-chrome__content {
   position: relative;
@@ -154,14 +164,15 @@
 }
 
 .sidebar__logo {
-  display: inline;
-  align-items: center;
-  position: absolute;
-  left: 40px;
+  width: 8rem;
 }
 
 .menu-item__menu-icon {
-  padding: 0 0.3125rem 0 0.4125rem;
+  padding-left: 0.55rem;
+  padding-top: 0.35rem;
+  padding-bottom: 0.35rem;
+  width: 2.2rem;
+  overflow: hidden;
 }
 
 .sidebar__menu-item.has-children--open {
@@ -169,5 +180,5 @@
 }
 
 .menu-item__text {
-  padding-left: 0.65rem;
+  padding-top: 0.35rem;
 }

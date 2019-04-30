@@ -2,11 +2,11 @@
   display: grid;
   align-items: center;
   grid-template-columns: auto 30rem;
-  grid-template-rows: auto 2rem 2rem 1fr;
+  grid-template-rows: 2rem 2rem auto 1fr;
   grid-template-areas:
-    "searchBar searchBar"
     "header actionButtons"
     "breadcrumb breadcrumb"
+    "searchBar searchBar"
     "main main";
 
   width: 100%;

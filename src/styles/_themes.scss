@@ -1,7 +1,7 @@
 $themes: (
   light: (
     // General
-      background__color: #fff,
+    background__color: #fff,
     text__color: rgba(0, 0, 0, 0.8),
     text__color--deemphasised: #fff,
     selected-color: #cae1f1,
@@ -9,11 +9,11 @@ $themes: (
     hover-color: #e8e8e8,
     raised-low__background-color: #e4e4e4,
     raised-high__background-color: #2185d0,
-    raised-high__selected-background-color: #1c70b1,
+    raised-high__selected-background-color: red,
+    raised-high__selected-focus-background-color: #1c70b1,
     raised-element__border: 1px solid #fff,
     border: 1px solid #dfe0e1,
     // Specific
-      sidebar__header-color: #fff,
     header__icon-color: #2185d0,
     dropdown__background-color: #fff,
     dropdown__border: 1px solid #dfe0e1,
@@ -27,7 +27,15 @@ $themes: (
     icon-button__color: #4d5250,
     icon-button__color--hover: black,
     scrollbar__track-color: #d3d3d3,
-    scrollbar__thumb-color: #a7a6a6
+    scrollbar__thumb-color: #a7a6a6,
+    // Naigation menu
+    sidebar__header-color: #fff,
+    sidebar__background-color: #01579B,
+    sidebar__menu-item-background: #01579B,
+    sidebar__menu-item-background--select: #0277BD,
+    sidebar__menu-item-background--select-hover: #0288D1,
+    sidebar__menu-item-text: rgba(255,255,255,0.8),
+    sidebar__menu-item-text--select: #fff
   ),
   dark: (
     // General
@@ -40,10 +48,10 @@ $themes: (
     raised-low__background-color: #adadad,
     raised-high__background-color: #4d5250,
     raised-high__selected-background-color: #747c79,
+    raised-high__selected-focus-background-color: #747c79,
     raised-element__border: 1px solid #aaa,
     border: 1px solid #4d5250,
     // Specific
-      sidebar__header-color: white,
     header__icon-color: #2185d0,
     dropdown__background-color: #282829,
     dropdown__border: 1px solid #4d5250,

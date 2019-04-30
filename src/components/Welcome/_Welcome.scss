@@ -5,9 +5,12 @@
   flex-direction: column;
 }
 
+.welcome__body {
+  padding: 5px;
+}
+
 .welcome__image {
-  background-color: darkblue;
-  height: 75px;
+  width: 200px;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -15,5 +18,4 @@
 
 .welcome__shortcuts__table {
   width: 400px;
-  margin: 10px;
 }
