@@ -236,7 +236,7 @@ const ElementPropertyFieldDetails: React.FunctionComponent<Props> = ({
 
           <p>
             It is inheriting a value of{" "}
-            <strong> {getDisplayValue(parentValue.value[type], type)}</strong>
+            <strong> {getDisplayValue(parentValue.value[type], type)}</strong>{" "}
             but this has been overriden by the user. You can revert to this
             inherited value if you like.
           </p>
@@ -248,7 +248,10 @@ const ElementPropertyFieldDetails: React.FunctionComponent<Props> = ({
         <div>
           <p>This property has no default value.</p>
 
-          <p>This property is inheriting it&apos;s value.</p>
+          <p>
+            This property is inheriting it&apos;s value{" "}
+            <strong> {getDisplayValue(parentValue.value[type], type)}</strong>.
+          </p>
         </div>
       );
     }

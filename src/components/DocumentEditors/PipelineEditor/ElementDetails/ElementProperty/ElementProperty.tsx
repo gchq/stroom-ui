@@ -58,14 +58,6 @@ const ElementProperty: React.FunctionComponent<Props> = ({
     elementPropertyType.defaultValue,
     elementPropertyType.type,
   );
-  console.log("Element Property", {
-    elementPropertyType,
-    value,
-    childValue,
-    parentValue,
-    currentValue,
-    pipeline,
-  });
 
   let type: string = elementPropertyType.type.toLowerCase();
 

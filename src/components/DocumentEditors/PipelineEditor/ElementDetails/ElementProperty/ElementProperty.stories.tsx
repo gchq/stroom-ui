@@ -5,29 +5,34 @@ import { addThemedStories } from "testing/storybook/themedStoryGenerator";
 import usePipelineState from "components/DocumentEditors/PipelineEditor/usePipelineState";
 import ElementProperty from "./ElementProperty";
 import { fullTestData } from "testing/data";
-import { PipelineDocumentType } from "components/DocumentEditors/useDocumentApi/types/pipelineDoc";
+import {
+  PipelineDocumentType,
+  PipelineElementType,
+} from "components/DocumentEditors/useDocumentApi/types/pipelineDoc";
 import {
   ElementPropertiesType,
   ElementPropertyType,
 } from "../../useElements/types";
 import JsonDebug from "testing/JsonDebug";
+import { getParentProperty } from "../../pipelineUtils";
 
 interface Props {
   pipelineId: string;
-  testElementId: string;
-  elementPropertyType: ElementPropertyType;
+  elementId: string;
+  property: ElementPropertyType;
+  hasParentValue: boolean;
 }
 
 const TestHarness: React.FunctionComponent<Props> = ({
   pipelineId,
-  testElementId,
-  elementPropertyType,
+  elementId,
+  property,
 }) => {
   const { pipelineEditApi } = usePipelineState(pipelineId);
   const { elementSelected } = pipelineEditApi;
   React.useEffect(() => {
-    elementSelected(testElementId);
-  }, [elementSelected, pipelineId, testElementId]);
+    elementSelected(elementId);
+  }, [elementSelected, pipelineId, elementId]);
   const { pipeline } = pipelineEditApi;
 
   const piplineProperties = React.useMemo(
@@ -47,7 +52,9 @@ const TestHarness: React.FunctionComponent<Props> = ({
 
   return pipeline !== undefined ? (
     <div>
-      <ElementProperty {...{ pipelineEditApi, elementPropertyType }} />
+      <ElementProperty
+        {...{ pipelineEditApi, elementPropertyType: property }}
+      />
       <JsonDebug value={{ piplineProperties }} />
     </div>
   ) : (
@@ -57,13 +64,31 @@ const TestHarness: React.FunctionComponent<Props> = ({
 
 class TestDeduplicator {
   elementPropertyTypesSeen: string[] = [];
+  elementPropertyTypesSeenWithParent: string[] = [];
 
-  isUnique(property: ElementPropertyType) {
-    let unique: boolean = !this.elementPropertyTypesSeen.includes(
-      property.type,
-    );
-    this.elementPropertyTypesSeen.push(property.type);
-    return unique;
+  isUnique(
+    pipeline: PipelineDocumentType,
+    element: PipelineElementType,
+    property: ElementPropertyType,
+  ): Props | undefined {
+    const hasParentValue: boolean =
+      getParentProperty(pipeline.configStack, element.id, property.name) !==
+      undefined;
+    let listToUse: string[] = hasParentValue
+      ? this.elementPropertyTypesSeenWithParent
+      : this.elementPropertyTypesSeen;
+    let unique: boolean = !listToUse.includes(property.type);
+
+    listToUse.push(property.type);
+
+    return unique
+      ? {
+          hasParentValue,
+          pipelineId: pipeline.uuid,
+          elementId: element.id,
+          property,
+        }
+      : undefined;
   }
 }
 
@@ -74,21 +99,16 @@ fullTestData.documents.Pipeline.forEach((pipeline: PipelineDocumentType) => {
     const elementProperties: ElementPropertiesType =
       fullTestData.elementProperties[element.type];
     Object.values(elementProperties)
-      .filter(p => testDeduplicator.isUnique(p))
-      .forEach((elementProperty: ElementPropertyType) => {
+      .map(p => testDeduplicator.isUnique(pipeline, element, p))
+      .filter(p => p !== undefined)
+      .forEach(props => {
         const stories = storiesOf(
           `Document Editors/Pipeline/Element Details/Element Property/${
-            elementProperty.type
-          }`,
+            props.property.type
+          }-${props.hasParentValue ? "parent" : "noParent"}`,
           module,
         );
-        addThemedStories(stories, () => (
-          <TestHarness
-            pipelineId={pipeline.uuid}
-            testElementId={element.id}
-            elementPropertyType={elementProperty}
-          />
-        ));
+        addThemedStories(stories, () => <TestHarness {...props} />);
       });
   });
 });
