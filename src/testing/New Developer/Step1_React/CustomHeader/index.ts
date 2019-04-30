@@ -4,6 +4,4 @@
  */
 import CustomHeader from "./CustomHeader";
 
-export { CustomHeader };
-
 export default CustomHeader;

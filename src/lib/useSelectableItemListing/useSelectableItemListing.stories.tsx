@@ -35,6 +35,7 @@ const TestList = () => {
     selectedItem,
     focusIndex,
     toggleSelection,
+    ...restOfSelectable
   } = useSelectableItemListing({
     getKey: a => a.name,
     openItem: a => setLastAction(`Opened Item ${a.name}`),
@@ -69,7 +70,16 @@ const TestList = () => {
           </li>
         ))}
       </ul>
-      <JsonDebug value={{ lastAction, externalSelectedItem }} />
+      <JsonDebug
+        value={{
+          lastAction,
+          externalSelectedItem,
+          selectedItemIndexes,
+          selectedItem,
+          focusIndex,
+          ...restOfSelectable,
+        }}
+      />
     </div>
   );
 };

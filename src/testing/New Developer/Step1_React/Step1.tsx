@@ -3,7 +3,7 @@ import * as React from "react";
 
 // Imports must be relative
 // Notice that I can import the 'directory' and it will look for the index.ts file and import stuff from there.
-import { CustomHeader } from "./CustomHeader";
+import CustomHeader from "./CustomHeader";
 
 /**
  * Simple Function Component
@@ -17,7 +17,7 @@ export const Step1 = () => {
   return (
     <div>
       <CustomHeader title="Hello React" />
-      <p>This is a basic 'Function Component'.</p>
+      <p>This is a basic Function Component.</p>
       <p>
         React used to use classes, which allowed things like state and side
         effects, but that has all gone away in favour of hooks now. So Function
@@ -25,8 +25,8 @@ export const Step1 = () => {
       </p>
       <p>
         This function demonstrates the composition of sub components with a
-        'Custom Header'. This custom header requires a 'title' prop, it then
-        puts that title into a h1 tag with some fixed text.
+        Custom Header. This custom header requires a title prop, it then puts
+        that title into a h1 tag with some fixed text.
       </p>
       <p>
         Props are a fundamental React concept, they are values which are passed
