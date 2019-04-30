@@ -55,7 +55,7 @@ export const Button = ({
       default:
         fontAwesomeSize = "1x";
     }
-    return "sm";
+    return "lg";
   }, [size]);
 
   return (

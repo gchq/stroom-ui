@@ -1,7 +1,7 @@
 .DocRefEditor {
   display: grid;
   align-items: center;
-  grid-template-columns: auto 30rem;
+  // grid-template-columns: auto 30rem;
   grid-template-rows: 2.7rem 1.5rem auto 1fr;
   grid-template-areas:
     "header actionButtons"
@@ -13,9 +13,32 @@
   height: 100%;
 }
 
+.DocRefEditor__focusarea {
+  outline: none;
+}
+
 .DocRefEditor__searchBar {
   grid-area: searchBar;
+  padding: 0.4rem;
 }
+
+// .DocRefEditor__searchBar * {
+//   padding: 0px !important;
+//   margin: 0px !important;
+// }
+
+.DocRefEditor__searchBar__value-container {
+  padding: 0px 8px !important;
+}
+
+.DocRefEditor__searchBar__control {
+  border-radius: 100px !important;
+}
+
+// .DocRefEditor__searchBar__control:hover{
+//   border: 1px solid #0277bd !important;
+//   box-shadow: 0 0 0 1px #0277bd !important;
+// }
 
 .DocRefEditor__header {
   grid-area: header;

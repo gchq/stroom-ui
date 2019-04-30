@@ -240,6 +240,7 @@ const AppSearchBar: React.FunctionComponent<Props> = ({
   return (
     <Select
       className={className}
+      classNamePrefix={className}
       {...{
         onOptionFocus,
         modeOptionProps,

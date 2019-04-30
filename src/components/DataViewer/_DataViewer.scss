@@ -1,10 +1,6 @@
 @import "./DataDetails/ErrorTable/ErrorTable";
 @import "./DataDetails/EventView/EventView";
 @import "./DetailsTabs";
-.DataTable__container {
-  height: calc(100% - 40px);
-  position: relative;
-}
 
 .DataTable__reactTable__container {
   position: absolute;
@@ -23,26 +19,52 @@
   border: none;
 }
 
-.DataTable__reactTable .rt-td {
-  padding: 2px 2px;
+.ReactTable .-pagination {
+  display: grid;
+  grid-template-columns: 4rem 1fr 4rem;
+  box-shadow: 0 0 4px 0 rgba(0,0,0,0.1);
 }
 
-.DataTable__reactTable .rt-tbody .rt-td {
+.ReactTable .rt-thead {
+  flex: 0 0 auto; // Stop rows expanding to fit all vertical space
+  // box-shadow: 0 1px 4px 0 rgba(0,0,0,0.15);
+  // border: none;
+}
+
+.ReactTable .rt-tbody {
+  flex: 0 1 auto; // Stop rows expanding to fit all vertical space
+}
+
+.DataTable__container .rt-td {
+  padding: 2px 4px;
+}
+
+// .DataTable__container .rt-thead {
+//   flex: 0 0 auto; // Stop rows expanding to fit all vertical space
+//   // box-shadow: 0 1px 4px 0 rgba(0,0,0,0.15);
+//   // border: none;
+// }
+
+// .DataTable__container .rt-tbody {
+//   flex: 0 1 auto; // Stop rows expanding to fit all vertical space
+// }
+
+.DDataTable__container .rt-tbody .rt-td {
   border-right: none; // Make the table much more compact
 }
 
-.DataTable__reactTable .rt-table .rt-body .rt-tr-group {
+.DataTable__container .rt-table .rt-body .rt-tr-group {
   max-height: 23px;
 }
 
-.DataTable__reactTable .rt-tbody .rt-tr-group {
+.DataTable__container .rt-tbody .rt-tr-group {
   max-height: 23px;
 }
 
-.DataTable__reactTable .rt-thead.-header {
-  box-shadow: none;
-  border-bottom: solid 1px lightgrey;
-}
+// .DataTable__container .rt-thead.-header {
+//   box-shadow: none;
+//   border-bottom: solid 1px lightgrey;
+// }
 
 .DataTable__selectedRow {
   background-color: $selected-item-colour;
@@ -56,7 +78,21 @@
   width: 100%;
 }
 
+.data-viewer {
+  display: grid;
+  align-items: center;
+  // grid-template-columns: auto 30rem;
+  grid-template-rows: 2.7rem auto;
+  grid-template-areas:
+    "header"
+    "main";
+
+  width: 100%;
+  height: 100%;
+}
+
 .data-viewer__header {
+  grid-area: header;
   width: 100%;
   display: inline-flex;
   flex-direction: row;
@@ -64,4 +100,15 @@
 
 .data-viewer__search-bar {
   flex-grow: 1;
+}
+
+// .data-viewer__table {
+//   grid-area: main;
+// }
+
+.DataTable__container {
+  grid-area: main;
+  position: relative;
+  width: 100%;
+  height: 100%;
 }

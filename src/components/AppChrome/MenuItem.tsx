@@ -164,7 +164,7 @@ const MenuItem: React.FunctionComponent<EnhancedProps> = ({
     classNames.push("is-active");
   }
 
-  const style = { paddingLeft: `${depth * 0.7}rem` };
+  const style = { paddingLeft: `${depth * 1.5}rem` };
   const className = classNames.join(" ");
 
   const hasChildrenIcon = `folder${

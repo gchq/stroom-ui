@@ -57,6 +57,14 @@ const DocRefEditor = <T extends {}>({
         text={docRef.name || "no name"}
       />
 
+      <div className="DocRefEditor__actionButtons">
+        {actionBarItems
+          .concat(additionalActionBarItems || [])
+          .map((actionBarItem, i) => (
+            <Button key={i} circular {...actionBarItem} />
+          ))}
+      </div>
+
       <DocRefBreadcrumb
         className="DocRefEditor__breadcrumb"
         docRefUuid={docRef.uuid}
@@ -68,13 +76,6 @@ const DocRefEditor = <T extends {}>({
         onChange={goToEditDocRef}
       />
 
-      <div className="DocRefEditor__actionButtons">
-        {actionBarItems
-          .concat(additionalActionBarItems || [])
-          .map((actionBarItem, i) => (
-            <Button key={i} circular {...actionBarItem} />
-          ))}
-      </div>
       <div className="DocRefEditor__main">{children}</div>
     </div>
   );

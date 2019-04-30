@@ -22,10 +22,10 @@ $themes: (
     breadcrumb__section___color: black,
     breadcrumb__section--active___color: black,
     icon-button__border: none,
-    icon-button__background-color: #e4e4e4,
-    icon-button__background-color--hover: #a8a8a8,
-    icon-button__color: #4d5250,
-    icon-button__color--hover: black,
+    icon-button__background-color: transparent,
+    icon-button__background-color--hover: transparent,
+    icon-button__color: #9e9e9e,
+    icon-button__color--hover: #212121,
     scrollbar__track-color: #d3d3d3,
     scrollbar__thumb-color: #a7a6a6,
     // Naigation menu
@@ -60,11 +60,19 @@ $themes: (
     breadcrumb__section___color: white,
     breadcrumb__section--active___color: white,
     icon-button__border: none,
-    icon-button__background-color: #282829,
-    icon-button__background-color--hover: #616161,
+    icon-button__background-color: transparent,
+    icon-button__background-color--hover: transparent,
     icon-button__color: #adadad,
     icon-button__color--hover: #ffffff,
     scrollbar__track-color: #333333,
-    scrollbar__thumb-color: #848484
+    scrollbar__thumb-color: #848484,
+    // Naigation menu
+    sidebar__header-color: #fff,
+    sidebar__background-color: #424242,
+    sidebar__menu-item-background: #424242,
+    sidebar__menu-item-background--select: #616161,
+    sidebar__menu-item-background--select-hover: #757575,
+    sidebar__menu-item-text: rgba(255,255,255,0.8),
+    sidebar__menu-item-text--select: #fff
   )
 );

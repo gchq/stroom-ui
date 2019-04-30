@@ -20,7 +20,9 @@ import IconHeader from "components/IconHeader";
 
 const Welcome: React.FunctionComponent = () => (
   <div className="welcome">
-    <IconHeader icon="home" text="Welcome" />
+    <div className="welcome__header">
+      <IconHeader icon="home" text="Welcome" />
+    </div>
     <div className="welcome__body">
       <img
         className="welcome__image"

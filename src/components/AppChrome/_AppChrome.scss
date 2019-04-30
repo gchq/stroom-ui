@@ -23,7 +23,7 @@
 }
 
 .app-chrome__sidebar--collapsed {
-  width: 2.5rem;
+  width: 2.2rem;
 }
 
 .app-chrome__sidebar-menu {
@@ -61,6 +61,8 @@
   display: inline-flex;
   outline: none;
   width: 100%;
+  height: 1.8rem;
+  overflow: hidden;
 }
 
 .sidebar__menu-item.nav {
@@ -113,8 +115,8 @@
 }
 .sidebar__toggle {
   position: absolute;
-  right: .5rem;
-  top: .25rem;
+  right: .36rem;
+  top: .4rem;
 }
 
 // .sidebar__children {
@@ -147,10 +149,6 @@
   margin: 0;
 }
 
-.content-tabs__grid {
-  display: block;
-}
-
 .app-chrome__content .ui.grid .column {
   padding: 0.3rem;
 }
@@ -168,11 +166,12 @@
 }
 
 .menu-item__menu-icon {
-  padding-left: 0.55rem;
+  // padding-left: 0.55rem;
   padding-top: 0.35rem;
   padding-bottom: 0.35rem;
   width: 2.2rem;
   overflow: hidden;
+  text-align: center;
 }
 
 .sidebar__menu-item.has-children--open {
