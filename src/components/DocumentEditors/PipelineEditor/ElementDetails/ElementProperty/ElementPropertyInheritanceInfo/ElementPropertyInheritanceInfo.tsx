@@ -18,7 +18,7 @@ import * as React from "react";
 
 import Button from "components/Button";
 
-import { PipelineEditApi } from "../../types";
+import { PipelineEditApi } from "../../../types";
 
 interface Props {
   pipelineEditApi: PipelineEditApi;

@@ -17,14 +17,14 @@
 import * as React from "react";
 
 import AppSearchBar from "components/AppSearchBar";
-import { PipelineEditApi } from "../../types";
+import { PipelineEditApi } from "../../../types";
 
 interface Props {
   value: any;
   name: string;
   pipelineEditApi: PipelineEditApi;
   type: string;
-  docRefTypes?: string[];
+  docRefType?: string;
 }
 
 /**
@@ -41,7 +41,7 @@ const ElementPropertyField: React.FunctionComponent<Props> = ({
   name,
   pipelineEditApi: { selectedElementId, elementPropertyUpdated },
   type,
-  docRefTypes,
+  docRefType,
 }) => {
   let elementField;
   switch (type) {
@@ -78,13 +78,13 @@ const ElementPropertyField: React.FunctionComponent<Props> = ({
         </div>
       );
       break;
-    case "docref":
+    case "entity":
       elementField = (
         <AppSearchBar
-          typeFilters={docRefTypes}
+          typeFilter={docRefType}
           value={value}
           onChange={node =>
-            elementPropertyUpdated(selectedElementId, name, "docref", node)
+            elementPropertyUpdated(selectedElementId, name, "entity", node)
           }
         />
       );

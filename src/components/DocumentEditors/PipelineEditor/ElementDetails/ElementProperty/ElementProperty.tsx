@@ -22,8 +22,8 @@ import {
   getCurrentValue,
   getElementValue,
 } from "../../pipelineUtils";
-import ElementPropertyFieldDetails from "../ElementPropertyInheritanceInfo/ElementPropertyInheritanceInfo";
-import ElementPropertyField from "../ElementPropertyField/ElementPropertyField";
+import ElementPropertyInheritanceInfo from "./ElementPropertyInheritanceInfo";
+import ElementPropertyField from "./ElementPropertyField";
 import { PipelineEditApi } from "../../types";
 import { ElementPropertyType } from "components/DocumentEditors/PipelineEditor/useElements/types";
 
@@ -70,7 +70,8 @@ const ElementProperty: React.FunctionComponent<Props> = ({
   let type: string = elementPropertyType.type.toLowerCase();
 
   let defaultValue: any = elementPropertyType.defaultValue;
-  let docRefTypes: string[] | undefined = elementPropertyType.docRefTypes;
+  let docRefType: string | undefined =
+    elementPropertyType.docRefTypes && elementPropertyType.docRefTypes[0];
   let name: string = elementPropertyType.name;
   let description: string = elementPropertyType.description;
 
@@ -83,14 +84,14 @@ const ElementProperty: React.FunctionComponent<Props> = ({
           name,
           pipelineEditApi,
           type,
-          docRefTypes,
+          docRefType,
         }}
       />
       <div className="element-property__advice">
         <p>
           The <em>field name</em> of this property is <strong>{name}</strong>
         </p>
-        <ElementPropertyFieldDetails
+        <ElementPropertyInheritanceInfo
           pipelineEditApi={pipelineEditApi}
           name={name}
           value={value}

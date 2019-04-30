@@ -21,7 +21,11 @@ import ElementDetails from "./ElementDetails";
 
 import { fullTestData } from "testing/data";
 import usePipelineState from "../usePipelineState/usePipelineState";
-import { PipelineDocumentType } from "components/DocumentEditors/useDocumentApi/types/pipelineDoc";
+import {
+  PipelineDocumentType,
+  PipelineElementType,
+} from "components/DocumentEditors/useDocumentApi/types/pipelineDoc";
+import { addThemedStories } from "testing/storybook/themedStoryGenerator";
 
 interface Props {
   pipelineId: string;
@@ -41,23 +45,35 @@ const TestHarness: React.FunctionComponent<Props> = ({
   return <ElementDetails pipelineEditApi={pipelineEditApi} />;
 };
 
-const stories = storiesOf("Document Editors/Pipeline/Element Details", module);
+// Only one story for each element type is required
+// Work through the adding previously unseen elements into the stories
+class TestDeduplicator {
+  elementTypesSeen: string[] = [];
 
-const elementTypesSeen: string[] = [];
+  isUnique(element: PipelineElementType) {
+    if (!this.elementTypesSeen.includes(element.type)) {
+      this.elementTypesSeen.push(element.type);
+      return true;
+    }
+    return false;
+  }
+}
+
+const testDeduplicator: TestDeduplicator = new TestDeduplicator();
 
 Object.values(fullTestData.documents.Pipeline)
   .map(p => p as PipelineDocumentType)
   .forEach(pipeline => {
     pipeline.merged.elements
-      .add!.filter(element => {
-        if (!elementTypesSeen.includes(element.type)) {
-          elementTypesSeen.push(element.type);
-          return true;
-        }
-        return false;
-      })
+      .add!.filter(e => testDeduplicator.isUnique(e))
       .forEach(element => {
-        stories.add(element.type, () => (
+        const stories = storiesOf(
+          `Document Editors/Pipeline/Element Details/Element Types/${
+            element.type
+          }`,
+          module,
+        );
+        addThemedStories(stories, () => (
           <TestHarness pipelineId={pipeline.uuid} testElementId={element.id} />
         ));
       });

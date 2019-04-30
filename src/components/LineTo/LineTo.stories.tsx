@@ -131,7 +131,39 @@ const ElbowDownTest: React.FunctionComponent = () => {
   );
 };
 
+let multiBlockStyle: React.CSSProperties = {
+  display: "flex",
+  width: "100%",
+  height: "100%",
+};
+let multiBlockPartStyle: React.CSSProperties = {
+  borderStyle: "solid",
+  width: "100%",
+  height: "100%",
+};
+
+const MultipleLineContainersTest: React.FunctionComponent = () => (
+  <div>
+    <h2>This tests is the relative positions are calculated correctly</h2>
+    <div style={multiBlockStyle}>
+      <div style={{ ...multiBlockPartStyle, borderColor: "lime" }}>
+        LINE
+        <DefaultLineTest />
+      </div>
+      <div style={{ ...multiBlockPartStyle, borderColor: "lightblue" }}>
+        CURVE
+        <CurveTest />
+      </div>
+      <div style={{ ...multiBlockPartStyle, borderColor: "yellow" }}>
+        ELBOW
+        <ElbowDownTest />
+      </div>
+    </div>
+  </div>
+);
+
 storiesOf("General Purpose/Line To SVG", module)
   .add("Default Line", () => <DefaultLineTest />)
   .add("Elbow Down", () => <ElbowDownTest />)
-  .add("Curve", () => <CurveTest />);
+  .add("Curve", () => <CurveTest />)
+  .add("Multiple", () => <MultipleLineContainersTest />);

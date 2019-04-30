@@ -20,7 +20,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import DocRefBreadcrumb from "components/DocRefBreadcrumb";
 
 export interface Props {
-  typeFilters?: string[];
+  typeFilter?: string;
   onChange: (d: DocRefType) => any;
   value?: DocRefType;
   className?: string;
@@ -96,7 +96,7 @@ const Menu: React.FunctionComponent<MenuProps<DocRefType>> = props => {
 };
 
 const AppSearchBar: React.FunctionComponent<Props> = ({
-  typeFilters = [],
+  typeFilter,
   onChange,
   value,
   className,
@@ -106,7 +106,14 @@ const AppSearchBar: React.FunctionComponent<Props> = ({
   const [focussedDocRef, onOptionFocus] = React.useState<
     DocRefType | undefined
   >(undefined);
-  const { recentItems } = useRecentItems();
+  const { recentItems: recentItemsAll } = useRecentItems();
+  const recentItems: DocRefType[] = React.useMemo(
+    () =>
+      !!typeFilter
+        ? recentItemsAll.filter(r => r.type === typeFilter)
+        : recentItemsAll,
+    [recentItemsAll, typeFilter],
+  );
   const {
     searchMode,
     componentProps: modeOptionProps,
@@ -121,20 +128,16 @@ const AppSearchBar: React.FunctionComponent<Props> = ({
       switchMode(
         newValue.length > 0 ? SearchMode.GLOBAL_SEARCH : SearchMode.NAVIGATION,
       );
-      searchApp({ term: newValue });
+      searchApp({ term: newValue, docRefType: typeFilter });
       setSearchTerm(newValue);
     },
-    [searchApp, switchMode, setSearchTerm],
+    [typeFilter, searchApp, switchMode, setSearchTerm],
   );
 
   const onThisChange = React.useCallback(
     (docRef: DocRefType) => {
       if (docRef.type === "Folder") {
-        if (
-          !typeFilters ||
-          typeFilters.length === 0 ||
-          typeFilters.includes("Folder")
-        ) {
+        if (!typeFilter || typeFilter === "Folder") {
           onChange(docRef);
         } else {
           setNavFolder(docRef);
@@ -143,14 +146,14 @@ const AppSearchBar: React.FunctionComponent<Props> = ({
         onChange(docRef);
       }
     },
-    [typeFilters, onChange, setNavFolder],
+    [typeFilter, onChange, setNavFolder],
   );
 
   const documentTreeToUse: DocRefTree = React.useMemo(() => {
-    return typeFilters.length > 0
-      ? filterTree(documentTree, d => typeFilters.includes(d.type))!
+    return typeFilter !== undefined
+      ? filterTree(documentTree, d => typeFilter === d.type)!
       : documentTree;
-  }, [typeFilters, documentTree]);
+  }, [typeFilter, documentTree]);
   const navFolderToUse = navFolder || documentTreeToUse;
   let docRefs: DocRefType[] = [];
   let parentFolder: DocRefType | undefined = undefined;

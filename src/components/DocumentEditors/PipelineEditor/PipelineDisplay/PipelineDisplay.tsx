@@ -23,7 +23,7 @@ import { PipelineLayoutGrid } from "../types";
 import { ShowDialog as ShowAddElementDialog } from "../AddElementModal/types";
 import { PipelineProps } from "../types";
 import useElements from "components/DocumentEditors/PipelineEditor/useElements";
-import { LineContainer, LineTo } from "components/LineTo";
+import { LineContainer, LineTo, LineEndpoint } from "components/LineTo";
 import { PipelineElementType } from "components/DocumentEditors/useDocumentApi/types/pipelineDoc";
 
 interface Props {
@@ -83,14 +83,18 @@ export const Pipeline: React.FunctionComponent<Props> = ({
                     let elementPropertiesThis = elementProperties[element.type];
 
                     return (
-                      <PipelineElement
+                      <LineEndpoint
                         key={element.id}
-                        elementId={element.id}
-                        showAddElementDialog={showAddElementDialog}
-                        elementDefinition={elementDefinition}
-                        elementProperties={elementPropertiesThis}
-                        pipelineEditApi={pipelineEditApi}
-                      />
+                        lineEndpointId={element.id}
+                      >
+                        <PipelineElement
+                          elementId={element.id}
+                          showAddElementDialog={showAddElementDialog}
+                          elementDefinition={elementDefinition}
+                          elementProperties={elementPropertiesThis}
+                          pipelineEditApi={pipelineEditApi}
+                        />
+                      </LineEndpoint>
                     );
                   })}
             </div>

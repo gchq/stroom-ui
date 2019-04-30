@@ -82,7 +82,7 @@ export const CopyMoveDocRefDialog: React.FunctionComponent<Props> = ({
         <form>
           <div>
             <label>Destination</label>
-            <AppSearchBar {...destinationProps} typeFilters={[]} />
+            <AppSearchBar {...destinationProps} typeFilter="Folder" />
           </div>
           <div>
             <label>Permission Inheritance</label>
