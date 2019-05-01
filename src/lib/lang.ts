@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import * as dateFormat from "dateformat";
 
 function hasAnyProps(object: any) {
   let hasProps = false;
@@ -24,4 +25,9 @@ function hasAnyProps(object: any) {
   return hasProps;
 }
 
-export { hasAnyProps };
+const formatDate = (dateString: string) => {
+  const dateFormatString = "ddd mmm d yyyy, hh:MM:ss";
+  return dateString ? dateFormat(dateString, dateFormatString) : "";
+};
+
+export { formatDate, hasAnyProps };

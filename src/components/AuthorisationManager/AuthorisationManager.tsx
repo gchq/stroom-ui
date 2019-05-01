@@ -1,11 +1,9 @@
 import * as React from "react";
 import { useManageUsers } from "components/AuthorisationManager/api/userGroups";
 import Button from "components/Button";
-import IconHeader from "components/IconHeader";
 import ThemedConfirm, {
   useDialog as useThemedConfim,
 } from "components/ThemedConfirm";
-import useForm from "lib/useForm";
 import useAppNavigation from "../AppChrome/useAppNavigation";
 import NewUserDialog, {
   useDialog as useNewUserDialog,
@@ -15,22 +13,15 @@ import {
   UserPickerDialog,
 } from "./UserPickerDialog";
 import UsersTable, { useTable } from "./UsersTable";
+import Toggle from "react-toggle";
+import IconHeader from "components/IconHeader";
 
 interface Props {
   isGroup: boolean;
 }
 
-interface Values {
-  name: string;
-  uuid: string;
-}
-
-const defaultValues: Values = {
-  name: "",
-  uuid: "",
-};
-
 const Authorisation: React.FunctionComponent<Props> = ({ isGroup }) => {
+  const [filterable, setFilteringEnabled] = React.useState(false);
   const { goToAuthorisationsForUser } = useAppNavigation();
   const {
     findUsers,
@@ -40,7 +31,9 @@ const Authorisation: React.FunctionComponent<Props> = ({ isGroup }) => {
     addUserToGroup,
   } = useManageUsers();
 
-  const { componentProps: tableProps } = useTable(users);
+  const { componentProps: tableProps } = useTable(users, {
+    filterable,
+  });
   const {
     selectableTableProps: { selectedItems: selectedUsers },
   } = tableProps;
@@ -66,16 +59,6 @@ const Authorisation: React.FunctionComponent<Props> = ({ isGroup }) => {
     }, [selectedUsers, deleteUser]),
   });
 
-  const { useTextInput } = useForm({
-    initialValues: defaultValues,
-    onValidate: React.useCallback(
-      ({ name, uuid }: Partial<Values>) => findUsers(name, isGroup, uuid),
-      [isGroup, findUsers],
-    ),
-  });
-  const nameProps = useTextInput("name");
-  const uuidProps = useTextInput("uuid");
-
   const {
     componentProps: userGroupPickerProps,
     showDialog: showGroupPicker,
@@ -95,6 +78,9 @@ const Authorisation: React.FunctionComponent<Props> = ({ isGroup }) => {
     }
   }, [selectedUsers, goToAuthorisationsForUser]);
 
+  // Ensure find users is called
+  React.useEffect(findUsers, [findUsers]);
+
   return (
     <div className="page">
       <div className="page__header">
@@ -112,14 +98,30 @@ const Authorisation: React.FunctionComponent<Props> = ({ isGroup }) => {
         </form>
       </div>
       <div className="page__buttons">
-        <Button text="Create" onClick={showNewDialog} />
         <Button
-          text="View/Edit"
-          disabled={selectedUsers.length !== 1}
-          onClick={onViewEditClick}
+          className="toolbar-button-small primary"
+          onClick={showNewDialog}
+          icon="plus"
+          text="Create"
         />
         <Button
-          text="Add to Group"
+          className="toolbar-button-small primary"
+          disabled={selectedUsers.length !== 1}
+          onClick={onViewEditClick}
+          icon="edit"
+          text="View/edit"
+        />
+        <Button
+          disabled={selectedUsers.length !== 1}
+          onClick={showDeleteDialog}
+          className="toolbar-button-small primary"
+          icon="trash"
+          text="Delete"
+        />
+        <Button
+          text="To Group"
+          icon="plus"
+          className="toolbar-button-small primary"
           disabled={
             selectedUsers.length === 0 || !!selectedUsers.find(u => u.group)
           }

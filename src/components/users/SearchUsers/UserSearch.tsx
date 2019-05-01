@@ -16,14 +16,18 @@
 
 import * as React from "react";
 import { useState } from "react";
-import ReactTable, { RowInfo, ComponentPropsGetterR } from "react-table";
+import ReactTable, {
+  RowInfo,
+  ComponentPropsGetterR,
+  Column,
+} from "react-table";
 import "react-table/react-table.css";
 import Toggle from "react-toggle";
 import "react-toggle/style.css";
 import Button from "components/Button";
 import { User } from "../types";
 import { getColumnFormat } from "./tableCustomisations";
-import IconHeader from "components/IconHeader";
+import IconHeader from "components/IconHeader";";
 
 interface UserSearchProps {
   onNewUserClicked: () => void;
@@ -40,8 +44,7 @@ const UserSearch: React.FunctionComponent<UserSearchProps> = ({
 }) => {
   const [isFilteringEnabled, setFilteringEnabled] = useState(false);
   const [selectedUser, setSelectedUser] = useState("");
-
-  const deleteButtonDisabled = !selectedUser;
+  const columns: Column<User>[] = useColumns(selectedUser);
 
   const getTrProps: ComponentPropsGetterR = React.useCallback(
     (state: any, rowInfo: RowInfo | undefined) => {
@@ -76,12 +79,13 @@ const UserSearch: React.FunctionComponent<UserSearchProps> = ({
         />
         {deleteButtonDisabled ? (
           <div>
-            <Button
-              className="toolbar-button-small primary"
-              disabled
-              icon="edit"
-              text="View/edit"
-            />
+        <Button
+          className="toolbar-button-small primary"
+          disabled={!selectedUser}
+          onClick={() => onUserOpen(selectedUser)}
+          icon="edit"
+          text="View/edit"
+        />
           </div>
         ) : (
           <Button
@@ -91,9 +95,8 @@ const UserSearch: React.FunctionComponent<UserSearchProps> = ({
             text="View/edit"
           />
         )}
-
         <Button
-          disabled={deleteButtonDisabled}
+          disabled={!selectedUser}
           onClick={() => {
             if (!!selectedUser) {
               onDeleteUser(selectedUser);
@@ -114,21 +117,21 @@ const UserSearch: React.FunctionComponent<UserSearchProps> = ({
         </div>
       </div>
       <div className="page__body">
-        <ReactTable
-          data={users}
-          className="fill-space -striped -highlight"
-          columns={getColumnFormat(selectedUser)}
-          defaultSorted={[
-            {
-              id: "email",
-              desc: true,
-            },
-          ]}
-          filterable={isFilteringEnabled}
-          showPagination
-          defaultPageSize={50}
-          getTrProps={getTrProps}
-        />
+          <ReactTable
+            data={users}
+            className="fill-space -striped -highlight"
+            columns={columns}
+            defaultSorted={[
+              {
+                id: "email",
+                desc: true,
+              },
+            ]}
+            filterable={isFilteringEnabled}
+            showPagination
+            defaultPageSize={50}
+            getTrProps={getTrProps}
+          />
       </div>
     </div>
   );

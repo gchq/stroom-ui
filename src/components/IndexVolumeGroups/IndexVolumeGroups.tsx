@@ -11,10 +11,12 @@ import NewIndexVolumeGroupDialog, {
 import ThemedConfirm, {
   useDialog as useConfirmDialog,
 } from "components/ThemedConfirm";
-import IconHeader from "components/IconHeader";
 import useAppNavigation from "../AppChrome/useAppNavigation";
+import Toggle from "react-toggle";
+import DocRefIconHeader from "components/DocRefIconHeader";
 
 const IndexVolumeGroups: React.FunctionComponent = () => {
+  const [filterable, setFilteringEnabled] = React.useState(false);
   const { goToIndexVolumeGroup } = useAppNavigation();
 
   const {
@@ -23,7 +25,7 @@ const IndexVolumeGroups: React.FunctionComponent = () => {
     deleteIndexVolumeGroup,
   } = useIndexVolumeGroups();
 
-  const { componentProps: tableProps } = useTable(groups);
+  const { componentProps: tableProps } = useTable(groups, { filterable });
   const {
     selectableTableProps: { selectedItems: selectedGroups },
   } = tableProps;
@@ -59,7 +61,7 @@ const IndexVolumeGroups: React.FunctionComponent = () => {
   return (
     <div className="page">
       <div className="page__header">
-        <IconHeader text="Index Volume Groups" icon="database" />
+        <DocRefIconHeader text="Index Volumes Groups" docRefType="Index" />
       </div>
       <div className="page__search" />
       <div className="page__body">
@@ -67,19 +69,41 @@ const IndexVolumeGroups: React.FunctionComponent = () => {
       </div>
 
       <div className="page__buttons">
-        <Button text="Create" onClick={showNewDialog} />
         <Button
-          text="View/Edit"
+          className="toolbar-button-small primary"
+          onClick={showNewDialog}
+          icon="plus"
+          text="Create"
+        />
+        <Button
+          className="toolbar-button-small primary"
           disabled={selectedGroups.length !== 1}
           onClick={onViewEditClick}
+          icon="edit"
+          text="View/edit"
         />
         <Button
+          disabled={selectedGroups.length !== 1}
+          onClick={showDeleteDialog}
+          className="toolbar-button-small primary"
+          icon="trash"
           text="Delete"
-          disabled={selectedGroups.length === 0}
-          onClick={() => showDeleteDialog()}
         />
+        <div className="UserSearch-filteringToggle">
+          <label>Show filtering</label>
+          <Toggle
+            icons={false}
+            checked={filterable}
+            onChange={event => setFilteringEnabled(event.target.checked)}
+          />
+        </div>
       </div>
 
+      <div className="UserSearch-content">
+        <div className="table-small-container">
+          <IndexVolumeGroupsTable {...tableProps} />
+        </div>
+      </div>
       <NewIndexVolumeGroupDialog {...newDialogComponentProps} />
       <ThemedConfirm {...deleteDialogComponentProps} />
     </div>

@@ -368,7 +368,7 @@ const AppChrome: React.FunctionComponent<AppChromeProps> = ({
     ? "app-chrome__sidebar--expanded"
     : "app-chrome__sidebar--collapsed";
   return (
-    <div className={`app-container ${theme}`}>
+    <div className={theme}>
       <CopyMoveDocRefDialog {...copyDialogComponentProps} />
       <CopyMoveDocRefDialog {...moveDialogComponentProps} />
       <div className="app-chrome flat">

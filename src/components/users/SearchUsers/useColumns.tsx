@@ -1,0 +1,89 @@
+import * as React from "react";
+import { ReactTableFunction, RowInfo, Column } from "react-table";
+import StateCell from "./StateCell";
+import { User } from "../types";
+import { formatDate } from "lib/lang";
+
+/** There is a corresponding react-table type but doing it like this is neater. */
+interface FilterProps {
+  filter: any;
+  onChange: ReactTableFunction;
+}
+
+const useColumns = (selectedUserRowId: string | undefined): Column<User>[] => {
+  const IdCell: React.FunctionComponent<RowInfo> = React.useCallback(
+    ({ row }) => (
+      <div>
+        {selectedUserRowId === row.row.value ? "selected" : "unselected"}
+      </div>
+    ),
+    [selectedUserRowId],
+  );
+
+  const getStateCellFilter = React.useCallback(
+    ({ filter, onChange }: FilterProps) => {
+      return (
+        <select
+          onChange={event => onChange(event.target.value)}
+          style={{ width: "100%" }}
+          value={filter ? filter.value : "all"}
+        >
+          <option value="">Show all</option>
+          <option value="enabled">Active only</option>
+          <option value="locked">Locked only</option>
+          <option value="disabled">Inactive only</option>
+        </select>
+      );
+    },
+    [],
+  );
+
+  const filterRow = React.useCallback((row: any, filter: any) => {
+    var index = row[filter.id]
+      .toLowerCase()
+      .indexOf(filter.value.toLowerCase());
+    return index >= 0;
+  }, []);
+
+  return [
+    {
+      Header: "",
+      accessor: "id",
+      Cell: IdCell,
+      filterable: false,
+      show: false,
+    },
+    {
+      Header: "Email",
+      accessor: "email",
+      maxWidth: 190,
+      filterMethod: (filter: any, row: any) => filterRow(row, filter),
+    },
+    {
+      Header: "Account status",
+      accessor: "state",
+      maxWidth: 100,
+      Cell: StateCell,
+      Filter: getStateCellFilter,
+    },
+    {
+      Header: "Last login",
+      accessor: "last_login",
+      Cell: (row: RowInfo) => formatDate(row.row.value),
+      maxWidth: 165,
+      filterable: false,
+    },
+    {
+      Header: "Login failures",
+      accessor: "login_failures",
+      maxWidth: 100,
+    },
+    {
+      Header: "Comments",
+      accessor: "comments",
+      filterMethod: (filter: any, row: any) => filterRow(row, filter),
+    },
+  ];
+};
+
+export default useColumns;

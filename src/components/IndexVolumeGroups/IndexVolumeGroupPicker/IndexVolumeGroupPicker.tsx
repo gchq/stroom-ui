@@ -4,6 +4,7 @@ import CreatableSelect from "react-select/lib/Creatable";
 
 import { useIndexVolumeGroups } from "components/IndexVolumeGroups/api";
 import { PickerProps, UsePickerProps, PickerBaseProps } from "./types";
+import useReactSelect from "lib/useReactSelect";
 
 const IndexVolumeGroupPicker: React.FunctionComponent<PickerProps> = ({
   value,
@@ -16,10 +17,15 @@ const IndexVolumeGroupPicker: React.FunctionComponent<PickerProps> = ({
     () => groups.map(g => g.name).filter(n => !valuesToFilterOut.includes(n)),
     [groups, valuesToFilterOut],
   );
+  const { _options, _onChange, _value } = useReactSelect({
+    onChange,
+    options,
+    value,
+  });
 
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const onCreateOption = React.useCallback(
-    d => {
+    (d: string) => {
       setIsLoading(true);
       createIndexVolumeGroup(d).then(() => {
         onChange(d);
@@ -32,11 +38,11 @@ const IndexVolumeGroupPicker: React.FunctionComponent<PickerProps> = ({
   return (
     <CreatableSelect
       isLoading={isLoading}
-      value={value}
-      onChange={onChange}
+      value={_value}
+      onChange={_onChange}
       placeholder="Index Volume Group"
       onCreateOption={onCreateOption}
-      options={options}
+      options={_options}
     />
   );
 };

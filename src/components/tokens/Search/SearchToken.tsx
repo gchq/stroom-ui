@@ -16,15 +16,16 @@
 
 import * as React from "react";
 import { useState } from "react";
-import ReactTable, { RowInfo } from "react-table";
+import ReactTable, { RowInfo, Column } from "react-table";
 import "react-table/react-table.css";
 import Toggle from "react-toggle";
 import "react-toggle/style.css";
 import useAppNavigation from "components/AppChrome/useAppNavigation";
 import Button from "components/Button";
-import { getColumnFormat } from "./tableCustomisations";
+import useColumns from "./useColumns";
 import useTokenSearch from "./useTokenSearch";
 import IconHeader from "components/IconHeader";
+import { Token } from "../api/types";
 
 const TokenSearch = () => {
   const {
@@ -37,6 +38,7 @@ const TokenSearch = () => {
     searchConfig,
     toggleState,
   } = useTokenSearch();
+  const columns: Column<Token>[] = useColumns(selectedTokenRowId, toggleState);
 
   const { goToNewApiKey, goToApiKey } = useAppNavigation();
   const [isFilteringEnabled, setFilteringEnabled] = useState(false);
@@ -77,7 +79,6 @@ const TokenSearch = () => {
           icon="trash"
           text="Delete"
         />
-
         <div className="UserSearch-filteringToggle">
           <label>Show filtering</label>
           <Toggle
@@ -87,14 +88,13 @@ const TokenSearch = () => {
           />
         </div>
       </div>
-
       <div className="page__body">
         <ReactTable
           data={results}
           pages={totalPages}
           manual
           className="fill-space -striped -highlight"
-          columns={getColumnFormat(selectedTokenRowId, toggleState)}
+          columns={columns}
           filterable={isFilteringEnabled}
           showPagination
           showPageSizeOptions={false}
