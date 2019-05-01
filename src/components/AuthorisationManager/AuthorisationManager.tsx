@@ -79,7 +79,7 @@ const Authorisation: React.FunctionComponent<Props> = ({ isGroup }) => {
   }, [selectedUsers, goToAuthorisationsForUser]);
 
   // Ensure find users is called
-  React.useEffect(findUsers, [findUsers]);
+  React.useEffect(() => findUsers(undefined, isGroup), [isGroup, findUsers]);
 
   return (
     <div className="page">

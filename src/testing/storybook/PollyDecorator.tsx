@@ -33,10 +33,6 @@ const testConfig: Config = {
   advertisedUrl: "/",
   allowPasswordResets: true,
   appClientId: "stroom-ui",
-  authTokensUiUrl:
-    "auth/tokens/because/they/are/loaded/in/an/iframe/which/is/beyond/scope/of/these/tests",
-  authUsersUiUrl:
-    "auth/users/because/they/are/loaded/in/an/iframe/which/is/beyond/scope/of/these/tests",
   authenticationServiceUrl: "http://localhost:9001",
   authorisationServiceUrl: "http://localhost:9001",
   stroomBaseServiceUrl: "http://localhost:9001",
