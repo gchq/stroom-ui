@@ -8,10 +8,15 @@ import {
   lockedUser,
   newUser,
   wellUsedUser,
-} from "../testData";
+} from "testing/data/users";
 import UserForm from "./UserForm";
+import { addThemedStories } from "testing/storybook/themedStoryGenerator";
 
-const getComponent = (user: User) => {
+interface Props {
+  user: User;
+}
+
+const TestHarness: React.FunctionComponent<Props> = ({ user }) => {
   return (
     <UserForm
       user={user}
@@ -29,9 +34,24 @@ const getComponent = (user: User) => {
   );
 };
 
-storiesOf("Users/UserForm", module)
-  .add("brand new", () => getComponent(newUser))
-  .add("well used", () => getComponent(wellUsedUser))
-  .add("disabled", () => getComponent(disabledUser))
-  .add("inactive", () => getComponent(inactiveUser))
-  .add("locked", () => getComponent(lockedUser));
+interface Test {
+  [s: string]: User;
+}
+
+const tests: Test = {
+  "brand new": newUser,
+  "well used": wellUsedUser,
+  disabled: disabledUser,
+  inactive: inactiveUser,
+  locked: lockedUser,
+};
+
+Object.entries(tests)
+  .map(k => ({
+    name: k[0],
+    user: k[1],
+  }))
+  .forEach(({ name, user }) => {
+    const stories = storiesOf(`Users/User Form/${name}`, module);
+    addThemedStories(stories, () => <TestHarness user={user} />);
+  });

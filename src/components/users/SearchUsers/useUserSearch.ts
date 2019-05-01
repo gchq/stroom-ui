@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from "react";
+import * as React from "react";
 import { useApi } from "../api";
 import { User } from "../types";
 import { useUserSearchState } from "./useUserSearchState";
@@ -19,7 +19,7 @@ const useUserSearch = (): UserSearchApi => {
   } = useUserSearchState();
   const { search } = useApi();
 
-  useEffect(() => {
+  React.useEffect(() => {
     search().then(users => {
       setUsers(users);
     });
@@ -27,7 +27,7 @@ const useUserSearch = (): UserSearchApi => {
 
   const { remove: removeUserUsingApi } = useApi();
 
-  const remove = useCallback(
+  const remove = React.useCallback(
     (userId: string) => {
       removeUserUsingApi(userId).then(() =>
         search().then(users => setUsers(users)),
@@ -36,18 +36,11 @@ const useUserSearch = (): UserSearchApi => {
     [removeUserUsingApi, search, setUsers],
   );
 
-  const changeSelectedUser = useCallback(
-    (userId: string) => {
-      setSelectedUser(userId);
-    },
-    [setSelectedUser],
-  );
-
   return {
     users,
     selectedUser,
     remove,
-    changeSelectedUser,
+    changeSelectedUser: setSelectedUser,
   };
 };
 

@@ -46,7 +46,6 @@ export interface NavigateApp<IN, OUT> {
   goToIndexVolume: (volumeId: IN) => OUT;
   goToIndexVolumeGroups: () => OUT;
   goToIndexVolumeGroup: (groupName: IN) => OUT;
-  goToStroomUsers: () => OUT;
   goToUsers: () => OUT;
   goToUser: (userId: string) => OUT;
   goToNewUser: () => OUT;

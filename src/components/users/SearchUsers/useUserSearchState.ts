@@ -1,4 +1,4 @@
-import { useReducer } from "react";
+import * as React from "react";
 import { User } from "../types";
 
 interface UserSearchStateApi {
@@ -48,20 +48,31 @@ const reducer = (
 };
 
 const useUserSearchState = (): UserSearchStateApi => {
-  const [userState, dispatch] = useReducer(reducer, {
+  const [userState, dispatch] = React.useReducer(reducer, {
     users: [],
     totalPages: 0,
     selectedUser: "",
   });
+  const setUsers = React.useCallback(
+    (users: User[]) => dispatch({ type: "set_user", users }),
+    [dispatch],
+  );
+  const setTotalPages = React.useCallback(
+    (totalPages: number) => dispatch({ type: "set_total_pages", totalPages }),
+    [dispatch],
+  );
+  const setSelectedUser = React.useCallback(
+    (userId: string) => dispatch({ type: "change_selected_user", userId }),
+    [dispatch],
+  );
+
   return {
     users: userState.users,
     totalPages: userState.totalPages,
     selectedUser: userState.selectedUser,
-    setUsers: (users: User[]) => dispatch({ type: "set_user", users }),
-    setTotalPages: (totalPages: number) =>
-      dispatch({ type: "set_total_pages", totalPages }),
-    setSelectedUser: (userId: string) =>
-      dispatch({ type: "change_selected_user", userId }),
+    setUsers,
+    setTotalPages,
+    setSelectedUser,
   };
 };
 

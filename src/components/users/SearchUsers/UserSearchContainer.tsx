@@ -26,10 +26,10 @@ const UserSearchContainer = () => {
   const { goToNewUser, goToUser } = useAppNavigation();
   return (
     <UserSearch
-      onNewUserClicked={() => goToNewUser()}
-      onUserOpen={(selectedUser: string) => goToUser(selectedUser)}
+      onNewUserClicked={goToNewUser}
+      onUserOpen={goToUser}
       users={users}
-      onDeleteUser={userId => remove(userId)}
+      onDeleteUser={remove}
     />
   );
 };

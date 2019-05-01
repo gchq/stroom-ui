@@ -20,7 +20,6 @@ import {
   HandleAuthenticationResponse,
   PrivateRoute,
 } from "startup/Authentication";
-import useConfig from "startup/config/useConfig";
 import AuthorisationManager, {
   UserAuthorisationEditor,
 } from "../AuthorisationManager";
@@ -29,8 +28,6 @@ import DocumentPermissionForUserEditor from "../AuthorisationManager/DocumentPer
 import DataViewer from "../DataViewer";
 import SwitchedDocRefEditor from "../DocumentEditors/SwitchedDocRefEditor";
 import ErrorPage from "../ErrorPage";
-import IconHeader from "../IconHeader";
-import IFrame from "../IFrame";
 import IndexVolumeGroups from "../IndexVolumeGroups";
 import IndexVolumeGroupEditor from "../IndexVolumeGroups/IndexVolumeGroupEditor";
 import IndexVolumes from "../IndexVolumes";
@@ -63,21 +60,6 @@ const renderWelcome = ({
     content={<Welcome />}
   />
 );
-
-const UsersIFrame = () => {
-  const { authUsersUiUrl } = useConfig();
-
-  return (
-    <React.Fragment>
-      <IconHeader icon="users" text="Users" />
-      {authUsersUiUrl ? (
-        <IFrame key="users" url={authUsersUiUrl} />
-      ) : (
-        <div>No Users URL in Config</div>
-      )}
-    </React.Fragment>
-  );
-};
 
 const Routes: React.FunctionComponent = () => {
   const urls = useUrlGenerator(":urlPrefix");
@@ -271,22 +253,6 @@ const Routes: React.FunctionComponent = () => {
             activeMenuItem="indexVolumeGroups"
             urlPrefix={urlPrefix}
             content={<IndexVolumeGroupEditor groupName={groupName} />}
-          />
-        )}
-      />
-
-      <PrivateRoute
-        exact
-        path={urls.goToStroomUsers()}
-        render={({
-          match: {
-            params: { urlPrefix },
-          },
-        }) => (
-          <AppChrome
-            activeMenuItem="userIdentities"
-            urlPrefix={urlPrefix}
-            content={<UsersIFrame />}
           />
         )}
       />

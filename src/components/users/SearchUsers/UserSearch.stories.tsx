@@ -3,23 +3,9 @@ import { storiesOf } from "@storybook/react";
 import * as React from "react";
 import UserSearch from "./UserSearch";
 
-import {
-  disabledUser,
-  inactiveUser,
-  lockedUser,
-  newUser,
-  wellUsedUser,
-} from "../testData";
-import { User } from "../types";
 import { addThemedStories } from "testing/storybook/themedStoryGenerator";
+import fullTestData from "testing/data";
 
-const users: User[] = [
-  disabledUser,
-  inactiveUser,
-  lockedUser,
-  newUser,
-  wellUsedUser,
-];
 const stories = storiesOf("Users/Search", module);
 
 addThemedStories(stories, () => (
@@ -27,6 +13,6 @@ addThemedStories(stories, () => (
     onNewUserClicked={() => action("onNewUserClicked")}
     onUserOpen={(userId: string) => action(`onUserOpen:${userId}`)}
     onDeleteUser={(userId: string) => action(`onDeleteUser: ${userId}`)}
-    users={users}
+    users={fullTestData.users}
   />
 ));
