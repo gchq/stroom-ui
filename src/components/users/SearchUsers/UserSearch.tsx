@@ -26,7 +26,7 @@ import Toggle from "react-toggle";
 import "react-toggle/style.css";
 import Button from "components/Button";
 import { User } from "../types";
-import { getColumnFormat } from "./tableCustomisations";
+import useColumns from "./useColumns";
 import IconHeader from "components/IconHeader";
 
 interface UserSearchProps {
@@ -77,24 +77,13 @@ const UserSearch: React.FunctionComponent<UserSearchProps> = ({
           icon="plus"
           text="Create"
         />
-        {deleteButtonDisabled ? (
-          <div>
-            <Button
-              className="toolbar-button-small primary"
-              disabled={!selectedUser}
-              onClick={() => onUserOpen(selectedUser)}
-              icon="edit"
-              text="View/edit"
-            />
-          </div>
-        ) : (
-          <Button
-            className="toolbar-button-small primary"
-            onClick={() => onUserOpen(selectedUser)}
-            icon="edit"
-            text="View/edit"
-          />
-        )}
+        <Button
+          className="toolbar-button-small primary"
+          disabled={!selectedUser}
+          onClick={() => onUserOpen(selectedUser)}
+          icon="edit"
+          text="View/edit"
+        />
         <Button
           disabled={!selectedUser}
           onClick={() => {

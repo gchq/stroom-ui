@@ -84,18 +84,7 @@ const Authorisation: React.FunctionComponent<Props> = ({ isGroup }) => {
   return (
     <div className="page">
       <div className="page__header">
-        <IconHeader
-          icon="users"
-          text={`${isGroup ? "Group" : "User"} Permissions`}
-        />
-      </div>
-      <div className="page__search">
-        <form>
-          <label htmlFor="name">Name</label>
-          <input {...nameProps} />
-          <label htmlFor="uuid">UUID</label>
-          <input {...uuidProps} />
-        </form>
+        <IconHeader text={isGroup ? "User Groups" : "Users"} icon="user" />
       </div>
       <div className="page__buttons">
         <Button
@@ -132,6 +121,14 @@ const Authorisation: React.FunctionComponent<Props> = ({ isGroup }) => {
           disabled={selectedUsers.length === 0}
           onClick={showDeleteDialog}
         />
+        <div className="UserSearch-filteringToggle">
+          <label>Show filtering</label>
+          <Toggle
+            icons={false}
+            checked={filterable}
+            onChange={event => setFilteringEnabled(event.target.checked)}
+          />
+        </div>
       </div>
       <div className="page__body">
         <UsersTable {...tableProps} />
