@@ -13,7 +13,7 @@ const resourceBuilder: ResourceBuilder = (
 
   // Get all users
   server.get(resource).intercept((req: HttpRequest, res: HttpResponse) => {
-    res.json(testCache.data!.users);
+    res.json(testCache.data!.usersAndGroups.users);
   });
   server
     .get(`${resource}/isPasswordValid`)

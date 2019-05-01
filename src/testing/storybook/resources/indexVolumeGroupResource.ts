@@ -75,8 +75,7 @@ const resourceBuilder: ResourceBuilder = (
         ),
       };
 
-      res.send(undefined);
-      // res.sendStatus(204);
+      res.status(204).send(undefined);
     });
 };
 

@@ -9,9 +9,18 @@ declare module "@pollyjs/adapter-fetch" {
   }
 
   export interface HttpResponse {
-    json: (body: any) => void;
-    send: (body: any) => void;
-    setHeader: (key: string, value: string) => void;
-    sendStatus: (code: number) => void;
+    status: (code: number) => HttpResponse;
+    setHeader: (key: string, value: string) => Response;
+    getHeader: (key: string) => string;
+    setHeaders: (headers: { [key: string]: any }) => Response;
+    removeHeader: (key: string) => HttpResponse;
+    removeHeaders: (keys: string[]) => HttpResponse;
+    hasHeader: (key: string) => boolean;
+    type: (newType: string) => HttpResponse;
+    send: (body: any) => HttpResponse;
+    sendStatus: (code: number) => HttpResponse;
+    json: (body: any) => HttpResponse;
+    jsonBody: () => object;
+    end: () => HttpResponse;
   }
 }

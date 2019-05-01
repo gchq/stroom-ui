@@ -14,7 +14,10 @@ const useCheckStatus = (status: number) =>
         return Promise.resolve(response);
       }
       return Promise.reject(
-        new HttpError(response.status, response.statusText),
+        new HttpError(
+          response.status,
+          response.statusText || "Incorrect HTTP Response Code",
+        ),
       );
     },
     [status],
@@ -66,7 +69,10 @@ export const useHttpClient = (): HttpClient => {
 
   const catchImpl = React.useCallback(
     (error: any) => {
-      cogoToast.error(error.message, {
+      const msg: string = `Error, Status ${error.status}, Msg: ${
+        error.message
+      }`;
+      cogoToast.error(msg, {
         hideAfter: 5,
         onClick: () => {
           reportError({
@@ -170,9 +176,8 @@ export const useHttpClient = (): HttpClient => {
         options?: {
           [s: string]: any;
         },
-        forceGet: boolean = true, // default to true, take care with settings this to false, old promises can override the updated picture with old information if this is mis-used
         addAuthentication: boolean = true, // most of the time we want authenticated requests, so we'll make that the default.
-      ): Promise<string | void> => {
+      ): Promise<Response | void> => {
         if (!idToken && addAuthentication) {
           let p = Promise.reject();
           p.catch(() => console.log("Missing ID Token, not making request"));
@@ -195,7 +200,6 @@ export const useHttpClient = (): HttpClient => {
           headers,
         })
           .then(handle204)
-          .then(r => r.text())
           .catch(catchImpl);
       },
       [method],

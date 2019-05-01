@@ -70,7 +70,7 @@ const resourceBuilder: ResourceBuilder = (
           ),
       );
 
-      res.send(undefined);
+      res.status(204).send(undefined);
     });
 
   // Get Permissions for Document
@@ -104,7 +104,7 @@ const resourceBuilder: ResourceBuilder = (
         udp => !(udp.docRefUuid === docRefUuid && udp.userUuid === userUuid),
       );
 
-      res.send(undefined);
+      res.status(204).send(undefined);
     });
 
   // Clear Permissions for Document
@@ -117,7 +117,7 @@ const resourceBuilder: ResourceBuilder = (
         udp => udp.docRefUuid !== docRefUuid,
       );
 
-      res.send(undefined);
+      res.status(204).send(undefined);
     });
 };
 
