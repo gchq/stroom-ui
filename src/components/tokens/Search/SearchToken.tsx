@@ -16,14 +16,15 @@
 
 import * as React from "react";
 import { useState } from "react";
-import ReactTable, { RowInfo } from "react-table";
+import ReactTable, { RowInfo, Column } from "react-table";
 import "react-table/react-table.css";
 import Toggle from "react-toggle";
 import "react-toggle/style.css";
 import useAppNavigation from "components/AppChrome/useAppNavigation";
 import Button from "components/Button";
-import { getColumnFormat } from "./tableCustomisations";
+import useColumns from "./useColumns";
 import useTokenSearch from "./useTokenSearch";
+import { Token } from "../api/types";
 
 const TokenSearch = () => {
   const {
@@ -36,6 +37,7 @@ const TokenSearch = () => {
     searchConfig,
     toggleState,
   } = useTokenSearch();
+  const columns: Column<Token>[] = useColumns(selectedTokenRowId, toggleState);
 
   const { goToNewApiKey, goToApiKey } = useAppNavigation();
   const [isFilteringEnabled, setFilteringEnabled] = useState(false);
@@ -97,7 +99,7 @@ const TokenSearch = () => {
                 pages={totalPages}
                 manual
                 className="-striped -highlight UserSearch-table"
-                columns={getColumnFormat(selectedTokenRowId, toggleState)}
+                columns={columns}
                 filterable={isFilteringEnabled}
                 showPagination
                 showPageSizeOptions={false}

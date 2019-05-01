@@ -16,13 +16,17 @@
 
 import * as React from "react";
 import { useState } from "react";
-import ReactTable, { RowInfo, ComponentPropsGetterR } from "react-table";
+import ReactTable, {
+  RowInfo,
+  ComponentPropsGetterR,
+  Column,
+} from "react-table";
 import "react-table/react-table.css";
 import Toggle from "react-toggle";
 import "react-toggle/style.css";
 import Button from "components/Button";
 import { User } from "../types";
-import { getColumnFormat } from "./tableCustomisations";
+import useColumns from "./useColumns";
 
 interface UserSearchProps {
   onNewUserClicked: () => void;
@@ -39,6 +43,7 @@ const UserSearch: React.FunctionComponent<UserSearchProps> = ({
 }) => {
   const [isFilteringEnabled, setFilteringEnabled] = useState(false);
   const [selectedUser, setSelectedUser] = useState("");
+  const colums: Column<User>[] = useColumns(selectedUser);
 
   const deleteButtonDisabled = !selectedUser;
 
@@ -116,7 +121,7 @@ const UserSearch: React.FunctionComponent<UserSearchProps> = ({
           <ReactTable
             data={users}
             className="UserSearch-table -striped -highlight"
-            columns={getColumnFormat(selectedUser)}
+            columns={colums}
             defaultSorted={[
               {
                 id: "email",
