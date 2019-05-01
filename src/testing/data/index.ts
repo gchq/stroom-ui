@@ -61,7 +61,6 @@ import { generate as generateScript } from "./script";
 import { generate as generateStatisticStore } from "./statisticStore";
 import { generate as generateStroomStatsStore } from "./stroomStatsStore";
 import { generateGenericTracker } from "./trackers";
-import { generate as generateUsers } from "./users";
 import { generateTestGroup, generateTestUser } from "./usersAndGroups";
 import { generate as generateVisualisation } from "./visualisation";
 import { generate as generateXmlSchema } from "./xmlSchema";
@@ -342,7 +341,6 @@ export const fullTestData: TestData = {
   userAppPermissions,
   docPermissionByType,
   userDocPermission,
-  users: generateUsers,
 };
 
 export default fullTestData;
