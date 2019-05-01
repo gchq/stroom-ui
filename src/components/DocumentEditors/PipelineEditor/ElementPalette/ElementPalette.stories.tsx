@@ -20,22 +20,22 @@ import ElementPalette from "./ElementPalette";
 
 import { fullTestData } from "testing/data";
 import { PipelineDocumentType } from "components/DocumentEditors/useDocumentApi/types/pipelineDoc";
+import { addThemedStories } from "testing/storybook/themedStoryGenerator";
 
 const showDeleteElementDialog = () =>
   console.error("Deleting Elements Not Supported in this Story");
 
-storiesOf("Document Editors/Pipeline/Element Palette", module).add(
-  "Element Palette",
-  () => {
-    return (
-      <ElementPalette
-        pipeline={
-          Object.values(
-            fullTestData.documents.Pipeline,
-          )[0] as PipelineDocumentType
-        }
-        showDeleteElementDialog={showDeleteElementDialog}
-      />
-    );
-  },
-);
+const stories = storiesOf("Document Editors/Pipeline/Element Palette", module);
+
+addThemedStories(stories, () => {
+  return (
+    <ElementPalette
+      pipeline={
+        Object.values(
+          fullTestData.documents.Pipeline,
+        )[0] as PipelineDocumentType
+      }
+      showDeleteElementDialog={showDeleteElementDialog}
+    />
+  );
+});

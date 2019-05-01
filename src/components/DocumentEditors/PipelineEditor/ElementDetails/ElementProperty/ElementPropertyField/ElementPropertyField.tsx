@@ -17,15 +17,14 @@
 import * as React from "react";
 
 import AppSearchBar from "components/AppSearchBar";
-import { PipelineEditApi } from "../types";
+import { PipelineEditApi } from "../../../types";
 
 interface Props {
   value: any;
   name: string;
   pipelineEditApi: PipelineEditApi;
-  elementId: string;
   type: string;
-  docRefTypes?: string[];
+  docRefType?: string;
 }
 
 /**
@@ -40,10 +39,9 @@ interface Props {
 const ElementPropertyField: React.FunctionComponent<Props> = ({
   value,
   name,
-  pipelineEditApi,
-  elementId,
+  pipelineEditApi: { selectedElementId, elementPropertyUpdated },
   type,
-  docRefTypes,
+  docRefType,
 }) => {
   let elementField;
   switch (type) {
@@ -55,12 +53,7 @@ const ElementPropertyField: React.FunctionComponent<Props> = ({
             checked={value}
             name={name}
             onChange={() =>
-              pipelineEditApi.elementPropertyUpdated(
-                elementId,
-                name,
-                "boolean",
-                !value,
-              )
+              elementPropertyUpdated(selectedElementId, name, "boolean", !value)
             }
           />
         </div>
@@ -74,8 +67,8 @@ const ElementPropertyField: React.FunctionComponent<Props> = ({
             name={name}
             value={parseInt(value, 10)}
             onChange={({ target: { value } }) =>
-              pipelineEditApi.elementPropertyUpdated(
-                elementId,
+              elementPropertyUpdated(
+                selectedElementId,
                 name,
                 "integer",
                 parseInt(value, 10),
@@ -85,18 +78,13 @@ const ElementPropertyField: React.FunctionComponent<Props> = ({
         </div>
       );
       break;
-    case "docref":
+    case "entity":
       elementField = (
         <AppSearchBar
-          typeFilters={docRefTypes}
+          typeFilter={docRefType}
           value={value}
           onChange={node =>
-            pipelineEditApi.elementPropertyUpdated(
-              elementId,
-              name,
-              "docref",
-              node,
-            )
+            elementPropertyUpdated(selectedElementId, name, "entity", node)
           }
         />
       );
@@ -110,12 +98,7 @@ const ElementPropertyField: React.FunctionComponent<Props> = ({
             value={value}
             name={name}
             onChange={({ target: { value } }) =>
-              pipelineEditApi.elementPropertyUpdated(
-                elementId,
-                name,
-                type,
-                value,
-              )
+              elementPropertyUpdated(selectedElementId, name, type, value)
             }
           />
         </div>
@@ -131,12 +114,7 @@ const ElementPropertyField: React.FunctionComponent<Props> = ({
             value={value}
             name={name}
             onChange={({ target: { value } }) =>
-              pipelineEditApi.elementPropertyUpdated(
-                elementId,
-                name,
-                type,
-                value,
-              )
+              elementPropertyUpdated(selectedElementId, name, type, value)
             }
           />
         </div>

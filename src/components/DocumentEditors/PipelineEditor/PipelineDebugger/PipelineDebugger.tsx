@@ -23,7 +23,7 @@ import Loader from "components/Loader";
 import DebuggerStep from "./DebuggerStep";
 import { getNext, getPrevious } from "./pipelineDebugger.utils";
 import useDocumentApi from "components/DocumentEditors/useDocumentApi";
-import usePipelineState from "../usePipelineState";
+import usePipelineState from "../usePipelineState/usePipelineState";
 import { PipelineDocumentType } from "components/DocumentEditors/useDocumentApi/types/pipelineDoc";
 
 interface Props {
@@ -43,11 +43,10 @@ const PipelineDebugger: React.FunctionComponent<Props> = ({
   const debuggerState = debuggers[debuggerId];
   const pipelineStateProps = usePipelineState(pipelineId);
   const {
-    pipelineEditApi: { selectedElementId, elementSelected },
+    pipelineEditApi: { asTree, selectedElementId, elementSelected },
     useEditorProps: {
       editorProps: { docRefContents: pipeline },
     },
-    asTree,
   } = pipelineStateProps;
 
   React.useEffect(() => {
@@ -78,7 +77,6 @@ const PipelineDebugger: React.FunctionComponent<Props> = ({
         <Button icon="chevron-right" text="Next" onClick={onNext} />
       </div>
       <PipelineDisplay
-        pipelineId={pipelineId}
         pipelineStateProps={pipelineStateProps}
         showAddElementDialog={() =>
           console.error(

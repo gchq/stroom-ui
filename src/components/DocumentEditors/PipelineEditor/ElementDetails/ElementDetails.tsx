@@ -16,36 +16,26 @@
 
 import * as React from "react";
 
-import ElementImage from "../ElementImage";
-import HorizontalPanel from "components/HorizontalPanel";
-import ElementProperty from "./ElementProperty";
-import {
-  ElementPropertiesType,
-  ElementDefinition,
-  ElementPropertyType,
-} from "components/DocumentEditors/PipelineEditor/useElements/types";
+import ElementProperty from "./ElementProperty/ElementProperty";
+import { ElementPropertyType } from "components/DocumentEditors/PipelineEditor/useElements/types";
 import Loader from "components/Loader";
-import useElements from "components/DocumentEditors/PipelineEditor/useElements";
 import { PipelineEditApi } from "../types";
-import {
-  PipelineDocumentType,
-  PipelineElementType,
-} from "components/DocumentEditors/useDocumentApi/types/pipelineDoc";
 
 interface Props {
-  pipeline: PipelineDocumentType;
   pipelineEditApi: PipelineEditApi;
 }
 
 const ElementDetails: React.FunctionComponent<Props> = ({
-  pipeline,
   pipelineEditApi,
 }) => {
-  const { elementDefinitions, elementProperties } = useElements();
+  const {
+    selectedElementId,
+    selectedElementType,
+    selectedElementDefinition,
+    selectedElementProperties,
+  } = pipelineEditApi;
 
-  console.log("TODO Initial Values", pipelineEditApi.elementInitialValues);
-
-  if (!pipelineEditApi.selectedElementId) {
+  if (!selectedElementId) {
     return (
       <div className="element-details__nothing-selected">
         <h3>Please select an element</h3>
@@ -53,84 +43,36 @@ const ElementDetails: React.FunctionComponent<Props> = ({
     );
   }
 
-  const elementType: string =
-    (pipeline &&
-      pipeline.merged.elements.add &&
-      pipeline.merged.elements.add.find(
-        (element: PipelineElementType) =>
-          element.id === pipelineEditApi.selectedElementId,
-      )!.type) ||
-    "";
-  const allElementTypeProperties: ElementPropertiesType =
-    elementProperties[elementType];
-  if (!allElementTypeProperties) {
-    return <Loader message={`Element Properties Unknown for ${elementType}`} />;
-  }
-
-  const sortedElementTypeProperties: ElementPropertyType[] = Object.values(
-    allElementTypeProperties,
-  ).sort((a: ElementPropertyType, b: ElementPropertyType) =>
-    a.displayPriority > b.displayPriority ? 1 : -1,
-  );
-
-  let elementDefinition = elementDefinitions.find(
-    (e: ElementDefinition) => e.type === elementType,
-  );
-
-  if (!elementDefinition) {
+  if (!selectedElementDefinition) {
     return (
       <Loader
-        message={`Could not find element definition for ${elementType}`}
+        message={`Could not find element definition for ${selectedElementType}`}
       />
     );
   }
 
-  let icon: string = elementDefinition.icon;
-  let typeName: string = elementType;
-  let elementTypeProperties: ElementPropertyType[] = sortedElementTypeProperties;
-
-  const title = (
-    <div className="element-details__title">
-      <ElementImage icon={icon} />
-      <div>
-        <h3>{pipelineEditApi.selectedElementId}</h3>
-      </div>
-    </div>
-  );
-
-  const detailContent = (
+  return (
     <React.Fragment>
       <p className="element-details__summary">
-        This element is a <strong>{typeName}</strong>.
+        This element is a <strong>{selectedElementType}</strong>.
       </p>
       <form className="element-details__form">
-        {Object.keys(elementTypeProperties).length === 0 ? (
+        {Object.keys(selectedElementProperties).length === 0 ? (
           <p>There is nothing to configure for this element </p>
         ) : (
-          !!pipelineEditApi.selectedElementId &&
-          elementTypeProperties.map(
-            (elementTypeProperty: ElementPropertyType) => (
+          !!selectedElementId &&
+          selectedElementProperties.map(
+            (elementPropertyType: ElementPropertyType) => (
               <ElementProperty
-                key={elementTypeProperty.name}
-                pipeline={pipeline}
+                key={elementPropertyType.name}
                 pipelineEditApi={pipelineEditApi}
-                elementId={pipelineEditApi.selectedElementId!}
-                elementPropertyType={elementTypeProperty}
+                elementPropertyType={elementPropertyType}
               />
             ),
           )
         )}
       </form>
     </React.Fragment>
-  );
-
-  return (
-    <HorizontalPanel
-      className="element-details__panel"
-      title={title}
-      onClose={() => pipelineEditApi.elementSelectionCleared()}
-      content={detailContent}
-    />
   );
 };
 

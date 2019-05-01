@@ -9,7 +9,7 @@ import { storiesOf } from "@storybook/react";
 import { addThemedStories } from "testing/storybook/themedStoryGenerator";
 
 // Import the component under test
-import { Step1 } from "./Step1";
+import Step1 from "./Step1";
 
 // Stories can be organised into folders, so all these ones will be under 'New Developer'.
 // All stories will be wrapped by the Stroom Decorator, which gives you the in browser dev server, CSS, hooks etc.

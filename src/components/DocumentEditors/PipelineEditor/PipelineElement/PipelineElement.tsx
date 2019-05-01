@@ -25,7 +25,7 @@ import {
 } from "react-dnd";
 
 import ElementImage from "../ElementImage";
-import { canMovePipelineElement, getInitialValues } from "../pipelineUtils";
+import { canMovePipelineElement } from "../pipelineUtils";
 import {
   DragDropTypes,
   DragCollectedProps,
@@ -36,27 +36,14 @@ import Button from "components/Button";
 
 import { ShowDialog } from "../AddElementModal/types";
 import { PipelineEditApi } from "../types";
-import {
-  PipelineDocumentType,
-  PipelinePropertyType,
-} from "components/DocumentEditors/useDocumentApi/types/pipelineDoc";
-import { PipelineAsTreeType } from "../AddElementModal/types";
-import {
-  ElementPropertiesType,
-  ElementDefinition,
-} from "components/DocumentEditors/PipelineEditor/useElements/types";
+import { ElementDefinition } from "components/DocumentEditors/PipelineEditor/useElements/types";
 
 interface Props {
-  pipelineId: string;
+  pipelineEditApi: PipelineEditApi;
   elementId: string;
   className?: string;
   showAddElementDialog: ShowDialog;
-  existingNames: string[];
-  pipelineEditApi: PipelineEditApi;
-  pipeline: PipelineDocumentType;
-  asTree: PipelineAsTreeType;
   elementDefinition: ElementDefinition;
-  elementProperties: ElementPropertiesType;
 }
 
 interface DragObject {
@@ -73,7 +60,7 @@ const dragSource: DragSourceSpec<Props, DragObject> = {
   },
   beginDrag(props) {
     return {
-      pipelineId: props.pipelineId,
+      pipelineId: props.pipelineEditApi.pipelineId,
       elementId: props.elementId,
       elementDefinition: props.elementDefinition,
     };
@@ -90,7 +77,11 @@ const dragCollect: DragSourceCollector<DragCollectedProps, Props> = (
 
 const dropTarget: DropTargetSpec<Props> = {
   canDrop(props, monitor) {
-    const { pipeline, elementId, asTree, elementDefinition } = props;
+    const {
+      elementId,
+      elementDefinition,
+      pipelineEditApi: { pipeline, asTree },
+    } = props;
 
     switch (monitor.getItemType()) {
       case DragDropTypes.ELEMENT:
@@ -129,24 +120,27 @@ const dropTarget: DropTargetSpec<Props> = {
   drop(props, monitor) {
     const {
       elementId,
-      pipelineEditApi,
+      pipelineEditApi: {
+        elementMoved,
+        elementReinstated,
+        existingElementNames,
+      },
       showAddElementDialog,
-      existingNames,
     } = props;
 
     switch (monitor.getItemType()) {
       case DragDropTypes.ELEMENT: {
         const newElementId = monitor.getItem().elementId;
-        pipelineEditApi.elementMoved(newElementId, elementId);
+        elementMoved(newElementId, elementId);
         break;
       }
       case DragDropTypes.PALLETE_ELEMENT: {
         const { element, recycleData } = monitor.getItem();
 
         if (recycleData) {
-          pipelineEditApi.elementReinstated(elementId, recycleData);
+          elementReinstated(elementId, recycleData);
         } else {
-          showAddElementDialog(elementId, element, existingNames);
+          showAddElementDialog(elementId, element, existingElementNames);
         }
         break;
       }
@@ -185,21 +179,11 @@ const PipelineElement: React.FunctionComponent<EnhancedProps> = ({
   draggingItemType,
   pipelineEditApi: { elementSelected, selectedElementId },
   elementDefinition,
-  elementProperties,
-  pipeline,
 }) => {
-  const onElementClick = React.useCallback(() => {
-    // We need to get the initial values for this element and make sure they go into the state
-    // TODO THIS MUST SURELY BE FIXED
-    const thisElementProperties = pipeline.merged.properties.add!.filter(
-      (property: PipelinePropertyType) => property.element === elementId,
-    );
-    const initialValues = getInitialValues(
-      elementProperties,
-      thisElementProperties,
-    );
-    return elementSelected(elementId, initialValues);
-  }, [elementId, elementProperties, pipeline, elementSelected]);
+  const onElementClick = React.useCallback(() => elementSelected(elementId), [
+    elementId,
+    elementSelected,
+  ]);
 
   const className = React.useMemo(() => {
     const classNames = ["Pipeline-element"];

@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import useDocumentApi from "components/DocumentEditors/useDocumentApi";
-import { useDocRefEditor } from "../DocRefEditor";
+import { useDocRefEditor } from "../../DocRefEditor";
 import {
   getPipelineAsTree,
   moveElementInPipeline,
@@ -11,9 +11,14 @@ import {
   setElementPropertyValueInPipeline,
   revertPropertyToParent,
   revertPropertyToDefault,
-} from "./pipelineUtils";
-import { PipelineEditApi, PipelineProps } from "./types";
-import { PipelineDocumentType } from "components/DocumentEditors/useDocumentApi/types/pipelineDoc";
+  getAllElementNames,
+} from "../pipelineUtils";
+import { PipelineEditApi, PipelineProps } from "../types";
+import {
+  PipelineDocumentType,
+  PipelineElementType,
+} from "components/DocumentEditors/useDocumentApi/types/pipelineDoc";
+import useElement from "../useElement";
 
 export const usePipelineState = (pipelineId: string): PipelineProps => {
   const documentApi = useDocumentApi<"Pipeline", PipelineDocumentType>(
@@ -23,7 +28,6 @@ export const usePipelineState = (pipelineId: string): PipelineProps => {
   const [selectedElementId, setSelectedElementId] = React.useState<
     string | undefined
   >(undefined);
-  const [elementInitialValues, setInitialValues] = React.useState<object>({});
 
   const useEditorProps = useDocRefEditor({
     docRefUuid: pipelineId,
@@ -38,31 +42,47 @@ export const usePipelineState = (pipelineId: string): PipelineProps => {
     docRefContents,
   ]);
 
+  const selectedElementType: string | undefined = React.useMemo(
+    () =>
+      (docRefContents &&
+        selectedElementId &&
+        docRefContents.merged.elements.add &&
+        docRefContents.merged.elements.add.find(
+          (element: PipelineElementType) => element.id === selectedElementId,
+        )!.type) ||
+      undefined,
+    [selectedElementId, docRefContents],
+  );
+
+  const {
+    definition: selectedElementDefinition,
+    properties: selectedElementProperties,
+  } = useElement(selectedElementType);
+
   return {
-    asTree,
     useEditorProps,
     pipelineEditApi: {
-      elementInitialValues,
+      pipelineId,
       selectedElementId,
+      selectedElementType,
+      selectedElementDefinition,
+      selectedElementProperties,
+      pipeline: docRefContents,
+      asTree,
+      existingElementNames:
+        docRefContents !== undefined ? getAllElementNames(docRefContents) : [],
       settingsUpdated: React.useCallback<PipelineEditApi["settingsUpdated"]>(
         ({ description }) => {
           onDocumentChange({ description });
         },
         [onDocumentChange],
       ),
-      elementSelected: React.useCallback<PipelineEditApi["elementReinstated"]>(
-        (elementId, initialValues) => {
-          setSelectedElementId(elementId);
-          setInitialValues(initialValues);
-        },
-        [setSelectedElementId, setInitialValues],
-      ),
+      elementSelected: setSelectedElementId,
       elementSelectionCleared: React.useCallback<
         PipelineEditApi["elementSelectionCleared"]
       >(() => {
         setSelectedElementId(undefined);
-        setInitialValues({});
-      }, [setSelectedElementId, setInitialValues]),
+      }, [setSelectedElementId]),
       elementDeleted: React.useCallback<PipelineEditApi["elementDeleted"]>(
         elementId => {
           if (!!docRefContents) {

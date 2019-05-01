@@ -18,11 +18,10 @@ import * as React from "react";
 
 import Button from "components/Button";
 
-import { PipelineEditApi } from "../types";
+import { PipelineEditApi } from "../../../types";
 
 interface Props {
   pipelineEditApi: PipelineEditApi;
-  elementId: string;
   name: string;
   value: any;
   parentValue: any;
@@ -60,8 +59,11 @@ const getDisplayValue = (value: any, type: string): string => {
  * @param {string} type The type of the property
  */
 const ElementPropertyFieldDetails: React.FunctionComponent<Props> = ({
-  pipelineEditApi,
-  elementId,
+  pipelineEditApi: {
+    selectedElementId,
+    elementPropertyRevertToDefault,
+    elementPropertyRevertToParent,
+  },
   name,
   value,
   parentValue,
@@ -72,17 +74,13 @@ const ElementPropertyFieldDetails: React.FunctionComponent<Props> = ({
   const RevertToDefaultButton = (
     <Button
       text="Revert to default"
-      onClick={() =>
-        pipelineEditApi.elementPropertyRevertToDefault(elementId, name)
-      }
+      onClick={() => elementPropertyRevertToDefault(selectedElementId, name)}
     />
   );
   const RevertToParentButton = (
     <Button
       text="Revert to parent"
-      onClick={() =>
-        pipelineEditApi.elementPropertyRevertToParent(elementId, name)
-      }
+      onClick={() => elementPropertyRevertToParent(selectedElementId, name)}
     />
   );
 
@@ -238,7 +236,7 @@ const ElementPropertyFieldDetails: React.FunctionComponent<Props> = ({
 
           <p>
             It is inheriting a value of{" "}
-            <strong> {getDisplayValue(parentValue.value[type], type)}</strong>
+            <strong> {getDisplayValue(parentValue.value[type], type)}</strong>{" "}
             but this has been overriden by the user. You can revert to this
             inherited value if you like.
           </p>
@@ -250,7 +248,10 @@ const ElementPropertyFieldDetails: React.FunctionComponent<Props> = ({
         <div>
           <p>This property has no default value.</p>
 
-          <p>This property is inheriting it&apos;s value.</p>
+          <p>
+            This property is inheriting it&apos;s value{" "}
+            <strong> {getDisplayValue(parentValue.value[type], type)}</strong>.
+          </p>
         </div>
       );
     }

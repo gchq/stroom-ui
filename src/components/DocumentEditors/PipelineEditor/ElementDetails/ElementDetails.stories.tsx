@@ -20,55 +20,61 @@ import { storiesOf } from "@storybook/react";
 import ElementDetails from "./ElementDetails";
 
 import { fullTestData } from "testing/data";
-import usePipelineState from "../usePipelineState";
-import { PipelineDocumentType } from "components/DocumentEditors/useDocumentApi/types/pipelineDoc";
+import usePipelineState from "../usePipelineState/usePipelineState";
+import {
+  PipelineDocumentType,
+  PipelineElementType,
+} from "components/DocumentEditors/useDocumentApi/types/pipelineDoc";
+import { addThemedStories } from "testing/storybook/themedStoryGenerator";
 
 interface Props {
   pipelineId: string;
   testElementId: string;
-  testElementConfig: object;
 }
 
 const TestHarness: React.FunctionComponent<Props> = ({
   pipelineId,
   testElementId,
-  testElementConfig,
 }) => {
-  const {
-    pipelineEditApi,
-    useEditorProps: {
-      editorProps: { docRefContents },
-    },
-  } = usePipelineState(pipelineId);
+  const { pipelineEditApi } = usePipelineState(pipelineId);
   const { elementSelected } = pipelineEditApi;
   React.useEffect(() => {
-    elementSelected(testElementId, testElementConfig);
-  }, [elementSelected, pipelineId, testElementId, testElementConfig]);
+    elementSelected(testElementId);
+  }, [elementSelected, pipelineId, testElementId]);
 
-  if (!docRefContents) {
-    return null;
-  }
-
-  return (
-    <ElementDetails
-      pipeline={docRefContents}
-      pipelineEditApi={pipelineEditApi}
-    />
-  );
+  return <ElementDetails pipelineEditApi={pipelineEditApi} />;
 };
 
-const stories = storiesOf("Document Editors/Pipeline/Element Details", module);
+// Only one story for each element type is required
+// Work through the adding previously unseen elements into the stories
+class TestDeduplicator {
+  elementTypesSeen: string[] = [];
+
+  isUnique(element: PipelineElementType) {
+    if (!this.elementTypesSeen.includes(element.type)) {
+      this.elementTypesSeen.push(element.type);
+      return true;
+    }
+    return false;
+  }
+}
+
+const testDeduplicator: TestDeduplicator = new TestDeduplicator();
 
 Object.values(fullTestData.documents.Pipeline)
   .map(p => p as PipelineDocumentType)
   .forEach(pipeline => {
-    pipeline.merged.elements.add!.forEach(element => {
-      stories.add(`${pipeline.uuid} - ${element.id}`, () => (
-        <TestHarness
-          pipelineId={pipeline.uuid}
-          testElementId={element.id}
-          testElementConfig={{ splitDepth: 10, splitCount: 10 }}
-        />
-      ));
-    });
+    pipeline.merged.elements
+      .add!.filter(e => testDeduplicator.isUnique(e))
+      .forEach(element => {
+        const stories = storiesOf(
+          `Document Editors/Pipeline/Element Details/Element Types/${
+            element.type
+          }`,
+          module,
+        );
+        addThemedStories(stories, () => (
+          <TestHarness pipelineId={pipeline.uuid} testElementId={element.id} />
+        ));
+      });
   });

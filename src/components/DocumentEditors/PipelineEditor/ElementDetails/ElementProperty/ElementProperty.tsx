@@ -21,38 +21,37 @@ import {
   getChildValue,
   getCurrentValue,
   getElementValue,
-} from "../pipelineUtils";
-import ElementPropertyFieldDetails from "./ElementPropertyInheritanceInfo";
+} from "../../pipelineUtils";
+import ElementPropertyInheritanceInfo from "./ElementPropertyInheritanceInfo";
 import ElementPropertyField from "./ElementPropertyField";
-import { PipelineEditApi } from "../types";
-import { PipelineDocumentType } from "components/DocumentEditors/useDocumentApi/types/pipelineDoc";
+import { PipelineEditApi } from "../../types";
 import { ElementPropertyType } from "components/DocumentEditors/PipelineEditor/useElements/types";
 
 interface Props {
-  pipeline: PipelineDocumentType;
   pipelineEditApi: PipelineEditApi;
-  elementId: string;
   elementPropertyType: ElementPropertyType;
 }
 
 const ElementProperty: React.FunctionComponent<Props> = ({
-  pipeline,
   pipelineEditApi,
-  elementId,
   elementPropertyType,
 }) => {
-  const value = getElementValue(pipeline, elementId, elementPropertyType.name);
+  const { pipeline, selectedElementId } = pipelineEditApi;
+  const value = getElementValue(
+    pipeline,
+    selectedElementId,
+    elementPropertyType.name,
+  );
   const childValue = getChildValue(
     pipeline,
-    elementId,
+    selectedElementId,
     elementPropertyType.name,
   );
   const parentValue = getParentProperty(
     pipeline.configStack,
-    elementId,
+    selectedElementId,
     elementPropertyType.name,
   );
-
   const currentValue = getCurrentValue(
     value,
     parentValue,
@@ -63,7 +62,8 @@ const ElementProperty: React.FunctionComponent<Props> = ({
   let type: string = elementPropertyType.type.toLowerCase();
 
   let defaultValue: any = elementPropertyType.defaultValue;
-  let docRefTypes: string[] | undefined = elementPropertyType.docRefTypes;
+  let docRefType: string | undefined =
+    elementPropertyType.docRefTypes && elementPropertyType.docRefTypes[0];
   let name: string = elementPropertyType.name;
   let description: string = elementPropertyType.description;
 
@@ -75,18 +75,16 @@ const ElementProperty: React.FunctionComponent<Props> = ({
           value: currentValue,
           name,
           pipelineEditApi,
-          elementId,
           type,
-          docRefTypes,
+          docRefType,
         }}
       />
       <div className="element-property__advice">
         <p>
           The <em>field name</em> of this property is <strong>{name}</strong>
         </p>
-        <ElementPropertyFieldDetails
+        <ElementPropertyInheritanceInfo
           pipelineEditApi={pipelineEditApi}
-          elementId={elementId}
           name={name}
           value={value}
           defaultValue={defaultValue}

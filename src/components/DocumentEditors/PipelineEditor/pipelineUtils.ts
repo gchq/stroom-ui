@@ -450,9 +450,6 @@ export function revertPropertyToDefault(
   element: string,
   name: string,
 ): PipelineDocumentType {
-  if (pipeline.configStack.length < 2) {
-    throw new Error("This function requires a configStack with a parent");
-  }
   if (element === undefined)
     throw new Error("This function requires an element name");
   if (name === undefined)

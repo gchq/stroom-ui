@@ -20,26 +20,22 @@ import Loader from "components/Loader";
 import PipelineElement from "../PipelineElement/PipelineElement";
 import { getPipelineLayoutGrid } from "../pipelineUtils";
 import { PipelineLayoutGrid } from "../types";
-import { getAllElementNames } from "../pipelineUtils";
 import { ShowDialog as ShowAddElementDialog } from "../AddElementModal/types";
 import { PipelineProps } from "../types";
 import useElements from "components/DocumentEditors/PipelineEditor/useElements";
-import { LineContainer, LineTo } from "components/LineTo";
+import { LineContainer, LineTo, LineEndpoint } from "components/LineTo";
 import { PipelineElementType } from "components/DocumentEditors/useDocumentApi/types/pipelineDoc";
 
 interface Props {
-  pipelineId: string;
   pipelineStateProps: PipelineProps;
   showAddElementDialog: ShowAddElementDialog;
 }
 
 export const Pipeline: React.FunctionComponent<Props> = ({
-  pipelineId,
   pipelineStateProps,
   showAddElementDialog,
 }) => {
   const {
-    asTree,
     pipelineEditApi,
     useEditorProps: {
       editorProps: { docRefContents: pipeline },
@@ -51,12 +47,13 @@ export const Pipeline: React.FunctionComponent<Props> = ({
     return <Loader message="Loading pipeline..." />;
   }
 
-  if (!asTree) {
+  if (!pipelineEditApi.asTree) {
     return <Loader message="Awaiting pipeline tree model..." />;
   }
 
-  const existingNames = getAllElementNames(pipeline);
-  const layoutGrid: PipelineLayoutGrid = getPipelineLayoutGrid(asTree);
+  const layoutGrid: PipelineLayoutGrid = getPipelineLayoutGrid(
+    pipelineEditApi.asTree,
+  );
 
   return (
     <LineContainer className="Pipeline-editor__elements">
@@ -86,18 +83,18 @@ export const Pipeline: React.FunctionComponent<Props> = ({
                     let elementPropertiesThis = elementProperties[element.type];
 
                     return (
-                      <PipelineElement
+                      <LineEndpoint
                         key={element.id}
-                        pipelineId={pipelineId}
-                        elementId={element.id}
-                        showAddElementDialog={showAddElementDialog}
-                        existingNames={existingNames}
-                        pipeline={pipeline}
-                        asTree={asTree}
-                        elementDefinition={elementDefinition}
-                        elementProperties={elementPropertiesThis}
-                        pipelineEditApi={pipelineEditApi}
-                      />
+                        lineEndpointId={element.id}
+                      >
+                        <PipelineElement
+                          elementId={element.id}
+                          showAddElementDialog={showAddElementDialog}
+                          elementDefinition={elementDefinition}
+                          elementProperties={elementPropertiesThis}
+                          pipelineEditApi={pipelineEditApi}
+                        />
+                      </LineEndpoint>
                     );
                   })}
             </div>
