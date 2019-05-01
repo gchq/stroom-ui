@@ -53,7 +53,6 @@ const DocRefEditor = <T extends {}>({
     <div className="DocRefEditor fill-space">
       <DocRefIconHeader
         docRefType={docRef.type}
-        className="DocRefEditor__header"
         text={docRef.name || "no name"}
       />
 

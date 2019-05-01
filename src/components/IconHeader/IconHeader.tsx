@@ -21,10 +21,15 @@ import { IconProp } from "@fortawesome/fontawesome-svg-core";
 interface Props {
   text: string;
   icon: IconProp;
+  className?: string;
 }
 
-const IconHeader: React.FunctionComponent<Props> = ({ text, icon }) => (
-  <div className="icon-header">
+const IconHeader: React.FunctionComponent<Props> = ({
+  text,
+  icon,
+  className,
+}) => (
+  <div className={`icon-header ${className || ""}`}>
     <FontAwesomeIcon className="icon-header__icon" icon={icon} size="lg" />
     <div className="icon-header__text">{text}</div>
   </div>

@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import ReactTable from "react-table";
+import ReactTable, { TableProps } from "react-table";
 
 import {
   useSelectableReactTable,
@@ -34,7 +34,10 @@ interface UseTable {
   componentProps: Props;
 }
 
-export const useTable = (groups: IndexVolumeGroup[]): UseTable => {
+export const useTable = (
+  groups: IndexVolumeGroup[],
+  customTableProps?: Partial<TableProps>,
+): UseTable => {
   const selectableTableProps = useSelectableReactTable<IndexVolumeGroup>(
     {
       getKey: v => v.name,
@@ -43,6 +46,7 @@ export const useTable = (groups: IndexVolumeGroup[]): UseTable => {
     },
     {
       columns: COLUMNS,
+      ...customTableProps,
     },
   );
 

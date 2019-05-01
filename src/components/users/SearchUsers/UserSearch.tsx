@@ -43,9 +43,7 @@ const UserSearch: React.FunctionComponent<UserSearchProps> = ({
 }) => {
   const [isFilteringEnabled, setFilteringEnabled] = useState(false);
   const [selectedUser, setSelectedUser] = useState("");
-  const colums: Column<User>[] = useColumns(selectedUser);
-
-  const deleteButtonDisabled = !selectedUser;
+  const columns: Column<User>[] = useColumns(selectedUser);
 
   const getTrProps: ComponentPropsGetterR = React.useCallback(
     (state: any, rowInfo: RowInfo | undefined) => {
@@ -75,38 +73,25 @@ const UserSearch: React.FunctionComponent<UserSearchProps> = ({
           icon="plus"
           text="Create"
         />
-        {deleteButtonDisabled ? (
-          <div>
-            <Button
-              className="toolbar-button-small primary"
-              disabled
-              icon="edit"
-              text="View/edit"
-            />
-          </div>
-        ) : (
-          <Button
-            className="toolbar-button-small primary"
-            onClick={() => onUserOpen(selectedUser)}
-            icon="edit"
-            text="View/edit"
-          />
-        )}
-
-        <div>
-          <Button
-            disabled={deleteButtonDisabled}
-            onClick={() => {
-              if (!!selectedUser) {
-                onDeleteUser(selectedUser);
-                // remove(selectedUser);
-              }
-            }}
-            className="toolbar-button-small primary"
-            icon="trash"
-            text="Delete"
-          />
-        </div>
+        <Button
+          className="toolbar-button-small primary"
+          disabled={!selectedUser}
+          onClick={() => onUserOpen(selectedUser)}
+          icon="edit"
+          text="View/edit"
+        />
+        <Button
+          disabled={!selectedUser}
+          onClick={() => {
+            if (!!selectedUser) {
+              onDeleteUser(selectedUser);
+              // remove(selectedUser);
+            }
+          }}
+          className="toolbar-button-small primary"
+          icon="trash"
+          text="Delete"
+        />
         <div className="UserSearch-filteringToggle">
           <label>Show filtering</label>
           <Toggle
@@ -121,7 +106,7 @@ const UserSearch: React.FunctionComponent<UserSearchProps> = ({
           <ReactTable
             data={users}
             className="UserSearch-table -striped -highlight"
-            columns={colums}
+            columns={columns}
             defaultSorted={[
               {
                 id: "email",

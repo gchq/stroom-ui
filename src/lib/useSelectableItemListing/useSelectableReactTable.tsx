@@ -58,6 +58,7 @@ function useSelectableReactTable<TItem>(
   return {
     ...selectableItemProps,
     tableProps: {
+      className: "UserSearch-table -striped -highlight",
       data: items,
       getTdProps,
       getTrProps,

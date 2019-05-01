@@ -11,6 +11,7 @@ import {
   wellUsedUser,
 } from "../testData";
 import { User } from "../types";
+import { addThemedStories } from "testing/storybook/themedStoryGenerator";
 
 const users: User[] = [
   disabledUser,
@@ -19,7 +20,9 @@ const users: User[] = [
   newUser,
   wellUsedUser,
 ];
-storiesOf("Users/Search", module).add("basic", () => (
+const stories = storiesOf("Users/Search", module);
+
+addThemedStories(stories, () => (
   <UserSearch
     onNewUserClicked={() => action("onNewUserClicked")}
     onUserOpen={(userId: string) => action(`onUserOpen:${userId}`)}

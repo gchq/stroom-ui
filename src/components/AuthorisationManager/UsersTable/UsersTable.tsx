@@ -1,34 +1,17 @@
 import * as React from "react";
-import ReactTable from "react-table";
+import ReactTable, { TableProps } from "react-table";
 import {
   SelectionBehaviour,
   useSelectableReactTable,
 } from "lib/useSelectableItemListing";
 import { StroomUser } from "../api/userGroups";
 import { TableOutProps } from "lib/useSelectableItemListing/types";
+import useColumns from "./useColumns";
 
 interface Props {
   users: StroomUser[];
   selectableTableProps: TableOutProps<StroomUser>;
 }
-
-const COLUMNS = [
-  {
-    id: "uuid",
-    Header: "UUID",
-    accessor: (u: StroomUser) => u.uuid,
-  },
-  {
-    id: "name",
-    Header: "Name",
-    accessor: (u: StroomUser) => u.name,
-  },
-  {
-    id: "isGroup",
-    Header: "Is Group",
-    accessor: (u: StroomUser) => (u.group ? "Group" : "User"),
-  },
-];
 
 const UsersTable: React.FunctionComponent<Props> = ({
   selectableTableProps: { onKeyDownWithShortcuts, tableProps },
@@ -42,7 +25,10 @@ interface UseTable {
   componentProps: Props;
 }
 
-export const useTable = (users: StroomUser[]): UseTable => {
+export const useTable = (
+  users: StroomUser[],
+  customTableProps?: Partial<TableProps>,
+): UseTable => {
   const selectableTableProps = useSelectableReactTable<StroomUser>(
     {
       getKey: v => v.uuid,
@@ -50,7 +36,8 @@ export const useTable = (users: StroomUser[]): UseTable => {
       selectionBehaviour: SelectionBehaviour.MULTIPLE,
     },
     {
-      columns: COLUMNS,
+      columns: useColumns(),
+      ...customTableProps,
     },
   );
 

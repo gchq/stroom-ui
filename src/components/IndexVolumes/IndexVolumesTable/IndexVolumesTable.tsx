@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import ReactTable from "react-table";
+import ReactTable, { TableProps } from "react-table";
 
 import {
   useSelectableReactTable,
@@ -35,7 +35,7 @@ const COLUMNS = [
 const IndexVolumesTable: React.FunctionComponent<Props> = ({
   selectableTableProps: { onKeyDownWithShortcuts, tableProps },
 }) => (
-  <div tabIndex={0} onKeyDown={onKeyDownWithShortcuts}>
+  <div className="fill-space" tabIndex={0} onKeyDown={onKeyDownWithShortcuts}>
     <ReactTable {...tableProps} />
   </div>
 );
@@ -44,7 +44,10 @@ interface UseTable {
   componentProps: Props;
 }
 
-export const useTable = (indexVolumes: IndexVolume[]): UseTable => {
+export const useTable = (
+  indexVolumes: IndexVolume[],
+  customTableProps?: Partial<TableProps>,
+): UseTable => {
   const selectableTableProps = useSelectableReactTable<IndexVolume>(
     {
       getKey: v => v.id,
@@ -53,6 +56,7 @@ export const useTable = (indexVolumes: IndexVolume[]): UseTable => {
     },
     {
       columns: COLUMNS,
+      ...customTableProps,
     },
   );
 
