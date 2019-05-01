@@ -24,10 +24,28 @@
 .search-bar__header {
   display: inline-flex;
   width: 100%;
+  border: 1px solid rgb(204,204,204);
+  border-radius: 3px;
+  padding: 0px;
+  margin: 0px;
 }
+
+// .search-bar__header:focus {
+//   border-color: red;
+// }
 
 .search-bar__input {
   flex-grow: 1;
+  margin: 0px;
+  border: none;
+}
+
+.search-bar__input:focus {
+  outline: none;
+}
+
+.search-bar__button {
+  margin-top: 2px;
 }
 
 .search-bar__content {

@@ -79,8 +79,10 @@ const DataViewer = () => {
     <div className="data-viewer">
       <div className="data-viewer__header">
         <IconHeader icon="database" text="Data" />
+      </div>
+      <div className="data-viewer__search-bar">
         <ExpressionSearchBar
-          className="data-viewer__search-bar"
+          // className="data-viewer__search-bar"
           dataSource={dataSource}
           onSearch={onSearch}
         />

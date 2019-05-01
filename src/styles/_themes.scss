@@ -12,7 +12,8 @@ $themes: (
     raised-high__selected-background-color: red,
     raised-high__selected-focus-background-color: #1c70b1,
     raised-element__border: 1px solid #fff,
-    border: 1px solid #dfe0e1,
+    border: 1px solid rgba(0,0,0,0.1),
+    border-color: rgba(0,0,0,0.1),
     // Specific
     header__icon-color: #2185d0,
     dropdown__background-color: #fff,
@@ -39,7 +40,7 @@ $themes: (
   ),
   dark: (
     // General
-      background__color: #282829,
+    background__color: #282829,
     text__color: #cacbcb,
     text__color--deemphasised: #cacbcb,
     selected-color: #185e90,
@@ -51,6 +52,7 @@ $themes: (
     raised-high__selected-focus-background-color: #747c79,
     raised-element__border: 1px solid #aaa,
     border: 1px solid #4d5250,
+    border-color: #4d5250,
     // Specific
     header__icon-color: #2185d0,
     dropdown__background-color: #282829,

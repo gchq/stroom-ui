@@ -82,9 +82,10 @@
   display: grid;
   align-items: center;
   // grid-template-columns: auto 30rem;
-  grid-template-rows: 2.7rem auto;
+  grid-template-rows: 2.7rem auto 1fr;
   grid-template-areas:
     "header"
+    "searchBar"
     "main";
 
   width: 100%;
@@ -99,7 +100,8 @@
 }
 
 .data-viewer__search-bar {
-  flex-grow: 1;
+  grid-area: searchBar;
+  padding: 0.4rem;
 }
 
 // .data-viewer__table {

@@ -120,6 +120,7 @@ const ExpressionSearchBar: React.FunctionComponent<Props> = ({
           onChange={onChange}
         />
         <Button
+          className="search-bar__button"
           disabled={!isSearchStringValid}
           icon="search"
           onClick={onClickSearch}
