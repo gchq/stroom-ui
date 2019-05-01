@@ -79,20 +79,22 @@ const ProcessingContainer: React.FunctionComponent = () => {
   }, [fetchTrackers, resetPaging]);
 
   return (
-    <div className="processing fill-space">
-      <div className="processing__header">
+    <div className="page">
+      <div className="page__header">
         <IconHeader icon="play" text="Processing" />
       </div>
-      <div className="processing__search">
-        <input
-          className="border"
-          placeholder="Search..."
-          value={searchCriteria}
-          onChange={onHandleSearchChange}
-        />
-        <ProcessingSearchHelp />
+      <div className="page__search">
+        <div className="processing__search">
+          <input
+            className="border"
+            placeholder="Search..."
+            value={searchCriteria}
+            onChange={onHandleSearchChange}
+          />
+          <ProcessingSearchHelp />
+        </div>
       </div>
-      <div className="processing__main">
+      <div className="page__body">
         <HorizontalMainDetails
           storageKey="processing"
           title={`Processing Details ${selectedTracker &&

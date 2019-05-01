@@ -81,9 +81,16 @@ const IndexVolumes: React.FunctionComponent = () => {
   }, [goToIndexVolume, selectedIndexVolumes]);
 
   return (
-    <div className="UserSearch-main">
-      <DocRefIconHeader text="Index Volumes" docRefType="Index" />
-      <div className="header">
+    <div className="page">
+      <div className="page__header">
+        <DocRefIconHeader text="Index Volumes" docRefType="Index" />
+      </div>
+      <div className="page__search" />
+      <div className="page__body">
+        <IndexVolumesTable {...tableProps} />
+      </div>
+
+      <div className="page__buttons">
         <Button
           className="toolbar-button-small primary"
           onClick={showCreateNewDialog}
@@ -122,9 +129,7 @@ const IndexVolumes: React.FunctionComponent = () => {
       </div>
 
       <div className="UserSearch-content">
-        <div className="table-small-container">
-          <IndexVolumesTable {...tableProps} />
-        </div>
+        <IndexVolumesTable {...tableProps} />
       </div>
       <IndexVolumeGroupModalPicker {...addToGroupProps} />
       <NewIndexVolumeDialog {...createNewDialogProps} />

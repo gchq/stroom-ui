@@ -44,13 +44,15 @@ const ThemedModal: React.FunctionComponent<Props> = ({
   const { theme } = useTheme();
 
   return (
-    <ReactModal className={`${theme}`} {...rest} style={reactModalOptions}>
-      <div className="raised-low themed-modal">
-        <header className="raised-low themed-modal__header">{header}</header>
-        <div className="raised-low themed-modal__content">{content}</div>
-        <div className="raised-low themed-modal__footer__actions">
-          {actions}
-        </div>
+    <ReactModal
+      className={`themed-modal ${theme}`}
+      {...rest}
+      style={reactModalOptions}
+    >
+      <div className="themed-modal__container">
+        <header className="themed-modal__header">{header}</header>
+        <div className="themed-modal__content">{content}</div>
+        <div className="themed-modal__footer__actions">{actions}</div>
       </div>
     </ReactModal>
   );

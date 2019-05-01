@@ -92,9 +92,12 @@ const TestTable = () => {
   ]);
 
   return (
-    <div tabIndex={0} onKeyDown={onKeyDownWithShortcuts}>
+    <div className="fill-space" tabIndex={0} onKeyDown={onKeyDownWithShortcuts}>
       <Button text="Reset" onClick={reset} />
-      <ReactTable {...tableProps} />
+      <ReactTable
+        className="useSelectableReactTable -striped -highlight"
+        {...tableProps}
+      />
       <form>
         <label>Species</label>
         <input {...speciesProps} />

@@ -19,11 +19,11 @@ import * as React from "react";
 import IconHeader from "components/IconHeader";
 
 const Welcome: React.FunctionComponent = () => (
-  <div className="welcome fill-space">
-    <div className="welcome__header">
+  <div className="page">
+    <div className="page__header">
       <IconHeader icon="home" text="Welcome" />
     </div>
-    <div className="welcome__body">
+    <div className="page__body welcome__body">
       <img
         className="welcome__image"
         alt="Stroom logo"

@@ -59,9 +59,16 @@ const IndexVolumeGroups: React.FunctionComponent = () => {
   }, [selectedGroups, goToIndexVolumeGroup]);
 
   return (
-    <div className="UserSearch-main">
-      <DocRefIconHeader text="Index Volumes Groups" docRefType="Index" />
-      <div className="header">
+    <div className="page">
+      <div className="page__header">
+        <DocRefIconHeader text="Index Volumes Groups" docRefType="Index" />
+      </div>
+      <div className="page__search" />
+      <div className="page__body">
+        <IndexVolumeGroupsTable {...tableProps} />
+      </div>
+
+      <div className="page__buttons">
         <Button
           className="toolbar-button-small primary"
           onClick={showNewDialog}
@@ -93,9 +100,7 @@ const IndexVolumeGroups: React.FunctionComponent = () => {
       </div>
 
       <div className="UserSearch-content">
-        <div className="table-small-container">
-          <IndexVolumeGroupsTable {...tableProps} />
-        </div>
+        <IndexVolumeGroupsTable {...tableProps} />
       </div>
       <NewIndexVolumeGroupDialog {...newDialogComponentProps} />
       <ThemedConfirm {...deleteDialogComponentProps} />

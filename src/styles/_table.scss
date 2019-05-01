@@ -35,6 +35,8 @@
 
 .ReactTable {
   width: 100%;
+  border: none;
+  border-top: 1px solid rgba(0,0,0,0.1);
 }
 
 .ReactTable .-pagination {
@@ -88,6 +90,9 @@
   border-bottom: none;
 }
 
+.table-row-dimmed {
+  color: darkgray;
+}
 
 
 

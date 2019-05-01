@@ -76,18 +76,18 @@ const DataViewer = () => {
   );
 
   return (
-    <div className="data-viewer fill-space">
-      <div className="data-viewer__header">
+    <div className="page">
+      <div className="page__header">
         <IconHeader icon="database" text="Data" />
       </div>
-      <div className="data-viewer__search">
+      <div className="page__search">
         <ExpressionSearchBar
           // className="data-viewer__search-bar"
           dataSource={dataSource}
           onSearch={onSearch}
         />
       </div>
-      <div className="data-viewer__main">
+      <div className="page__body">
         <HorizontalMainDetails
           storageKey="dataViewer"
           title=""

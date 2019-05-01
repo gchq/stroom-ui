@@ -82,9 +82,11 @@ const Authorisation: React.FunctionComponent<Props> = ({ isGroup }) => {
   React.useEffect(() => findUsers(undefined, isGroup), [isGroup, findUsers]);
 
   return (
-    <div className="UserSearch-main">
-      <IconHeader text={isGroup ? "User Groups" : "Users"} icon="user" />
-      <div className="header">
+    <div className="page">
+      <div className="page__header">
+        <IconHeader text={isGroup ? "User Groups" : "Users"} icon="user" />
+      </div>
+      <div className="page__buttons">
         <Button
           className="toolbar-button-small primary"
           onClick={showNewDialog}
@@ -114,6 +116,11 @@ const Authorisation: React.FunctionComponent<Props> = ({ isGroup }) => {
           }
           onClick={showGroupPicker}
         />
+        <Button
+          text="Delete"
+          disabled={selectedUsers.length === 0}
+          onClick={showDeleteDialog}
+        />
         <div className="UserSearch-filteringToggle">
           <label>Show filtering</label>
           <Toggle
@@ -123,11 +130,8 @@ const Authorisation: React.FunctionComponent<Props> = ({ isGroup }) => {
           />
         </div>
       </div>
-
-      <div className="UserSearch-content">
-        <div className="table-small-container">
-          <UsersTable {...tableProps} />
-        </div>
+      <div className="page__body">
+        <UsersTable {...tableProps} />
       </div>
 
       <UserPickerDialog {...userGroupPickerProps} />

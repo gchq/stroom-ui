@@ -27,6 +27,7 @@ import "react-toggle/style.css";
 import Button from "components/Button";
 import { User } from "../types";
 import useColumns from "./useColumns";
+import IconHeader from "components/IconHeader";
 
 interface UserSearchProps {
   onNewUserClicked: () => void;
@@ -65,8 +66,11 @@ const UserSearch: React.FunctionComponent<UserSearchProps> = ({
   );
 
   return (
-    <div className="UserSearch-main">
-      <div className="header">
+    <div className="page">
+      <div className="page__header">
+        <IconHeader icon="users" text={`Users`} />
+      </div>
+      <div className="page__buttons">
         <Button
           className="toolbar-button-small primary"
           onClick={() => onNewUserClicked()}
@@ -101,30 +105,22 @@ const UserSearch: React.FunctionComponent<UserSearchProps> = ({
           />
         </div>
       </div>
-      <div className="UserSearch-content">
-        <div className="table-small-container">
-          <ReactTable
-            data={users}
-            className="UserSearch-table -striped -highlight"
-            columns={columns}
-            defaultSorted={[
-              {
-                id: "email",
-                desc: true,
-              },
-            ]}
-            filterable={isFilteringEnabled}
-            showPagination
-            defaultPageSize={50}
-            style={{
-              // We use 'calc' because we want full height but need
-              // to account for the header. Obviously if the header height
-              // changes this offset will need to change too.
-              height: "calc(100vh - 50px)",
-            }}
-            getTrProps={getTrProps}
-          />
-        </div>
+      <div className="page__body">
+        <ReactTable
+          data={users}
+          className="fill-space -striped -highlight"
+          columns={columns}
+          defaultSorted={[
+            {
+              id: "email",
+              desc: true,
+            },
+          ]}
+          filterable={isFilteringEnabled}
+          showPagination
+          defaultPageSize={50}
+          getTrProps={getTrProps}
+        />
       </div>
     </div>
   );
