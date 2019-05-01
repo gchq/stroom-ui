@@ -5,6 +5,7 @@ import {
   DocRefType,
   DocRefTree,
   DocRefWithLineage,
+  copyDocRef,
 } from "components/DocumentEditors/useDocumentApi/types/base";
 import { OptionProps } from "react-select/lib/components/Option";
 import DocRefImage from "../DocRefImage";
@@ -97,10 +98,14 @@ const Menu: React.FunctionComponent<MenuProps<DocRefType>> = props => {
 
 const AppSearchBar: React.FunctionComponent<Props> = ({
   typeFilter,
-  onChange,
+  onChange: onChangeRaw,
   value,
   className,
 }) => {
+  const onChange: (d: DocRefType) => void = React.useCallback(
+    d => onChangeRaw(copyDocRef(d)),
+    [onChangeRaw],
+  );
   const [searchTerm, setSearchTerm] = React.useState<string>("");
   const { documentTree, searchResults, searchApp } = useDocumentSearch();
   const [focussedDocRef, onOptionFocus] = React.useState<

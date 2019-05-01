@@ -54,23 +54,6 @@ let AppSearchAsForm: React.FunctionComponent<Props> = ({ typeFilter }) => {
   );
 };
 
-const AppSearchAsPicker: React.FunctionComponent<Props> = ({ typeFilter }) => {
-  const [pickedDocRef, setPickedDocRef] = React.useState<
-    DocRefType | undefined
-  >(undefined);
-
-  return (
-    <div>
-      <AppSearchBar
-        typeFilter={typeFilter}
-        onChange={setPickedDocRef}
-        value={pickedDocRef}
-      />
-      <JsonDebug value={{ pickedDocRef }} />
-    </div>
-  );
-};
-
 class AppSearchAsNavigator extends React.Component<
   Props,
   { chosenDocRef?: DocRefType }
@@ -104,18 +87,16 @@ class AppSearchAsNavigator extends React.Component<
   }
 }
 
-const stories = storiesOf(`App Search Bar`, module);
+const globalSearch = storiesOf(`App Search Bar/Global Search`, module);
+addThemedStories(globalSearch, () => <AppSearchAsNavigator />);
 
-stories
-  .add("Search Bar (global)", () => <AppSearchAsNavigator />)
-  .add("Doc Ref Form", () => <AppSearchAsForm />)
-  .add("Doc Ref Picker", () => <AppSearchAsPicker />)
-  .add("Doc Ref Form (Pipeline)", () => (
-    <AppSearchAsForm typeFilter="Pipeline" />
-  ))
-  .add("Doc Ref Picker (Feed AND Dictionary)", () => (
-    <AppSearchAsPicker typeFilter="Feed" />
-  ))
-  .add("Doc Ref Form (Folders)", () => <AppSearchAsForm typeFilter="Folder" />);
+const asForm = storiesOf(`App Search Bar/In Form`, module);
+addThemedStories(asForm, () => <AppSearchAsForm />);
 
-addThemedStories(stories, () => <AppSearchAsNavigator />);
+const asFormSpecificType = storiesOf(`App Search Bar/Specific Type`, module);
+addThemedStories(asFormSpecificType, () => (
+  <AppSearchAsForm typeFilter="Pipeline" />
+));
+
+const asFormFolder = storiesOf(`App Search Bar/Find Folder`, module);
+addThemedStories(asFormFolder, () => <AppSearchAsForm typeFilter="Folder" />);

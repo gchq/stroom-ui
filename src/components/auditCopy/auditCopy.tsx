@@ -102,8 +102,7 @@ export const ByCopy = ({
   if (by !== undefined && by !== null) {
     return (
       <div className="copy">
-        <strong>{verb}</strong> '{by}
-        '.
+        <strong>{verb}</strong> &apos;{by}&apos;.
       </div>
     );
   } else {
