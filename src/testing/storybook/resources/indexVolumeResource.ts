@@ -76,8 +76,7 @@ const resourceBuilder: ResourceBuilder = (
         ),
       };
 
-      res.send(undefined);
-      // res.sendStatus(204);
+      res.status(204).send(undefined);
     });
 
   // Get Volumes in Group
@@ -134,8 +133,7 @@ const resourceBuilder: ResourceBuilder = (
         ],
       );
 
-      res.send(undefined);
-      // res.sendStatus(204);
+      res.status(204).send(undefined);
     });
 
   // Remove Volume from Group
@@ -148,8 +146,7 @@ const resourceBuilder: ResourceBuilder = (
         m => !(m.groupName === groupName && m.volumeId === volumeId),
       );
 
-      res.send(undefined);
-      // res.sendStatus(204);
+      res.status(204).send(undefined);
     });
 };
 

@@ -65,8 +65,7 @@ const resourceBuilder: ResourceBuilder = (
         ),
       };
 
-      res.send(undefined);
-      // res.sendStatus(204);
+      res.status(204).send(undefined);
     });
   // Users in Group
   server
@@ -116,8 +115,7 @@ const resourceBuilder: ResourceBuilder = (
         ],
       );
 
-      res.send(undefined);
-      // res.sendStatus(204);
+      res.status(204).send(undefined);
     });
 
   // Remove User from Group
@@ -132,8 +130,7 @@ const resourceBuilder: ResourceBuilder = (
           ),
       );
 
-      res.send(undefined);
-      // res.sendStatus(204);
+      res.status(204).send(undefined);
     });
 };
 

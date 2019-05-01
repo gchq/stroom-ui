@@ -42,20 +42,16 @@ const TestForm = () => {
   );
 
   return (
-    <form>
-      <div>
-        <label>App Permissions</label>
-        <AppPermissionPicker
-          {...{
-            value,
-            addPermission,
-            removePermission,
-          }}
-        />
-      </div>
-
+    <div>
+      <AppPermissionPicker
+        {...{
+          value,
+          addPermission,
+          removePermission,
+        }}
+      />
       <JsonDebug value={value} />
-    </form>
+    </div>
   );
 };
 

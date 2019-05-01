@@ -29,8 +29,7 @@ const resourceBuilder: ResourceBuilder = (
         req.params.permissionName,
       ].filter(onlyUnique);
 
-      res.send(undefined);
-      // res.sendStatus(204);
+      res.status(204).send(undefined);
     });
 
   server
@@ -42,8 +41,7 @@ const resourceBuilder: ResourceBuilder = (
         p => p !== req.params.permissionName,
       );
 
-      res.send(undefined);
-      // res.sendStatus(204);
+      res.status(204).send(undefined);
     });
 };
 
