@@ -158,7 +158,7 @@ input {
 
 :focus .inFocus {
   @include themify($themes) {
-    background-color: themed("raised-high__selected-background-color");
+    background-color: themed("raised-high__selected-focus-background-color");
   }
 }
 
@@ -170,7 +170,7 @@ input {
 
 :focus .raised-high .inFocus {
   @include themify($themes) {
-    background-color: themed("raised-high__selected-background-color");
+    background-color: themed("raised-high__selected-focus-background-color");
   }
 }
 
@@ -208,13 +208,13 @@ input {
 
 .focussed {
   @include themify($themes) {
-    border: solid thin themed("focussed-color");
+    outline: solid thin themed("focussed-color");
   }
 }
 
 .focussed:hover {
   @include themify($themes) {
-    border: solid thin themed("focussed-color");
+    outline: solid thin themed("focussed-color");
   }
 }
 
@@ -228,6 +228,12 @@ input {
 .border {
   @include themify($themes) {
     border: themed("border");
+  }
+}
+
+.border-color {
+  @include themify($themes) {
+    border-color: themed("border-color");
   }
 }
 
@@ -283,6 +289,24 @@ input {
 // Specific styles //
 /////////////////////
 
+.app-chrome__sidebar {
+  @include themify($themes) {
+    background-color: themed("sidebar__background-color");
+    color: themed("sidebar__menu-item-text");
+  }
+}
+.app-chrome__sidebar_header {
+  @include themify($themes) {
+    background-color: themed("sidebar__background-color");
+    color: themed("sidebar__header-color");
+  }
+}
+// .app-chrome__sidebar_header:hover {
+//   @include themify($themes) {
+//     background-color: themed("sidebar__menu-item-background--select");
+//     color: themed("sidebar__menu-item-text--select");
+//   }
+// }
 .sidebar__logo svg path {
   @include themify($themes) {
     fill: themed("sidebar__header-color");
@@ -290,23 +314,32 @@ input {
 }
 .sidebar__menu-item {
   @include themify($themes) {
-    color: themed("text__color--deemphasised");
+    background-color: themed("sidebar__background-color");
+    color: themed("sidebar__menu-item-text");
+  }
+}
+.app-chrome__sidebar-menu:focus .sidebar__menu-item.is-active {
+  @include themify($themes) {
+    background-color: themed("sidebar__menu-item-background--select-hover");
+    color: themed("sidebar__menu-item-text--select");
   }
 }
 .sidebar__menu-item.is-active {
   @include themify($themes) {
-    background-color: themed("raised-high__selected-background-color");
+    background-color: themed("sidebar__menu-item-background--select");
+    color: themed("sidebar__menu-item-text--select");
   }
 }
 .sidebar__menu-item.nav:hover {
   @include themify($themes) {
-    background-color: themed("raised-high__selected-background-color");
+    background-color: themed("sidebar__menu-item-background--select");
+    color: themed("sidebar__menu-item-text--select");
   }
 }
-
 .sidebar__menu-item.doc:hover {
   @include themify($themes) {
-    background-color: themed("raised-high__selected-background-color");
+    background-color: themed("sidebar__menu-item-background--select");
+    color: themed("sidebar__menu-item-text--select");
   }
 }
 
@@ -398,11 +431,5 @@ body ::-webkit-scrollbar-thumb {
       color: themed("text__color");
       border: none;
     }
-  }
-}
-
-.app-chrome__sidebar_header:hover {
-  @include themify($themes) {
-    background-color: themed("raised-high__selected-background-color");
   }
 }

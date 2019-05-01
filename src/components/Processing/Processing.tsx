@@ -79,9 +79,11 @@ const ProcessingContainer: React.FunctionComponent = () => {
   }, [fetchTrackers, resetPaging]);
 
   return (
-    <div className="processing__container fill-space">
-      <div className="processing__header-container">
+    <div className="processing fill-space">
+      <div className="processing__header">
         <IconHeader icon="play" text="Processing" />
+      </div>
+      <div className="processing__search">
         <input
           className="border"
           placeholder="Search..."
@@ -90,25 +92,27 @@ const ProcessingContainer: React.FunctionComponent = () => {
         />
         <ProcessingSearchHelp />
       </div>
-      <HorizontalMainDetails
-        storageKey="processing"
-        title={`Processing Details ${selectedTracker &&
-          selectedTracker.pipelineName}`}
-        isOpen={!!selectedTracker}
-        onClose={onClearSelection}
-        mainContent={
-          <ProcessingList
-            streamTasksApi={streamTasksApi}
-            onSelectionChanged={setSelectedTracker}
-          />
-        }
-        detailContent={
-          <ProcessingDetails
-            tracker={selectedTracker}
-            enableToggle={enableToggleSelected}
-          />
-        }
-      />
+      <div className="processing__main">
+        <HorizontalMainDetails
+          storageKey="processing"
+          title={`Processing Details ${selectedTracker &&
+            selectedTracker.pipelineName}`}
+          isOpen={!!selectedTracker}
+          onClose={onClearSelection}
+          mainContent={
+            <ProcessingList
+              streamTasksApi={streamTasksApi}
+              onSelectionChanged={setSelectedTracker}
+            />
+          }
+          detailContent={
+            <ProcessingDetails
+              tracker={selectedTracker}
+              enableToggle={enableToggleSelected}
+            />
+          }
+        />
+      </div>
     </div>
   );
 };

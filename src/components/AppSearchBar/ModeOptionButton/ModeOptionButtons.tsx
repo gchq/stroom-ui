@@ -43,6 +43,7 @@ const ModeOptionButtons: React.FunctionComponent<Props> = ({ switchMode }) => (
       <Button
         key={modeOption.mode}
         icon={modeOption.icon}
+        className="circular"
         groupPosition={modeOption.position}
         onClick={e => {
           switchMode(modeOption.mode);

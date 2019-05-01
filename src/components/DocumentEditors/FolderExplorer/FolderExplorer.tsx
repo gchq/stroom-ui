@@ -186,7 +186,11 @@ const FolderExplorer: React.FunctionComponent<SwitchedDocRefEditorProps> = ({
       {...folderEditorProps}
       additionalActionBarItems={additionalActionBarItems}
     >
-      <div tabIndex={0} onKeyDown={onKeyDownWithShortcuts}>
+      <div
+        tabIndex={0}
+        className="DocRefEditor__focusarea"
+        onKeyDown={onKeyDownWithShortcuts}
+      >
         {folder &&
           folder.node &&
           folder.node.children &&

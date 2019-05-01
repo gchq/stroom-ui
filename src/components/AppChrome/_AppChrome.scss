@@ -16,6 +16,9 @@
 .app-chrome__sidebar {
   height: inherit;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  flex: 0 1 auto;
 }
 
 .app-chrome__sidebar--expanded {
@@ -23,14 +26,18 @@
 }
 
 .app-chrome__sidebar--collapsed {
-  width: 2.5rem;
+  width: 2.2rem;
 }
 
 .app-chrome__sidebar-menu {
   overflow-y: auto;
   position: absolute;
-  height: calc(100% - 2.2rem);
+  height: 100%;
   width: 100%;
+}
+
+.app-chrome__sidebar-menu:focus {
+  outline: none;
 }
 
 .app-chrome__sidebar-menu__container {
@@ -45,18 +52,26 @@
 }
 
 .app-chrome__sidebar_header {
-  position: relative;
-  height: 2.2rem;
+  padding-left: 0.7rem;
+  height: 2.7rem;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.app-chrome__sidebar_header_icon {
+  cursor: pointer;
 }
 
 .sidebar__menu-item {
   display: inline-flex;
   outline: none;
   width: 100%;
+  height: 1.8rem;
+  overflow: hidden;
 }
 
 .sidebar__menu-item.nav {
-  padding: 0.35rem 0 0.35rem 0.1rem;
+  // padding: 0.35rem 0 0.35rem 0.1rem;
   color: white;
   outline: inherit;
   white-space: nowrap;
@@ -73,6 +88,10 @@
   text-overflow: ellipsis;
   overflow-x: hidden;
 }
+
+// .sidebar__menu-item.doc {
+//   font-size: 0.85rem;
+// }
 
 .sidebar__menu-item.selected {
   font-weight: bold;
@@ -80,10 +99,6 @@
 
 .sidebar__menu-item.doc.dnd-over {
   font-weight: italic;
-}
-
-.sidebar__menu-item.doc {
-  font-size: 0.85rem;
 }
 
 .sidebar__menu-item.doc.collapsed {
@@ -104,12 +119,14 @@
   color: red;
 }
 .sidebar__toggle {
-  width: 1.5rem;
+  position: absolute;
+  right: .36rem;
+  top: .4rem;
 }
 
-.sidebar__children {
-  margin-bottom: 0.4rem;
-}
+// .sidebar__children {
+//   margin-bottom: 0.4rem;
+// }
 
 .app-chrome__content {
   position: relative;
@@ -137,10 +154,6 @@
   margin: 0;
 }
 
-.content-tabs__grid {
-  display: block;
-}
-
 .app-chrome__content .ui.grid .column {
   padding: 0.3rem;
 }
@@ -154,14 +167,16 @@
 }
 
 .sidebar__logo {
-  display: inline;
-  align-items: center;
-  position: absolute;
-  left: 40px;
+  width: 8rem;
 }
 
 .menu-item__menu-icon {
-  padding: 0 0.3125rem 0 0.4125rem;
+  // padding-left: 0.55rem;
+  padding-top: 0.35rem;
+  padding-bottom: 0.35rem;
+  width: 2.2rem;
+  overflow: hidden;
+  text-align: center;
 }
 
 .sidebar__menu-item.has-children--open {
@@ -169,5 +184,5 @@
 }
 
 .menu-item__text {
-  padding-left: 0.65rem;
+  padding-top: 0.35rem;
 }

@@ -26,7 +26,7 @@ interface Props {
 const IconHeader: React.FunctionComponent<Props> = ({ text, icon }) => (
   <div className="icon-header">
     <FontAwesomeIcon className="icon-header__icon" icon={icon} size="lg" />
-    <p className="icon-header__text">{text}</p>
+    <div className="icon-header__text">{text}</div>
   </div>
 );
 

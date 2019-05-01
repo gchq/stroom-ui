@@ -6,6 +6,7 @@ $button-margin: 3px;;
   border-radius: 3px;
   margin-left: $button-margin;
   margin-right: $button-margin;
+  cursor: pointer;
 }
 
 .button.left {
@@ -47,5 +48,7 @@ $button-margin: 3px;;
 }
 
 .button__text {
-  margin-left:0.2rem;
+  margin-left:0.4rem;
+  font-size: 10pt;
+  vertical-align: middle;
 }

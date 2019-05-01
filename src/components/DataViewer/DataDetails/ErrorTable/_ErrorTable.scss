@@ -3,6 +3,14 @@
   position: relative;
 }
 
+.ErrorTable__reactTable .rt-thead {
+  flex: 0 0 auto; // Stop rows expanding to fit all vertical space
+}
+
+.ErrorTable__reactTable .rt-tbody {
+  flex: 0 1 auto; // Stop rows expanding to fit all vertical space
+}
+
 .ErrorTable__reactTable__container {
   position: absolute;
   top: 0; // If you want to push the top of the table down a bit, e.g. for a toolbar, do it here.

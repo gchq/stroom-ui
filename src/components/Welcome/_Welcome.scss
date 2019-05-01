@@ -1,13 +1,23 @@
 .welcome {
-  width: 100%;
-  height: 100%;
   display: flex;
   flex-direction: column;
 }
 
+.welcome__header {
+  display: inline-flex;
+  flex-direction: row;
+  flex-shrink: 0;
+}
+
+.welcome__body {
+  padding: 0.36rem;
+  position: relative;
+  flex-grow: 1;
+  overflow: auto;
+}
+
 .welcome__image {
-  background-color: darkblue;
-  height: 75px;
+  width: 200px;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -15,5 +25,4 @@
 
 .welcome__shortcuts__table {
   width: 400px;
-  margin: 10px;
 }

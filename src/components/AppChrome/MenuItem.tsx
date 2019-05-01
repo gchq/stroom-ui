@@ -121,7 +121,7 @@ const MenuItem: React.FunctionComponent<EnhancedProps> = ({
     menuItemOpened(menuItem.key, !areMenuItemsOpen[menuItem.key]);
     e.preventDefault();
   };
-  const onTitleClick: React.MouseEventHandler<HTMLDivElement> = (
+  const onSelect: React.MouseEventHandler<HTMLDivElement> = (
     e: React.MouseEvent,
   ) => {
     menuItem.onClick();
@@ -164,7 +164,7 @@ const MenuItem: React.FunctionComponent<EnhancedProps> = ({
     classNames.push("is-active");
   }
 
-  const style = { paddingLeft: `${depth * 0.7}rem` };
+  const style = { paddingLeft: `${depth * 1.5}rem` };
   const className = classNames.join(" ");
 
   const hasChildrenIcon = `folder${
@@ -174,7 +174,7 @@ const MenuItem: React.FunctionComponent<EnhancedProps> = ({
 
   return connectDragSource(
     connectDropTarget(
-      <div className={className} style={style}>
+      <div onClick={onSelect} className={className} style={style}>
         {hasChildren ? (
           <div className="menu-item__menu-icon" onClick={onExpand}>
             <FontAwesomeIcon size="lg" icon={hasChildrenIcon} />
@@ -187,7 +187,7 @@ const MenuItem: React.FunctionComponent<EnhancedProps> = ({
         {isCollapsed ? (
           undefined
         ) : (
-          <span onClick={onTitleClick} className="menu-item__text">
+          <span onClick={onSelect} className="menu-item__text">
             {menuItem.title}
           </span>
         )}

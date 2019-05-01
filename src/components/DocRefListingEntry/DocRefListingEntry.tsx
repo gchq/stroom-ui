@@ -1,7 +1,5 @@
 import * as React from "react";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
 import DocRefImage from "../DocRefImage";
 import { Props } from "./types";
 import { DocRefType } from "components/DocumentEditors/useDocumentApi/types/base";
@@ -11,7 +9,6 @@ let DocRefListingEntry: React.FunctionComponent<Props> = ({
   dndIsOver,
   dndCanDrop,
   openDocRef,
-  enterFolder,
   children,
   toggleSelection,
   selectedDocRefs,
@@ -35,20 +32,6 @@ let DocRefListingEntry: React.FunctionComponent<Props> = ({
       e.stopPropagation();
     },
     [openDocRef, docRef],
-  );
-  const onEnterFolder: React.MouseEventHandler<
-    HTMLDivElement
-  > = React.useCallback(
-    e => {
-      if (enterFolder) {
-        enterFolder(docRef);
-      } else {
-        openDocRef(docRef); // fall back to this
-      }
-      e.stopPropagation();
-      e.preventDefault();
-    },
-    [enterFolder, openDocRef, docRef],
   );
 
   const className = React.useMemo(() => {
@@ -83,23 +66,14 @@ let DocRefListingEntry: React.FunctionComponent<Props> = ({
     return additionalClasses.join(" ");
   }, [docRef, selectedDocRefs, focussedDocRef, dndCanDrop, dndIsOver]);
 
-  let canEnterFolder: boolean =
-    docRef.type === "System" || docRef.type === "Folder";
-
   return (
     <div className={className} onClick={onSelect}>
-      <DocRefImage docRefType={docRef.type} />
+      <div className="DocRefListingEntry__docRefImage">
+        <DocRefImage docRefType={docRef.type} />
+      </div>
       <div className="DocRefListingEntry__name" onClick={onOpenDocRef}>
         {docRef.name}
       </div>
-      {canEnterFolder && (
-        <div
-          className="DocRefListingEntry__enterFolderIcon"
-          onClick={onEnterFolder}
-        >
-          <FontAwesomeIcon size="lg" icon="angle-right" />
-        </div>
-      )}
       <div className="DocRefListing__children">{children}</div>
     </div>
   );

@@ -30,7 +30,7 @@ const DocRefIconHeader: React.FunctionComponent<Props> = ({
 }) => (
   <div className={`icon-header ${className || ""}`}>
     <DocRefImage docRefType={docRefType} size="lg" />
-    <p className="icon-header__text">{text}</p>
+    <div className="icon-header__text">{text}</div>
   </div>
 );
 

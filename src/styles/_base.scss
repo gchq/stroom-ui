@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-@font-face {
-  font-family: "Varela";
-  font-style: normal;
-  font-weight: 400;
-  src: local("Varela"),
-    url("./fonts/varela/Varela-Regular.ttf") format("truetype");
-}
+// @font-face {
+//   font-family: "Varela";
+//   font-style: normal;
+//   font-weight: 400;
+//   src: local("Varela"),
+//     url("./fonts/varela/Varela-Regular.ttf") format("truetype");
+// }
 
 @font-face {
   font-family: "Open Sans";
@@ -31,10 +31,14 @@
 }
 
 body {
-  font-family: "Varela";
+  // font-family: "Varela";
   margin: 0;
   padding: 0;
   height: 100%;
+  // font-family: sans-serif;
+  font-family: "Open Sans";
+  font-size: 10pt;
+  overflow: hidden;
 }
 
 .fill-space {

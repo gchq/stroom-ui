@@ -35,3 +35,7 @@
 .horizontal-panel__header__actions {
   display: inline-flex;
 }
+
+.horizontal-panel__content {
+  overflow: auto;
+}

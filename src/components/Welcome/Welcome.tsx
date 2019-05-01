@@ -19,37 +19,41 @@ import * as React from "react";
 import IconHeader from "components/IconHeader";
 
 const Welcome: React.FunctionComponent = () => (
-  <div className="welcome">
-    <IconHeader icon="home" text="Welcome" />
-    <div className="welcome__image">
-      <img
-        className="sidebar__logo"
-        alt="Stroom logo"
-        src={require("../../images/logo.svg")}
-      />
+  <div className="welcome fill-space">
+    <div className="welcome__header">
+      <IconHeader icon="home" text="Welcome" />
     </div>
-    <div className="welcome__shortcuts">
-      <h4>Global shortcut keys</h4>
-      <table className="welcome__shortcuts__table">
-        <tbody>
-          <tr>
-            <th />
-            <th>Shortcut</th>
-          </tr>
-          <tr>
-            <td>Document search</td>
-            <td>
-              <code>ctrl + shift + f</code>
-            </td>
-          </tr>
-          <tr>
-            <td> Recent documents </td>
-            <td>
-              <code> ctrl + shift + e</code>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+    <div className="welcome__body">
+      <img
+        className="welcome__image"
+        alt="Stroom logo"
+        src={require("../../images/logo_orange.svg")}
+      />
+      <h1>About Stroom</h1>
+      <p>Stroom is designed to receive data from multiple systems.</p>
+      <div className="welcome__shortcuts">
+        <h4>Global shortcut keys</h4>
+        <table className="welcome__shortcuts__table">
+          <tbody>
+            <tr>
+              <th />
+              <th>Shortcut</th>
+            </tr>
+            <tr>
+              <td>Document search</td>
+              <td>
+                <code>ctrl + shift + f</code>
+              </td>
+            </tr>
+            <tr>
+              <td> Recent documents </td>
+              <td>
+                <code> ctrl + shift + e</code>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 );

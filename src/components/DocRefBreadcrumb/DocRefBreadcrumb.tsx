@@ -29,17 +29,19 @@ const DocRefBreadcrumb: React.FunctionComponent<Props> = ({
       {lineage.map(l => (
         <React.Fragment key={l.uuid}>
           <Divider />
-          <button
+          <div
             className="DocRefBreadcrumb__link"
             title={l.name}
             onClick={() => openDocRef(l)}
           >
             {l.name}
-          </button>
+          </div>
         </React.Fragment>
       ))}
       <Divider />
-      <div className="DocRefBreadcrumb__name">{node.name}</div>
+      <div className="DocRefBreadcrumb__name" title={node.name}>
+        {node.name}
+      </div>
     </div>
   );
 };

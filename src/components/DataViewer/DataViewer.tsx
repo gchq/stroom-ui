@@ -76,18 +76,18 @@ const DataViewer = () => {
   );
 
   return (
-    <div>
-      <div className="content-tabs__grid">
-        <div className="data-viewer__header">
-          <IconHeader icon="database" text="Data" />
-          <ExpressionSearchBar
-            className="data-viewer__search-bar"
-            dataSource={dataSource}
-            onSearch={onSearch}
-          />
-        </div>
+    <div className="data-viewer fill-space">
+      <div className="data-viewer__header">
+        <IconHeader icon="database" text="Data" />
       </div>
-      <div className="DataTable__container">
+      <div className="data-viewer__search">
+        <ExpressionSearchBar
+          // className="data-viewer__search-bar"
+          dataSource={dataSource}
+          onSearch={onSearch}
+        />
+      </div>
+      <div className="data-viewer__main">
         <div className="DataTable__reactTable__container">
           <HorizontalMainDetails
             storageKey="dataViewer"
