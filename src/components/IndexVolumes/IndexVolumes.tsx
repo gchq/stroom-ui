@@ -129,9 +129,7 @@ const IndexVolumes: React.FunctionComponent = () => {
       </div>
 
       <div className="UserSearch-content">
-        <div className="table-small-container">
-          <IndexVolumesTable {...tableProps} />
-        </div>
+        <IndexVolumesTable {...tableProps} />
       </div>
       <IndexVolumeGroupModalPicker {...addToGroupProps} />
       <NewIndexVolumeDialog {...createNewDialogProps} />

@@ -27,7 +27,7 @@ import "react-toggle/style.css";
 import Button from "components/Button";
 import { User } from "../types";
 import { getColumnFormat } from "./tableCustomisations";
-import IconHeader from "components/IconHeader";";
+import IconHeader from "components/IconHeader";
 
 interface UserSearchProps {
   onNewUserClicked: () => void;
@@ -79,13 +79,13 @@ const UserSearch: React.FunctionComponent<UserSearchProps> = ({
         />
         {deleteButtonDisabled ? (
           <div>
-        <Button
-          className="toolbar-button-small primary"
-          disabled={!selectedUser}
-          onClick={() => onUserOpen(selectedUser)}
-          icon="edit"
-          text="View/edit"
-        />
+            <Button
+              className="toolbar-button-small primary"
+              disabled={!selectedUser}
+              onClick={() => onUserOpen(selectedUser)}
+              icon="edit"
+              text="View/edit"
+            />
           </div>
         ) : (
           <Button
@@ -117,21 +117,21 @@ const UserSearch: React.FunctionComponent<UserSearchProps> = ({
         </div>
       </div>
       <div className="page__body">
-          <ReactTable
-            data={users}
-            className="fill-space -striped -highlight"
-            columns={columns}
-            defaultSorted={[
-              {
-                id: "email",
-                desc: true,
-              },
-            ]}
-            filterable={isFilteringEnabled}
-            showPagination
-            defaultPageSize={50}
-            getTrProps={getTrProps}
-          />
+        <ReactTable
+          data={users}
+          className="fill-space -striped -highlight"
+          columns={columns}
+          defaultSorted={[
+            {
+              id: "email",
+              desc: true,
+            },
+          ]}
+          filterable={isFilteringEnabled}
+          showPagination
+          defaultPageSize={50}
+          getTrProps={getTrProps}
+        />
       </div>
     </div>
   );
