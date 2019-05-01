@@ -3,14 +3,6 @@
   position: relative;
 }
 
-.ErrorTable__reactTable .rt-thead {
-  flex: 0 0 auto; // Stop rows expanding to fit all vertical space
-}
-
-.ErrorTable__reactTable .rt-tbody {
-  flex: 0 1 auto; // Stop rows expanding to fit all vertical space
-}
-
 .ErrorTable__reactTable__container {
   position: absolute;
   top: 0; // If you want to push the top of the table down a bit, e.g. for a toolbar, do it here.
@@ -26,14 +18,4 @@
   left: 0;
   bottom: 0;
   border-top: none;
-}
-
-.ErrorTable__reactTable .rt-td {
-  // Make the table much more compact
-  padding: 2px 2px;
-}
-
-.ErrorTable__reactTable .rt-tbody .rt-td {
-  // Clean up lines
-  border-right: none;
 }

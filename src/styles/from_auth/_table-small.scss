@@ -19,11 +19,11 @@
   color: #4d4d4d;
 }
 
-.table-row-small {
-  height: 25px;
-  font-size: 12px;
-  padding-top: 0px;
-}
+// .table-row-small {
+//   height: 25px;
+//   font-size: 12px;
+//   padding-top: 0px;
+// }
 
 .table-row-dimmed {
   color: darkgray;
@@ -55,11 +55,4 @@
 .table-small-container .pagination-bottom .-pagination button {
   padding: 3px;
   font-size: 13px;
-}
-
-.rt-thead.-header {
-  // box-shadow: 0 1px 0px 0 rgba(0, 0, 0, 0.15) !important;
-
-  border-bottom: 2px solid rgba(0,0,0,0.1);
-  box-shadow: 0 0 4px 0 rgba(0,0,0,0.15) !important;
 }

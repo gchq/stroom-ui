@@ -1,75 +1,3 @@
-@import "./DataDetails/ErrorTable/ErrorTable";
-@import "./DataDetails/EventView/EventView";
-@import "./DetailsTabs";
-
-.DataTable__reactTable__container {
-  position: absolute;
-  top: 0; // If you want to push the top of the table down a bit, e.g. for a toolbar, do it here.
-  right: 0;
-  left: 0;
-  bottom: 0;
-}
-
-.DataTable__reactTable {
-  position: absolute;
-  top: 0px;
-  right: 0;
-  left: 0;
-  bottom: 0;
-  border: none;
-}
-
-.ReactTable .-pagination {
-  display: grid;
-  grid-template-columns: 4rem 1fr 4rem;
-  box-shadow: 0 0 4px 0 rgba(0,0,0,0.1);
-}
-
-.ReactTable .rt-thead {
-  flex: 0 0 auto; // Stop rows expanding to fit all vertical space
-  // box-shadow: 0 1px 4px 0 rgba(0,0,0,0.15);
-  // border: none;
-}
-
-.ReactTable .rt-tbody {
-  flex: 0 1 auto; // Stop rows expanding to fit all vertical space
-}
-
-.DataTable__container .rt-td {
-  padding: 2px 4px;
-}
-
-// .DataTable__container .rt-thead {
-//   flex: 0 0 auto; // Stop rows expanding to fit all vertical space
-//   // box-shadow: 0 1px 4px 0 rgba(0,0,0,0.15);
-//   // border: none;
-// }
-
-// .DataTable__container .rt-tbody {
-//   flex: 0 1 auto; // Stop rows expanding to fit all vertical space
-// }
-
-.DDataTable__container .rt-tbody .rt-td {
-  border-right: none; // Make the table much more compact
-}
-
-.DataTable__container .rt-table .rt-body .rt-tr-group {
-  max-height: 23px;
-}
-
-.DataTable__container .rt-tbody .rt-tr-group {
-  max-height: 23px;
-}
-
-// .DataTable__container .rt-thead.-header {
-//   box-shadow: none;
-//   border-bottom: solid 1px lightgrey;
-// }
-
-.DataTable__selectedRow {
-  background-color: $selected-item-colour;
-}
-
 .StreamDetails__table {
   font-size: 11px;
 }
@@ -93,10 +21,6 @@
   padding: 0.4rem;
   flex-shrink: 0;
 }
-
-// .data-viewer__table {
-//   grid-area: main;
-// }
 
 .data-viewer__main {
   position: relative;

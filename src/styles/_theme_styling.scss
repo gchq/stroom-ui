@@ -196,25 +196,25 @@ input {
 
 .selected {
   @include themify($themes) {
-    background-color: themed("selected-color");
+    background-color: themed("selected-color") !important;
   }
 }
 
 .selected:hover {
   @include themify($themes) {
-    background-color: themed("selected-color");
+    background-color: themed("selected-color") !important;
   }
 }
 
 .focussed {
   @include themify($themes) {
-    outline: solid thin themed("focussed-color");
+    border: solid thin themed("focussed-color");
   }
 }
 
 .focussed:hover {
   @include themify($themes) {
-    outline: solid thin themed("focussed-color");
+    border: solid thin themed("focussed-color");
   }
 }
 

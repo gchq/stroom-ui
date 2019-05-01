@@ -110,11 +110,6 @@ const TokenSearch = () => {
                   // changes this offset will need to change too.
                   height: "calc(100vh - 50px)",
                 }}
-                getTheadTrProps={() => {
-                  return {
-                    className: "table-header-small",
-                  };
-                }}
                 getTrProps={(state: any, rowInfo: RowInfo | undefined) => {
                   let selected = false;
                   let enabled = true;
@@ -123,7 +118,7 @@ const TokenSearch = () => {
                     enabled = rowInfo.row.enabled;
                   }
 
-                  let className = "table-row-small";
+                  let className = "";
                   className += selected ? " table-row-selected" : "";
                   className += enabled ? "" : " table-row-dimmed";
                   return {

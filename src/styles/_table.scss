@@ -33,10 +33,42 @@
 //   max-height: 23px;
 // }
 
+.ReactTable {
+  width: 100%;
+}
+
+.ReactTable .-pagination {
+  display: grid;
+  grid-template-columns: 4rem 1fr 4rem;
+  box-shadow: 0 0 4px 0 rgba(0,0,0,0.1);
+}
+
+.ReactTable .rt-thead {
+  flex: 0 0 auto; // Stop rows expanding to fit all vertical space
+}
+
+.ReactTable .rt-tbody {
+  flex: 0 1 auto; // Stop rows expanding to fit all vertical space
+}
+
 // // Style table headers
 .ReactTable .rt-th {
   font-weight: bold;
   text-align: left;
+}
+
+.ReactTable .rt-tr {
+  // Add invisible borders to all rows so we can change them to highlight borders when focussed without changing spacing.
+  border: solid thin transparent;
+}
+
+.ReactTable .rt-td {
+  // Make the table much more compact
+  padding: 1px 5px;
+}
+
+.ReactTable .rt-tbody .rt-td {
+  border-right: none; // Clean up lines
 }
 
 .ReactTable .header {
@@ -44,14 +76,22 @@
   border-bottom: none;
 }
 
+.ReactTable .rt-thead.-header {
+  // box-shadow: 0 1px 0px 0 rgba(0, 0, 0, 0.15) !important;
+
+  // border-bottom: 2px solid rgba(0,0,0,0.1);
+  box-shadow: 0 0 4px 0 rgba(0,0,0,0.15) !important;
+}
+
 .ReactTable .rt-tbody .rt-tr-group {
   // We don't need lines between the rows
   border-bottom: none;
 }
 
-.ReactTable {
-  width: 100%;
-}
+
+
+
+
 
 // .ReactTable .rt-tbody .rt-tr-group {
 //   max-height: 23px;

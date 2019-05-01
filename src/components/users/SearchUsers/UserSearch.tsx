@@ -55,9 +55,7 @@ const UserSearch: React.FunctionComponent<UserSearchProps> = ({
           }
           // changeSelectedUser(rowInfo.row.id);
         },
-        className: selected
-          ? "table-row-small table-row-selected"
-          : "table-row-small",
+        className: selected ? "selected focussed" : "",
       };
     },
     [setSelectedUser, selectedUser],
@@ -117,7 +115,7 @@ const UserSearch: React.FunctionComponent<UserSearchProps> = ({
         <div className="table-small-container">
           <ReactTable
             data={users}
-            className="-striped -highlight UserSearch-table"
+            className="UserSearch-table -striped -highlight"
             columns={getColumnFormat(selectedUser)}
             defaultSorted={[
               {
@@ -133,16 +131,6 @@ const UserSearch: React.FunctionComponent<UserSearchProps> = ({
               // to account for the header. Obviously if the header height
               // changes this offset will need to change too.
               height: "calc(100vh - 50px)",
-            }}
-            getTheadTrProps={() => {
-              return {
-                className: "table-header-small",
-              };
-            }}
-            getTheadProps={() => {
-              return {
-                className: "table-row-small",
-              };
             }}
             getTrProps={getTrProps}
           />

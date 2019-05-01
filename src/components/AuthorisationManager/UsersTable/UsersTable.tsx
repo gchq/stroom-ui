@@ -34,7 +34,7 @@ const UsersTable: React.FunctionComponent<Props> = ({
   selectableTableProps: { onKeyDownWithShortcuts, tableProps },
 }) => (
   <div tabIndex={0} onKeyDown={onKeyDownWithShortcuts}>
-    <ReactTable {...tableProps} />
+    <ReactTable className="UsersTable -striped -highlight" {...tableProps} />
   </div>
 );
 

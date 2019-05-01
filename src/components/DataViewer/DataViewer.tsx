@@ -88,22 +88,25 @@ const DataViewer = () => {
         />
       </div>
       <div className="data-viewer__main">
-        <div className="DataTable__reactTable__container">
-          <HorizontalMainDetails
-            storageKey="dataViewer"
-            title=""
-            onClose={clearSelection}
-            isOpen={!!selectedItem}
-            mainContent={<ReactTable {...tableProps} />}
-            detailContent={
-              !!selectedItem ? (
-                <DetailsTabs data={selectedItem} />
-              ) : (
-                <div>Please Select a Single Row</div>
-              )
-            }
-          />
-        </div>
+        <HorizontalMainDetails
+          storageKey="dataViewer"
+          title=""
+          onClose={clearSelection}
+          isOpen={!!selectedItem}
+          mainContent={
+            <ReactTable
+              className="tracker-table border-color -striped -highlight"
+              {...tableProps}
+            />
+          }
+          detailContent={
+            !!selectedItem ? (
+              <DetailsTabs data={selectedItem} />
+            ) : (
+              <div>Please Select a Single Row</div>
+            )
+          }
+        />
       </div>
     </div>
   );

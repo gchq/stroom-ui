@@ -110,7 +110,7 @@ const ErrorTable: React.FunctionComponent<Props> = ({ errors }) => {
     <ReactTable
       sortable={false}
       showPagination={false}
-      className="ErrorTable__reactTable"
+      className="ErrorTable__reactTable -striped -highlight"
       data={tableData}
       columns={tableColumns}
     />

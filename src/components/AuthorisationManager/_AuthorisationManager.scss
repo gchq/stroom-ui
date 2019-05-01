@@ -23,28 +23,3 @@
   bottom: 0;
   border: none;
 }
-
-.UserTable__reactTable .rt-td {
-  padding: 2px 2px;
-}
-
-.UserTable__reactTable .rt-tbody .rt-td {
-  border-right: none; // Make the table much more compact
-}
-
-.UserTable__reactTable .rt-table .rt-body .rt-tr-group {
-  max-height: 23px;
-}
-
-.UserTable__reactTable .rt-tbody .rt-tr-group {
-  max-height: 23px;
-}
-
-.UserTable__reactTable .rt-thead.-header {
-  box-shadow: none;
-  border-bottom: solid 1px lightgrey;
-}
-
-.UserTable__selectedRow {
-  background-color: $selected-item-colour;
-}

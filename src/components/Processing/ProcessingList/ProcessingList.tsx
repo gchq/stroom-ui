@@ -171,7 +171,7 @@ const ProcessingList: React.FunctionComponent<Props> = ({
     <ReactTable
       manual
       sortable
-      className="tracker-table border-color"
+      className="tracker-table border-color -striped -highlight"
       showPagination={false}
       pageSize={pageSize + 1}
       {...tableProps}
