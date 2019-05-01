@@ -19,29 +19,22 @@
 @import "./ProcessingSearchHelp/ProcessingSearchHelp";
 
 .processing {
-  display: grid;
-  align-items: center;
-  grid-template-rows: 2.7rem auto 1fr;
-  grid-template-areas:
-    "header"
-    "search"
-    "main";
-  width: 100%;
-  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .processing__header {
-  grid-area: header;
   width: 100%;
   display: inline-flex;
   flex-direction: row;
+  flex-shrink: 0;
 }
 
 .processing__search {
-  grid-area: search;
   padding: 0.4rem;
   display: inline-flex;
   flex-direction: row;
+  flex-shrink: 0;
 }
 
 .processing__search input {
@@ -49,13 +42,13 @@
 }
 
 .processing__main {
-  grid-area: main;
-  width: 100%;
-  height: 100%;
+  position: relative;
+  flex-grow: 1;
+  overflow: hidden;
 }
 
 .processing__table .horizontal-panel {
-  border-top: 1px solid lightgrey
+  border-top: 1px solid rgba(0,0,0,0.1);
 }
 
 

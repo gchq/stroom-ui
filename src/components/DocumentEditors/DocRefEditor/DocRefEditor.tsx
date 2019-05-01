@@ -50,7 +50,7 @@ const DocRefEditor = <T extends {}>({
   });
 
   return (
-    <div className="DocRefEditor">
+    <div className="DocRefEditor fill-space">
       <DocRefIconHeader
         docRefType={docRef.type}
         className="DocRefEditor__header"
@@ -72,7 +72,7 @@ const DocRefEditor = <T extends {}>({
       />
 
       <AppSearchBar
-        className="DocRefEditor__searchBar"
+        className="DocRefEditor__search"
         onChange={goToEditDocRef}
       />
 

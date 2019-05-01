@@ -1,31 +1,18 @@
 .welcome {
-  width: 100%;
-  height: 100%;
   display: flex;
   flex-direction: column;
-
-  display: grid;
-  align-items: center;
-  // grid-template-columns: auto 30rem;
-  grid-template-rows: 2.7rem auto;
-  grid-template-areas:
-    "header"
-    "body";
-
-  width: 100%;
-  height: 100%;
 }
 
 .welcome__header {
-  grid-area: header;
-  // padding: 5px;
+  display: inline-flex;
+  flex-direction: row;
+  flex-shrink: 0;
 }
 
 .welcome__body {
-  grid-area: body;
-  width: 100%;
-  height: 100%;
   padding: 0.36rem;
+  position: relative;
+  flex-grow: 1;
   overflow: auto;
 }
 

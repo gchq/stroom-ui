@@ -79,38 +79,27 @@
 }
 
 .data-viewer {
-  display: grid;
-  align-items: center;
-  // grid-template-columns: auto 30rem;
-  grid-template-rows: 2.7rem auto 1fr;
-  grid-template-areas:
-    "header"
-    "searchBar"
-    "main";
-
-  width: 100%;
-  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .data-viewer__header {
-  grid-area: header;
-  width: 100%;
   display: inline-flex;
   flex-direction: row;
+  flex-shrink: 0;
 }
 
-.data-viewer__search-bar {
-  grid-area: searchBar;
+.data-viewer__search {
   padding: 0.4rem;
+  flex-shrink: 0;
 }
 
 // .data-viewer__table {
 //   grid-area: main;
 // }
 
-.DataTable__container {
-  grid-area: main;
+.data-viewer__main {
   position: relative;
-  width: 100%;
-  height: 100%;
+  flex-grow: 1;
+  overflow: hidden;
 }
