@@ -45,15 +45,17 @@ const ThemedConfirm: React.FunctionComponent<Props> = ({
   const { theme } = useTheme();
 
   return (
-    <ReactModal className={`${theme}`} {...rest} style={reactModalOptions}>
-      <div className="raised-low themed-modal">
-        <header className="raised-low themed-modal__header">
+    <ReactModal
+      className={`themed-modal ${theme}`}
+      {...rest}
+      style={reactModalOptions}
+    >
+      <div className="themed-modal__container">
+        <header className="themed-modal__header">
           <IconHeader text={question} icon="question-circle" />
         </header>
-        {details && (
-          <div className="raised-low themed-modal__content">{details}</div>
-        )}
-        <div className="raised-low themed-modal__footer__actions">
+        {details && <div className="themed-modal__content">{details}</div>}
+        <div className="themed-modal__footer__actions">
           <Button icon="times" text="Cancel" onClick={onCloseDialog} />
           <Button
             onClick={() => {

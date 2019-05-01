@@ -14,19 +14,19 @@
  * limitations under the License.
  */
 
-.UserSearch-main {
-  padding: 0;
-}
+// .UserSearch-main {
+//   padding: 0;
+// }
 
-.UserSearch-content {
-  padding: 0;
-}
+// .UserSearch-content {
+//   padding: 0;
+// }
 
-.UserSearch-header {
-  display: flex;
-  flex-direction: row;
-  padding: 5px;
-}
+// .UserSearch-header {
+//   display: flex;
+//   flex-direction: row;
+//   padding: 5px;
+// }
 
 /* We need the button to be small so it doesn't make the cell in the table too big */
 
@@ -44,7 +44,7 @@ p.warning {
 
 .UserSearch-filteringToggle {
   font-size: 14px;
-  padding: 0 5px 0 7px;
+  margin: 0 3px;
   display: flex;
   flex-direction: row;
   align-items: center;

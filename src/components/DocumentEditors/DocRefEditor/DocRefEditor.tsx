@@ -50,33 +50,33 @@ const DocRefEditor = <T extends {}>({
   });
 
   return (
-    <div className="DocRefEditor fill-space">
-      <DocRefIconHeader
-        docRefType={docRef.type}
-        className="DocRefEditor__header"
-        text={docRef.name || "no name"}
-      />
-
-      <div className="DocRefEditor__actionButtons">
+    <div className="page">
+      <div className="page__header">
+        <DocRefIconHeader
+          docRefType={docRef.type}
+          text={docRef.name || "no name"}
+        />
+      </div>
+      <div className="page__breadcrumb">
+        <DocRefBreadcrumb
+          docRefUuid={docRef.uuid}
+          openDocRef={goToEditDocRef}
+        />
+      </div>
+      <div className="page__search">
+        <AppSearchBar
+          className="DocRefEditor__search"
+          onChange={goToEditDocRef}
+        />
+      </div>
+      <div className="page__body">{children}</div>
+      <div className="page__buttons">
         {actionBarItems
           .concat(additionalActionBarItems || [])
           .map((actionBarItem, i) => (
             <Button key={i} circular {...actionBarItem} />
           ))}
       </div>
-
-      <DocRefBreadcrumb
-        className="DocRefEditor__breadcrumb"
-        docRefUuid={docRef.uuid}
-        openDocRef={goToEditDocRef}
-      />
-
-      <AppSearchBar
-        className="DocRefEditor__search"
-        onChange={goToEditDocRef}
-      />
-
-      <div className="DocRefEditor__main">{children}</div>
     </div>
   );
 };

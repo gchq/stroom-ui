@@ -18,34 +18,35 @@
 @import "./ProcessingDetails/ProcessingDetails";
 @import "./ProcessingSearchHelp/ProcessingSearchHelp";
 
-.processing {
-  display: flex;
-  flex-direction: column;
-}
+// .processing {
+//   display: flex;
+//   flex-direction: column;
+// }
 
-.processing__header {
-  width: 100%;
-  display: inline-flex;
-  flex-direction: row;
-  flex-shrink: 0;
-}
+// .processing__header {
+//   width: 100%;
+//   display: inline-flex;
+//   flex-direction: row;
+//   flex-shrink: 0;
+// }
 
 .processing__search {
-  padding: 0.4rem;
+  // padding: 0.4rem;
   display: inline-flex;
   flex-direction: row;
   flex-shrink: 0;
+  width: 100%;
 }
 
 .processing__search input {
   margin: 0;
 }
 
-.processing__main {
-  position: relative;
-  flex-grow: 1;
-  overflow: hidden;
-}
+// .processing__main {
+//   position: relative;
+//   flex-grow: 1;
+//   overflow: hidden;
+// }
 
 .processing__table .horizontal-panel {
   border-top: 1px solid rgba(0,0,0,0.1);

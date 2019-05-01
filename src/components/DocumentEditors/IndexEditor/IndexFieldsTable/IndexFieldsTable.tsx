@@ -44,8 +44,11 @@ const COLUMNS = [
 const IndexFieldsTable: React.FunctionComponent<Props> = ({
   selectableTableProps: { onKeyDownWithShortcuts, tableProps },
 }) => (
-  <div tabIndex={0} onKeyDown={onKeyDownWithShortcuts}>
-    <ReactTable {...tableProps} />
+  <div className="fill-space" tabIndex={0} onKeyDown={onKeyDownWithShortcuts}>
+    <ReactTable
+      className="IndexFieldsTable -striped -highlight"
+      {...tableProps}
+    />
   </div>
 );
 

@@ -57,26 +57,31 @@ const IndexVolumeGroups: React.FunctionComponent = () => {
   }, [selectedGroups, goToIndexVolumeGroup]);
 
   return (
-    <div className="fill-space">
-      <IconHeader text="Index Volume Groups" icon="database" />
+    <div className="page">
+      <div className="page__header">
+        <IconHeader text="Index Volume Groups" icon="database" />
+      </div>
+      <div className="page__search" />
+      <div className="page__body">
+        <IndexVolumeGroupsTable {...tableProps} />
+      </div>
 
-      <Button text="Create" onClick={showNewDialog} />
-      <Button
-        text="View/Edit"
-        disabled={selectedGroups.length !== 1}
-        onClick={onViewEditClick}
-      />
-      <Button
-        text="Delete"
-        disabled={selectedGroups.length === 0}
-        onClick={() => showDeleteDialog()}
-      />
+      <div className="page__buttons">
+        <Button text="Create" onClick={showNewDialog} />
+        <Button
+          text="View/Edit"
+          disabled={selectedGroups.length !== 1}
+          onClick={onViewEditClick}
+        />
+        <Button
+          text="Delete"
+          disabled={selectedGroups.length === 0}
+          onClick={() => showDeleteDialog()}
+        />
+      </div>
 
       <NewIndexVolumeGroupDialog {...newDialogComponentProps} />
-
       <ThemedConfirm {...deleteDialogComponentProps} />
-
-      <IndexVolumeGroupsTable {...tableProps} />
     </div>
   );
 };

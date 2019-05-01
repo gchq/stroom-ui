@@ -77,30 +77,37 @@ const IndexVolumes: React.FunctionComponent = () => {
   }, [goToIndexVolume, selectedIndexVolumes]);
 
   return (
-    <div className="fill-space">
-      <IconHeader text="Index Volumes" icon="database" />
+    <div className="page">
+      <div className="page__header">
+        <IconHeader text="Index Volumes" icon="database" />
+      </div>
+      <div className="page__search" />
+      <div className="page__body">
+        <IndexVolumesTable {...tableProps} />
+      </div>
 
-      <Button text="Create" onClick={showCreateNewDialog} />
-      <Button
-        text="View/Edit"
-        disabled={selectedIndexVolumes.length !== 1}
-        onClick={onViewClick}
-      />
-      <Button
-        text="Add to Group"
-        disabled={selectedIndexVolumes.length === 0}
-        onClick={showAddToGroupDialog}
-      />
-      <Button
-        text="Delete"
-        disabled={selectedIndexVolumes.length === 0}
-        onClick={showDeleteDialog}
-      />
+      <div className="page__buttons">
+        <Button text="Create" onClick={showCreateNewDialog} />
+        <Button
+          text="View/Edit"
+          disabled={selectedIndexVolumes.length !== 1}
+          onClick={onViewClick}
+        />
+        <Button
+          text="Add to Group"
+          disabled={selectedIndexVolumes.length === 0}
+          onClick={showAddToGroupDialog}
+        />
+        <Button
+          text="Delete"
+          disabled={selectedIndexVolumes.length === 0}
+          onClick={showDeleteDialog}
+        />
+      </div>
 
       <IndexVolumeGroupModalPicker {...addToGroupProps} />
       <NewIndexVolumeDialog {...createNewDialogProps} />
       <ThemedConfirm {...deleteDialogProps} />
-      <IndexVolumesTable {...tableProps} />
     </div>
   );
 };

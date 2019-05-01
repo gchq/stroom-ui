@@ -1,25 +1,25 @@
-.DocRefEditor {
-  display: flex;
-  flex-direction: column;
-}
+// .DocRefEditor {
+//   display: flex;
+//   flex-direction: column;
+// }
 
 .DocRefEditor__focusarea {
   outline: none;
 }
 
-.DocRefEditor__header {
-  width: 100%;
-  display: inline-flex;
-  flex-direction: row;
-  flex-shrink: 0;
-}
+// .DocRefEditor__header {
+//   width: 100%;
+//   display: inline-flex;
+//   flex-direction: row;
+//   flex-shrink: 0;
+// }
 
-.DocRefEditor__search {
-  padding: 0.4rem;
-  // display: inline-flex;
-  // flex-direction: row;
-  flex-shrink: 0;
-}
+// .DocRefEditor__search {
+//   padding: 0.4rem;
+//   // display: inline-flex;
+//   // flex-direction: row;
+//   flex-shrink: 0;
+// }
 
 // .DocRefEditor__search * {
 //   padding: 0px !important;
@@ -41,22 +41,22 @@
 
 
 
-.DocRefEditor__breadcrumb {
-  padding: 0.4rem;
-  // display: inline-flex;
-  // flex-direction: row;
-  flex-shrink: 0;
-}
+// .DocRefEditor__breadcrumb {
+//   padding: 0.4rem;
+//   // display: inline-flex;
+//   // flex-direction: row;
+//   flex-shrink: 0;
+// }
 
-.DocRefEditor__actionButtons {
-  position: absolute;
-  top: 0px;
-  right: 0px;
-  justify-self: right;
-}
+// .DocRefEditor__actionButtons {
+//   position: absolute;
+//   top: 0px;
+//   right: 0px;
+//   justify-self: right;
+// }
 
-.DocRefEditor__main {
-  position: relative;
-  flex-grow: 1;
-  overflow: hidden;
-}
+// .DocRefEditor__main {
+//   position: relative;
+//   flex-grow: 1;
+//   overflow: hidden;
+// }

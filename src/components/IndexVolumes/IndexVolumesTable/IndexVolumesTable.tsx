@@ -35,8 +35,8 @@ const COLUMNS = [
 const IndexVolumesTable: React.FunctionComponent<Props> = ({
   selectableTableProps: { onKeyDownWithShortcuts, tableProps },
 }) => (
-  <div tabIndex={0} onKeyDown={onKeyDownWithShortcuts}>
-    <ReactTable {...tableProps} />
+  <div className="fill-space" tabIndex={0} onKeyDown={onKeyDownWithShortcuts}>
+    <ReactTable className="fill-space -striped -highlight" {...tableProps} />
   </div>
 );
 

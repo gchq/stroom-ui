@@ -65,6 +65,7 @@ export const Button = ({
       ) : (
         undefined
       )}
+      {text && icon ? <span className="button__margin" /> : undefined}
       {text ? <span className="button__text">{text}</span> : undefined}
     </button>
   );
