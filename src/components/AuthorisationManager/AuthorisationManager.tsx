@@ -116,11 +116,6 @@ const Authorisation: React.FunctionComponent<Props> = ({ isGroup }) => {
           }
           onClick={showGroupPicker}
         />
-        <Button
-          text="Delete"
-          disabled={selectedUsers.length === 0}
-          onClick={showDeleteDialog}
-        />
         <div className="UserSearch-filteringToggle">
           <label>Show filtering</label>
           <Toggle
