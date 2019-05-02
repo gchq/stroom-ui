@@ -56,6 +56,13 @@ const DocRefEditor = <T extends {}>({
           docRefType={docRef.type}
           text={docRef.name || "no name"}
         />
+        <div className="page__buttons">
+          {actionBarItems
+            .concat(additionalActionBarItems || [])
+            .map((actionBarItem, i) => (
+              <Button key={i} circular {...actionBarItem} />
+            ))}
+        </div>
       </div>
       <div className="page__breadcrumb">
         <DocRefBreadcrumb
@@ -70,13 +77,6 @@ const DocRefEditor = <T extends {}>({
         />
       </div>
       <div className="page__body">{children}</div>
-      <div className="page__buttons">
-        {actionBarItems
-          .concat(additionalActionBarItems || [])
-          .map((actionBarItem, i) => (
-            <Button key={i} circular {...actionBarItem} />
-          ))}
-      </div>
     </div>
   );
 };

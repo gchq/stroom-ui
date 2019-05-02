@@ -7,8 +7,9 @@
 
 .page__header {
   display: inline-flex;
-  flex-direction: row;
-  flex-shrink: 0;
+  // flex-direction: row;
+  // flex-shrink: 0;
+  flex-flow: wrap;
 }
 
 .page__breadcrumb {
@@ -29,8 +30,9 @@
 
 .page__buttons {
   display: flex;
-  position: absolute;
-  padding: 0.36rem 0.1rem 0.36rem 0.36rem;
-  top: 0px;
-  right: 0px;
+  // position: absolute;
+  // padding: 0.36rem 0.1rem 0.36rem 0.36rem;
+  flex-wrap: wrap;
+  // top: 0px;
+  // right: 0px;
 }

@@ -3,11 +3,9 @@
   padding: .36rem;
   align-items: center;
   // height: 2.7rem;
-}
-
-.icon-header {
   font-size: large;
   font-weight: bold;
+  flex-grow: 1;
 }
 
 .icon-header__icon {
@@ -15,7 +13,7 @@
 }
 
 .icon-header__text {
-  padding-right: .3rem;
+  // padding-right: .3rem;
   padding-left: .3rem;
   font-size: 18pt;
 }

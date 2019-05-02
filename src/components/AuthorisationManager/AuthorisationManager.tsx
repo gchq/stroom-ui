@@ -85,44 +85,44 @@ const Authorisation: React.FunctionComponent<Props> = ({ isGroup }) => {
     <div className="page">
       <div className="page__header">
         <IconHeader text={isGroup ? "User Groups" : "Users"} icon="user" />
-      </div>
-      <div className="page__buttons">
-        <Button
-          className="toolbar-button-small primary"
-          onClick={showNewDialog}
-          icon="plus"
-          text="Create"
-        />
-        <Button
-          className="toolbar-button-small primary"
-          disabled={selectedUsers.length !== 1}
-          onClick={onViewEditClick}
-          icon="edit"
-          text="View/edit"
-        />
-        <Button
-          disabled={selectedUsers.length !== 1}
-          onClick={showDeleteDialog}
-          className="toolbar-button-small primary"
-          icon="trash"
-          text="Delete"
-        />
-        <Button
-          text="To Group"
-          icon="plus"
-          className="toolbar-button-small primary"
-          disabled={
-            selectedUsers.length === 0 || !!selectedUsers.find(u => u.group)
-          }
-          onClick={showGroupPicker}
-        />
-        <div className="UserSearch-filteringToggle">
-          <label>Show filtering</label>
-          <Toggle
-            icons={false}
-            checked={filterable}
-            onChange={event => setFilteringEnabled(event.target.checked)}
+        <div className="page__buttons">
+          <Button
+            className="toolbar-button-small primary"
+            onClick={showNewDialog}
+            icon="plus"
+            text="Create"
           />
+          <Button
+            className="toolbar-button-small primary"
+            disabled={selectedUsers.length !== 1}
+            onClick={onViewEditClick}
+            icon="edit"
+            text="View/edit"
+          />
+          <Button
+            disabled={selectedUsers.length !== 1}
+            onClick={showDeleteDialog}
+            className="toolbar-button-small primary"
+            icon="trash"
+            text="Delete"
+          />
+          <Button
+            text="To Group"
+            icon="plus"
+            className="toolbar-button-small primary"
+            disabled={
+              selectedUsers.length === 0 || !!selectedUsers.find(u => u.group)
+            }
+            onClick={showGroupPicker}
+          />
+          <div className="UserSearch-filteringToggle">
+            <label>Show filtering</label>
+            <Toggle
+              icons={false}
+              checked={filterable}
+              onChange={event => setFilteringEnabled(event.target.checked)}
+            />
+          </div>
         </div>
       </div>
       <div className="page__body">
