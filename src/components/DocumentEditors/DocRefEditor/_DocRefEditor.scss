@@ -34,6 +34,11 @@
   border-radius: 100px !important;
 }
 
+.DocRefEditor__search__placeholder + div{
+  margin: 0px;
+  padding: 0px;
+}
+
 // .DocRefEditor__search__control:hover{
 //   border: 1px solid #0277bd !important;
 //   box-shadow: 0 0 0 1px #0277bd !important;
