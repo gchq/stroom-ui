@@ -173,7 +173,7 @@ const ProcessingList: React.FunctionComponent<Props> = ({
       sortable
       className="tracker-table border-color -striped -highlight"
       showPagination={false}
-      pageSize={pageSize + 1}
+      pageSize={pageSize}
       {...tableProps}
       onFetchData={state => onHandleSort(state.sorted[0])}
     />
