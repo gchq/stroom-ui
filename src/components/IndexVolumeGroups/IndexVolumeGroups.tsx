@@ -99,9 +99,6 @@ const IndexVolumeGroups: React.FunctionComponent = () => {
         </div>
       </div>
 
-      <div className="UserSearch-content">
-        <IndexVolumeGroupsTable {...tableProps} />
-      </div>
       <NewIndexVolumeGroupDialog {...newDialogComponentProps} />
       <ThemedConfirm {...deleteDialogComponentProps} />
     </div>
