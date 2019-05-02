@@ -18,6 +18,11 @@ import * as React from "react";
 
 import IconHeader from "components/IconHeader";
 
+const ABOUT_HTML = {
+  __html: `<h1>About Stroom</h1>
+<p>Stroom is designed to receive data from multiple systems.</p>`,
+};
+
 const Welcome: React.FunctionComponent = () => (
   <div className="page">
     <div className="page__header">
@@ -29,8 +34,7 @@ const Welcome: React.FunctionComponent = () => (
         alt="Stroom logo"
         src={require("../../images/logo_orange.svg")}
       />
-      <h1>About Stroom</h1>
-      <p>Stroom is designed to receive data from multiple systems.</p>
+      <div dangerouslySetInnerHTML={ABOUT_HTML} />
       <div className="welcome__shortcuts">
         <h4>Global shortcut keys</h4>
         <table className="welcome__shortcuts__table">

@@ -14,6 +14,7 @@ import streamTaskResource from "./streamTaskResource";
 import stroomUserResource from "./userAndGroupsResource";
 import documentResources from "./documentResources";
 import userResource from "./userResource";
+import welcomeResource from "./welcomeResource";
 
 const resourceBuilders: ResourceBuilder[] = [
   appPermissionResource,
@@ -30,6 +31,7 @@ const resourceBuilders: ResourceBuilder[] = [
   streamTaskResource,
   stroomUserResource,
   userResource,
+  welcomeResource,
 ];
 
 export default resourceBuilders;
