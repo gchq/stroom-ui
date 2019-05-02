@@ -30,7 +30,6 @@ export interface MenuItemType {
   children?: MenuItemType[];
   docRef?: DocRefType;
   parentDocRef?: DocRefType;
-  isActive?: boolean;
 }
 
 export interface NavigateApp<IN, OUT> {

@@ -5,6 +5,8 @@ export const Step3 = () => {
   // Here I call my custom hook, and just destructure it's parts.
   const { count, increment, decrement } = useCounter();
 
+  console.log("Rendering Step 3");
+
   return (
     <div>
       <h2>Step 3 - Custom Hooks</h2>
