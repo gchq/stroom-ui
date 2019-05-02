@@ -59,6 +59,7 @@ export interface AppChromeProps {
 }
 
 const getDocumentTreeMenuItems = (
+  activeMenuItem: string,
   openDocRef: DocRefConsumer,
   parentDocRef: DocRefType | undefined,
   treeNode: DocRefTree,
@@ -76,7 +77,15 @@ const getDocumentTreeMenuItems = (
     treeNode.children && treeNode.children.length > 0
       ? treeNode.children
           .filter(t => t.type === "Folder")
-          .map(t => getDocumentTreeMenuItems(openDocRef, treeNode, t, true))
+          .map(t =>
+            getDocumentTreeMenuItems(
+              activeMenuItem,
+              openDocRef,
+              treeNode,
+              t,
+              true,
+            ),
+          )
       : undefined,
 });
 
@@ -101,6 +110,7 @@ const getOpenMenuItems = function<
 };
 
 const getMenuItems = (
+  activeMenuItem: string,
   isCollapsed: boolean = false,
   menuItems: MenuItemType[],
   areMenuItemsOpen: MenuItemsOpenState,
@@ -122,6 +132,7 @@ const getMenuItems = (
           depth > 0 ? "child" : ""
         }`}
         key={menuItem.key}
+        activeMenuItem={activeMenuItem}
         menuItem={menuItem}
         depth={depth}
         isCollapsed={isCollapsed}
@@ -134,6 +145,7 @@ const getMenuItems = (
       {menuItem.children && areMenuItemsOpen[menuItem.key] ? (
         <div className={`${depth === 0 ? "sidebar__children" : ""}`}>
           {getMenuItems(
+            activeMenuItem,
             isCollapsed,
             menuItem.children,
             areMenuItemsOpen,
@@ -213,16 +225,19 @@ const AppChrome: React.FunctionComponent<AppChromeProps> = ({
       onClick: goToWelcome,
       icon: "home",
       style: "nav",
-      isActive: activeMenuItem === "welcome",
     },
-    getDocumentTreeMenuItems(goToEditDocRef, undefined, documentTree),
+    getDocumentTreeMenuItems(
+      activeMenuItem,
+      goToEditDocRef,
+      undefined,
+      documentTree,
+    ),
     {
       key: "data",
       title: "Data",
       onClick: goToDataViewer,
       icon: "database",
       style: "nav",
-      isActive: activeMenuItem === "data",
     },
     {
       key: "processing",
@@ -230,7 +245,6 @@ const AppChrome: React.FunctionComponent<AppChromeProps> = ({
       onClick: goToProcessing,
       icon: "play",
       style: "nav",
-      isActive: activeMenuItem === "processing",
     },
     {
       key: "indexing",
@@ -244,20 +258,18 @@ const AppChrome: React.FunctionComponent<AppChromeProps> = ({
       skipInContractedMenu: true,
       children: [
         {
-          key: "indexing-volumes",
+          key: "indexVolumes",
           title: "Index Volumes",
           onClick: goToIndexVolumes,
           icon: "database",
           style: "nav",
-          isActive: activeMenuItem === "indexVolumes",
         },
         {
-          key: "indexing-groups",
+          key: "indexVolumeGroups",
           title: "Index Groups",
           onClick: goToIndexVolumeGroups,
           icon: "database",
           style: "nav",
-          isActive: activeMenuItem === "indexVolumeGroups",
         },
       ],
     },
@@ -273,12 +285,11 @@ const AppChrome: React.FunctionComponent<AppChromeProps> = ({
       skipInContractedMenu: true,
       children: [
         {
-          key: "admin-me",
+          key: "userSettings",
           title: "Me",
           onClick: goToUserSettings,
           icon: "user",
           style: "nav",
-          isActive: activeMenuItem === "userSettings",
         },
         {
           key: "adminPermissions",
@@ -294,31 +305,26 @@ const AppChrome: React.FunctionComponent<AppChromeProps> = ({
             [menuItemOpened, areMenuItemsOpen],
           ),
           children: [true, false].map((isGroup: boolean) => ({
-            key: `admin-permissions-${isGroup}`,
+            key: `${isGroup ? "groupPermissions" : "userPermissions"}`,
             title: isGroup ? "Group" : "User",
             onClick: () => goToAuthorisationManager(isGroup.toString()),
             icon: "user" as IconProp,
             style: "nav",
-            isActive: isGroup
-              ? activeMenuItem === "groupPermissions"
-              : activeMenuItem === "userPermissions",
           })) as MenuItemType[],
         },
         {
-          key: "admin-users",
+          key: "userIdentities",
           title: "Users",
           onClick: goToUsers,
           icon: "users",
           style: "nav",
-          isActive: activeMenuItem === "userIdentities",
         },
         {
-          key: "admin-apikeys",
+          key: "apiKeys",
           title: "API Keys",
           onClick: goToApiKeys,
           icon: "key",
           style: "nav",
-          isActive: activeMenuItem === "apiKeys",
         },
       ],
     },
@@ -354,6 +360,11 @@ const AppChrome: React.FunctionComponent<AppChromeProps> = ({
       }
     },
   });
+
+  React.useEffect(() => {
+    //toggleSelection(activeMenuItem);
+    console.log("Active Menu Item Changed", activeMenuItem);
+  }, [activeMenuItem]);
 
   const {
     showDialog: showCopyDialog,
@@ -405,6 +416,7 @@ const AppChrome: React.FunctionComponent<AppChromeProps> = ({
               >
                 <div className="app-chrome__sidebar-menu__container">
                   {getMenuItems(
+                    activeMenuItem,
                     !isExpanded,
                     menuItems,
                     areMenuItemsOpen,

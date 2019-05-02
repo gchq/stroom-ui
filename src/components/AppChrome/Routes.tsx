@@ -280,7 +280,7 @@ const Routes: React.FunctionComponent = () => {
           },
         }: RouteComponentProps<any>) => (
           <AppChrome
-            activeMenuItem="explorer"
+            activeMenuItem={docRefUuid}
             urlPrefix={urlPrefix}
             content={<SwitchedDocRefEditor docRefUuid={docRefUuid} />}
           />
