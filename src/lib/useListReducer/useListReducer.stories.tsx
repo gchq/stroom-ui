@@ -1,31 +1,26 @@
 import * as React from "react";
+import * as loremIpsum from "lorem-ipsum";
 import { storiesOf } from "@storybook/react";
 
 import useListReducer from "./useListReducer";
 
-class Character {
-  name: string;
+const generateItem = () => loremIpsum({ count: 3, units: "words" });
 
-  constructor(name: string) {
-    this.name = name;
-  }
+const TEST_ITEMS: string[] = Array(5)
+  .fill(null)
+  .map(generateItem);
+
+interface Props {
+  initialItems: string[];
 }
 
-const testCharacters: Character[] = [
-  { name: "Arnold Rimmer" },
-  { name: "Dave Lister" },
-  { name: "Cat" },
-  { name: "Holly" },
-  { name: "Kochanski" },
-];
+const TestHarness: React.FunctionComponent<Props> = ({ initialItems }) => {
+  const { items, itemAdded, itemRemoved } = useListReducer(
+    c => c,
+    initialItems,
+  );
 
-const TestHarness: React.FunctionComponent = () => {
-  const { items, itemsReceived, itemAdded, itemRemoved } = useListReducer<
-    Character
-  >(c => c.name);
-
-  const [newName, setNewName] = React.useState<string>("Queeq");
-  React.useEffect(() => itemsReceived(testCharacters), [itemsReceived]);
+  const [newName, setNewName] = React.useState<string>(generateItem());
 
   const onNewNameChange: React.ChangeEventHandler<
     HTMLInputElement
@@ -35,7 +30,7 @@ const TestHarness: React.FunctionComponent = () => {
 
   const onAddNewItem = React.useCallback(
     e => {
-      itemAdded({ name: newName });
+      itemAdded(generateItem());
       e.preventDefault();
     },
     [itemAdded, newName],
@@ -49,13 +44,15 @@ const TestHarness: React.FunctionComponent = () => {
         <button onClick={onAddNewItem}>Add</button>
       </form>
       {items.map(c => (
-        <div key={c.name}>
-          {c.name}
-          <button onClick={() => itemRemoved(c.name)}>Remove</button>
+        <div key={c}>
+          {c}
+          <button onClick={() => itemRemoved(c)}>Remove</button>
         </div>
       ))}
     </div>
   );
 };
 
-storiesOf("lib/useListReducer", module).add("basic", () => <TestHarness />);
+storiesOf("lib/useListReducer", module).add("basic", () => (
+  <TestHarness initialItems={TEST_ITEMS} />
+));
