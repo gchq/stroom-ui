@@ -47,45 +47,45 @@ const TokenSearch = () => {
     <div className="page">
       <div className="page__header">
         <IconHeader icon="key" text={`API Keys`} />
-      </div>
-      <div className="page__buttons">
-        <Button
-          className="toolbar-button-small primary"
-          onClick={() => goToNewApiKey()}
-          icon="plus"
-          text="Create"
-        />
+        <div className="page__buttons">
+          <Button
+            className="toolbar-button-small primary"
+            onClick={() => goToNewApiKey()}
+            icon="plus"
+            text="Create"
+          />
 
-        {noTokenSelected ? (
+          {noTokenSelected ? (
+            <Button
+              className="toolbar-button-small primary"
+              disabled={noTokenSelected}
+              icon="edit"
+              text="View/edit"
+            />
+          ) : (
+            <Button
+              className="toolbar-button-small primary"
+              disabled={noTokenSelected}
+              onClick={() => goToApiKey(`${selectedTokenRowId}`)}
+              icon="edit"
+              text="View/edit"
+            />
+          )}
           <Button
-            className="toolbar-button-small primary"
             disabled={noTokenSelected}
-            icon="edit"
-            text="View/edit"
-          />
-        ) : (
-          <Button
+            onClick={() => deleteSelectedToken(selectedTokenRowId)}
             className="toolbar-button-small primary"
-            disabled={noTokenSelected}
-            onClick={() => goToApiKey(`${selectedTokenRowId}`)}
-            icon="edit"
-            text="View/edit"
+            icon="trash"
+            text="Delete"
           />
-        )}
-        <Button
-          disabled={noTokenSelected}
-          onClick={() => deleteSelectedToken(selectedTokenRowId)}
-          className="toolbar-button-small primary"
-          icon="trash"
-          text="Delete"
-        />
-        <div className="UserSearch-filteringToggle">
-          <label>Show filtering</label>
-          <Toggle
-            icons={false}
-            checked={isFilteringEnabled}
-            onChange={event => setFilteringEnabled(event.target.checked)}
-          />
+          <div className="UserSearch-filteringToggle">
+            <label>Show filtering</label>
+            <Toggle
+              icons={false}
+              checked={isFilteringEnabled}
+              onChange={event => setFilteringEnabled(event.target.checked)}
+            />
+          </div>
         </div>
       </div>
       <div className="page__body">

@@ -69,40 +69,40 @@ const UserSearch: React.FunctionComponent<UserSearchProps> = ({
     <div className="page">
       <div className="page__header">
         <IconHeader icon="users" text={`Users`} />
-      </div>
-      <div className="page__buttons">
-        <Button
-          className="toolbar-button-small primary"
-          onClick={() => onNewUserClicked()}
-          icon="plus"
-          text="Create"
-        />
-        <Button
-          className="toolbar-button-small primary"
-          disabled={!selectedUser}
-          onClick={() => onUserOpen(selectedUser)}
-          icon="edit"
-          text="View/edit"
-        />
-        <Button
-          disabled={!selectedUser}
-          onClick={() => {
-            if (!!selectedUser) {
-              onDeleteUser(selectedUser);
-              // remove(selectedUser);
-            }
-          }}
-          className="toolbar-button-small primary"
-          icon="trash"
-          text="Delete"
-        />
-        <div className="UserSearch-filteringToggle">
-          <label>Show filtering</label>
-          <Toggle
-            icons={false}
-            checked={isFilteringEnabled}
-            onChange={event => setFilteringEnabled(event.target.checked)}
+        <div className="page__buttons">
+          <Button
+            className="toolbar-button-small primary"
+            onClick={() => onNewUserClicked()}
+            icon="plus"
+            text="Create"
           />
+          <Button
+            className="toolbar-button-small primary"
+            disabled={!selectedUser}
+            onClick={() => onUserOpen(selectedUser)}
+            icon="edit"
+            text="View/edit"
+          />
+          <Button
+            disabled={!selectedUser}
+            onClick={() => {
+              if (!!selectedUser) {
+                onDeleteUser(selectedUser);
+                // remove(selectedUser);
+              }
+            }}
+            className="toolbar-button-small primary"
+            icon="trash"
+            text="Delete"
+          />
+          <div className="UserSearch-filteringToggle">
+            <label>Show filtering</label>
+            <Toggle
+              icons={false}
+              checked={isFilteringEnabled}
+              onChange={event => setFilteringEnabled(event.target.checked)}
+            />
+          </div>
         </div>
       </div>
       <div className="page__body">

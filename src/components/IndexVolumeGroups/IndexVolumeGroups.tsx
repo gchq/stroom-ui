@@ -62,44 +62,39 @@ const IndexVolumeGroups: React.FunctionComponent = () => {
     <div className="page">
       <div className="page__header">
         <DocRefIconHeader text="Index Volumes Groups" docRefType="Index" />
+        <div className="page__buttons">
+          <Button
+            className="toolbar-button-small primary"
+            onClick={showNewDialog}
+            icon="plus"
+            text="Create"
+          />
+          <Button
+            className="toolbar-button-small primary"
+            disabled={selectedGroups.length !== 1}
+            onClick={onViewEditClick}
+            icon="edit"
+            text="View/edit"
+          />
+          <Button
+            disabled={selectedGroups.length !== 1}
+            onClick={showDeleteDialog}
+            className="toolbar-button-small primary"
+            icon="trash"
+            text="Delete"
+          />
+          <div className="UserSearch-filteringToggle">
+            <label>Show filtering</label>
+            <Toggle
+              icons={false}
+              checked={filterable}
+              onChange={event => setFilteringEnabled(event.target.checked)}
+            />
+          </div>
+        </div>
       </div>
       <div className="page__search" />
       <div className="page__body">
-        <IndexVolumeGroupsTable {...tableProps} />
-      </div>
-
-      <div className="page__buttons">
-        <Button
-          className="toolbar-button-small primary"
-          onClick={showNewDialog}
-          icon="plus"
-          text="Create"
-        />
-        <Button
-          className="toolbar-button-small primary"
-          disabled={selectedGroups.length !== 1}
-          onClick={onViewEditClick}
-          icon="edit"
-          text="View/edit"
-        />
-        <Button
-          disabled={selectedGroups.length !== 1}
-          onClick={showDeleteDialog}
-          className="toolbar-button-small primary"
-          icon="trash"
-          text="Delete"
-        />
-        <div className="UserSearch-filteringToggle">
-          <label>Show filtering</label>
-          <Toggle
-            icons={false}
-            checked={filterable}
-            onChange={event => setFilteringEnabled(event.target.checked)}
-          />
-        </div>
-      </div>
-
-      <div className="UserSearch-content">
         <IndexVolumeGroupsTable {...tableProps} />
       </div>
       <NewIndexVolumeGroupDialog {...newDialogComponentProps} />

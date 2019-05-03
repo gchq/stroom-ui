@@ -84,51 +84,46 @@ const IndexVolumes: React.FunctionComponent = () => {
     <div className="page">
       <div className="page__header">
         <DocRefIconHeader text="Index Volumes" docRefType="Index" />
+        <div className="page__buttons">
+          <Button
+            className="toolbar-button-small primary"
+            onClick={showCreateNewDialog}
+            icon="plus"
+            text="Create"
+          />
+          <Button
+            className="toolbar-button-small primary"
+            disabled={selectedIndexVolumes.length !== 1}
+            onClick={onViewClick}
+            icon="edit"
+            text="View/edit"
+          />
+          <Button
+            disabled={selectedIndexVolumes.length !== 1}
+            onClick={showDeleteDialog}
+            className="toolbar-button-small primary"
+            icon="trash"
+            text="Delete"
+          />
+          <Button
+            text="To Group"
+            className="toolbar-button-small primary"
+            icon="plus"
+            disabled={selectedIndexVolumes.length === 0}
+            onClick={showAddToGroupDialog}
+          />
+          <div className="UserSearch-filteringToggle">
+            <label>Show filtering</label>
+            <Toggle
+              icons={false}
+              checked={filterable}
+              onChange={event => setFilteringEnabled(event.target.checked)}
+            />
+          </div>
+        </div>
       </div>
       <div className="page__search" />
       <div className="page__body">
-        <IndexVolumesTable {...tableProps} />
-      </div>
-
-      <div className="page__buttons">
-        <Button
-          className="toolbar-button-small primary"
-          onClick={showCreateNewDialog}
-          icon="plus"
-          text="Create"
-        />
-        <Button
-          className="toolbar-button-small primary"
-          disabled={selectedIndexVolumes.length !== 1}
-          onClick={onViewClick}
-          icon="edit"
-          text="View/edit"
-        />
-        <Button
-          disabled={selectedIndexVolumes.length !== 1}
-          onClick={showDeleteDialog}
-          className="toolbar-button-small primary"
-          icon="trash"
-          text="Delete"
-        />
-        <Button
-          text="To Group"
-          className="toolbar-button-small primary"
-          icon="plus"
-          disabled={selectedIndexVolumes.length === 0}
-          onClick={showAddToGroupDialog}
-        />
-        <div className="UserSearch-filteringToggle">
-          <label>Show filtering</label>
-          <Toggle
-            icons={false}
-            checked={filterable}
-            onChange={event => setFilteringEnabled(event.target.checked)}
-          />
-        </div>
-      </div>
-
-      <div className="UserSearch-content">
         <IndexVolumesTable {...tableProps} />
       </div>
       <IndexVolumeGroupModalPicker {...addToGroupProps} />

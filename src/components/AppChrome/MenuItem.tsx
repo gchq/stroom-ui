@@ -24,6 +24,7 @@ import { DocRefType } from "components/DocumentEditors/useDocumentApi/types/base
 interface Props {
   className?: string;
   menuItem: MenuItemType;
+  activeMenuItem: string;
   depth: number;
   isCollapsed?: boolean;
   selectedItems: MenuItemType[];
@@ -109,6 +110,7 @@ const MenuItem: React.FunctionComponent<EnhancedProps> = ({
   selectedItems,
   menuItemOpened,
   focussedItem,
+  activeMenuItem,
 }) => {
   const isSelected: boolean = selectedItems
     .map((d: MenuItemType) => d.key)
@@ -160,7 +162,7 @@ const MenuItem: React.FunctionComponent<EnhancedProps> = ({
     classNames.push("has-children--open");
   }
 
-  if (menuItem.isActive) {
+  if (menuItem.key === activeMenuItem) {
     classNames.push("is-active");
   }
 
