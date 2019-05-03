@@ -17,49 +17,48 @@
 import * as React from "react";
 
 import IconHeader from "components/IconHeader";
+import useWelcomeHtml from "./api/useWelcomeHtml";
 
-const ABOUT_HTML = {
-  __html: `<h1>About Stroom</h1>
-<p>Stroom is designed to receive data from multiple systems.</p>`,
-};
-
-const Welcome: React.FunctionComponent = () => (
-  <div className="page">
-    <div className="page__header">
-      <IconHeader icon="home" text="Welcome" />
-    </div>
-    <div className="page__body welcome__body">
-      <img
-        className="welcome__image"
-        alt="Stroom logo"
-        src={require("../../images/logo_orange.svg")}
-      />
-      <div dangerouslySetInnerHTML={ABOUT_HTML} />
-      <div className="welcome__shortcuts">
-        <h4>Global shortcut keys</h4>
-        <table className="welcome__shortcuts__table">
-          <tbody>
-            <tr>
-              <th />
-              <th>Shortcut</th>
-            </tr>
-            <tr>
-              <td>Document search</td>
-              <td>
-                <code>ctrl + shift + f</code>
-              </td>
-            </tr>
-            <tr>
-              <td> Recent documents </td>
-              <td>
-                <code> ctrl + shift + e</code>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+const Welcome: React.FunctionComponent = () => {
+  const welcomeData = useWelcomeHtml();
+  return (
+    <div className="page">
+      <div className="page__header">
+        <IconHeader icon="home" text="Welcome" />
+      </div>
+      <div className="page__body welcome__body">
+        <img
+          className="welcome__image"
+          alt="Stroom logo"
+          src={require("../../images/logo_orange.svg")}
+        />
+        <div dangerouslySetInnerHTML={welcomeData} />
+        <div className="welcome__shortcuts">
+          <h4>Global shortcut keys</h4>
+          <table className="welcome__shortcuts__table">
+            <tbody>
+              <tr>
+                <th />
+                <th>Shortcut</th>
+              </tr>
+              <tr>
+                <td>Document search</td>
+                <td>
+                  <code>ctrl + shift + f</code>
+                </td>
+              </tr>
+              <tr>
+                <td> Recent documents </td>
+                <td>
+                  <code> ctrl + shift + e</code>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
-  </div>
-);
+  );
+};
 
 export default Welcome;
