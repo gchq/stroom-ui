@@ -58,7 +58,7 @@ function useSelectableReactTable<TItem>(
   return {
     ...selectableItemProps,
     tableProps: {
-      className: "UserSearch-table -striped -highlight",
+      className: "fill-space -striped -highlight",
       data: items,
       getTdProps,
       getTrProps,
