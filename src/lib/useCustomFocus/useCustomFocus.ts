@@ -33,12 +33,12 @@ const reducer = (
 ): ReducerState => {
   switch (action.type) {
     case "up":
-      return { itemsLength, focusIndex: (focusIndex + 1) % itemsLength };
-    case "down":
       return {
         itemsLength,
         focusIndex: (focusIndex + -1 + itemsLength) % itemsLength,
       };
+    case "down":
+      return { itemsLength, focusIndex: (focusIndex + 1) % itemsLength };
     case "clear":
       return {
         itemsLength,
