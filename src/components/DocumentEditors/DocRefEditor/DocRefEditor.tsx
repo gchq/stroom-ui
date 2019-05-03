@@ -45,6 +45,7 @@ const DocRefEditor = <T extends {}>({
   }
   actionBarItems.push({
     icon: "key",
+    text: "Permissions",
     title: "Permissions",
     onClick: openDocRefPermissions,
   });
@@ -74,7 +75,7 @@ const DocRefEditor = <T extends {}>({
         {actionBarItems
           .concat(additionalActionBarItems || [])
           .map((actionBarItem, i) => (
-            <Button key={i} circular {...actionBarItem} />
+            <Button key={i} {...actionBarItem} />
           ))}
       </div>
     </div>
