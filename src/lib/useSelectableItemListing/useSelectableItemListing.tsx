@@ -2,6 +2,7 @@ import * as React from "react";
 import useKeyIsDown from "../useKeyIsDown";
 import { InProps, OutProps } from "./types";
 import { SelectionBehaviour } from "./enums";
+import useOnKeyDown from "lib/useOnKeyDown";
 
 const defaultPreFocusWrap = () => true;
 
@@ -148,14 +149,22 @@ const useSelectableItemListing = <TItem extends {}>({
     setLastSelectedIndex(indexToUse);
   };
 
-  const onKeyDownWithShortcuts = (e: React.KeyboardEvent) => {
-    if (e.key === "ArrowUp" || e.key === "k") {
+  const goUp = React.useCallback(
+    (e: React.KeyboardEvent) => {
       focusUp();
       e.preventDefault();
-    } else if (e.key === "ArrowDown" || e.key === "j") {
+    },
+    [focusUp],
+  );
+  const goDown = React.useCallback(
+    (e: React.KeyboardEvent) => {
       focusDown();
       e.preventDefault();
-    } else if (e.key === "Enter") {
+    },
+    [focusDown],
+  );
+  const enterItemOnKey = React.useCallback(
+    (e: React.KeyboardEvent) => {
       if (focussedItem) {
         if (!!openItem) {
           openItem(focussedItem);
@@ -164,7 +173,11 @@ const useSelectableItemListing = <TItem extends {}>({
         }
       }
       e.preventDefault();
-    } else if (e.key === "ArrowRight" || e.key === "l") {
+    },
+    [focussedItem, openItem, toggleSelection, getKey],
+  );
+  const goRight = React.useCallback(
+    (e: React.KeyboardEvent) => {
       if (!!focussedItem) {
         if (!!enterItem) {
           enterItem(focussedItem);
@@ -174,17 +187,41 @@ const useSelectableItemListing = <TItem extends {}>({
           toggleSelection(getKey(focussedItem));
         }
       }
-    } else if (e.key === "ArrowLeft" || e.key === "h") {
+      e.preventDefault();
+    },
+    [focussedItem, enterItem, openItem, toggleSelection, getKey],
+  );
+  const goLeft = React.useCallback(
+    (e: React.KeyboardEvent) => {
       if (!!focussedItem && !!goBack) {
         goBack(focussedItem);
       }
-    } else if (e.key === " ") {
+      e.preventDefault();
+    },
+    [focussedItem, goBack],
+  );
+  const spaceKey = React.useCallback(
+    (e: React.KeyboardEvent) => {
       if (selectionBehaviour !== SelectionBehaviour.NONE) {
         toggleSelection();
         e.preventDefault();
       }
-    }
-  };
+    },
+    [selectionBehaviour, toggleSelection],
+  );
+
+  const onKeyDown = useOnKeyDown({
+    ArrowUp: goUp,
+    k: goUp,
+    ArrowDown: goDown,
+    j: goDown,
+    ArrowLeft: goLeft,
+    h: goLeft,
+    ArrowRight: goRight,
+    l: goRight,
+    Enter: enterItemOnKey,
+    " ": spaceKey,
+  });
 
   const selectedItem: TItem | undefined =
     selectedItems.length > 0 && !!lastSelectedIndex
@@ -201,7 +238,7 @@ const useSelectableItemListing = <TItem extends {}>({
     toggleSelection,
     clearSelection,
     keyIsDown,
-    onKeyDownWithShortcuts,
+    onKeyDown,
   };
 };
 

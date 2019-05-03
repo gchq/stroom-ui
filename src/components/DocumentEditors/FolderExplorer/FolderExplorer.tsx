@@ -107,7 +107,7 @@ const FolderExplorer: React.FunctionComponent<SwitchedDocRefEditorProps> = ({
     componentProps: createDialogComponentProps,
   } = useCreateDialog(onCreateDocument);
   const {
-    onKeyDownWithShortcuts,
+    onKeyDown,
     selectedItems: selectedDocRefs,
     toggleSelection,
     keyIsDown,
@@ -189,7 +189,7 @@ const FolderExplorer: React.FunctionComponent<SwitchedDocRefEditorProps> = ({
       <div
         tabIndex={0}
         className="DocRefEditor__focusarea"
-        onKeyDown={onKeyDownWithShortcuts}
+        onKeyDown={onKeyDown}
       >
         {folder &&
           folder.node &&

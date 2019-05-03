@@ -23,9 +23,9 @@ const COLUMNS = [
 ];
 
 const IndexVolumeGroupsTable: React.FunctionComponent<Props> = ({
-  selectableTableProps: { onKeyDownWithShortcuts, tableProps },
+  selectableTableProps: { onKeyDown, tableProps },
 }) => (
-  <div className="fill-space" tabIndex={0} onKeyDown={onKeyDownWithShortcuts}>
+  <div className="fill-space" tabIndex={0} onKeyDown={onKeyDown}>
     <ReactTable className="fill-space -striped -highlight" {...tableProps} />
   </div>
 );

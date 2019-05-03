@@ -332,7 +332,7 @@ const AppChrome: React.FunctionComponent<AppChromeProps> = ({
   const openMenuItems = getOpenMenuItems(menuItems, areMenuItemsOpen);
 
   const {
-    onKeyDownWithShortcuts,
+    onKeyDown,
     toggleSelection,
     selectedItems,
     focussedItem,
@@ -410,7 +410,7 @@ const AppChrome: React.FunctionComponent<AppChromeProps> = ({
               </div>
               <div
                 tabIndex={0}
-                onKeyDown={onKeyDownWithShortcuts}
+                onKeyDown={onKeyDown}
                 className="app-chrome__sidebar-menu"
                 data-simplebar
               >
