@@ -29,7 +29,9 @@ const DocRefIconHeader: React.FunctionComponent<Props> = ({
   className,
 }) => (
   <div className={`icon-header ${className || ""}`}>
-    <DocRefImage docRefType={docRefType} size="lg" />
+    <div className="icon-header__icon">
+      <DocRefImage docRefType={docRefType} size="lg" />
+    </div>
     <div className="icon-header__text">{text}</div>
   </div>
 );

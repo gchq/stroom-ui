@@ -21,6 +21,7 @@ import { Credentials } from "components/authentication/types";
 import Button from "components/Button";
 import { hasAnyProps } from "lib/lang";
 import * as Yup from "yup";
+import { ButtonAction } from "components/Button/types";
 
 const LoginValidationSchema = Yup.object().shape({
   email: Yup.string().required("Required"),
@@ -94,9 +95,9 @@ const LoginForm: React.FunctionComponent<{
                     undefined
                   )}
                 </div>
-                <div className="Login__actions">
+                <div className="Login__actions page__buttons">
                   <Button
-                    className="toolbar-button-full primary"
+                    action={ButtonAction.Primary}
                     disabled={isPristine || hasErrors}
                     type="submit"
                     text="Sign in"

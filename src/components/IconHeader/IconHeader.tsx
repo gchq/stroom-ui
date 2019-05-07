@@ -30,7 +30,9 @@ const IconHeader: React.FunctionComponent<Props> = ({
   className,
 }) => (
   <div className={`icon-header ${className || ""}`}>
-    <FontAwesomeIcon className="icon-header__icon" icon={icon} size="lg" />
+    <div className="icon-header__icon">
+      <FontAwesomeIcon icon={icon} size="lg" />
+    </div>
     <div className="icon-header__text">{text}</div>
   </div>
 );

@@ -18,14 +18,25 @@ import * as React from "react";
 
 import Button from "../Button/Button";
 import { DialogActionButtonProps } from "./types";
+import { ButtonAction } from "components/Button/types";
 
 const DialogActionButtons = ({
   onCancel,
-  onConfirm
+  onConfirm,
 }: DialogActionButtonProps) => (
   <React.Fragment>
-    <Button text="Cancel" onClick={onCancel} />
-    <Button onClick={onConfirm} icon="check" text="Choose" />
+    <Button
+      action={ButtonAction.Primary}
+      icon="check"
+      text="Choose"
+      onClick={onConfirm}
+    />
+    <Button
+      action={ButtonAction.Secondary}
+      icon="times"
+      text="Cancel"
+      onClick={onCancel}
+    />
   </React.Fragment>
 );
 

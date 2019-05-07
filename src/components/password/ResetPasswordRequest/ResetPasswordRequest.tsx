@@ -19,6 +19,7 @@ import * as React from "react";
 import Button from "components/Button";
 import { hasAnyProps } from "lib/lang";
 import * as Yup from "yup";
+import { ButtonAction, ButtonAppearance } from "components/Button/types";
 
 const ValidationSchema = Yup.object().shape({
   email: Yup.string().required("Required"),
@@ -63,13 +64,15 @@ const ResetPasswordRequest: React.FunctionComponent<{
             </div>
             <div className="footer">
               <Button
-                className="toolbar-button-small primary"
+                appearance={ButtonAppearance.Text}
+                action={ButtonAction.Primary}
                 type="submit"
                 disabled={isPristine || hasErrors}
                 text="Send"
               />
               <Button
-                className="toolbar-button-medium secondary"
+                appearance={ButtonAppearance.Text}
+                action={ButtonAction.Secondary}
                 onClick={() => onBack()}
                 text="Back to Stroom"
               />

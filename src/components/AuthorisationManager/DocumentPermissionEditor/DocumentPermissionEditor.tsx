@@ -16,6 +16,7 @@ import ThemedConfirm, {
 import useRouter from "lib/useRouter";
 import useAppNavigation from "../../AppChrome/useAppNavigation";
 import UsersTable, { useTable as useUsersTable } from "../UsersTable";
+import { ButtonAppearance } from "components/Button/types";
 
 interface Props {
   docRefUuid: string;
@@ -109,14 +110,23 @@ export const DocumentPermissionEditor: React.FunctionComponent<Props> = ({
         text={`Document Permissions for ${docRef.type} - ${docRef.name}`}
       />
       <div>
-        <Button text="Back" onClick={history.goBack} />
+        <Button
+          appearance={ButtonAppearance.Text}
+          text="Back"
+          onClick={history.goBack}
+        />
         <Button text="Add" onClick={showUserPicker} />
         <Button
+          appearance={ButtonAppearance.Text}
           text="View/Edit"
           disabled={selectedUsers.length !== 1}
           onClick={onClickEdit}
         />
-        <Button text={clearButtonText} onClick={showConfirmClear} />
+        <Button
+          appearance={ButtonAppearance.Text}
+          text={clearButtonText}
+          onClick={showConfirmClear}
+        />
 
         <h2>Users</h2>
         <UsersTable {...usersTableProps} />

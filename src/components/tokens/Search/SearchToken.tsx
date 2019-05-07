@@ -26,6 +26,7 @@ import useColumns from "./useColumns";
 import useTokenSearch from "./useTokenSearch";
 import IconHeader from "components/IconHeader";
 import { Token } from "../api/types";
+import { ButtonAppearance } from "components/Button/types";
 
 const TokenSearch = () => {
   const {
@@ -49,7 +50,7 @@ const TokenSearch = () => {
         <IconHeader icon="key" text={`API Keys`} />
         <div className="page__buttons">
           <Button
-            className="toolbar-button-small primary"
+            appearance={ButtonAppearance.Text}
             onClick={() => goToNewApiKey()}
             icon="plus"
             text="Create"
@@ -57,14 +58,14 @@ const TokenSearch = () => {
 
           {noTokenSelected ? (
             <Button
-              className="toolbar-button-small primary"
+              appearance={ButtonAppearance.Text}
               disabled={noTokenSelected}
               icon="edit"
               text="View/edit"
             />
           ) : (
             <Button
-              className="toolbar-button-small primary"
+              appearance={ButtonAppearance.Text}
               disabled={noTokenSelected}
               onClick={() => goToApiKey(`${selectedTokenRowId}`)}
               icon="edit"
@@ -72,9 +73,9 @@ const TokenSearch = () => {
             />
           )}
           <Button
+            appearance={ButtonAppearance.Text}
             disabled={noTokenSelected}
             onClick={() => deleteSelectedToken(selectedTokenRowId)}
-            className="toolbar-button-small primary"
             icon="trash"
             text="Delete"
           />

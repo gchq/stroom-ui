@@ -17,15 +17,17 @@
 import * as React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { SizeProp } from "@fortawesome/fontawesome-svg-core";
-import { ButtonProps } from "./types";
+import { ButtonProps, ButtonAppearance, ButtonAction } from "./types";
 
 export const Button = ({
   text,
   icon,
   className: rawClassName,
   groupPosition,
-  circular,
+  appearance,
+  action,
   selected,
+  disabled,
   type,
   size,
   ...rest
@@ -35,12 +37,74 @@ export const Button = ({
 
     if (rawClassName) classNames.push(rawClassName);
     if (groupPosition) classNames.push(groupPosition);
-    if (circular) classNames.push("circular");
+
+    // Set the base button class.
+    classNames.push("button__base");
+    // Set the general button styling class unless this is an icon button.
+    if (appearance !== ButtonAppearance.Icon) classNames.push("button");
+
+    // Get the style name (contained by default).
+    let appearanceName = "button__contained";
+    if (appearance) {
+      switch (+appearance) {
+        case ButtonAppearance.Normal: {
+          appearanceName = "button__contained";
+          break;
+        }
+        case ButtonAppearance.Icon: {
+          appearanceName = "button__icon";
+          break;
+        }
+        case ButtonAppearance.Outline: {
+          appearanceName = "button__outline";
+          break;
+        }
+        case ButtonAppearance.Text: {
+          appearanceName = "button__text-only";
+          break;
+        }
+        default:
+          break;
+      }
+    }
+    // Set the style name.
+    classNames.push(appearanceName);
+
+    // Get the color (none by default);
+    let actionName;
+    if (action) {
+      switch (+action) {
+        case ButtonAction.Primary: {
+          actionName = appearanceName + "__primary";
+          break;
+        }
+        case ButtonAction.Secondary: {
+          actionName = appearanceName + "__secondary";
+          break;
+        }
+        default:
+          break;
+      }
+    }
+    if (actionName) {
+      // Set the color.
+      classNames.push(actionName);
+    }
+
     if (text) classNames.push("has-text");
     if (selected) classNames.push("selected");
+    if (disabled) classNames.push("disabled");
 
     return classNames.join(" ");
-  }, [rawClassName, groupPosition, circular, text, selected]);
+  }, [
+    rawClassName,
+    groupPosition,
+    appearance,
+    action,
+    text,
+    selected,
+    disabled,
+  ]);
 
   let fontAwesomeSize: SizeProp = React.useMemo(() => {
     switch (size) {

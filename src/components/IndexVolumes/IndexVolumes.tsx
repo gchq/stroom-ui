@@ -18,6 +18,7 @@ import { useIndexVolumes, IndexVolume } from "components/IndexVolumes/api";
 import useAppNavigation from "../AppChrome/useAppNavigation";
 import Toggle from "react-toggle";
 import DocRefIconHeader from "components/DocRefIconHeader";
+import { ButtonAppearance } from "components/Button/types";
 
 const IndexVolumes: React.FunctionComponent = () => {
   const [filterable, setFilteringEnabled] = React.useState(false);
@@ -86,28 +87,28 @@ const IndexVolumes: React.FunctionComponent = () => {
         <DocRefIconHeader text="Index Volumes" docRefType="Index" />
         <div className="page__buttons">
           <Button
-            className="toolbar-button-small primary"
+            appearance={ButtonAppearance.Text}
             onClick={showCreateNewDialog}
             icon="plus"
             text="Create"
           />
           <Button
-            className="toolbar-button-small primary"
+            appearance={ButtonAppearance.Text}
             disabled={selectedIndexVolumes.length !== 1}
             onClick={onViewClick}
             icon="edit"
             text="View/edit"
           />
           <Button
+            appearance={ButtonAppearance.Text}
             disabled={selectedIndexVolumes.length !== 1}
             onClick={showDeleteDialog}
-            className="toolbar-button-small primary"
             icon="trash"
             text="Delete"
           />
           <Button
+            appearance={ButtonAppearance.Text}
             text="To Group"
-            className="toolbar-button-small primary"
             icon="plus"
             disabled={selectedIndexVolumes.length === 0}
             onClick={showAddToGroupDialog}

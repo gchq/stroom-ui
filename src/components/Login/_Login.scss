@@ -50,7 +50,9 @@
 }
 
 .Login__actions {
-  width: 100%;
+  // width: 100%;
+  display: flex;
+  justify-content: flex-end;
   padding: 15px 0 2px 0;
 }
 
