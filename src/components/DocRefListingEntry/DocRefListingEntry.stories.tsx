@@ -59,7 +59,7 @@ let TestDocRefListingEntry: React.FunctionComponent<Props> = ({
   };
 
   const {
-    onKeyDownWithShortcuts,
+    onKeyDown,
     toggleSelection,
     selectedItems: selectedDocRefs,
     focussedItem: focussedDocRef,
@@ -76,7 +76,7 @@ let TestDocRefListingEntry: React.FunctionComponent<Props> = ({
     <div style={{ width: "50%" }}>
       <div
         tabIndex={0}
-        onKeyDown={onKeyDownWithShortcuts}
+        onKeyDown={onKeyDown}
         style={{ borderStyle: "dashed", borderWidth: "2px" }}
       >
         {docRefs &&

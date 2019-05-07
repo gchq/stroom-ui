@@ -14,9 +14,9 @@ interface Props {
 }
 
 const UsersTable: React.FunctionComponent<Props> = ({
-  selectableTableProps: { onKeyDownWithShortcuts, tableProps },
+  selectableTableProps: { onKeyDown, tableProps },
 }) => (
-  <div className="fill-space" tabIndex={0} onKeyDown={onKeyDownWithShortcuts}>
+  <div className="fill-space" tabIndex={0} onKeyDown={onKeyDown}>
     <ReactTable
       className="UsersTable fill-space -striped -highlight"
       {...tableProps}

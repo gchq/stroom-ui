@@ -70,11 +70,9 @@ const TestTable = () => {
     [name, species, addAnimal],
   );
 
-  const {
-    onKeyDownWithShortcuts,
-    selectedItem,
-    tableProps,
-  } = useSelectableReactTable<Animal>(
+  const { onKeyDown, selectedItem, tableProps } = useSelectableReactTable<
+    Animal
+  >(
     {
       getKey: a => a.uuid,
       items: animals,
@@ -92,7 +90,7 @@ const TestTable = () => {
   ]);
 
   return (
-    <div className="fill-space" tabIndex={0} onKeyDown={onKeyDownWithShortcuts}>
+    <div className="fill-space" tabIndex={0} onKeyDown={onKeyDown}>
       <Button text="Reset" onClick={reset} />
       <ReactTable
         className="useSelectableReactTable -striped -highlight"

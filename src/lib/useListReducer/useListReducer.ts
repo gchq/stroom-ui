@@ -10,19 +10,27 @@ interface ReceivedAction<T> {
   type: "itemsReceived";
   items: T[];
 }
-interface AddedToListAction<T> {
+interface AddAction<T> {
   type: "itemAdded";
   item: T;
 }
-interface RemovedFromListAction {
+interface RemovedAction {
   type: "itemRemoved";
   itemKey: string;
+}
+interface RemovedByIndexAction {
+  type: "itemRemovedByIndex";
+  index: number;
 }
 
 const createListReducer = <T extends {}>(getKey: (item: T) => string) => {
   return (
     state: T[],
-    action: ReceivedAction<T> | AddedToListAction<T> | RemovedFromListAction,
+    action:
+      | ReceivedAction<T>
+      | AddAction<T>
+      | RemovedAction
+      | RemovedByIndexAction,
   ): T[] => {
     switch (action.type) {
       case "itemsReceived":
@@ -33,6 +41,8 @@ const createListReducer = <T extends {}>(getKey: (item: T) => string) => {
           .concat([action.item]);
       case "itemRemoved":
         return state.filter(u => getKey(u) !== action.itemKey);
+      case "itemRemovedByIndex":
+        return state.filter((u, i) => i !== action.index);
       default:
         return state;
     }
@@ -44,12 +54,17 @@ interface UseListReducer<T extends {}> {
   itemsReceived: (items: T[]) => void;
   itemAdded: (item: T) => void;
   itemRemoved: (itemKey: string) => void;
+  itemAtIndexRemoved: (index: number) => void;
 }
 
 const useListReducer = <T extends {}>(
   getKey: (item: T) => string,
+  initialItems: T[] = [],
 ): UseListReducer<T> => {
-  const [items, dispatch] = React.useReducer(createListReducer<T>(getKey), []);
+  const [items, dispatch] = React.useReducer(
+    createListReducer<T>(getKey),
+    initialItems,
+  );
 
   return {
     items,
@@ -59,7 +74,7 @@ const useListReducer = <T extends {}>(
           type: "itemsReceived",
           items,
         }),
-      [],
+      [dispatch],
     ),
     itemAdded: React.useCallback(
       (item: T) =>
@@ -67,7 +82,7 @@ const useListReducer = <T extends {}>(
           type: "itemAdded",
           item,
         }),
-      [],
+      [dispatch],
     ),
     itemRemoved: React.useCallback(
       (itemKey: string) =>
@@ -75,7 +90,15 @@ const useListReducer = <T extends {}>(
           type: "itemRemoved",
           itemKey,
         }),
-      [],
+      [dispatch],
+    ),
+    itemAtIndexRemoved: React.useCallback(
+      (index: number) =>
+        dispatch({
+          type: "itemRemovedByIndex",
+          index,
+        }),
+      [dispatch],
     ),
   };
 };

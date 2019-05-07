@@ -28,7 +28,7 @@ export interface OutProps<TItem> {
   selectedItemIndexes: Set<number>;
   toggleSelection: (itemKey: string) => void;
   clearSelection: () => void;
-  onKeyDownWithShortcuts: React.KeyboardEventHandler<HTMLDivElement>;
+  onKeyDown: React.KeyboardEventHandler<HTMLDivElement>;
   keyIsDown: KeyDownState;
 }
 

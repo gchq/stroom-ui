@@ -122,47 +122,50 @@ const getMenuItems = (
   focussedItem?: MenuItemType,
   depth: number = 0,
 ) =>
-  menuItems.map(menuItem => (
-    <React.Fragment key={menuItem.key}>
-      <MenuItem
-        keyIsDown={keyIsDown}
-        selectedItems={selectedItems}
-        focussedItem={focussedItem}
-        className={`sidebar__text-color ${isCollapsed ? "collapsed" : ""} ${
-          depth > 0 ? "child" : ""
-        }`}
-        key={menuItem.key}
-        activeMenuItem={activeMenuItem}
-        menuItem={menuItem}
-        depth={depth}
-        isCollapsed={isCollapsed}
-        showCopyDialog={showCopyDialog}
-        showMoveDialog={showMoveDialog}
-        menuItemOpened={menuItemOpened}
-        areMenuItemsOpen={areMenuItemsOpen}
-      />
-      {/* TODO: we only want the 'children' class on the first set of children. We're using it to pad the bottom. Any better ideas? */}
-      {menuItem.children && areMenuItemsOpen[menuItem.key] ? (
-        <div className={`${depth === 0 ? "sidebar__children" : ""}`}>
-          {getMenuItems(
-            activeMenuItem,
-            isCollapsed,
-            menuItem.children,
-            areMenuItemsOpen,
-            menuItemOpened,
-            keyIsDown,
-            showCopyDialog,
-            showMoveDialog,
-            selectedItems,
-            focussedItem,
-            depth + 1,
-          )}
-        </div>
-      ) : (
-        undefined
-      )}
-    </React.Fragment>
-  ));
+  menuItems.map(menuItem => {
+    //console.log("Rendering Menu Item");
+    return (
+      <React.Fragment key={menuItem.key}>
+        <MenuItem
+          keyIsDown={keyIsDown}
+          selectedItems={selectedItems}
+          focussedItem={focussedItem}
+          className={`sidebar__text-color ${isCollapsed ? "collapsed" : ""} ${
+            depth > 0 ? "child" : ""
+          }`}
+          key={menuItem.key}
+          activeMenuItem={activeMenuItem}
+          menuItem={menuItem}
+          depth={depth}
+          isCollapsed={isCollapsed}
+          showCopyDialog={showCopyDialog}
+          showMoveDialog={showMoveDialog}
+          menuItemOpened={menuItemOpened}
+          areMenuItemsOpen={areMenuItemsOpen}
+        />
+        {/* TODO: we only want the 'children' class on the first set of children. We're using it to pad the bottom. Any better ideas? */}
+        {menuItem.children && areMenuItemsOpen[menuItem.key] ? (
+          <div className={`${depth === 0 ? "sidebar__children" : ""}`}>
+            {getMenuItems(
+              activeMenuItem,
+              isCollapsed,
+              menuItem.children,
+              areMenuItemsOpen,
+              menuItemOpened,
+              keyIsDown,
+              showCopyDialog,
+              showMoveDialog,
+              selectedItems,
+              focussedItem,
+              depth + 1,
+            )}
+          </div>
+        ) : (
+          undefined
+        )}
+      </React.Fragment>
+    );
+  });
 
 const AppChrome: React.FunctionComponent<AppChromeProps> = ({
   activeMenuItem,
@@ -332,7 +335,7 @@ const AppChrome: React.FunctionComponent<AppChromeProps> = ({
   const openMenuItems = getOpenMenuItems(menuItems, areMenuItemsOpen);
 
   const {
-    onKeyDownWithShortcuts,
+    onKeyDown,
     toggleSelection,
     selectedItems,
     focussedItem,
@@ -410,7 +413,7 @@ const AppChrome: React.FunctionComponent<AppChromeProps> = ({
               </div>
               <div
                 tabIndex={0}
-                onKeyDown={onKeyDownWithShortcuts}
+                onKeyDown={onKeyDown}
                 className="app-chrome__sidebar-menu"
                 data-simplebar
               >

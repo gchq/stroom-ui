@@ -5,11 +5,13 @@ interface UseToggle {
   toggle: () => void;
 }
 
+function reducer(state: boolean) {
+  return !state;
+}
+
 const useToggle = (defaultValue: boolean = false): UseToggle => {
-  const [value, setValue] = React.useState<boolean>(defaultValue);
-  const toggle = React.useCallback(() => {
-    setValue(!value);
-  }, [value, setValue]);
+  const [value, dispatch] = React.useReducer(reducer, defaultValue);
+  const toggle = React.useCallback(() => dispatch(undefined), [dispatch]);
 
   return {
     value,

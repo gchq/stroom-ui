@@ -30,7 +30,7 @@ const TestList = () => {
   const { animals, preFocusWrap, reset } = useTestAnimals();
 
   const {
-    onKeyDownWithShortcuts,
+    onKeyDown,
     selectedItemIndexes,
     selectedItem,
     focusIndex,
@@ -51,7 +51,7 @@ const TestList = () => {
   ]);
 
   return (
-    <div tabIndex={0} onKeyDown={onKeyDownWithShortcuts}>
+    <div tabIndex={0} onKeyDown={onKeyDown}>
       <h3>Test Selectable Item Listing</h3>
       <Button text="Reset" onClick={reset} />
       <ul>
