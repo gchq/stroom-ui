@@ -25,10 +25,23 @@ interface ItemWithClick<T> {
 }
 
 const TestHarness: React.FunctionComponent<Props> = ({ initialItems }) => {
-  const { items, itemAtIndexRemoved } = useListReducer(d => d, initialItems);
+  const { items, itemAtIndexRemoved, itemAdded } = useListReducer(
+    d => d,
+    initialItems,
+  );
+
+  const preFocusWrap = React.useCallback(() => {
+    if (items.length < 9) {
+      itemAdded(generateItem());
+      return false;
+    } else {
+      return true;
+    }
+  }, [items, itemAdded]);
 
   const { set, down, up, clear, focusIndex, focussedItem } = useCustomFocus({
     items,
+    preFocusWrap,
   });
 
   const removeFirstItem = React.useCallback(() => itemAtIndexRemoved(0), [

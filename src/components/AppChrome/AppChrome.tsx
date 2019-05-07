@@ -29,7 +29,7 @@ import {
 } from "./types";
 
 import useSelectableItemListing from "lib/useSelectableItemListing";
-import { KeyDownState } from "lib/useKeyIsDown";
+import useKeyIsDown, { KeyDownState } from "lib/useKeyIsDown";
 import {
   CopyMoveDocRefDialog,
   useDialog as useCopyMoveDocRefDialog,
@@ -334,12 +334,12 @@ const AppChrome: React.FunctionComponent<AppChromeProps> = ({
   ];
   const openMenuItems = getOpenMenuItems(menuItems, areMenuItemsOpen);
 
+  const keyIsDown = useKeyIsDown();
   const {
     onKeyDown,
     toggleSelection,
     selectedItems,
     focussedItem,
-    keyIsDown,
   } = useSelectableItemListing<MenuItemType>({
     items: openMenuItems,
     getKey: m => m.key,

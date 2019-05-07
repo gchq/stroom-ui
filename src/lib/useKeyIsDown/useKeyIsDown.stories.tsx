@@ -16,7 +16,7 @@
 import * as React from "react";
 import { storiesOf } from "@storybook/react";
 
-import useKeyIsDown, { DEFAULT_FILTERS } from "./useKeyIsDown";
+import useKeyIsDown from "./useKeyIsDown";
 
 import { KeyDownState } from "./types";
 

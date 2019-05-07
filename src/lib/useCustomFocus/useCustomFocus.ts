@@ -2,6 +2,7 @@ import * as React from "react";
 
 interface InProps<T extends {}> {
   items: T[];
+  preFocusWrap?: () => boolean;
 }
 
 interface OutProps<T extends {}> {
@@ -26,6 +27,7 @@ interface SetFocus {
 }
 interface ChangeFocus {
   type: "up" | "down" | "clear";
+  preFocusWrap?: () => boolean;
 }
 interface SetItemsLength {
   type: "setLength";
@@ -33,38 +35,54 @@ interface SetItemsLength {
 }
 
 const reducer = (
-  { focusIndex, itemsLength }: ReducerState,
+  state: ReducerState,
   action: SetFocus | ChangeFocus | SetItemsLength,
 ): ReducerState => {
+  const { focusIndex, itemsLength } = state;
   switch (action.type) {
     case "set":
       return {
-        itemsLength,
+        ...state,
         focusIndex: action.index,
       };
-    case "up":
+    case "up": {
+      const newFocusIndex = (focusIndex + -1 + itemsLength) % itemsLength;
       return {
-        itemsLength,
-        focusIndex: (focusIndex + -1 + itemsLength) % itemsLength,
+        ...state,
+        focusIndex: newFocusIndex,
       };
-    case "down":
-      return { itemsLength, focusIndex: (focusIndex + 1) % itemsLength };
+    }
+    case "down": {
+      let newFocusIndex = (focusIndex + 1) % itemsLength;
+      if (
+        !!action.preFocusWrap &&
+        newFocusIndex < focusIndex &&
+        !action.preFocusWrap()
+      ) {
+        newFocusIndex = focusIndex;
+      }
+      return { ...state, focusIndex: newFocusIndex };
+    }
     case "clear":
       return {
-        itemsLength,
+        ...state,
         focusIndex: NO_FOCUS,
       };
     case "setLength":
       return {
+        ...state,
         itemsLength: action.itemsLength,
         focusIndex: focusIndex % action.itemsLength,
       };
     default:
-      return { focusIndex, itemsLength };
+      return state;
   }
 };
 
-const useCustomFocus = <T extends {}>({ items }: InProps<T>): OutProps<T> => {
+const useCustomFocus = <T extends {}>({
+  items,
+  preFocusWrap,
+}: InProps<T>): OutProps<T> => {
   const [{ focusIndex }, dispatch] = React.useReducer(reducer, {
     focusIndex: NO_FOCUS,
     itemsLength: items.length,
@@ -87,8 +105,14 @@ const useCustomFocus = <T extends {}>({ items }: InProps<T>): OutProps<T> => {
     (index: number) => dispatch({ type: "set", index }),
     [dispatch],
   );
-  const up = React.useCallback(() => dispatch({ type: "up" }), [dispatch]);
-  const down = React.useCallback(() => dispatch({ type: "down" }), [dispatch]);
+  const up = React.useCallback(() => dispatch({ type: "up", preFocusWrap }), [
+    dispatch,
+    preFocusWrap,
+  ]);
+  const down = React.useCallback(
+    () => dispatch({ type: "down", preFocusWrap }),
+    [dispatch, preFocusWrap],
+  );
   const clear = React.useCallback(() => dispatch({ type: "clear" }), [
     dispatch,
   ]);

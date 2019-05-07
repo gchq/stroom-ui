@@ -8,6 +8,10 @@ interface InProps<T extends {}> {
 
 interface OutProps<T extends {}> {
   selectedItems: T[];
+  selectedIndexes: number[];
+  selectedKeys: string[];
+  lastSelectedKey: string | undefined;
+  lastSelectedIndex: number | undefined;
   toggleSelection: (key: string) => void;
   clearSelection: () => void;
 }
@@ -30,36 +34,115 @@ interface UpdateRawKeys {
 
 interface ReducerState {
   selectedKeys: string[];
+  selectedIndexes: number[];
   rawKeys: string[];
+  lastSelectedKey: string | undefined;
+  lastSelectedIndex: number | undefined;
 }
 
 const reducer = (
-  { selectedKeys, rawKeys }: ReducerState,
+  state: ReducerState,
   action: SelectionToggled | SelectionCleared | UpdateRawKeys,
 ): ReducerState => {
+  const { selectedKeys, rawKeys, lastSelectedKey, lastSelectedIndex } = state;
   switch (action.type) {
     case "toggled": {
       const { key, isShiftDown, isCtrlDown } = action;
+      // If CTRL is down (includes Meta) then simply add the keys
       if (isCtrlDown) {
         if (selectedKeys.includes(key)) {
+          const newSelectedKeys: string[] = selectedKeys.filter(k => k !== key);
           return {
             rawKeys,
-            selectedKeys: selectedKeys.filter(k => k !== key),
+            selectedKeys: newSelectedKeys,
+            selectedIndexes: rawKeys
+              .map((k, i) => (newSelectedKeys.includes(k) ? i : undefined))
+              .filter(i => i !== undefined),
+            lastSelectedKey: key,
+            lastSelectedIndex: rawKeys.findIndex(d => d === key),
           };
         } else {
-          return { rawKeys, selectedKeys: [...selectedKeys, key] };
+          const newSelectedKeys = [...selectedKeys, key];
+          return {
+            rawKeys,
+            selectedKeys: newSelectedKeys,
+            selectedIndexes: rawKeys
+              .map((k, i) => (newSelectedKeys.includes(k) ? i : undefined))
+              .filter(i => i !== undefined),
+            lastSelectedKey: key,
+            lastSelectedIndex: rawKeys.findIndex(d => d === key),
+          };
         }
+      } else if (isShiftDown) {
+        let newSelectedKeys: string[] = [];
+        const lastSelectedIndex = rawKeys.indexOf(lastSelectedKey);
+        const thisSelectedIndex = rawKeys.indexOf(key);
+
+        if (lastSelectedKey === undefined) {
+          newSelectedKeys.push(key);
+        } else if (thisSelectedIndex < lastSelectedIndex) {
+          newSelectedKeys = rawKeys.slice(
+            thisSelectedIndex,
+            lastSelectedIndex + 1,
+          );
+        } else {
+          newSelectedKeys = rawKeys.slice(
+            lastSelectedIndex,
+            thisSelectedIndex + 1,
+          );
+        }
+
+        return {
+          rawKeys,
+          selectedKeys: newSelectedKeys,
+          selectedIndexes: rawKeys
+            .map((k, i) => (newSelectedKeys.includes(k) ? i : undefined))
+            .filter(i => i !== undefined),
+          lastSelectedKey: key,
+          lastSelectedIndex: rawKeys.findIndex(d => d === key),
+        };
+      } else {
+        const newSelectedKeys: string[] = selectedKeys.includes(key)
+          ? []
+          : [key];
+        return {
+          rawKeys,
+          selectedKeys: newSelectedKeys,
+          selectedIndexes: rawKeys
+            .map((k, i) => (newSelectedKeys.includes(k) ? i : undefined))
+            .filter(i => i !== undefined),
+          lastSelectedKey: key,
+          lastSelectedIndex: rawKeys.findIndex(d => d === key),
+        };
       }
     }
     case "cleared":
-      return { rawKeys, selectedKeys: [] };
+      return {
+        rawKeys,
+        selectedKeys: [],
+        selectedIndexes: [],
+        lastSelectedKey: undefined,
+        lastSelectedIndex: undefined,
+      };
     case "updateRawKeys":
+      const newSelectedKeys: string[] = selectedKeys.filter(s =>
+        action.rawKeys.includes(s),
+      );
       return {
         rawKeys: action.rawKeys,
-        selectedKeys: selectedKeys.filter(s => action.rawKeys.includes(s)),
+        selectedKeys: newSelectedKeys,
+        selectedIndexes: rawKeys
+          .map((k, i) => (newSelectedKeys.includes(k) ? i : undefined))
+          .filter(i => i !== undefined),
+        lastSelectedKey: action.rawKeys.includes(lastSelectedKey)
+          ? lastSelectedKey
+          : undefined,
+        lastSelectedIndex: action.rawKeys.includes(lastSelectedKey)
+          ? lastSelectedIndex
+          : undefined,
       };
     default:
-      return { selectedKeys, rawKeys };
+      return state;
   }
 };
 
@@ -70,14 +153,20 @@ const useSelectable = <T extends {}>({
   getKey,
 }: InProps<T>): OutProps<T> => {
   const keyIsDown: KeyDownState = useKeyIsDown(keyDownFilters);
-  const [{ selectedKeys }, dispatch] = React.useReducer(reducer, {
+  const [
+    { selectedKeys, lastSelectedKey, lastSelectedIndex, selectedIndexes },
+    dispatch,
+  ] = React.useReducer(reducer, {
     rawKeys: [],
     selectedKeys: [],
+    selectedIndexes: [],
+    lastSelectedKey: undefined,
+    lastSelectedIndex: undefined,
   });
   React.useEffect(() => {
     const rawKeys: string[] = items.map(getKey);
     dispatch({ type: "updateRawKeys", rawKeys });
-  }, [items, dispatch]);
+  }, [items, dispatch, getKey]);
 
   const toggleSelection = React.useCallback(
     (key: string) =>
@@ -96,11 +185,15 @@ const useSelectable = <T extends {}>({
 
   const selectedItems: T[] = React.useMemo(
     () => items.filter(item => selectedKeys.includes(getKey(item))),
-    [selectedKeys, getKey],
+    [selectedKeys, getKey, items],
   );
 
   return {
     selectedItems,
+    selectedIndexes,
+    selectedKeys,
+    lastSelectedKey,
+    lastSelectedIndex,
     toggleSelection,
     clearSelection,
   };

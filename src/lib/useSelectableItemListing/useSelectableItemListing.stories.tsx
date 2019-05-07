@@ -31,7 +31,7 @@ const TestList = () => {
 
   const {
     onKeyDown,
-    selectedItemIndexes,
+    selectedIndexes,
     selectedItem,
     focusIndex,
     toggleSelection,
@@ -61,7 +61,7 @@ const TestList = () => {
             onClick={() => toggleSelection(animal.name)}
             style={{
               borderStyle: focusIndex === i ? "solid" : "none",
-              backgroundColor: selectedItemIndexes.has(i)
+              backgroundColor: selectedIndexes.includes(i)
                 ? "lightblue"
                 : "white",
             }}
@@ -74,7 +74,7 @@ const TestList = () => {
         value={{
           lastAction,
           externalSelectedItem,
-          selectedItemIndexes,
+          selectedIndexes,
           selectedItem,
           focusIndex,
           ...restOfSelectable,
