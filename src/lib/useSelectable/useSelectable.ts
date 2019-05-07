@@ -32,19 +32,23 @@ interface UpdateRawKeys {
   rawKeys: string[];
 }
 
-interface ReducerState {
+type ActionType = SelectionToggled | SelectionCleared | UpdateRawKeys;
+
+interface InnerReducerState {
   selectedKeys: string[];
-  selectedIndexes: number[];
   rawKeys: string[];
   lastSelectedKey: string | undefined;
-  lastSelectedIndex: number | undefined;
 }
 
-const reducer = (
-  state: ReducerState,
-  action: SelectionToggled | SelectionCleared | UpdateRawKeys,
-): ReducerState => {
-  const { selectedKeys, rawKeys, lastSelectedKey, lastSelectedIndex } = state;
+/**
+ * This inner reducer calculates the new values of selected based on keys.
+ * The outer reducer then derives properties based on index within the raw list.
+ */
+const innerReducer = (
+  state: InnerReducerState,
+  action: ActionType,
+): InnerReducerState => {
+  const { selectedKeys, rawKeys, lastSelectedKey } = state;
   switch (action.type) {
     case "toggled": {
       const { key, isShiftDown, isCtrlDown } = action;
@@ -55,25 +59,18 @@ const reducer = (
           return {
             rawKeys,
             selectedKeys: newSelectedKeys,
-            selectedIndexes: rawKeys
-              .map((k, i) => (newSelectedKeys.includes(k) ? i : undefined))
-              .filter(i => i !== undefined),
             lastSelectedKey: key,
-            lastSelectedIndex: rawKeys.findIndex(d => d === key),
           };
         } else {
           const newSelectedKeys = [...selectedKeys, key];
           return {
             rawKeys,
             selectedKeys: newSelectedKeys,
-            selectedIndexes: rawKeys
-              .map((k, i) => (newSelectedKeys.includes(k) ? i : undefined))
-              .filter(i => i !== undefined),
             lastSelectedKey: key,
-            lastSelectedIndex: rawKeys.findIndex(d => d === key),
           };
         }
       } else if (isShiftDown) {
+        // If Shift is held down, try to create a contiguous selection from the last selected item.
         let newSelectedKeys: string[] = [];
         const lastSelectedIndex = rawKeys.indexOf(lastSelectedKey);
         const thisSelectedIndex = rawKeys.indexOf(key);
@@ -95,11 +92,7 @@ const reducer = (
         return {
           rawKeys,
           selectedKeys: newSelectedKeys,
-          selectedIndexes: rawKeys
-            .map((k, i) => (newSelectedKeys.includes(k) ? i : undefined))
-            .filter(i => i !== undefined),
           lastSelectedKey: key,
-          lastSelectedIndex: rawKeys.findIndex(d => d === key),
         };
       } else {
         const newSelectedKeys: string[] = selectedKeys.includes(key)
@@ -108,11 +101,7 @@ const reducer = (
         return {
           rawKeys,
           selectedKeys: newSelectedKeys,
-          selectedIndexes: rawKeys
-            .map((k, i) => (newSelectedKeys.includes(k) ? i : undefined))
-            .filter(i => i !== undefined),
           lastSelectedKey: key,
-          lastSelectedIndex: rawKeys.findIndex(d => d === key),
         };
       }
     }
@@ -120,30 +109,42 @@ const reducer = (
       return {
         rawKeys,
         selectedKeys: [],
-        selectedIndexes: [],
         lastSelectedKey: undefined,
-        lastSelectedIndex: undefined,
       };
     case "updateRawKeys":
-      const newSelectedKeys: string[] = selectedKeys.filter(s =>
-        action.rawKeys.includes(s),
-      );
       return {
         rawKeys: action.rawKeys,
-        selectedKeys: newSelectedKeys,
-        selectedIndexes: rawKeys
-          .map((k, i) => (newSelectedKeys.includes(k) ? i : undefined))
-          .filter(i => i !== undefined),
+        selectedKeys: selectedKeys.filter(s => action.rawKeys.includes(s)),
         lastSelectedKey: action.rawKeys.includes(lastSelectedKey)
           ? lastSelectedKey
-          : undefined,
-        lastSelectedIndex: action.rawKeys.includes(lastSelectedKey)
-          ? lastSelectedIndex
           : undefined,
       };
     default:
       return state;
   }
+};
+
+interface ReducerState extends InnerReducerState {
+  selectedIndexes: number[];
+  lastSelectedIndex: number | undefined;
+}
+
+/**
+ * Using a layered reducer so that I don't have to repeat the calculation of the
+ * properties being added by the outer reducer
+ */
+const reducer = (state: ReducerState, action: ActionType): ReducerState => {
+  const innerState = innerReducer(state, action);
+
+  const { selectedKeys, rawKeys, lastSelectedKey } = innerState;
+
+  return {
+    ...innerState,
+    selectedIndexes: rawKeys
+      .map((k, i) => (selectedKeys.includes(k) ? i : undefined))
+      .filter(i => i !== undefined),
+    lastSelectedIndex: rawKeys.findIndex(d => d === lastSelectedKey),
+  };
 };
 
 const keyDownFilters: string[] = ["Control", "Shift", "Meta"];

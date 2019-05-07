@@ -38,7 +38,7 @@ function useSelectableReactTable<TItem>(
         selectedItems.findIndex(v => getKey(v) === rowId) !== -1;
       const hasFocus = !!focussedItem && getKey(focussedItem) === rowId;
       const hasData = rowId !== undefined;
-      let classNames = ["hoverable"];
+      let classNames = [];
       if (hasData) {
         classNames.push("hoverable");
         if (isSelected) {

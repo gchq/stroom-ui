@@ -123,7 +123,7 @@ const getMenuItems = (
   depth: number = 0,
 ) =>
   menuItems.map(menuItem => {
-    //console.log("Rendering Menu Item");
+    console.log("Rendering Menu Item");
     return (
       <React.Fragment key={menuItem.key}>
         <MenuItem
@@ -335,33 +335,35 @@ const AppChrome: React.FunctionComponent<AppChromeProps> = ({
   const openMenuItems = getOpenMenuItems(menuItems, areMenuItemsOpen);
 
   const keyIsDown = useKeyIsDown();
-  const {
-    onKeyDown,
-    toggleSelection,
-    selectedItems,
-    focussedItem,
-  } = useSelectableItemListing<MenuItemType>({
+  const { onKeyDown, selectedItems, focussedItem } = useSelectableItemListing<
+    MenuItemType
+  >({
     items: openMenuItems,
-    getKey: m => m.key,
-    openItem: m => m.onClick(),
-    enterItem: m => menuItemOpened(m.key, true),
-    goBack: m => {
-      if (m) {
-        if (areMenuItemsOpen[m.key]) {
-          menuItemOpened(m.key, false);
-        } else if (!!m.parentDocRef) {
-          // Can we bubble back up to the parent folder of the current selection?
-          let newSelection = openMenuItems.find(
-            ({ key }: MenuItemType) =>
-              !!m.parentDocRef && key === m.parentDocRef.uuid,
-          );
-          if (!!newSelection) {
-            toggleSelection(newSelection.key);
+    getKey: React.useCallback(m => m.key, []),
+    openItem: React.useCallback(m => m.onClick(), []),
+    enterItem: React.useCallback(m => menuItemOpened(m.key, true), [
+      menuItemOpened,
+    ]),
+    goBack: React.useCallback(
+      m => {
+        if (m) {
+          if (areMenuItemsOpen[m.key]) {
+            menuItemOpened(m.key, false);
+          } else if (!!m.parentDocRef) {
+            // Can we bubble back up to the parent folder of the current selection?
+            // let newSelection = openMenuItems.find(
+            //   ({ key }: MenuItemType) =>
+            //     !!m.parentDocRef && key === m.parentDocRef.uuid,
+            // );
+            // if (!!newSelection) {
+            //   toggleSelection(newSelection.key);
+            // }
+            menuItemOpened(m.parentDocRef.uuid, false);
           }
-          menuItemOpened(m.parentDocRef.uuid, false);
         }
-      }
-    },
+      },
+      [areMenuItemsOpen, menuItemOpened],
+    ),
   });
 
   React.useEffect(() => {

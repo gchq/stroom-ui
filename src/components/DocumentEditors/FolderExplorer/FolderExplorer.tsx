@@ -114,7 +114,7 @@ const FolderExplorer: React.FunctionComponent<SwitchedDocRefEditorProps> = ({
   } = useSelectableItemListing({
     items: folder.node.children || [],
     selectionBehaviour: SelectionBehaviour.MULTIPLE,
-    getKey: d => d.uuid,
+    getKey: React.useCallback(d => d.uuid, []),
     openItem: goToEditDocRef,
     goBack: goBack,
   });

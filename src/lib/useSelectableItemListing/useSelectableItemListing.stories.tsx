@@ -37,8 +37,10 @@ const TestList = () => {
     toggleSelection,
     ...restOfSelectable
   } = useSelectableItemListing({
-    getKey: a => a.name,
-    openItem: a => setLastAction(`Opened Item ${a.name}`),
+    getKey: React.useCallback(a => a.name, []),
+    openItem: React.useCallback(a => setLastAction(`Opened Item ${a.name}`), [
+      setLastAction,
+    ]),
     items: animals,
     selectionBehaviour: SelectionBehaviour.MULTIPLE,
     preFocusWrap,

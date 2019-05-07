@@ -34,7 +34,7 @@ export const useTable = (
 ): UseTable => {
   const selectableTableProps = useSelectableReactTable<StroomUser>(
     {
-      getKey: v => v.uuid,
+      getKey: React.useCallback(v => v.uuid, []),
       items: users,
       selectionBehaviour: SelectionBehaviour.MULTIPLE,
     },

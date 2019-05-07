@@ -27,6 +27,8 @@ const useSelectableItemListing = <TItem extends {}>({
     lastSelectedIndex,
   } = useSelectable<TItem>({ items, getKey });
 
+  console.log("Use Selectable Item Listing");
+
   const enterItemOnKey = React.useCallback(
     (e: React.KeyboardEvent) => {
       if (focussedItem) {
@@ -85,10 +87,13 @@ const useSelectableItemListing = <TItem extends {}>({
     " ": spaceKey,
   });
 
-  const selectedItem: TItem | undefined =
-    selectedItems.length > 0 && !!lastSelectedKey
-      ? items.find(item => getKey(item) === lastSelectedKey)
-      : undefined;
+  const selectedItem: TItem | undefined = React.useMemo(
+    () =>
+      selectedItems.length > 0 && !!lastSelectedKey
+        ? selectedItems.find(item => getKey(item) === lastSelectedKey)
+        : undefined,
+    [selectedItems, lastSelectedKey, getKey],
+  );
 
   return {
     focusIndex,

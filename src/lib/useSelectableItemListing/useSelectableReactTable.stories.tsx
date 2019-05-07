@@ -53,9 +53,6 @@ const TestTable = () => {
     useTextInput,
   } = useForm<NewItemFormValues>({ initialValues: defaultFormValues });
 
-  const [externalSelectedItem, setExternalSelectedItem] = React.useState<
-    Animal | undefined
-  >(undefined);
   const { animals, preFocusWrap, reset, addAnimal } = useTestAnimals();
 
   const speciesProps = useTextInput("species");
@@ -74,7 +71,7 @@ const TestTable = () => {
     Animal
   >(
     {
-      getKey: a => a.uuid,
+      getKey: React.useCallback(a => a.uuid, []),
       items: animals,
       selectionBehaviour: SelectionBehaviour.MULTIPLE,
       preFocusWrap,
@@ -83,11 +80,6 @@ const TestTable = () => {
       columns: COLUMNS,
     },
   );
-
-  React.useEffect(() => setExternalSelectedItem(selectedItem), [
-    selectedItem,
-    setExternalSelectedItem,
-  ]);
 
   return (
     <div className="fill-space" tabIndex={0} onKeyDown={onKeyDown}>
@@ -109,7 +101,7 @@ const TestTable = () => {
         value={{
           species: speciesProps.value,
           name: nameProps.value,
-          externalSelectedItem,
+          selectedItem,
         }}
       />
     </div>

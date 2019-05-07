@@ -66,7 +66,7 @@ let TestDocRefListingEntry: React.FunctionComponent<Props> = ({
   } = useSelectableItemListing<DocRefType>({
     items: docRefs,
     openItem: openDocRef,
-    getKey: d => d.uuid,
+    getKey: React.useCallback(d => d.uuid, []),
     enterItem: enterFolder,
     goBack,
     selectionBehaviour: SelectionBehaviour.MULTIPLE,
