@@ -215,10 +215,10 @@ const ExpressionOperator: React.FunctionComponent<EnhancedProps> = ({
     classNames.push("expression-item--disabled");
   }
 
-  let enabledColour = "grey";
-  if (value.enabled) {
-    enabledColour = "blue";
-  }
+  // let enabledColour = "grey";
+  // if (value.enabled) {
+  //   enabledColour = "blue";
+  // }
 
   const className = classNames.join(" ");
 
@@ -271,7 +271,8 @@ const ExpressionOperator: React.FunctionComponent<EnhancedProps> = ({
                 <Button
                   icon="check"
                   groupPosition="middle"
-                  color={enabledColour}
+                  // color={enabledColour}
+                  disabled={!value.enabled}
                   onClick={onEnabledToggled}
                 />
                 <Button

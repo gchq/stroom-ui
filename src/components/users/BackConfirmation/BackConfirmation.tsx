@@ -18,6 +18,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import * as React from "react";
 import * as ReactModal from "react-modal";
 import Button from "components/Button";
+import { ButtonAppearance } from "components/Button/types";
 
 const BackConfirmation = ({
   isOpen,
@@ -52,7 +53,7 @@ const BackConfirmation = ({
       )}
       <div className="BackConfirmation__actions">
         <Button
-          className="toolbar-button-large primary"
+          appearance={ButtonAppearance.Text}
           type="button"
           onClick={() => onGoBack()}
           icon="trash"
@@ -60,7 +61,7 @@ const BackConfirmation = ({
         />
 
         <Button
-          className="toolbar-button-large primary"
+          appearance={ButtonAppearance.Text}
           type="button"
           disabled={hasErrors}
           onClick={() => onSaveAndGoBack()}
@@ -69,7 +70,7 @@ const BackConfirmation = ({
         />
 
         <Button
-          className="toolbar-button-large primary"
+          appearance={ButtonAppearance.Text}
           type="button"
           onClick={() => onContinueEditing()}
           icon="times"

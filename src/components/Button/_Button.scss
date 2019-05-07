@@ -1,58 +1,282 @@
-$button-margin: 3px;;
+// $button-margin: 3px;
 
-.button {
-  width: 30px;
-  height: 30px;
-  border-radius: 3px;
-  margin-left: $button-margin;
-  margin-right: $button-margin;
-  cursor: pointer;
-}
 
-.button.left {
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
-  margin-left: $button-margin;
-  margin-right: 0;
-}
 
-.button.middle {
-  margin-left: 0;
-  margin-right: 0;
-  border-radius: 0;
-}
 
-.button.right {
-  margin-left: 0;
-  margin-right: $button-margin;
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
-}
 
-.button.circular {
-  border-radius: 25px;
-}
 
-.button.has-text {
-  width: auto;
-  min-width: 5rem;
-}
+// .button {
+//   width: 30px;
+//   height: 30px;
+//   border-radius: 3px;
+//   margin-left: $button-margin;
+//   margin-right: $button-margin;
+//   cursor: pointer;
+// }
 
-// If there's no text then it's an icon button. Icon buttons don't need padding. 
-// In fact, if they do have padding larger icons don't display correctly.
-.button:not(.has-text) {
-  padding: 0 0 0 0;
-}
+// .button.left {
+//   border-top-right-radius: 0;
+//   border-bottom-right-radius: 0;
+//   margin-left: $button-margin;
+//   margin-right: 0;
+// }
 
-.button.selected {
-  // Selected is indicated by a colour and is configured as part of the theme.
-}
+// .button.middle {
+//   margin-left: 0;
+//   margin-right: 0;
+//   border-radius: 0;
+// }
+
+// .button.right {
+//   margin-left: 0;
+//   margin-right: $button-margin;
+//   border-top-left-radius: 0;
+//   border-bottom-left-radius: 0;
+// }
+
+// .button.circular {
+//   width: 30px;
+//   height: 30px;
+//   border-radius: 3px;
+//   margin-left: $button-margin;
+//   margin-right: $button-margin;
+//   border: none;
+//   cursor: pointer;
+//   border-radius: 25px;
+// }
+
+// .button.has-text {
+//   width: auto;
+//   min-width: 5rem;
+// }
+
+// // If there's no text then it's an icon button. Icon buttons don't need padding. 
+// // In fact, if they do have padding larger icons don't display correctly.
+// .button:not(.has-text) {
+//   padding: 0 0 0 0;
+// }
+
+// .button.selected {
+//   // Selected is indicated by a colour and is configured as part of the theme.
+// }
 
 .button__margin {
   margin: 0.2rem;
 }
 
 .button__text {
-  font-size: 10pt;
+  // font-size: 10pt;
   vertical-align: middle;
 }
+
+
+
+
+
+
+
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+// Base for all buttons
+////////////////////////////////////////////////////////////////////////////////
+.button__base { // .jr0u89w
+  color: inherit;
+  border: 0;
+  margin: 0;
+  cursor: pointer;
+  display: inline-flex;
+  outline: none;
+  padding: 0;
+  margin: 0px 3px;
+  position: relative;
+  align-items: center;
+  user-select: none;
+  border-radius: 0;
+  vertical-align: middle;
+  justify-content: center;
+  -moz-appearance: none;
+  text-decoration: none;
+  background-color: transparent;
+  -webkit-appearance: none;
+  -webkit-tap-highlight-color: transparent;
+
+  margin: 0.2rem;
+}
+
+.button__base.disabled { // .jr0u89w.j1p4cocs
+  cursor: default;
+  pointer-events: none;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// General button styles
+////////////////////////////////////////////////////////////////////////////////
+.button { // .j9la4jl
+  color: rgba(0, 0, 0, 0.87);
+  padding: 6px 16px;
+  font-size: 0.875rem;
+  min-width: 64px;
+  box-sizing: border-box;
+  transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  line-height: 1.75;
+  // font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-weight: 500;
+  border-radius: 4px;
+  letter-spacing: 0.02857em;
+  text-transform: uppercase;
+
+  font-size: 0.7rem;
+}
+
+.button:hover { // .j9la4jl:hover
+  text-decoration: none;
+  background-color: rgba(0, 0, 0, 0.08);
+}
+
+.button.disabled { // .j9la4jl.j1p4cocs {
+  color: rgba(0, 0, 0, 0.26);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// Contained buttons
+////////////////////////////////////////////////////////////////////////////////
+.button__contained { // .jpyw0mp
+  color: rgba(0, 0, 0, 0.87);
+  box-shadow: 0px 1px 5px 0px rgba(0,0,0,0.2), 0px 2px 2px 0px rgba(0,0,0,0.14), 0px 3px 1px -2px rgba(0,0,0,0.12);
+  background-color: #e0e0e0;
+}
+
+.button__contained:hover { // .jpyw0mp:hover
+  background-color: #d5d5d5;
+}
+
+.button__contained:active { // .jpyw0mp:active
+  box-shadow: 0px 5px 5px -3px rgba(0,0,0,0.2), 0px 8px 10px 1px rgba(0,0,0,0.14), 0px 3px 14px 2px rgba(0,0,0,0.12);
+}
+
+.button__contained__primary { // .j1xs0a6r
+  color: #fff;
+  background-color: #2196f3;
+}
+
+.button__contained__primary:hover { // .j1xs0a6r:hover
+  background-color: #1976d2;
+}
+
+.button__contained__secondary { // .j1qgefk9
+  color: #fff;
+  background-color: rgb(225, 0, 80);
+}
+
+.button__contained__secondary:hover { // .j1qgefk9:hover
+  background-color: rgb(157, 0, 56);
+}
+
+.button__contained.disabled { // .jpyw0mp.j1p4cocs
+  color: rgba(0, 0, 0, 0.26);
+  box-shadow: none;
+  background-color: rgba(0, 0, 0, 0.12);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// Text only buttons
+////////////////////////////////////////////////////////////////////////////////
+.button__text-only { // .j1hrif9t
+  padding: 6px 8px;
+}
+
+.button__text-only__primary { // .j14bbh75
+  color: #2196f3;
+}
+
+.button__text-only__primary:hover { // .j14bbh75:hover
+  background-color: rgba(33, 150, 243, 0.08);
+}
+
+.button__text-only__secondary { // .j1y9307j
+  color: rgb(225, 0, 80);
+}
+
+.button__text-only__secondary:hover { // .j1y9307j:hover
+  background-color: rgba(225, 0, 80, 0.08);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// Outlined buttons
+////////////////////////////////////////////////////////////////////////////////
+.button__outlined { // .j5jkmku
+  border: 1px solid rgba(0, 0, 0, 0.23);
+  padding: 5px 16px;
+}
+
+.button__outlined__primary { // .j9ze19u
+  color: #2196f3;
+  border: 1px solid rgba(33, 150, 243, 0.5);
+}
+
+.button__outlined__primary:hover { // .j9ze19u:hover
+  border: 1px solid #2196f3;
+  background-color: rgba(33, 150, 243, 0.08);
+}
+
+.button__outlined__secondary { // .j1xxvqug
+  color: rgb(225, 0, 80);
+  border: 1px solid rgba(225, 0, 80, 0.5);
+}
+
+.button__outlined__secondary:hover { // .j1xxvqug:hover
+  border: 1px solid rgb(225, 0, 80);
+  background-color: rgba(225, 0, 80, 0.08);
+}
+
+.button__outlined.disabled { // .j5jkmku.j1p4cocs
+  border: 1px solid rgba(0, 0, 0, 0.26);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// Icon buttons
+////////////////////////////////////////////////////////////////////////////////
+.button__icon { // .j1g2vga5
+  flex: 0 0 auto;
+  color: rgba(0, 0, 0, 0.54);
+  padding: 12px;
+  overflow: visible;
+  font-size: 1.5rem;
+  text-align: center;
+  transition: background-color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  border-radius: 50%;
+
+  // Added
+  min-width: 1.81rem;
+  min-height: 1.81rem;
+  font-size: 0.7rem;
+  padding: 0.4rem;
+}
+
+.button__icon:hover { // .j1g2vga5:hover
+  background-color: rgba(0, 0, 0, 0.08);
+}
+
+.button__icon__primary { // j1q4g7ue
+  color: rgb(225, 0, 80);
+}
+
+.button__icon__primary:hover { // .j1q4g7ue:hover
+  background-color: rgba(225, 0, 80, 0.08);
+}
+
+.button__icon__secondary { // .j42ua74
+  color: #2196f3;
+}
+
+.button__icon__secondary:hover { // .j42ua74:hover
+  background-color: rgba(33, 150, 243, 0.08);
+}
+
+.button__icon.disabled { // .j1g2vga5.j1p4cocs
+  color: rgba(0, 0, 0, 0.26);
+}
+

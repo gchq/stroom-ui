@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import * as React from "react";
 import * as CopyToClipboard from "react-copy-to-clipboard";
 import Toggle from "react-toggle";
@@ -25,6 +24,7 @@ import Button from "components/Button";
 import Loader from "components/Loader";
 import useIdFromPath from "lib/useIdFromPath";
 import useTokens from "./useTokens";
+import { ButtonAppearance } from "components/Button/types";
 
 const EditToken = () => {
   const { toggleEnabledState, fetchApiKey, token } = useTokens();
@@ -40,12 +40,12 @@ const EditToken = () => {
   return (
     <form>
       <div className="header">
-        <button
-          className="primary toolbar-button-small"
+        <Button
+          appearance={ButtonAppearance.Text}
+          icon="arrow-left"
+          text="Back"
           onClick={() => goToApiKeys()}
-        >
-          <FontAwesomeIcon icon="arrow-left" /> Back
-        </button>
+        />
       </div>
       {token === undefined ? (
         <div className="loader-container">

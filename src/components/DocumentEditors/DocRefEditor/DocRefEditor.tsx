@@ -13,7 +13,7 @@ import Button from "../../Button";
 import { useDocumentTree } from "components/DocumentEditors/api/explorer";
 import useAppNavigation from "../../AppChrome/useAppNavigation";
 import { DocumentApi } from "components/DocumentEditors/useDocumentApi/types/documentApi";
-import { ButtonProps } from "components/Button/types";
+import { ButtonProps, ButtonAppearance } from "components/Button/types";
 
 const DocRefEditor = <T extends {}>({
   onClickSave,
@@ -34,15 +34,19 @@ const DocRefEditor = <T extends {}>({
     [goToAuthorisationsForDocument, docRefUuid],
   );
 
-  const actionBarItems: ButtonProps[] = [];
+  let actionBarItems: ButtonProps[] = [];
   if (!!onClickSave) {
     actionBarItems.push({
       icon: "save",
+      text: "Save",
       disabled: !isDirty,
       title: isDirty ? "Save" : "Saved",
       onClick: onClickSave,
     });
   }
+
+  actionBarItems = actionBarItems.concat(additionalActionBarItems || []);
+
   actionBarItems.push({
     icon: "key",
     text: "Permissions",
@@ -58,18 +62,20 @@ const DocRefEditor = <T extends {}>({
           text={docRef.name || "no name"}
         />
         <div className="page__buttons">
-          {actionBarItems
-            .concat(additionalActionBarItems || [])
-            .map((actionBarItem, i) => (
-              <Button key={i} circular {...actionBarItem} />
-            ))}
+          {actionBarItems.map((actionBarItem, i) => (
+            <Button
+              key={i}
+              appearance={ButtonAppearance.Text}
+              {...actionBarItem}
+            />
+          ))}
         </div>
-      </div>
-      <div className="page__breadcrumb">
-        <DocRefBreadcrumb
-          docRefUuid={docRef.uuid}
-          openDocRef={goToEditDocRef}
-        />
+        <div className="page__breadcrumb">
+          <DocRefBreadcrumb
+            docRefUuid={docRef.uuid}
+            openDocRef={goToEditDocRef}
+          />
+        </div>
       </div>
       <div className="page__search">
         <AppSearchBar

@@ -3,6 +3,7 @@ import * as React from "react";
 import Button from "../../Button";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { SearchMode } from "./types";
+import { ButtonAppearance } from "components/Button/types";
 
 interface Props {
   searchMode: SearchMode;
@@ -43,7 +44,7 @@ const ModeOptionButtons: React.FunctionComponent<Props> = ({ switchMode }) => (
       <Button
         key={modeOption.mode}
         icon={modeOption.icon}
-        className="circular"
+        appearance={ButtonAppearance.Icon}
         groupPosition={modeOption.position}
         onClick={e => {
           switchMode(modeOption.mode);

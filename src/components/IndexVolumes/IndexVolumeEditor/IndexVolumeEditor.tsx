@@ -16,6 +16,7 @@ import ThemedConfirm, {
   useDialog as useConfirmDialog,
 } from "components/ThemedConfirm";
 import Loader from "components/Loader";
+import { ButtonAppearance } from "components/Button/types";
 
 interface Props {
   volumeId: string;
@@ -71,9 +72,18 @@ const IndexVolumeEditor: React.FunctionComponent<Props> = ({ volumeId }) => {
     <div>
       <IconHeader icon="database" text={`Index Volume - ${indexVolume.id}`} />
 
-      <Button text="Back" onClick={history.goBack} />
-      <Button text="Add to Group" onClick={showIndexVolumeGroupPicker} />
       <Button
+        appearance={ButtonAppearance.Text}
+        text="Back"
+        onClick={history.goBack}
+      />
+      <Button
+        appearance={ButtonAppearance.Text}
+        text="Add to Group"
+        onClick={showIndexVolumeGroupPicker}
+      />
+      <Button
+        appearance={ButtonAppearance.Text}
         text="Remove From Group(s)"
         disabled={selectedItems.length === 0}
         onClick={showRemoveDialog}

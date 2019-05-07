@@ -24,6 +24,7 @@ import useAppNavigation from "./useAppNavigation";
 import { WithChromeContext } from "lib/useRouter/BrowserRouter";
 import Button from "components/Button";
 import useRouter from "lib/useRouter";
+import { ButtonAppearance } from "components/Button/types";
 
 const storiesWithChrome = storiesOf("App Chrome/With Chrome", module);
 addThemedStories(storiesWithChrome, () => <Routes />);
@@ -54,15 +55,22 @@ const TestHarness: React.FunctionComponent = () => {
       <div style={{ backgroundColor: "lightblue", padding: "0.7rem" }}>
         <h4>Test Navigation {location.pathname}</h4>
         <Button
+          appearance={ButtonAppearance.Text}
           onClick={goToAuthorisationUsers}
           text="Go To Authorisation for Users"
         />
         <Button
+          appearance={ButtonAppearance.Text}
           onClick={goToAuthorisationGroups}
           text="Go To Authorisation for Groups"
         />
-        <Button onClick={goToIndexVolumes} text="Go To Index Volumes" />
         <Button
+          appearance={ButtonAppearance.Text}
+          onClick={goToIndexVolumes}
+          text="Go To Index Volumes"
+        />
+        <Button
+          appearance={ButtonAppearance.Text}
           onClick={goToIndexVolumeGroups}
           text="Go To Index Volume Groups"
         />

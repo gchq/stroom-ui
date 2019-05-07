@@ -26,18 +26,29 @@
 //   margin: 0px !important;
 // }
 
+// .DocRefEditor__search div {
+//   margin: 0px;
+//   padding: 0px;
+// }
+
 .DocRefEditor__search__value-container {
   padding: 0px 8px !important;
 }
 
 .DocRefEditor__search__control {
   border-radius: 100px !important;
+  min-height: 0 !important;
 }
 
-.DocRefEditor__search__placeholder + div {
+.DocRefEditor__search__value-container div {
   margin: 0px;
   padding: 0px;
 }
+
+// .DocRefEditor__search__placeholder + div {
+//   margin: 0px;
+//   padding: 0px;
+// }
 
 // .DocRefEditor__search__control:hover{
 //   border: 1px solid #0277bd !important;

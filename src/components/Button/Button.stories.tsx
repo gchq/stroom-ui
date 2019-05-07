@@ -19,6 +19,7 @@ import { storiesOf } from "@storybook/react";
 
 import { addThemedStories } from "testing/storybook/themedStoryGenerator";
 import Button from "./Button";
+import { ButtonAppearance } from "./types";
 
 const stories = storiesOf("General Purpose/Button", module);
 
@@ -72,21 +73,40 @@ stories.add("just text", () => (
 stories.add("just icon", () => <Button className="raised-low" icon="trash" />);
 
 stories.add("circular icon", () => (
-  <Button className="raised-low" circular icon="trash" />
+  <Button
+    className="raised-low"
+    appearance={ButtonAppearance.Icon}
+    icon="trash"
+  />
 ));
 
 stories.add("circular icon and text - should be weird", () => (
-  <Button className="raised-low" circular icon="trash" text="Madness" />
+  <Button
+    className="raised-low"
+    appearance={ButtonAppearance.Icon}
+    icon="trash"
+    text="Madness"
+  />
 ));
 
 stories.add("selected - icon and text", () => (
-  <Button className="raised-low" selected icon="angle-up" text="Button text" />
+  <Button
+    className="raised-low"
+    appearance={ButtonAppearance.Icon}
+    icon="angle-up"
+    text="Button text"
+  />
 ));
 
 stories.add("disabled", () => (
   <div>
     <Button className="raised-low" disabled icon="trash" />
-    <Button className="raised-low" disabled circular icon="trash" />
+    <Button
+      className="raised-low"
+      appearance={ButtonAppearance.Icon}
+      disabled
+      icon="trash"
+    />
     <Button className="raised-low" disabled text="Button text" />
     <Button
       className="raised-low"
@@ -104,7 +124,11 @@ stories.add("many buttons", () => (
     <Button className="raised-low" text="Button 2" groupPosition="middle" />
     <Button className="raised-low" text="Button 3" groupPosition="right" />
 
-    <Button className="raised-low" circular icon="trash" />
+    <Button
+      className="raised-low"
+      appearance={ButtonAppearance.Icon}
+      icon="trash"
+    />
 
     <Button
       className="raised-low"

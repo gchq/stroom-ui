@@ -16,6 +16,7 @@
 
 import * as React from "react";
 import Button from "components/Button";
+import { ButtonAppearance } from "components/Button/types";
 
 const ConfirmPasswordResetEmail: React.FunctionComponent<{
   onBack: Function;
@@ -29,7 +30,7 @@ const ConfirmPasswordResetEmail: React.FunctionComponent<{
     </p>
     <div className="footer">
       <Button
-        className="toolbar-button-medium primary"
+        appearance={ButtonAppearance.Text}
         onClick={() => onBack()}
         text="Back to Stroom"
       />

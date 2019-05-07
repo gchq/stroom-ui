@@ -28,6 +28,7 @@ import Button from "components/Button";
 import { User } from "../types";
 import useColumns from "./useColumns";
 import IconHeader from "components/IconHeader";
+import { ButtonAppearance } from "components/Button/types";
 
 interface UserSearchProps {
   onNewUserClicked: () => void;
@@ -71,19 +72,20 @@ const UserSearch: React.FunctionComponent<UserSearchProps> = ({
         <IconHeader icon="users" text={`Users`} />
         <div className="page__buttons">
           <Button
-            className="toolbar-button-small primary"
+            appearance={ButtonAppearance.Text}
             onClick={() => onNewUserClicked()}
             icon="plus"
             text="Create"
           />
           <Button
-            className="toolbar-button-small primary"
+            appearance={ButtonAppearance.Text}
             disabled={!selectedUser}
             onClick={() => onUserOpen(selectedUser)}
             icon="edit"
             text="View/edit"
           />
           <Button
+            appearance={ButtonAppearance.Text}
             disabled={!selectedUser}
             onClick={() => {
               if (!!selectedUser) {
@@ -91,7 +93,6 @@ const UserSearch: React.FunctionComponent<UserSearchProps> = ({
                 // remove(selectedUser);
               }
             }}
-            className="toolbar-button-small primary"
             icon="trash"
             text="Delete"
           />

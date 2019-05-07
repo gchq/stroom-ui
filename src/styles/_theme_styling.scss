@@ -136,19 +136,19 @@ input {
   }
 }
 
-.button {
-  @include themify($themes) {
-    background-color: themed("background__color");
-    color: themed("text__color");
-  }
-}
+// .button {
+//   @include themify($themes) {
+//     background-color: themed("background__color");
+//     color: themed("text__color");
+//   }
+// }
 
-.button.positive {
-  @include themify($themes) {
-    background-color: themed("selected-color");
-    color: themed("text__color");
-  }
-}
+// .button.positive {
+//   @include themify($themes) {
+//     background-color: themed("selected-color");
+//     color: themed("text__color");
+//   }
+// }
 
 .hoverable:hover {
   @include themify($themes) {
@@ -249,41 +249,41 @@ input {
   }
 }
 
-.button {
-  @include themify($themes) {
-    border: themed("icon-button__border");
-    background-color: themed("icon-button__background-color");
-    color: themed("icon-button__color");
-  }
-}
+// .button {
+//   @include themify($themes) {
+//     border: themed("icon-button__border");
+//     background-color: themed("icon-button__background-color");
+//     color: themed("icon-button__color");
+//   }
+// }
 
-.button.selected {
-  @include themify($themes) {
-    background-color: themed("selected-color");
-  }
-}
+// .button.selected {
+//   @include themify($themes) {
+//     background-color: themed("selected-color");
+//   }
+// }
 
-.button:hover:enabled,
-.button:focus:enabled {
-  @include themify($themes) {
-    color: themed("icon-button__color--hover");
-    background-color: themed("icon-button__background-color--hover");
-  }
-}
+// .button:hover:enabled,
+// .button:focus:enabled {
+//   @include themify($themes) {
+//     color: themed("icon-button__color--hover");
+//     background-color: themed("icon-button__background-color--hover");
+//   }
+// }
 
-.button.raised-high:hover:enabled,
-.button.raised-high:focus:enabled {
-  @include themify($themes) {
-    color: themed("text__color--deemphasised");
-    background-color: themed("raised-high__selected-background-color");
-  }
-}
+// .button.raised-high:hover:enabled,
+// .button.raised-high:focus:enabled {
+//   @include themify($themes) {
+//     color: themed("text__color--deemphasised");
+//     background-color: themed("raised-high__selected-background-color");
+//   }
+// }
 
-.button:disabled,
-.button[disabled] {
-  background-color: #cccccc;
-  color: #666666;
-}
+// .button:disabled,
+// .button[disabled] {
+//   background-color: #cccccc;
+//   color: #666666;
+// }
 
 /////////////////////
 // Specific styles //

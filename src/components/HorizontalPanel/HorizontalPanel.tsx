@@ -2,6 +2,7 @@ import * as React from "react";
 import * as Mousetrap from "mousetrap";
 
 import Button from "../Button";
+import { ButtonAppearance } from "components/Button/types";
 
 interface Props {
   title: React.ReactNode;
@@ -31,7 +32,11 @@ const HorizontalPanel: React.FunctionComponent<Props> = ({
       <div className="horizontal-panel__header flat">
         <div className="horizontal-panel__header__title">{title}</div>
         {headerMenuItems}
-        <Button icon="times" onClick={() => onClose()} />
+        <Button
+          appearance={ButtonAppearance.Icon}
+          icon="times"
+          onClick={() => onClose()}
+        />
       </div>
       <div className="horizontal-panel__content">{content}</div>
     </div>

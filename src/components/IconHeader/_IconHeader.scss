@@ -1,16 +1,17 @@
 .icon-header {
   display: inline-flex;
-  padding: .36rem;
-  padding-bottom: 0PX;
-  align-items: center;
+  // padding: .36rem;
+  // padding-bottom: 0px;
+  //align-items: center;
   // height: 2.7rem;
   font-size: large;
   font-weight: bold;
   flex-grow: 1;
+  align-self: flex-start;
 }
 
 .icon-header__icon {
-  // padding-right: .3rem;
+  padding-top: .25rem;
 }
 
 .icon-header__text {
