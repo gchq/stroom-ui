@@ -6,11 +6,14 @@ interface KeyHandlersByKey {
 }
 
 const useOnKeyDown = (handlers: KeyHandlersByKey): KeyboardEventHandler => {
-  return (e: React.KeyboardEvent) => {
-    const handler = handlers[e.key];
+  return React.useCallback(
+    (e: React.KeyboardEvent) => {
+      const handler = handlers[e.key];
 
-    if (!!handler) handler(e);
-  };
+      if (!!handler) handler(e);
+    },
+    [handlers],
+  );
 };
 
 export default useOnKeyDown;

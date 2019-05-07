@@ -1,6 +1,5 @@
 import { TableProps } from "react-table";
 
-import { KeyDownState } from "../useKeyIsDown";
 import { SelectionBehaviour } from "./enums";
 
 export interface InProps<TItem> {
@@ -22,14 +21,13 @@ export interface InProps<TItem> {
 export interface OutProps<TItem> {
   focusIndex: number;
   focussedItem?: any;
+  selectedIndexes: number[];
   lastSelectedIndex?: number;
   selectedItem?: TItem;
   selectedItems: TItem[];
-  selectedItemIndexes: Set<number>;
   toggleSelection: (itemKey: string) => void;
   clearSelection: () => void;
   onKeyDown: React.KeyboardEventHandler<HTMLDivElement>;
-  keyIsDown: KeyDownState;
 }
 
 export interface TableOutProps<TItem> extends OutProps<TItem> {

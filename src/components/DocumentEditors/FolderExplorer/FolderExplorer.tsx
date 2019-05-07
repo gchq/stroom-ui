@@ -41,6 +41,7 @@ import { useDocRefInfoDialog } from "../../DocRefInfoModal/DocRefInfoModal";
 import { useDocumentTree } from "components/DocumentEditors/api/explorer";
 import useAppNavigation from "../../AppChrome/useAppNavigation";
 import { ButtonProps } from "components/Button/types";
+import useKeyIsDown from "lib/useKeyIsDown";
 
 const FolderExplorer: React.FunctionComponent<SwitchedDocRefEditorProps> = ({
   docRefUuid,
@@ -110,14 +111,14 @@ const FolderExplorer: React.FunctionComponent<SwitchedDocRefEditorProps> = ({
     onKeyDown,
     selectedItems: selectedDocRefs,
     toggleSelection,
-    keyIsDown,
   } = useSelectableItemListing({
     items: folder.node.children || [],
     selectionBehaviour: SelectionBehaviour.MULTIPLE,
-    getKey: d => d.uuid,
+    getKey: React.useCallback(d => d.uuid, []),
     openItem: goToEditDocRef,
     goBack: goBack,
   });
+  const keyIsDown = useKeyIsDown();
 
   const onClickCreate = React.useCallback(() => {
     if (!!folder) {

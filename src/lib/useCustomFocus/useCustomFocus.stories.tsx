@@ -19,22 +19,53 @@ interface Props {
   initialItems: string[];
 }
 
-const TestHarness: React.FunctionComponent<Props> = ({ initialItems }) => {
-  const { items, itemAtIndexRemoved } = useListReducer(d => d, initialItems);
+interface ItemWithClick<T> {
+  item: T;
+  onClick: () => void;
+}
 
-  const { down, up, clear, focusIndex, focussedItem } = useCustomFocus({
+const TestHarness: React.FunctionComponent<Props> = ({ initialItems }) => {
+  const { items, itemAtIndexRemoved, itemAdded } = useListReducer(
+    d => d,
+    initialItems,
+  );
+
+  const preFocusWrap = React.useCallback(() => {
+    if (items.length < 9) {
+      itemAdded(generateItem());
+      return false;
+    } else {
+      return true;
+    }
+  }, [items, itemAdded]);
+
+  const { set, down, up, clear, focusIndex, focussedItem } = useCustomFocus({
     items,
+    preFocusWrap,
   });
 
   const removeFirstItem = React.useCallback(() => itemAtIndexRemoved(0), [
     itemAtIndexRemoved,
   ]);
 
+  const itemsWithClick: ItemWithClick<string>[] = React.useMemo(
+    () =>
+      items.map((item, i) => ({
+        item,
+        onClick: () => set(i),
+      })),
+    [items, set],
+  );
+
   return (
     <div>
       <h1>Custom Focus Test</h1>
-      {items.map((item, i) => (
-        <div key={i} style={i === focusIndex ? focusStyle : {}}>
+      {itemsWithClick.map(({ item, onClick }, i) => (
+        <div
+          key={i}
+          onClick={onClick}
+          style={i === focusIndex ? focusStyle : {}}
+        >
           {item}
         </div>
       ))}

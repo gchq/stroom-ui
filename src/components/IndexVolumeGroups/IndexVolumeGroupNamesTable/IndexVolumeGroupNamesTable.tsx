@@ -40,7 +40,7 @@ interface UseTable {
 export const useTable = (groupNames: string[]): UseTable => {
   const selectableTableProps = useSelectableReactTable<string>(
     {
-      getKey: v => v,
+      getKey: React.useCallback(v => v, []),
       items: groupNames,
       selectionBehaviour: SelectionBehaviour.MULTIPLE,
     },

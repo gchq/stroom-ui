@@ -50,7 +50,7 @@ export const useTable = (
 ): UseTable => {
   const selectableTableProps = useSelectableReactTable<IndexVolume>(
     {
-      getKey: v => v.id,
+      getKey: React.useCallback(v => v.id, []),
       items: indexVolumes,
       selectionBehaviour: SelectionBehaviour.MULTIPLE,
     },

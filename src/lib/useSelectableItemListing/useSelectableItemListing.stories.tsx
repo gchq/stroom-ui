@@ -31,14 +31,16 @@ const TestList = () => {
 
   const {
     onKeyDown,
-    selectedItemIndexes,
+    selectedIndexes,
     selectedItem,
     focusIndex,
     toggleSelection,
     ...restOfSelectable
   } = useSelectableItemListing({
-    getKey: a => a.name,
-    openItem: a => setLastAction(`Opened Item ${a.name}`),
+    getKey: React.useCallback(a => a.name, []),
+    openItem: React.useCallback(a => setLastAction(`Opened Item ${a.name}`), [
+      setLastAction,
+    ]),
     items: animals,
     selectionBehaviour: SelectionBehaviour.MULTIPLE,
     preFocusWrap,
@@ -61,7 +63,7 @@ const TestList = () => {
             onClick={() => toggleSelection(animal.name)}
             style={{
               borderStyle: focusIndex === i ? "solid" : "none",
-              backgroundColor: selectedItemIndexes.has(i)
+              backgroundColor: selectedIndexes.includes(i)
                 ? "lightblue"
                 : "white",
             }}
@@ -74,7 +76,7 @@ const TestList = () => {
         value={{
           lastAction,
           externalSelectedItem,
-          selectedItemIndexes,
+          selectedIndexes,
           selectedItem,
           focusIndex,
           ...restOfSelectable,
