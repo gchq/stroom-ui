@@ -3,27 +3,43 @@ import { KeyDownState } from "./types";
 
 export const DEFAULT_FILTERS = ["Control", "Shift", "Alt", "Meta"];
 
+interface KeyAction {
+  isDown: boolean;
+  key: string;
+}
+
+const reducer = (
+  state: KeyDownState,
+  { key, isDown }: KeyAction,
+): KeyDownState => {
+  return {
+    ...state,
+    [key]: isDown,
+  };
+};
+
 const useKeyIsDown = function(
   filters: string[] = DEFAULT_FILTERS,
 ): KeyDownState {
-  const [keysDown, setKeysDown] = React.useState<KeyDownState>(
+  const [keysDown, dispatch] = React.useReducer(
+    reducer,
     filters.reduce((acc, c) => ({ ...acc, [c]: false }), {}),
   );
 
   React.useEffect(() => {
     const onkeydown = (e: KeyboardEvent) => {
-      if (filters.indexOf(e.key) !== -1) {
-        setKeysDown({ ...keysDown, [e.key]: true });
-        e.preventDefault();
+      if (filters.includes(e.key)) {
+        dispatch({ key: e.key, isDown: true });
       }
+      e.preventDefault();
     };
     document.addEventListener("keydown", onkeydown);
 
     const onkeyup = (e: KeyboardEvent) => {
-      if (filters.indexOf(e.key) !== -1) {
-        setKeysDown({ ...keysDown, [e.key]: false });
-        e.preventDefault();
+      if (filters.includes(e.key)) {
+        dispatch({ key: e.key, isDown: false });
       }
+      e.preventDefault();
     };
     document.addEventListener("keyup", onkeyup);
 
@@ -31,7 +47,7 @@ const useKeyIsDown = function(
       document.removeEventListener("keydown", onkeydown);
       document.removeEventListener("keyup", onkeyup);
     };
-  }, [filters, keysDown]); // empty array prevents this code re-running for state changes
+  }, [filters, dispatch]); // empty array prevents this code re-running for state changes
 
   return keysDown;
 };

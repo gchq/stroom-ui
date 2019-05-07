@@ -7,6 +7,7 @@ interface InProps<T extends {}> {
 interface OutProps<T extends {}> {
   focusIndex: number;
   focussedItem: T | undefined;
+  set: (index: number) => void;
   up: () => void;
   down: () => void;
   clear: () => void;
@@ -19,6 +20,10 @@ interface ReducerState {
 
 const NO_FOCUS = -1;
 
+interface SetFocus {
+  type: "set";
+  index: number;
+}
 interface ChangeFocus {
   type: "up" | "down" | "clear";
 }
@@ -29,9 +34,14 @@ interface SetItemsLength {
 
 const reducer = (
   { focusIndex, itemsLength }: ReducerState,
-  action: ChangeFocus | SetItemsLength,
+  action: SetFocus | ChangeFocus | SetItemsLength,
 ): ReducerState => {
   switch (action.type) {
+    case "set":
+      return {
+        itemsLength,
+        focusIndex: action.index,
+      };
     case "up":
       return {
         itemsLength,
@@ -73,6 +83,10 @@ const useCustomFocus = <T extends {}>({ items }: InProps<T>): OutProps<T> => {
     }
   }, [focusIndex, items]);
 
+  const set = React.useCallback(
+    (index: number) => dispatch({ type: "set", index }),
+    [dispatch],
+  );
   const up = React.useCallback(() => dispatch({ type: "up" }), [dispatch]);
   const down = React.useCallback(() => dispatch({ type: "down" }), [dispatch]);
   const clear = React.useCallback(() => dispatch({ type: "clear" }), [
@@ -82,6 +96,7 @@ const useCustomFocus = <T extends {}>({ items }: InProps<T>): OutProps<T> => {
   return {
     focusIndex,
     focussedItem,
+    set,
     up,
     down,
     clear,

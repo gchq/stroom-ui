@@ -19,10 +19,15 @@ interface Props {
   initialItems: string[];
 }
 
+interface ItemWithClick<T> {
+  item: T;
+  onClick: () => void;
+}
+
 const TestHarness: React.FunctionComponent<Props> = ({ initialItems }) => {
   const { items, itemAtIndexRemoved } = useListReducer(d => d, initialItems);
 
-  const { down, up, clear, focusIndex, focussedItem } = useCustomFocus({
+  const { set, down, up, clear, focusIndex, focussedItem } = useCustomFocus({
     items,
   });
 
@@ -30,11 +35,24 @@ const TestHarness: React.FunctionComponent<Props> = ({ initialItems }) => {
     itemAtIndexRemoved,
   ]);
 
+  const itemsWithClick: ItemWithClick<string>[] = React.useMemo(
+    () =>
+      items.map((item, i) => ({
+        item,
+        onClick: () => set(i),
+      })),
+    [items, set],
+  );
+
   return (
     <div>
       <h1>Custom Focus Test</h1>
-      {items.map((item, i) => (
-        <div key={i} style={i === focusIndex ? focusStyle : {}}>
+      {itemsWithClick.map(({ item, onClick }, i) => (
+        <div
+          key={i}
+          onClick={onClick}
+          style={i === focusIndex ? focusStyle : {}}
+        >
           {item}
         </div>
       ))}

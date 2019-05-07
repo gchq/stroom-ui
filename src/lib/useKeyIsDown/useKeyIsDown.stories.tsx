@@ -20,34 +20,35 @@ import useKeyIsDown, { DEFAULT_FILTERS } from "./useKeyIsDown";
 
 import { KeyDownState } from "./types";
 
-const TestHarness: React.FunctionComponent = () => {
-  const keyIsDown1: KeyDownState = useKeyIsDown();
-  const filters2: string[] = ["Control", "Alt"];
-  const keyIsDown2: KeyDownState = useKeyIsDown(filters2);
+interface Props {
+  filters?: string[];
+}
+
+const TestHarness: React.FunctionComponent<Props> = ({ filters }) => {
+  const keyIsDown: KeyDownState = useKeyIsDown(filters);
   return (
     <div>
-      <h3>Test Keys Down/Up (instance 1)</h3>
+      <h3>Test Keys Down/Up</h3>
 
       <form>
-        {DEFAULT_FILTERS.map(f => (
-          <div key={f}>
-            <label>{f}</label>
-            <input type="checkbox" readOnly checked={keyIsDown1[f]} />
-          </div>
-        ))}
-      </form>
-
-      <h3>Test Keys Down/Up (instance 2)</h3>
-      <form>
-        {filters2.map(f => (
-          <div key={f}>
-            <label>{f}</label>
-            <input type="checkbox" readOnly checked={keyIsDown2[f]} />
-          </div>
-        ))}
+        {Object.entries(keyIsDown)
+          .map(k => ({ key: k[0], isDown: k[1] }))
+          .map(({ key, isDown }) => (
+            <div key={key}>
+              <label>{key}</label>
+              <input type="checkbox" readOnly checked={isDown} />
+            </div>
+          ))}
       </form>
     </div>
   );
 };
 
-storiesOf("lib/useKeyIsDown", module).add("test", () => <TestHarness />);
+storiesOf("lib/useKeyIsDown", module)
+  .add("default", () => <TestHarness />)
+  .add("control/alt", () => <TestHarness filters={["Control", "Alt"]} />)
+  .add("up/down/left/right", () => (
+    <TestHarness
+      filters={["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"]}
+    />
+  ));

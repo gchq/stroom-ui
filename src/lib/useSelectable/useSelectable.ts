@@ -1,4 +1,5 @@
 import * as React from "react";
+import useKeyIsDown, { KeyDownState } from "lib/useKeyIsDown";
 
 interface InProps<T extends {}> {
   items: T[];
@@ -7,46 +8,86 @@ interface InProps<T extends {}> {
 
 interface OutProps<T extends {}> {
   selectedItems: T[];
-  toggleSelection: (itemKey: string) => void;
+  toggleSelection: (key: string) => void;
   clearSelection: () => void;
 }
 
 interface SelectionToggled {
   type: "toggled";
   key: string;
+  isCtrlDown: boolean;
+  isShiftDown: boolean;
 }
 
 interface SelectionCleared {
   type: "cleared";
 }
 
+interface UpdateRawKeys {
+  type: "updateRawKeys";
+  rawKeys: string[];
+}
+
+interface ReducerState {
+  selectedKeys: string[];
+  rawKeys: string[];
+}
+
 const reducer = (
-  state: string[],
-  action: SelectionToggled | SelectionCleared,
-) => {
+  { selectedKeys, rawKeys }: ReducerState,
+  action: SelectionToggled | SelectionCleared | UpdateRawKeys,
+): ReducerState => {
   switch (action.type) {
-    case "toggled":
-      if (state.includes(action.key)) {
-        return state.filter(k => k !== action.key);
-      } else {
-        return [...state, action.key];
+    case "toggled": {
+      const { key, isShiftDown, isCtrlDown } = action;
+      if (isCtrlDown) {
+        if (selectedKeys.includes(key)) {
+          return {
+            rawKeys,
+            selectedKeys: selectedKeys.filter(k => k !== key),
+          };
+        } else {
+          return { rawKeys, selectedKeys: [...selectedKeys, key] };
+        }
       }
+    }
     case "cleared":
-      return [];
+      return { rawKeys, selectedKeys: [] };
+    case "updateRawKeys":
+      return {
+        rawKeys: action.rawKeys,
+        selectedKeys: selectedKeys.filter(s => action.rawKeys.includes(s)),
+      };
     default:
-      return state;
+      return { selectedKeys, rawKeys };
   }
 };
+
+const keyDownFilters: string[] = ["Control", "Shift", "Meta"];
 
 const useSelectable = <T extends {}>({
   items,
   getKey,
 }: InProps<T>): OutProps<T> => {
-  const [selectedKeys, dispatch] = React.useReducer(reducer, []);
+  const keyIsDown: KeyDownState = useKeyIsDown(keyDownFilters);
+  const [{ selectedKeys }, dispatch] = React.useReducer(reducer, {
+    rawKeys: [],
+    selectedKeys: [],
+  });
+  React.useEffect(() => {
+    const rawKeys: string[] = items.map(getKey);
+    dispatch({ type: "updateRawKeys", rawKeys });
+  }, [items, dispatch]);
 
   const toggleSelection = React.useCallback(
-    (key: string) => dispatch({ type: "toggled", key }),
-    [dispatch],
+    (key: string) =>
+      dispatch({
+        type: "toggled",
+        key,
+        isCtrlDown: keyIsDown["Control"] || keyIsDown["Meta"],
+        isShiftDown: keyIsDown["Shift"],
+      }),
+    [dispatch, keyIsDown],
   );
   const clearSelection = React.useCallback(
     () => dispatch({ type: "cleared" }),
