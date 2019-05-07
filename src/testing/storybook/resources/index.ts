@@ -3,6 +3,7 @@ import { ResourceBuilder } from "./types";
 import authenticationResource from "./authenticationResource";
 import authorisationResource from "./authorisationResource";
 import appPermissionResource from "./appPermissionResource";
+import buildInfoResource from "./buildInfoResource";
 import documentPermissionResource from "./documentPermissionResource";
 import elementsResource from "./elementsResource";
 import explorerResource from "./explorerResource";
@@ -20,6 +21,7 @@ const resourceBuilders: ResourceBuilder[] = [
   appPermissionResource,
   authenticationResource,
   authorisationResource,
+  buildInfoResource,
   documentPermissionResource,
   documentResources,
   elementsResource,
