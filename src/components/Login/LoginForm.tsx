@@ -95,7 +95,7 @@ const LoginForm: React.FunctionComponent<{
                     undefined
                   )}
                 </div>
-                <div className="Login__actions">
+                <div className="Login__actions page__buttons">
                   <Button
                     action={ButtonAction.Primary}
                     disabled={isPristine || hasErrors}
