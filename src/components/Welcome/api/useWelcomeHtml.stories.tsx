@@ -9,6 +9,6 @@ const TestHarness: React.FunctionComponent = () => {
   return <JsonDebug value={welcomeData} />;
 };
 
-storiesOf("Sections/Welcome/useWelcomeHtml", module).add("basic", () => (
+storiesOf("Sections/Welcome/useWelcomeHtml", module).add("test", () => (
   <TestHarness />
 ));

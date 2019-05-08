@@ -53,6 +53,6 @@ const TestHarness: React.FunctionComponent<Props> = ({ initialItems }) => {
   );
 };
 
-storiesOf("lib/useListReducer", module).add("basic", () => (
+storiesOf("lib/useListReducer", module).add("test", () => (
   <TestHarness initialItems={TEST_ITEMS} />
 ));

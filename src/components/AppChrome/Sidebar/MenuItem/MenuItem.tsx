@@ -27,10 +27,10 @@ interface Props {
   activeMenuItem: string;
   depth: number;
   isCollapsed?: boolean;
-  selectedItems: MenuItemType[];
+  selectedItems: string[];
   focussedItem?: MenuItemType;
   keyIsDown: KeyDownState;
-  areMenuItemsOpen: MenuItemsOpenState;
+  menuItemIsOpenByKey: MenuItemsOpenState;
   menuItemOpened: MenuItemOpened;
   showCopyDialog: (docRefUuids: string[], destination: DocRefType) => void;
   showMoveDialog: (docRefUuids: string[], destination: DocRefType) => void;
@@ -102,7 +102,7 @@ const MenuItem: React.FunctionComponent<EnhancedProps> = ({
   isOver,
   canDrop,
   className: rawClassName,
-  areMenuItemsOpen,
+  menuItemIsOpenByKey,
   depth,
   connectDropTarget,
   connectDragSource,
@@ -112,66 +112,88 @@ const MenuItem: React.FunctionComponent<EnhancedProps> = ({
   focussedItem,
   activeMenuItem,
 }) => {
-  const isSelected: boolean = selectedItems
-    .map((d: MenuItemType) => d.key)
-    .includes(menuItem.key);
-  const inFocus: boolean = !!focussedItem && focussedItem.key === menuItem.key;
+  const isSelected: boolean = React.useMemo(
+    () => selectedItems.includes(menuItem.key),
+    [menuItem, selectedItems],
+  );
+  const inFocus: boolean = React.useMemo(
+    () => !!focussedItem && focussedItem.key === menuItem.key,
+    [menuItem, focussedItem],
+  );
 
-  const onExpand: React.MouseEventHandler<HTMLDivElement> = (
-    e: React.MouseEvent,
-  ) => {
-    menuItemOpened(menuItem.key, !areMenuItemsOpen[menuItem.key]);
-    e.preventDefault();
-  };
-  const onSelect: React.MouseEventHandler<HTMLDivElement> = (
-    e: React.MouseEvent,
-  ) => {
-    menuItem.onClick();
-    e.preventDefault();
-  };
+  const onExpand: React.MouseEventHandler<HTMLDivElement> = React.useCallback(
+    (e: React.MouseEvent) => {
+      menuItemOpened(menuItem.key, !menuItemIsOpenByKey[menuItem.key]);
+      e.preventDefault();
+    },
+    [menuItem.key, menuItemIsOpenByKey, menuItemOpened],
+  );
+  const onSelect: React.MouseEventHandler<HTMLDivElement> = React.useCallback(
+    (e: React.MouseEvent) => {
+      menuItem.onClick();
+      e.preventDefault();
+    },
+    [menuItem],
+  );
 
-  const classNames = [];
+  const isShowingChildren: boolean = menuItemIsOpenByKey[menuItem.key];
+  const hasChildren: boolean =
+    menuItem.children && menuItem.children.length > 0;
 
-  if (rawClassName) {
-    classNames.push(rawClassName);
-  }
+  const className = React.useMemo(() => {
+    const classNames = [];
 
-  classNames.push("sidebar__menu-item");
-  classNames.push(menuItem.style);
-
-  if (isOver) {
-    classNames.push("dnd-over");
-  }
-  if (isOver) {
-    if (canDrop) {
-      classNames.push("can-drop");
-    } else {
-      classNames.push("cannot-drop");
+    if (rawClassName) {
+      classNames.push(rawClassName);
     }
-  }
-  if (inFocus) {
-    classNames.push("inFocus");
-  }
-  if (isSelected) {
-    classNames.push("selected");
-  }
 
-  const hasChildren = menuItem.children && menuItem.children.length > 0;
-  const isShowingChildren = areMenuItemsOpen[menuItem.key];
-  if (hasChildren && isShowingChildren) {
-    classNames.push("has-children--open");
-  }
+    classNames.push("sidebar__menu-item");
+    classNames.push(menuItem.style);
 
-  if (menuItem.key === activeMenuItem) {
-    classNames.push("is-active");
-  }
+    if (isOver) {
+      classNames.push("dnd-over");
+    }
+    if (isOver) {
+      if (canDrop) {
+        classNames.push("can-drop");
+      } else {
+        classNames.push("cannot-drop");
+      }
+    }
+    if (inFocus) {
+      classNames.push("inFocus");
+    }
+    if (isSelected) {
+      classNames.push("selected");
+    }
+
+    if (hasChildren && isShowingChildren) {
+      classNames.push("has-children--open");
+    }
+
+    if (menuItem.key === activeMenuItem) {
+      classNames.push("is-active");
+    }
+
+    return classNames.join(" ");
+  }, [
+    menuItem,
+    activeMenuItem,
+    isOver,
+    canDrop,
+    rawClassName,
+    isShowingChildren,
+    hasChildren,
+    inFocus,
+    isSelected,
+  ]);
 
   const style = { paddingLeft: `${depth * 1.5}rem` };
-  const className = classNames.join(" ");
 
-  const hasChildrenIcon = `folder${
-    isShowingChildren ? "-open" : "-plus"
-  }` as IconProp;
+  const hasChildrenIcon: IconProp = React.useMemo(
+    () => (isShowingChildren ? "folder-open" : "folder-plus"),
+    [isShowingChildren],
+  );
   //const isHeader = menuItem.key !== "stroom";
 
   return connectDragSource(

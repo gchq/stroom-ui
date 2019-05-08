@@ -85,6 +85,6 @@ const TestHarness: React.FunctionComponent<Props> = ({ initialItems }) => {
   );
 };
 
-storiesOf("lib/useCustomFocus", module).add("basic", () => (
+storiesOf("lib/useCustomFocus", module).add("test", () => (
   <TestHarness initialItems={TEST_ITEMS} />
 ));

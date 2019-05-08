@@ -19,6 +19,4 @@ const TestHarness: React.FunctionComponent = () => {
   );
 };
 
-storiesOf("Sections/Welcome/useApi", module).add("Basic", () => (
-  <TestHarness />
-));
+storiesOf("Sections/Welcome/useApi", module).add("test", () => <TestHarness />);
