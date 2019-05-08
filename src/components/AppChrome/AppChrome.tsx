@@ -20,10 +20,7 @@ import "simplebar/dist/simplebar.css";
 
 import { ActiveMenuItem } from "./types";
 import { useTheme } from "lib/useTheme/useTheme";
-import {
-  WithChromeContext,
-  DEFAULT_CHROME_MODE,
-} from "lib/useRouter/BrowserRouter";
+import { useChromeContext } from "lib/useRouter/BrowserRouter";
 import Sidebar from "./Sidebar";
 
 export interface AppChromeProps {
@@ -37,23 +34,13 @@ const AppChrome: React.FunctionComponent<AppChromeProps> = ({
   urlPrefix,
   content,
 }) => {
-  const { setUrlPrefix, urlPrefix: urlPrefixInUse } = React.useContext(
-    WithChromeContext,
-  );
-  React.useEffect(() => setUrlPrefix(urlPrefix), [urlPrefix, setUrlPrefix]);
+  const includeSidebar = useChromeContext(urlPrefix);
   const { theme } = useTheme();
-
-  React.useEffect(() => {
-    //toggleSelection(activeMenuItem);
-    console.log("Active Menu Item Changed", activeMenuItem);
-  }, [activeMenuItem]);
 
   return (
     <div className={theme}>
       <div className="app-chrome flat">
-        {urlPrefixInUse === DEFAULT_CHROME_MODE && (
-          <Sidebar {...{ activeMenuItem }} />
-        )}
+        {includeSidebar && <Sidebar {...{ activeMenuItem }} />}
         <div className="app-chrome__content">
           <div className="content-tabs">
             <div className="content-tabs__content">{content}</div>
