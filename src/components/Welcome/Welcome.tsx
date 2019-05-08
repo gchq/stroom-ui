@@ -16,6 +16,7 @@
 
 import * as React from "react";
 
+import BuildInfo from "components/BuildInfo";
 import IconHeader from "components/IconHeader";
 import useWelcomeHtml from "./api/useWelcomeHtml";
 
@@ -56,6 +57,7 @@ const Welcome: React.FunctionComponent = () => {
             </tbody>
           </table>
         </div>
+        <BuildInfo />
       </div>
     </div>
   );

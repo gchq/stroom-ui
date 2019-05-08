@@ -59,7 +59,10 @@ const DataViewer = () => {
   >(
     {
       items: !!streams ? streams.streamAttributeMaps : [],
-      getKey: d => `${(d && d.meta && d.meta.id) || "none"}`,
+      getKey: React.useCallback(
+        d => `${(d && d.meta && d.meta.id) || "none"}`,
+        [],
+      ),
       selectionBehaviour: SelectionBehaviour.SINGLE,
     },
     {

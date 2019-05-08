@@ -30,7 +30,7 @@ const TestHarness: React.FunctionComponent<Props> = ({ initialItems }) => {
 
   const onAddNewItem = React.useCallback(
     e => {
-      itemAdded(generateItem());
+      itemAdded(newName);
       e.preventDefault();
     },
     [itemAdded, newName],

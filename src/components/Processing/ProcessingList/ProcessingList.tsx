@@ -139,7 +139,7 @@ const ProcessingList: React.FunctionComponent<Props> = ({
   const { tableProps, selectedItem } = useSelectableReactTable<StreamTaskType>(
     {
       items: tableData,
-      getKey: t => `${t.filterId}`,
+      getKey: React.useCallback(t => `${t.filterId}`, []),
       selectionBehaviour: SelectionBehaviour.SINGLE,
       preFocusWrap,
     },
