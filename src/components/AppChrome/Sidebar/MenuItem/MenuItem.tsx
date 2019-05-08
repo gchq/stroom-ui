@@ -15,7 +15,7 @@ import {
   DragObject,
   DragCollectedProps,
   DropCollectedProps,
-} from "../DocumentEditors/FolderExplorer/types";
+} from "components/DocumentEditors/FolderExplorer/types";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { KeyDownState } from "lib/useKeyIsDown";
 import { MenuItemOpened, MenuItemType, MenuItemsOpenState } from "./types";

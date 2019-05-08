@@ -14,7 +14,9 @@ const useSelectableItemListing = <TItem extends {}>({
   selectionBehaviour = SelectionBehaviour.NONE,
   preFocusWrap,
 }: InProps<TItem>): OutProps<TItem> => {
-  const { up, down, focusIndex, focussedItem } = useCustomFocus<TItem>({
+  const { up, down, setByIndex, focusIndex, focussedItem } = useCustomFocus<
+    TItem
+  >({
     items,
     preFocusWrap,
   });
@@ -26,8 +28,6 @@ const useSelectableItemListing = <TItem extends {}>({
     lastSelectedKey,
     lastSelectedIndex,
   } = useSelectable<TItem>({ items, getKey });
-
-  console.log("Use Selectable Item Listing");
 
   const enterItemOnKey = React.useCallback(
     (e: React.KeyboardEvent) => {
@@ -74,6 +74,14 @@ const useSelectableItemListing = <TItem extends {}>({
     [selectionBehaviour, toggleSelection, getKey, focussedItem],
   );
 
+  const toggleSelectionAndFocus = React.useCallback(
+    (itemKey: string) => {
+      toggleSelection(itemKey);
+      setByIndex(items.findIndex(item => getKey(item) === itemKey));
+    },
+    [items, getKey, toggleSelection, setByIndex],
+  );
+
   const onKeyDown = useOnKeyDown({
     ArrowUp: up,
     k: up,
@@ -102,7 +110,7 @@ const useSelectableItemListing = <TItem extends {}>({
     selectedIndexes,
     selectedItem,
     lastSelectedIndex,
-    toggleSelection,
+    toggleSelection: toggleSelectionAndFocus,
     clearSelection,
     onKeyDown,
   };

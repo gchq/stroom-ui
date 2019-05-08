@@ -55,6 +55,12 @@ const TestList = () => {
   return (
     <div tabIndex={0} onKeyDown={onKeyDown}>
       <h3>Test Selectable Item Listing</h3>
+      <p>
+        The lightblue items are selected items, the black bordered item is the
+        focussed one. If you focus scroll off the end of the list, it should
+        demo the pre-focus wrap hook which allows the calling component to
+        request more data instead.
+      </p>
       <Button text="Reset" onClick={reset} />
       <ul>
         {animals.map((animal, i) => (
