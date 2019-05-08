@@ -1,4 +1,4 @@
-import CreateToken from "./CreateToken";
-import EditToken from "./EditToken";
+import CreateToken from "./CreateTokenContainer";
+import EditToken from "./EditTokenContainer";
 
 export { CreateToken, EditToken };

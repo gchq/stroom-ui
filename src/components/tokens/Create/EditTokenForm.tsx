@@ -18,28 +18,20 @@ import * as React from "react";
 import * as CopyToClipboard from "react-copy-to-clipboard";
 import Toggle from "react-toggle";
 import "react-toggle/style.css";
-import useAppNavigation from "lib/useAppNavigation";
 import { ByCopy, OnCopy } from "components/auditCopy";
 import Button from "components/Button";
 import Loader from "components/Loader";
-import useIdFromPath from "lib/useIdFromPath";
-import useTokens from "./useTokens";
+import { Token } from "../api/types";
 
-const EditToken = () => {
-  const { toggleEnabledState, fetchApiKey, token } = useTokens();
-  const { goToApiKeys } = useAppNavigation();
-
-  const tokenId = useIdFromPath("apikey/");
-  React.useEffect(() => {
-    if (!!tokenId) {
-      fetchApiKey(tokenId);
-    }
-  }, [tokenId, fetchApiKey]);
-
+const EditTokenForm: React.FunctionComponent<{
+  onBack: () => void;
+  onChangeState: (id: string, newState: boolean) => void;
+  token: Token;
+}> = ({ onBack, onChangeState, token }) => {
   return (
     <form>
       <div className="header">
-        <Button icon="arrow-left" text="Back" onClick={() => goToApiKeys()} />
+        <Button icon="arrow-left" text="Back" onClick={() => onBack()} />
       </div>
       {token === undefined ? (
         <div className="loader-container">
@@ -61,8 +53,8 @@ const EditToken = () => {
                     icons={false}
                     checked={token.enabled}
                     onChange={() =>
-                      !!tokenId
-                        ? toggleEnabledState(tokenId, !token.enabled)
+                      !!token.id
+                        ? onChangeState(token.id, !token.enabled)
                         : undefined
                     }
                   />
@@ -105,4 +97,4 @@ const EditToken = () => {
   );
 };
 
-export default EditToken;
+export default EditTokenForm;
