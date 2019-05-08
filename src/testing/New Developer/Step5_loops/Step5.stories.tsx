@@ -26,10 +26,17 @@ const people: Person[] = [
 ];
 
 const TestHarness: React.FunctionComponent = () => {
+  // So you can put JavaScript here
+
   return (
+    // The parentheses indicate a 'HTML' expression
     <div>
+      {/* The curly braces indicate a switch back to JavaScript expression
+      It's an expression rather than a full chunk of code though*/}
       {people.map(({ name, age }, i) => (
+        // Oh lookup, more parentheses, back to HTML
         <div key={i}>
+          {/* ah, but there are more curly braces, back to JavaScript.... */}
           <h1>{name}</h1>
           <p>Is {age} years old</p>
         </div>
