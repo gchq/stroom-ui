@@ -5,6 +5,6 @@ import ConfirmPasswordResetEmail from "./ConfirmPasswordResetEmail";
 
 const stories = storiesOf("Auth/ConfirmPasswordResetEmail", module);
 
-stories.add("basic", () => (
+stories.add("test", () => (
   <ConfirmPasswordResetEmail onBack={action("onBack")} />
 ));

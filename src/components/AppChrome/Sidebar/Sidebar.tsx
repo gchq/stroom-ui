@@ -32,7 +32,7 @@ const getMenuItems = (
   keyIsDown: KeyDownState,
   showCopyDialog: ShowCopyDocRefDialog,
   showMoveDialog: ShowCopyDocRefDialog,
-  selectedItems: MenuItemType[],
+  selectedItems: string[],
   focussedItem?: MenuItemType,
   depth: number = 0,
 ) =>
@@ -87,6 +87,7 @@ const Sidebar: React.FunctionComponent<Props> = ({ activeMenuItem }) => {
     openMenuItems,
     menuItemOpened,
     areMenuItemsOpen,
+    menuItemsByKey,
   } = useMenuItems(activeMenuItem);
 
   const { copyDocuments, moveDocuments } = useDocumentTree();
@@ -104,36 +105,47 @@ const Sidebar: React.FunctionComponent<Props> = ({ activeMenuItem }) => {
     ? "app-chrome__sidebar--expanded"
     : "app-chrome__sidebar--collapsed";
 
+  const getKey = React.useCallback((key: string) => key, []);
+  const openItem = React.useCallback(
+    (key: string) => {
+      const menuItem = menuItemsByKey[key];
+      // call the onclick
+      menuItem.onClick();
+    },
+    [menuItemsByKey],
+  );
+  const enterItem = React.useCallback(m => menuItemOpened(m, true), [
+    menuItemOpened,
+  ]);
+  const goBack = React.useCallback(
+    (key: string) => {
+      const menuItem = menuItemsByKey[key];
+      if (areMenuItemsOpen[key]) {
+        menuItemOpened(key, false);
+      } else if (!!menuItem.parentDocRef) {
+        // Can we bubble back up to the parent folder of the current selection?
+        // let newSelection = openMenuItems.find(
+        //   ({ key }: MenuItemType) =>
+        //     !!m.parentDocRef && key === m.parentDocRef.uuid,
+        // );
+        // if (!!newSelection) {
+        //   toggleSelection(newSelection.key);
+        // }
+        menuItemOpened(menuItem.parentDocRef.uuid, false);
+      }
+    },
+    [areMenuItemsOpen, menuItemOpened, menuItemsByKey],
+  );
+
   const keyIsDown = useKeyIsDown();
   const { onKeyDown, selectedItems, focussedItem } = useSelectableItemListing<
-    MenuItemType
+    string
   >({
     items: openMenuItems,
-    getKey: React.useCallback(m => m.key, []),
-    openItem: React.useCallback(m => m.onClick(), []),
-    enterItem: React.useCallback(m => menuItemOpened(m.key, true), [
-      menuItemOpened,
-    ]),
-    goBack: React.useCallback(
-      m => {
-        if (m) {
-          if (areMenuItemsOpen[m.key]) {
-            menuItemOpened(m.key, false);
-          } else if (!!m.parentDocRef) {
-            // Can we bubble back up to the parent folder of the current selection?
-            // let newSelection = openMenuItems.find(
-            //   ({ key }: MenuItemType) =>
-            //     !!m.parentDocRef && key === m.parentDocRef.uuid,
-            // );
-            // if (!!newSelection) {
-            //   toggleSelection(newSelection.key);
-            // }
-            menuItemOpened(m.parentDocRef.uuid, false);
-          }
-        }
-      },
-      [areMenuItemsOpen, menuItemOpened],
-    ),
+    getKey,
+    openItem,
+    enterItem,
+    goBack,
   });
 
   const {

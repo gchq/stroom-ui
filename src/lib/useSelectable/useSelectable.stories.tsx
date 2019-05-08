@@ -58,6 +58,6 @@ const TestHarness: React.FunctionComponent<Props> = ({ items }) => {
   );
 };
 
-storiesOf("lib/useSelectable", module).add("basic", () => (
+storiesOf("lib/useSelectable", module).add("test", () => (
   <TestHarness items={TEST_ITEMS} />
 ));
