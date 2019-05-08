@@ -26,7 +26,7 @@ interface Variant {
 }
 const variants: Variant[] = [
   {
-    title: "Default Buttons (default)",
+    title: "Default Buttons",
     appearance: "default",
   },
   {

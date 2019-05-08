@@ -111,6 +111,8 @@ export const Button = ({
     return "lg";
   }, [size]);
 
+  let showText = text && appearance !== "icon";
+
   return (
     <button className={className} {...rest}>
       {icon ? (
@@ -118,8 +120,8 @@ export const Button = ({
       ) : (
         undefined
       )}
-      {text && icon ? <span className="button__margin" /> : undefined}
-      {text ? <span className="button__text">{text}</span> : undefined}
+      {showText && icon ? <span className="button__margin" /> : undefined}
+      {showText ? <span className="button__text">{text}</span> : undefined}
     </button>
   );
 };
