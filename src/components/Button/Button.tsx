@@ -36,28 +36,28 @@ export const Button = ({
     if (rawClassName) classNames.push(rawClassName);
 
     // Set the base button class.
-    classNames.push("button__base");
+    classNames.push("button-base");
     // Set the general button styling class unless this is an icon button.
     if (appearance !== "icon") classNames.push("button");
 
-    // Get the style name (contained by default).
-    let appearanceName = "button__contained";
+    // Get the style name.
+    let appearanceName = "button-default";
     if (appearance) {
       switch (appearance) {
         case "default": {
-          appearanceName = "button__default";
+          appearanceName = "button-default";
           break;
         }
         case "outline": {
-          appearanceName = "button__outline";
+          appearanceName = "button-outline";
           break;
         }
         case "icon": {
-          appearanceName = "button__icon";
+          appearanceName = "button-icon";
           break;
         }
         case "contained": {
-          appearanceName = "button__contained";
+          appearanceName = "button-contained";
           break;
         }
         default:
@@ -72,11 +72,11 @@ export const Button = ({
     if (action) {
       switch (action) {
         case "primary": {
-          actionName = appearanceName + "__primary";
+          actionName = appearanceName + "-primary";
           break;
         }
         case "secondary": {
-          actionName = appearanceName + "__secondary";
+          actionName = appearanceName + "-secondary";
           break;
         }
         default:
@@ -89,8 +89,8 @@ export const Button = ({
     }
 
     if (text) classNames.push("has-text");
-    if (selected) classNames.push("selected");
-    if (disabled) classNames.push("disabled");
+    if (selected) classNames.push("button-selected");
+    if (disabled) classNames.push("button-disabled");
 
     return classNames.join(" ");
   }, [rawClassName, appearance, action, text, selected, disabled]);
@@ -120,8 +120,8 @@ export const Button = ({
       ) : (
         undefined
       )}
-      {showText && icon ? <span className="button__margin" /> : undefined}
-      {showText ? <span className="button__text">{text}</span> : undefined}
+      {showText && icon ? <span className="button-margin" /> : undefined}
+      {showText ? <span className="button-text">{text}</span> : undefined}
     </button>
   );
 };

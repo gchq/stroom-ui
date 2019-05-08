@@ -1,4 +1,4 @@
-// $button-margin: 3px;
+$button-margin: .2rem;
 
 
 
@@ -60,29 +60,31 @@
 //   // Selected is indicated by a colour and is configured as part of the theme.
 // }
 
-.button__margin {
+.button-margin {
   margin: 0.2rem;
 }
 
-.button__text {
+.button-text {
   // font-size: 10pt;
   vertical-align: middle;
 }
 
 
 
-
-
-
-
-
-
+////////////////////////////////////////////////////////////////////////////////
+// Button container to wrap multiple buttons
+////////////////////////////////////////////////////////////////////////////////
+.button-container {
+  display: flex;
+  flex-wrap: wrap;
+  margin: -$button-margin;
+}
 
 
 ////////////////////////////////////////////////////////////////////////////////
 // Base for all buttons
 ////////////////////////////////////////////////////////////////////////////////
-.button__base { // .jr0u89w
+.button-base { // .jr0u89w
   color: inherit;
   border: 0;
   margin: 0;
@@ -103,10 +105,10 @@
   -webkit-appearance: none;
   -webkit-tap-highlight-color: transparent;
 
-  margin: 0.2rem;
+  margin: $button-margin;
 }
 
-.button__base.disabled { // .jr0u89w.j1p4cocs
+.button-base.button-disabled { // .jr0u89w.j1p4cocs
   cursor: default;
   pointer-events: none;
 }
@@ -136,46 +138,46 @@
   background-color: rgba(0, 0, 0, 0.08);
 }
 
-.button.disabled { // .j9la4jl.j1p4cocs {
+.button.button-disabled { // .j9la4jl.j1p4cocs {
   color: rgba(0, 0, 0, 0.26);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 // Contained buttons
 ////////////////////////////////////////////////////////////////////////////////
-.button__contained { // .jpyw0mp
+.button-contained { // .jpyw0mp
   color: rgba(0, 0, 0, 0.87);
   box-shadow: 0px 1px 5px 0px rgba(0,0,0,0.2), 0px 2px 2px 0px rgba(0,0,0,0.14), 0px 3px 1px -2px rgba(0,0,0,0.12);
   background-color: #e0e0e0;
 }
 
-.button__contained:hover { // .jpyw0mp:hover
+.button-contained:hover { // .jpyw0mp:hover
   background-color: #d5d5d5;
 }
 
-.button__contained:active { // .jpyw0mp:active
+.button-contained:active { // .jpyw0mp:active
   box-shadow: 0px 5px 5px -3px rgba(0,0,0,0.2), 0px 8px 10px 1px rgba(0,0,0,0.14), 0px 3px 14px 2px rgba(0,0,0,0.12);
 }
 
-.button__contained__primary { // .j1xs0a6r
+.button-contained-primary { // .j1xs0a6r
   color: #fff;
   background-color: #2196f3;
 }
 
-.button__contained__primary:hover { // .j1xs0a6r:hover
+.button-contained-primary:hover { // .j1xs0a6r:hover
   background-color: #1976d2;
 }
 
-.button__contained__secondary { // .j1qgefk9
+.button-contained-secondary { // .j1qgefk9
   color: #fff;
   background-color: rgb(225, 0, 80);
 }
 
-.button__contained__secondary:hover { // .j1qgefk9:hover
+.button-contained-secondary:hover { // .j1qgefk9:hover
   background-color: rgb(157, 0, 56);
 }
 
-.button__contained.disabled { // .jpyw0mp.j1p4cocs
+.button-contained.button-disabled { // .jpyw0mp.j1p4cocs
   color: rgba(0, 0, 0, 0.26);
   box-shadow: none;
   background-color: rgba(0, 0, 0, 0.12);
@@ -184,62 +186,62 @@
 ////////////////////////////////////////////////////////////////////////////////
 // Default buttons
 ////////////////////////////////////////////////////////////////////////////////
-.button__default { // .j1hrif9t
+.button-default { // .j1hrif9t
   padding: 6px 8px;
 }
 
-.button__default__primary { // .j14bbh75
+.button-default-primary { // .j14bbh75
   color: #2196f3;
 }
 
-.button__default__primary:hover { // .j14bbh75:hover
+.button-default-primary:hover { // .j14bbh75:hover
   background-color: rgba(33, 150, 243, 0.08);
 }
 
-.button__default__secondary { // .j1y9307j
+.button-default-secondary { // .j1y9307j
   color: rgb(225, 0, 80);
 }
 
-.button__default__secondary:hover { // .j1y9307j:hover
+.button-default-secondary:hover { // .j1y9307j:hover
   background-color: rgba(225, 0, 80, 0.08);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 // Outline buttons
 ////////////////////////////////////////////////////////////////////////////////
-.button__outline { // .j5jkmku
-  border: 1px solid rgba(0, 0, 0, 0.23);
+.button-outline { // .j5jkmku
+  border: thin solid rgba(0, 0, 0, 0.23);
   padding: 5px 16px;
 }
 
-.button__outline__primary { // .j9ze19u
+.button-outline-primary { // .j9ze19u
   color: #2196f3;
-  border: 1px solid rgba(33, 150, 243, 0.5);
+  border: thin solid rgba(33, 150, 243, 0.5);
 }
 
-.button__outline__primary:hover { // .j9ze19u:hover
-  border: 1px solid #2196f3;
+.button-outline-primary:hover { // .j9ze19u:hover
+  border: thin solid #2196f3;
   background-color: rgba(33, 150, 243, 0.08);
 }
 
-.button__outline__secondary { // .j1xxvqug
+.button-outline-secondary { // .j1xxvqug
   color: rgb(225, 0, 80);
-  border: 1px solid rgba(225, 0, 80, 0.5);
+  border: thin solid rgba(225, 0, 80, 0.5);
 }
 
-.button__outline__secondary:hover { // .j1xxvqug:hover
-  border: 1px solid rgb(225, 0, 80);
+.button-outline-secondary:hover { // .j1xxvqug:hover
+  border: thin solid rgb(225, 0, 80);
   background-color: rgba(225, 0, 80, 0.08);
 }
 
-.button__outline.disabled { // .j5jkmku.j1p4cocs
-  border: 1px solid rgba(0, 0, 0, 0.26);
+.button-outline.button-disabled { // .j5jkmku.j1p4cocs
+  border: thin solid rgba(0, 0, 0, 0.26);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 // Icon buttons
 ////////////////////////////////////////////////////////////////////////////////
-.button__icon { // .j1g2vga5
+.button-icon { // .j1g2vga5
   flex: 0 0 auto;
   color: rgba(0, 0, 0, 0.54);
   padding: 12px;
@@ -256,27 +258,27 @@
   padding: 0.4rem;
 }
 
-.button__icon:hover { // .j1g2vga5:hover
+.button-icon:hover { // .j1g2vga5:hover
   background-color: rgba(0, 0, 0, 0.08);
 }
 
-.button__icon__primary { // .j42ua74
+.button-icon-primary { // .j42ua74
   color: #2196f3;
 }
 
-.button__icon__primary:hover { // .j42ua74:hover
+.button-icon-primary:hover { // .j42ua74:hover
   background-color: rgba(33, 150, 243, 0.08);
 }
 
-.button__icon__secondary { // j1q4g7ue
+.button-icon-secondary { // j1q4g7ue
   color: rgb(225, 0, 80);
 }
 
-.button__icon__secondary:hover { // .j1q4g7ue:hover
+.button-icon-secondary:hover { // .j1q4g7ue:hover
   background-color: rgba(225, 0, 80, 0.08);
 }
 
-.button__icon.disabled { // .j1g2vga5.j1p4cocs
+.button-icon.button-disabled { // .j1g2vga5.j1p4cocs
   color: rgba(0, 0, 0, 0.26);
 }
 

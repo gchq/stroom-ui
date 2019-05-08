@@ -94,7 +94,7 @@ const LoginForm: React.FunctionComponent<{
                     undefined
                   )}
                 </div>
-                <div className="Login__actions page__buttons">
+                <div className="Login__actions page__buttons button-container">
                   <Button
                     appearance="contained"
                     action="primary"

@@ -85,7 +85,7 @@ const Authorisation: React.FunctionComponent<Props> = ({ isGroup }) => {
     <div className="page">
       <div className="page__header">
         <IconHeader text={isGroup ? "User Groups" : "Users"} icon="user" />
-        <div className="page__buttons">
+        <div className="page__buttons button-container">
           <Button onClick={showNewDialog} icon="plus" text="Create" />
           <Button
             disabled={selectedUsers.length !== 1}

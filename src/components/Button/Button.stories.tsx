@@ -49,40 +49,80 @@ const TestHarness: React.FunctionComponent = () => {
       {variants.map(({ title, appearance }, i) => (
         <div key={i}>
           <h1>{title}</h1>
-          <Button
-            appearance={appearance}
-            action="primary"
-            icon="save"
-            text="Save"
-            title="Save"
-          />
-          <Button
-            appearance={appearance}
-            action="secondary"
-            text="Close"
-            icon="times"
-            title="Close"
-          />
-          <Button
-            appearance={appearance}
-            icon="key"
-            text="Permissions"
-            title="Permissions"
-          />
-          <Button
-            appearance={appearance}
-            icon="key"
-            text="Disabled"
-            title="Disabled"
-            disabled={true}
-          />
-          <Button
-            appearance={appearance}
-            icon="key"
-            text="Selected"
-            title="Selected"
-            selected={true}
-          />
+          <div className="button-container">
+            <Button
+              appearance={appearance}
+              action="primary"
+              icon="save"
+              text="Save"
+              title="Save"
+            />
+            <Button
+              appearance={appearance}
+              action="secondary"
+              text="Close"
+              icon="times"
+              title="Close"
+            />
+            <Button
+              appearance={appearance}
+              icon="key"
+              text="Permissions"
+              title="Permissions"
+            />
+          </div>
+
+          <div className="button-container">
+            <Button
+              appearance={appearance}
+              action="primary"
+              icon="save"
+              text="Save"
+              title="Save"
+              selected={true}
+            />
+            <Button
+              appearance={appearance}
+              action="secondary"
+              text="Close"
+              icon="times"
+              title="Close"
+              selected={true}
+            />
+            <Button
+              appearance={appearance}
+              icon="key"
+              text="Permissions"
+              title="Permissions"
+              selected={true}
+            />
+          </div>
+
+          <div className="button-container">
+            <Button
+              appearance={appearance}
+              action="primary"
+              icon="save"
+              text="Save"
+              title="Save"
+              disabled={true}
+            />
+            <Button
+              appearance={appearance}
+              action="secondary"
+              text="Close"
+              icon="times"
+              title="Close"
+              disabled={true}
+            />
+            <Button
+              appearance={appearance}
+              icon="key"
+              text="Permissions"
+              title="Permissions"
+              disabled={true}
+            />
+          </div>
         </div>
       ))}
     </div>
@@ -96,7 +136,7 @@ const stories = storiesOf("General Purpose/Button", module);
 stories.add("Button Appeearance", () => <TestHarness />);
 
 // stories.add("button group - icon and text", () => (
-//   <div className="page__buttons">
+//   <div className="button-container">
 //     <Button
 //       icon="angle-up"
 //       text="Button 1"
@@ -115,7 +155,7 @@ stories.add("Button Appeearance", () => <TestHarness />);
 // ));
 
 // stories.add("button group - text only", () => (
-//   <div className="page__buttons">
+//   <div className="button-container">
 //     <Button text="Button 1" />
 //     <Button action="primary" text="Button 2" />
 //     <Button action="secondary" text="Button 3" />
@@ -142,7 +182,7 @@ stories.add("Button Appeearance", () => <TestHarness />);
 // ));
 
 // stories.add("disabled", () => (
-//   <div className="page__buttons">
+//   <div className="button-container">
 //     <Button className="raised-low" disabled icon="trash" />
 //     <Button
 //       className="raised-low"
@@ -162,7 +202,7 @@ stories.add("Button Appeearance", () => <TestHarness />);
 // ));
 
 // stories.add("many buttons", () => (
-//   <div className="page__buttons">
+//   <div className="button-container">
 //     <Button className="raised-low" text="Button 1" />
 //     <Button className="raised-low" text="Button 2" />
 //     <Button className="raised-low" text="Button 3" />

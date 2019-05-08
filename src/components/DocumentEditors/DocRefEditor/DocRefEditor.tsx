@@ -61,7 +61,7 @@ const DocRefEditor = <T extends {}>({
           docRefType={docRef.type}
           text={docRef.name || "no name"}
         />
-        <div className="page__buttons">
+        <div className="page__buttons button-container">
           {actionBarItems.map((actionBarItem, i) => (
             <Button key={i} {...actionBarItem} />
           ))}

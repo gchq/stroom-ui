@@ -47,7 +47,7 @@ const TokenSearch = () => {
     <div className="page">
       <div className="page__header">
         <IconHeader icon="key" text={`API Keys`} />
-        <div className="page__buttons">
+        <div className="page__buttons button-container">
           <Button onClick={() => goToNewApiKey()} icon="plus" text="Create" />
 
           {noTokenSelected ? (
