@@ -14,7 +14,6 @@ import ThemedConfirm, {
 import useAppNavigation from "../../lib/useAppNavigation/useAppNavigation";
 import Toggle from "react-toggle";
 import DocRefIconHeader from "components/DocRefIconHeader";
-import { ButtonAppearance } from "components/Button/types";
 
 const IndexVolumeGroups: React.FunctionComponent = () => {
   const [filterable, setFilteringEnabled] = React.useState(false);
@@ -64,21 +63,14 @@ const IndexVolumeGroups: React.FunctionComponent = () => {
       <div className="page__header">
         <DocRefIconHeader text="Index Volumes Groups" docRefType="Index" />
         <div className="page__buttons">
+          <Button onClick={showNewDialog} icon="plus" text="Create" />
           <Button
-            appearance={ButtonAppearance.Text}
-            onClick={showNewDialog}
-            icon="plus"
-            text="Create"
-          />
-          <Button
-            appearance={ButtonAppearance.Text}
             disabled={selectedGroups.length !== 1}
             onClick={onViewEditClick}
             icon="edit"
             text="View/edit"
           />
           <Button
-            appearance={ButtonAppearance.Text}
             disabled={selectedGroups.length !== 1}
             onClick={showDeleteDialog}
             icon="trash"

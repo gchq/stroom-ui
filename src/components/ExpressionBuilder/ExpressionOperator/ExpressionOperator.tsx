@@ -241,45 +241,22 @@ const ExpressionOperator: React.FunctionComponent<EnhancedProps> = ({
             <Button
               selected={value.op === l}
               key={l}
-              groupPosition={
-                i === 0
-                  ? "left"
-                  : OperatorTypeValues.length - 1 === i
-                  ? "right"
-                  : "middle"
-              }
               onClick={() => onOpChange(l)}
               text={l}
             />
           ))}
 
           <div className="ExpressionItem__buttons">
-            <Button
-              icon="plus"
-              text="Term"
-              groupPosition="left"
-              onClick={onAddTerm}
-            />
-            <Button
-              icon="plus"
-              text="Group"
-              groupPosition={isRoot ? "right" : "middle"}
-              onClick={onAddOperator}
-            />
+            <Button icon="plus" text="Term" onClick={onAddTerm} />
+            <Button icon="plus" text="Group" onClick={onAddOperator} />
             {!isRoot && (
               <React.Fragment>
                 <Button
                   icon="check"
-                  groupPosition="middle"
-                  // color={enabledColour}
                   disabled={!value.enabled}
                   onClick={onEnabledToggled}
                 />
-                <Button
-                  icon="trash"
-                  groupPosition="right"
-                  onClick={onDeleteThis}
-                />
+                <Button icon="trash" onClick={onDeleteThis} />
               </React.Fragment>
             )}
           </div>

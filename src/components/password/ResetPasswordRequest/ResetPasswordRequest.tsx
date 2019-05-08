@@ -19,7 +19,6 @@ import * as React from "react";
 import Button from "components/Button";
 import { hasAnyProps } from "lib/lang";
 import * as Yup from "yup";
-import { ButtonAction, ButtonAppearance } from "components/Button/types";
 
 const ValidationSchema = Yup.object().shape({
   email: Yup.string().required("Required"),
@@ -64,15 +63,13 @@ const ResetPasswordRequest: React.FunctionComponent<{
             </div>
             <div className="footer">
               <Button
-                appearance={ButtonAppearance.Text}
-                action={ButtonAction.Primary}
+                action="primary"
                 type="submit"
                 disabled={isPristine || hasErrors}
                 text="Send"
               />
               <Button
-                appearance={ButtonAppearance.Text}
-                action={ButtonAction.Secondary}
+                action="secondary"
                 onClick={() => onBack()}
                 text="Back to Stroom"
               />

@@ -24,7 +24,6 @@ import {
   DataSourceType,
   ExpressionOperatorType,
 } from "../ExpressionBuilder/types";
-import { ButtonAppearance } from "components/Button/types";
 
 interface Props {
   className?: string;
@@ -123,7 +122,7 @@ const ExpressionSearchBar: React.FunctionComponent<Props> = ({
         <Button
           className="search-bar__button"
           disabled={!isSearchStringValid}
-          appearance={ButtonAppearance.Icon}
+          appearance="icon"
           icon="search"
           onClick={onClickSearch}
         />

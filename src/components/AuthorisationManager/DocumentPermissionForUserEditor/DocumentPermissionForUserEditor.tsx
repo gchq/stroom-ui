@@ -9,7 +9,7 @@ import Button from "components/Button";
 import useRouter from "lib/useRouter";
 import { useUser } from "components/AuthorisationManager/api/userGroups";
 import { useDocumentTree } from "components/DocumentEditors/api/explorer";
-import { ButtonAppearance } from "components/Button/types";
+import ModeOptionButtons from "components/AppSearchBar/ModeOptionButton";
 
 interface Props {
   docRefUuid: string;
@@ -37,11 +37,7 @@ export const DocumentPermissionForUserEditor: React.FunctionComponent<
       <h2>{`Document Permissions for Doc ${docRef.type}-${
         docRef.name
       }, user ${user && user.name}`}</h2>
-      <Button
-        appearance={ButtonAppearance.Text}
-        text="Back"
-        onClick={history.goBack}
-      />
+      <ModeOptionButtons text="Back" onClick={history.goBack} />
 
       <CheckboxSeries
         allValues={permissionsForType}

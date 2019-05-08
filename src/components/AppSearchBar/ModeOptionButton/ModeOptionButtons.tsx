@@ -3,7 +3,6 @@ import * as React from "react";
 import Button from "../../Button";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { SearchMode } from "./types";
-import { ButtonAppearance } from "components/Button/types";
 
 interface Props {
   searchMode: SearchMode;
@@ -13,7 +12,6 @@ interface Props {
 interface ModeOption {
   mode: SearchMode;
   icon: IconProp;
-  position: "left" | "middle" | "right";
   title: string;
 }
 
@@ -21,19 +19,16 @@ const MODE_OPTIONS: ModeOption[] = [
   {
     mode: SearchMode.GLOBAL_SEARCH,
     icon: "search",
-    position: "left",
     title: "Search",
   },
   {
     mode: SearchMode.NAVIGATION,
     icon: "folder",
-    position: "middle",
     title: "Navigation",
   },
   {
     mode: SearchMode.RECENT_ITEMS,
     icon: "history",
-    position: "right",
     title: "Recent Items",
   },
 ];
@@ -44,8 +39,7 @@ const ModeOptionButtons: React.FunctionComponent<Props> = ({ switchMode }) => (
       <Button
         key={modeOption.mode}
         icon={modeOption.icon}
-        appearance={ButtonAppearance.Icon}
-        groupPosition={modeOption.position}
+        appearance="icon"
         onClick={e => {
           switchMode(modeOption.mode);
           e.stopPropagation();

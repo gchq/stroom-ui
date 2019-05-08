@@ -182,25 +182,25 @@
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-// Text only buttons
+// Default buttons
 ////////////////////////////////////////////////////////////////////////////////
-.button__text-only { // .j1hrif9t
+.button__default { // .j1hrif9t
   padding: 6px 8px;
 }
 
-.button__text-only__primary { // .j14bbh75
+.button__default__primary { // .j14bbh75
   color: #2196f3;
 }
 
-.button__text-only__primary:hover { // .j14bbh75:hover
+.button__default__primary:hover { // .j14bbh75:hover
   background-color: rgba(33, 150, 243, 0.08);
 }
 
-.button__text-only__secondary { // .j1y9307j
+.button__default__secondary { // .j1y9307j
   color: rgb(225, 0, 80);
 }
 
-.button__text-only__secondary:hover { // .j1y9307j:hover
+.button__default__secondary:hover { // .j1y9307j:hover
   background-color: rgba(225, 0, 80, 0.08);
 }
 

@@ -24,7 +24,6 @@ import BackConfirmation from "../BackConfirmation";
 import { UserValidationSchema } from "../validation";
 import EditUserFormProps from "./EditUserFormProps";
 import UserFields from "./UserFields";
-import { ButtonAppearance, ButtonAction } from "components/Button/types";
 
 const UserForm: React.FunctionComponent<EditUserFormProps> = ({
   onSubmit,
@@ -61,7 +60,6 @@ const UserForm: React.FunctionComponent<EditUserFormProps> = ({
           <Form>
             <div className="header">
               <Button
-                appearance={ButtonAppearance.Text}
                 onClick={() => handleBack(isPristine)}
                 icon="arrow-left"
                 text="Back"
@@ -78,8 +76,7 @@ const UserForm: React.FunctionComponent<EditUserFormProps> = ({
               />
               <div className="footer">
                 <Button
-                  appearance={ButtonAppearance.Text}
-                  action={ButtonAction.Primary}
+                  action="primary"
                   type="submit"
                   disabled={isPristine || hasErrors}
                   icon="save"
@@ -87,8 +84,7 @@ const UserForm: React.FunctionComponent<EditUserFormProps> = ({
                   // isLoading={isSaving}
                 />
                 <Button
-                  appearance={ButtonAppearance.Text}
-                  action={ButtonAction.Secondary}
+                  action="secondary"
                   icon="times"
                   onClick={() => onCancel()}
                   text="Cancel"

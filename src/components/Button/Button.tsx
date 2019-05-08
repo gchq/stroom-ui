@@ -17,18 +17,16 @@
 import * as React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { SizeProp } from "@fortawesome/fontawesome-svg-core";
-import { ButtonProps, ButtonAppearance, ButtonAction } from "./types";
+import { ButtonProps } from "./types";
 
 export const Button = ({
   text,
   icon,
   className: rawClassName,
-  groupPosition,
   appearance,
   action,
   selected,
   disabled,
-  type,
   size,
   ...rest
 }: ButtonProps) => {
@@ -36,31 +34,30 @@ export const Button = ({
     let classNames = ["button"];
 
     if (rawClassName) classNames.push(rawClassName);
-    if (groupPosition) classNames.push(groupPosition);
 
     // Set the base button class.
     classNames.push("button__base");
     // Set the general button styling class unless this is an icon button.
-    if (appearance !== ButtonAppearance.Icon) classNames.push("button");
+    if (appearance !== "icon") classNames.push("button");
 
     // Get the style name (contained by default).
     let appearanceName = "button__contained";
     if (appearance) {
-      switch (+appearance) {
-        case ButtonAppearance.Normal: {
-          appearanceName = "button__contained";
+      switch (appearance) {
+        case "default": {
+          appearanceName = "button__default";
           break;
         }
-        case ButtonAppearance.Icon: {
-          appearanceName = "button__icon";
-          break;
-        }
-        case ButtonAppearance.Outline: {
+        case "outline": {
           appearanceName = "button__outline";
           break;
         }
-        case ButtonAppearance.Text: {
-          appearanceName = "button__text-only";
+        case "icon": {
+          appearanceName = "button__icon";
+          break;
+        }
+        case "contained": {
+          appearanceName = "button__contained";
           break;
         }
         default:
@@ -73,12 +70,12 @@ export const Button = ({
     // Get the color (none by default);
     let actionName;
     if (action) {
-      switch (+action) {
-        case ButtonAction.Primary: {
+      switch (action) {
+        case "primary": {
           actionName = appearanceName + "__primary";
           break;
         }
-        case ButtonAction.Secondary: {
+        case "secondary": {
           actionName = appearanceName + "__secondary";
           break;
         }
@@ -96,15 +93,7 @@ export const Button = ({
     if (disabled) classNames.push("disabled");
 
     return classNames.join(" ");
-  }, [
-    rawClassName,
-    groupPosition,
-    appearance,
-    action,
-    text,
-    selected,
-    disabled,
-  ]);
+  }, [rawClassName, appearance, action, text, selected, disabled]);
 
   let fontAwesomeSize: SizeProp = React.useMemo(() => {
     switch (size) {
@@ -123,7 +112,7 @@ export const Button = ({
   }, [size]);
 
   return (
-    <button className={className} type={type} {...rest}>
+    <button className={className} {...rest}>
       {icon ? (
         <FontAwesomeIcon size={fontAwesomeSize} icon={icon} />
       ) : (
