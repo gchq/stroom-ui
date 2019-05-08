@@ -20,7 +20,7 @@ import { storiesOf } from "@storybook/react";
 
 import Routes from "./Routes";
 import { addThemedStories } from "testing/storybook/themedStoryGenerator";
-import useAppNavigation from "./useAppNavigation";
+import useAppNavigation from "../../lib/useAppNavigation/useAppNavigation";
 import { WithChromeContext } from "lib/useRouter/BrowserRouter";
 import Button from "components/Button";
 import useRouter from "lib/useRouter";

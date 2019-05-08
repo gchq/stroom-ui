@@ -16,10 +16,10 @@ const generateAnimal = (): Animal => ({
 });
 
 const AMOUNT_TO_FETCH = 5;
-const initialAnimals = Array(AMOUNT_TO_FETCH)
+const initialAnimals = Array(AMOUNT_TO_FETCH * 2)
   .fill(1)
   .map(generateAnimal);
-const MAX_ANIMALS = 13;
+const MAX_ANIMALS = AMOUNT_TO_FETCH * 4;
 
 interface OutProps {
   animals: Animal[];

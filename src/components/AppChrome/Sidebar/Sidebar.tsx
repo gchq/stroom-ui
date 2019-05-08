@@ -1,0 +1,201 @@
+import * as React from "react";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import useLocalStorage, { storeBoolean } from "lib/useLocalStorage";
+import useMenuItems from "./useMenuItems";
+import { ShowDialog as ShowCopyDocRefDialog } from "components/DocumentEditors/FolderExplorer/CopyMoveDocRefDialog/types";
+import {
+  CopyMoveDocRefDialog,
+  useDialog as useCopyMoveDocRefDialog,
+} from "components/DocumentEditors/FolderExplorer/CopyMoveDocRefDialog";
+import useKeyIsDown, { KeyDownState } from "lib/useKeyIsDown";
+import useSelectableItemListing from "lib/useSelectableItemListing";
+import {
+  MenuItemsOpenState,
+  MenuItemType,
+  MenuItemOpened,
+} from "./MenuItem/types";
+import MenuItem from "./MenuItem";
+import { useDocumentTree } from "components/DocumentEditors/api/explorer";
+import { ActiveMenuItem } from "../types";
+
+interface Props {
+  activeMenuItem: ActiveMenuItem;
+}
+
+const getMenuItems = (
+  activeMenuItem: string,
+  isCollapsed: boolean = false,
+  menuItems: MenuItemType[],
+  areMenuItemsOpen: MenuItemsOpenState,
+  menuItemOpened: MenuItemOpened,
+  keyIsDown: KeyDownState,
+  showCopyDialog: ShowCopyDocRefDialog,
+  showMoveDialog: ShowCopyDocRefDialog,
+  selectedItems: MenuItemType[],
+  focussedItem?: MenuItemType,
+  depth: number = 0,
+) =>
+  menuItems.map(menuItem => {
+    console.log("Rendering Menu Item");
+    return (
+      <React.Fragment key={menuItem.key}>
+        <MenuItem
+          keyIsDown={keyIsDown}
+          selectedItems={selectedItems}
+          focussedItem={focussedItem}
+          className={`sidebar__text-color ${isCollapsed ? "collapsed" : ""} ${
+            depth > 0 ? "child" : ""
+          }`}
+          key={menuItem.key}
+          activeMenuItem={activeMenuItem}
+          menuItem={menuItem}
+          depth={depth}
+          isCollapsed={isCollapsed}
+          showCopyDialog={showCopyDialog}
+          showMoveDialog={showMoveDialog}
+          menuItemOpened={menuItemOpened}
+          areMenuItemsOpen={areMenuItemsOpen}
+        />
+        {/* TODO: we only want the 'children' class on the first set of children. We're using it to pad the bottom. Any better ideas? */}
+        {menuItem.children && areMenuItemsOpen[menuItem.key] ? (
+          <div className={`${depth === 0 ? "sidebar__children" : ""}`}>
+            {getMenuItems(
+              activeMenuItem,
+              isCollapsed,
+              menuItem.children,
+              areMenuItemsOpen,
+              menuItemOpened,
+              keyIsDown,
+              showCopyDialog,
+              showMoveDialog,
+              selectedItems,
+              focussedItem,
+              depth + 1,
+            )}
+          </div>
+        ) : (
+          undefined
+        )}
+      </React.Fragment>
+    );
+  });
+
+const Sidebar: React.FunctionComponent<Props> = ({ activeMenuItem }) => {
+  const {
+    menuItems,
+    openMenuItems,
+    menuItemOpened,
+    areMenuItemsOpen,
+  } = useMenuItems(activeMenuItem);
+
+  const { copyDocuments, moveDocuments } = useDocumentTree();
+
+  const { value: isExpanded, reduceValue: setIsExpanded } = useLocalStorage(
+    "isExpanded",
+    true,
+    storeBoolean,
+  );
+  const toggleIsExpanded = React.useCallback(
+    () => setIsExpanded(existingIsExpanded => !existingIsExpanded),
+    [setIsExpanded],
+  );
+  const sidebarClassName = isExpanded
+    ? "app-chrome__sidebar--expanded"
+    : "app-chrome__sidebar--collapsed";
+
+  const keyIsDown = useKeyIsDown();
+  const { onKeyDown, selectedItems, focussedItem } = useSelectableItemListing<
+    MenuItemType
+  >({
+    items: openMenuItems,
+    getKey: React.useCallback(m => m.key, []),
+    openItem: React.useCallback(m => m.onClick(), []),
+    enterItem: React.useCallback(m => menuItemOpened(m.key, true), [
+      menuItemOpened,
+    ]),
+    goBack: React.useCallback(
+      m => {
+        if (m) {
+          if (areMenuItemsOpen[m.key]) {
+            menuItemOpened(m.key, false);
+          } else if (!!m.parentDocRef) {
+            // Can we bubble back up to the parent folder of the current selection?
+            // let newSelection = openMenuItems.find(
+            //   ({ key }: MenuItemType) =>
+            //     !!m.parentDocRef && key === m.parentDocRef.uuid,
+            // );
+            // if (!!newSelection) {
+            //   toggleSelection(newSelection.key);
+            // }
+            menuItemOpened(m.parentDocRef.uuid, false);
+          }
+        }
+      },
+      [areMenuItemsOpen, menuItemOpened],
+    ),
+  });
+
+  const {
+    showDialog: showCopyDialog,
+    componentProps: copyDialogComponentProps,
+  } = useCopyMoveDocRefDialog(copyDocuments);
+  const {
+    showDialog: showMoveDialog,
+    componentProps: moveDialogComponentProps,
+  } = useCopyMoveDocRefDialog(moveDocuments);
+
+  return (
+    <div className={`app-chrome__sidebar ${sidebarClassName}`}>
+      <CopyMoveDocRefDialog {...copyDialogComponentProps} />
+      <CopyMoveDocRefDialog {...moveDialogComponentProps} />
+      <React.Fragment>
+        <div className="app-chrome__sidebar_header">
+          {isExpanded ? (
+            <img
+              className="sidebar__logo"
+              alt="Stroom logo"
+              src={require("../../../images/logo.svg")}
+            />
+          ) : (
+            undefined
+          )}
+          <div
+            className="app-chrome__sidebar_header_icon"
+            onClick={toggleIsExpanded}
+          >
+            <FontAwesomeIcon
+              aria-label="Show/hide the sidebar"
+              className="menu-item__menu-icon sidebar__toggle sidebar__menu-item borderless "
+              icon="bars"
+              size="2x"
+            />
+          </div>
+        </div>
+        <div
+          tabIndex={0}
+          onKeyDown={onKeyDown}
+          className="app-chrome__sidebar-menu"
+          data-simplebar
+        >
+          <div className="app-chrome__sidebar-menu__container">
+            {getMenuItems(
+              activeMenuItem,
+              !isExpanded,
+              menuItems,
+              areMenuItemsOpen,
+              menuItemOpened,
+              keyIsDown,
+              showCopyDialog,
+              showMoveDialog,
+              selectedItems,
+              focussedItem,
+            )}
+          </div>
+        </div>
+      </React.Fragment>
+    </div>
+  );
+};
+
+export default Sidebar;

@@ -4,7 +4,7 @@ import Button from "components/Button";
 import ThemedConfirm, {
   useDialog as useThemedConfim,
 } from "components/ThemedConfirm";
-import useAppNavigation from "../AppChrome/useAppNavigation";
+import useAppNavigation from "../../lib/useAppNavigation/useAppNavigation";
 import NewUserDialog, {
   useDialog as useNewUserDialog,
 } from "./NewUserDialog/NewUserDialog";

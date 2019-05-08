@@ -9,6 +9,7 @@ export const HistoryContext = React.createContext<History | undefined>(
 );
 
 export interface ChromeContext {
+  includeSidebar: boolean;
   urlPrefix: string;
   setUrlPrefix: (i: string) => void;
 }
@@ -17,9 +18,16 @@ export const DEFAULT_CHROME_MODE = "withChrome";
 
 export const WithChromeContext = React.createContext<ChromeContext>({
   urlPrefix: DEFAULT_CHROME_MODE,
+  includeSidebar: true,
   setUrlPrefix: () =>
     console.error("Setting Include Chrome on Default Implementation"),
 });
+
+export const useChromeContext = (urlPrefix: string): boolean => {
+  const { includeSidebar, setUrlPrefix } = React.useContext(WithChromeContext);
+  React.useEffect(() => setUrlPrefix(urlPrefix), [urlPrefix, setUrlPrefix]);
+  return includeSidebar;
+};
 
 interface Props {
   history: History;
@@ -47,6 +55,7 @@ const CustomRouter: React.FunctionComponent<Props> = ({
             value={{
               urlPrefix,
               setUrlPrefix,
+              includeSidebar: urlPrefix === DEFAULT_CHROME_MODE,
             }}
           >
             <HistoryContext.Provider value={history}>

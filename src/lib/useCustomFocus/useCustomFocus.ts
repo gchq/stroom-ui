@@ -8,7 +8,8 @@ interface InProps<T extends {}> {
 interface OutProps<T extends {}> {
   focusIndex: number;
   focussedItem: T | undefined;
-  set: (index: number) => void;
+  setByIndex: (index: number) => void;
+  setByItem: (item: T) => void;
   up: () => void;
   down: () => void;
   clear: () => void;
@@ -101,9 +102,13 @@ const useCustomFocus = <T extends {}>({
     }
   }, [focusIndex, items]);
 
-  const set = React.useCallback(
+  const setByIndex = React.useCallback(
     (index: number) => dispatch({ type: "set", index }),
     [dispatch],
+  );
+  const setByItem = React.useCallback(
+    (item: T) => dispatch({ type: "set", index: items.indexOf(item) }),
+    [dispatch, items],
   );
   const up = React.useCallback(() => dispatch({ type: "up", preFocusWrap }), [
     dispatch,
@@ -120,7 +125,8 @@ const useCustomFocus = <T extends {}>({
   return {
     focusIndex,
     focussedItem,
-    set,
+    setByIndex,
+    setByItem,
     up,
     down,
     clear,

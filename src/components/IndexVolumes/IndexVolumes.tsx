@@ -15,7 +15,7 @@ import {
   useIndexVolumeGroupModalPicker,
 } from "../IndexVolumeGroups/IndexVolumeGroupPickerDialog";
 import { useIndexVolumes, IndexVolume } from "components/IndexVolumes/api";
-import useAppNavigation from "../AppChrome/useAppNavigation";
+import useAppNavigation from "../../lib/useAppNavigation/useAppNavigation";
 import Toggle from "react-toggle";
 import DocRefIconHeader from "components/DocRefIconHeader";
 
