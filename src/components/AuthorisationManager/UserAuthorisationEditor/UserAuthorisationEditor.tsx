@@ -9,7 +9,6 @@ import Loader from "components/Loader";
 import useRouter from "lib/useRouter";
 import { useAppPermissionsForUser } from "components/AuthorisationManager/api/appPermission";
 import { AppPermissionPicker } from "../AppPermissionPicker";
-import { ButtonAppearance } from "components/Button/types";
 
 interface Props {
   userUuid: string;
@@ -35,11 +34,7 @@ const UserAuthorisationEditor: React.FunctionComponent<Props> = ({
   return (
     <div>
       <IconHeader text={title} icon="user" />
-      <Button
-        appearance={ButtonAppearance.Text}
-        text="Back"
-        onClick={history.goBack}
-      />
+      <Button text="Back" onClick={history.goBack} />
 
       <section>
         <h2>Application Permissions</h2>

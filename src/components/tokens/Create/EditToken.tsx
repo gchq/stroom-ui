@@ -24,7 +24,6 @@ import Button from "components/Button";
 import Loader from "components/Loader";
 import useIdFromPath from "lib/useIdFromPath";
 import useTokens from "./useTokens";
-import { ButtonAppearance } from "components/Button/types";
 
 const EditToken = () => {
   const { toggleEnabledState, fetchApiKey, token } = useTokens();
@@ -40,12 +39,7 @@ const EditToken = () => {
   return (
     <form>
       <div className="header">
-        <Button
-          appearance={ButtonAppearance.Text}
-          icon="arrow-left"
-          text="Back"
-          onClick={() => goToApiKeys()}
-        />
+        <Button icon="arrow-left" text="Back" onClick={() => goToApiKeys()} />
       </div>
       {token === undefined ? (
         <div className="loader-container">

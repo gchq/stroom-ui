@@ -22,7 +22,6 @@ import { AsyncUserSelect } from "components/users";
 import { useAuthenticationContext } from "startup/Authentication";
 import useConfig from "startup/config/useConfig";
 import useTokens from "./useTokens";
-import { ButtonAppearance, ButtonAction } from "components/Button/types";
 
 interface DropDownValues {
   label: string;
@@ -52,7 +51,6 @@ const TokenCreateForm = () => {
             <form onSubmit={handleSubmit}>
               <div className="header">
                 <Button
-                  appearance={ButtonAppearance.Text}
                   icon="arrow-left"
                   text="Back"
                   onClick={() => goToApiKeys()}
@@ -81,8 +79,7 @@ const TokenCreateForm = () => {
               </div>
               <div className="footer">
                 <Button
-                  appearance={ButtonAppearance.Text}
-                  action={ButtonAction.Primary}
+                  action="primary"
                   disabled={submitIsDisabled}
                   icon="plus"
                   type="submit"

@@ -15,7 +15,6 @@ import {
 import UsersTable, { useTable } from "./UsersTable";
 import Toggle from "react-toggle";
 import IconHeader from "components/IconHeader";
-import { ButtonAppearance } from "components/Button/types";
 
 interface Props {
   isGroup: boolean;
@@ -87,28 +86,20 @@ const Authorisation: React.FunctionComponent<Props> = ({ isGroup }) => {
       <div className="page__header">
         <IconHeader text={isGroup ? "User Groups" : "Users"} icon="user" />
         <div className="page__buttons">
+          <Button onClick={showNewDialog} icon="plus" text="Create" />
           <Button
-            appearance={ButtonAppearance.Text}
-            onClick={showNewDialog}
-            icon="plus"
-            text="Create"
-          />
-          <Button
-            appearance={ButtonAppearance.Text}
             disabled={selectedUsers.length !== 1}
             onClick={onViewEditClick}
             icon="edit"
             text="View/edit"
           />
           <Button
-            appearance={ButtonAppearance.Text}
             disabled={selectedUsers.length !== 1}
             onClick={showDeleteDialog}
             icon="trash"
             text="Delete"
           />
           <Button
-            appearance={ButtonAppearance.Text}
             text="To Group"
             icon="plus"
             disabled={

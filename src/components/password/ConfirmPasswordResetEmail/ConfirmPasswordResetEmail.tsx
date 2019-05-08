@@ -16,7 +16,6 @@
 
 import * as React from "react";
 import Button from "components/Button";
-import { ButtonAppearance } from "components/Button/types";
 
 const ConfirmPasswordResetEmail: React.FunctionComponent<{
   onBack: Function;
@@ -29,11 +28,7 @@ const ConfirmPasswordResetEmail: React.FunctionComponent<{
       receive a message with a link that will let you change your password.
     </p>
     <div className="footer">
-      <Button
-        appearance={ButtonAppearance.Text}
-        onClick={() => onBack()}
-        text="Back to Stroom"
-      />
+      <Button onClick={() => onBack()} text="Back to Stroom" />
     </div>
   </div>
 );

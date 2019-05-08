@@ -13,7 +13,7 @@ import Button from "../../Button";
 import { useDocumentTree } from "components/DocumentEditors/api/explorer";
 import useAppNavigation from "../../AppChrome/useAppNavigation";
 import { DocumentApi } from "components/DocumentEditors/useDocumentApi/types/documentApi";
-import { ButtonProps, ButtonAppearance } from "components/Button/types";
+import { ButtonProps } from "components/Button/types";
 
 const DocRefEditor = <T extends {}>({
   onClickSave,
@@ -63,11 +63,7 @@ const DocRefEditor = <T extends {}>({
         />
         <div className="page__buttons">
           {actionBarItems.map((actionBarItem, i) => (
-            <Button
-              key={i}
-              appearance={ButtonAppearance.Text}
-              {...actionBarItem}
-            />
+            <Button key={i} {...actionBarItem} />
           ))}
         </div>
         <div className="page__breadcrumb">
