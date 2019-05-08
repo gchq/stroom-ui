@@ -39,7 +39,14 @@ const TestHarness: React.FunctionComponent<Props> = ({ initialItems }) => {
     }
   }, [items, itemAdded]);
 
-  const { set, down, up, clear, focusIndex, focussedItem } = useCustomFocus({
+  const {
+    setByIndex,
+    down,
+    up,
+    clear,
+    focusIndex,
+    focussedItem,
+  } = useCustomFocus({
     items,
     preFocusWrap,
   });
@@ -52,9 +59,9 @@ const TestHarness: React.FunctionComponent<Props> = ({ initialItems }) => {
     () =>
       items.map((item, i) => ({
         item,
-        onClick: () => set(i),
+        onClick: () => setByIndex(i),
       })),
-    [items, set],
+    [items, setByIndex],
   );
 
   return (

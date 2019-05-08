@@ -47,7 +47,7 @@ import { UserCreate, UserEdit, UserSearch } from "../users";
 import UserSettings from "../UserSettings";
 import Welcome from "../Welcome";
 import AppChrome from "./AppChrome";
-import useUrlGenerator from "./useUrlGenerator";
+import useUrlGenerator from "../../lib/useAppNavigation/useUrlGenerator";
 
 const renderWelcome = ({
   match: {

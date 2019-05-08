@@ -5,7 +5,7 @@ import cogoToast from "cogo-toast";
 
 import { useAuthenticationContext } from "startup/Authentication";
 import { useErrorReporting } from "components/ErrorPage";
-import useAppNavigation from "components/AppChrome/useAppNavigation";
+import useAppNavigation from "lib/useAppNavigation/useAppNavigation";
 
 const useCheckStatus = (status: number) =>
   React.useCallback(

@@ -20,7 +20,7 @@ import ReactTable, { RowInfo, Column } from "react-table";
 import "react-table/react-table.css";
 import Toggle from "react-toggle";
 import "react-toggle/style.css";
-import useAppNavigation from "components/AppChrome/useAppNavigation";
+import useAppNavigation from "lib/useAppNavigation/useAppNavigation";
 import Button from "components/Button";
 import useColumns from "./useColumns";
 import useTokenSearch from "./useTokenSearch";

@@ -15,7 +15,7 @@
  */
 
 import * as React from "react";
-import useAppNavigation from "components/AppChrome/useAppNavigation";
+import useAppNavigation from "lib/useAppNavigation/useAppNavigation";
 import { PasswordValidationRequest } from "components/authentication/types";
 import useConfig from "startup/config/useConfig";
 import { useUsers } from "../api";

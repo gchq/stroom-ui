@@ -1,5 +1,5 @@
 import { useCallback } from "react";
-import useAppNavigation from "components/AppChrome/useAppNavigation";
+import useAppNavigation from "lib/useAppNavigation/useAppNavigation";
 import { useApi as useAuthorisationApi } from "components/authorisation";
 import useApi from "../api/useApi";
 import { User } from "../types";

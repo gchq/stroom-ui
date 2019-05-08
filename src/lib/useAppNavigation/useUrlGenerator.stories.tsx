@@ -49,6 +49,4 @@ const TestHarness: React.FunctionComponent = () => {
   );
 };
 
-storiesOf("App Chrome/useUrlGenerator", module).add("test", () => (
-  <TestHarness />
-));
+storiesOf("lib/useUrlGenerator", module).add("test", () => <TestHarness />);

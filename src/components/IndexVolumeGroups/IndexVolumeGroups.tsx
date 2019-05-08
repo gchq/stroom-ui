@@ -11,7 +11,7 @@ import NewIndexVolumeGroupDialog, {
 import ThemedConfirm, {
   useDialog as useConfirmDialog,
 } from "components/ThemedConfirm";
-import useAppNavigation from "../AppChrome/useAppNavigation";
+import useAppNavigation from "../../lib/useAppNavigation/useAppNavigation";
 import Toggle from "react-toggle";
 import DocRefIconHeader from "components/DocRefIconHeader";
 import { ButtonAppearance } from "components/Button/types";

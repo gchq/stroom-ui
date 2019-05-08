@@ -18,7 +18,7 @@ import * as React from "react";
 import * as CopyToClipboard from "react-copy-to-clipboard";
 import Toggle from "react-toggle";
 import "react-toggle/style.css";
-import useAppNavigation from "components/AppChrome/useAppNavigation";
+import useAppNavigation from "lib/useAppNavigation";
 import { ByCopy, OnCopy } from "components/auditCopy";
 import Button from "components/Button";
 import Loader from "components/Loader";

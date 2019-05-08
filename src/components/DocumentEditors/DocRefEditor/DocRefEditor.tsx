@@ -11,7 +11,7 @@ import DocRefIconHeader from "../../DocRefIconHeader";
 import DocRefBreadcrumb from "../../DocRefBreadcrumb";
 import Button from "../../Button";
 import { useDocumentTree } from "components/DocumentEditors/api/explorer";
-import useAppNavigation from "../../AppChrome/useAppNavigation";
+import useAppNavigation from "../../../lib/useAppNavigation/useAppNavigation";
 import { DocumentApi } from "components/DocumentEditors/useDocumentApi/types/documentApi";
 import { ButtonProps, ButtonAppearance } from "components/Button/types";
 
