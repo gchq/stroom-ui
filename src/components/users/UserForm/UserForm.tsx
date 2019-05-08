@@ -76,6 +76,7 @@ const UserForm: React.FunctionComponent<EditUserFormProps> = ({
               />
               <div className="footer">
                 <Button
+                  appearance="contained"
                   action="primary"
                   type="submit"
                   disabled={isPristine || hasErrors}
@@ -84,6 +85,7 @@ const UserForm: React.FunctionComponent<EditUserFormProps> = ({
                   // isLoading={isSaving}
                 />
                 <Button
+                  appearance="contained"
                   action="secondary"
                   icon="times"
                   onClick={() => onCancel()}

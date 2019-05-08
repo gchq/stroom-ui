@@ -63,12 +63,14 @@ const ResetPasswordRequest: React.FunctionComponent<{
             </div>
             <div className="footer">
               <Button
+                appearance="contained"
                 action="primary"
                 type="submit"
                 disabled={isPristine || hasErrors}
                 text="Send"
               />
               <Button
+                appearance="contained"
                 action="secondary"
                 onClick={() => onBack()}
                 text="Back to Stroom"

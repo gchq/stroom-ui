@@ -24,8 +24,20 @@ const DialogActionButtons = ({
   onConfirm,
 }: DialogActionButtonProps) => (
   <React.Fragment>
-    <Button action="primary" icon="check" text="Choose" onClick={onConfirm} />
-    <Button action="secondary" icon="times" text="Cancel" onClick={onCancel} />
+    <Button
+      appearance="contained"
+      action="primary"
+      icon="check"
+      text="Choose"
+      onClick={onConfirm}
+    />
+    <Button
+      appearance="contained"
+      action="secondary"
+      icon="times"
+      text="Cancel"
+      onClick={onCancel}
+    />
   </React.Fragment>
 );
 

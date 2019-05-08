@@ -79,6 +79,7 @@ const TokenCreateForm = () => {
               </div>
               <div className="footer">
                 <Button
+                  appearance="contained"
                   action="primary"
                   disabled={submitIsDisabled}
                   icon="plus"
