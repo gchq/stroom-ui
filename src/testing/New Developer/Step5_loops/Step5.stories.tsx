@@ -45,4 +45,13 @@ const TestHarness: React.FunctionComponent = () => {
   );
 };
 
-storiesOf("New Developer/Step 4", module).add("all", () => <TestHarness />);
+storiesOf("New Developer/Step 5", module)
+  .add("all", () => <TestHarness />)
+  .add("avoid", () => {
+    return (
+      <div>
+        If you put enough component logic in here, there are certain things
+        about React that are not respected (mostly around Context)
+      </div>
+    );
+  });
