@@ -23,8 +23,8 @@ interface MenuItemsByKey {
 interface OutProps {
   menuItems: MenuItemType[];
   menuItemsByKey: MenuItemsByKey;
-  areMenuItemsOpen: MenuItemsOpenState;
-  openMenuItems: string[];
+  menuItemIsOpenByKey: MenuItemsOpenState;
+  openMenuItemKeys: string[];
   menuItemOpened: MenuItemOpened;
   menuItemToggled: MenuItemToggled;
 }
@@ -72,9 +72,9 @@ const getDocumentTreeMenuItems = (
       : undefined,
 });
 
-const useMenuItems = (activeMenuItem?: string): OutProps => {
-  console.log("Rendering Use Menu Items");
+const DEFAULT_MENU_OPEN_STATE: MenuItemsOpenState = {};
 
+const useMenuItems = (activeMenuItem?: string): OutProps => {
   const {
     goToWelcome,
     goToDataViewer,
@@ -91,11 +91,11 @@ const useMenuItems = (activeMenuItem?: string): OutProps => {
   const { documentTree } = useDocumentTree();
 
   const {
-    value: areMenuItemsOpen,
+    value: menuItemIsOpenByKey,
     reduceValue: modifyOpenMenuItems,
   } = useLocalStorage<MenuItemsOpenState>(
     "app-chrome-menu-items-open",
-    {},
+    DEFAULT_MENU_OPEN_STATE,
     useStoreObjectFactory<MenuItemsOpenState>(),
   );
   const menuItemOpened: MenuItemOpened = React.useCallback(
@@ -237,12 +237,12 @@ const useMenuItems = (activeMenuItem?: string): OutProps => {
     ],
   );
 
-  const openMenuItems: string[] = React.useMemo(
+  const openMenuItemKeys: string[] = React.useMemo(
     () =>
-      Object.entries(areMenuItemsOpen)
+      Object.entries(menuItemIsOpenByKey)
         .filter(k => k[1])
         .map(k => k[0]),
-    [areMenuItemsOpen],
+    [menuItemIsOpenByKey],
   );
 
   const menuItemsByKey: MenuItemsByKey = React.useMemo(() => {
@@ -258,10 +258,10 @@ const useMenuItems = (activeMenuItem?: string): OutProps => {
 
   return {
     menuItems,
-    openMenuItems,
+    openMenuItemKeys,
     menuItemOpened,
     menuItemToggled,
-    areMenuItemsOpen,
+    menuItemIsOpenByKey,
     menuItemsByKey,
   };
 };

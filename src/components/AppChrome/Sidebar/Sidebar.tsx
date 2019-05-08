@@ -27,7 +27,7 @@ const getMenuItems = (
   activeMenuItem: string,
   isCollapsed: boolean = false,
   menuItems: MenuItemType[],
-  areMenuItemsOpen: MenuItemsOpenState,
+  menuItemIsOpenByKey: MenuItemsOpenState,
   menuItemOpened: MenuItemOpened,
   keyIsDown: KeyDownState,
   showCopyDialog: ShowCopyDocRefDialog,
@@ -55,16 +55,16 @@ const getMenuItems = (
           showCopyDialog={showCopyDialog}
           showMoveDialog={showMoveDialog}
           menuItemOpened={menuItemOpened}
-          areMenuItemsOpen={areMenuItemsOpen}
+          menuItemIsOpenByKey={menuItemIsOpenByKey}
         />
         {/* TODO: we only want the 'children' class on the first set of children. We're using it to pad the bottom. Any better ideas? */}
-        {menuItem.children && areMenuItemsOpen[menuItem.key] ? (
+        {menuItem.children && menuItemIsOpenByKey[menuItem.key] ? (
           <div className={`${depth === 0 ? "sidebar__children" : ""}`}>
             {getMenuItems(
               activeMenuItem,
               isCollapsed,
               menuItem.children,
-              areMenuItemsOpen,
+              menuItemIsOpenByKey,
               menuItemOpened,
               keyIsDown,
               showCopyDialog,
@@ -84,9 +84,9 @@ const getMenuItems = (
 const Sidebar: React.FunctionComponent<Props> = ({ activeMenuItem }) => {
   const {
     menuItems,
-    openMenuItems,
+    openMenuItemKeys,
     menuItemOpened,
-    areMenuItemsOpen,
+    menuItemIsOpenByKey,
     menuItemsByKey,
   } = useMenuItems(activeMenuItem);
 
@@ -120,7 +120,7 @@ const Sidebar: React.FunctionComponent<Props> = ({ activeMenuItem }) => {
   const goBack = React.useCallback(
     (key: string) => {
       const menuItem = menuItemsByKey[key];
-      if (areMenuItemsOpen[key]) {
+      if (menuItemIsOpenByKey[key]) {
         menuItemOpened(key, false);
       } else if (!!menuItem.parentDocRef) {
         // Can we bubble back up to the parent folder of the current selection?
@@ -134,14 +134,14 @@ const Sidebar: React.FunctionComponent<Props> = ({ activeMenuItem }) => {
         menuItemOpened(menuItem.parentDocRef.uuid, false);
       }
     },
-    [areMenuItemsOpen, menuItemOpened, menuItemsByKey],
+    [menuItemIsOpenByKey, menuItemOpened, menuItemsByKey],
   );
 
   const keyIsDown = useKeyIsDown();
   const { onKeyDown, selectedItems, focussedItem } = useSelectableItemListing<
     string
   >({
-    items: openMenuItems,
+    items: openMenuItemKeys,
     getKey,
     openItem,
     enterItem,
@@ -195,7 +195,7 @@ const Sidebar: React.FunctionComponent<Props> = ({ activeMenuItem }) => {
               activeMenuItem,
               !isExpanded,
               menuItems,
-              areMenuItemsOpen,
+              menuItemIsOpenByKey,
               menuItemOpened,
               keyIsDown,
               showCopyDialog,

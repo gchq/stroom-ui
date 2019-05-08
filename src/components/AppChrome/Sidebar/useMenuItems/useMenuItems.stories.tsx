@@ -11,13 +11,13 @@ import {
 
 interface MenuItemListProps {
   menuItems: MenuItemType[];
-  areMenuItemsOpen: MenuItemsOpenState;
+  menuItemIsOpenByKey: MenuItemsOpenState;
   menuItemToggled: MenuItemToggled;
 }
 
 const MenuItemList: React.FunctionComponent<MenuItemListProps> = ({
   menuItems,
-  areMenuItemsOpen,
+  menuItemIsOpenByKey,
   menuItemToggled,
 }) => (
   <ul>
@@ -25,14 +25,14 @@ const MenuItemList: React.FunctionComponent<MenuItemListProps> = ({
       <li key={key}>
         {!!children ? (
           <span onClick={() => menuItemToggled(key)}>
-            {title} - {areMenuItemsOpen[key] ? "OPEN" : "CLOSED"}
+            {title} - {menuItemIsOpenByKey[key] ? "OPEN" : "CLOSED"}
           </span>
         ) : (
           <span>{title}</span>
         )}
-        {children && areMenuItemsOpen[key] && (
+        {children && menuItemIsOpenByKey[key] && (
           <MenuItemList
-            {...{ areMenuItemsOpen, menuItemToggled }}
+            {...{ menuItemIsOpenByKey, menuItemToggled }}
             menuItems={children}
           />
         )}
@@ -44,8 +44,8 @@ const MenuItemList: React.FunctionComponent<MenuItemListProps> = ({
 const TestHarness: React.FunctionComponent = () => {
   const {
     menuItems,
-    areMenuItemsOpen,
-    openMenuItems,
+    menuItemIsOpenByKey,
+    openMenuItemKeys,
     menuItemToggled,
   } = useMenuItems();
 
@@ -55,8 +55,8 @@ const TestHarness: React.FunctionComponent = () => {
         Click on the title of a folder to expand it. Be aware leaf nodes will
         not be shown.
       </p>
-      <MenuItemList {...{ menuItems, areMenuItemsOpen, menuItemToggled }} />
-      <JsonDebug value={{ areMenuItemsOpen, openMenuItems }} />
+      <MenuItemList {...{ menuItems, menuItemIsOpenByKey, menuItemToggled }} />
+      <JsonDebug value={{ menuItemIsOpenByKey, openMenuItemKeys }} />
     </div>
   );
 };

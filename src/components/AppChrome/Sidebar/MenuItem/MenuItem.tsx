@@ -30,7 +30,7 @@ interface Props {
   selectedItems: string[];
   focussedItem?: MenuItemType;
   keyIsDown: KeyDownState;
-  areMenuItemsOpen: MenuItemsOpenState;
+  menuItemIsOpenByKey: MenuItemsOpenState;
   menuItemOpened: MenuItemOpened;
   showCopyDialog: (docRefUuids: string[], destination: DocRefType) => void;
   showMoveDialog: (docRefUuids: string[], destination: DocRefType) => void;
@@ -102,7 +102,7 @@ const MenuItem: React.FunctionComponent<EnhancedProps> = ({
   isOver,
   canDrop,
   className: rawClassName,
-  areMenuItemsOpen,
+  menuItemIsOpenByKey,
   depth,
   connectDropTarget,
   connectDragSource,
@@ -123,10 +123,10 @@ const MenuItem: React.FunctionComponent<EnhancedProps> = ({
 
   const onExpand: React.MouseEventHandler<HTMLDivElement> = React.useCallback(
     (e: React.MouseEvent) => {
-      menuItemOpened(menuItem.key, !areMenuItemsOpen[menuItem.key]);
+      menuItemOpened(menuItem.key, !menuItemIsOpenByKey[menuItem.key]);
       e.preventDefault();
     },
-    [menuItem.key, areMenuItemsOpen, menuItemOpened],
+    [menuItem.key, menuItemIsOpenByKey, menuItemOpened],
   );
   const onSelect: React.MouseEventHandler<HTMLDivElement> = React.useCallback(
     (e: React.MouseEvent) => {
@@ -136,7 +136,7 @@ const MenuItem: React.FunctionComponent<EnhancedProps> = ({
     [menuItem],
   );
 
-  const isShowingChildren: boolean = areMenuItemsOpen[menuItem.key];
+  const isShowingChildren: boolean = menuItemIsOpenByKey[menuItem.key];
   const hasChildren: boolean =
     menuItem.children && menuItem.children.length > 0;
 
