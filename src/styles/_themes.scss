@@ -20,9 +20,6 @@ $themes: (
     dropdown__background-color: #fff,
     dropdown__border: 1px solid #dfe0e1,
     dropdown__hover-color: #dfe0e1,
-    breadcrumb__divider___color: black,
-    breadcrumb__section___color: black,
-    breadcrumb__section--active___color: black,
     scrollbar__track-color: #d3d3d3,
     scrollbar__thumb-color: #a7a6a6,
     // Naigation menu
@@ -33,15 +30,10 @@ $themes: (
     sidebar__menu-item-background--select-hover: #0288D1,
     sidebar__menu-item-text: rgba(255,255,255,0.8),
     sidebar__menu-item-text--select: #fff,
-
-    // Breadcrumbs
-    breadcrumb-text__color: rgba(0,0,0,0.5),
-    breadcrumb-text__color--hover: rgba(0,0,0,0.7),
-    breadcrumb-divider__color: rgba(0,0,0,0.3),
   ),
   dark: (
     // General
-    background__color: #282829,
+    background__color: #1e1e1e,
     text__color: #cacbcb,
     text__color--deemphasised: #cacbcb,
     selected-color: #185e90,
@@ -60,23 +52,15 @@ $themes: (
     dropdown__background-color: #282829,
     dropdown__border: 1px solid #4d5250,
     dropdown__hover-color: #4d5250,
-    breadcrumb__divider___color: white,
-    breadcrumb__section___color: white,
-    breadcrumb__section--active___color: white,
     scrollbar__track-color: #333333,
     scrollbar__thumb-color: #848484,
     // Naigation menu
     sidebar__header-color: #fff,
-    sidebar__background-color: #424242,
-    sidebar__menu-item-background: #424242,
-    sidebar__menu-item-background--select: #616161,
-    sidebar__menu-item-background--select-hover: #757575,
+    sidebar__background-color: #252526,
+    sidebar__menu-item-background: #252526,
+    sidebar__menu-item-background--select: #37373d,
+    sidebar__menu-item-background--select-hover: #37373d,
     sidebar__menu-item-text: rgba(255,255,255,0.8),
     sidebar__menu-item-text--select: #fff,
-
-    // Breadcrumbs
-    breadcrumb-text__color: rgba(255,255,255,0.5),
-    breadcrumb-text__color--hover: rgba(255,255,255,0.7),
-    breadcrumb-divider__color: rgba(255,255,255,0.3),
   )
 );
