@@ -6,6 +6,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+## [v7.0-alpha.1] - 2019-05-09
+
+- Design uplift
+
+- Refactoring
 
 ## [v1.0-alpha.8] - 2019-04-23
 
@@ -39,7 +44,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Experimental first tag
 
-[unreleased]: https://github.com/gchq/stroom-auth/compare/v1.0-alpha.8...master
+[unreleased]: https://github.com/gchq/stroom-auth/compare/v7.0-alpha.1...master
+[v7.0-alpha.1]: https://github.com/gchq/stroom-auth/compare/v1.0-alpha.8...v7.0-alpha.1
 [v1.0-alpha.8]: https://github.com/gchq/stroom-auth/compare/v1.0-alpha.7...v1.0-alpha.8
 [v1.0-alpha.7]: https://github.com/gchq/stroom-auth/compare/v1.0-alpha.6...v1.0-alpha.7
 [v1.0-alpha.6]: https://github.com/gchq/stroom-auth/compare/v1.0-alpha.5...v1.0-alpha.6
