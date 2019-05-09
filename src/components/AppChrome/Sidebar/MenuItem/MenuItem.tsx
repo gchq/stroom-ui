@@ -125,6 +125,7 @@ const MenuItem: React.FunctionComponent<EnhancedProps> = ({
     (e: React.MouseEvent) => {
       menuItemOpened(menuItem.key, !menuItemIsOpenByKey[menuItem.key]);
       e.preventDefault();
+      e.stopPropagation(); // prevent onSelect from also firing
     },
     [menuItem.key, menuItemIsOpenByKey, menuItemOpened],
   );
@@ -194,7 +195,6 @@ const MenuItem: React.FunctionComponent<EnhancedProps> = ({
     () => (isShowingChildren ? "folder-open" : "folder-plus"),
     [isShowingChildren],
   );
-  //const isHeader = menuItem.key !== "stroom";
 
   return connectDragSource(
     connectDropTarget(
