@@ -464,6 +464,20 @@ input {
   }
 }
 
+.button-outline:hover { 
+  @include themify($themes) {
+    border-color: themed("button-outline__border-color--hover");
+    background-color: themed("button-outline__background-color--hover");
+  }
+}
+
+.button-outline.button-selected { 
+  @include themify($themes) {
+    border-color: themed("button-outline__border-color--hover");
+    background-color: themed("button-outline__background-color--selected");
+  }
+}
+
 .button-outline-primary { 
   @include themify($themes) {
     color: themed("button-outline-primary__color");
@@ -481,7 +495,7 @@ input {
 .button-outline-primary.button-selected { 
   @include themify($themes) {
     border-color: themed("button-outline-primary__border-color--hover");
-    background-color: themed("button-outline-primary__background-color--hover");
+    background-color: themed("button-outline-primary__background-color--selected");
   }
 }
 
@@ -502,7 +516,7 @@ input {
 .button-outline-secondary.button-selected {
   @include themify($themes) {
     border-color: themed("button-outline-secondary__border-color--hover");
-    background-color: themed("button-outline-secondary__background-color--hover");
+    background-color: themed("button-outline-secondary__background-color--selected");
   }
 }
 
