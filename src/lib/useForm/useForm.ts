@@ -11,28 +11,22 @@ interface UseForm<T> {
   onValidate?: (updates: Partial<T>) => void;
 }
 
-export const useForm = function<T>({
+const reducer = <T extends {}>(state: T, action: Partial<T>) => {
+  return { ...state, ...action };
+};
+
+export const useForm = <T extends {}>({
   initialValues,
   onValidate,
-}: UseForm<T>): Form<T> {
-  const [value, setCurrentValues] = React.useState<Partial<T>>(
-    initialValues || {},
-  );
-
-  // Memo-ized function to combine updates with existing state
-  const onUpdate = React.useCallback(
-    (newUpdates: Partial<T>) => {
-      setCurrentValues({ ...value, ...newUpdates });
-    },
-    [value, setCurrentValues],
-  );
+}: UseForm<T>): Form<T> => {
+  const [value, onUpdate] = React.useReducer(reducer, initialValues || {});
 
   // Set the current values to the initial values, whenever those change
   React.useEffect(() => {
     if (!!initialValues) {
-      setCurrentValues(initialValues);
+      onUpdate(initialValues);
     }
-  }, [initialValues, setCurrentValues]);
+  }, [initialValues, onUpdate]);
 
   // Call out to the validation function when the values change
   React.useEffect(() => {
