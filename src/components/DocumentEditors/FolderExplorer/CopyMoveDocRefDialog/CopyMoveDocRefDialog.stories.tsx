@@ -1,7 +1,6 @@
 import * as React from "react";
 import { storiesOf } from "@storybook/react";
 
-import { fromSetupSampleData } from "../test";
 import {
   CopyMoveDocRefDialog,
   useDialog as useCopyMoveDocRefDialog,
@@ -10,8 +9,10 @@ import {
 import JsonDebug from "testing/JsonDebug";
 import { DocRefType } from "components/DocumentEditors/useDocumentApi/types/base";
 import { PermissionInheritance } from "../PermissionInheritancePicker/types";
+import { addThemedStories } from "testing/storybook/themedStoryGenerator";
+import fullTestData from "testing/data";
 
-const testFolder2 = fromSetupSampleData.children![1];
+const testFolder2 = fullTestData.documentTree.children![1];
 
 interface Props {
   testUuids: string[];
@@ -44,12 +45,14 @@ const TestHarness: React.FunctionComponent<Props> = ({
   );
 };
 
-storiesOf("Document Editors/Folder/Copy Doc Ref Dialog", module).add(
-  "simple",
-  () => (
-    <TestHarness
-      testUuids={testFolder2.children!.map(d => d.uuid)}
-      testDestination={testFolder2}
-    />
-  ),
+const stories = storiesOf(
+  "Document Editors/Folder/Copy Doc Ref/Dialog",
+  module,
 );
+
+addThemedStories(stories, () => (
+  <TestHarness
+    testUuids={testFolder2.children!.map(d => d.uuid)}
+    testDestination={testFolder2}
+  />
+));

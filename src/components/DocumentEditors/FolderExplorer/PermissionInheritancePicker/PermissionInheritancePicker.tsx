@@ -19,8 +19,6 @@ const PermissionInheritancePicker: React.FunctionComponent<
     value,
   });
 
-  console.log("Permission Inheritance", { options, value });
-
   return (
     <Select
       placeholder="Permission Inheritance"
