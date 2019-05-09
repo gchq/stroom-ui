@@ -15,20 +15,13 @@
  */
 import * as React from "react";
 
-import IconHeader from "../../../IconHeader";
-import DialogActionButtons from "../../../DialogActionButtons";
-import ThemedModal from "../../../ThemedModal";
-import AppSearchBar from "../../../AppSearchBar";
-import PermissionInheritancePicker from "../PermissionInheritancePicker";
-import useForm from "lib/useForm";
+import IconHeader from "components/IconHeader";
+import DialogActionButtons from "components/DialogActionButtons";
+import ThemedModal from "components/ThemedModal";
 import { UseDialog, Props } from "./types";
 import { DocRefType } from "components/DocumentEditors/useDocumentApi/types/base";
 import { PermissionInheritance } from "../PermissionInheritancePicker/types";
-
-interface FormValues {
-  destination?: DocRefType;
-  permissionInheritance: PermissionInheritance;
-}
+import CopyMoveDocRefForm, { useThisForm } from "./CopyMoveDocRefForm";
 
 export const CopyMoveDocRefDialog: React.FunctionComponent<Props> = ({
   uuids,
@@ -37,25 +30,10 @@ export const CopyMoveDocRefDialog: React.FunctionComponent<Props> = ({
   onConfirm,
   onCloseDialog,
 }) => {
-  const initialValues = React.useMemo<FormValues>(
-    () => ({
-      permissionInheritance: PermissionInheritance.NONE,
-      destination: initialDestination,
-    }),
-    [initialDestination],
-  );
-
   const {
     value: { destination, permissionInheritance },
-    useControlledInputProps,
-  } = useForm<FormValues>({
-    initialValues,
-  });
-
-  const destinationProps = useControlledInputProps<DocRefType>("destination");
-  const permissionInheritanceProps = useControlledInputProps<
-    PermissionInheritance
-  >("permissionInheritance");
+    componentProps,
+  } = useThisForm({ initialDestination });
 
   const onConfirmLocal = React.useCallback(() => {
     if (!!destination && !!permissionInheritance) {
@@ -78,18 +56,7 @@ export const CopyMoveDocRefDialog: React.FunctionComponent<Props> = ({
           text="Select a Destination Folder for the Copy"
         />
       }
-      content={
-        <form>
-          <div>
-            <label>Destination</label>
-            <AppSearchBar {...destinationProps} typeFilter="Folder" />
-          </div>
-          <div>
-            <label>Permission Inheritance</label>
-            <PermissionInheritancePicker {...permissionInheritanceProps} />
-          </div>
-        </form>
-      }
+      content={<CopyMoveDocRefForm {...componentProps} />}
       actions={
         <DialogActionButtons
           onCancel={onCloseDialog}
