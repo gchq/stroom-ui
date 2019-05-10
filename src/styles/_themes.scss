@@ -20,9 +20,6 @@ $themes: (
     dropdown__background-color: #fff,
     dropdown__border: 1px solid #dfe0e1,
     dropdown__hover-color: #dfe0e1,
-    breadcrumb__divider___color: black,
-    breadcrumb__section___color: black,
-    breadcrumb__section--active___color: black,
     scrollbar__track-color: #d3d3d3,
     scrollbar__thumb-color: #a7a6a6,
     // Naigation menu
@@ -33,100 +30,10 @@ $themes: (
     sidebar__menu-item-background--select-hover: #0288D1,
     sidebar__menu-item-text: rgba(255,255,255,0.8),
     sidebar__menu-item-text--select: #fff,
-
-
-
-
-    // Breadcrumbs
-    breadcrumb-text__color: rgba(0,0,0,0.5),
-    breadcrumb-text__color--hover: rgba(0,0,0,0.7),
-    breadcrumb-divider__color: rgba(0,0,0,0.3),
-  
-  
-
-
-
-
-
-
-
-
-
-    ////////////////////////////////////////////////////////////////////////////////
-    // General button styles
-    ////////////////////////////////////////////////////////////////////////////////
-    button__color: rgba(0,0,0,0.87),
-    button__background-color--hover: rgba(0, 0, 0, 0.08),
-    button__color--disabled: rgba(0, 0, 0, 0.26),
-
-    ////////////////////////////////////////////////////////////////////////////////
-    // Contained buttons
-    ////////////////////////////////////////////////////////////////////////////////
-    button-contained__color: rgba(0, 0, 0, 0.87),
-    button-contained__background-color: #e0e0e0,
-    button-contained__background-color--hover: #d5d5d5,
-    button-contained__background-color--selected: #bdbdbd,
-    button-contained__color--disabled: rgba(0, 0, 0, 0.26),
-    button-contained__background-color--disabled: rgba(0, 0, 0, 0.12),
-    button-contained-primary__color: #fff,
-    button-contained-primary__background-color: #2196f3,
-    button-contained-primary__background-color--hover: #1976d2,
-    // button-contained-primary__background-color--selected: #1976d2,
-    button-contained-secondary__color: #fff,
-    button-contained-secondary__background-color: rgb(225, 0, 80),
-    button-contained-secondary__background-color--hover: rgb(157, 0, 56),
-    // button-contained-secondary__background-color--selected: rgb(157, 0, 56),
-
-    ////////////////////////////////////////////////////////////////////////////////
-    // Default buttons
-    ////////////////////////////////////////////////////////////////////////////////
-    button-default-primary__color: #2196f3,
-    button-default-primary__background-color--hover: rgba(33, 150, 243, 0.08),
-    button-default-secondary__color: rgb(225, 0, 80),
-    button-default-secondary__background-color--hover: rgba(225, 0, 80, 0.08),
-
-    ////////////////////////////////////////////////////////////////////////////////
-    // Outline buttons
-    ////////////////////////////////////////////////////////////////////////////////
-    button-outline__border-color: rgba(0, 0, 0, 0.23),
-    button-outline__border-color--disabled: rgba(0, 0, 0, 0.1),
-    button-outline-primary__color: #2196f3,
-    button-outline-primary__border-color: rgba(33, 150, 243, 0.5),
-    button-outline-primary__border-color--hover: #2196f3,
-    button-outline-primary__background-color--hover: rgba(33, 150, 243, 0.08),
-    // button-outline-primary__border-color--selected: #2196f3,
-    // button-outline-primary__background-color--selected: rgba(33, 150, 243, 0.08),
-    button-outline-secondary__color: rgb(225, 0, 80),
-    button-outline-secondary__border-color: rgba(225, 0, 80, 0.5),
-    button-outline-secondary__border-color--hover: rgb(225, 0, 80),
-    button-outline-secondary__background-color--hover: rgba(225, 0, 80, 0.08),
-    // button-outline-secondary__border-color--selected: rgb(225, 0, 80),
-    // button-outline-secondary__background-color--selected: rgba(225, 0, 80, 0.08),
-
-    ////////////////////////////////////////////////////////////////////////////////
-    // Icon buttons
-    ////////////////////////////////////////////////////////////////////////////////
-    button-icon__color: rgba(0, 0, 0, 0.54),
-    button-icon__background-color--hover: rgba(0, 0, 0, 0.08),
-    button-icon-primary__color: #2196f3,
-    button-icon-primary__background-color--hover: rgba(33, 150, 243, 0.08),
-    button-icon-secondary__color: rgb(225, 0, 80),
-    button-icon-secondary__background-color--hover: rgba(225, 0, 80, 0.08),
-    button-icon__color--disabled: rgba(0, 0, 0, 0.26),
-
-
-
-
-
-
-
-
-
-
   ),
   dark: (
     // General
-    background__color: #282829,
+    background__color: #1e1e1e,
     text__color: #cacbcb,
     text__color--deemphasised: #cacbcb,
     selected-color: #185e90,
@@ -145,81 +52,15 @@ $themes: (
     dropdown__background-color: #282829,
     dropdown__border: 1px solid #4d5250,
     dropdown__hover-color: #4d5250,
-    breadcrumb__divider___color: white,
-    breadcrumb__section___color: white,
-    breadcrumb__section--active___color: white,
     scrollbar__track-color: #333333,
     scrollbar__thumb-color: #848484,
     // Naigation menu
     sidebar__header-color: #fff,
-    sidebar__background-color: #424242,
-    sidebar__menu-item-background: #424242,
-    sidebar__menu-item-background--select: #616161,
-    sidebar__menu-item-background--select-hover: #757575,
+    sidebar__background-color: #252526,
+    sidebar__menu-item-background: #252526,
+    sidebar__menu-item-background--select: #37373d,
+    sidebar__menu-item-background--select-hover: #37373d,
     sidebar__menu-item-text: rgba(255,255,255,0.8),
     sidebar__menu-item-text--select: #fff,
-
-
-    // Breadcrumbs
-    breadcrumb-text__color: rgba(255,255,255,0.5),
-    breadcrumb-text__color--hover: rgba(255,255,255,0.7),
-    breadcrumb-divider__color: rgba(255,255,255,0.3),
-
-
-    ////////////////////////////////////////////////////////////////////////////////
-    // General button styles
-    ////////////////////////////////////////////////////////////////////////////////
-    button__color: #cacbcb,
-    button__background-color--hover: rgba(255, 255, 255, 0.15),
-    button__color--disabled: rgba(255, 255, 255, 0.26),
-
-    ////////////////////////////////////////////////////////////////////////////////
-    // Contained buttons
-    ////////////////////////////////////////////////////////////////////////////////
-    button-contained__color: #cacbcb,
-    button-contained__background-color: #4d5250,
-    button-contained__background-color--hover: rgba(255, 255, 255, 0.08),
-    button-contained__background-color--selected: rgba(255, 255, 255, 0.08),
-    button-contained__color--disabled: rgba(255, 255, 255, 0.26),
-    button-contained__background-color--disabled: rgba(255, 255, 255, 0.12),
-    button-contained-primary__color: #fff,
-    button-contained-primary__background-color: #2196f3,
-    button-contained-primary__background-color--hover: #1976d2,
-    button-contained-secondary__color: #fff,
-    button-contained-secondary__background-color: rgb(225, 0, 80),
-    button-contained-secondary__background-color--hover: rgb(157, 0, 56),
-
-    ////////////////////////////////////////////////////////////////////////////////
-    // Default buttons
-    ////////////////////////////////////////////////////////////////////////////////
-    button-default-primary__color: #2196f3,
-    button-default-primary__background-color--hover: rgba(33, 150, 243, 0.08),
-    button-default-secondary__color: rgb(225, 0, 80),
-    button-default-secondary__background-color--hover: rgba(225, 0, 80, 0.08),
-
-    ////////////////////////////////////////////////////////////////////////////////
-    // Outline buttons
-    ////////////////////////////////////////////////////////////////////////////////
-    button-outline__border-color: #616161,
-    button-outline__border-color--disabled: #616161,
-    button-outline-primary__color: #2196f3,
-    button-outline-primary__border-color: rgba(33, 150, 243, 0.5),
-    button-outline-primary__border-color--hover: #2196f3,
-    button-outline-primary__background-color--hover: rgba(33, 150, 243, 0.08),
-    button-outline-secondary__color: rgb(225, 0, 80),
-    button-outline-secondary__border-color: rgba(225, 0, 80, 0.5),
-    button-outline-secondary__border-color--hover: rgb(225, 0, 80),
-    button-outline-secondary__background-color--hover: rgba(225, 0, 80, 0.08),
-
-    ////////////////////////////////////////////////////////////////////////////////
-    // Icon buttons
-    ////////////////////////////////////////////////////////////////////////////////
-    button-icon__color: #cacbcb,
-    button-icon__background-color--hover: rgba(255, 255, 255, 0.15),
-    button-icon-primary__color: #2196f3,
-    button-icon-primary__background-color--hover: rgba(33, 150, 243, 0.08),
-    button-icon-secondary__color: rgb(225, 0, 80),
-    button-icon-secondary__background-color--hover: rgba(225, 0, 80, 0.08),
-    button-icon__color--disabled: rgba(255, 255, 255, 0.26),
   )
 );

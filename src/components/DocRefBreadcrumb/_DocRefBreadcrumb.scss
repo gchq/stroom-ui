@@ -1,3 +1,6 @@
+@import "themes.scss";
+@import "../../styles/themify.scss";
+
 .DocRefBreadcrumb__link {
   display: inline-block;
   cursor: pointer;
@@ -23,4 +26,31 @@
   display: inline-block;
   color: rgba(0,0,0,0.5);
   font-size: 8pt;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// Breadcrumbs
+////////////////////////////////////////////////////////////////////////////////
+.DocRefBreadcrumb__link {
+  @include themify($themes) {
+    color: themed("breadcrumb-text__color");
+  }
+}
+
+.DocRefBreadcrumb__link:hover {
+  @include themify($themes) {
+    color: themed("breadcrumb-text__color--hover");
+  }
+}
+
+.DocRefBreadcrumb__divider {
+  @include themify($themes) {
+    color: themed("breadcrumb-divider__color");
+  }
+}
+
+.DocRefBreadcrumb__name {
+  @include themify($themes) {
+    color: themed("breadcrumb-text__color");
+  }
 }
