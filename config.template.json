@@ -3,9 +3,9 @@
   "allowPasswordResets": true,
   "clientId": "stroom-ui",
   "authenticationServiceUrl": "https://IP_ADDRESS/authService/authentication/v1",
-  "authorisationServiceUrl": "http://IP_ADDRESS:8080/api/authorisation/v1",
-  "stroomBaseServiceUrl": "http://IP_ADDRESS:8080/api",
-  "stroomUiUrl": "http://IP_ADDRESS:8080/stroom",
-  "tokenServiceUrl": "http://IP_ADDRESS:8099/token/v1",
-  "userServiceUrl": "http://IP_ADDRESS:8099/user/v1"
+  "authorisationServiceUrl": "https://IP_ADDRESS:8080/api/authorisation/v1",
+  "stroomBaseServiceUrl": "https://IP_ADDRESS:8080/api",
+  "stroomUiUrl": "https://IP_ADDRESS:8080/stroom",
+  "tokenServiceUrl": "https://IP_ADDRESS:8099/token/v1",
+  "userServiceUrl": "https://IP_ADDRESS:8099/user/v1"
 }
