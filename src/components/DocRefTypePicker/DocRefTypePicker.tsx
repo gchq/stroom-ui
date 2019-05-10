@@ -6,12 +6,14 @@ import Select, { components } from "react-select";
 import { OptionProps } from "react-select/lib/components/Option";
 import { SingleValueProps } from "react-select/lib/components/SingleValue";
 import { ControlledInput } from "lib/useForm/types";
+import useReactSelect from "lib/useReactSelect";
+import { BasicOption } from "lib/useReactSelect/types";
 
 interface Props extends ControlledInput<string> {
   invalidTypes?: string[];
 }
 
-const SingleValue: React.FunctionComponent<SingleValueProps<string>> = ({
+const SingleValue: React.FunctionComponent<SingleValueProps<BasicOption>> = ({
   children,
   ...props
 }) => {
@@ -21,7 +23,7 @@ const SingleValue: React.FunctionComponent<SingleValueProps<string>> = ({
         <DocRefImage
           className="DocRefTypePicker--image"
           size="sm"
-          docRefType={props.data}
+          docRefType={props.data.value}
         />
         {children}
       </div>
@@ -33,7 +35,7 @@ const SingleValue: React.FunctionComponent<SingleValueProps<string>> = ({
   }
 };
 
-const Option: React.FunctionComponent<OptionProps<string>> = props => (
+const Option: React.FunctionComponent<OptionProps<BasicOption>> = props => (
   <components.Option {...props}>
     <DocRefImage
       className="DocRefTypePicker--image"
@@ -50,12 +52,17 @@ let DocRefTypePicker = ({ value, onChange, invalidTypes = [] }: Props) => {
     () => docRefTypes.filter(d => !invalidTypes.includes(d)),
     [docRefTypes, invalidTypes],
   );
+  const { _onChange, _options, _value } = useReactSelect({
+    options,
+    onChange,
+    value,
+  });
 
   return (
     <Select
-      value={value}
-      onChange={onChange}
-      options={options}
+      value={_value}
+      onChange={_onChange}
+      options={_options}
       components={{ SingleValue, Option }}
     />
   );

@@ -1,4 +1,4 @@
-interface InputProps {
+export interface InputProps {
   onChange: React.ChangeEventHandler<HTMLElement>;
   value: string;
 }

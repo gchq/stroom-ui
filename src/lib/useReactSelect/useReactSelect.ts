@@ -1,10 +1,6 @@
 import * as React from "react";
 import { ValueType } from "react-select/lib/types";
-
-interface BasicOption {
-  value: string;
-  label: string;
-}
+import { BasicOption } from "./types";
 
 interface PropsIn {
   options: string[];
