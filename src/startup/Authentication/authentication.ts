@@ -21,7 +21,7 @@ import { History } from "history";
 export const sendAuthenticationRequest = (
   referrer: string,
   uiUrl: string,
-  appClientId: string,
+  clientId: string,
   authenticationServiceUrl: string,
   appPermission?: string,
 ) => {
@@ -39,7 +39,7 @@ export const sendAuthenticationRequest = (
   localStorage.setItem("appPermission", appPermission || ""); // TODO, I have added this default thing...is it right?
 
   // Compose the new URL
-  const authenticationRequestParams = `?scope=openid&response_type=code&client_id=${appClientId}&redirect_url=${redirectUrl}&state=${state}&nonce=${nonceHash}`;
+  const authenticationRequestParams = `?scope=openid&response_type=code&client_id=${clientId}&redirect_url=${redirectUrl}&state=${state}&nonce=${nonceHash}`;
   const authenticationRequestUrl = `${authenticationServiceUrl}/authenticate/${authenticationRequestParams}`;
 
   // We hand off to the authenticationService.

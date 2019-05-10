@@ -21,7 +21,7 @@ import { sendAuthenticationRequest } from "./authentication";
 interface Props {
   referrer: string;
   uiUrl: string;
-  appClientId: string;
+  clientId: string;
   authenticationServiceUrl: string;
   appPermission?: string;
 }
@@ -29,7 +29,7 @@ interface Props {
 const AuthenticationRequest: React.FunctionComponent<Props> = ({
   referrer,
   uiUrl,
-  appClientId,
+  clientId,
   authenticationServiceUrl,
   appPermission,
 }) => {
@@ -37,11 +37,11 @@ const AuthenticationRequest: React.FunctionComponent<Props> = ({
     sendAuthenticationRequest(
       referrer,
       uiUrl,
-      appClientId,
+      clientId,
       authenticationServiceUrl,
       appPermission,
     );
-  }, [referrer, uiUrl, appClientId, authenticationServiceUrl, appPermission]);
+  }, [referrer, uiUrl, clientId, authenticationServiceUrl, appPermission]);
 
   return null;
 };

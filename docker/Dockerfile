@@ -69,16 +69,18 @@ VOLUME [ "/etc/nginx/certs" ]
 #   ...save to a file.
 #   Do environment variable substitution for nginx.conf
 #   Serve the statics.
-CMD env | grep STROOM_UI | \
-    sed 's/STROOM_UI_//g' | sed -e 's/\(.*=\)/\L&/' | sed -r 's/_([a-z])/\U\1/g' | \
+CMD env | grep APP_ | \
+    sed 's/APP_//g' | \
+    sed -e 's/\(.*=\)/\L&/' | \
+    sed -r 's/_([a-z])/\U\1/g' | \
     jo > /usr/share/nginx/html/config.json \
     && envsubst '${NGINX_HOST} \
-                ${NGINX_HTTP_PORT} \
-                ${NGINX_HTTPS_PORT} \
-                ${NGINX_SSL_CERTIFICATE} \
-                ${NGINX_SSL_CERTIFICATE_KEY} \
-                ${NGINX_SSL_CLIENT_CERTIFICATE}' \
-            < /etc/nginx/template/nginx.conf.template > /etc/nginx/nginx.conf \
+    ${NGINX_HTTP_PORT} \
+    ${NGINX_HTTPS_PORT} \
+    ${NGINX_SSL_CERTIFICATE} \
+    ${NGINX_SSL_CERTIFICATE_KEY} \
+    ${NGINX_SSL_CLIENT_CERTIFICATE}' \
+    < /etc/nginx/template/nginx.conf.template > /etc/nginx/nginx.conf \
     && nginx -g 'daemon off;'
 
 
@@ -86,9 +88,9 @@ CMD env | grep STROOM_UI | \
 # jo is a JSON tool for generating json output on the command line.
 # We use it to convert environment vars to JSON. We serve this in 'public'.
 RUN apk add --no-cache \
-        tini \
-        sed \
-        --repository http://dl-3.alpinelinux.org/alpine/edge/testing/ jo
+    tini \
+    sed \
+    --repository http://dl-3.alpinelinux.org/alpine/edge/testing/ jo
 
 COPY --from=build /root/app/build /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/nginx.conf

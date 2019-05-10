@@ -34,7 +34,7 @@ interface Api {
 
 export const useApi = (): Api => {
   const { httpGetJson, httpPostJsonResponse } = useHttpClient();
-  let { authenticationServiceUrl, appClientId } = useConfig();
+  let { authenticationServiceUrl, clientId } = useConfig();
 
   // If we have a clientId on the URL we'll use that. It means we're logging
   // in on behalf of a relying party so we need to identify as them.
@@ -42,7 +42,7 @@ export const useApi = (): Api => {
   if (!!router && !!router.location) {
     const query = queryString.parse(router.location.search);
     if (!!query.clientId) {
-      appClientId = query.clientId + "";
+      clientId = query.clientId + "";
     }
   }
 
@@ -66,13 +66,13 @@ export const useApi = (): Api => {
             email,
             password,
             sessionId,
-            requestingClientId: appClientId,
+            requestingClientId: clientId,
           }),
         },
         false,
       );
     },
-    [authenticationServiceUrl, appClientId, httpPostJsonResponse],
+    [authenticationServiceUrl, clientId, httpPostJsonResponse],
   );
 
   const changePassword = useCallback(
