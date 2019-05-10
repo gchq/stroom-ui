@@ -1,6 +1,6 @@
 import { DocRefType } from "components/DocumentEditors/useDocumentApi/types/base";
 
-export interface NavigateApp<IN, OUT> {
+export interface RawNavigateApp<IN, OUT> {
   goToWelcome: () => OUT;
   goToDataViewer: () => OUT;
   goToProcessing: () => OUT;
@@ -23,3 +23,5 @@ export interface NavigateApp<IN, OUT> {
   goToEditDocRefByUuid: (docRefUuid: IN) => OUT;
   goToEditDocRef: (docRef: DocRefType) => OUT;
 }
+
+export type NavigateApp = RawNavigateApp<string, void>;

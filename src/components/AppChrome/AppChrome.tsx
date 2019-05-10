@@ -20,7 +20,7 @@ import "simplebar/dist/simplebar.css";
 
 import { ActiveMenuItem } from "./types";
 import { useTheme } from "lib/useTheme/useTheme";
-import { useChromeContext } from "lib/useRouter/BrowserRouter";
+import { useIncludeSidebar } from "lib/useRouter/BrowserRouter";
 import Sidebar from "./Sidebar";
 
 export interface AppChromeProps {
@@ -34,7 +34,7 @@ const AppChrome: React.FunctionComponent<AppChromeProps> = ({
   urlPrefix,
   content,
 }) => {
-  const includeSidebar = useChromeContext(urlPrefix);
+  const includeSidebar = useIncludeSidebar(urlPrefix);
   const { theme } = useTheme();
 
   return (

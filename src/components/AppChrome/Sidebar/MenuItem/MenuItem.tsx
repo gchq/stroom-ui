@@ -18,7 +18,7 @@ import {
 } from "components/DocumentEditors/FolderExplorer/types";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { KeyDownState } from "lib/useKeyIsDown";
-import { MenuItemOpened, MenuItemType, MenuItemsOpenState } from "./types";
+import { MenuItemToggled, MenuItemType, MenuItemsOpenState } from "./types";
 import { DocRefType } from "components/DocumentEditors/useDocumentApi/types/base";
 
 interface Props {
@@ -31,7 +31,7 @@ interface Props {
   focussedItem?: MenuItemType;
   keyIsDown: KeyDownState;
   menuItemIsOpenByKey: MenuItemsOpenState;
-  menuItemOpened: MenuItemOpened;
+  menuItemToggled: MenuItemToggled;
   showCopyDialog: (docRefUuids: string[], destination: DocRefType) => void;
   showMoveDialog: (docRefUuids: string[], destination: DocRefType) => void;
 }
@@ -108,7 +108,7 @@ const MenuItem: React.FunctionComponent<EnhancedProps> = ({
   connectDragSource,
   isCollapsed,
   selectedItems,
-  menuItemOpened,
+  menuItemToggled,
   focussedItem,
   activeMenuItem,
 }) => {
@@ -123,11 +123,11 @@ const MenuItem: React.FunctionComponent<EnhancedProps> = ({
 
   const onExpand: React.MouseEventHandler<HTMLDivElement> = React.useCallback(
     (e: React.MouseEvent) => {
-      menuItemOpened(menuItem.key, !menuItemIsOpenByKey[menuItem.key]);
+      menuItemToggled(menuItem.key);
       e.preventDefault();
       e.stopPropagation(); // prevent onSelect from also firing
     },
-    [menuItem.key, menuItemIsOpenByKey, menuItemOpened],
+    [menuItem.key, menuItemToggled],
   );
   const onSelect: React.MouseEventHandler<HTMLDivElement> = React.useCallback(
     (e: React.MouseEvent) => {
