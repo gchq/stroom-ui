@@ -24,11 +24,11 @@ let TestHarness: React.FunctionComponent = () => {
       <form>
         <div>
           <label>Has Confirmed</label>
-          <input type="checkbox" checked={hasConfirmed} />
+          <input type="checkbox" readOnly checked={hasConfirmed} />
         </div>
         <div>
           <label>Has Cancelled</label>
-          <input type="checkbox" checked={hasCancelled} />
+          <input type="checkbox" readOnly checked={hasCancelled} />
         </div>
       </form>
       <button onClick={onReset}>Reset</button>
