@@ -19,6 +19,7 @@ import { useState } from "react";
 
 interface Props {
   options: SelectOption[];
+  onChange?: (event: string) => void;
   selected?: string;
 }
 
@@ -29,6 +30,7 @@ export interface SelectOption {
 
 const InlineSelect: React.FunctionComponent<Props> = ({
   options,
+  onChange,
   selected,
   ...rest
 }) => {
@@ -43,6 +45,9 @@ const InlineSelect: React.FunctionComponent<Props> = ({
           const value = event.target.value;
           setSelectedItem(value);
           setEditing(false);
+          if (!!onChange) {
+            onChange(event.target.value);
+          }
         }}
         value={selectedItem}
         {...rest}

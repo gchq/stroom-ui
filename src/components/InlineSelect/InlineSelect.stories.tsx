@@ -18,6 +18,7 @@ import { storiesOf } from "@storybook/react";
 import * as React from "react";
 import { addThemedStories } from "testing/storybook/themedStoryGenerator";
 import InlineSelect, { SelectOption } from "./InlineSelect";
+import { action } from "@storybook/addon-actions";
 
 const stories = storiesOf("General Purpose/InlineSelect", module);
 
@@ -40,6 +41,14 @@ const TestHarness: React.FunctionComponent<{ inlineSelect: any }> = ({
     </form>
   </div>
 );
+
+stories.add("With onChange", () => (
+  <TestHarness
+    inlineSelect={
+      <InlineSelect options={options} onChange={action("onChange")} />
+    }
+  />
+));
 
 stories.add("With value", () => (
   <TestHarness
