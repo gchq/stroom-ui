@@ -18,6 +18,7 @@ import { storiesOf } from "@storybook/react";
 import * as React from "react";
 import { addThemedStories } from "testing/storybook/themedStoryGenerator";
 import InlineInput from "./InlineInput";
+import { action } from "@storybook/addon-actions";
 
 const TestHarness: React.FunctionComponent<{ inlineInput: any }> = ({
   inlineInput,
@@ -32,6 +33,12 @@ const TestHarness: React.FunctionComponent<{ inlineInput: any }> = ({
 );
 
 const stories = storiesOf("General Purpose/InlineInput", module);
+
+stories.add("With onChange", () => (
+  <TestHarness
+    inlineInput={<InlineInput value="Yoda" onChange={action("onChange")} />}
+  />
+));
 
 stories.add("With value", () => (
   <TestHarness inlineInput={<InlineInput value="Yoda" />} />
