@@ -19,12 +19,22 @@ import * as React from "react";
 import { addThemedStories } from "testing/storybook/themedStoryGenerator";
 import InlineInput from "./InlineInput";
 
+const TestHarness: React.FunctionComponent<{ inlineInput: any }> = ({
+  inlineInput,
+}) => (
+  <div>
+    <form>
+      <span>I would like to feed </span>
+      {inlineInput}
+      <span> to the sarlacc.</span>
+    </form>
+  </div>
+);
+
 const stories = storiesOf("General Purpose/InlineInput", module);
 
-addThemedStories(stories, () => (
-  <form>
-    <span>I would like to feed </span>
-    <InlineInput name="some_name" />
-    <span> to the sarlacc.</span>
-  </form>
+stories.add("With value", () => (
+  <TestHarness inlineInput={<InlineInput value="Yoda" />} />
 ));
+
+addThemedStories(stories, () => <TestHarness inlineInput={<InlineInput />} />);

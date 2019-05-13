@@ -17,13 +17,13 @@
 import * as React from "react";
 import { useState } from "react";
 
-const InlineInput: React.FunctionComponent<{ name: string }> = ({
-  name,
+const InlineInput: React.FunctionComponent<{ value?: string }> = ({
+  value: defaultValue,
   ...rest
 }) => {
   const [isEditing, setEditing] = useState(false);
-  const [value, setValue] = useState("");
-  const [editingValue, setEditingValue] = useState("");
+  const [value, setValue] = useState(defaultValue);
+  const [editingValue, setEditingValue] = useState(defaultValue);
   if (isEditing) {
     return (
       <input
@@ -40,7 +40,6 @@ const InlineInput: React.FunctionComponent<{ name: string }> = ({
         }}
         type="text"
         value={editingValue}
-        name={name}
         onKeyDown={event => {
           if (event.key === "Enter") {
             event.preventDefault();
