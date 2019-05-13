@@ -17,45 +17,24 @@
 import { storiesOf } from "@storybook/react";
 import * as React from "react";
 import { addThemedStories } from "testing/storybook/themedStoryGenerator";
-import InlineSelect, { SelectOption } from "./InlineSelect";
-import { action } from "@storybook/addon-actions";
+import InlineInput from "./InlineInput";
 
-const stories = storiesOf("General Purpose/InlineSelect", module);
-
-const options: SelectOption[] = [
-  { value: "leia", label: "Princess Leia" },
-  { value: "han", label: "Han Solo" },
-  { value: "jabba", label: "Jabba the Hut" },
-  { value: "luke", label: "Luke Skywalker" },
-  { value: "everyone", label: "everyone" },
-];
-
-const TestHarness: React.FunctionComponent<{ inlineSelect: any }> = ({
-  inlineSelect,
+const TestHarness: React.FunctionComponent<{ inlineInput: any }> = ({
+  inlineInput,
 }) => (
   <div>
     <form>
       <span>I would like to feed </span>
-      {inlineSelect}
+      {inlineInput}
       <span> to the sarlacc.</span>
     </form>
   </div>
 );
 
-stories.add("With onChange", () => (
-  <TestHarness
-    inlineSelect={
-      <InlineSelect options={options} onChange={action("onChange")} />
-    }
-  />
-));
+const stories = storiesOf("General Purpose/InlineInput", module);
 
 stories.add("With value", () => (
-  <TestHarness
-    inlineSelect={<InlineSelect options={options} selected="everyone" />}
-  />
+  <TestHarness inlineInput={<InlineInput value="Yoda" />} />
 ));
 
-addThemedStories(stories, () => (
-  <TestHarness inlineSelect={<InlineSelect options={options} />} />
-));
+addThemedStories(stories, () => <TestHarness inlineInput={<InlineInput />} />);
