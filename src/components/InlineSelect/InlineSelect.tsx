@@ -19,15 +19,20 @@ import { useState } from "react";
 
 interface Props {
   options: SelectOption;
+  selected?: string;
 }
 
 export interface SelectOption {
   [key: string]: string;
 }
 
-const InlineSelect: React.FunctionComponent<Props> = ({ options, ...rest }) => {
+const InlineSelect: React.FunctionComponent<Props> = ({
+  options,
+  selected,
+  ...rest
+}) => {
   const [isEditing, setEditing] = useState(false);
-  const [selectedItem, setSelectedItem] = useState(undefined);
+  const [selectedItem, setSelectedItem] = useState(selected);
   if (isEditing) {
     return (
       <select

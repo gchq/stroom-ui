@@ -29,12 +29,24 @@ options["jabba"] = "Jabba the Hut";
 options["luke"] = "Luke Skywalker";
 options["everyone"] = "everyone";
 
-addThemedStories(stories, () => (
+const TestHarness: React.FunctionComponent<{ inlineSelect: any }> = ({
+  inlineSelect,
+}) => (
   <div>
     <form>
       <span>I would like to feed </span>
-      <InlineSelect options={options} />
+      {inlineSelect}
       <span> to the sarlacc.</span>
     </form>
   </div>
+);
+
+stories.add("With value", () => (
+  <TestHarness
+    inlineSelect={<InlineSelect options={options} selected="everyone" />}
+  />
+));
+
+addThemedStories(stories, () => (
+  <TestHarness inlineSelect={<InlineSelect options={options} />} />
 ));
