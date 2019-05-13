@@ -38,6 +38,7 @@ const InlineSelect: React.FunctionComponent<Props> = ({ options, ...rest }) => {
           setSelectedItem(value);
           setEditing(false);
         }}
+        value={selectedItem}
         {...rest}
       >
         {Object.keys(options).map(name => {
