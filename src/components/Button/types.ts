@@ -1,4 +1,5 @@
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
+// import { MouseEventHandler } from "react";
 
 /**
  * Button Properties
@@ -21,4 +22,6 @@ export interface ButtonProps
   className?: string;
   /** The size of the icon*/
   size?: "small" | "medium" | "large" | "xlarge";
+
+  // onClick?: MouseEventHandler<HTMLButtonElement>;
 }
