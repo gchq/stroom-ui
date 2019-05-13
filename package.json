@@ -129,6 +129,7 @@
     "not op_mini all"
   ],
   "resolutions": {
-    "babel-jest": "24.7.1"
+    "babel-jest": "24.7.1",
+    "babel-loader": "8.0.5"
   }
 }
