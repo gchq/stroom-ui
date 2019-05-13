@@ -84,7 +84,11 @@ const TestHarness: React.FunctionComponent = () => {
 
   return (
     <div>
-      <h2>Demonstrates Key Handling</h2>
+      <h1>Demonstrates Key Handling</h1>
+      <p>
+        Press the arrow keys to move the square around. This test uses a reducer
+        with a location state to track the position of the red square.
+      </p>
       <div ref={mainDiv} tabIndex={0} onKeyDown={onKeyDown}>
         {LOCATIONS.map((col, i) => (
           <div key={i} style={colStyle}>
