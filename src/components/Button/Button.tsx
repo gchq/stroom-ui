@@ -19,6 +19,34 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { SizeProp } from "@fortawesome/fontawesome-svg-core";
 import { ButtonProps } from "./types";
 
+// const ripple = (evt: React.MouseEvent<HTMLButtonElement>): void => {
+//   alert("I was clicked");
+
+//   const btn = evt.currentTarget;
+//   var x = evt.pageX - btn.offsetLeft;
+//   var y = evt.pageY - btn.offsetTop;
+
+//   const rippleContainer = btn.getElementsByClassName("ripple-container")[0];
+
+//   // btn.append("<span class=ripple/>").css({
+//   //   left: x,
+//   //   top: y,
+//   // });
+
+//   const span = document.createElement("span");
+//   span.className = "ripple";
+//   span.style.left = x + "px";
+//   span.style.top = y + "px";
+//   rippleContainer.append(span);
+
+//   // DOM.span
+//   //   .appendTo(btn)
+//   //   .css({
+//   //     left: x,
+//   //     top: y,
+//   //   });
+// };
+
 export const Button = ({
   text,
   icon,
@@ -28,6 +56,7 @@ export const Button = ({
   selected,
   disabled,
   size,
+  onClick,
   ...rest
 }: ButtonProps) => {
   const className = React.useMemo(() => {
@@ -113,8 +142,40 @@ export const Button = ({
 
   let showText = text && appearance !== "icon";
 
+  const ripple = (evt: React.MouseEvent<HTMLButtonElement>): void => {
+    // alert("I was clicked");
+
+    const btn = evt.currentTarget;
+    const rect = btn.getBoundingClientRect();
+    var x = evt.clientX - rect.left;
+    var y = evt.clientY - rect.top;
+
+    const rippleContainer = btn.getElementsByClassName("ripple-container")[0];
+
+    // btn.append("<span class=ripple/>").css({
+    //   left: x,
+    //   top: y,
+    // });
+
+    const span = document.createElement("span");
+    span.className = "ripple";
+    span.style.left = x + "px";
+    span.style.top = y + "px";
+    rippleContainer.append(span);
+
+    // DOM.span
+    //   .appendTo(btn)
+    //   .css({
+    //     left: x,
+    //     top: y,
+    //   });
+
+    onClick(evt);
+  };
+
   return (
-    <button className={className} {...rest}>
+    <button className={className} onClick={ripple} {...rest}>
+      <div className="ripple-container" />
       {icon ? (
         <FontAwesomeIcon size={fontAwesomeSize} icon={icon} />
       ) : (
