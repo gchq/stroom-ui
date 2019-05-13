@@ -130,6 +130,6 @@
   ],
   "resolutions": {
     "babel-jest": "24.7.1",
-    "babel-loader": "8.0.5"
+    "babel-loader": "8.0.6"
   }
 }

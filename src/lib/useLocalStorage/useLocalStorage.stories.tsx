@@ -34,10 +34,10 @@ const TestHarnessSetValue: React.FunctionComponent = () => {
 
   return (
     <div>
-      <p>Storage 1 demonstrates simple use of setValue</p>
+      <p>Demonstrates simple use of setValue</p>
       <form>
         <div>
-          <label>Value in Storage 1</label>
+          <label>Value in Storage</label>
           <input value={value.name} onChange={onName1Change} />
         </div>
       </form>
@@ -72,15 +72,23 @@ const TestHarnessReducer: React.FunctionComponent = () => {
     useStoreObjectFactory(),
   );
 
-  const onAddValue = React.useCallback(() => {
-    reduceValue(existing => ({ names: [newValue, ...existing.names] }));
-  }, [newValue, reduceValue]);
+  const onAddValue = React.useCallback(
+    e => {
+      reduceValue(existing => ({ names: [newValue, ...existing.names] }));
+      e.preventDefault();
+    },
+    [newValue, reduceValue],
+  );
 
-  const onRemoveValue = React.useCallback(() => {
-    reduceValue(existing => ({
-      names: existing.names.filter(e => e !== newValue),
-    }));
-  }, [newValue, reduceValue]);
+  const onRemoveValue = React.useCallback(
+    e => {
+      reduceValue(existing => ({
+        names: existing.names.filter(e => e !== newValue),
+      }));
+      e.preventDefault();
+    },
+    [newValue, reduceValue],
+  );
 
   const resetStorage = React.useCallback(() => {
     resetValue();
@@ -100,16 +108,13 @@ const TestHarnessReducer: React.FunctionComponent = () => {
       </p>
       <form>
         <div>
-          <label>Value for Storage 2</label>
+          <label>Value for Storage</label>
           <input value={newValue} onChange={onNewValueChange} />
+          <button onClick={onAddValue}>Add Value</button>
+          <button onClick={onRemoveValue}>Remove Value</button>
         </div>
       </form>
 
-      <div>
-        <h4>Modify Value 2</h4>
-        <button onClick={onAddValue}>Add Value 2</button>
-        <button onClick={onRemoveValue}>Remove Value 2</button>
-      </div>
       <div>
         <button onClick={resetStorage}>Reset All Storage</button>
       </div>
