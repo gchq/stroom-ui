@@ -17,24 +17,14 @@
 import { storiesOf } from "@storybook/react";
 import * as React from "react";
 import { addThemedStories } from "testing/storybook/themedStoryGenerator";
-import InlineSelect, { SelectOption } from "./InlineSelect";
+import InlineInput from "./InlineInput";
 
-const stories = storiesOf("General Purpose/InlineSelect", module);
-
-const options: SelectOption = {};
-
-options["leia"] = "Princess Leia";
-options["han"] = "Han Solo";
-options["jabba"] = "Jabba the Hut";
-options["luke"] = "Luke Skywalker";
-options["everyone"] = "everyone";
+const stories = storiesOf("General Purpose/InlineInput", module);
 
 addThemedStories(stories, () => (
-  <div>
-    <form>
-      <span>I would like to feed </span>
-      <InlineSelect options={options} />
-      <span> to the sarlacc.</span>
-    </form>
-  </div>
+  <form>
+    <span>I would like to feed </span>
+    <InlineInput name="some_name" />
+    <span> to the sarlacc.</span>
+  </form>
 ));

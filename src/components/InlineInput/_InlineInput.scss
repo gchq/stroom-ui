@@ -4,9 +4,12 @@ select {
   margin: unset !important;
 }
 
-.inline-select__not-editing {
+.inline-input__not-editing {
   color: blue;
 }
 
-.inline-select__editing {
+.inline-input__editing {
+  width: 10em;
+  padding: 0;
+  margin: 0;
 }

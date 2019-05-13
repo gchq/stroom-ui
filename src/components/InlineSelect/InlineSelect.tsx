@@ -25,18 +25,20 @@ export interface SelectOption {
   [key: string]: string;
 }
 
-const InlineSelect: React.FunctionComponent<Props> = ({ options }) => {
+const InlineSelect: React.FunctionComponent<Props> = ({ options, ...rest }) => {
   const [isEditing, setEditing] = useState(false);
   const [selectedItem, setSelectedItem] = useState(undefined);
   if (isEditing) {
     return (
       <select
+        className="inline-select__editing"
         onBlur={() => setEditing(false)}
         onChange={event => {
           const value = event.target.value;
           setSelectedItem(value);
           setEditing(false);
         }}
+        {...rest}
       >
         {Object.keys(options).map(name => {
           return (
@@ -48,8 +50,17 @@ const InlineSelect: React.FunctionComponent<Props> = ({ options }) => {
       </select>
     );
   } else {
-    const textToDisplay = !!selectedItem ? selectedItem : "click to select";
-    return <span onClick={() => setEditing(true)}>{textToDisplay}</span>;
+    const textToDisplay = !!selectedItem
+      ? options[selectedItem]
+      : "click to choose";
+    return (
+      <span
+        className="inline-select__not-editing"
+        onClick={() => setEditing(true)}
+      >
+        {textToDisplay}
+      </span>
+    );
   }
 };
 
