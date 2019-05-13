@@ -21,13 +21,13 @@ import InlineSelect, { SelectOption } from "./InlineSelect";
 
 const stories = storiesOf("General Purpose/InlineSelect", module);
 
-const options: SelectOption[] = [];
-
-options.push({ value: "leia", label: "Princess Leia" });
-options.push({ value: "han", label: "Han Solo" });
-options.push({ value: "jabba", label: "Jabba the Hut" });
-options.push({ value: "luke", label: "Luke Skywalker" });
-options.push({ value: "everyone", label: "everyone" });
+const options: SelectOption[] = [
+  { value: "leia", label: "Princess Leia" },
+  { value: "han", label: "Han Solo" },
+  { value: "jabba", label: "Jabba the Hut" },
+  { value: "luke", label: "Luke Skywalker" },
+  { value: "everyone", label: "everyone" },
+];
 
 const TestHarness: React.FunctionComponent<{ inlineSelect: any }> = ({
   inlineSelect,
