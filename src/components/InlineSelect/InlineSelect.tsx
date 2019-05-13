@@ -18,12 +18,13 @@ import * as React from "react";
 import { useState } from "react";
 
 interface Props {
-  options: SelectOption;
+  options: SelectOption[];
   selected?: string;
 }
 
 export interface SelectOption {
-  [key: string]: string;
+  value: string;
+  label: string;
 }
 
 const InlineSelect: React.FunctionComponent<Props> = ({
@@ -46,19 +47,19 @@ const InlineSelect: React.FunctionComponent<Props> = ({
         value={selectedItem}
         {...rest}
       >
-        {Object.keys(options).map(name => {
-          return (
-            <option key={name} value={name}>
-              {options[name]}
-            </option>
-          );
-        })}
+        {options.map(option => (
+          <option key={option.value} value={option.value}>
+            {option.label}
+          </option>
+        ))}
       </select>
     );
   } else {
-    const textToDisplay = !!selectedItem
-      ? options[selectedItem]
-      : "click to choose";
+    let textToDisplay = "click to choose";
+    if (!!selectedItem) {
+      textToDisplay = options.find(option => option.value === selectedItem)
+        .label;
+    }
     return (
       <span
         className="inline-select__not-editing"
