@@ -13,7 +13,7 @@ import useSelectableItemListing from "lib/useSelectableItemListing";
 import {
   MenuItemsOpenState,
   MenuItemType,
-  MenuItemOpened,
+  MenuItemToggled,
 } from "./MenuItem/types";
 import MenuItem from "./MenuItem";
 import { useDocumentTree } from "components/DocumentEditors/api/explorer";
@@ -28,7 +28,7 @@ const getMenuItems = (
   isCollapsed: boolean = false,
   menuItems: MenuItemType[],
   menuItemIsOpenByKey: MenuItemsOpenState,
-  menuItemOpened: MenuItemOpened,
+  menuItemToggled: MenuItemToggled,
   keyIsDown: KeyDownState,
   showCopyDialog: ShowCopyDocRefDialog,
   showMoveDialog: ShowCopyDocRefDialog,
@@ -52,7 +52,7 @@ const getMenuItems = (
         isCollapsed={isCollapsed}
         showCopyDialog={showCopyDialog}
         showMoveDialog={showMoveDialog}
-        menuItemOpened={menuItemOpened}
+        menuItemToggled={menuItemToggled}
         menuItemIsOpenByKey={menuItemIsOpenByKey}
       />
       {/* TODO: we only want the 'children' class on the first set of children. We're using it to pad the bottom. Any better ideas? */}
@@ -63,7 +63,7 @@ const getMenuItems = (
             isCollapsed,
             menuItem.children,
             menuItemIsOpenByKey,
-            menuItemOpened,
+            menuItemToggled,
             keyIsDown,
             showCopyDialog,
             showMoveDialog,
@@ -83,9 +83,10 @@ const Sidebar: React.FunctionComponent<Props> = ({ activeMenuItem }) => {
     menuItems,
     openMenuItemKeys,
     menuItemOpened,
+    menuItemToggled,
     menuItemIsOpenByKey,
     menuItemsByKey,
-  } = useMenuItems(activeMenuItem);
+  } = useMenuItems();
 
   const { copyDocuments, moveDocuments } = useDocumentTree();
 
@@ -193,7 +194,7 @@ const Sidebar: React.FunctionComponent<Props> = ({ activeMenuItem }) => {
               !isExpanded,
               menuItems,
               menuItemIsOpenByKey,
-              menuItemOpened,
+              menuItemToggled,
               keyIsDown,
               showCopyDialog,
               showMoveDialog,

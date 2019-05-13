@@ -122,7 +122,7 @@ const FolderExplorer: React.FunctionComponent<SwitchedDocRefEditorProps> = ({
 
   const onClickCreate = React.useCallback(() => {
     if (!!folder) {
-      showCreateDialog(folder.node);
+      showCreateDialog();
     }
   }, [folder, showCreateDialog]);
 

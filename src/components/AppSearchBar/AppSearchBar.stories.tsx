@@ -44,6 +44,7 @@ let AppSearchAsForm: React.FunctionComponent<Props> = ({ typeFilter }) => {
 
   return (
     <form>
+      <p>{typeFilter ? `Only showing ${typeFilter}` : "Showing All Types"}</p>
       <div>
         <label>Chosen Doc Ref</label>
         <AppSearchBar typeFilter={typeFilter} {...chosenDocRefProps} />
@@ -54,38 +55,19 @@ let AppSearchAsForm: React.FunctionComponent<Props> = ({ typeFilter }) => {
   );
 };
 
-class AppSearchAsNavigator extends React.Component<
-  Props,
-  { chosenDocRef?: DocRefType }
-> {
-  displayRef: React.RefObject<HTMLDivElement>;
-  constructor(props: Props) {
-    super(props);
-
-    this.displayRef = React.createRef();
-    this.state = {
-      chosenDocRef: undefined,
-    };
-  }
-  render() {
-    return (
-      <div style={{ height: "100%", width: "100%" }}>
-        <AppSearchBar
-          onChange={d => {
-            this.setState({ chosenDocRef: d });
-            this.displayRef.current!.focus();
-          }}
-          value={this.state.chosenDocRef}
-        />
-        <div tabIndex={0} ref={this.displayRef}>
-          {this.state.chosenDocRef
-            ? `Would be opening ${this.state.chosenDocRef.name}...`
-            : "no doc ref chosen"}
-        </div>
+const AppSearchAsNavigator: React.FunctionComponent<Props> = () => {
+  const [chosenDocRef, setChosenDocRef] = React.useState<DocRefType>(undefined);
+  return (
+    <div style={{ height: "100%", width: "100%" }}>
+      <AppSearchBar onChange={setChosenDocRef} value={chosenDocRef} />
+      <div tabIndex={0}>
+        {chosenDocRef
+          ? `Would be opening ${chosenDocRef.name}...`
+          : "no doc ref chosen"}
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 const globalSearch = storiesOf(`App Search Bar/Global Search`, module);
 addThemedStories(globalSearch, () => <AppSearchAsNavigator />);

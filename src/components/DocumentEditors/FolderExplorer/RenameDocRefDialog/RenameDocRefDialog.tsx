@@ -19,8 +19,8 @@ import DialogActionButtons from "../../../DialogActionButtons";
 import IconHeader from "../../../IconHeader";
 import ThemedModal from "../../../ThemedModal";
 // import { required, minLength2 } from "lib/formUtils";
-import useForm from "lib/useForm";
 import { DocRefType } from "components/DocumentEditors/useDocumentApi/types/base";
+import RenameDocRefForm, { useThisForm } from "./RenameDocRefForm";
 
 interface Props {
   isOpen: boolean;
@@ -29,31 +29,17 @@ interface Props {
   onCloseDialog: () => void;
 }
 
-interface FormValues {
-  docRefName?: string;
-}
-
 export const RenameDocRefDialog: React.FunctionComponent<Props> = ({
   isOpen,
   docRef,
   onConfirm,
   onCloseDialog,
 }) => {
-  const initialValues = React.useMemo(
-    () => ({
-      docRefName: !!docRef ? docRef.name : "no document",
-    }),
-    [docRef],
-  );
-
   const {
     value: { docRefName },
-    useTextInput,
-  } = useForm<FormValues>({
-    initialValues,
-  });
+    componentProps,
+  } = useThisForm(docRef);
 
-  const docRefNameProps = useTextInput("docRefName");
   const onConfirmLocal = React.useCallback(() => {
     if (!!docRef && !!docRefName) {
       onConfirm(docRef, docRefName);
@@ -65,12 +51,7 @@ export const RenameDocRefDialog: React.FunctionComponent<Props> = ({
     <ThemedModal
       isOpen={isOpen}
       header={<IconHeader icon="edit" text="Enter New Name for Doc Ref" />}
-      content={
-        <form>
-          <label>Type</label>
-          <input {...docRefNameProps} />
-        </form>
-      }
+      content={<RenameDocRefForm {...componentProps} />}
       actions={
         <DialogActionButtons
           onCancel={onCloseDialog}

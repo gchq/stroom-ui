@@ -23,7 +23,7 @@ export const WithChromeContext = React.createContext<ChromeContext>({
     console.error("Setting Include Chrome on Default Implementation"),
 });
 
-export const useChromeContext = (urlPrefix: string): boolean => {
+export const useIncludeSidebar = (urlPrefix: string): boolean => {
   const { includeSidebar, setUrlPrefix } = React.useContext(WithChromeContext);
   React.useEffect(() => setUrlPrefix(urlPrefix), [urlPrefix, setUrlPrefix]);
   return includeSidebar;

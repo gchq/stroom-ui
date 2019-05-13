@@ -32,7 +32,7 @@ Polly.register(FetchAdapter);
 const testConfig: Config = {
   advertisedUrl: "/",
   allowPasswordResets: true,
-  appClientId: "stroom-ui",
+  clientId: "stroom-ui",
   authenticationServiceUrl: "http://localhost:9001",
   authorisationServiceUrl: "http://localhost:9001",
   stroomBaseServiceUrl: "http://localhost:9001",

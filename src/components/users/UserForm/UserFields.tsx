@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
+import { AuditCopy, LoginStatsCopy } from "components/auditCopy";
 import { ErrorMessage, Field, FormikErrors, FormikTouched } from "formik";
 import * as React from "react";
 import Toggle from "react-toggle";
 import "react-toggle/style.css";
-import { AuditCopy, LoginStatsCopy } from "components/auditCopy";
 import { User } from "../types";
 
 const LoginFailureCopy = ({ attemptCount }: { attemptCount: number }) => (
@@ -115,6 +115,7 @@ const UserFields = ({
             </div>
             <div className="field-container__spacer" />
             <div className="field-container--with-validation">
+              <label>Never expires?</label>
               <Field
                 name="neverExpires"
                 label="neverExpires"

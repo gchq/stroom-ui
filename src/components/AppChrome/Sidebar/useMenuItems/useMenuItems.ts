@@ -1,13 +1,6 @@
 import * as React from "react";
-import { IconProp } from "@fortawesome/fontawesome-svg-core";
 
 import useAppNavigation from "lib/useAppNavigation/useAppNavigation";
-import { useDocumentTree } from "components/DocumentEditors/api/explorer";
-import {
-  DocRefConsumer,
-  DocRefType,
-  DocRefTree,
-} from "components/DocumentEditors/useDocumentApi/types/base";
 import useLocalStorage, { useStoreObjectFactory } from "lib/useLocalStorage";
 import {
   MenuItemsOpenState,
@@ -15,6 +8,13 @@ import {
   MenuItemToggled,
   MenuItemType,
 } from "../MenuItem/types";
+import useDocumentMenu from "./useDocumentMenu";
+import useAdminMenu from "./useAdminMenu";
+import useWelcomeMenu from "./useWelcomeMenu";
+import useIndexingMenu from "./useIndexingMenu";
+import { SubMenuProps } from "./types";
+import useDataViewerMenu from "./useDataViewerMenu";
+import useProcessingMenu from "./useProcessingMenu";
 
 interface MenuItemsByKey {
   [key: string]: MenuItemType;
@@ -25,8 +25,8 @@ interface OutProps {
   menuItemsByKey: MenuItemsByKey;
   menuItemIsOpenByKey: MenuItemsOpenState;
   openMenuItemKeys: string[];
-  menuItemOpened: MenuItemOpened;
   menuItemToggled: MenuItemToggled;
+  menuItemOpened: MenuItemOpened;
 }
 
 const iterateMenuItems = function(
@@ -41,54 +41,10 @@ const iterateMenuItems = function(
   });
 };
 
-const getDocumentTreeMenuItems = (
-  activeMenuItem: string,
-  openDocRef: DocRefConsumer,
-  parentDocRef: DocRefType | undefined,
-  treeNode: DocRefTree,
-  skipInContractedMenu = false,
-): MenuItemType => ({
-  key: treeNode.uuid,
-  title: treeNode.name,
-  onClick: () => openDocRef(treeNode),
-  icon: "folder",
-  style: skipInContractedMenu ? "doc" : "nav",
-  skipInContractedMenu,
-  docRef: treeNode,
-  parentDocRef,
-  children:
-    treeNode.children && treeNode.children.length > 0
-      ? treeNode.children
-          .filter(t => t.type === "Folder")
-          .map(t =>
-            getDocumentTreeMenuItems(
-              activeMenuItem,
-              openDocRef,
-              treeNode,
-              t,
-              true,
-            ),
-          )
-      : undefined,
-});
-
 const DEFAULT_MENU_OPEN_STATE: MenuItemsOpenState = {};
 
-const useMenuItems = (activeMenuItem?: string): OutProps => {
-  const {
-    goToWelcome,
-    goToDataViewer,
-    goToProcessing,
-    goToIndexVolumes,
-    goToApiKeys,
-    goToAuthorisationManager,
-    goToIndexVolumeGroups,
-    goToUserSettings,
-    goToUsers,
-    goToEditDocRef,
-  } = useAppNavigation();
-
-  const { documentTree } = useDocumentTree();
+const useMenuItems = (): OutProps => {
+  const navigateApp = useAppNavigation();
 
   const {
     value: menuItemIsOpenByKey,
@@ -107,6 +63,7 @@ const useMenuItems = (activeMenuItem?: string): OutProps => {
     },
     [modifyOpenMenuItems],
   );
+
   const menuItemToggled: MenuItemToggled = React.useCallback(
     (name: string) => {
       modifyOpenMenuItems(existing => ({
@@ -116,125 +73,18 @@ const useMenuItems = (activeMenuItem?: string): OutProps => {
     },
     [modifyOpenMenuItems],
   );
+  const subMenuProps: SubMenuProps = { navigateApp, menuItemToggled };
 
-  const documentMenuItems = React.useMemo(
-    () =>
-      getDocumentTreeMenuItems(
-        activeMenuItem,
-        goToEditDocRef,
-        undefined,
-        documentTree,
-      ),
-    [activeMenuItem, goToEditDocRef, documentTree],
-  );
+  const welcome: MenuItemType = useWelcomeMenu(subMenuProps);
+  const documentMenuItems = useDocumentMenu(subMenuProps);
+  const dataViewer: MenuItemType = useDataViewerMenu(subMenuProps);
+  const processing: MenuItemType = useProcessingMenu(subMenuProps);
+  const indexing: MenuItemType = useIndexingMenu(subMenuProps);
+  const admin: MenuItemType = useAdminMenu(subMenuProps);
 
   const menuItems: MenuItemType[] = React.useMemo(
-    () => [
-      {
-        key: "welcome",
-        title: "Welcome",
-        onClick: goToWelcome,
-        icon: "home",
-        style: "nav",
-      },
-      documentMenuItems,
-      {
-        key: "data",
-        title: "Data",
-        onClick: goToDataViewer,
-        icon: "database",
-        style: "nav",
-      },
-      {
-        key: "processing",
-        title: "Processing",
-        onClick: goToProcessing,
-        icon: "play",
-        style: "nav",
-      },
-      {
-        key: "indexing",
-        title: "Indexing",
-        onClick: () => menuItemToggled("indexing"),
-        icon: "database",
-        style: "nav",
-        skipInContractedMenu: true,
-        children: [
-          {
-            key: "indexVolumes",
-            title: "Index Volumes",
-            onClick: goToIndexVolumes,
-            icon: "database",
-            style: "nav",
-          },
-          {
-            key: "indexVolumeGroups",
-            title: "Index Groups",
-            onClick: goToIndexVolumeGroups,
-            icon: "database",
-            style: "nav",
-          },
-        ],
-      },
-      {
-        key: "admin",
-        title: "Admin",
-        onClick: () => menuItemToggled("admin"),
-        icon: "cogs",
-        style: "nav",
-        skipInContractedMenu: true,
-        children: [
-          {
-            key: "userSettings",
-            title: "Me",
-            onClick: goToUserSettings,
-            icon: "user",
-            style: "nav",
-          },
-          {
-            key: "adminPermissions",
-            title: "Permissions",
-            icon: "key",
-            style: "nav",
-            onClick: () => menuItemToggled("adminPermissions"),
-            children: [true, false].map((isGroup: boolean) => ({
-              key: `${isGroup ? "groupPermissions" : "userPermissions"}`,
-              title: isGroup ? "Group" : "User",
-              onClick: () => goToAuthorisationManager(isGroup.toString()),
-              icon: "user" as IconProp,
-              style: "nav",
-            })) as MenuItemType[],
-          },
-          {
-            key: "userIdentities",
-            title: "Users",
-            onClick: goToUsers,
-            icon: "users",
-            style: "nav",
-          },
-          {
-            key: "apiKeys",
-            title: "API Keys",
-            onClick: goToApiKeys,
-            icon: "key",
-            style: "nav",
-          },
-        ],
-      },
-    ],
-    [
-      documentMenuItems,
-      menuItemToggled,
-      goToWelcome,
-      goToDataViewer,
-      goToProcessing,
-      goToIndexVolumes,
-      goToIndexVolumeGroups,
-      goToUserSettings,
-      goToApiKeys,
-      goToUsers,
-      goToAuthorisationManager,
-    ],
+    () => [welcome, documentMenuItems, dataViewer, processing, indexing, admin],
+    [documentMenuItems, welcome, dataViewer, processing, indexing, admin],
   );
 
   const openMenuItemKeys: string[] = React.useMemo(

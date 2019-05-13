@@ -19,15 +19,10 @@ import * as React from "react";
 import IconHeader from "../../../IconHeader";
 import ThemedModal from "../../../ThemedModal";
 import DialogActionButtons from "../../../DialogActionButtons";
-import { DocRefTypePicker } from "../../../DocRefTypePicker";
-import PermissionInheritancePicker from "../PermissionInheritancePicker";
-import useForm from "lib/useForm";
-import { DocRefType } from "components/DocumentEditors/useDocumentApi/types/base";
-import { PermissionInheritance } from "../PermissionInheritancePicker/types";
+import CreateDocRefForm, { useThisForm } from "./CreateDocRefForm";
 // import { required, minLength2 } from "lib/formUtils";
 
 interface Props {
-  destination?: DocRefType;
   isOpen: boolean;
   onConfirm: (
     docRefType: string,
@@ -37,17 +32,6 @@ interface Props {
   onCloseDialog: () => void;
 }
 
-interface FormValues {
-  docRefType?: string;
-  docRefName?: string;
-  permissionInheritance: PermissionInheritance;
-}
-
-const initialValues: FormValues = {
-  docRefName: "New Document",
-  permissionInheritance: PermissionInheritance.NONE,
-};
-
 export const CreateDocRefDialog: React.FunctionComponent<Props> = ({
   isOpen,
   onConfirm,
@@ -55,17 +39,8 @@ export const CreateDocRefDialog: React.FunctionComponent<Props> = ({
 }) => {
   const {
     value: { docRefType, docRefName, permissionInheritance },
-    useControlledInputProps,
-    useTextInput,
-  } = useForm<FormValues>({
-    initialValues,
-  });
-
-  const docRefNameProps = useTextInput("docRefName");
-  const docRefTypeProps = useControlledInputProps<string>("docRefType");
-  const permissionInheritanceProps = useControlledInputProps<
-    PermissionInheritance
-  >("permissionInheritance");
+    componentProps,
+  } = useThisForm();
 
   const onConfirmLocal = React.useCallback(() => {
     if (!!docRefType && !!docRefName && !!permissionInheritance) {
@@ -85,22 +60,7 @@ export const CreateDocRefDialog: React.FunctionComponent<Props> = ({
       isOpen={isOpen}
       onRequestClose={onCloseDialog}
       header={<IconHeader icon="plus" text="Create a New Doc Ref" />}
-      content={
-        <form>
-          <div>
-            <label>Doc Ref Type</label>
-            <DocRefTypePicker {...docRefTypeProps} />
-          </div>
-          <div>
-            <label>Name</label>
-            <input {...docRefNameProps} />
-          </div>
-          <div>
-            <label>Permission Inheritance</label>
-            <PermissionInheritancePicker {...permissionInheritanceProps} />
-          </div>
-        </form>
-      }
+      content={<CreateDocRefForm {...componentProps} />}
       actions={
         <DialogActionButtons
           onCancel={onCloseDialog}
@@ -120,7 +80,7 @@ interface UseDialog {
    * The owning component is ready to start a deletion process.
    * Calling this will open the dialog, and setup the UUIDs
    */
-  showDialog: (destination: DocRefType) => void;
+  showDialog: () => void;
   /**
    * These are the properties that the owning component can just give to the Dialog component
    * using destructing.
@@ -138,24 +98,18 @@ export const useDialog = (
     permissionInheritance: string,
   ) => void,
 ): UseDialog => {
-  const [destination, setDestination] = React.useState<DocRefType | undefined>(
-    undefined,
-  );
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
 
   return {
     componentProps: {
-      destination,
       isOpen,
       onConfirm,
       onCloseDialog: () => {
         setIsOpen(false);
-        setDestination(undefined);
       },
     },
-    showDialog: _destination => {
+    showDialog: () => {
       setIsOpen(true);
-      setDestination(_destination);
     },
   };
 };

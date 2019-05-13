@@ -1,7 +1,7 @@
 export interface Config {
   advertisedUrl?: string;
   allowPasswordResets?: boolean;
-  appClientId?: string;
+  clientId?: string;
   authenticationServiceUrl?: string;
   authorisationServiceUrl?: string;
   stroomBaseServiceUrl?: string;

@@ -20,20 +20,20 @@ import AuthenticationRequest from "./AuthenticationRequest";
 import useAuthenticationContext from "./useAuthenticationContext";
 
 const PrivateRoute = ({ render, ...rest }: RouteProps) => {
-  const { advertisedUrl, appClientId, authenticationServiceUrl } = useConfig();
+  const { advertisedUrl, clientId, authenticationServiceUrl } = useConfig();
   const { idToken } = useAuthenticationContext();
 
   if (
     !(
       advertisedUrl !== undefined &&
-      appClientId !== undefined &&
+      clientId !== undefined &&
       authenticationServiceUrl !== undefined
     )
   ) {
     throw new Error(
       `Config Not Correct for Private Routes ${JSON.stringify({
         advertisedUrl,
-        appClientId,
+        clientId,
         authenticationServiceUrl,
       })}`,
     );
@@ -49,7 +49,7 @@ const PrivateRoute = ({ render, ...rest }: RouteProps) => {
           <AuthenticationRequest
             referrer={props.location.pathname}
             uiUrl={advertisedUrl}
-            appClientId={appClientId}
+            clientId={clientId}
             authenticationServiceUrl={authenticationServiceUrl}
           />
         )

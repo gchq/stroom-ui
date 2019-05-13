@@ -2,18 +2,11 @@ import * as React from "react";
 import { storiesOf } from "@storybook/react";
 
 import CreateDocRefDialog, { useDialog } from "./CreateDocRefDialog";
-import { fromSetupSampleData } from "../test";
 
 import JsonDebug from "testing/JsonDebug";
-import { DocRefType } from "components/DocumentEditors/useDocumentApi/types/base";
+import { addThemedStories } from "testing/storybook/themedStoryGenerator";
 
-const testFolder2 = fromSetupSampleData.children![1];
-
-interface Props {
-  testDestination: DocRefType;
-}
-
-const TestHarness: React.FunctionComponent<Props> = ({ testDestination }) => {
+const TestHarness: React.FunctionComponent = () => {
   const [lastConfirmed, setLastConfirmed] = React.useState<object>({});
   const { showDialog, componentProps } = useDialog(
     (docRefType: string, docRefName: string, permissionInheritance: string) => {
@@ -24,14 +17,15 @@ const TestHarness: React.FunctionComponent<Props> = ({ testDestination }) => {
   return (
     <div>
       <h1>Create Doc Ref Test</h1>
-      <button onClick={() => showDialog(testDestination)}>Show</button>
+      <button onClick={() => showDialog()}>Show</button>
       <CreateDocRefDialog {...componentProps} />
       <JsonDebug value={lastConfirmed} />
     </div>
   );
 };
 
-storiesOf("Document Editors/Folder/Create Doc Ref Dialog", module).add(
-  "simple",
-  () => <TestHarness testDestination={testFolder2} />,
+const stories = storiesOf(
+  "Document Editors/Folder/Create Doc Ref/Dialog",
+  module,
 );
+addThemedStories(stories, () => <TestHarness />);
