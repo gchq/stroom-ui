@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-import * as React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { SizeProp } from "@fortawesome/fontawesome-svg-core";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import * as React from "react";
 import { ButtonProps } from "./types";
 
 // const ripple = (evt: React.MouseEvent<HTMLButtonElement>): void => {
@@ -120,6 +120,8 @@ export const Button = ({
     if (text) classNames.push("has-text");
     if (selected) classNames.push("button-selected");
     if (disabled) classNames.push("button-disabled");
+
+    classNames.push(size);
 
     return classNames.join(" ");
   }, [rawClassName, appearance, action, text, selected, disabled]);

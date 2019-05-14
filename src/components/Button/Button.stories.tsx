@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-import * as React from "react";
 import { storiesOf } from "@storybook/react";
-
+import * as React from "react";
 import { addThemedStories } from "testing/storybook/themedStoryGenerator";
 import Button from "./Button";
+
 
 interface Variant {
   title: string;
@@ -121,6 +121,56 @@ const TestHarness: React.FunctionComponent = () => {
               text="Permissions"
               title="Permissions"
               disabled={true}
+            />
+          </div>
+          <div className="button-container">
+            <Button
+              size="small"
+              appearance={appearance}
+              action="primary"
+              icon="save"
+              text="Save"
+              title="Save"
+            />
+            <Button
+              size="small"
+              appearance={appearance}
+              action="secondary"
+              text="Close"
+              icon="times"
+              title="Close"
+            />
+            <Button
+              size="small"
+              appearance={appearance}
+              icon="key"
+              text="Permissions"
+              title="Permissions"
+            />
+          </div>
+          <div className="button-container">
+            <Button
+              size="xlarge"
+              appearance={appearance}
+              action="primary"
+              icon="save"
+              text="Save"
+              title="Save"
+            />
+            <Button
+              size="xlarge"
+              appearance={appearance}
+              action="secondary"
+              text="Close"
+              icon="times"
+              title="Close"
+            />
+            <Button
+              size="xlarge"
+              appearance={appearance}
+              icon="key"
+              text="Permissions"
+              title="Permissions"
             />
           </div>
         </div>

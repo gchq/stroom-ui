@@ -317,6 +317,12 @@ $button-margin: .2rem;
   }
 }
 
+.button-icon.small { // .j1g2vga5
+  min-width: 0.25rem;
+  min-height: 0.25rem;
+  padding: 0.2rem;
+}
+
 .button-icon.button-selected {
   background-color: rgba(158, 158, 158,0.2); // material grey 500 20%
   @include themify($themes) {
