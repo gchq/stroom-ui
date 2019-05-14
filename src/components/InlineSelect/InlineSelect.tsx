@@ -70,7 +70,7 @@ const InlineSelect: React.FunctionComponent<Props> = ({
         value={selectedItem}
         {...rest}
       >
-        <option disabled selected value={undefined}>--please select--</option>
+        <option disabled selected value={undefined}></option>
         {options.map(option => (
           <option key={option.value} value={option.value}>
             {option.label}

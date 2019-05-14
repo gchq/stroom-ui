@@ -43,26 +43,34 @@ const InlineMultiSelect: React.FunctionComponent<Props> = ({
     }
   }
 
-  const remainingOptions = options.filter(option => selectedItems.indexOf(option.value) <= 0);
+  const remainingOptions = options.filter(option => selectedItems.indexOf(option.value) < 0);
+  // console.log({remainingOptions});
   return (
     <span>
       [
       {selectedItems.map((selectedItem, index) => {
+        const thisSelectsOptions = Object.assign([], remainingOptions);
+        thisSelectsOptions.push(options.find(option => option.value === selectedItem));
+        console.log({thisSelectsOptions});
         return (
           <React.Fragment key={selectedItem}>
             <InlineSelect
-              options={options}
+              options={thisSelectsOptions}
               selected={selectedItem}
               onChange={handleChange}
               {...rest}
             />
-            ,{"\u00A0"}
+            {index !== options.length - 1 ? 
+            <span>,{"\u00A0"}</span> : undefined }
           </React.Fragment>
 
         )
       })}
-      <InlineSelect {...rest} options={options} emitOnly={true}
+
+      {remainingOptions.length > 0 ?
+      <InlineSelect {...rest} options={remainingOptions} emitOnly={true}
         onChange={handleChange} />
+        : undefined}
 
       ]
     </span>
