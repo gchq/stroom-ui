@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-import { action } from "@storybook/addon-actions";
 import { storiesOf } from "@storybook/react";
+import { SelectOption } from "components/InlineSelect/InlineSelect";
 import * as React from "react";
 import { addThemedStories } from "testing/storybook/themedStoryGenerator";
-import InlineSelect, { SelectOption } from "./InlineSelect";
+import InlineMultiSelect from "./InlineMultiSelect";
 
-const stories = storiesOf("General Purpose/InlineSelect", module);
+const stories = storiesOf("General Purpose/InlineMultiSelect", module);
 
 const options: SelectOption[] = [
   { value: "leia", label: "Princess Leia" },
@@ -32,16 +32,32 @@ const options: SelectOption[] = [
 
 addThemedStories(stories, () => (
   <div style={{padding:"5em"}}>
-    <h1>InlineSelect</h1>
-    <p>An edit-in-place <code>select</code>, to be used inline with text.</p>
+    <h1>InlineMultiSelect</h1>
+    <p>An edit-in-place multi<code>select</code>, to be used inline with text. 
+    Allows the selection of multiple options.</p>
     <form>
 
-      <h2>Simplest</h2>
+      <h2>Empty</h2>
       <span>I would like to feed </span>
-      <InlineSelect options={options} />
+      <InlineMultiSelect options={options} selected={[]}/>
       <span> to the sarlacc.</span>
       
-      <h2>With an existing value</h2>
+      <h2>Single selection</h2>
+      <span>I would like to feed </span>
+      <InlineMultiSelect options={options} selected={["leia"]}/>
+      <span> to the sarlacc.</span>
+
+      <h2>Multiple selection</h2>
+      <span>I would like to feed </span>
+      <InlineMultiSelect options={options} selected={["leia", "han", "luke"]}/>
+      <span> to the sarlacc.</span>
+
+      <h2>Same thing selected more than one</h2>
+      <span>I would like to feed </span>
+      <InlineMultiSelect options={options} selected={["leia", "han", "leia"]}/>
+      <span> to the sarlacc.</span>
+
+      {/* <h2>With an existing value</h2>
       <span>I would like to feed </span>
       <InlineSelect options={options} selected="everyone" />
       <span> to the sarlacc.</span>
@@ -49,12 +65,7 @@ addThemedStories(stories, () => (
       <h2>With an onChange handler (see Action addon)</h2>
       <span>I would like to feed </span>
       <InlineSelect options={options} onChange={action("onChange")} />
-      <span> to the sarlacc.</span>
-
-      <h2>With a placeholder</h2>
-      <span>I would like to feed </span>
-      <InlineSelect options={options} placeholder="+" onChange={action("onChange")} />
-      <span> to the sarlacc.</span>
+      <span> to the sarlacc.</span> */}
     </form>
   </div>
 ));

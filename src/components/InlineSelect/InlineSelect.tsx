@@ -15,13 +15,19 @@
  */
 
 import * as React from "react";
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 
 interface Props {
   options?: SelectOption[];
   simpleOptions?: string[];
-  onChange?: (event: string) => void;
+  onChange?: (event: ChangeEvent<HTMLSelectElement>) => void;
   selected?: string;
+  placeholder?: string;
+  // emitOnly has a very specific purpose: it allows this select to remain
+  // as it was after it's been selected, and all it does is dispatch the 
+  // onChange event with the item that was selected. This is necessary
+  // for the multi-select.
+  emitOnly?: boolean; 
 }
 
 export interface SelectOption {
@@ -34,6 +40,8 @@ const InlineSelect: React.FunctionComponent<Props> = ({
   simpleOptions,
   onChange,
   selected,
+  placeholder,
+  emitOnly,
   ...rest
 }) => {
   const [isEditing, setEditing] = useState(false);
@@ -53,12 +61,16 @@ const InlineSelect: React.FunctionComponent<Props> = ({
           setSelectedItem(value);
           setEditing(false);
           if (!!onChange) {
-            onChange(event.target.value);
+            onChange(event);
+          }
+          if(emitOnly){
+            setSelectedItem(undefined);
           }
         }}
         value={selectedItem}
         {...rest}
       >
+        <option disabled selected value={undefined}>--please select--</option>
         {options.map(option => (
           <option key={option.value} value={option.value}>
             {option.label}
@@ -67,8 +79,8 @@ const InlineSelect: React.FunctionComponent<Props> = ({
       </select>
     );
   } else {
-    let defaultText = <em>click to choose</em>
-    let textToDisplay:string = undefined;
+    let defaultText = placeholder || <em>click to choose</em>
+    let textToDisplay: string = undefined;
     if (!!selectedItem) {
       const selectedOption = options.find(
         option => option.value === selectedItem,
@@ -82,7 +94,7 @@ const InlineSelect: React.FunctionComponent<Props> = ({
         className="inline-select__not-editing"
         onClick={() => setEditing(true)}
       >
-        {textToDisplay||defaultText}
+        {textToDisplay || defaultText}
       </span>
     );
   }

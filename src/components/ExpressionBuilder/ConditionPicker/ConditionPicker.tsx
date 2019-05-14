@@ -1,13 +1,6 @@
+import InlineSelect, { SelectOption } from "components/InlineSelect/InlineSelect";
 import * as React from "react";
-import Select from "react-select";
-import {
-  ConditionType,
-  ConditionDisplayValues,
-  conditionTypes,
-} from "../types";
-import InlineSelect, {
-  SelectOption,
-} from "components/InlineSelect/InlineSelect";
+import { ConditionDisplayValues, ConditionType, conditionTypes } from "../types";
 
 interface Props {
   conditionOptions?: ConditionType[];
@@ -33,7 +26,7 @@ const ConditionPicker: React.FunctionComponent<Props> = ({
   return (
     <InlineSelect
       selected={!!selected ? selected.value : undefined}
-      onChange={(value: string) => onChange(value as ConditionType)}
+      onChange={(event: React.ChangeEvent<HTMLSelectElement>) => onChange(event.target.value as ConditionType)}
       options={options}
     />
   );

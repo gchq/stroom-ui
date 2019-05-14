@@ -1,8 +1,6 @@
+import InlineSelect, { SelectOption } from "components/InlineSelect/InlineSelect";
 import * as React from "react";
 import { DataSourceType } from "../types";
-import InlineSelect, {
-  SelectOption,
-} from "components/InlineSelect/InlineSelect";
 
 interface Props {
   dataSource: DataSourceType;
@@ -22,7 +20,7 @@ const DataSourceFieldPicker: React.FunctionComponent<Props> = ({
   );
 
   return (
-    <InlineSelect options={options} selected={value} onChange={onChange} />
+    <InlineSelect options={options} selected={value} onChange={(event) => { onChange(event.target.value)}} />
   );
 };
 
