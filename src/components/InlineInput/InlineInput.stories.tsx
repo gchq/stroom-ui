@@ -14,34 +14,41 @@
  * limitations under the License.
  */
 
+import { action } from "@storybook/addon-actions";
 import { storiesOf } from "@storybook/react";
 import * as React from "react";
 import { addThemedStories } from "testing/storybook/themedStoryGenerator";
 import InlineInput from "./InlineInput";
-import { action } from "@storybook/addon-actions";
-
-const TestHarness: React.FunctionComponent<{ inlineInput: any }> = ({
-  inlineInput,
-}) => (
-  <div>
-    <form>
-      <span>I would like to feed </span>
-      {inlineInput}
-      <span> to the sarlacc.</span>
-    </form>
-  </div>
-);
 
 const stories = storiesOf("General Purpose/InlineInput", module);
 
-stories.add("With onChange", () => (
-  <TestHarness
-    inlineInput={<InlineInput value="Yoda" onChange={action("onChange")} />}
-  />
-));
+addThemedStories(stories, () => 
+  <div style={{padding:"5em"}}>
+    <h1>InlineInput</h1>
+    <p>An edit-in-place <code>input</code>, to be used inline with text.</p>
+    <p>Controls when editing are:</p>
+    <ul>
+      <li><code>esc</code>: discard the change and close <code>input</code> </li>
+      <li><code>enter</code>: keep the change and close <code>input</code> </li>
+      <li><code>blur</code> the component: keep the change and close <code>input</code> </li>
+    </ul>
+    <form>
 
-stories.add("With value", () => (
-  <TestHarness inlineInput={<InlineInput value="Yoda" />} />
-));
+      <h2>Simplest</h2>
+      <span>I would like to feed </span>
+      <InlineInput/>
+      <span> to the sarlacc.</span>
 
-addThemedStories(stories, () => <TestHarness inlineInput={<InlineInput />} />);
+      <h2>With an existing value</h2>
+      <span>I would like to feed </span>
+      <InlineInput value="Yoda" />
+      <span> to the sarlacc.</span>
+
+      <h2>With an onChange handler (see Action addon)</h2>
+      <span>I would like to feed </span>
+      <InlineInput onChange={action("onChange")} />
+      <span> to the sarlacc.</span>
+
+    </form>
+  </div>
+ );

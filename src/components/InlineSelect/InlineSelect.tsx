@@ -67,7 +67,8 @@ const InlineSelect: React.FunctionComponent<Props> = ({
       </select>
     );
   } else {
-    let textToDisplay = "click to choose";
+    let defaultText = <em>click to choose</em>
+    let textToDisplay:string = undefined;
     if (!!selectedItem) {
       const selectedOption = options.find(
         option => option.value === selectedItem,
@@ -81,7 +82,7 @@ const InlineSelect: React.FunctionComponent<Props> = ({
         className="inline-select__not-editing"
         onClick={() => setEditing(true)}
       >
-        {textToDisplay}
+        {textToDisplay||defaultText}
       </span>
     );
   }
