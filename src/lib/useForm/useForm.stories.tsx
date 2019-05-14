@@ -18,8 +18,10 @@ const SIMPLE_INITIAL_VALUES: SimpleInputsFormValues = {
 };
 
 const SimpleInputsTestHarness: React.FunctionComponent = () => {
+  const [validatedValue, onValidate] = React.useState<object>({});
   const { useTextInput, value } = useForm<SimpleInputsFormValues>({
     initialValues: SIMPLE_INITIAL_VALUES,
+    onValidate,
   });
   const firstNameProps = useTextInput("firstName");
   const surnameProps = useTextInput("surname");
@@ -30,7 +32,7 @@ const SimpleInputsTestHarness: React.FunctionComponent = () => {
       <input {...firstNameProps} />
       <label>Surname</label>
       <input {...surnameProps} />
-      <JsonDebug value={value} />
+      <JsonDebug value={{ value, validatedValue }} />
     </form>
   );
 };

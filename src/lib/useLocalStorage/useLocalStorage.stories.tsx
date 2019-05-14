@@ -8,20 +8,11 @@ interface TestStore1 {
   name: string;
 }
 
-interface TestStore2 {
-  names: string[];
-}
+const TestHarnessSetValue: React.FunctionComponent = () => {
+  const storageKey = "testWithSetValue";
 
-const TestHarness: React.FunctionComponent = () => {
-  const storageKey1 = "testWithSetValue";
-  const storageKey2 = "testWithReducer";
-
-  const {
-    value: value1,
-    setValue: setValue1,
-    resetValue: resetValue1,
-  } = useLocalStorage<TestStore1>(
-    storageKey1,
+  const { value, setValue, resetValue } = useLocalStorage<TestStore1>(
+    storageKey,
     {
       name: "someName",
     },
@@ -32,51 +23,82 @@ const TestHarness: React.FunctionComponent = () => {
     HTMLInputElement
   > = React.useCallback(
     ({ target: { value } }) => {
-      setValue1({ name: value });
+      setValue({ name: value });
     },
-    [setValue1],
+    [setValue],
   );
 
-  const [newValue2, setNewValue2] = React.useState<string>("kochanski");
-  const onNewValue2Change: React.ChangeEventHandler<
+  const resetStorage = React.useCallback(() => {
+    resetValue();
+  }, [resetValue]);
+
+  return (
+    <div>
+      <p>Demonstrates simple use of setValue</p>
+      <form>
+        <div>
+          <label>Value in Storage</label>
+          <input value={value.name} onChange={onName1Change} />
+        </div>
+      </form>
+
+      <div>
+        <button onClick={resetStorage}>Reset All Storage</button>
+      </div>
+      <JsonDebug value={{ storageKey, value }} />
+    </div>
+  );
+};
+
+interface TestStore2 {
+  names: string[];
+}
+
+const TestHarnessReducer: React.FunctionComponent = () => {
+  const storageKey = "testWithReducer";
+
+  const [newValue, setNewValue] = React.useState<string>("kochanski");
+  const onNewValueChange: React.ChangeEventHandler<
     HTMLInputElement
-  > = React.useCallback(({ target: { value } }) => setNewValue2(value), [
-    setNewValue2,
+  > = React.useCallback(({ target: { value } }) => setNewValue(value), [
+    setNewValue,
   ]);
 
-  const {
-    value: value2,
-    reduceValue: reduceValue2,
-    resetValue: resetValue2,
-  } = useLocalStorage<TestStore2>(
-    storageKey2,
+  const { value, reduceValue, resetValue } = useLocalStorage<TestStore2>(
+    storageKey,
     {
       names: ["lister", "rimmer", "cat", "kryten"],
     },
     useStoreObjectFactory(),
   );
 
-  const onAddValue2 = React.useCallback(() => {
-    reduceValue2(existing => ({ names: [newValue2, ...existing.names] }));
-  }, [newValue2, reduceValue2]);
+  const onAddValue = React.useCallback(
+    e => {
+      reduceValue(existing => ({ names: [newValue, ...existing.names] }));
+      e.preventDefault();
+    },
+    [newValue, reduceValue],
+  );
 
-  const onRemoveValue2 = React.useCallback(() => {
-    reduceValue2(existing => ({
-      names: existing.names.filter(e => e !== newValue2),
-    }));
-  }, [newValue2, reduceValue2]);
+  const onRemoveValue = React.useCallback(
+    e => {
+      reduceValue(existing => ({
+        names: existing.names.filter(e => e !== newValue),
+      }));
+      e.preventDefault();
+    },
+    [newValue, reduceValue],
+  );
 
   const resetStorage = React.useCallback(() => {
-    resetValue1();
-    resetValue2();
-  }, [resetValue1, resetValue2]);
+    resetValue();
+  }, [resetValue]);
 
   return (
     <div>
-      <p>Storage 1 demonstrates simple use of setValue</p>
       <p>
-        Storage 2 demonstrates the use of a reducer, where any new value is
-        calculated with reference to the existing one.
+        Demonstrates the use of a reducer, where any new value is calculated
+        with reference to the existing one.
       </p>
       <p>
         If a reducer is not used, and instead a function is memoized that gets
@@ -86,26 +108,21 @@ const TestHarness: React.FunctionComponent = () => {
       </p>
       <form>
         <div>
-          <label>Value in Storage 1</label>
-          <input value={value1.name} onChange={onName1Change} />
-        </div>
-        <div>
-          <label>Value for Storage 2</label>
-          <input value={newValue2} onChange={onNewValue2Change} />
+          <label>Value for Storage</label>
+          <input value={newValue} onChange={onNewValueChange} />
+          <button onClick={onAddValue}>Add Value</button>
+          <button onClick={onRemoveValue}>Remove Value</button>
         </div>
       </form>
 
       <div>
-        <h4>Modify Value 2</h4>
-        <button onClick={onAddValue2}>Add Value 2</button>
-        <button onClick={onRemoveValue2}>Remove Value 2</button>
-      </div>
-      <div>
         <button onClick={resetStorage}>Reset All Storage</button>
       </div>
-      <JsonDebug value={{ storageKey1, value1, storageKey2, value2 }} />
+      <JsonDebug value={{ storageKey, value }} />
     </div>
   );
 };
 
-storiesOf("lib/useLocalStorage", module).add("test", () => <TestHarness />);
+storiesOf("lib/useLocalStorage", module)
+  .add("setValue", () => <TestHarnessSetValue />)
+  .add("reducer", () => <TestHarnessReducer />);

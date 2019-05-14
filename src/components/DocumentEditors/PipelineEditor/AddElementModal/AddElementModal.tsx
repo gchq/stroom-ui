@@ -4,13 +4,9 @@ import IconHeader from "components/IconHeader";
 import Button from "components/Button";
 import ThemedModal from "components/ThemedModal";
 // import { required, minLength2 } from "lib/formUtils";
-import useForm from "lib/useForm";
 import { Props, OnAddElement, UseDialog } from "./types";
 import { ElementDefinition } from "components/DocumentEditors/PipelineEditor/useElements/types";
-
-interface FormValues {
-  newName: string;
-}
+import AddElementForm, { useThisForm } from "./AddElementForm";
 
 export const AddElementModal: React.FunctionComponent<Props> = ({
   isOpen,
@@ -20,35 +16,13 @@ export const AddElementModal: React.FunctionComponent<Props> = ({
   elementDefinition,
   existingNames,
 }) => {
-  const initialValues = React.useMemo<FormValues>(
-    () => ({
-      newName: !!elementDefinition
-        ? elementDefinition.type
-        : "no element definition",
-    }),
-    [elementDefinition],
-  );
-
-  const onUniqueNameCheck = React.useCallback(
-    (value: string) => {
-      return existingNames.includes(value);
-    },
-    [existingNames],
-  );
-
   const {
+    componentProps,
     value: { newName },
-    useTextInput,
-  } = useForm<FormValues>({
-    initialValues,
-    onValidate: React.useCallback(
-      v => {
-        onUniqueNameCheck(v.newName);
-      },
-      [onUniqueNameCheck],
-    ),
+  } = useThisForm({
+    elementDefinition,
+    existingNames,
   });
-  const newNameProps = useTextInput("newName");
 
   const onAddElementLocal = React.useCallback(() => {
     if (!!parentId && !!elementDefinition && !!newName) {
@@ -71,14 +45,7 @@ export const AddElementModal: React.FunctionComponent<Props> = ({
       isOpen={isOpen}
       onRequestClose={onCloseDialog}
       header={<IconHeader icon="file" text="Add New Element" />}
-      content={
-        <form>
-          <div>
-            <label>Name</label>
-            <input {...newNameProps} />
-          </div>
-        </form>
-      }
+      content={<AddElementForm {...componentProps} />}
       actions={
         <React.Fragment>
           <Button

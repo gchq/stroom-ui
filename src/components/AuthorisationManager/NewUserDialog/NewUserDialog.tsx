@@ -2,11 +2,7 @@ import * as React from "react";
 
 import ThemedModal from "components/ThemedModal";
 import DialogActionButtons from "components/DialogActionButtons";
-import useForm from "lib/useForm";
-
-interface FormValues {
-  name: string;
-}
+import NewUserForm, { useThisForm } from "./NewUserForm";
 
 interface Props {
   isOpen: boolean;
@@ -14,11 +10,6 @@ interface Props {
   onCreateUser: (name: string, isGroup: boolean) => void;
   onCloseDialog: () => void;
 }
-
-// You MUST use a memo-ized/global constant here or you end up with render recursion
-const defaultValues: FormValues = {
-  name: "",
-};
 
 const NewUserDialog: React.FunctionComponent<Props> = ({
   isOpen,
@@ -28,11 +19,8 @@ const NewUserDialog: React.FunctionComponent<Props> = ({
 }) => {
   const {
     value: { name },
-    useTextInput,
-  } = useForm<FormValues>({
-    initialValues: defaultValues,
-  });
-  const nameProps = useTextInput("name");
+    componentProps,
+  } = useThisForm();
 
   const onConfirm = React.useCallback(() => {
     if (name) {
@@ -45,14 +33,7 @@ const NewUserDialog: React.FunctionComponent<Props> = ({
     <ThemedModal
       isOpen={isOpen}
       header={<h2>Create {isGroup ? "User" : "Group"}</h2>}
-      content={
-        <form>
-          <div>
-            <label>Name</label>
-            <input {...nameProps} />
-          </div>
-        </form>
-      }
+      content={<NewUserForm {...componentProps} />}
       actions={
         <DialogActionButtons onCancel={onCloseDialog} onConfirm={onConfirm} />
       }

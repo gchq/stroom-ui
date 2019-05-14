@@ -18,38 +18,61 @@ import * as React from "react";
 import { useState } from "react";
 
 interface Props {
-  options: SelectOption;
+  options: SelectOption[];
+  onChange?: (event: string) => void;
+  selected?: string;
 }
 
 export interface SelectOption {
-  [key: string]: string;
+  value: string;
+  label: string;
 }
 
-const InlineSelect: React.FunctionComponent<Props> = ({ options }) => {
+const InlineSelect: React.FunctionComponent<Props> = ({
+  options,
+  onChange,
+  selected,
+  ...rest
+}) => {
   const [isEditing, setEditing] = useState(false);
-  const [selectedItem, setSelectedItem] = useState(undefined);
+  const [selectedItem, setSelectedItem] = useState(selected);
   if (isEditing) {
     return (
       <select
+        className="inline-select__editing"
         onBlur={() => setEditing(false)}
         onChange={event => {
           const value = event.target.value;
           setSelectedItem(value);
           setEditing(false);
+          if (!!onChange) {
+            onChange(event.target.value);
+          }
         }}
+        value={selectedItem}
+        {...rest}
       >
-        {Object.keys(options).map(name => {
-          return (
-            <option key={name} value={name}>
-              {options[name]}
-            </option>
-          );
-        })}
+        {options.map(option => (
+          <option key={option.value} value={option.value}>
+            {option.label}
+          </option>
+        ))}
       </select>
     );
   } else {
-    const textToDisplay = !!selectedItem ? selectedItem : "click to select";
-    return <span onClick={() => setEditing(true)}>{textToDisplay}</span>;
+    let textToDisplay = "click to choose";
+    if (!!selectedItem) {
+      textToDisplay = options.find(option => option.value === selectedItem)
+        .label;
+    }
+    return (
+      <span
+        className="inline-select__not-editing"
+        onClick={() => setEditing(true)}
+      >
+        {textToDisplay}
+      </span>
+    );
   }
 };
 

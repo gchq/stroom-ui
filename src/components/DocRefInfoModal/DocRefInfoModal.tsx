@@ -15,12 +15,11 @@
  */
 import * as React from "react";
 
-import Loader from "../Loader";
 import ThemedModal from "../ThemedModal";
 import IconHeader from "../IconHeader";
 import Button from "../Button";
-import { useDocRefInfo } from "components/DocumentEditors/api/explorer";
 import { DocRefType } from "components/DocumentEditors/useDocumentApi/types/base";
+import DocRefInfoForm from "./DocRefInfoForm";
 
 interface Props {
   docRef?: DocRefType;
@@ -33,67 +32,16 @@ const DocRefInfoModal: React.FunctionComponent<Props> = ({
   onCloseDialog,
   docRef,
 }) => {
-  const docRefInfo = useDocRefInfo(docRef);
-
   if (!isOpen || !docRef) {
     return null;
   }
-
-  if (!docRefInfo) {
-    return <Loader message="Awaiting DocRef info..." />;
-  }
-
-  const { createTime, updateTime } = docRefInfo;
-
-  const formattedCreateTime = new Date(createTime).toLocaleString("en-GB", {
-    timeZone: "UTC",
-  });
-  const formattedUpdateTime = new Date(updateTime).toLocaleString("en-GB", {
-    timeZone: "UTC",
-  });
 
   return (
     <ThemedModal
       isOpen={isOpen}
       onRequestClose={onCloseDialog}
       header={<IconHeader icon="info" text="Document Information" />}
-      content={
-        <form className="DocRefInfo">
-          <div className="DocRefInfo__type">
-            <label>Type</label>
-            <input type="text" value={docRefInfo.docRef.type} />
-          </div>
-          <div className="DocRefInfo__uuid">
-            <label>UUID</label>
-            <input type="text" value={docRefInfo.docRef.uuid} />
-          </div>
-          <div className="DocRefInfo__name">
-            <label>Name</label>
-            <input type="text" value={docRefInfo.docRef.name} />
-          </div>
-
-          <div className="DocRefInfo__createdBy">
-            <label>Created by</label>
-            <input type="text" value={docRefInfo.createUser} />
-          </div>
-          <div className="DocRefInfo__createdOn">
-            <label>at</label>
-            <input type="text" value={formattedCreateTime} />
-          </div>
-          <div className="DocRefInfo__updatedBy">
-            <label>Updated by</label>
-            <input type="text" value={docRefInfo.updateUser} />
-          </div>
-          <div className="DocRefInfo__updatedOn">
-            <label>at</label>
-            <input type="text" value={formattedUpdateTime} />
-          </div>
-          <div className="DocRefInfo__otherInfo">
-            <label>Other Info</label>
-            <input type="text" value={docRefInfo.otherInfo} />
-          </div>
-        </form>
-      }
+      content={<DocRefInfoForm docRef={docRef} />}
       actions={<Button onClick={onCloseDialog} text="Close" />}
     />
   );
