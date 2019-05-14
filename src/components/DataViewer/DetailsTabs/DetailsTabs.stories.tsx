@@ -7,6 +7,6 @@ import { DataRow } from "../types";
 
 const data: DataRow = fullTestData.dataList.streamAttributeMaps[0];
 
-const stories = storiesOf("Sections/Data/Details Tabs", module);
+const stories = storiesOf("Sections/Data Viewer/Details Tabs", module);
 
 addThemedStories(stories, () => <DetailsTabs data={data} />);
