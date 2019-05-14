@@ -95,7 +95,7 @@ const DataViewer = () => {
           storageKey="dataViewer"
           title=""
           onClose={clearSelection}
-          isOpen={!!selectedItem}
+          isOpen={true}
           mainContent={
             <ReactTable
               className="tracker-table border-color -striped -highlight"
