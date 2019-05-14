@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+import Button from "components/Button";
 import * as React from "react";
 import { ChangeEvent, useState } from "react";
 
@@ -27,6 +28,7 @@ interface Props {
   onChange?: (event: ChangeEvent<HTMLSelectElement>) => void;
   selected?: string;
   placeholder?: string;
+  usePlaceholderButton?: boolean;
   // emitOnly has a very specific purpose: it allows this select to remain
   // as it was after it's been selected, and all it does is dispatch the 
   // onChange event with the item that was selected. This is necessary
@@ -45,6 +47,7 @@ const InlineSelect: React.FunctionComponent<Props> = ({
   onChange,
   selected,
   placeholder,
+  usePlaceholderButton,
   emitOnly,
   ...rest
 }) => {
@@ -74,7 +77,7 @@ const InlineSelect: React.FunctionComponent<Props> = ({
         value={selectedItem}
         {...rest}
       >
-        <option disabled selected value={undefined}></option>
+        <option disabled selected value={undefined}>--please select--</option>
         {options.map(option => (
           <option key={option.value} value={option.value}>
             {option.label}
@@ -83,7 +86,15 @@ const InlineSelect: React.FunctionComponent<Props> = ({
       </select>
     );
   } else {
-    let defaultText = placeholder || <em>click to choose</em>
+    let placeholderText = placeholder || <em>click to choose</em>
+    const placeholderButton = <Button
+              size="small"
+              appearance="icon"
+              action="primary"
+              text="Add"
+              icon="plus"
+              title="Add"
+            />
     let textToDisplay: string = undefined;
     if (!!selectedItem) {
       const selectedOption = options.find(
@@ -98,7 +109,7 @@ const InlineSelect: React.FunctionComponent<Props> = ({
         className="inline-select__not-editing"
         onClick={() => setEditing(true)}
       >
-        {textToDisplay || defaultText}
+        {textToDisplay || (usePlaceholderButton ? placeholderButton : placeholderText)}
       </span>
     );
   }

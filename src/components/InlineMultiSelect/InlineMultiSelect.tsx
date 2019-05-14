@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+import Button from "components/Button";
 import InlineSelect, { SelectOption } from "components/InlineSelect/InlineSelect";
 import * as React from "react";
 import { ChangeEvent } from "react";
@@ -61,7 +62,18 @@ const InlineMultiSelect: React.FunctionComponent<Props> = ({
               onChange={handleChange}
               {...rest}
             />
-
+            <Button
+              size="small"
+              appearance="icon"
+              action="secondary"
+              text="Remove"
+              icon="times"
+              title="Remove"
+              onClick={() => {
+                const newSelectedItems = selectedItems.filter(item => item !== selectedItem)
+                setSelectedItems(newSelectedItems);
+              }}
+            />
             {/* we only want to display this if we're not at the end of the list */}
             {index !== options.length - 1 ?
               <span>,{"\u00A0"}</span> : undefined}
@@ -73,6 +85,7 @@ const InlineMultiSelect: React.FunctionComponent<Props> = ({
       {/* We only want to display this if there are options left to select */}
       {remainingOptions.length > 0 ?
         <InlineSelect
+          usePlaceholderButton={true}
           options={remainingOptions}
           emitOnly={true}
           onChange={handleChange}
