@@ -24,7 +24,7 @@ import Button from "components/Button";
 import JsonDebug from "testing/JsonDebug";
 
 const stories = storiesOf(
-  "Sections/Authorisation Manager/New User Dialog",
+  "Sections/Authorisation Manager/New User/Dialog",
   module,
 );
 

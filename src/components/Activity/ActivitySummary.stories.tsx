@@ -13,30 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import * as React from "react";
 
+import * as React from "react";
 import { storiesOf } from "@storybook/react";
 
-import { DocRefInfoModal } from ".";
+import ActivitySummary from "./ActivitySummary";
 
-import { useDocRefInfoDialog } from "./DocRefInfoModal";
-import Button from "../Button";
-import fullTestData from "testing/data";
 import { addThemedStories } from "testing/storybook/themedStoryGenerator";
 
-const testFolder1 = fullTestData.documentTree.children![0];
+const stories = storiesOf("Sections/Activity", module);
 
-const TestHarness: React.FunctionComponent = () => {
-  const { showDialog, componentProps } = useDocRefInfoDialog();
-
-  return (
-    <div>
-      <Button text="show" onClick={() => showDialog(testFolder1)} />
-      <DocRefInfoModal {...componentProps} />
-    </div>
-  );
-};
-
-const stories = storiesOf("Doc Ref/Info/Dialog", module);
-
-addThemedStories(stories, () => <TestHarness />);
+addThemedStories(stories, () => <ActivitySummary />);
