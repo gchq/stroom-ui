@@ -1,5 +1,6 @@
 import { ResourceBuilder } from "./types";
 
+import activityResource from "./activityResource";
 import authenticationResource from "./authenticationResource";
 import authorisationResource from "./authorisationResource";
 import appPermissionResource from "./appPermissionResource";
@@ -18,6 +19,7 @@ import userResource from "./userResource";
 import welcomeResource from "./welcomeResource";
 
 const resourceBuilders: ResourceBuilder[] = [
+  activityResource,
   appPermissionResource,
   authenticationResource,
   authorisationResource,
