@@ -57,15 +57,6 @@ addThemedStories(stories, () => (
       <InlineMultiSelect options={options} selected={["leia", "han", "leia"]}/>
       <span> to the sarlacc.</span>
 
-      {/* <h2>With an existing value</h2>
-      <span>I would like to feed </span>
-      <InlineSelect options={options} selected="everyone" />
-      <span> to the sarlacc.</span>
-
-      <h2>With an onChange handler (see Action addon)</h2>
-      <span>I would like to feed </span>
-      <InlineSelect options={options} onChange={action("onChange")} />
-      <span> to the sarlacc.</span> */}
     </form>
   </div>
 ));

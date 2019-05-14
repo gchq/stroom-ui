@@ -30,8 +30,16 @@ const options: SelectOption[] = [
   { value: "everyone", label: "everyone" },
 ];
 
+const simpleOptions: string[] = [
+  "leia",
+  "han",
+  "jabba",
+  "luke",
+  "everyone"
+]
+
 addThemedStories(stories, () => (
-  <div style={{padding:"5em"}}>
+  <div style={{ padding: "5em" }}>
     <h1>InlineSelect</h1>
     <p>An edit-in-place <code>select</code>, to be used inline with text.</p>
     <form>
@@ -40,7 +48,7 @@ addThemedStories(stories, () => (
       <span>I would like to feed </span>
       <InlineSelect options={options} />
       <span> to the sarlacc.</span>
-      
+
       <h2>With an existing value</h2>
       <span>I would like to feed </span>
       <InlineSelect options={options} selected="everyone" />
@@ -55,6 +63,12 @@ addThemedStories(stories, () => (
       <span>I would like to feed </span>
       <InlineSelect options={options} placeholder="+" onChange={action("onChange")} />
       <span> to the sarlacc.</span>
+
+      <h2>With simple options, i.e. not value/label pairs but just values</h2>
+      <span>I would like to feed </span>
+      <InlineSelect simpleOptions={simpleOptions} onChange={action("onChange")} />
+      <span> to the sarlacc.</span>
+
     </form>
   </div>
 ));

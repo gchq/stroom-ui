@@ -20,14 +20,12 @@ import { ChangeEvent } from "react";
 
 interface Props {
   options?: SelectOption[];
-  simpleOptions?: string[];
   onChange?: (event: string) => void;
   selected?: string[];
 }
 
 const InlineMultiSelect: React.FunctionComponent<Props> = ({
   options,
-  simpleOptions,
   onChange,
   selected,
   ...rest
@@ -43,15 +41,18 @@ const InlineMultiSelect: React.FunctionComponent<Props> = ({
     }
   }
 
+  // We only want to allow something to be selected once, so we need to
+  // work out what options are remaining...
   const remainingOptions = options.filter(option => selectedItems.indexOf(option.value) < 0);
-  // console.log({remainingOptions});
   return (
     <span>
       [
       {selectedItems.map((selectedItem, index) => {
+        //... but we must have this option present in the list, otherwise
+        // it can't be selected
         const thisSelectsOptions = Object.assign([], remainingOptions);
-        thisSelectsOptions.push(options.find(option => option.value === selectedItem));
-        console.log({thisSelectsOptions});
+        thisSelectsOptions.push(
+          options.find(option => option.value === selectedItem));
         return (
           <React.Fragment key={selectedItem}>
             <InlineSelect
@@ -60,16 +61,23 @@ const InlineMultiSelect: React.FunctionComponent<Props> = ({
               onChange={handleChange}
               {...rest}
             />
-            {index !== options.length - 1 ? 
-            <span>,{"\u00A0"}</span> : undefined }
+
+            {/* we only want to display this if we're not at the end of the list */}
+            {index !== options.length - 1 ?
+              <span>,{"\u00A0"}</span> : undefined}
           </React.Fragment>
 
         )
       })}
 
+      {/* We only want to display this if there are options left to select */}
       {remainingOptions.length > 0 ?
-      <InlineSelect {...rest} options={remainingOptions} emitOnly={true}
-        onChange={handleChange} />
+        <InlineSelect
+          options={remainingOptions}
+          emitOnly={true}
+          onChange={handleChange}
+          {...rest}
+        />
         : undefined}
 
       ]

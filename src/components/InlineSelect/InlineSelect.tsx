@@ -19,6 +19,10 @@ import { ChangeEvent, useState } from "react";
 
 interface Props {
   options?: SelectOption[];
+  // 'select' components demand value/label pairs for their options
+  // But some clients don't care about the labels, so we can let 
+  // them pass an array of values and we'll map them into the
+  // array of SelectOptions.
   simpleOptions?: string[];
   onChange?: (event: ChangeEvent<HTMLSelectElement>) => void;
   selected?: string;
