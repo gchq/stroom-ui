@@ -1,5 +1,6 @@
-import * as React from "react";
+import InlineInput from "components/InlineInput/InlineInput";
 import { ControlledInput } from "lib/useForm/types";
+import * as React from "react";
 
 interface Props extends ControlledInput<any> {
   valueType: string;
@@ -40,19 +41,21 @@ const BetweenValueWidget: React.FunctionComponent<Props> = ({
 
   return (
     <span>
-      <input
+      [
+      <InlineInput
         placeholder="from"
         type={valueType}
         value={fromValue}
         onChange={onFromValueChange}
       />
-      <span className="input-between__divider">to</span>
-      <input
+      <span> to </span>
+      <InlineInput
         placeholder="to"
         type={valueType}
         value={toValue}
         onChange={onToValueChange}
       />
+      ]
     </span>
   );
 };

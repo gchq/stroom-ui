@@ -15,12 +15,12 @@
  */
 
 import * as React from "react";
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 
 const InlineInput: React.FunctionComponent<{
-  onChange?: (e: string) => void;
+  onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
   value?: string;
-}> = ({ onChange, value: defaultValue, ...rest }) => {
+} & React.InputHTMLAttributes<HTMLInputElement>> = ({ onChange, value: defaultValue, ...rest }) => {
   const [isEditing, setEditing] = useState(false);
   const [value, setValue] = useState(defaultValue);
   const [editingValue, setEditingValue] = useState(defaultValue);
@@ -38,7 +38,7 @@ const InlineInput: React.FunctionComponent<{
           const newValue = event.target.value;
           setEditingValue(newValue);
           if (!!onChange) {
-            onChange(event.target.value);
+            onChange(event);
           }
         }}
         type="text"
