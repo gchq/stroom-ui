@@ -31,6 +31,7 @@ import {
 import withValueType from "../withValueType";
 import DataSourceFieldPicker from "../DataSourceFieldPicker/DataSourceFieldPicker";
 import { LineEndpoint } from "components/LineTo";
+import InlineSelect from "components/InlineSelect/InlineSelect";
 
 interface Props {
   index: number;
@@ -150,17 +151,18 @@ const ExpressionTerm: React.FunctionComponent<EnhancedProps> = ({
           </LineEndpoint>
         </div>,
       )}
-      <DataSourceFieldPicker
-        dataSource={dataSource}
-        value={value.field}
+      <InlineSelect
+        simpleOptions={dataSource.fields.map(field => field.name)}
+        selected={value.field}
         onChange={onFieldChange}
       />
+      {"\u00A0"}
       <ConditionPicker
-        className="expression-term__select"
         value={value.condition}
         onChange={onConditionChange}
         conditionOptions={conditionOptions}
       />
+      {"\u00A0"}
       <ValueWidget
         valueType={valueType}
         term={value}

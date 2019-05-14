@@ -20,6 +20,14 @@
   display: flex;
 }
 
+/** The next two styles hide/show the buttons on expression terms */
+.expression-term .expression-term__actions {
+  visibility: hidden;
+}
+.operator__child:hover > div > div > div.expression-term__actions {
+  visibility: visible;
+}
+
 .expression-item__root {
   margin-right: 0.5rem;
   margin-left: 0.5rem;

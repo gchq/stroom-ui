@@ -1,7 +1,8 @@
 import * as React from "react";
 import { DataSourceType } from "../types";
-import Select from "react-select";
-import useReactSelect from "lib/useReactSelect";
+import InlineSelect, {
+  SelectOption,
+} from "components/InlineSelect/InlineSelect";
 
 interface Props {
   dataSource: DataSourceType;
@@ -14,23 +15,14 @@ const DataSourceFieldPicker: React.FunctionComponent<Props> = ({
   value,
   onChange,
 }) => {
-  const options: string[] = React.useMemo(
-    () => dataSource.fields.map(({ name }) => name),
+  // Convert value list to value/label list
+  const options: SelectOption[] = React.useMemo(
+    () => dataSource.fields.map(({ name }) => ({ value: name, label: name })),
     [dataSource],
   );
-  const { _options, _onChange, _value } = useReactSelect({
-    options,
-    onChange,
-    value,
-  });
 
   return (
-    <Select
-      placeholder="Field"
-      options={_options}
-      value={_value}
-      onChange={_onChange}
-    />
+    <InlineSelect options={options} selected={value} onChange={onChange} />
   );
 };
 

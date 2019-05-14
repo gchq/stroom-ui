@@ -18,7 +18,8 @@ import * as React from "react";
 import { useState } from "react";
 
 interface Props {
-  options: SelectOption[];
+  options?: SelectOption[];
+  simpleOptions?: string[];
   onChange?: (event: string) => void;
   selected?: string;
 }
@@ -30,12 +31,18 @@ export interface SelectOption {
 
 const InlineSelect: React.FunctionComponent<Props> = ({
   options,
+  simpleOptions,
   onChange,
   selected,
   ...rest
 }) => {
   const [isEditing, setEditing] = useState(false);
   const [selectedItem, setSelectedItem] = useState(selected);
+
+  if (!!simpleOptions) {
+    options = simpleOptions.map(option => ({ value: option, label: option }));
+  }
+
   if (isEditing) {
     return (
       <select
@@ -62,8 +69,12 @@ const InlineSelect: React.FunctionComponent<Props> = ({
   } else {
     let textToDisplay = "click to choose";
     if (!!selectedItem) {
-      textToDisplay = options.find(option => option.value === selectedItem)
-        .label;
+      const selectedOption = options.find(
+        option => option.value === selectedItem,
+      );
+      textToDisplay = !!selectedOption
+        ? selectedOption.label
+        : "Error: unknown option!";
     }
     return (
       <span
