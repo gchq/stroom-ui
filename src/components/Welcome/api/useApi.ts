@@ -12,7 +12,7 @@ const useApi = (): UseApi => {
   const { stroomBaseServiceUrl } = useConfig();
   return {
     getWelcomeHtml: React.useCallback(
-      () => httpGetJson(`${stroomBaseServiceUrl}/welcome`),
+      () => httpGetJson(`${stroomBaseServiceUrl}/welcome/v1`),
       [httpGetJson, stroomBaseServiceUrl],
     ),
   };

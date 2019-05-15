@@ -12,7 +12,7 @@ const useApi = (): UseApi => {
   const { stroomBaseServiceUrl } = useConfig();
   return {
     getBuildInfo: React.useCallback(
-      () => httpGetJson(`${stroomBaseServiceUrl}/build-info`),
+      () => httpGetJson(`${stroomBaseServiceUrl}/build-info/v1`),
       [httpGetJson, stroomBaseServiceUrl],
     ),
   };
