@@ -26,6 +26,7 @@ const InlineInput: React.FunctionComponent<
   const [isEditing, setEditing] = useState(false);
   const [value, setValue] = useState(defaultValue);
   const [editingValue, setEditingValue] = useState(defaultValue);
+  React.useEffect(() => setValue(defaultValue), [defaultValue, setValue]);
   if (isEditing) {
     return (
       <input
