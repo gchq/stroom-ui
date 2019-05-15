@@ -16,9 +16,10 @@
 
 import Button from "components/Button";
 import InlineInput from "components/InlineInput/InlineInput";
-import * as React from "react";
 import { ControlledInput } from "lib/useForm/types";
 import useListReducer from "lib/useListReducer";
+import * as React from "react";
+import { useCallback, useEffect, useMemo } from "react";
 
 const getKey = (k: string) => k;
 
@@ -36,29 +37,28 @@ const InlineMultiInput: React.FunctionComponent<ControlledInput<string[]>> = ({
   // Use the standard list reducer to manage the items
   const {
     items,
-    itemAdded,
-    itemAtIndexUpdated,
-    itemAtIndexRemoved,
+    addItem,
+    updateItemAtIndex,
+    removeItemAtIndex,
   } = useListReducer<string>(getKey, values);
 
-  // New values are empty strings by default
-  const addNewValue = React.useCallback(() => itemAdded(""), [itemAdded]);
+  const addNewItem = useCallback(() => addItem(""), [addItem]);
 
   // When the items change in the list, we call the onChange handler
-  React.useEffect(() => onChange(items), [onChange, items]);
+  useEffect(() => onChange(items), [onChange, items]);
 
   // Create memoized versions of the onChange and onRemove functions for each item
-  const valuesOnChangeHandlers: ValueAndChangeHandler[] = React.useMemo(
+  const valuesOnChangeHandlers: ValueAndChangeHandler[] = useMemo(
     () =>
       values.map((value, valueIndex) => ({
         onChange: ({
           target: { value: newValue },
         }: React.ChangeEvent<HTMLInputElement>) =>
-          itemAtIndexUpdated(valueIndex, newValue),
-        onRemove: () => itemAtIndexRemoved(valueIndex),
+          updateItemAtIndex(valueIndex, newValue),
+        onRemove: () => removeItemAtIndex(valueIndex),
         value,
       })),
-    [values, itemAtIndexUpdated, itemAtIndexRemoved],
+    [values, updateItemAtIndex, removeItemAtIndex],
   );
 
   return (
@@ -88,7 +88,7 @@ const InlineMultiInput: React.FunctionComponent<ControlledInput<string[]>> = ({
         text="Add"
         icon="plus"
         title="Add"
-        onClick={addNewValue}
+        onClick={addNewItem}
       />
       ]
     </span>
