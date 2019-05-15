@@ -15,18 +15,11 @@
  */
 
 import * as React from "react";
-import { ChangeEvent, useState } from "react";
 
 const InlineInput: React.FunctionComponent<
-  {
-    onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
-    value?: string;
-  } & React.InputHTMLAttributes<HTMLInputElement>
-> = ({ onChange, value: defaultValue, ...rest }) => {
-  const [isEditing, setEditing] = useState(false);
-  const [value, setValue] = useState(defaultValue);
-  const [editingValue, setEditingValue] = useState(defaultValue);
-  React.useEffect(() => setValue(defaultValue), [defaultValue, setValue]);
+  React.InputHTMLAttributes<HTMLInputElement>
+> = ({ onChange, value, ...rest }) => {
+  const [isEditing, setEditing] = React.useState(false);
   if (isEditing) {
     return (
       <input
@@ -34,30 +27,21 @@ const InlineInput: React.FunctionComponent<
         className="inline-input__editing"
         onBlur={() => {
           // Blurring sets the value
-          setValue(editingValue);
           setEditing(false);
         }}
-        onChange={event => {
-          const newValue = event.target.value;
-          setEditingValue(newValue);
-          if (!!onChange) {
-            onChange(event);
-          }
-        }}
+        onChange={onChange}
         type="text"
-        value={editingValue}
+        value={value}
         onKeyDown={event => {
           if (event.key === "Enter") {
             event.preventDefault();
             // 'Enter' sets the value
-            setValue(editingValue);
             setEditing(false);
           } else if (event.key === "Escape") {
             event.preventDefault();
             // 'Escape' does not set the value, and we need to update the
             // editing value to the original.
             setEditing(false);
-            setEditingValue(value);
           }
         }}
         {...rest}
