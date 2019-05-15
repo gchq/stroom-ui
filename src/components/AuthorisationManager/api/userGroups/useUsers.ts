@@ -1,8 +1,7 @@
-import * as React from "react";
-
-import useApi from "./useApi";
 import useListReducer from "lib/useListReducer";
+import * as React from "react";
 import { StroomUser } from ".";
+import useApi from "./useApi";
 
 /**
  * Use this to convert a list of users UUID's into a list of user objects.
@@ -11,7 +10,7 @@ import { StroomUser } from ".";
  */
 const useUsers = (userUuids: string[]): StroomUser[] => {
   const { fetchUser } = useApi();
-  const { items: allUsers, itemAdded } = useListReducer<StroomUser>(
+  const { items: allUsers, addItem } = useListReducer<StroomUser>(
     u => u.uuid,
   );
 
@@ -26,8 +25,8 @@ const useUsers = (userUuids: string[]): StroomUser[] => {
     let userUuidsFound = allUsers.map(u => u.uuid);
     userUuids
       .filter(userUuid => !userUuidsFound.includes(userUuid))
-      .forEach(userUuid => fetchUser(userUuid).then(user => itemAdded(user)));
-  }, [allUsers, userUuids, fetchUser, itemAdded]);
+      .forEach(userUuid => fetchUser(userUuid).then(user => addItem(user)));
+  }, [allUsers, userUuids, fetchUser, addItem]);
 
   return users;
 };

@@ -5,11 +5,16 @@ select {
 }
 
 .inline-input__not-editing {
-  color: blue;
+  color: rgb(0, 83, 151);
 }
 
 .inline-input__editing {
   width: 10em;
   padding: 0;
   margin: 0;
+  color: rgb(0, 83, 151);
+  // Setting the height is necessary to stop the content below moving down
+  height:17px;
+  // Setting the font-size is necessary to stop the line itself moving down
+  font-size: 12px;
 }

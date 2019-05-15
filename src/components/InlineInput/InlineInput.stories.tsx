@@ -16,25 +16,61 @@
 
 import { storiesOf } from "@storybook/react";
 import * as React from "react";
+import JsonDebug from "testing/JsonDebug";
 import { addThemedStories } from "testing/storybook/themedStoryGenerator";
 import InlineInput from "./InlineInput";
 
-const TestHarness: React.FunctionComponent<{ inlineInput: any }> = ({
-  inlineInput,
-}) => (
-  <div>
-    <form>
-      <span>I would like to feed </span>
-      {inlineInput}
-      <span> to the sarlacc.</span>
-    </form>
-  </div>
-);
-
 const stories = storiesOf("General Purpose/InlineInput", module);
 
-stories.add("With value", () => (
-  <TestHarness inlineInput={<InlineInput value="Yoda" />} />
-));
+addThemedStories(stories, () => {
+  const [stringValue, setStringValue] = React.useState<string>("Yoda");
+  const onStringValueChange: React.ChangeEventHandler< HTMLInputElement > = 
+    React.useCallback(({ target: { value } }) => setStringValue(value), [ setStringValue ]);
+     
+  const [numericValue, setNumericValue] = React.useState<string>("10");
+  const onNumericValueChange: React.ChangeEventHandler< HTMLInputElement > = 
+    React.useCallback(({ target: { value } }) => setNumericValue(value), [ setNumericValue ]);
 
-addThemedStories(stories, () => <TestHarness inlineInput={<InlineInput />} />);
+  const [dateValue, setDateValue] = React.useState<string>("2019-01-01");
+  const onDateValueChange: React.ChangeEventHandler< HTMLInputElement > = 
+    React.useCallback(({ target: { value } }) => setDateValue(value), [ setDateValue ]);
+  return (
+    <div style={{ padding: "5em" }}>
+      <h1>InlineInput</h1>
+      <p>
+        An edit-in-place <code>input</code>, to be used inline with text.
+      </p>
+      <p>Controls when editing are:</p>
+      <ul>
+        <li>
+          <code>esc</code>: discard the change and close <code>input</code>{" "}
+        </li>
+        <li>
+          <code>enter</code>: keep the change and close <code>input</code>{" "}
+        </li>
+        <li>
+          <code>blur</code> the component: keep the change and close{" "}
+          <code>input</code>{" "}
+        </li>
+      </ul>
+      <form>
+        <h2>Controlled Input</h2>
+        <span>I would like to feed </span>
+        <InlineInput value={stringValue} onChange={onStringValueChange} />
+        <span> to the sarlacc.</span>
+
+        <h2>A numeric input</h2>
+        <span>I would like to feed </span>
+        <InlineInput type="number" value={numericValue} onChange={onNumericValueChange}/> jawas
+        <span> to the sarlacc.</span>
+        
+        <h2>A date input</h2>
+        <span>I would like to feed Jabba to the sarlacc on </span>
+        <InlineInput type="date" value={dateValue} onChange={onDateValueChange}/>.
+
+      </form>
+
+      <JsonDebug value={{ stringValue, numericValue, dateValue }} />
+    </div>
+  );
+});

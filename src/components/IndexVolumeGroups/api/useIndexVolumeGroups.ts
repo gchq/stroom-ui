@@ -1,8 +1,7 @@
-import * as React from "react";
-
-import useApi from "./useApi";
 import useListReducer from "lib/useListReducer/useListReducer";
+import * as React from "react";
 import { IndexVolumeGroup } from "./types";
+import useApi from "./useApi";
 
 interface UseIndexVolumeGroups {
   groups: IndexVolumeGroup[];
@@ -13,9 +12,9 @@ interface UseIndexVolumeGroups {
 const useIndexVolumeGroups = (): UseIndexVolumeGroups => {
   const {
     items: groups,
-    itemsReceived,
-    itemAdded,
-    itemRemoved,
+    receiveItems,
+    addItem,
+    removeItem,
   } = useListReducer<IndexVolumeGroup>(g => g.name);
 
   const {
@@ -25,19 +24,19 @@ const useIndexVolumeGroups = (): UseIndexVolumeGroups => {
   } = useApi();
 
   React.useEffect(() => {
-    getIndexVolumeGroups().then(itemsReceived);
-  }, [getIndexVolumeGroups, itemsReceived]);
+    getIndexVolumeGroups().then(receiveItems);
+  }, [getIndexVolumeGroups, receiveItems]);
 
   return {
     groups,
     createIndexVolumeGroup: React.useCallback(
-      (groupName: string) => createIndexVolumeGroup(groupName).then(itemAdded),
-      [createIndexVolumeGroup, itemAdded],
+      (groupName: string) => createIndexVolumeGroup(groupName).then(addItem),
+      [createIndexVolumeGroup, addItem],
     ),
     deleteIndexVolumeGroup: React.useCallback(
       (groupName: string) =>
-        deleteIndexVolumeGroup(groupName).then(() => itemRemoved(groupName)),
-      [deleteIndexVolumeGroup, itemRemoved],
+        deleteIndexVolumeGroup(groupName).then(() => removeItem(groupName)),
+      [deleteIndexVolumeGroup, removeItem],
     ),
   };
 };

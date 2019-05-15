@@ -14,38 +14,11 @@
  * limitations under the License.
  */
 
-import * as React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { SizeProp } from "@fortawesome/fontawesome-svg-core";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import * as React from "react";
 import { ButtonProps } from "./types";
-
-// const ripple = (evt: React.MouseEvent<HTMLButtonElement>): void => {
-//   alert("I was clicked");
-
-//   const btn = evt.currentTarget;
-//   var x = evt.pageX - btn.offsetLeft;
-//   var y = evt.pageY - btn.offsetTop;
-
-//   const rippleContainer = btn.getElementsByClassName("ripple-container")[0];
-
-//   // btn.append("<span class=ripple/>").css({
-//   //   left: x,
-//   //   top: y,
-//   // });
-
-//   const span = document.createElement("span");
-//   span.className = "ripple";
-//   span.style.left = x + "px";
-//   span.style.top = y + "px";
-//   rippleContainer.append(span);
-
-//   // DOM.span
-//   //   .appendTo(btn)
-//   //   .css({
-//   //     left: x,
-//   //     top: y,
-//   //   });
-// };
+import RippleContainer, { useRipple } from "./RippleContainer";
 
 export const Button = ({
   text,
@@ -121,8 +94,10 @@ export const Button = ({
     if (selected) classNames.push("button-selected");
     if (disabled) classNames.push("button-disabled");
 
+    classNames.push(size);
+
     return classNames.join(" ");
-  }, [rawClassName, appearance, action, text, selected, disabled]);
+  }, [rawClassName, appearance, action, text, selected, disabled, size]);
 
   let fontAwesomeSize: SizeProp = React.useMemo(() => {
     switch (size) {
@@ -142,41 +117,11 @@ export const Button = ({
 
   let showText = text && appearance !== "icon";
 
-  const ripple = (evt: React.MouseEvent<HTMLButtonElement>): void => {
-    // alert("I was clicked");
-
-    const btn = evt.currentTarget;
-    const rect = btn.getBoundingClientRect();
-    var x = evt.clientX - rect.left;
-    var y = evt.clientY - rect.top;
-
-    const rippleContainer = btn.getElementsByClassName("ripple-container")[0];
-
-    // btn.append("<span class=ripple/>").css({
-    //   left: x,
-    //   top: y,
-    // });
-
-    const span = document.createElement("span");
-    span.className = "ripple";
-    span.style.left = x + "px";
-    span.style.top = y + "px";
-    rippleContainer.append(span);
-
-    // DOM.span
-    //   .appendTo(btn)
-    //   .css({
-    //     left: x,
-    //     top: y,
-    //   });
-    if (onClick) {
-      onClick(evt);
-    }
-  };
+  const { onClickWithRipple, ripples } = useRipple(onClick);
 
   return (
-    <button className={className} onClick={ripple} {...rest}>
-      <div className="ripple-container" />
+    <button className={className} onClick={onClickWithRipple} {...rest}>
+      <RippleContainer ripples={ripples} />
       {icon ? (
         <FontAwesomeIcon size={fontAwesomeSize} icon={icon} />
       ) : (

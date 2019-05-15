@@ -20,6 +20,14 @@
   display: flex;
 }
 
+/** The next two styles hide/show the buttons on expression terms */
+.expression-term .expression-term__actions {
+  visibility: hidden;
+}
+.operator__child:hover > div > div.expression-term__actions {
+  visibility: visible;
+}
+
 .expression-item__root {
   margin-right: 0.5rem;
   margin-left: 0.5rem;
@@ -27,6 +35,8 @@
 
 .expression-item {
   margin-top: 0.5rem;
+  width:100%;
+  justify-content: space-between;
 }
 
 .expression-item--disabled {
@@ -40,11 +50,6 @@
 
 .ExpressionItem__buttons {
   float: right;
-}
-
-.input-between__divider {
-  margin-right: 1rem;
-  margin-left: 1rem;
 }
 
 .expression-operator-circle {

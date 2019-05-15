@@ -14,23 +14,18 @@
  * limitations under the License.
  */
 
-import * as React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
-import { DragSourceSpec, DragSource, DragSourceCollector } from "react-dnd";
+import InlineSelect from "components/InlineSelect/InlineSelect";
+import { LineEndpoint } from "components/LineTo";
+import * as React from "react";
+import { ChangeEvent } from "react";
+import { DragSource, DragSourceCollector, DragSourceSpec } from "react-dnd";
 import Button from "../../Button";
 import ConditionPicker from "../ConditionPicker/ConditionPicker";
-import { DragDropTypes, DragObject, DragCollectedProps } from "../types";
+import { ConditionType, DataSourceFieldType, DataSourceType, DragCollectedProps, DragDropTypes, DragObject, ExpressionTermType } from "../types";
 import ValueWidget from "../ValueWidget";
-import {
-  DataSourceType,
-  ConditionType,
-  DataSourceFieldType,
-  ExpressionTermType,
-} from "../types";
 import withValueType from "../withValueType";
-import DataSourceFieldPicker from "../DataSourceFieldPicker/DataSourceFieldPicker";
-import { LineEndpoint } from "components/LineTo";
+
 
 interface Props {
   index: number;
@@ -42,7 +37,7 @@ interface Props {
   onChange: (e: ExpressionTermType, index: number) => void;
 }
 
-interface EnhancedProps extends Props, DragCollectedProps {}
+interface EnhancedProps extends Props, DragCollectedProps { }
 
 const dragSource: DragSourceSpec<Props, DragObject> = {
   beginDrag(props) {
@@ -89,7 +84,8 @@ const ExpressionTerm: React.FunctionComponent<EnhancedProps> = ({
   }, [index, value, onChange]);
 
   const onFieldChange = React.useCallback(
-    (field: string) => {
+    (event: ChangeEvent<HTMLSelectElement>) => {
+      const field = event.target.value;
       onChange(
         {
           ...value,
@@ -140,40 +136,43 @@ const ExpressionTerm: React.FunctionComponent<EnhancedProps> = ({
 
   return (
     <div className={className}>
-      {connectDragSource(
-        <div className="expression-operator-circle">
-          <LineEndpoint
-            lineEndpointId={idWithinExpression}
-            className="expression-operator-circle"
-          >
-            <FontAwesomeIcon icon="bars" />
-          </LineEndpoint>
-        </div>,
-      )}
-      <DataSourceFieldPicker
-        dataSource={dataSource}
-        value={value.field}
-        onChange={onFieldChange}
-      />
-      <ConditionPicker
-        className="expression-term__select"
-        value={value.condition}
-        onChange={onConditionChange}
-        conditionOptions={conditionOptions}
-      />
-      <ValueWidget
-        valueType={valueType}
-        term={value}
-        onChange={onValueChange}
-      />
-
+      <div>
+        {connectDragSource(
+          <div className="expression-operator-circle">
+            <LineEndpoint
+              lineEndpointId={idWithinExpression}
+              className="expression-operator-circle"
+            >
+              <FontAwesomeIcon icon="bars" />
+            </LineEndpoint>
+          </div>,
+        )}
+        <InlineSelect
+          simpleOptions={dataSource.fields.map(field => field.name)}
+          selected={value.field}
+          onChange={onFieldChange}
+        />
+        {"\u00A0"}
+        <ConditionPicker
+          value={value.condition}
+          onChange={onConditionChange}
+          conditionOptions={conditionOptions}
+        />
+        {"\u00A0"}
+        <ValueWidget
+          valueType={valueType}
+          term={value}
+          onChange={onValueChange}
+        />
+      </div>
       <div className="expression-term__actions">
         <Button
+          appearance="icon"
           icon="check"
           disabled={value.enabled}
           onClick={onEnabledToggled}
         />
-        <Button icon="trash" onClick={onDeleteThis} />
+        <Button icon="trash" appearance="icon" action="secondary" onClick={onDeleteThis} />
       </div>
     </div>
   );

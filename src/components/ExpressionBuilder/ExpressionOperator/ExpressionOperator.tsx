@@ -13,34 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import * as React from "react";
-import { pipe } from "ramda";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  DragSource,
-  DropTarget,
-  DropTargetCollector,
-  DropTargetSpec,
-  DragSourceSpec,
-  DragSourceCollector,
-} from "react-dnd";
-
-import { canMove } from "lib/treeUtils/treeUtils";
-import {
-  DragDropTypes,
-  DragObject,
-  DragCollectedProps,
-  DropCollectedProps,
-  ExpressionOperatorType,
-  ExpressionItem,
-  ExpressionTermType,
-} from "../types";
-import ExpressionTerm from "components/ExpressionBuilder/ExpressionTerm/ExpressionTerm";
 import Button from "components/Button";
-import { DataSourceType, OperatorType, OperatorTypeValues } from "../types";
-import { LineTo, LineEndpoint } from "components/LineTo";
+import ExpressionTerm from "components/ExpressionBuilder/ExpressionTerm/ExpressionTerm";
+import { LineEndpoint, LineTo } from "components/LineTo";
+import { canMove } from "lib/treeUtils/treeUtils";
+import { pipe } from "ramda";
+import * as React from "react";
+import { DragSource, DragSourceCollector, DragSourceSpec, DropTarget, DropTargetCollector, DropTargetSpec } from "react-dnd";
+import { getNewOperator, getNewTerm } from "../expressionUtils";
+import { DataSourceType, DragCollectedProps, DragDropTypes, DragObject, DropCollectedProps, ExpressionItem, ExpressionOperatorType, ExpressionTermType, OperatorType, OperatorTypeValues } from "../types";
 
-import { getNewTerm, getNewOperator } from "../expressionUtils";
+
 
 interface Props {
   index?: number; // If this is undefined, assume this is the root
@@ -274,7 +258,6 @@ const ExpressionOperator: React.FunctionComponent<EnhancedProps> = ({
             switch (c.type) {
               case "term":
                 itemElement = (
-                  <div>
                     <ExpressionTerm
                       index={i}
                       idWithinExpression={itemLineEndpointId}
@@ -284,7 +267,6 @@ const ExpressionOperator: React.FunctionComponent<EnhancedProps> = ({
                       onDelete={onChildDeleted}
                       onChange={onChildUpdated}
                     />
-                  </div>
                 );
                 break;
               case "operator":

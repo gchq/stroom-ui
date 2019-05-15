@@ -39,7 +39,7 @@ const testExpression: ExpressionOperatorType = {
     {
       type: "term",
       field: "colour",
-      condition: "CONTAINS",
+      condition: "EQUALS",
       value: "red",
       dictionary: null,
       enabled: true,
@@ -91,7 +91,7 @@ const testExpression: ExpressionOperatorType = {
         {
           type: "term",
           field: "id",
-          condition: "CONTAINS",
+          condition: "EQUALS",
           value: "bob",
           dictionary: null,
           enabled: false,

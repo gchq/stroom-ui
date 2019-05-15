@@ -1,5 +1,6 @@
-import * as React from "react";
+import InlineInput from "components/InlineInput/InlineInput";
 import { ControlledInput } from "lib/useForm/types";
+import * as React from "react";
 
 interface Props extends ControlledInput<any> {
   valueType: string;
@@ -10,11 +11,10 @@ export const SingleValueWidget: React.FunctionComponent<Props> = ({
   onChange,
   valueType,
 }) => (
-  <input
-    placeholder="value"
+  <InlineInput
     type={valueType}
     value={value || ""}
-    onChange={({ target: { value } }) => onChange(value)}
+    onChange={(value: any) => onChange(value)}
   />
 );
 
