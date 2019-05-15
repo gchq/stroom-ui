@@ -17,10 +17,12 @@
 import * as React from "react";
 import { ChangeEvent, useState } from "react";
 
-const InlineInput: React.FunctionComponent<{
-  onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
-  value?: string;
-} & React.InputHTMLAttributes<HTMLInputElement>> = ({ onChange, value: defaultValue, ...rest }) => {
+const InlineInput: React.FunctionComponent<
+  {
+    onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
+    value?: string;
+  } & React.InputHTMLAttributes<HTMLInputElement>
+> = ({ onChange, value: defaultValue, ...rest }) => {
   const [isEditing, setEditing] = useState(false);
   const [value, setValue] = useState(defaultValue);
   const [editingValue, setEditingValue] = useState(defaultValue);

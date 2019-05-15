@@ -17,69 +17,69 @@
 import Button from "components/Button";
 import InlineInput from "components/InlineInput/InlineInput";
 import * as React from "react";
+import { ControlledInput } from "lib/useForm/types";
+import useListReducer from "lib/useListReducer";
 
-interface Props {
-  onChange?: (event: string) => void;
-  values?: string[];
+const getKey = (k: string) => k;
+
+interface ValueAndChangeHandler {
+  value: string;
+  onChange: React.ChangeEventHandler<HTMLInputElement>;
+  onRemove: () => void;
 }
 
-const InlineMultiInput: React.FunctionComponent<Props> = ({
+const InlineMultiInput: React.FunctionComponent<ControlledInput<string[]>> = ({
   onChange,
-  values: defaultValues,
+  value: values,
   ...rest
 }) => {
-  const [values, setValues] = React.useState(defaultValues || []);
-  console.log({ values });
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>, index: number) => {
-    console.log('handleInputChange');
-    console.log({ index });
-    console.log({ values });
-    const newValues = Object.assign([], values);
-    newValues[index] = event.target.value;
-    setValues(newValues);
-    console.log({ newValues });
-  }
+  // Use the standard list reducer to manage the items
+  const {
+    items,
+    itemAdded,
+    itemAtIndexUpdated,
+    itemAtIndexRemoved,
+  } = useListReducer<string>(getKey, values);
 
-  const handleInputRemoval = (value: string) => {
-    console.log("handleInputRemoval");
-    console.log({ value });
-    const newValues = values.filter(removalCandidate => removalCandidate !== value)
-    setValues(newValues);
-    console.log({ newValues });
-  }
+  // New values are empty strings by default
+  const addNewValue = React.useCallback(() => itemAdded(""), [itemAdded]);
+
+  // When the items change in the list, we call the onChange handler
+  React.useEffect(() => onChange(items), [onChange, items]);
+
+  // Create memoized versions of the onChange and onRemove functions for each item
+  const valuesOnChangeHandlers: ValueAndChangeHandler[] = React.useMemo(
+    () =>
+      values.map((value, valueIndex) => ({
+        onChange: ({
+          target: { value: newValue },
+        }: React.ChangeEvent<HTMLInputElement>) =>
+          itemAtIndexUpdated(valueIndex, newValue),
+        onRemove: () => itemAtIndexRemoved(valueIndex),
+        value,
+      })),
+    [values, itemAtIndexUpdated, itemAtIndexRemoved],
+  );
 
   return (
     <span>
       [
-        {values.map((value, index) => {
-        console.log("Looping");
-        console.log({ value });
-        return (
-          <React.Fragment>
-            <InlineInput
-              value={value}
-              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                handleInputChange(event, index);
-              }}
-              {...rest} />
-            <Button
-              type="button"
-              size="small"
-              appearance="icon"
-              action="secondary"
-              text="Remove"
-              icon="times"
-              title="Remove"
-              onClick={() => {
-                handleInputRemoval(value);
-              }}
-            />
-            {index !== values.length - 1 ?
-              <span>,{"\u00A0"}</span> : undefined}
-          </React.Fragment>
-        )
-      })}
-
+      {valuesOnChangeHandlers.map(({ value, onChange, onRemove }, index) => (
+        <React.Fragment key={index}>
+          <InlineInput value={value} onChange={onChange} {...rest} />
+          <Button
+            type="button"
+            size="small"
+            appearance="icon"
+            action="secondary"
+            text="Remove"
+            icon="times"
+            title="Remove"
+            onClick={onRemove}
+          />
+          {index !== values.length - 1 ? <span>,{"\u00A0"}</span> : undefined}
+        </React.Fragment>
+      ))}
       <Button
         size="small"
         type="button"
@@ -88,15 +88,11 @@ const InlineMultiInput: React.FunctionComponent<Props> = ({
         text="Add"
         icon="plus"
         title="Add"
-        onClick={() => {
-          const newValues = Object.assign([], values);
-          newValues.push("");
-          setValues(newValues);
-        }}
+        onClick={addNewValue}
       />
       ]
     </span>
-  )
+  );
 };
 
 export default InlineMultiInput;

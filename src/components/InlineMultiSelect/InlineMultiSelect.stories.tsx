@@ -31,32 +31,32 @@ const options: SelectOption[] = [
 ];
 
 addThemedStories(stories, () => (
-  <div style={{padding:"5em"}}>
+  <div style={{ padding: "5em" }}>
     <h1>InlineMultiSelect</h1>
-    <p>An edit-in-place multi<code>select</code>, to be used inline with text. 
-    Allows the selection of multiple options.</p>
+    <p>
+      An edit-in-place multi<code>select</code>, to be used inline with text.
+      Allows the selection of multiple options.
+    </p>
     <form>
-
       <h2>Empty</h2>
       <span>I would like to feed </span>
-      <InlineMultiSelect options={options} selected={[]}/>
+      <InlineMultiSelect options={options} selected={[]} />
       <span> to the sarlacc.</span>
-      
+
       <h2>Single selection</h2>
       <span>I would like to feed </span>
-      <InlineMultiSelect options={options} selected={["leia"]}/>
+      <InlineMultiSelect options={options} selected={["leia"]} />
       <span> to the sarlacc.</span>
 
       <h2>Multiple selection</h2>
       <span>I would like to feed </span>
-      <InlineMultiSelect options={options} selected={["leia", "han", "luke"]}/>
+      <InlineMultiSelect options={options} selected={["leia", "han", "luke"]} />
       <span> to the sarlacc.</span>
 
       <h2>Same thing selected more than one</h2>
       <span>I would like to feed </span>
-      <InlineMultiSelect options={options} selected={["leia", "han", "leia"]}/>
+      <InlineMultiSelect options={options} selected={["leia", "han", "leia"]} />
       <span> to the sarlacc.</span>
-
     </form>
   </div>
 ));

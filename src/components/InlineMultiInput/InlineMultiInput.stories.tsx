@@ -18,26 +18,39 @@ import { storiesOf } from "@storybook/react";
 import * as React from "react";
 import { addThemedStories } from "testing/storybook/themedStoryGenerator";
 import InlineMultiInput from "./InlineMultiInput";
+import JsonDebug from "testing/JsonDebug";
 
 const stories = storiesOf("General Purpose/InlineMultiInput", module);
 
-addThemedStories(stories, () => (
-  <div style={{padding:"5em"}}>
-    <h1>InlineMultiInput</h1>
-    <p>An edit-in-place multi<code>input</code>, to be used inline with text. 
-    Allows adding multiple values.</p>
-    <form>
+addThemedStories(stories, () => {
+  const [firstList, setFirstList] = React.useState<string[]>([
+    "Jar-Jar Binks",
+    "Darth Maul",
+  ]);
+  const [secondList, setSecondList] = React.useState<string[]>([
+    "Han Solo",
+    "Jabba The Hut",
+    "C3PO",
+  ]);
 
-      <h2>Empty</h2>
-      <span>I would like to feed </span>
-      <InlineMultiInput />
-      <span> to the sarlacc.</span>
-      
-      <h2>With some default values</h2>
-      <span>I would like to feed </span>
-      <InlineMultiInput values={["Han Solo", "Jabba The Hut", "C3PO"]}/>
-      <span> to the sarlacc.</span>
-{/*
+  return (
+    <div style={{ padding: "5em" }}>
+      <h1>InlineMultiInput</h1>
+      <p>
+        An edit-in-place multi<code>input</code>, to be used inline with text.
+        Allows adding multiple values.
+      </p>
+      <form>
+        <h2>Empty</h2>
+        <span>I would like to feed </span>
+        <InlineMultiInput value={firstList} onChange={setFirstList} />
+        <span> to the sarlacc.</span>
+
+        <h2>With some default values</h2>
+        <span>I would like to feed </span>
+        <InlineMultiInput value={secondList} onChange={setSecondList} />
+        <span> to the sarlacc.</span>
+        {/*
       <h2>Multiple selection</h2>
       <span>I would like to feed </span>
       <InlineMultiInput />
@@ -47,7 +60,8 @@ addThemedStories(stories, () => (
       <span>I would like to feed </span>
       <InlineMultiInput />
       <span> to the sarlacc.</span> */}
-
-    </form>
-  </div>
-));
+      </form>
+      <JsonDebug value={{ firstList, secondList }} />
+    </div>
+  );
+});

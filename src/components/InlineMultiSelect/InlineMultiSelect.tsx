@@ -15,7 +15,9 @@
  */
 
 import Button from "components/Button";
-import InlineSelect, { SelectOption } from "components/InlineSelect/InlineSelect";
+import InlineSelect, {
+  SelectOption,
+} from "components/InlineSelect/InlineSelect";
 import * as React from "react";
 import { ChangeEvent } from "react";
 
@@ -40,11 +42,13 @@ const InlineMultiSelect: React.FunctionComponent<Props> = ({
     if (!!onChange) {
       onChange(value);
     }
-  }
+  };
 
   // We only want to allow something to be selected once, so we need to
   // work out what options are remaining...
-  const remainingOptions = options.filter(option => selectedItems.indexOf(option.value) < 0);
+  const remainingOptions = options.filter(
+    option => selectedItems.indexOf(option.value) < 0,
+  );
   return (
     <span>
       [
@@ -53,7 +57,8 @@ const InlineMultiSelect: React.FunctionComponent<Props> = ({
         // it can't be selected
         const thisSelectsOptions = Object.assign([], remainingOptions);
         thisSelectsOptions.push(
-          options.find(option => option.value === selectedItem));
+          options.find(option => option.value === selectedItem),
+        );
         return (
           <React.Fragment key={selectedItem}>
             <InlineSelect
@@ -70,20 +75,23 @@ const InlineMultiSelect: React.FunctionComponent<Props> = ({
               icon="times"
               title="Remove"
               onClick={() => {
-                const newSelectedItems = selectedItems.filter(item => item !== selectedItem)
+                const newSelectedItems = selectedItems.filter(
+                  item => item !== selectedItem,
+                );
                 setSelectedItems(newSelectedItems);
               }}
             />
             {/* we only want to display this if we're not at the end of the list */}
-            {index !== options.length - 1 ?
-              <span>,{"\u00A0"}</span> : undefined}
+            {index !== options.length - 1 ? (
+              <span>,{"\u00A0"}</span>
+            ) : (
+              undefined
+            )}
           </React.Fragment>
-
-        )
+        );
       })}
-
       {/* We only want to display this if there are options left to select */}
-      {remainingOptions.length > 0 ?
+      {remainingOptions.length > 0 ? (
         <InlineSelect
           usePlaceholderButton={true}
           options={remainingOptions}
@@ -91,11 +99,12 @@ const InlineMultiSelect: React.FunctionComponent<Props> = ({
           onChange={handleChange}
           {...rest}
         />
-        : undefined}
-
+      ) : (
+        undefined
+      )}
       ]
     </span>
-  )
+  );
 };
 
 export default InlineMultiSelect;

@@ -18,6 +18,11 @@ interface RemovedAction {
   type: "itemRemoved";
   itemKey: string;
 }
+interface UpdatedAtIndexAction<T> {
+  type: "itemUpdatedAtIndex";
+  index: number;
+  newValue: T;
+}
 interface RemovedByIndexAction {
   type: "itemRemovedByIndex";
   index: number;
@@ -30,6 +35,7 @@ const createListReducer = <T extends {}>(getKey: (item: T) => string) => {
       | ReceivedAction<T>
       | AddAction<T>
       | RemovedAction
+      | UpdatedAtIndexAction<T>
       | RemovedByIndexAction,
   ): T[] => {
     switch (action.type) {
@@ -41,6 +47,8 @@ const createListReducer = <T extends {}>(getKey: (item: T) => string) => {
           .concat([action.item]);
       case "itemRemoved":
         return state.filter(u => getKey(u) !== action.itemKey);
+      case "itemUpdatedAtIndex":
+        return state.map((u, i) => (i === action.index ? action.newValue : u));
       case "itemRemovedByIndex":
         return state.filter((u, i) => i !== action.index);
       default:
@@ -54,6 +62,7 @@ interface UseListReducer<T extends {}> {
   itemsReceived: (items: T[]) => void;
   itemAdded: (item: T) => void;
   itemRemoved: (itemKey: string) => void;
+  itemAtIndexUpdated: (index: number, newValue: T) => void;
   itemAtIndexRemoved: (index: number) => void;
 }
 
@@ -90,6 +99,11 @@ const useListReducer = <T extends {}>(
           type: "itemRemoved",
           itemKey,
         }),
+      [dispatch],
+    ),
+    itemAtIndexUpdated: React.useCallback(
+      (index: number, newValue: T) =>
+        dispatch({ type: "itemUpdatedAtIndex", index, newValue }),
       [dispatch],
     ),
     itemAtIndexRemoved: React.useCallback(
