@@ -19,7 +19,6 @@ import * as React from "react";
 import { addThemedStories } from "testing/storybook/themedStoryGenerator";
 import Button from "./Button";
 
-
 interface Variant {
   title: string;
   appearance: "default" | "outline" | "icon" | "contained";
