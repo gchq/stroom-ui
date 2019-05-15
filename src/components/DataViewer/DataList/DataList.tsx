@@ -34,7 +34,6 @@ import { ExpressionOperatorType } from "components/ExpressionBuilder/types";
 // import useReduxState from "lib/useReduxState";
 
 interface Props {
-  dataViewerId: string;
   expression?: ExpressionOperatorType;
 }
 
@@ -46,10 +45,7 @@ interface Props {
 //   pipeline?: string;
 // }
 
-const DataList: React.FunctionComponent<Props> = ({
-  dataViewerId,
-  expression,
-}) => {
+const DataList: React.FunctionComponent<Props> = ({ expression }) => {
   return <div>Nope</div>;
   /*
   const { selectRow } = useActionCreators();
