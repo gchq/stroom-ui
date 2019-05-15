@@ -16,16 +16,10 @@
 
 import Button from "components/Button";
 import * as React from "react";
-import { ChangeEvent, useState } from "react";
+import { FunctionComponent, SelectHTMLAttributes, useState } from "react";
 
 interface Props {
   options?: SelectOption[];
-  // 'select' components demand value/label pairs for their options
-  // But some clients don't care about the labels, so we can let 
-  // them pass an array of values and we'll map them into the
-  // array of SelectOptions.
-  simpleOptions?: string[];
-  onChange?: (event: ChangeEvent<HTMLSelectElement>) => void;
   selected?: string;
   placeholder?: string;
   usePlaceholderButton?: boolean;
@@ -41,9 +35,8 @@ export interface SelectOption {
   label: string;
 }
 
-const InlineSelect: React.FunctionComponent<Props> = ({
+const InlineSelect: FunctionComponent<Props & SelectHTMLAttributes<HTMLSelectElement>> = ({
   options,
-  simpleOptions,
   onChange,
   selected,
   placeholder,
@@ -52,29 +45,14 @@ const InlineSelect: React.FunctionComponent<Props> = ({
   ...rest
 }) => {
   const [isEditing, setEditing] = useState(false);
-  const [selectedItem, setSelectedItem] = useState(selected);
-
-  if (!!simpleOptions) {
-    options = simpleOptions.map(option => ({ value: option, label: option }));
-  }
 
   if (isEditing) {
     return (
       <select
         className="inline-select__editing"
         onBlur={() => setEditing(false)}
-        onChange={event => {
-          const value = event.target.value;
-          setSelectedItem(value);
-          setEditing(false);
-          if (!!onChange) {
-            onChange(event);
-          }
-          if(emitOnly){
-            setSelectedItem(undefined);
-          }
-        }}
-        value={selectedItem}
+        onChange={onChange}
+        value={selected}
         {...rest}
       >
         <option disabled selected value={undefined}>--please select--</option>
@@ -96,9 +74,9 @@ const InlineSelect: React.FunctionComponent<Props> = ({
               title="Add"
             />
     let textToDisplay: string = undefined;
-    if (!!selectedItem) {
+    if (!!selected) {
       const selectedOption = options.find(
-        option => option.value === selectedItem,
+        option => option.value === selected,
       );
       textToDisplay = !!selectedOption
         ? selectedOption.label
