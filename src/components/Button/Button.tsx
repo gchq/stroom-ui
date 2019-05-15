@@ -124,7 +124,7 @@ export const Button = ({
     classNames.push(size);
 
     return classNames.join(" ");
-  }, [rawClassName, appearance, action, text, selected, disabled]);
+  }, [rawClassName, appearance, action, text, selected, disabled, size]);
 
   let fontAwesomeSize: SizeProp = React.useMemo(() => {
     switch (size) {

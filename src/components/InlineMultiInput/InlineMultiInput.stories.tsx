@@ -14,50 +14,40 @@
  * limitations under the License.
  */
 
-import { action } from "@storybook/addon-actions";
 import { storiesOf } from "@storybook/react";
 import * as React from "react";
 import { addThemedStories } from "testing/storybook/themedStoryGenerator";
-import InlineInput from "./InlineInput";
+import InlineMultiInput from "./InlineMultiInput";
 
-const stories = storiesOf("General Purpose/InlineInput", module);
+const stories = storiesOf("General Purpose/InlineMultiInput", module);
 
-addThemedStories(stories, () => 
+addThemedStories(stories, () => (
   <div style={{padding:"5em"}}>
-    <h1>InlineInput</h1>
-    <p>An edit-in-place <code>input</code>, to be used inline with text.</p>
-    <p>Controls when editing are:</p>
-    <ul>
-      <li><code>esc</code>: discard the change and close <code>input</code> </li>
-      <li><code>enter</code>: keep the change and close <code>input</code> </li>
-      <li><code>blur</code> the component: keep the change and close <code>input</code> </li>
-    </ul>
+    <h1>InlineMultiInput</h1>
+    <p>An edit-in-place multi<code>input</code>, to be used inline with text. 
+    Allows adding multiple values.</p>
     <form>
 
-      <h2>Simplest</h2>
+      <h2>Empty</h2>
       <span>I would like to feed </span>
-      <InlineInput/>
+      <InlineMultiInput />
+      <span> to the sarlacc.</span>
+      
+      <h2>With some default values</h2>
+      <span>I would like to feed </span>
+      <InlineMultiInput values={["Han Solo", "Jabba The Hut", "C3PO"]}/>
+      <span> to the sarlacc.</span>
+{/*
+      <h2>Multiple selection</h2>
+      <span>I would like to feed </span>
+      <InlineMultiInput />
       <span> to the sarlacc.</span>
 
-      <h2>With an existing value</h2>
+      <h2>Same thing selected more than one</h2>
       <span>I would like to feed </span>
-      <InlineInput value="Yoda" />
-      <span> to the sarlacc.</span>
-
-      <h2>With an onChange handler (see Action addon)</h2>
-      <span>I would like to feed </span>
-      <InlineInput onChange={action("onChange")} />
-      <span> to the sarlacc.</span>
-
-      <h2>A numeric input</h2>
-      <span>I would like to feed </span>
-      <InlineInput type="number"/> jawas
-      <span> to the sarlacc.</span>
-
-      <h2>A date input</h2>
-      <span>I would like to feed Jabba to the sarlacc on </span>
-      <InlineInput type="date"/>.
+      <InlineMultiInput />
+      <span> to the sarlacc.</span> */}
 
     </form>
   </div>
- );
+));
