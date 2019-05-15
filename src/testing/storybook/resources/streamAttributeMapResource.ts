@@ -30,6 +30,18 @@ const resourceBuilder: ResourceBuilder = (
   });
 
   /**
+   * This responds to getDetailsForSelectedStream
+   */
+  server
+    .get(`${resource}/:metaId`)
+    .intercept(({ params: { metaId } }: HttpRequest, res: HttpResponse) => {
+      const row = testCache.data!.dataList.streamAttributeMaps.find(
+        s => `${s.meta.id}` === metaId,
+      );
+      res.json(row);
+    });
+
+  /**
    * This responds with a list of streamAttributeMaps, body is a search
    */
   server.post(resource).intercept((req: HttpRequest, res: HttpResponse) => {
