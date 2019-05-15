@@ -2,7 +2,11 @@
   "compilerOptions": {
     "module": "esnext",
     "target": "es5",
-    "lib": ["es6", "dom", "es2017"],
+    "lib": [
+      "es6",
+      "dom",
+      "es2017"
+    ],
     "sourceMap": true,
     "allowJs": true,
     "jsx": "react",
@@ -23,6 +27,17 @@
     "strict": false,
     "resolveJsonModule": true
   },
-  "exclude": ["node_modules", "build", "scripts", "acceptance-tests", "webpack", "jest", "src/setupTests.ts"],
-  "include": ["node_modules/@pollyjs/adapter-fetch/dist/umd", "src"]
+  "exclude": [
+    "node_modules",
+    "build",
+    "scripts",
+    "acceptance-tests",
+    "webpack",
+    "jest",
+    "src/setupTests.ts"
+  ],
+  "include": [
+    "node_modules/@pollyjs/adapter-fetch/dist/umd",
+    "src"
+  ]
 }
