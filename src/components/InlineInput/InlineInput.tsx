@@ -16,9 +16,32 @@
 
 import * as React from "react";
 
+// This supplies default internal value/onChange pair if
+// such things are not part of the given props
+const useControlledInput = (
+  props: React.InputHTMLAttributes<HTMLInputElement>,
+): React.InputHTMLAttributes<HTMLInputElement> => {
+  const [value, setValue] = React.useState<string>("");
+  const onChange = React.useCallback(
+    ({ target: { value } }) => setValue(value),
+    [setValue],
+  );
+
+  if (props.onChange && props.value) {
+    return props;
+  } else {
+    return { ...props, onChange, value };
+  }
+};
+
 const InlineInput: React.FunctionComponent<
   React.InputHTMLAttributes<HTMLInputElement>
-> = ({ onChange, value, ...rest }) => {
+> = ({ onChange: _onChange, value: _value, ...rest }) => {
+  const { onChange, value } = useControlledInput({
+    onChange: _onChange,
+    value: _value,
+  });
+
   const [isEditing, setEditing] = React.useState(false);
   if (isEditing) {
     return (
