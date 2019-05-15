@@ -171,8 +171,9 @@ export const Button = ({
     //     left: x,
     //     top: y,
     //   });
-
-    onClick(evt);
+    if (onClick) {
+      onClick(evt);
+    }
   };
 
   return (
