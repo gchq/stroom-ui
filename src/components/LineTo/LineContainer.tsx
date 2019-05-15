@@ -14,14 +14,13 @@
  * limitations under the License.
  */
 
+import useListReducer from "lib/useListReducer";
 import * as React from "react";
 import * as uuidv4 from "uuid/v4";
-
 import LineContext from "./LineContext";
-import { LineType, LineElementCreator } from "./types";
 import StraightLine from "./lineCreators/StraightLine";
-import useListReducer from "lib/useListReducer";
 import LinesSvg from "./LinesSvg";
+import { LineElementCreator, LineType } from "./types";
 
 export interface Props {
   className?: string;
@@ -34,9 +33,9 @@ const LineContainer: React.FunctionComponent<Props> = ({
   children,
 }) => {
   const {
-    itemAdded: lineCreated,
+    addItem: lineCreated,
     items: rawLines,
-    itemRemoved: lineDestroyed,
+    removeItem: lineDestroyed,
   } = useListReducer<LineType>(l => l.lineId);
 
   const lineContextId = React.useMemo(() => uuidv4(), []);

@@ -6,34 +6,15 @@ export interface Props {
 
 const JsonDebug: React.FunctionComponent<Props> = ({ value }) => (
   <div
-    style={{
-      margin: "3rem 0",
-      borderRadius: 4,
-      background: "#f6f8fa",
-
-      boxShadow: "0 0 1px  #eee inset",
-    }}
+    style={{ margin: "3rem 0", }}
   >
-    <div
-      style={{
-        textTransform: "uppercase",
-        fontSize: 11,
-        borderTopLeftRadius: 4,
-        borderTopRightRadius: 4,
-        fontWeight: 500,
-        padding: ".5rem",
-        background: "#555",
-        color: "#fff",
-        letterSpacing: "1px",
-      }}
-    >
-      Debug Information
-    </div>
+  <hr/>
+  <h1>Debug information</h1>
     <pre
       style={{
-        fontSize: "1.5rem",
+        fontSize: "1rem",
         padding: ".25rem .5rem",
-        overflowX: "scroll",
+        overflowX: "auto",
       }}
     >
       {JSON.stringify(value, null, 2)}

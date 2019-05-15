@@ -1,7 +1,6 @@
-import * as React from "react";
-
-import useApi from "./useApi";
 import useListReducer from "lib/useListReducer/useListReducer";
+import * as React from "react";
+import useApi from "./useApi";
 
 interface UseDocumentPermissions {
   permissionNames: string[];
@@ -15,9 +14,9 @@ const useDocumentPermissionsForUser = (
 ): UseDocumentPermissions => {
   const {
     items: permissionNames,
-    itemAdded,
-    itemRemoved,
-    itemsReceived,
+    addItem,
+    removeItem,
+    receiveItems,
   } = useListReducer<string>(g => g);
 
   const {
@@ -27,24 +26,24 @@ const useDocumentPermissionsForUser = (
   } = useApi();
 
   React.useEffect(() => {
-    getPermissionsForDocumentForUser(docRefUuid, userUuid).then(itemsReceived);
-  }, [docRefUuid, userUuid, getPermissionsForDocumentForUser, itemsReceived]);
+    getPermissionsForDocumentForUser(docRefUuid, userUuid).then(receiveItems);
+  }, [docRefUuid, userUuid, getPermissionsForDocumentForUser, receiveItems]);
 
   const addPermission = React.useCallback(
     (permissionName: string) => {
       addDocPermission(docRefUuid, userUuid, permissionName).then(() =>
-        itemAdded(permissionName),
+        addItem(permissionName),
       );
     },
-    [docRefUuid, userUuid, addDocPermission, itemAdded],
+    [docRefUuid, userUuid, addDocPermission, addItem],
   );
   const removePermission = React.useCallback(
     (permissionName: string) => {
       removeDocPermission(docRefUuid, userUuid, permissionName).then(() =>
-        itemRemoved(permissionName),
+        removeItem(permissionName),
       );
     },
-    [docRefUuid, userUuid, removeDocPermission, itemRemoved],
+    [docRefUuid, userUuid, removeDocPermission, removeItem],
   );
 
   return {

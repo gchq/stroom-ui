@@ -1,8 +1,7 @@
-import * as React from "react";
-
-import useApi from "./useApi";
 import useListReducer from "lib/useListReducer";
+import * as React from "react";
 import { StroomUser } from ".";
+import useApi from "./useApi";
 
 interface ManageUsers {
   users: StroomUser[];
@@ -15,9 +14,9 @@ interface ManageUsers {
 const useManageUsers = (): ManageUsers => {
   const {
     items: users,
-    itemAdded,
-    itemRemoved,
-    itemsReceived,
+    addItem,
+    removeItem,
+    receiveItems,
   } = useListReducer<StroomUser>(u => u.uuid);
 
   const { createUser, deleteUser, addUserToGroup, findUsers } = useApi();
@@ -26,9 +25,9 @@ const useManageUsers = (): ManageUsers => {
     users,
     findUsers: React.useCallback(
       (name, isGroup, uuid) => {
-        findUsers(name, isGroup, uuid).then(itemsReceived);
+        findUsers(name, isGroup, uuid).then(receiveItems);
       },
-      [findUsers, itemsReceived],
+      [findUsers, receiveItems],
     ),
     addUserToGroup: React.useCallback(
       (userUuid: string, groupUuid: string) => {
@@ -39,16 +38,16 @@ const useManageUsers = (): ManageUsers => {
     createUser: React.useCallback(
       (name: string, isGroup: boolean) => {
         let p = createUser(name, isGroup);
-        p.then(itemAdded);
+        p.then(addItem);
         return p;
       },
-      [createUser, itemAdded],
+      [createUser, addItem],
     ),
     deleteUser: React.useCallback(
       (userUuid: string) => {
-        deleteUser(userUuid).then(() => itemRemoved(userUuid));
+        deleteUser(userUuid).then(() => removeItem(userUuid));
       },
-      [itemRemoved, deleteUser],
+      [removeItem, deleteUser],
     ),
   };
 };

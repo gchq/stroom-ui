@@ -1,7 +1,6 @@
-import * as React from "react";
-
-import useApi from "./useApi";
 import useListReducer from "lib/useListReducer/useListReducer";
+import * as React from "react";
+import useApi from "./useApi";
 
 /**
  * An API for managing the application permissions for a single user.
@@ -21,9 +20,9 @@ interface UserAppPermissionApi {
 const useAppPermissionsForUser = (userUuid: string): UserAppPermissionApi => {
   const {
     items: userAppPermissions,
-    itemsReceived,
-    itemAdded,
-    itemRemoved,
+    receiveItems,
+    addItem,
+    removeItem,
   } = useListReducer<string>(g => g);
 
   const {
@@ -33,23 +32,23 @@ const useAppPermissionsForUser = (userUuid: string): UserAppPermissionApi => {
   } = useApi();
 
   React.useEffect(() => {
-    getPermissionsForUser(userUuid).then(itemsReceived);
-  }, [userUuid, getPermissionsForUser, itemsReceived]);
+    getPermissionsForUser(userUuid).then(receiveItems);
+  }, [userUuid, getPermissionsForUser, receiveItems]);
 
   const addPermission = React.useCallback(
     (permissionName: string) =>
       addAppPermission(userUuid, permissionName).then(() =>
-        itemAdded(permissionName),
+        addItem(permissionName),
       ),
-    [userUuid, addAppPermission, itemAdded],
+    [userUuid, addAppPermission, addItem],
   );
 
   const removePermission = React.useCallback(
     (permissionName: string) =>
       removeAppPermission(userUuid, permissionName).then(() =>
-        itemRemoved(permissionName),
+        removeItem(permissionName),
       ),
-    [userUuid, removeAppPermission, itemRemoved],
+    [userUuid, removeAppPermission, removeItem],
   );
 
   return {

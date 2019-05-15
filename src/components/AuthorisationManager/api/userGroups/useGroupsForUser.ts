@@ -1,8 +1,7 @@
-import * as React from "react";
-
-import useApi from "./useApi";
 import useListReducer from "lib/useListReducer/useListReducer";
+import * as React from "react";
 import { StroomUser } from ".";
+import useApi from "./useApi";
 
 interface UseGroupsForUser {
   groups: StroomUser[];
@@ -13,9 +12,9 @@ interface UseGroupsForUser {
 const useGroupsForUser = (user: StroomUser): UseGroupsForUser => {
   const {
     items: groups,
-    itemsReceived,
-    itemAdded,
-    itemRemoved,
+    receiveItems,
+    addItem,
+    removeItem,
   } = useListReducer<StroomUser>(g => g.uuid);
 
   const {
@@ -26,24 +25,24 @@ const useGroupsForUser = (user: StroomUser): UseGroupsForUser => {
   } = useApi();
 
   React.useEffect(() => {
-    findGroupsForUser(user.uuid).then(itemsReceived);
-  }, [user, findGroupsForUser, itemsReceived]);
+    findGroupsForUser(user.uuid).then(receiveItems);
+  }, [user, findGroupsForUser, receiveItems]);
 
   const addToGroup = React.useCallback(
     (groupUuid: string) => {
       addUserToGroup(user.uuid, groupUuid)
         .then(() => fetchUser(groupUuid))
-        .then(itemAdded);
+        .then(addItem);
     },
-    [user, fetchUser, addUserToGroup, itemAdded],
+    [user, fetchUser, addUserToGroup, addItem],
   );
   const removeFromGroup = React.useCallback(
     (groupUuid: string) => {
       removeUserFromGroup(user.uuid, groupUuid).then(() =>
-        itemRemoved(groupUuid),
+        removeItem(groupUuid),
       );
     },
-    [user, removeUserFromGroup, itemRemoved],
+    [user, removeUserFromGroup, removeItem],
   );
 
   return {

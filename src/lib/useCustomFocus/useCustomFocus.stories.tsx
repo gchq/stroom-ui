@@ -1,9 +1,9 @@
-import * as React from "react";
-import * as loremIpsum from "lorem-ipsum";
 import { storiesOf } from "@storybook/react";
-import useCustomFocus from "./useCustomFocus";
-import JsonDebug from "testing/JsonDebug";
 import useListReducer from "lib/useListReducer";
+import * as loremIpsum from "lorem-ipsum";
+import * as React from "react";
+import JsonDebug from "testing/JsonDebug";
+import useCustomFocus from "./useCustomFocus";
 
 const generateItem = () => loremIpsum({ count: 3, units: "words" });
 
@@ -25,19 +25,19 @@ interface ItemWithClick<T> {
 }
 
 const TestHarness: React.FunctionComponent<Props> = ({ initialItems }) => {
-  const { items, itemAtIndexRemoved, itemAdded } = useListReducer(
+  const { items, removeItemAtIndex, addItem } = useListReducer(
     d => d,
     initialItems,
   );
 
   const preFocusWrap = React.useCallback(() => {
     if (items.length < 9) {
-      itemAdded(generateItem());
+      addItem(generateItem());
       return false;
     } else {
       return true;
     }
-  }, [items, itemAdded]);
+  }, [items, addItem]);
 
   const {
     setByIndex,
@@ -51,8 +51,8 @@ const TestHarness: React.FunctionComponent<Props> = ({ initialItems }) => {
     preFocusWrap,
   });
 
-  const removeFirstItem = React.useCallback(() => itemAtIndexRemoved(0), [
-    itemAtIndexRemoved,
+  const removeFirstItem = React.useCallback(() => removeItemAtIndex(0), [
+    removeItemAtIndex,
   ]);
 
   const itemsWithClick: ItemWithClick<string>[] = React.useMemo(

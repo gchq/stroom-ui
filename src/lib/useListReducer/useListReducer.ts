@@ -59,11 +59,11 @@ const createListReducer = <T extends {}>(getKey: (item: T) => string) => {
 
 interface UseListReducer<T extends {}> {
   items: T[];
-  itemsReceived: (items: T[]) => void;
-  itemAdded: (item: T) => void;
-  itemRemoved: (itemKey: string) => void;
-  itemAtIndexUpdated: (index: number, newValue: T) => void;
-  itemAtIndexRemoved: (index: number) => void;
+  receiveItems: (items: T[]) => void;
+  addItem: (item: T) => void;
+  removeItem: (itemKey: string) => void;
+  updateItemAtIndex: (index: number, newValue: T) => void;
+  removeItemAtIndex: (index: number) => void;
 }
 
 const useListReducer = <T extends {}>(
@@ -77,7 +77,7 @@ const useListReducer = <T extends {}>(
 
   return {
     items,
-    itemsReceived: React.useCallback(
+    receiveItems: React.useCallback(
       (items: T[]) =>
         dispatch({
           type: "itemsReceived",
@@ -85,7 +85,7 @@ const useListReducer = <T extends {}>(
         }),
       [dispatch],
     ),
-    itemAdded: React.useCallback(
+    addItem: React.useCallback(
       (item: T) =>
         dispatch({
           type: "itemAdded",
@@ -93,7 +93,7 @@ const useListReducer = <T extends {}>(
         }),
       [dispatch],
     ),
-    itemRemoved: React.useCallback(
+    removeItem: React.useCallback(
       (itemKey: string) =>
         dispatch({
           type: "itemRemoved",
@@ -101,12 +101,12 @@ const useListReducer = <T extends {}>(
         }),
       [dispatch],
     ),
-    itemAtIndexUpdated: React.useCallback(
+    updateItemAtIndex: React.useCallback(
       (index: number, newValue: T) =>
         dispatch({ type: "itemUpdatedAtIndex", index, newValue }),
       [dispatch],
     ),
-    itemAtIndexRemoved: React.useCallback(
+    removeItemAtIndex: React.useCallback(
       (index: number) =>
         dispatch({
           type: "itemRemovedByIndex",

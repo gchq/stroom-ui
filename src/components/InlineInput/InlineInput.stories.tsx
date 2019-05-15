@@ -16,18 +16,24 @@
 
 import { storiesOf } from "@storybook/react";
 import * as React from "react";
+import JsonDebug from "testing/JsonDebug";
 import { addThemedStories } from "testing/storybook/themedStoryGenerator";
 import InlineInput from "./InlineInput";
 
 const stories = storiesOf("General Purpose/InlineInput", module);
 
 addThemedStories(stories, () => {
-  const [value1, setValue1] = React.useState<string>(undefined);
-  const onChange1: React.ChangeEventHandler<
-    HTMLInputElement
-  > = React.useCallback(({ target: { value } }) => setValue1(value), [
-    setValue1,
-  ]);
+  const [stringValue, setStringValue] = React.useState<string>("Yoda");
+  const onStringValueChange: React.ChangeEventHandler< HTMLInputElement > = 
+    React.useCallback(({ target: { value } }) => setStringValue(value), [ setStringValue ]);
+     
+  const [numericValue, setNumericValue] = React.useState<string>("10");
+  const onNumericValueChange: React.ChangeEventHandler< HTMLInputElement > = 
+    React.useCallback(({ target: { value } }) => setNumericValue(value), [ setNumericValue ]);
+
+  const [dateValue, setDateValue] = React.useState<string>("2019-01-01");
+  const onDateValueChange: React.ChangeEventHandler< HTMLInputElement > = 
+    React.useCallback(({ target: { value } }) => setDateValue(value), [ setDateValue ]);
   return (
     <div style={{ padding: "5em" }}>
       <h1>InlineInput</h1>
@@ -48,26 +54,23 @@ addThemedStories(stories, () => {
         </li>
       </ul>
       <form>
-        <h2>Simplest</h2>
-        <span>I would like to feed </span>
-        <InlineInput />
-        <span> to the sarlacc.</span>
-        <h2>With an existing value</h2>
-        <span>I would like to feed </span>
-        <InlineInput value="Yoda" />
-        <span> to the sarlacc.</span>
         <h2>Controlled Input</h2>
         <span>I would like to feed </span>
-        <InlineInput value={value1} onChange={onChange1} />
+        <InlineInput value={stringValue} onChange={onStringValueChange} />
         <span> to the sarlacc.</span>
+
         <h2>A numeric input</h2>
         <span>I would like to feed </span>
-        <InlineInput type="number" /> jawas
+        <InlineInput type="number" value={numericValue} onChange={onNumericValueChange}/> jawas
         <span> to the sarlacc.</span>
+        
         <h2>A date input</h2>
         <span>I would like to feed Jabba to the sarlacc on </span>
-        <InlineInput type="date" />.
+        <InlineInput type="date" value={dateValue} onChange={onDateValueChange}/>.
+
       </form>
+
+      <JsonDebug value={{ stringValue, numericValue, dateValue }} />
     </div>
   );
 });

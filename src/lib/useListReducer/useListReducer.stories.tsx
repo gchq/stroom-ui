@@ -1,7 +1,6 @@
-import * as React from "react";
-import * as loremIpsum from "lorem-ipsum";
 import { storiesOf } from "@storybook/react";
-
+import * as loremIpsum from "lorem-ipsum";
+import * as React from "react";
 import useListReducer from "./useListReducer";
 
 const generateItem = () => loremIpsum({ count: 3, units: "words" });
@@ -15,7 +14,7 @@ interface Props {
 }
 
 const TestHarness: React.FunctionComponent<Props> = ({ initialItems }) => {
-  const { items, itemAdded, itemRemoved } = useListReducer(
+  const { items, addItem, removeItem } = useListReducer(
     c => c,
     initialItems,
   );
@@ -30,10 +29,10 @@ const TestHarness: React.FunctionComponent<Props> = ({ initialItems }) => {
 
   const onAddNewItem = React.useCallback(
     e => {
-      itemAdded(newName);
+      addItem(newName);
       e.preventDefault();
     },
-    [itemAdded, newName],
+    [addItem, newName],
   );
 
   return (
@@ -46,7 +45,7 @@ const TestHarness: React.FunctionComponent<Props> = ({ initialItems }) => {
       {items.map(c => (
         <div key={c}>
           {c}
-          <button onClick={() => itemRemoved(c)}>Remove</button>
+          <button onClick={() => removeItem(c)}>Remove</button>
         </div>
       ))}
     </div>
