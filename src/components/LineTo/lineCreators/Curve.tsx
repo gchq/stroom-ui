@@ -37,7 +37,7 @@ const Curve: LineElementCreator = ({
       d={pathSpec}
       style={{
         stroke: "black",
-        strokeWidth: 2,
+        strokeWidth: 1,
         fill: "none",
       }}
     />

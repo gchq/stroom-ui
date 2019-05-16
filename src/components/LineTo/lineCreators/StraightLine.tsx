@@ -15,7 +15,7 @@ const StraightLine: LineElementCreator = ({
     y2={toRect.top + toRect.height / 2}
     style={{
       stroke: "black",
-      strokeWidth: 2,
+      strokeWidth: 1,
       fill: "none",
     }}
   />

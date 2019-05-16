@@ -38,7 +38,7 @@ const AppSearchBarWidget: FunctionComponent<Props> = ({ onChange, value }) => {
       </div>
     );
   } else {
-    const textToDisplay = "click to select";
+    const textToDisplay = !!value ? value.name : "click to select";
     return <span onClick={() => setEditing(true)}>{textToDisplay}</span>;
   }
 };

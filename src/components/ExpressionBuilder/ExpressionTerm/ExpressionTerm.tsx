@@ -150,7 +150,7 @@ const ExpressionTerm: React.FunctionComponent<EnhancedProps> = ({
               lineEndpointId={idWithinExpression}
               className="expression-operator-circle"
             >
-              <FontAwesomeIcon icon="bars" />
+              <FontAwesomeIcon size="sm" icon="bars" />
             </LineEndpoint>
           </div>,
         )}

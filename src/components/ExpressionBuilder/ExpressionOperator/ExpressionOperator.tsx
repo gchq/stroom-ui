@@ -20,11 +20,27 @@ import { LineEndpoint, LineTo } from "components/LineTo";
 import { canMove } from "lib/treeUtils/treeUtils";
 import { pipe } from "ramda";
 import * as React from "react";
-import { DragSource, DragSourceCollector, DragSourceSpec, DropTarget, DropTargetCollector, DropTargetSpec } from "react-dnd";
+import {
+  DragSource,
+  DragSourceCollector,
+  DragSourceSpec,
+  DropTarget,
+  DropTargetCollector,
+  DropTargetSpec,
+} from "react-dnd";
 import { getNewOperator, getNewTerm } from "../expressionUtils";
-import { DataSourceType, DragCollectedProps, DragDropTypes, DragObject, DropCollectedProps, ExpressionItem, ExpressionOperatorType, ExpressionTermType, OperatorType, OperatorTypeValues } from "../types";
-
-
+import {
+  DataSourceType,
+  DragCollectedProps,
+  DragDropTypes,
+  DragObject,
+  DropCollectedProps,
+  ExpressionItem,
+  ExpressionOperatorType,
+  ExpressionTermType,
+  OperatorType,
+  OperatorTypeValues,
+} from "../types";
 
 interface Props {
   index?: number; // If this is undefined, assume this is the root
@@ -209,14 +225,14 @@ const ExpressionOperator: React.FunctionComponent<EnhancedProps> = ({
   return (
     <div className={className}>
       {connectDropTarget(
-        <div>
+        <div className={"expression-item__row"}>
           {connectDragSource(
             <div className="expression-operator-circle">
               <LineEndpoint
                 className="expression-operator-circle"
                 lineEndpointId={idWithinExpression}
               >
-                <FontAwesomeIcon color={dndBarColour} icon="bars" />
+                <FontAwesomeIcon size="sm" color={dndBarColour} icon="bars" />
               </LineEndpoint>
             </div>,
           )}
@@ -258,15 +274,15 @@ const ExpressionOperator: React.FunctionComponent<EnhancedProps> = ({
             switch (c.type) {
               case "term":
                 itemElement = (
-                    <ExpressionTerm
-                      index={i}
-                      idWithinExpression={itemLineEndpointId}
-                      dataSource={dataSource}
-                      isEnabled={isEnabled && c.enabled}
-                      value={c as ExpressionTermType}
-                      onDelete={onChildDeleted}
-                      onChange={onChildUpdated}
-                    />
+                  <ExpressionTerm
+                    index={i}
+                    idWithinExpression={itemLineEndpointId}
+                    dataSource={dataSource}
+                    isEnabled={isEnabled && c.enabled}
+                    value={c as ExpressionTermType}
+                    onDelete={onChildDeleted}
+                    onChange={onChildUpdated}
+                  />
                 );
                 break;
               case "operator":

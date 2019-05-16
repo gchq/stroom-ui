@@ -31,6 +31,13 @@
   visibility: visible;
 }
 
+.ExpressionItem__buttons {
+  visibility: hidden;
+}
+.expression-item__row:hover .ExpressionItem__buttons {
+  visibility: visible;
+}
+
 .expression-item__root {
   margin-right: 0.5rem;
   margin-left: 0.5rem;
@@ -57,6 +64,7 @@
 
 .expression-operator-circle {
   display: inline;
+  padding-right: 4px;
 }
 
 .operator__placeholder {
