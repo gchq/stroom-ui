@@ -15,7 +15,7 @@
  */
 
 import * as React from "react";
-import { FunctionComponent, InputHTMLAttributes } from "react";
+import { FunctionComponent, InputHTMLAttributes, useCallback } from "react";
 
 const InlineInput: FunctionComponent<InputHTMLAttributes<HTMLInputElement>> = ({
   onChange,
@@ -23,6 +23,7 @@ const InlineInput: FunctionComponent<InputHTMLAttributes<HTMLInputElement>> = ({
   ...rest
 }) => {
   const [isEditing, setEditing] = React.useState(false);
+  const handleEdit = useCallback(() => setEditing(true), [setEditing]);
   if (isEditing) {
     return (
       <input
@@ -53,10 +54,7 @@ const InlineInput: FunctionComponent<InputHTMLAttributes<HTMLInputElement>> = ({
   } else {
     const textToDisplay = !!value ? value : "click to edit";
     return (
-      <span
-        className="inline-input__not-editing"
-        onClick={() => setEditing(true)}
-      >
+      <span className="inline-input__not-editing" onClick={handleEdit}>
         {textToDisplay}
       </span>
     );

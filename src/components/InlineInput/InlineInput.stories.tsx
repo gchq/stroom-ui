@@ -25,16 +25,25 @@ const stories = storiesOf("General Purpose/InlineInput", module);
 
 addThemedStories(stories, () => {
   const [stringValue, setStringValue] = React.useState<string>("Yoda");
-  const onStringValueChange: ChangeEventHandler<HTMLInputElement> = 
-    React.useCallback(({ target: { value } }) => setStringValue(value), [ setStringValue ]);
-     
+  const onStringValueChange: ChangeEventHandler<
+    HTMLInputElement
+  > = React.useCallback(({ target: { value } }) => setStringValue(value), [
+    setStringValue,
+  ]);
+
   const [numericValue, setNumericValue] = React.useState<string>("10");
-  const onNumericValueChange: ChangeEventHandler<HTMLInputElement> = 
-    React.useCallback(({ target: { value } }) => setNumericValue(value), [ setNumericValue ]);
+  const onNumericValueChange: ChangeEventHandler<
+    HTMLInputElement
+  > = React.useCallback(({ target: { value } }) => setNumericValue(value), [
+    setNumericValue,
+  ]);
 
   const [dateValue, setDateValue] = React.useState<string>("2019-01-01");
-  const onDateValueChange: ChangeEventHandler<HTMLInputElement> = 
-    React.useCallback(({ target: { value } }) => setDateValue(value), [ setDateValue ]);
+  const onDateValueChange: ChangeEventHandler<
+    HTMLInputElement
+  > = React.useCallback(({ target: { value } }) => setDateValue(value), [
+    setDateValue,
+  ]);
   return (
     <div style={{ padding: "5em" }}>
       <h1>InlineInput</h1>
@@ -59,16 +68,23 @@ addThemedStories(stories, () => {
         <span>I would like to feed </span>
         <InlineInput value={stringValue} onChange={onStringValueChange} />
         <span> to the sarlacc.</span>
-
         <h2>A numeric input</h2>
         <span>I would like to feed </span>
-        <InlineInput type="number" value={numericValue} onChange={onNumericValueChange}/> jawas
+        <InlineInput
+          type="number"
+          value={numericValue}
+          onChange={onNumericValueChange}
+        />{" "}
+        jawas
         <span> to the sarlacc.</span>
-        
         <h2>A date input</h2>
         <span>I would like to feed Jabba to the sarlacc on </span>
-        <InlineInput type="date" value={dateValue} onChange={onDateValueChange}/>.
-
+        <InlineInput
+          type="date"
+          value={dateValue}
+          onChange={onDateValueChange}
+        />
+        .
       </form>
 
       <JsonDebug value={{ stringValue, numericValue, dateValue }} />

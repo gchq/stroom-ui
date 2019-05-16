@@ -6,18 +6,23 @@ import InValueWidget from "./InValueWidget";
 import BetweenValueWidget from "./BetweenValueWidget";
 import JsonDebug from "testing/JsonDebug";
 import { addThemedStories } from "testing/storybook/themedStoryGenerator";
+import { ChangeEventHandler, useCallback, useState } from "react";
 
 [
   { valueType: "text", defaultValue: "Red" },
   { valueType: "number", defaultValue: "10" },
-  { valueType: "datetime-local", defaultValue: `${Date.now()}` },
+  { valueType: "datetime-local", defaultValue: "2018-06-12T19:30" },
 ].forEach(({ valueType, defaultValue }) => {
   const stories = storiesOf(
     `Expression/Value Widgets/Single/${valueType}`,
     module,
   );
   const TestHarness: React.FunctionComponent = () => {
-    const [value, onChange] = React.useState(defaultValue);
+    const [value, setValue] = useState(defaultValue);
+    const onChange: ChangeEventHandler<HTMLInputElement> = useCallback(
+      ({ target: { value } }) => setValue(value),
+      [setValue],
+    );
     return (
       <div>
         <SingleValueWidget
