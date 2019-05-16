@@ -148,7 +148,7 @@ const ExpressionTerm: React.FunctionComponent<EnhancedProps> = ({
           </div>,
         )}
         <InlineSelect
-          simpleOptions={dataSource.fields.map(field => field.name)}
+          options={dataSource.fields.map(field => {return {value:field.name, label: field.name}})}
           selected={value.field}
           onChange={onFieldChange}
         />

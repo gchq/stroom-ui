@@ -14,9 +14,10 @@
  * limitations under the License.
  */
 
-import { action } from "@storybook/addon-actions";
 import { storiesOf } from "@storybook/react";
 import * as React from "react";
+import { ChangeEventHandler, useCallback, useState } from "react";
+import JsonDebug from "testing/JsonDebug";
 import { addThemedStories } from "testing/storybook/themedStoryGenerator";
 import InlineSelect, { SelectOption } from "./InlineSelect";
 
@@ -38,7 +39,19 @@ const simpleOptions: string[] = [
   "everyone"
 ]
 
-addThemedStories(stories, () => (
+addThemedStories(stories, () => {
+  const [empty, setEmpty] = useState<string>("");
+  const onEmptyChangeHandler: ChangeEventHandler<HTMLSelectElement> = 
+    useCallback(({ target: { value } }) => setEmpty(value), [ setEmpty ]);
+
+  const [single, setSingle] = useState<string>("han");
+  const onSingleChangeHandler: ChangeEventHandler<HTMLSelectElement> = 
+    useCallback(({target: {value}}) => setSingle(value), [setSingle]);
+
+  const [placeholder, setPlaceholder] = useState<string>("leia");
+  const onPlaceholderChangeHandler: ChangeEventHandler<HTMLSelectElement> = 
+    useCallback(({target: {value}}) => setPlaceholder(value), [setPlaceholder]);
+  return (
   <div style={{ padding: "5em" }}>
     <h1>InlineSelect</h1>
     <p>An edit-in-place <code>select</code>, to be used inline with text.</p>
@@ -46,29 +59,20 @@ addThemedStories(stories, () => (
 
       <h2>Simplest</h2>
       <span>I would like to feed </span>
-      <InlineSelect options={options} />
+      <InlineSelect options={options} selected={empty} onChange={onEmptyChangeHandler}/>
       <span> to the sarlacc.</span>
 
       <h2>With an existing value</h2>
       <span>I would like to feed </span>
-      <InlineSelect options={options} selected="everyone" />
-      <span> to the sarlacc.</span>
-
-      <h2>With an onChange handler (see Action addon)</h2>
-      <span>I would like to feed </span>
-      <InlineSelect options={options} onChange={action("onChange")} />
+      <InlineSelect options={options} selected={single} onChange={onSingleChangeHandler}/>
       <span> to the sarlacc.</span>
 
       <h2>With a placeholder</h2>
       <span>I would like to feed </span>
-      <InlineSelect options={options} placeholder="+" onChange={action("onChange")} />
-      <span> to the sarlacc.</span>
-
-      <h2>With simple options, i.e. not value/label pairs but just values</h2>
-      <span>I would like to feed </span>
-      <InlineSelect simpleOptions={simpleOptions} onChange={action("onChange")} />
+      <InlineSelect options={options} placeholder="+" selected={placeholder} onChange={onPlaceholderChangeHandler}/>
       <span> to the sarlacc.</span>
 
     </form>
+    <JsonDebug value={{ empty, single, placeholder }} />
   </div>
-));
+)});
