@@ -22,10 +22,17 @@ import { ChangeEvent } from "react";
 import { DragSource, DragSourceCollector, DragSourceSpec } from "react-dnd";
 import Button from "../../Button";
 import ConditionPicker from "../ConditionPicker/ConditionPicker";
-import { ConditionType, DataSourceFieldType, DataSourceType, DragCollectedProps, DragDropTypes, DragObject, ExpressionTermType } from "../types";
+import {
+  ConditionType,
+  DataSourceFieldType,
+  DataSourceType,
+  DragCollectedProps,
+  DragDropTypes,
+  DragObject,
+  ExpressionTermType,
+} from "../types";
 import ValueWidget from "../ValueWidget";
 import withValueType from "../withValueType";
-
 
 interface Props {
   index: number;
@@ -37,7 +44,7 @@ interface Props {
   onChange: (e: ExpressionTermType, index: number) => void;
 }
 
-interface EnhancedProps extends Props, DragCollectedProps { }
+interface EnhancedProps extends Props, DragCollectedProps {}
 
 const dragSource: DragSourceSpec<Props, DragObject> = {
   beginDrag(props) {
@@ -148,7 +155,9 @@ const ExpressionTerm: React.FunctionComponent<EnhancedProps> = ({
           </div>,
         )}
         <InlineSelect
-          options={dataSource.fields.map(field => {return {value:field.name, label: field.name}})}
+          options={dataSource.fields.map(field => {
+            return { value: field.name, label: field.name };
+          })}
           selected={value.field}
           onChange={onFieldChange}
         />
@@ -172,7 +181,12 @@ const ExpressionTerm: React.FunctionComponent<EnhancedProps> = ({
           disabled={value.enabled}
           onClick={onEnabledToggled}
         />
-        <Button icon="trash" appearance="icon" action="secondary" onClick={onDeleteThis} />
+        <Button
+          icon="trash"
+          appearance="icon"
+          action="secondary"
+          onClick={onDeleteThis}
+        />
       </div>
     </div>
   );
