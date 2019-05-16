@@ -12,6 +12,7 @@ const TestHarness: React.FunctionComponent = () => {
 
   return (
     <div
+      className="control"
       onClick={onClickWithRipple}
       style={{
         width: "200px",

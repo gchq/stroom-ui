@@ -1,66 +1,65 @@
 $themes: (
   light: (
-    // General
-    background__color: #fff,
-    text__color: rgba(0, 0, 0, 0.8),
-    text__color--deemphasised: #fff,
-    selected-color: #cae1f1,
-    focussed-color: #809db1,
-    hover-color: #e8e8e8,
+    // Page
+    page__background-color: #fff,
+    page__text-color: rgba(0, 0, 0, 0.8),
+
+    // Controls
+    control__background-color: #fff,
+    control__text-color: rgba(0, 0, 0, 0.8),
+    control__border-color: rgba(0,0,0,0.1),
+    control__border-color--focussed: #809db1,
+    control__text-color--focussed: rgba(0, 0, 0, 0.8),
+    control__background-color--hover: #e8e8e8,
+    control__text-color--hover: rgba(0, 0, 0, 0.8),
+    control__background-color--selected: #cae1f1,
+    control__text-color--selected: #000,
+
+
+    // Pipeline editor
     raised-low__background-color: #e4e4e4,
+    raised-low__text-color: rgba(0, 0, 0, 0.8),
     raised-high__background-color: #2185d0,
+    raised-high__text-color: rgba(0, 0, 0, 0.8),
     raised-high__selected-background-color: red,
     raised-high__selected-focus-background-color: #1c70b1,
-    raised-element__border: 1px solid #fff,
-    border: 1px solid rgba(0,0,0,0.1),
+    raised-element__border: thin solid #fff,
+
+
     border-color: rgba(0,0,0,0.1),
-    control__background-color: #fff,
+
     // Specific
     header__icon-color: #2185d0,
-    dropdown__background-color: #fff,
-    dropdown__border: 1px solid #dfe0e1,
-    dropdown__hover-color: #dfe0e1,
-    scrollbar__track-color: #d3d3d3,
-    scrollbar__thumb-color: #a7a6a6,
-    // Naigation menu
-    sidebar__header-color: #fff,
-    sidebar__background-color: #01579B,
-    sidebar__menu-item-background: #01579B,
-    sidebar__menu-item-background--select: #0277BD,
-    sidebar__menu-item-background--select-hover: #0288D1,
-    sidebar__menu-item-text: rgba(255,255,255,0.8),
-    sidebar__menu-item-text--select: #fff,
   ),
   dark: (
-    // General
-    background__color: #1e1e1e,
-    text__color: #cacbcb,
-    text__color--deemphasised: #cacbcb,
-    selected-color: #185e90,
-    focussed-color: #0f3e5f,
-    hover-color: #1f4a69,
+    // Page
+    page__background-color: #212121,
+    page__text-color: #cacbcb,
+
+    // Input
+    control__background-color: #1e1e1e,
+    control__text-color: #cacbcb,
+    control__border-color: #4d5250,
+    control__border-color--focussed: #0f3e5f,
+    control__text-color--focussed: #cacbcb,
+    control__background-color--hover: #1f4a69,
+    control__text-color--hover: #cacbcb,
+    control__background-color--selected: #185e90,
+    control__text-color--selected: #fff,
+
+
+
+    // Pipeline editor
     raised-low__background-color: #adadad,
+    raised-low__text-color: #cacbcb,
     raised-high__background-color: #4d5250,
+    raised-high__text-color: #cacbcb,
     raised-high__selected-background-color: #747c79,
     raised-high__selected-focus-background-color: #747c79,
-    raised-element__border: 1px solid #aaa,
-    border: 1px solid #4d5250,
+    raised-element__border: thin solid #aaa,
     border-color: #4d5250,
-    control__background-color: #212121,
+
     // Specific
     header__icon-color: #2185d0,
-    dropdown__background-color: #282829,
-    dropdown__border: 1px solid #4d5250,
-    dropdown__hover-color: #4d5250,
-    scrollbar__track-color: #333333,
-    scrollbar__thumb-color: #848484,
-    // Naigation menu
-    sidebar__header-color: #fff,
-    sidebar__background-color: #252526,
-    sidebar__menu-item-background: #252526,
-    sidebar__menu-item-background--select: #37373d,
-    sidebar__menu-item-background--select-hover: #37373d,
-    sidebar__menu-item-text: rgba(255,255,255,0.8),
-    sidebar__menu-item-text--select: #fff,
   )
 );

@@ -38,6 +38,7 @@ let DocRefListingEntry: React.FunctionComponent<Props> = ({
     const additionalClasses = [];
     additionalClasses.push("DocRefListingEntry");
     additionalClasses.push("hoverable");
+    additionalClasses.push("clickable");
 
     if (dndIsOver) {
       additionalClasses.push("dndIsOver");

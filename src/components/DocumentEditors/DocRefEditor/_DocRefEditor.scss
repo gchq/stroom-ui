@@ -1,78 +1,55 @@
-// .DocRefEditor {
-//   display: flex;
-//   flex-direction: column;
-// }
+@import "../../../styles/themes.scss";
+@import "../../../styles/themify.scss";
 
 .DocRefEditor__focusarea {
   outline: none;
 }
 
-// .DocRefEditor__header {
-//   width: 100%;
-//   display: inline-flex;
-//   flex-direction: row;
-//   flex-shrink: 0;
-// }
-
-// .DocRefEditor__search {
-//   padding: 0.4rem;
-//   // display: inline-flex;
-//   // flex-direction: row;
-//   flex-shrink: 0;
-// }
-
-// .DocRefEditor__search * {
-//   padding: 0px !important;
-//   margin: 0px !important;
-// }
-
-// .DocRefEditor__search div {
-//   margin: 0px;
-//   padding: 0px;
-// }
-
-.DocRefEditor__search__value-container {
-  padding: 0px 8px !important;
-}
-
 .DocRefEditor__search__control {
   border-radius: 100px !important;
   min-height: 0 !important;
+  background-color: white;
+  @include themify($themes) {
+    background-color: themed("control__background-color");
+  }
+}
+
+.DocRefEditor__search__value-container {
+  padding: 0 8px !important;
 }
 
 .DocRefEditor__search__value-container div {
-  margin: 0px;
-  padding: 0px;
+  margin: 0;
+  padding: 0;
+  background-color: transparent;
 }
 
-// .DocRefEditor__search__placeholder + div {
-//   margin: 0px;
-//   padding: 0px;
-// }
+.DocRefEditor__search__menu {
+  // margin: 0;
+  // padding: 0;
+  background-color: white;
+  @include themify($themes) {
+    background-color: themed("control__background-color");
+    border: thin solid themed("control__border-color");
+  }
+}
 
-// .DocRefEditor__search__control:hover{
-//   border: 1px solid #0277bd !important;
-//   box-shadow: 0 0 0 1px #0277bd !important;
-// }
+.DocRefEditor__search__option {
+  // vertical-align: middle;
+  // padding: 8px 12px;
+  padding: .1rem 12px !important;
+}
 
+.DocRefEditor__search__option--is-focused {
+  @include themify($themes) {
+    color: themed("control__text-color--hover") !important;
+    background-color: themed("control__background-color--hover") !important;
+  }
+}
 
-
-// .DocRefEditor__breadcrumb {
-//   padding: 0.4rem;
-//   // display: inline-flex;
-//   // flex-direction: row;
-//   flex-shrink: 0;
-// }
-
-// .DocRefEditor__actionButtons {
-//   position: absolute;
-//   top: 0px;
-//   right: 0px;
-//   justify-self: right;
-// }
-
-// .DocRefEditor__main {
-//   position: relative;
-//   flex-grow: 1;
-//   overflow: hidden;
-// }
+.DocRefEditor__search__option--is-selected {
+  @include themify($themes) {
+    color: themed("control__text-color--selected") !important;
+    background-color: themed("control__background-color--selected") !important;
+  }
+}

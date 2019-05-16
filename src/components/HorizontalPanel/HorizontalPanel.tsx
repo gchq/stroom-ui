@@ -28,7 +28,7 @@ const HorizontalPanel: React.FunctionComponent<Props> = ({
 
   return (
     <div className={`horizontal-panel ${className || ""}`}>
-      <div className="horizontal-panel__header flat">
+      <div className="horizontal-panel__header page">
         <div className="horizontal-panel__header__title">{title}</div>
         {headerMenuItems}
         <Button appearance="icon" icon="times" onClick={() => onClose()} />

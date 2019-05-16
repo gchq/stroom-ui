@@ -13,7 +13,7 @@
 
 // .table__reactTable {
 //   position: absolute;
-//   top: 0px;
+//   top: 0;
 //   right: 0;
 //   left: 0;
 //   bottom: 0;
@@ -36,7 +36,7 @@
 .ReactTable {
   width: 100%;
   border: none;
-  border-top: 1px solid rgba(0,0,0,0.1);
+  border-top: thin solid rgba(0,0,0,0.1);
 }
 
 .ReactTable .-pagination {
@@ -55,7 +55,7 @@
 
 // // Style table headers
 .ReactTable .rt-th {
-  font-weight: bold;
+  font-weight: 600;
   text-align: left;
 }
 
@@ -79,7 +79,7 @@
 }
 
 .ReactTable .rt-thead.-header {
-  // box-shadow: 0 1px 0px 0 rgba(0, 0, 0, 0.15) !important;
+  // box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.15) !important;
 
   // border-bottom: 2px solid rgba(0,0,0,0.1);
   box-shadow: 0 0 4px 0 rgba(0,0,0,0.15) !important;
@@ -109,5 +109,5 @@
 
 // .ReactTable .rt-thead.header {
 //   box-shadow: none;
-//   border-bottom: solid 1px lightgrey;
+//   border-bottom: thin solid lightgrey;
 // }

@@ -69,7 +69,7 @@ const UserSearch: React.FunctionComponent<UserSearchProps> = ({
     <div className="page">
       <div className="page__header">
         <IconHeader icon="users" text={`Users`} />
-        <div className="page__buttons button-container">
+        <div className="page__buttons Button__container">
           <Button
             onClick={() => onNewUserClicked()}
             icon="plus"

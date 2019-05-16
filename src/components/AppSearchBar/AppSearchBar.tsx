@@ -34,13 +34,13 @@ const SingleValue: React.FunctionComponent<SingleValueProps<DocRefType>> = ({
   children,
   data: { type },
 }) => (
-  <div>
+  <div className="DocRefTypePicker">
     <DocRefImage
-      className="DocRefTypePicker--image"
-      size="sm"
+      className="DocRefTypePicker__image"
+      size="lg"
       docRefType={type}
     />
-    {children}
+    <div className="DocRefTypePicker__text">{children}</div>
   </div>
 );
 
@@ -57,12 +57,14 @@ const Option: React.FunctionComponent<OptionProps<DocRefType>> = (
   }, [props.isFocused, props.data, onOptionFocus]);
   return (
     <components.Option {...props}>
-      <DocRefImage
-        className="DocRefTypePicker--image"
-        size="sm"
-        docRefType={props.data.type}
-      />
-      {props.children}
+      <div className="DocRefTypePicker">
+        <DocRefImage
+          className="DocRefTypePicker__image"
+          size="lg"
+          docRefType={props.data.type}
+        />
+        <div className="DocRefTypePicker__text">{props.children}</div>
+      </div>
       {provideBreadcrumbs && (
         <DocRefBreadcrumb
           docRefUuid={props.data.uuid}
@@ -83,11 +85,11 @@ const Menu: React.FunctionComponent<MenuProps<DocRefType>> = props => {
     <React.Fragment>
       <components.Menu {...props}>
         <React.Fragment>
-          <div className="app-search-header">
+          <div className="AppSearchBar__header">
             <div>
               <FontAwesomeIcon icon={headerIcon} size="lg" />
             </div>
-            <div className="app-search-header__text">{headerTitle}</div>
+            <div className="AppSearchBar__header-text">{headerTitle}</div>
           </div>
           {props.children}
         </React.Fragment>

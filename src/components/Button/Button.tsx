@@ -33,33 +33,33 @@ export const Button = ({
   ...rest
 }: ButtonProps) => {
   const className = React.useMemo(() => {
-    let classNames = ["button"];
+    let classNames = ["Button"];
 
     if (rawClassName) classNames.push(rawClassName);
 
     // Set the base button class.
-    classNames.push("button-base");
+    classNames.push("Button--base");
     // Set the general button styling class unless this is an icon button.
-    if (appearance !== "icon") classNames.push("button");
+    if (appearance !== "icon") classNames.push("Button");
 
     // Get the style name.
-    let appearanceName = "button-default";
+    let appearanceName = "Button--default";
     if (appearance) {
       switch (appearance) {
         case "default": {
-          appearanceName = "button-default";
+          appearanceName = "Button--default";
           break;
         }
         case "outline": {
-          appearanceName = "button-outline";
+          appearanceName = "Button--outline";
           break;
         }
         case "icon": {
-          appearanceName = "button-icon";
+          appearanceName = "Button--icon";
           break;
         }
         case "contained": {
-          appearanceName = "button-contained";
+          appearanceName = "Button--contained";
           break;
         }
         default:
@@ -91,8 +91,8 @@ export const Button = ({
     }
 
     if (text) classNames.push("has-text");
-    if (selected) classNames.push("button-selected");
-    if (disabled) classNames.push("button-disabled");
+    if (selected) classNames.push("Button--selected");
+    if (disabled) classNames.push("Button--disabled");
 
     classNames.push(size);
 
@@ -127,8 +127,8 @@ export const Button = ({
       ) : (
         undefined
       )}
-      {showText && icon ? <span className="button-margin" /> : undefined}
-      {showText ? <span className="button-text">{text}</span> : undefined}
+      {showText && icon ? <span className="Button__margin" /> : undefined}
+      {showText ? <span className="Button__text">{text}</span> : undefined}
     </button>
   );
 };

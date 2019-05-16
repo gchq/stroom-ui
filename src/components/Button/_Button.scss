@@ -9,24 +9,23 @@ $button-margin: .2rem;
 ////////////////////
 // Inner elements //
 ////////////////////
-.button-margin {
+.Button__margin {
   margin: 0.2rem;
 }
 
-.button-text {
-  // font-size: 10pt;
+.Button__text {
   vertical-align: middle;
   z-index: 1;
 }
 
-.button svg {
+.Button svg {
   z-index: 1;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 // Button container to wrap multiple buttons
 ////////////////////////////////////////////////////////////////////////////////
-.button-container {
+.Button__container {
   display: flex;
   flex-wrap: wrap;
   margin: -$button-margin;
@@ -35,7 +34,7 @@ $button-margin: .2rem;
 ////////////////////////////////////////////////////////////////////////////////
 // Base for all buttons
 ////////////////////////////////////////////////////////////////////////////////
-.button-base { // .jr0u89w
+.Button--base { // .jr0u89w
   color: inherit;
   border: 0;
   margin: 0;
@@ -43,7 +42,6 @@ $button-margin: .2rem;
   display: inline-flex;
   outline: none;
   padding: 0;
-  margin: 0px 3px;
   position: relative;
   align-items: center;
   user-select: none;
@@ -59,7 +57,7 @@ $button-margin: .2rem;
   margin: $button-margin;
 }
 
-.button-base.button-disabled { // .jr0u89w.j1p4cocs
+.Button--base.Button--disabled { // .jr0u89w.j1p4cocs
   cursor: default;
   pointer-events: none;
 }
@@ -67,17 +65,17 @@ $button-margin: .2rem;
 ////////////////////////////////////////////////////////////////////////////////
 // General button styles
 ////////////////////////////////////////////////////////////////////////////////
-.button { // .j9la4jl
+.Button { // .j9la4jl
   color: rgba(0, 0, 0, 0.87);
-  padding: 6px 16px;
+  padding: .375rem 1rem;
   font-size: 0.875rem;
-  min-width: 64px;
+  min-width: 4rem;
   box-sizing: border-box;
   transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
   line-height: 1.75;
   // font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-weight: 500;
-  border-radius: 4px;
+  border-radius: .25rem;
   letter-spacing: 0.02857em;
   text-transform: uppercase;
 
@@ -87,85 +85,88 @@ $button-margin: .2rem;
 
   position: relative;
   overflow: hidden;
+
+  font-family: "Open Sans";
+  font-weight: 600;
 }
 
-.button:hover { // .j9la4jl:hover
+.Button:hover { // .j9la4jl:hover
   text-decoration: none;
   background-color: rgba(0, 0, 0, 0.08);
 }
 
-.button.button-disabled { // .j9la4jl.j1p4cocs {
+.Button.Button--disabled { // .j9la4jl.j1p4cocs {
   color: rgba(0, 0, 0, 0.26);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 // Default buttons
 ////////////////////////////////////////////////////////////////////////////////
-.button-default { // .j1hrif9t
-  padding: 6px 8px;
+.Button--default { // .j1hrif9t
+  padding: .375rem .5rem;
   color: #424242;  // material grey 800
   @include themify($themes) {
     color: themed("button-default__color");
   }
 }
 
-.button-default.button-selected {
+.Button--default.Button--selected {
   background-color: rgba(158, 158, 158, 0.2); // material grey 500 20%
   @include themify($themes) {
     background-color: themed("button-default__background-color--selected");
   }
 }
 
-.button-default:hover {
+.Button--default:hover {
   background-color: rgba(158, 158, 158, 0.3); // material grey 500 30%
   @include themify($themes) {
     background-color: themed("button-default__background-color--hover");
   }
 }
 
-.button-default-primary { // .j14bbh75
+.Button--default-primary { // .j14bbh75
   color: #2196f3; // material blue 500 
   @include themify($themes) {
     color: themed("button-default-primary__color");
   }
 }
 
-.button-default-primary.button-selected {
+.Button--default-primary.Button--selected {
   background-color: rgba(33, 150, 243, 0.1); // material blue 500 10%
   @include themify($themes) {
     background-color: themed("button-default-primary__background-color--selected");
   }
 }
 
-.button-default-primary:hover { // .j14bbh75:hover
+.Button--default-primary:hover { // .j14bbh75:hover
   background-color: rgba(33, 150, 243, 0.2); // material blue 500 20%
   @include themify($themes) {
     background-color: themed("button-default-primary__background-color--hover");
   }
 }
 
-.button-default-secondary { // .j1y9307j
+.Button--default-secondary { // .j1y9307j
   color: #e91e63; // material pink 500 
   @include themify($themes) {
     color: themed("button-default-secondary__color");
   }
 }
 
-.button-default-secondary.button-selected {
+.Button--default-secondary.Button--selected {
   background-color: rgba(233, 30, 99, 0.1); // material pink 500 10%
   @include themify($themes) {
     background-color: themed("button-default-secondary__background-color--selected");
   }
 }
 
-.button-default-secondary:hover { // .j1y9307j:hover
+.Button--default-secondary:hover { // .j1y9307j:hover
   background-color: rgba(233, 30, 99, 0.2); // material pink 500 20%
   @include themify($themes) {
     background-color: themed("button-default-secondary__background-color--hover");
   }
 }
 
-.button-default.button-disabled {
+.Button--default.Button--disabled {
   color: rgba(0, 0, 0, 0.26);
   @include themify($themes) {
     color: themed("button-default__color--disabled");
@@ -176,9 +177,9 @@ $button-margin: .2rem;
 // Outline buttons
 ////////////////////////////////////////////////////////////////////////////////
 
-.button-outline { // .j5jkmku
+.Button--outline { // .j5jkmku
   border: thin solid;
-  padding: 5px 16px;
+  padding: .3rem 1rem;
   color: #424242;  // material grey 800
   border-color: rgba(158, 158, 158, 0.8); // material grey 500 80%
   @include themify($themes) {
@@ -187,7 +188,7 @@ $button-margin: .2rem;
   }
 }
 
-.button-outline.button-selected { 
+.Button--outline.Button--selected { 
   border-color: rgba(158, 158, 158, 1.0); // material grey 500 100%
   background-color: rgba(158, 158, 158, 0.2); // material grey 500 20%
   @include themify($themes) {
@@ -196,7 +197,7 @@ $button-margin: .2rem;
   }
 }
 
-.button-outline:hover { 
+.Button--outline:hover { 
   border-color: rgba(158, 158, 158, 1.0); // material grey 500 100%
   background-color: rgba(158, 158, 158, 0.3); // material grey 500 30%
   @include themify($themes) {
@@ -205,7 +206,7 @@ $button-margin: .2rem;
   }
 }
 
-.button-outline.button-disabled {
+.Button--outline.Button--disabled {
   color: rgba(0, 0, 0, 0.26);
   border-color: rgba(0, 0, 0, 0.26);
   @include themify($themes) {
@@ -214,7 +215,7 @@ $button-margin: .2rem;
   }
 }
 
-.button-outline-primary { // .j9ze19u
+.Button--outline-primary { // .j9ze19u
   border: thin solid;
   color: #2196f3; // material blue 500 
   border-color: rgba(33, 150, 243, 0.5); // material blue 500 50%
@@ -224,7 +225,7 @@ $button-margin: .2rem;
   }
 }
 
-.button-outline-primary.button-selected { 
+.Button--outline-primary.Button--selected { 
   border-color: rgba(33, 150, 243, 1.0); // material blue 500 100%
   background-color: rgba(33, 150, 243, 0.1); // material blue 500 10%
   @include themify($themes) {
@@ -233,7 +234,7 @@ $button-margin: .2rem;
   }
 }
 
-.button-outline-primary:hover { // .j9ze19u:hover
+.Button--outline-primary:hover { // .j9ze19u:hover
   border: thin solid;
   border-color: rgba(33, 150, 243, 1.0); // material blue 500 100%
   background-color: rgba(33, 150, 243, 0.2); // material blue 500 20%
@@ -243,7 +244,7 @@ $button-margin: .2rem;
   }
 }
 
-.button-outline-primary.button-disabled { 
+.Button--outline-primary.Button--disabled { 
   color: rgba(0, 0, 0, 0.26);
   border-color: rgba(0, 0, 0, 0.26);
   @include themify($themes) {
@@ -252,7 +253,7 @@ $button-margin: .2rem;
   }
 }
 
-.button-outline-secondary { // .j1xxvqug
+.Button--outline-secondary { // .j1xxvqug
   border: thin solid;
   color: #e91e63; // material pink 500 
   border-color: rgba(233, 30, 99, 0.5); // material pink 500 50%
@@ -262,7 +263,7 @@ $button-margin: .2rem;
   }
 }
 
-.button-outline-secondary.button-selected {
+.Button--outline-secondary.Button--selected {
   border-color: rgba(233, 30, 99, 1.0); // material pink 500 100%
   background-color: rgba(233, 30, 99, 0.1); // material pink 500 10%
   @include themify($themes) {
@@ -271,7 +272,7 @@ $button-margin: .2rem;
   }
 }
 
-.button-outline-secondary:hover {
+.Button--outline-secondary:hover {
   border: thin solid;
   border-color: rgba(233, 30, 99, 1.0); // material pink 500 100%
   background-color: rgba(233, 30, 99, 0.2); // material pink 500 20%
@@ -281,7 +282,7 @@ $button-margin: .2rem;
   }
 }
 
-.button-outline-secondary.button-disabled { 
+.Button--outline-secondary.Button--disabled { 
   border: thin solid;
   color: rgba(0, 0, 0, 0.26);
   border-color: rgba(0, 0, 0, 0.26);
@@ -295,9 +296,9 @@ $button-margin: .2rem;
 // Icon buttons
 ////////////////////////////////////////////////////////////////////////////////
 
-.button-icon { // .j1g2vga5
+.Button--icon { // .j1g2vga5
   flex: 0 0 auto;
-  padding: 12px;
+  padding: .75rem;
   overflow: visible;
   font-size: 1.5rem;
   text-align: center;
@@ -317,69 +318,69 @@ $button-margin: .2rem;
   }
 }
 
-.button-icon.small { // .j1g2vga5
+.Button--icon.small { // .j1g2vga5
   min-width: 0.25rem;
   min-height: 0.25rem;
   padding: 0.2rem;
 }
 
-.button-icon.button-selected {
+.Button--icon.Button--selected {
   background-color: rgba(158, 158, 158,0.2); // material grey 500 20%
   @include themify($themes) {
     background-color: themed("button-icon__background-color--selected");
   }
 }
 
-.button-icon:hover { // .j1g2vga5:hover
+.Button--icon:hover { // .j1g2vga5:hover
   background-color: rgba(158, 158, 158,0.3); // material grey 500 30%
   @include themify($themes) {
     background: themed("button-icon__background-color--hover");
   }
 }
 
-.button-icon-primary { // .j42ua74
+.Button--icon-primary { // .j42ua74
   color: #2196f3; // material blue 500 
   @include themify($themes) {
     color: themed("button-icon-primary__color");
   }
 }
 
-.button-icon-primary.button-selected {
+.Button--icon-primary.Button--selected {
   background-color: rgba(33, 150, 243,0.1); // material blue 500 10%
   @include themify($themes) {
     background-color: themed("button-icon-primary__background-color--selected");
   }
 }
 
-.button-icon-primary:hover { // .j42ua74:hover
+.Button--icon-primary:hover { // .j42ua74:hover
   background-color: rgba(33, 150, 243,0.2); // material blue 500 20%
   @include themify($themes) {
     background: themed("button-icon-primary__background-color--hover");
   }
 }
 
-.button-icon-secondary { // j1q4g7ue
+.Button--icon-secondary { // j1q4g7ue
   color: #e91e63; // material pink 500 
   @include themify($themes) {
     color: themed("button-icon-secondary__color");
   }
 }
 
-.button-icon-secondary.button-selected {
+.Button--icon-secondary.Button--selected {
   background-color: rgba(233, 30, 99,0.1); // material pink 500 10%
   @include themify($themes) {
     background-color: themed("button-icon-secondary__background-color--selected");
   }
 }
 
-.button-icon-secondary:hover { // .j1q4g7ue:hover
+.Button--icon-secondary:hover { // .j1q4g7ue:hover
   background-color: rgba(233, 30, 99,0.2); // material pink 500 20%
   @include themify($themes) {
     background: themed("button-icon-secondary__background-color--hover");
   }
 }
 
-.button-icon.button-disabled { // .j1g2vga5.j1p4cocs
+.Button--icon.Button--disabled { // .j1g2vga5.j1p4cocs
   color: rgba(0, 0, 0, 0.26);
   @include themify($themes) {
     color: themed("button-icon__color--disabled");
@@ -390,8 +391,8 @@ $button-margin: .2rem;
 // Contained buttons
 ////////////////////////////////////////////////////////////////////////////////
 
-.button-contained { // .jpyw0mp
-  box-shadow: 0px 1px 5px 0px rgba(0,0,0,0.2), 0px 2px 2px 0px rgba(0,0,0,0.14), 0px 3px 1px -2px rgba(0,0,0,0.12);
+.Button--contained { // .jpyw0mp
+  box-shadow: 0 .06rem .3rem 0 rgba(0,0,0,0.2), 0 .125rem .125rem 0 rgba(0,0,0,0.14), 0 .18rem .06rem -.125rem rgba(0,0,0,0.12);
   color: #424242;  // material grey 800
   background-color: #e0e0e0; // material grey 300 
   @include themify($themes) {
@@ -400,25 +401,25 @@ $button-margin: .2rem;
   }
 }
 
-.button-contained.button-selected {
+.Button--contained.Button--selected {
   background-color: #bdbdbd; // material grey 400 
   @include themify($themes) {
     background-color: themed("button-contained__background-color--selected");
   }
 }
 
-.button-contained:hover { // .jpyw0mp:hover
+.Button--contained:hover { // .jpyw0mp:hover
   background-color: #eeeeee; // material grey 200
   @include themify($themes) {
     background-color: themed("button-contained__background-color--hover");
   }
 }
 
-.button-contained:active { // .jpyw0mp:active
-  box-shadow: 0px 5px 5px -3px rgba(0,0,0,0.2), 0px 8px 10px 1px rgba(0,0,0,0.14), 0px 3px 14px 2px rgba(0,0,0,0.12);
+.Button--contained:active { // .jpyw0mp:active
+  box-shadow: 0 .3rem .3rem -.18rem rgba(0,0,0,0.2), 0 .5rem .625rem .06rem rgba(0,0,0,0.14), 0 .18rem .875rem .125rem rgba(0,0,0,0.12);
 }
 
-.button-contained-primary { // .j1xs0a6r
+.Button--contained-primary { // .j1xs0a6r
   color: #fff;
   background-color: #2196f3; // material blue 500
   @include themify($themes) {
@@ -427,21 +428,21 @@ $button-margin: .2rem;
   }
 }
 
-.button-contained-primary.button-selected {
+.Button--contained-primary.Button--selected {
   background-color: #1e88e5; // material blue 600
   @include themify($themes) {
     background-color: themed("button-contained-primary__background-color--selected");
   }
 }
 
-.button-contained-primary:hover { // .j1xs0a6r:hover
+.Button--contained-primary:hover { // .j1xs0a6r:hover
   background-color: #42a5f5; // material blue 400
   @include themify($themes) {
     background-color: themed("button-contained-primary__background-color--hover");
   }
 }
 
-.button-contained-secondary { // .j1qgefk9
+.Button--contained-secondary { // .j1qgefk9
   color: #fff;
   background-color: #e91e63; // material pink 500 
   @include themify($themes) {
@@ -450,21 +451,21 @@ $button-margin: .2rem;
   }
 }
 
-.button-contained-secondary.button-selected {
+.Button--contained-secondary.Button--selected {
   background-color: #d81b60; // material pink 600
   @include themify($themes) {
     background-color: themed("button-contained-secondary__background-color--selected");
   }
 }
 
-.button-contained-secondary:hover { // .j1qgefk9:hover
+.Button--contained-secondary:hover { // .j1qgefk9:hover
   background-color: #ec407a; // material pink 400
   @include themify($themes) {
     background-color: themed("button-contained-secondary__background-color--hover");
   }
 }
 
-.button-contained.button-disabled { // .jpyw0mp.j1p4cocs
+.Button--contained.Button--disabled { // .jpyw0mp.j1p4cocs
   box-shadow: none;
   color: rgba(0, 0, 0, 0.26);
   background-color: rgba(0, 0, 0, 0.12);
@@ -490,10 +491,10 @@ $button-margin: .2rem;
   border-radius: 50%;
   background-color: rgba(0, 0, 0, 0.1);
   
-  width: 100px;
-  height: 100px;
-  margin-top: -50px;
-  margin-left: -50px;
+  width: 6.25rem;
+  height: 6.25rem;
+  margin-top: -3.125rem;
+  margin-left: -3.125rem;
   
   animation: ripple 1s;
   opacity: 0;

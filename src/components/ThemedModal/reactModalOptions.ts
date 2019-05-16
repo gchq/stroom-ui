@@ -14,7 +14,7 @@ export default {
     transform: "translate(-50%, -50%)",
     // right: '40px',
     // bottom: '40px',
-    border: "1px solid #ccc",
+    border: "thin solid #ccc",
     background: "#fff",
     overflow: "auto",
     WebkitOverflowScrolling: "touch",

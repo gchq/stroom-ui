@@ -32,7 +32,7 @@ textarea {
   padding: 0.6rem;
   margin: 8px 0;
   display: inline-block;
-  border: 1px solid #ccc;
+  border: thin solid #ccc;
   border-radius: 3px;
   font-family: "Open Sans";
   background-color: white;
@@ -41,7 +41,7 @@ textarea {
 input:focus,
 select:focus,
 textarea:focus {
-  outline: 1px solid #1e88e5;
+  outline: thin solid #1e88e5;
 }
 
 a:focus {
@@ -64,7 +64,7 @@ a:focus {
   display: flex;
   flex-direction: column;
   width: calc(100% - 45px);
-  border-top: solid 1px lightgrey;
+  border-top: thin solid lightgrey;
   padding: 10px 5px 20px 5px;
 }
 

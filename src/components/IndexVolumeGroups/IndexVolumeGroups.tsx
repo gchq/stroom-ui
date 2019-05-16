@@ -62,7 +62,7 @@ const IndexVolumeGroups: React.FunctionComponent = () => {
     <div className="page">
       <div className="page__header">
         <DocRefIconHeader text="Index Volumes Groups" docRefType="Index" />
-        <div className="page__buttons button-container">
+        <div className="page__buttons Button__container">
           <Button onClick={showNewDialog} icon="plus" text="Create" />
           <Button
             disabled={selectedGroups.length !== 1}

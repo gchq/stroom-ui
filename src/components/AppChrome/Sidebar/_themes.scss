@@ -1,0 +1,20 @@
+$themes: (
+  light: (
+    sidebar__header-color: #fff,
+    sidebar__background-color: #01579B,
+    sidebar__menu-item-background: #01579B,
+    sidebar__menu-item-background--select: #0277BD,
+    sidebar__menu-item-background--select-hover: #0288D1,
+    sidebar__menu-item-text: rgba(255,255,255,0.8),
+    sidebar__menu-item-text--select: #fff,
+  ),
+  dark: (
+    sidebar__header-color: #fff,
+    sidebar__background-color: #252526,
+    sidebar__menu-item-background: #252526,
+    sidebar__menu-item-background--select: #37373d,
+    sidebar__menu-item-background--select-hover: #37373d,
+    sidebar__menu-item-text: rgba(255,255,255,0.8),
+    sidebar__menu-item-text--select: #fff,
+  )
+);

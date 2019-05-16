@@ -18,6 +18,7 @@ import {
 import MenuItem from "./MenuItem";
 import { useDocumentTree } from "components/DocumentEditors/api/explorer";
 import { ActiveMenuItem } from "../types";
+import ActivitySummary from "components/Activity";
 
 interface Props {
   activeMenuItem: ActiveMenuItem;
@@ -201,6 +202,10 @@ const Sidebar: React.FunctionComponent<Props> = ({ activeMenuItem }) => {
               selectedItems,
               focussedItem,
             )}
+          </div>
+
+          <div className="app-chrome__sidebar-menu__activity-summary">
+            <ActivitySummary />
           </div>
         </div>
       </React.Fragment>

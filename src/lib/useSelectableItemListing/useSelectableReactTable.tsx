@@ -41,6 +41,7 @@ function useSelectableReactTable<TItem>(
       let classNames = [];
       if (hasData) {
         classNames.push("hoverable");
+        classNames.push("clickable");
         if (isSelected) {
           classNames.push("selected");
         }

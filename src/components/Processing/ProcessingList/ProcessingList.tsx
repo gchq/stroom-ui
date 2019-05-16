@@ -75,7 +75,7 @@ const ProcessingList: React.FunctionComponent<Props> = ({
       ) : (
         <Button
           disabled={allRecordsRetrieved}
-          className="border hoverable processing-list__load-more-button"
+          className="border hoverable clickable processing-list__load-more-button"
           onClick={fetchMore}
           text={retrievalStave}
         />
@@ -88,7 +88,7 @@ const ProcessingList: React.FunctionComponent<Props> = ({
       row.original.filterId !== undefined ? (
         <Progress
           percent={row.original.trackerPercent}
-          symbolClassName="flat-text"
+          symbolClassName="page__text"
         />
       ) : (
         "UNKNOWN"

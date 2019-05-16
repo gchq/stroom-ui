@@ -84,7 +84,7 @@ const IndexVolumes: React.FunctionComponent = () => {
     <div className="page">
       <div className="page__header">
         <DocRefIconHeader text="Index Volumes" docRefType="Index" />
-        <div className="page__buttons button-container">
+        <div className="page__buttons Button__container">
           <Button onClick={showCreateNewDialog} icon="plus" text="Create" />
           <Button
             disabled={selectedIndexVolumes.length !== 1}

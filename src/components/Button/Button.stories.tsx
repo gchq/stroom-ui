@@ -48,7 +48,7 @@ const TestHarness: React.FunctionComponent = () => {
       {variants.map(({ title, appearance }, i) => (
         <div key={i}>
           <h1>{title}</h1>
-          <div className="button-container">
+          <div className="Button__container">
             <Button
               appearance={appearance}
               action="primary"
@@ -71,7 +71,7 @@ const TestHarness: React.FunctionComponent = () => {
             />
           </div>
 
-          <div className="button-container">
+          <div className="Button__container">
             <Button
               appearance={appearance}
               action="primary"
@@ -97,7 +97,7 @@ const TestHarness: React.FunctionComponent = () => {
             />
           </div>
 
-          <div className="button-container">
+          <div className="Button__container">
             <Button
               appearance={appearance}
               action="primary"
@@ -122,7 +122,7 @@ const TestHarness: React.FunctionComponent = () => {
               disabled={true}
             />
           </div>
-          <div className="button-container">
+          <div className="Button__container">
             <Button
               size="small"
               appearance={appearance}
@@ -147,7 +147,7 @@ const TestHarness: React.FunctionComponent = () => {
               title="Permissions"
             />
           </div>
-          <div className="button-container">
+          <div className="Button__container">
             <Button
               size="xlarge"
               appearance={appearance}
