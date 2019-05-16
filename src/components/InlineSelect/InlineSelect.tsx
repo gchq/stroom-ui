@@ -15,7 +15,12 @@
  */
 
 import * as React from "react";
-import { FunctionComponent, SelectHTMLAttributes, useState } from "react";
+import {
+  FunctionComponent,
+  SelectHTMLAttributes,
+  useState,
+  useEffect,
+} from "react";
 
 interface Props {
   options?: SelectOption[];
@@ -30,8 +35,12 @@ export interface SelectOption {
 
 const InlineSelect: FunctionComponent<
   Props & SelectHTMLAttributes<HTMLSelectElement>
-> = ({ options, onChange, selected, placeholder, ...rest }) => {
+> = ({ options, onChange, selected, placeholder, autoFocus, ...rest }) => {
   const [isEditing, setEditing] = useState(false);
+
+  // Honor the autoFocus
+  useEffect(() => setEditing(autoFocus), [autoFocus]);
+
   if (isEditing) {
     return (
       <select

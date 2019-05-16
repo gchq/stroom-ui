@@ -17,10 +17,11 @@
 import * as React from "react";
 import { FunctionComponent, InputHTMLAttributes } from "react";
 
-const InlineInput: FunctionComponent<InputHTMLAttributes<HTMLInputElement> > = ({ 
-  onChange, value, ...rest 
+const InlineInput: FunctionComponent<InputHTMLAttributes<HTMLInputElement>> = ({
+  onChange,
+  value,
+  ...rest
 }) => {
-
   const [isEditing, setEditing] = React.useState(false);
   if (isEditing) {
     return (

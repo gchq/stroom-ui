@@ -88,6 +88,10 @@ const InlineMultiSelect: React.FunctionComponent<Props> = ({
               options={thisSelectsOptions}
               selected={value}
               onChange={onChange}
+              // If we don't have a value then we're showing a newly
+              // added select, and we want it focused so it's editable
+              // and doesn't have to be clicked. I.e. this saves a click.
+              autoFocus={value === undefined || value === ""}
               {...rest}
             />
             <Button
