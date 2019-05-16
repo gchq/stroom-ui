@@ -51,7 +51,9 @@ const InlineMultiInput: React.FunctionComponent<ControlledInput<string[]>> = ({
   const valuesOnChangeHandlers: ValueAndChangeHandler[] = useMemo(
     () =>
       values.map((value, valueIndex) => ({
-        onChange: ({ target: { value: newValue } }: ChangeEvent<HTMLInputElement>) =>
+        onChange: ({
+          target: { value: newValue },
+        }: ChangeEvent<HTMLInputElement>) =>
           updateItemAtIndex(valueIndex, newValue),
         onRemove: () => removeItemAtIndex(valueIndex),
         value,

@@ -15,10 +15,12 @@
  */
 
 import Button from "components/Button";
-import InlineSelect, { SelectOption } from "components/InlineSelect/InlineSelect";
+import InlineSelect, {
+  SelectOption,
+} from "components/InlineSelect/InlineSelect";
 import useListReducer from "lib/useListReducer";
 import * as React from "react";
-import { ChangeEvent, useEffect, useMemo } from "react";
+import { ChangeEvent, useEffect, useMemo, useCallback } from "react";
 
 const getKey = (k: string) => k;
 
@@ -48,37 +50,21 @@ const InlineMultiSelect: React.FunctionComponent<Props> = ({
     removeItemAtIndex,
   } = useListReducer<string>(getKey, selected);
 
-  // const {
-  //   items: selectedItems,
-  //   addItem: addSelectedItem,
-  //   updateItemAtIndex: updateSelectedItemAtIndex,
-  //   removeItemAtIndex: removeSelectedItemAtIndex,
-  // } = useListReducer<SelectOption>(getKey, options);
-  // const addNewItem = useCallback(() => addItem({}), [addItem]);
-
+  const addNewItem = useCallback(() => addItem(undefined), [addItem]);
   useEffect(() => onChange(items), [onChange, items]);
 
   const valuesAndChangeHandlers: ValueAndChangeHandler[] = useMemo(
-    () => 
-    selected.map((value, valueIndex) => ({
-      onChange: ({target: {value:newValue}}: ChangeEvent<HTMLSelectElement>) =>
-        updateItemAtIndex(valueIndex, newValue),
+    () =>
+      selected.map((value, valueIndex) => ({
+        onChange: ({
+          target: { value: newValue },
+        }: ChangeEvent<HTMLSelectElement>) =>
+          updateItemAtIndex(valueIndex, newValue),
         onRemove: () => removeItemAtIndex(valueIndex),
-        value
+        value,
       })),
-      [selected, updateItemAtIndex, removeItemAtIndex],
-    );
-
-  // const [selectedItems, setSelectedItems] = React.useState(selected);
-  // const handleChange = (event: ChangeEvent<HTMLSelectElement>) => {
-  //   const value = event.target.value;
-  //   selectedItems.push(value);
-  //   const newSelectedItems = Object.assign([], selectedItems);
-  //   setSelectedItems(newSelectedItems);
-  //   if (!!onChange) {
-  //     onChange(value);
-  //   }
-  // };
+    [selected, updateItemAtIndex, removeItemAtIndex],
+  );
 
   // We only want to allow something to be selected once, so we need to
   // work out what options are remaining...
@@ -88,37 +74,31 @@ const InlineMultiSelect: React.FunctionComponent<Props> = ({
   return (
     <span>
       [
-      {/* {selectedItems.map((selectedItem, index) => { */}
-      {valuesAndChangeHandlers.map(({value, onChange, onRemove}, index) => {
+      {valuesAndChangeHandlers.map(({ value, onChange, onRemove }, index) => {
         //... but we must have this option present in the list, otherwise
         // it can't be selected
         const thisSelectsOptions = Object.assign([], remainingOptions);
-        thisSelectsOptions.push(
-          options.find(option => option.value === value),
-        );
+        const selectedOption = options.find(option => option.value === value);
+        if (!!selectedOption) {
+          thisSelectsOptions.push(selectedOption);
+        }
         return (
           <React.Fragment key={index}>
             <InlineSelect
               options={thisSelectsOptions}
               selected={value}
-              // selected={options.find(option => option.value === value)}
               onChange={onChange}
               {...rest}
             />
             <Button
               size="small"
+              type="button"
               appearance="icon"
               action="secondary"
               text="Remove"
               icon="times"
               title="Remove"
               onClick={onRemove}
-              // onClick={() => {
-              //   const newSelectedItems = selectedItems.filter(
-              //     item => item !== selectedItem,
-              //   );
-              //   setSelectedItems(newSelectedItems);
-              // }}
             />
             {/* we only want to display this if we're not at the end of the list */}
             {index !== options.length - 1 ? (
@@ -131,12 +111,15 @@ const InlineMultiSelect: React.FunctionComponent<Props> = ({
       })}
       {/* We only want to display this if there are options left to select */}
       {remainingOptions.length > 0 ? (
-        <InlineSelect
-          usePlaceholderButton={true}
-          options={remainingOptions}
-          emitOnly={true}
-          // onChange={addNewItem}
-          {...rest}
+        <Button
+          size="small"
+          type="button"
+          appearance="icon"
+          action="primary"
+          text="Add"
+          icon="plus"
+          title="Add"
+          onClick={addNewItem}
         />
       ) : (
         undefined

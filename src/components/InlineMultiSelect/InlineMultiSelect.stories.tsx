@@ -33,33 +33,49 @@ const options: SelectOption[] = [
 ];
 
 addThemedStories(stories, () => {
-  const [emptySelection, setEmptySelection] = useState<string[]> ([ ]);
-  const [singleSelection, setSingleSelection] = useState<string[]> ([ "leia" ]);
-  const [multiSelection, setMultiSelection] = useState<string[]> ([ "leia", "han", "luke" ]);
+  const [emptySelection, setEmptySelection] = useState<string[]>([]);
+  const [singleSelection, setSingleSelection] = useState<string[]>(["leia"]);
+  const [multiSelection, setMultiSelection] = useState<string[]>([
+    "leia",
+    "han",
+    "luke",
+  ]);
   return (
-  <div style={{ padding: "5em" }}>
-    <h1>InlineMultiSelect</h1>
-    <p>
-      An edit-in-place multi<code>select</code>, to be used inline with text.
-      Allows the selection of multiple options.
-    </p>
-    <form>
-      <h2>Empty</h2>
-      <span>I would like to feed </span>
-      <InlineMultiSelect options={options} selected={emptySelection}  onChange={setEmptySelection}/>
-      <span> to the sarlacc.</span>
+    <div style={{ padding: "5em" }}>
+      <h1>InlineMultiSelect</h1>
+      <p>
+        An edit-in-place multi<code>select</code>, to be used inline with text.
+        Allows the selection of multiple options.
+      </p>
+      <form>
+        <h2>Empty</h2>
+        <span>I would like to feed </span>
+        <InlineMultiSelect
+          options={options}
+          selected={emptySelection}
+          onChange={setEmptySelection}
+        />
+        <span> to the sarlacc.</span>
 
-      <h2>Single selection</h2>
-      <span>I would like to feed </span>
-      <InlineMultiSelect options={options} selected={singleSelection} onChange={setSingleSelection}/>
-      <span> to the sarlacc.</span>
+        <h2>Single selection</h2>
+        <span>I would like to feed </span>
+        <InlineMultiSelect
+          options={options}
+          selected={singleSelection}
+          onChange={setSingleSelection}
+        />
+        <span> to the sarlacc.</span>
 
-      <h2>Multiple selection</h2>
-      <span>I would like to feed </span>
-      <InlineMultiSelect options={options} selected={multiSelection} onChange={setMultiSelection}/>
-      <span> to the sarlacc.</span>
-
-    </form>
-    <JsonDebug value={{ emptySelection, singleSelection, multiSelection }} />
-  </div>
-)});
+        <h2>Multiple selection</h2>
+        <span>I would like to feed </span>
+        <InlineMultiSelect
+          options={options}
+          selected={multiSelection}
+          onChange={setMultiSelection}
+        />
+        <span> to the sarlacc.</span>
+      </form>
+      <JsonDebug value={{ emptySelection, singleSelection, multiSelection }} />
+    </div>
+  );
+});
