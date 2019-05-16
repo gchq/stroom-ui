@@ -11,26 +11,6 @@ const BetweenValueWidget: React.FunctionComponent<Props> = ({
   onChange,
   value,
 }) => {
-  const onFromValueChange = ({
-    target: { value },
-  }: React.ChangeEvent<HTMLInputElement>) => {
-    const parts = value.split(",");
-    const existingToValue = parts.length === 2 ? parts[1] : "";
-    const newValue = `${value},${existingToValue}`;
-
-    onChange(newValue);
-  };
-
-  const onToValueChange = ({
-    target: { value },
-  }: React.ChangeEvent<HTMLInputElement>) => {
-    const parts = value.split(",");
-    const existingFromValue = parts.length === 2 ? parts[0] : "";
-    const newValue = `${existingFromValue},${value}`;
-
-    onChange(newValue);
-  };
-
   let fromValue = "";
   let toValue = "";
   if (value) {
@@ -38,6 +18,20 @@ const BetweenValueWidget: React.FunctionComponent<Props> = ({
     fromValue = splitValues.length === 2 ? splitValues[0] : "";
     toValue = splitValues.length === 2 ? splitValues[1] : "";
   }
+
+  const onToValueChange = ({
+    target: { value },
+  }: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = `${fromValue},${value}`;
+    onChange(newValue);
+  };
+
+  const onFromValueChange = ({
+    target: { value },
+  }: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = `${value},${toValue}`;
+    onChange(newValue);
+  };
 
   return (
     <span>
