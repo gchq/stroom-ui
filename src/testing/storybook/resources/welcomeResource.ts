@@ -13,7 +13,7 @@ const resourceBuilder: ResourceBuilder = (
   server: any,
   { stroomBaseServiceUrl }: Config,
 ) => {
-  const resource = `${stroomBaseServiceUrl}/welcome/`;
+  const resource = `${stroomBaseServiceUrl}/welcome/v1/`;
 
   server.get(resource).intercept((req: HttpRequest, res: HttpResponse) => {
     res.json(ABOUT_HTML);

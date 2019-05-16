@@ -16,7 +16,7 @@ const resourceBuilder: ResourceBuilder = (
   server: any,
   { stroomBaseServiceUrl }: Config,
 ) => {
-  const resource = `${stroomBaseServiceUrl}/build-info/`;
+  const resource = `${stroomBaseServiceUrl}/build-info/v1/`;
 
   server.get(resource).intercept((req: HttpRequest, res: HttpResponse) => {
     res.json(BUILD_INFO);
