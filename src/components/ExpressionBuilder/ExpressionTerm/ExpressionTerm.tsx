@@ -143,7 +143,7 @@ const ExpressionTerm: React.FunctionComponent<EnhancedProps> = ({
 
   return (
     <div className={className}>
-      <div>
+      <div className={"ExpressionTerm__expression"}>
         {connectDragSource(
           <div className="expression-operator-circle">
             <LineEndpoint

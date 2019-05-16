@@ -13,6 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+@import "./ExpressionTerm/ExpressionTerm";
+@import "./ValueWidget/valueWidget";
+
 .operator__children {
   padding-left: 2rem;
 }
@@ -35,7 +38,7 @@
 
 .expression-item {
   margin-top: 0.5rem;
-  width:100%;
+  width: 100%;
   justify-content: space-between;
 }
 
