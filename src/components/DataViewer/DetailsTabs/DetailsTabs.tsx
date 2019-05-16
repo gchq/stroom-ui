@@ -15,11 +15,13 @@
  */
 
 import * as React from "react";
-import * as moment from "moment";
 
 import { useStreamDataRow } from "components/DataViewer/api/streamAttributeMap";
 import Loader from "components/Loader";
 import { DataRow } from "../types";
+import StreamDetails from "./StreamDetails";
+import StreamAttributes from "./StreamAttributes";
+import DataRetention from "./DataRetention";
 
 interface Props {
   data: DataRow;
@@ -35,138 +37,6 @@ const DetailsTabs: React.FunctionComponent<Props> = ({ data }) => {
     [], // dataRow
   );
 
-  const renderDetails = React.useCallback(() => {
-    return (
-      dataRow && (
-        <div className="tab-pane">
-          <div className="StreamDetails__container">
-            <div className="StreamDetails__table__container">
-              <table className="StreamDetails__table">
-                <tbody>
-                  <tr>
-                    <td>Stream ID</td>
-                    <td>
-                      <code>{dataRow.meta.id}</code>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Status</td>
-                    <td>
-                      <code> {dataRow.meta.status}</code>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Status MS</td>
-                    <td>
-                      {moment(dataRow.meta.statusMs).format(
-                        "MMMM Do YYYY, h:mm:ss a",
-                      )}
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Stream Task ID</td>
-                    <td>{/* <code> {details.data.processTaskId}</code> */}</td>
-                  </tr>
-                  <tr>
-                    <td>Parent Stream ID</td>
-                    <td>{/* <code>{details.data.parentDataId}</code> */}</td>
-                  </tr>
-                  <tr>
-                    <td>Created</td>
-                    <td>
-                      {moment(dataRow.meta.createMs).format(
-                        "MMMM Do YYYY, h:mm:ss a",
-                      )}
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Effective</td>
-                    <td>
-                      {moment(dataRow.meta.effectiveMs).format(
-                        "MMMM Do YYYY, h:mm:ss a",
-                      )}
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Stream processor uuid</td>
-                    TODO
-                    {/* <td>{details.stream.processor.id}</td> */}
-                  </tr>
-                  <tr>
-                    <td>Files</td>
-                    TODO
-                    {/* <td>{details.fileNameList}</td> */}
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      )
-    );
-  }, [dataRow]);
-
-  const renderAttributes = React.useCallback(
-    () => (
-      <div className="tab-pane">
-        <div className="StreamDetails__container">
-          <div className="StreamDetails__table__container">
-            <table className="StreamDetails__table">
-              <tbody>
-                TODO
-                {/* {Object.keys(details.nameValueMap).map((key, index) => {
-                if (key !== 'Until' && key !== 'Rule' && key !== 'Age') {
-                  return (
-                    <tr>
-                      <td>{key}</td>
-                      <td>
-                        <code>{details.nameValueMap[key]}</code>
-                      </td>
-                    </tr>
-                  );
-                }
-                return undefined;
-              })} */}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    ),
-    [],
-  );
-
-  const renderRetention = React.useCallback(
-    () => (
-      <div className="tab-pane">
-        <div className="RetentionDetails__container">
-          <div className="RetentionDetails__table__container">
-            <table className="RetentionDetails__table">
-              <tbody>
-                <tr>
-                  <td>Age</td>
-                  TODO
-                  {/* <td>{details.nameValueMap.Age}</td> */}
-                </tr>
-                <tr>
-                  <td>Until</td>
-                  TODO
-                  {/* <td>{details.nameValueMap.Until}</td> */}
-                </tr>
-                <tr>
-                  <td>Rule</td>
-                  TODO
-                  {/* <td>{details.nameValueMap.Rule}</td> */}
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    ),
-    [],
-  );
-
   if (!dataRow) {
     return <Loader message="Loading Data" />;
   }
@@ -178,15 +48,15 @@ const DetailsTabs: React.FunctionComponent<Props> = ({ data }) => {
     },
     {
       menuItem: "Details",
-      render: renderDetails,
+      render: <StreamDetails dataRow={dataRow} />,
     },
     {
       menuItem: "Attributes",
-      render: renderAttributes,
+      render: <StreamAttributes dataRow={dataRow} />,
     },
     {
       menuItem: "Retention",
-      render: renderRetention,
+      render: <DataRetention dataRow={dataRow} />,
     },
   ];
   if (panes) {
