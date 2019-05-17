@@ -1,8 +1,8 @@
 import * as React from "react";
-import { DataRow } from "components/StreamBrowser/types";
+import { StreamMetaRow } from "components/StreamBrowser/types";
 
 interface Props {
-  dataRow: DataRow;
+  dataRow: StreamMetaRow;
 }
 
 const defaultAttributes = {

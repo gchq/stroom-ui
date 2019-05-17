@@ -1,4 +1,4 @@
-import StreamTable from "./StreamTable";
+import StreamTable, { useTable } from "./StreamTable";
 
-export { StreamTable };
+export { StreamTable, useTable };
 export default StreamTable;

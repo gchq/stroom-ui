@@ -5,16 +5,16 @@ import {
   DataSourceType,
   ExpressionOperatorType,
 } from "components/ExpressionBuilder/types";
-import { StreamAttributeMapResult, PageRequest, DataRow } from "../types";
+import { StreamAttributeMapResult, PageRequest, StreamMetaRow } from "../types";
 
 interface Api {
-  page: (props: PageRequest) => Promise<StreamAttributeMapResult>;
+  fetch: (props: PageRequest) => Promise<StreamAttributeMapResult>;
   search: (
     expression: ExpressionOperatorType,
     page: PageRequest,
   ) => Promise<StreamAttributeMapResult>;
   fetchDataSource: () => Promise<DataSourceType>;
-  getDetailsForSelectedStream: (metaId: number) => Promise<DataRow>;
+  getDetailsForSelectedStream: (metaId: number) => Promise<StreamMetaRow>;
 }
 
 export const useApi = (): Api => {
@@ -56,7 +56,7 @@ export const useApi = (): Api => {
         ),
       [stroomBaseServiceUrl, httpGetJson],
     ),
-    page: React.useCallback(
+    fetch: React.useCallback(
       (pageInfo: PageRequest) => httpGetJson(getPageUrl(pageInfo)),
       [getPageUrl, httpGetJson],
     ),

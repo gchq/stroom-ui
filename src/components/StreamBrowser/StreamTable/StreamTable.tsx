@@ -15,7 +15,13 @@
  */
 
 import * as React from "react";
-import { ExpressionOperatorType } from "components/ExpressionBuilder/types";
+import { StreamAttributeMapResult, StreamMetaRow } from "../types";
+import {
+  useSelectableReactTable,
+  SelectionBehaviour,
+} from "lib/useSelectableItemListing";
+import ReactTable, { Column } from "react-table";
+import { TableOutProps } from "lib/useSelectableItemListing/types";
 
 // import * as moment from "moment";
 // import { path } from "ramda";
@@ -29,13 +35,7 @@ import { ExpressionOperatorType } from "components/ExpressionBuilder/types";
 
 // import Loader from "components/Loader";
 // import Button from "components/Button";
-// import { Direction, ExpressionOperatorType, DataRow } from "types";
-
-// import useReduxState from "lib/useReduxState";
-
-interface Props {
-  expression?: ExpressionOperatorType;
-}
+// import { Direction, ExpressionOperatorType, StreamMetaRow } from "types";
 
 // interface TableData {
 //   metaId?: string;
@@ -45,9 +45,29 @@ interface Props {
 //   pipeline?: string;
 // }
 
-const StreamTable: React.FunctionComponent<Props> = ({ expression }) => {
-  return <div>Nope</div>;
-  /*
+const COLUMNS: Column[] = [
+  {
+    id: "id",
+    Header: "ID",
+    accessor: (u: StreamMetaRow) => u && u.meta && u.meta.id,
+  },
+  {
+    id: "feedName",
+    Header: "Feed",
+    accessor: (u: StreamMetaRow) => u && u.meta && u.meta.feedName,
+  },
+];
+
+const StreamTable: React.FunctionComponent<TableOutProps<StreamMetaRow>> = ({
+  tableProps,
+}) => (
+  <ReactTable
+    className="tracker-table border-color -striped -highlight"
+    {...tableProps}
+  />
+);
+
+/*
   const { selectRow } = useActionCreators();
   const dataViewers = useReduxState(({ dataViewers }) => dataViewers);
   const { selectedRow, pageOffset, pageSize, streamAttributeMaps, dataSource } =
@@ -141,7 +161,7 @@ const StreamTable: React.FunctionComponent<Props> = ({ expression }) => {
   }
 
   let tableData: TableData[] = streamAttributeMaps.map(
-    (streamAttributeMap: DataRow) => {
+    (streamAttributeMap: StreamMetaRow) => {
       return {
         metaId: `${streamAttributeMap.data.id}`,
         created: moment(streamAttributeMap.data.createMs).format(
@@ -172,7 +192,7 @@ const StreamTable: React.FunctionComponent<Props> = ({ expression }) => {
       Cell: (row: RowInfo): React.ReactNode => {
         // This block of code is mostly about making a sensible looking popup.
         const stream = streamAttributeMaps.find(
-          (streamAttributeMap: DataRow) =>
+          (streamAttributeMap: StreamMetaRow) =>
             streamAttributeMap.data.id === row.original.metaId
         );
 
@@ -270,6 +290,23 @@ const StreamTable: React.FunctionComponent<Props> = ({ expression }) => {
     />
   );
   */
-};
+//};
+
+export const useTable = (
+  streams: StreamAttributeMapResult,
+): TableOutProps<StreamMetaRow> =>
+  useSelectableReactTable<StreamMetaRow>(
+    {
+      items: streams.streamAttributeMaps,
+      getKey: React.useCallback(
+        d => `${(d && d.meta && d.meta.id) || "none"}`,
+        [],
+      ),
+      selectionBehaviour: SelectionBehaviour.SINGLE,
+    },
+    {
+      columns: COLUMNS,
+    },
+  );
 
 export default StreamTable;

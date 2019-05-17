@@ -15,35 +15,18 @@
  */
 
 import * as React from "react";
-import ReactTable, { Column } from "react-table";
 
 import {
   useStreamSearch,
   useStreamDataSource,
 } from "components/StreamBrowser/api";
-import {
-  useSelectableReactTable,
-  SelectionBehaviour,
-} from "lib/useSelectableItemListing";
 import IconHeader from "../IconHeader";
 import ExpressionSearchBar from "../ExpressionSearchBar";
 import HorizontalMainDetails from "../HorizontalMainDetails";
 import StreamDetailTabs from "./StreamDetailTabs";
 import { ExpressionOperatorType } from "../ExpressionBuilder/types";
-import { DataRow, PageRequest } from "./types";
-
-const COLUMNS: Column[] = [
-  {
-    id: "id",
-    Header: "ID",
-    accessor: (u: DataRow) => u && u.meta && u.meta.id,
-  },
-  {
-    id: "feedName",
-    Header: "Feed",
-    accessor: (u: DataRow) => u && u.meta && u.meta.feedName,
-  },
-];
+import { PageRequest } from "./types";
+import StreamTable, { useTable } from "./StreamTable";
 
 const defaultPageRequest: PageRequest = {
   pageOffset: 0,
@@ -54,22 +37,6 @@ const StreamBrowser = () => {
   const dataSource = useStreamDataSource();
   const { streams, search } = useStreamSearch();
 
-  const { tableProps, selectedItem, clearSelection } = useSelectableReactTable<
-    DataRow
-  >(
-    {
-      items: !!streams ? streams.streamAttributeMaps : [],
-      getKey: React.useCallback(
-        d => `${(d && d.meta && d.meta.id) || "none"}`,
-        [],
-      ),
-      selectionBehaviour: SelectionBehaviour.SINGLE,
-    },
-    {
-      columns: COLUMNS,
-    },
-  );
-
   // The expression search bar will call this on mount
   const onSearch = React.useCallback(
     (expression: ExpressionOperatorType) => {
@@ -77,6 +44,9 @@ const StreamBrowser = () => {
     },
     [search],
   );
+
+  const tableProps = useTable(streams);
+  const { clearSelection, selectedItem } = tableProps;
 
   return (
     <div className="page">
@@ -96,12 +66,7 @@ const StreamBrowser = () => {
           title=""
           onClose={clearSelection}
           isOpen={true}
-          mainContent={
-            <ReactTable
-              className="tracker-table border-color -striped -highlight"
-              {...tableProps}
-            />
-          }
+          mainContent={<StreamTable {...tableProps} />}
           detailContent={
             !!selectedItem ? (
               <StreamDetailTabs data={selectedItem} />

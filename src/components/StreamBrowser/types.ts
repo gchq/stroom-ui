@@ -12,22 +12,22 @@ export interface PageResponse {
   exact: boolean;
 }
 
-export interface DataItem {
+export interface StreamMeta {
   id: number;
   feedName: string;
   typeName: string;
+  processorUuid: number;
   pipelineUuid: string;
   parentDataId: number;
   processTaskId: number;
-  processorId: number;
   status: DataStatus;
   statusMs: number;
   createMs: number;
   effectiveMs: number;
 }
 
-export interface DataRow {
-  meta: DataItem;
+export interface StreamMetaRow {
+  meta: StreamMeta;
   attributes?: {
     [key: string]: string;
   };
@@ -35,7 +35,7 @@ export interface DataRow {
 
 export interface StreamAttributeMapResult {
   pageResponse: PageResponse;
-  streamAttributeMaps: DataRow[];
+  streamAttributeMaps: StreamMetaRow[];
 }
 
 export interface OffsetRange {
@@ -78,7 +78,7 @@ export interface FetchDataParams {
 }
 
 export interface PagedData {
-  streamAttributeMaps: DataRow[];
+  streamAttributeMaps: StreamMetaRow[];
   total: number;
 }
 

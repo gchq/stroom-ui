@@ -19,7 +19,7 @@ const useStreamSearch = (): UseStreamSearch => {
   const [streams, setStreams] = React.useState<StreamAttributeMapResult>(
     defaultStreams,
   );
-  const { page, search } = useApi();
+  const { fetch, search } = useApi();
 
   return {
     streams,
@@ -28,8 +28,8 @@ const useStreamSearch = (): UseStreamSearch => {
         search(e, p).then(setStreams),
       [search, setStreams],
     ),
-    page: React.useCallback((s: PageRequest) => page(s).then(setStreams), [
-      page,
+    fetch: React.useCallback((s: PageRequest) => fetch(s).then(setStreams), [
+      fetch,
       setStreams,
     ]),
   };
