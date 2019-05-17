@@ -13,7 +13,7 @@ const useAppNavigation = (): NavigateApp => {
   return React.useMemo(
     () => ({
       goToWelcome: () => h.push(u.goToWelcome()),
-      goToDataViewer: () => h.push(u.goToDataViewer()),
+      goToStreamBrowser: () => h.push(u.goToStreamBrowser()),
       goToProcessing: () => h.push(u.goToProcessing()),
       goToUserSettings: () => h.push(u.goToUserSettings()),
       goToAuthorisationManager: (isGroup: string) =>
