@@ -57,6 +57,11 @@ $themes: (
 
     // Specific
     header__icon-color: #2185d0,
+
+
+
+    // React table
+    odd-row__background-color: rgba(0,0,0,0.03),
   ),
   dark: (
     // Page
@@ -115,5 +120,8 @@ $themes: (
 
     // Specific
     header__icon-color: #2185d0,
+
+    // React table
+    odd-row__background-color: rgba(0,0,0,0.2),
   )
 );

@@ -40,13 +40,13 @@ table {
 
 // .dropdown__content {
 //   @include themify($themes) {
-//     background-color: themed("control__background--color");
+//     background-color: themed("control__background-color");
 //   }
 // }
 
 input {
   @include themify($themes) {
-    background-color: themed("control__background--color");
+    background-color: themed("control__background-color");
     color: themed("control__text-color");
   }
 }
@@ -60,7 +60,7 @@ input {
 
   input {
     @include themify($themes) {
-      background-color: themed("control__background--color");
+      background-color: themed("control__background-color");
       color: themed("control__text-color");
     }
   }

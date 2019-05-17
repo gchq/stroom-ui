@@ -1,18 +1,18 @@
+@import "themes.scss";
 @import "themify.scss";
-
-$themes: (
-  light: (
-    odd-row__background-color: rgba(0,0,0,0.03),
-  ),
-  dark: (
-    odd-row__background-color: rgba(0,0,0,0.2),
-  )
-);
 
 .ReactTable {
   width: 100%;
   border: none;
   border-top: thin solid rgba(0,0,0,0.1);
+}
+
+.ReactTable .rt-thead.-filters input {
+  @include themify($themes) {
+    background-color: themed("control__background-color");
+    color: themed("control__text-color");
+    border-color: themed("control__border-color");
+  }
 }
 
 .ReactTable .-pagination {
