@@ -20,7 +20,7 @@ import ReactTable, { Column } from "react-table";
 import {
   useStreamSearch,
   useStreamDataSource,
-} from "components/StreamBrowser/api/streamAttributeMap";
+} from "components/StreamBrowser/api";
 import {
   useSelectableReactTable,
   SelectionBehaviour,

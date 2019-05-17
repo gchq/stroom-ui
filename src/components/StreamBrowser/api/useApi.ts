@@ -5,7 +5,7 @@ import {
   DataSourceType,
   ExpressionOperatorType,
 } from "components/ExpressionBuilder/types";
-import { StreamAttributeMapResult, PageRequest, DataRow } from "../../types";
+import { StreamAttributeMapResult, PageRequest, DataRow } from "../types";
 
 interface Api {
   page: (props: PageRequest) => Promise<StreamAttributeMapResult>;

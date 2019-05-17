@@ -1,5 +1,5 @@
 import { ExpressionOperatorType } from "components/ExpressionBuilder/types";
-import { PageRequest, StreamAttributeMapResult } from "../../types";
+import { PageRequest, StreamAttributeMapResult } from "../types";
 
 export interface UseStreamSearch {
   page: (p: PageRequest) => void;

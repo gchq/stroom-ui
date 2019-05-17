@@ -18,7 +18,7 @@ import * as React from "react";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 
-import { useStreamDataRow } from "components/StreamBrowser/api/streamAttributeMap";
+import { useStreamDataRow } from "components/StreamBrowser/api";
 import Loader from "components/Loader";
 import { DataRow } from "../types";
 import StreamDetails from "./StreamDetails";
