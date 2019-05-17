@@ -3,17 +3,17 @@ import { SubMenuProps } from "../types";
 import { MenuItemType } from "../../MenuItem/types";
 
 const useDataViewerMenu = ({
-  navigateApp: { goToDataViewer },
+  navigateApp: { goToStreamBrowser },
 }: SubMenuProps): MenuItemType =>
   React.useMemo(
     () => ({
       key: "data",
       title: "Data",
-      onClick: goToDataViewer,
+      onClick: goToStreamBrowser,
       icon: "database",
       style: "nav",
     }),
-    [goToDataViewer],
+    [goToStreamBrowser],
   );
 
 export default useDataViewerMenu;

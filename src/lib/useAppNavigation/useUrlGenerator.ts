@@ -8,7 +8,7 @@ const useUrlGenerator = (
   return React.useMemo(
     () => ({
       goToWelcome: () => `/${urlPrefix}/welcome`,
-      goToDataViewer: () => `/${urlPrefix}/data`,
+      goToStreamBrowser: () => `/${urlPrefix}/data`,
       goToProcessing: () => `/${urlPrefix}/processing`,
       goToUserSettings: () => `/${urlPrefix}/me`,
       goToAuthorisationManager: (isGroup: string = ":isGroup") =>
