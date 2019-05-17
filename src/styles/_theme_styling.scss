@@ -106,17 +106,9 @@ input {
   .item:hover,
   .text:hover {
     @include themify($themes) {
-      background-color: themed("control__background-color--hover");
-      color: themed("control__text-color--hover");
+      background-color: themed("item__background-color--hover");
+      color: themed("item__text-color--hover");
     }
-  }
-}
-
-
-.hoverable:hover {
-  @include themify($themes) {
-    background-color: themed("control__background-color--hover") !important;
-    color: themed("control__text-color--hover") !important;
   }
 }
 
@@ -155,32 +147,6 @@ input {
   @include themify($themes) {
     background-color: themed("raised-low__background-color");
     color: themed("raised-low__text-color");
-  }
-}
-
-.selected {
-  @include themify($themes) {
-    background-color: themed("control__background-color--selected") !important;
-    color: themed("control__text-color--selected") !important;
-  }
-}
-
-.selected:hover {
-  @include themify($themes) {
-    background-color: themed("control__background-color--selected") !important;
-    color: themed("control__text-color--selected") !important;
-  }
-}
-
-.focussed {
-  @include themify($themes) {
-    border: solid thin themed("control__border-color--focussed");
-  }
-}
-
-.focussed:hover {
-  @include themify($themes) {
-    border: solid thin themed("control__border-color--focussed");
   }
 }
 
@@ -275,8 +241,8 @@ input {
 
 .pagination__container .pagination .active {
   @include themify($themes) {
-    background-color: themed("control__background-color--selected");
-    color: themed("control__text-color--selected");
+    background-color: themed("control__background-color");
+    color: themed("control__text-color");
   }
 }
 
@@ -287,7 +253,7 @@ input {
 }
 .react-sweet-progress-line-inner {
   @include themify($themes) {
-    background-color: themed("control__background-color--selected");
+    background-color: themed("control__background-color");
   }
 }
 

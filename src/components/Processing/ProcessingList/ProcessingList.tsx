@@ -168,15 +168,17 @@ const ProcessingList: React.FunctionComponent<Props> = ({
   );
 
   return (
-    <ReactTable
-      manual
-      sortable
-      className="tracker-table border-color -striped -highlight"
-      showPagination={false}
-      pageSize={pageSize}
-      {...tableProps}
-      onFetchData={state => onHandleSort(state.sorted[0])}
-    />
+    <div className="fill-space" tabIndex={0}>
+      <ReactTable
+        manual
+        sortable
+        className="tracker-table border-color -striped -highlight"
+        showPagination={false}
+        pageSize={pageSize}
+        {...tableProps}
+        onFetchData={state => onHandleSort(state.sorted[0])}
+      />
+    </div>
   );
 };
 

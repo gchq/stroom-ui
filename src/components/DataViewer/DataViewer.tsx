@@ -97,10 +97,12 @@ const DataViewer = () => {
           onClose={clearSelection}
           isOpen={true}
           mainContent={
-            <ReactTable
-              className="tracker-table border-color -striped -highlight"
-              {...tableProps}
-            />
+            <div className="fill-space" tabIndex={0}>
+              <ReactTable
+                className="tracker-table border-color -striped -highlight"
+                {...tableProps}
+              />
+            </div>
           }
           detailContent={
             !!selectedItem ? (

@@ -62,7 +62,7 @@ let TestDocRefListingEntry: React.FunctionComponent<Props> = ({
     onKeyDown,
     toggleSelection,
     selectedItems: selectedDocRefs,
-    focussedItem: focussedDocRef,
+    highlightedItem: highlightedDocRef,
   } = useSelectableItemListing<DocRefType>({
     items: docRefs,
     openItem: openDocRef,
@@ -91,7 +91,7 @@ let TestDocRefListingEntry: React.FunctionComponent<Props> = ({
                 dndIsOver,
                 toggleSelection,
                 selectedDocRefs,
-                focussedDocRef,
+                highlightedDocRef,
               }}
             >
               {provideBreadcrumbs && (

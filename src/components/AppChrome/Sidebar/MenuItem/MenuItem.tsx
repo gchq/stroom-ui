@@ -28,7 +28,7 @@ interface Props {
   depth: number;
   isCollapsed?: boolean;
   selectedItems: string[];
-  focussedItem?: MenuItemType;
+  highlightedItem?: MenuItemType;
   keyIsDown: KeyDownState;
   menuItemIsOpenByKey: MenuItemsOpenState;
   menuItemToggled: MenuItemToggled;
@@ -109,16 +109,16 @@ const MenuItem: React.FunctionComponent<EnhancedProps> = ({
   isCollapsed,
   selectedItems,
   menuItemToggled,
-  focussedItem,
+  highlightedItem,
   activeMenuItem,
 }) => {
   const isSelected: boolean = React.useMemo(
     () => selectedItems.includes(menuItem.key),
     [menuItem, selectedItems],
   );
-  const inFocus: boolean = React.useMemo(
-    () => !!focussedItem && focussedItem.key === menuItem.key,
-    [menuItem, focussedItem],
+  const hasHighlight: boolean = React.useMemo(
+    () => !!highlightedItem && highlightedItem.key === menuItem.key,
+    [menuItem, highlightedItem],
   );
 
   const onExpand: React.MouseEventHandler<HTMLDivElement> = React.useCallback(
@@ -161,11 +161,11 @@ const MenuItem: React.FunctionComponent<EnhancedProps> = ({
         classNames.push("cannot-drop");
       }
     }
-    if (inFocus) {
-      classNames.push("inFocus");
+    if (hasHighlight) {
+      classNames.push("highlighted-item");
     }
     if (isSelected) {
-      classNames.push("selected");
+      classNames.push("selected-item");
     }
 
     if (hasChildren && isShowingChildren) {
@@ -185,7 +185,7 @@ const MenuItem: React.FunctionComponent<EnhancedProps> = ({
     rawClassName,
     isShowingChildren,
     hasChildren,
-    inFocus,
+    hasHighlight,
     isSelected,
   ]);
 

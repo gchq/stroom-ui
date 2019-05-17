@@ -59,7 +59,7 @@ const UserSearch: React.FunctionComponent<UserSearchProps> = ({
           }
           // changeSelectedUser(rowInfo.row.id);
         },
-        className: selected ? "selected focussed" : "",
+        className: selected ? "selected-item highlighted-item" : "",
       };
     },
     [setSelectedUser, selectedUser],
@@ -102,7 +102,7 @@ const UserSearch: React.FunctionComponent<UserSearchProps> = ({
           </div>
         </div>
       </div>
-      <div className="page__body">
+      <div className="page__body" tabIndex={0}>
         <ReactTable
           data={users}
           className="fill-space -striped -highlight"

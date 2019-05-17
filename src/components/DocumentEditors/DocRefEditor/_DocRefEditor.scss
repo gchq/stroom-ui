@@ -42,14 +42,14 @@
 
 .DocRefEditor__search__option--is-focused {
   @include themify($themes) {
-    color: themed("control__text-color--hover") !important;
-    background-color: themed("control__background-color--hover") !important;
+    color: themed("item__text-color--focus--highlighted") !important;
+    background-color: themed("item__background-color--focus--highlighted") !important;
   }
 }
 
 .DocRefEditor__search__option--is-selected {
   @include themify($themes) {
-    color: themed("control__text-color--selected") !important;
-    background-color: themed("control__background-color--selected") !important;
+    color: themed("item__text-color--focus--highlighted--selected") !important;
+    background-color: themed("item__background-color--focus--highlighted--selected") !important;
   }
 }

@@ -110,7 +110,7 @@ const AppSearchBar: React.FunctionComponent<Props> = ({
   );
   const [searchTerm, setSearchTerm] = React.useState<string>("");
   const { documentTree, searchResults, searchApp } = useDocumentSearch();
-  const [focussedDocRef, onOptionFocus] = React.useState<
+  const [highlightedDocRef, onOptionFocus] = React.useState<
     DocRefType | undefined
   >(undefined);
   const { recentItems: recentItemsAll } = useRecentItems();
@@ -235,8 +235,8 @@ const AppSearchBar: React.FunctionComponent<Props> = ({
   const onKeyDown: KeyboardEventHandler = React.useCallback(
     e => {
       if (e.key === "ArrowRight" || e.key === "l") {
-        if (!!focussedDocRef && focussedDocRef.type === "Folder") {
-          setNavFolder(focussedDocRef);
+        if (!!highlightedDocRef && highlightedDocRef.type === "Folder") {
+          setNavFolder(highlightedDocRef);
         }
       } else if (e.key === "ArrowLeft" || e.key === "h") {
         if (!!parentFolder) {
@@ -244,7 +244,7 @@ const AppSearchBar: React.FunctionComponent<Props> = ({
         }
       }
     },
-    [setNavFolder, parentFolder, focussedDocRef],
+    [setNavFolder, parentFolder, highlightedDocRef],
   );
 
   return (

@@ -76,7 +76,7 @@ const TokenSearch = () => {
           </div>
         </div>
       </div>
-      <div className="page__body">
+      <div className="page__body" tabIndex={0}>
         <ReactTable
           data={results}
           pages={totalPages}
