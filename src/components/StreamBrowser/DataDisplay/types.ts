@@ -1,14 +1,70 @@
-export interface StroomData {
-  markers: ErrorData[];
-  data: string;
+export interface OffsetRange {
+  offset: number;
+  length: number;
 }
 
-export interface ErrorData {
+export interface RowCount {
+  count: number;
+  exact: boolean;
+}
+
+export interface AbstractFetchDataResult {
+  streamType: string;
+  classification: string;
+  streamRange: OffsetRange;
+  streamRowCount: RowCount;
+  pageRange: OffsetRange;
+  pageRowCount: RowCount;
+  availableChildStreamTypes: string[];
+}
+
+export interface FetchDataResult extends AbstractFetchDataResult {
+  data: string;
+  html: boolean;
+}
+
+export const isFetchDataResult = (
+  result: AnyFetchDataResult,
+): result is FetchDataResult => !!(result as any).data;
+
+export interface FetchMarkerResult extends AbstractFetchDataResult {
+  markers: AnyMarker[];
+}
+
+export const isFetchMarkerResult = (
+  result: AnyFetchDataResult,
+): result is FetchMarkerResult => !!(result as any).markers;
+
+export type AnyFetchDataResult = FetchDataResult | FetchMarkerResult;
+
+export interface AbstractMarker {
+  severity: string;
+}
+
+export interface StoredError extends AbstractMarker {
   elementId: string;
   location: Location;
   message: string;
-  severity: string;
 }
+
+export interface Expander {
+  depth: number;
+  expanded: boolean;
+  leaf: boolean;
+}
+
+export interface Summary extends AbstractMarker {
+  count: number;
+  total: number;
+  expander: Expander;
+}
+
+export type AnyMarker = Summary | StoredError;
+
+export const isStoredErrorMarker = (marker: AnyMarker): marker is StoredError =>
+  !!(marker as any).elementId;
+export const isSummaryMarker = (marker: AnyMarker): marker is Summary =>
+  !!(marker as any).expander;
 
 export interface Location {
   streamNo: number;

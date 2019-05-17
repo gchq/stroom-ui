@@ -5,7 +5,10 @@ import { addThemedStories } from "testing/storybook/themedStoryGenerator";
 import EventView from "./EventView";
 import { eventData } from "testing/data/data";
 
-const stories = storiesOf("Sections/Stream Browser/Details/Event View", module);
+const stories = storiesOf(
+  "Sections/Stream Browser/Data Display/Event View",
+  module,
+);
 
 addThemedStories(stories, () => {
   return <EventView events={eventData.data} />;

@@ -20,12 +20,12 @@ import { splitAt } from "ramda";
 
 import ReactTable, { RowInfo } from "react-table";
 
-import { ErrorData } from "../types";
+import { AnyMarker, isStoredErrorMarker, StoredError } from "../types";
 
 import Tooltip from "components/Tooltip";
 
 interface Props {
-  errors: ErrorData[];
+  errors: AnyMarker[];
 }
 
 const SeverityCell = (row: RowInfo): React.ReactNode => {
@@ -91,14 +91,16 @@ const ErrorTable: React.FunctionComponent<Props> = ({ errors }) => {
   ];
   const tableData = React.useMemo(
     () =>
-      splitAt(1, errors)[1].map((error: ErrorData) => ({
-        elementId: error.elementId,
-        stream: error.location.streamNo,
-        line: error.location.lineNo,
-        col: error.location.colNo,
-        message: error.message,
-        severity: error.severity,
-      })),
+      splitAt(1, errors)[1]
+        .filter(isStoredErrorMarker)
+        .map((error: StoredError) => ({
+          elementId: error.elementId,
+          stream: error.location.streamNo,
+          line: error.location.lineNo,
+          col: error.location.colNo,
+          message: error.message,
+          severity: error.severity,
+        })),
     [errors],
   );
 

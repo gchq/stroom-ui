@@ -15,21 +15,25 @@
  */
 
 import * as React from "react";
-import { path } from "ramda";
 
 import ErrorTable from "./ErrorTable";
 import EventView from "./EventView";
-import { StroomData } from "./types";
+import {
+  AnyFetchDataResult,
+  isFetchMarkerResult,
+  isFetchDataResult,
+} from "./types";
 
 interface Props {
-  meta: StroomData;
+  meta: AnyFetchDataResult;
 }
 
 const DataDisplay: React.FunctionComponent<Props> = ({ meta }) => {
-  const streamType = path(["streamType", "path"], meta);
-  if (streamType === "ERROR") return <ErrorTable errors={meta.markers} />;
-  else if (streamType === "RAW_EVENTS") return <EventView events={meta.data} />;
-  else if (streamType === "EVENTS") return <EventView events={meta.data} />;
+  if (isFetchMarkerResult(meta)) {
+    return <ErrorTable errors={meta.markers} />;
+  } else if (isFetchDataResult(meta)) {
+    return <EventView events={meta.data} />;
+  }
   return <div>TODO</div>;
 };
 

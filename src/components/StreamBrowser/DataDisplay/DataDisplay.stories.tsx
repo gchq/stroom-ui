@@ -21,13 +21,13 @@ import { errorData, eventData } from "testing/data/data/dataDisplay.testData";
 import { addThemedStories } from "testing/storybook/themedStoryGenerator";
 
 const errorStories = storiesOf(
-  "Sections/Stream Browser/Details/Showing Errors",
+  "Sections/Stream Browser/Data Display/Errors",
   module,
 );
 addThemedStories(errorStories, () => <DataDisplay meta={errorData} />);
 
 const eventStories = storiesOf(
-  "Sections/Stream Browser/Details/Showing Events",
+  "Sections/Stream Browser/Data Display/Events",
   module,
 );
 addThemedStories(eventStories, () => <DataDisplay meta={eventData} />);
