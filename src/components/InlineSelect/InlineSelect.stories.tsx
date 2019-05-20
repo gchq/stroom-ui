@@ -31,48 +31,59 @@ const options: SelectOption[] = [
   { value: "everyone", label: "everyone" },
 ];
 
-const simpleOptions: string[] = [
-  "leia",
-  "han",
-  "jabba",
-  "luke",
-  "everyone"
-]
-
 addThemedStories(stories, () => {
   const [empty, setEmpty] = useState<string>("");
-  const onEmptyChangeHandler: ChangeEventHandler<HTMLSelectElement> = 
-    useCallback(({ target: { value } }) => setEmpty(value), [ setEmpty ]);
+  const onEmptyChangeHandler: ChangeEventHandler<
+    HTMLSelectElement
+  > = useCallback(({ target: { value } }) => setEmpty(value), [setEmpty]);
 
   const [single, setSingle] = useState<string>("han");
-  const onSingleChangeHandler: ChangeEventHandler<HTMLSelectElement> = 
-    useCallback(({target: {value}}) => setSingle(value), [setSingle]);
+  const onSingleChangeHandler: ChangeEventHandler<
+    HTMLSelectElement
+  > = useCallback(({ target: { value } }) => setSingle(value), [setSingle]);
 
   const [placeholder, setPlaceholder] = useState<string>("leia");
-  const onPlaceholderChangeHandler: ChangeEventHandler<HTMLSelectElement> = 
-    useCallback(({target: {value}}) => setPlaceholder(value), [setPlaceholder]);
+  const onPlaceholderChangeHandler: ChangeEventHandler<
+    HTMLSelectElement
+  > = useCallback(({ target: { value } }) => setPlaceholder(value), [
+    setPlaceholder,
+  ]);
   return (
-  <div style={{ padding: "5em" }}>
-    <h1>InlineSelect</h1>
-    <p>An edit-in-place <code>select</code>, to be used inline with text.</p>
-    <form>
+    <div style={{ padding: "5em" }}>
+      <h1>InlineSelect</h1>
+      <p>
+        An edit-in-place <code>select</code>, to be used inline with text.
+      </p>
+      <form>
+        <h2>Simplest</h2>
+        <span>I would like to feed </span>
+        <InlineSelect
+          options={options}
+          selected={empty}
+          onChange={onEmptyChangeHandler}
+        />
+        <span> to the sarlacc.</span>
 
-      <h2>Simplest</h2>
-      <span>I would like to feed </span>
-      <InlineSelect options={options} selected={empty} onChange={onEmptyChangeHandler}/>
-      <span> to the sarlacc.</span>
+        <h2>With an existing value</h2>
+        <span>I would like to feed </span>
+        <InlineSelect
+          options={options}
+          selected={single}
+          onChange={onSingleChangeHandler}
+        />
+        <span> to the sarlacc.</span>
 
-      <h2>With an existing value</h2>
-      <span>I would like to feed </span>
-      <InlineSelect options={options} selected={single} onChange={onSingleChangeHandler}/>
-      <span> to the sarlacc.</span>
-
-      <h2>With a placeholder</h2>
-      <span>I would like to feed </span>
-      <InlineSelect options={options} placeholder="+" selected={placeholder} onChange={onPlaceholderChangeHandler}/>
-      <span> to the sarlacc.</span>
-
-    </form>
-    <JsonDebug value={{ empty, single, placeholder }} />
-  </div>
-)});
+        <h2>With a placeholder</h2>
+        <span>I would like to feed </span>
+        <InlineSelect
+          options={options}
+          placeholder="+"
+          selected={placeholder}
+          onChange={onPlaceholderChangeHandler}
+        />
+        <span> to the sarlacc.</span>
+      </form>
+      <JsonDebug value={{ empty, single, placeholder }} />
+    </div>
+  );
+});

@@ -6,6 +6,7 @@ import InValueWidget from "./InValueWidget";
 import AppSearchBar from "../../AppSearchBar";
 import { ExpressionTermType } from "../types";
 import AppSearchBarWidget from "./AppSearchBarWidget";
+import { useCallback } from "react";
 
 interface Props {
   onChange: (value: any) => any;
@@ -18,6 +19,9 @@ const ValueWidget: React.FunctionComponent<Props> = ({
   onChange,
   valueType,
 }) => {
+  const handleChange = useCallback(event => onChange(event.target.value), [
+    onChange,
+  ]);
   switch (condition) {
     case "CONTAINS":
     case "EQUALS":
@@ -29,7 +33,7 @@ const ValueWidget: React.FunctionComponent<Props> = ({
         <SingleValueWidget
           value={value}
           valueType={valueType}
-          onChange={onChange}
+          onChange={handleChange}
         />
       );
     }

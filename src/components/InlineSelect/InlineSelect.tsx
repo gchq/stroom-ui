@@ -18,8 +18,8 @@ import * as React from "react";
 import {
   FunctionComponent,
   SelectHTMLAttributes,
-  useState,
   useEffect,
+  useState,
 } from "react";
 
 interface Props {
@@ -41,6 +41,10 @@ const InlineSelect: FunctionComponent<
   // Honor the autoFocus
   useEffect(() => setEditing(autoFocus), [autoFocus]);
 
+  if (selected === undefined) {
+    selected = "__default__";
+  }
+
   if (isEditing) {
     return (
       <select
@@ -50,7 +54,7 @@ const InlineSelect: FunctionComponent<
         value={selected}
         {...rest}
       >
-        <option disabled selected value={undefined}>
+        <option disabled value="__default__">
           --please select--
         </option>
         {options.map(option => (

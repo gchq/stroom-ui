@@ -18,7 +18,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import InlineSelect from "components/InlineSelect/InlineSelect";
 import { LineEndpoint } from "components/LineTo";
 import * as React from "react";
-import { ChangeEvent } from "react";
+import { ChangeEvent, useCallback } from "react";
 import { DragSource, DragSourceCollector, DragSourceSpec } from "react-dnd";
 import Button from "../../Button";
 import ConditionPicker from "../ConditionPicker/ConditionPicker";
@@ -76,11 +76,11 @@ const ExpressionTerm: React.FunctionComponent<EnhancedProps> = ({
   index,
   idWithinExpression,
 }) => {
-  const onDeleteThis = React.useCallback(() => {
+  const onDeleteThis = useCallback(() => {
     onDelete(index);
   }, [index, onDelete]);
 
-  const onEnabledToggled = React.useCallback(() => {
+  const onEnabledToggled = useCallback(() => {
     onChange(
       {
         ...value,
@@ -90,7 +90,7 @@ const ExpressionTerm: React.FunctionComponent<EnhancedProps> = ({
     );
   }, [index, value, onChange]);
 
-  const onFieldChange = React.useCallback(
+  const onFieldChange = useCallback(
     (event: ChangeEvent<HTMLSelectElement>) => {
       const field = event.target.value;
       onChange(
@@ -104,7 +104,7 @@ const ExpressionTerm: React.FunctionComponent<EnhancedProps> = ({
     [index, value, onChange],
   );
 
-  const onConditionChange = React.useCallback(
+  const onConditionChange = useCallback(
     (condition: ConditionType) => {
       onChange(
         {
@@ -117,7 +117,7 @@ const ExpressionTerm: React.FunctionComponent<EnhancedProps> = ({
     [index, value, onChange],
   );
 
-  const onValueChange = React.useCallback(
+  const onValueChange = useCallback(
     (v: string) => onChange({ ...value, value: v }, index),
     [index, value, onChange],
   );
