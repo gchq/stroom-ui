@@ -34,7 +34,7 @@ module.exports = {
   },
   plugins: ["react", "@typescript-eslint", "prettier"],
   rules: {
-    "prettier/prettier": "error",
+    "prettier/prettier": "warn",
     //"react/jsx-uses-vars": 1,
     // Indent with 2 spaces
     //indent: ["error", 2],
