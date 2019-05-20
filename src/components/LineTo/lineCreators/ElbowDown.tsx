@@ -3,14 +3,13 @@ import * as React from "react";
 import { LineDefinition, LineElementCreator } from "../types";
 
 const ElbowDown: LineElementCreator = ({
-  lineId,
   fromRect,
   toRect,
 }: LineDefinition) => (
-  <React.Fragment key={lineId}>
+  <React.Fragment>
     <line
       x1={fromRect.left + fromRect.width / 2}
-      y1={fromRect.top + fromRect.height / 2}
+      y1={fromRect.bottom}
       x2={fromRect.left + fromRect.width / 2}
       y2={toRect.top + toRect.height / 2}
       style={{

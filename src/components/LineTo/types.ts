@@ -14,7 +14,8 @@ export interface LineType {
 
 export interface LineContextApi {
   lineContextId: string;
+  rawLines: LineType[];
   getEndpointId: (identity: string) => string;
-  lineCreated: (line: LineType) => void;
-  lineDestroyed: (lineId: string) => void;
+  createLine: (line: LineType) => void;
+  destroyLine: (lineId: string) => void;
 }

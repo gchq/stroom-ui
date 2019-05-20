@@ -6,7 +6,6 @@ import LineContext from "./LineContext";
 
 interface Props {
   LineElementCreator: LineElementCreator;
-  rawLines: LineType[];
 }
 
 function calculateLine({ fromId, toId }: LineType): LineDefinition | undefined {
@@ -41,11 +40,10 @@ export const useRefreshCounter = () => {
   return count;
 };
 
-const LinesSvg: React.FunctionComponent<Props> = ({
-  rawLines,
-  LineElementCreator,
-}) => {
-  const { lineContextId, getEndpointId } = React.useContext(LineContext);
+const LinesSvg: React.FunctionComponent<Props> = ({ LineElementCreator }) => {
+  const { rawLines, lineContextId, getEndpointId } = React.useContext(
+    LineContext,
+  );
 
   const thisRect: DOMRect | undefined = React.useMemo(() => {
     const thisElement = document.getElementById(lineContextId);

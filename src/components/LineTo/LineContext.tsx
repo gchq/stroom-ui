@@ -22,8 +22,9 @@ const defaultFunction = () =>
 const LineContext = React.createContext<LineContextApi>({
   lineContextId: "DEFAULT",
   getEndpointId: () => "DEFAULT",
-  lineCreated: defaultFunction,
-  lineDestroyed: defaultFunction,
+  createLine: defaultFunction,
+  destroyLine: defaultFunction,
+  rawLines: [],
 });
 
 export default LineContext;
