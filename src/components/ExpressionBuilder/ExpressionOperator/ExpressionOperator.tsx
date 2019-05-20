@@ -41,8 +41,8 @@ import {
   OperatorType,
   OperatorTypeValues,
 } from "../types";
-import useReactSelect from "lib/useReactSelect";
-import Select from "react-select/lib/Select";
+import InlineSelect from "components/InlineSelect/InlineSelect";
+import { useCallback } from "react";
 
 interface Props {
   index?: number; // If this is undefined, assume this is the root
@@ -127,13 +127,13 @@ const ExpressionOperator: React.FunctionComponent<EnhancedProps> = ({
 }) => {
   const isRoot = index === undefined;
 
-  const onDeleteThis = React.useCallback(() => {
+  const onDeleteThis = useCallback(() => {
     if (!!index && onDelete) {
       onDelete(index);
     }
   }, [index, onDelete]);
 
-  const onAddOperator = React.useCallback(() => {
+  const onAddOperator = useCallback(() => {
     onChange(
       {
         ...value,
@@ -143,7 +143,7 @@ const ExpressionOperator: React.FunctionComponent<EnhancedProps> = ({
     );
   }, [index, value, onChange]);
 
-  const onAddTerm = React.useCallback(() => {
+  const onAddTerm = useCallback(() => {
     onChange(
       {
         ...value,
@@ -153,7 +153,7 @@ const ExpressionOperator: React.FunctionComponent<EnhancedProps> = ({
     );
   }, [index, value, onChange]);
 
-  const onOpChange = React.useCallback(
+  const onOpChange = useCallback(
     (op: OperatorType) => {
       onChange(
         {
@@ -166,7 +166,7 @@ const ExpressionOperator: React.FunctionComponent<EnhancedProps> = ({
     [value, index, onChange],
   );
 
-  const onEnabledToggled = React.useCallback(() => {
+  const onEnabledToggled = useCallback(() => {
     if (!!index) {
       onChange(
         {
@@ -178,7 +178,7 @@ const ExpressionOperator: React.FunctionComponent<EnhancedProps> = ({
     }
   }, [index, value, onChange]);
 
-  const onChildUpdated = React.useCallback(
+  const onChildUpdated = useCallback(
     (_value: ExpressionTermType | ExpressionOperatorType, _index: number) => {
       onChange(
         {
@@ -191,7 +191,7 @@ const ExpressionOperator: React.FunctionComponent<EnhancedProps> = ({
     [index, value, onChange],
   );
 
-  const onChildDeleted = React.useCallback(
+  const onChildDeleted = useCallback(
     (_index: number) => {
       onChange(
         {
@@ -223,18 +223,11 @@ const ExpressionOperator: React.FunctionComponent<EnhancedProps> = ({
   // }
 
   const className = classNames.join(" ");
-  // const op = value.op;
-  // const { _onChange, _options, _value } = useReactSelect({
-  //   OperatorTypeValues,
-  //   onOpChange,
-  //   op,
-  // });
-  const operatorOptions = OperatorTypeValues.map(
-    operatorTypeValue => operatorTypeValue,
-  );
-  const operatorValue = value.op;
-  console.log({ operatorValue });
-  console.log({ operatorOptions });
+
+  const operatorTypeValues = OperatorTypeValues.map(o => {
+    return { value: o, label: o };
+  });
+
   return (
     <div className={className}>
       {connectDropTarget(
@@ -250,20 +243,11 @@ const ExpressionOperator: React.FunctionComponent<EnhancedProps> = ({
             </div>,
           )}
 
-          <Select
-            value={operatorValue}
-            onChange={onOpChange}
-            options={operatorOptions}
+          <InlineSelect
+            selected={value.op}
+            onChange={event => onOpChange(event.target.value as OperatorType)}
+            options={operatorTypeValues}
           />
-
-          {OperatorTypeValues.map((l, i) => (
-            <Button
-              selected={value.op === l}
-              key={l}
-              onClick={() => onOpChange(l)}
-              text={l}
-            />
-          ))}
 
           <div className="ExpressionItem__buttons">
             <Button icon="plus" text="Term" onClick={onAddTerm} />
