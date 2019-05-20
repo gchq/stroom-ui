@@ -41,6 +41,8 @@ import {
   OperatorType,
   OperatorTypeValues,
 } from "../types";
+import useReactSelect from "lib/useReactSelect";
+import Select from "react-select/lib/Select";
 
 interface Props {
   index?: number; // If this is undefined, assume this is the root
@@ -221,7 +223,18 @@ const ExpressionOperator: React.FunctionComponent<EnhancedProps> = ({
   // }
 
   const className = classNames.join(" ");
-
+  // const op = value.op;
+  // const { _onChange, _options, _value } = useReactSelect({
+  //   OperatorTypeValues,
+  //   onOpChange,
+  //   op,
+  // });
+  const operatorOptions = OperatorTypeValues.map(
+    operatorTypeValue => operatorTypeValue,
+  );
+  const operatorValue = value.op;
+  console.log({ operatorValue });
+  console.log({ operatorOptions });
   return (
     <div className={className}>
       {connectDropTarget(
@@ -236,6 +249,12 @@ const ExpressionOperator: React.FunctionComponent<EnhancedProps> = ({
               </LineEndpoint>
             </div>,
           )}
+
+          <Select
+            value={operatorValue}
+            onChange={onOpChange}
+            options={operatorOptions}
+          />
 
           {OperatorTypeValues.map((l, i) => (
             <Button
