@@ -13,30 +13,34 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 import * as React from "react";
 
 import { storiesOf } from "@storybook/react";
 import { Switch, Route, RouteComponentProps } from "react-router";
 
 import ActivityChooser from "./ActivityChooser";
-
-// import IndexVolumeEditor from "./ActivityChooser";
+import ActivityEditor from "./ActivityEditor";
 import { addThemedStories } from "testing/storybook/themedStoryGenerator";
+import useAppNavigation from "lib/useAppNavigation";
 
-const TestHarness = () => (
-  <Switch>
-    {/* <Route
-      exact
-      path="/s/indexing/volumes/:id"
-      render={(props: RouteComponentProps<any>) => (
-        <IndexVolumeEditor volumeId={props.match.params.id} />
-      )}
-    /> */}
-    <Route component={ActivityChooser} />
-  </Switch>
-);
+const TestHarness = () => {
+  const {
+    urlGenerator: { goToActivity },
+  } = useAppNavigation();
+  return (
+    <Switch>
+      <Route
+        exact
+        path={goToActivity(":id")}
+        render={(props: RouteComponentProps<any>) => (
+          <ActivityEditor activityId={props.match.params.id} />
+        )}
+      />
+      <Route component={ActivityChooser} />
+    </Switch>
+  );
+};
 
-const stories = storiesOf("Sections/Activity/Chooser", module);
+const stories = storiesOf("Sections/Activity", module);
 
 addThemedStories(stories, () => <TestHarness />);

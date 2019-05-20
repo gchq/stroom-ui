@@ -72,6 +72,7 @@ import { generateTestGroup, generateTestUser } from "./usersAndGroups";
 import { generate as generateVisualisation } from "./visualisation";
 import { generate as generateXmlSchema } from "./xmlSchema";
 import { generate as generateXslt } from "./xslt";
+import { Activity } from "components/Activity/api/types";
 
 let docPermissionByType = testDocRefsTypes.reduce(
   (acc, curr) => ({ ...acc, [curr]: documentPermissionNames }),
@@ -173,6 +174,34 @@ let trackers: StreamTaskType[] = Array(10)
 let indexes: IndexDoc[] = Array(5)
   .fill(null)
   .map(generateIndex);
+
+const ACTIVITY: Activity = {
+  id: "1",
+  userId: "testuser",
+  details: {
+    properties: [
+      {
+        id: "prop1",
+        name: "name1",
+        value: "value1",
+        showInSelection: true,
+        showInList: true,
+      },
+      {
+        id: "prop2",
+        name: "name2",
+        value: "value2",
+        showInSelection: true,
+        showInList: true,
+      },
+    ],
+  },
+};
+
+const ACTIVITY2: Activity = JSON.parse(JSON.stringify(ACTIVITY));
+ACTIVITY2.id = "2";
+
+const ACTIVITIES: Activity[] = [ACTIVITY, ACTIVITY2];
 
 // let users: User[] = Array(5)
 // .fill(null)
@@ -312,6 +341,7 @@ iterateNodes(docTree, (_, node) => {
 });
 
 export const fullTestData: TestData = {
+  activities: ACTIVITIES,
   documentTree: docTree,
   docRefTypes: testDocRefsTypes,
   elements,

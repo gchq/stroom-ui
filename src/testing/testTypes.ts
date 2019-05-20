@@ -17,6 +17,7 @@ import {
 import { IndexVolume } from "components/IndexVolumes/api";
 import { StreamTaskType } from "components/Processing/types";
 import { User } from "components/users/types";
+import { Activity } from "components/Activity/api/types";
 
 export interface UserGroupMembership {
   userUuid: string;
@@ -30,6 +31,7 @@ export interface UserDocPermission {
 }
 
 export interface TestData {
+  activities: Activity[];
   docRefTypes: string[];
   documentTree: DocRefTree;
   elements: ElementDefinition[];

@@ -20,22 +20,27 @@ import { storiesOf } from "@storybook/react";
 import { Switch, Route, RouteComponentProps } from "react-router";
 
 import IndexVolumes from "./IndexVolumes";
-
 import IndexVolumeEditor from "./IndexVolumeEditor";
 import { addThemedStories } from "testing/storybook/themedStoryGenerator";
+import useAppNavigation from "lib/useAppNavigation";
 
-const TestHarness = () => (
-  <Switch>
-    <Route
-      exact
-      path="/s/indexing/volumes/:id"
-      render={(props: RouteComponentProps<any>) => (
-        <IndexVolumeEditor volumeId={props.match.params.id} />
-      )}
-    />
-    <Route component={IndexVolumes} />
-  </Switch>
-);
+const TestHarness = () => {
+  const {
+    urlGenerator: { goToIndexVolume },
+  } = useAppNavigation();
+  return (
+    <Switch>
+      <Route
+        exact
+        path={goToIndexVolume(":id")}
+        render={(props: RouteComponentProps<any>) => (
+          <IndexVolumeEditor volumeId={props.match.params.id} />
+        )}
+      />
+      <Route component={IndexVolumes} />
+    </Switch>
+  );
+};
 
 const stories = storiesOf("Sections/Index Volumes", module);
 
