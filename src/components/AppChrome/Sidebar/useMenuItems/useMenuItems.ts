@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import useAppNavigation from "lib/useAppNavigation/useAppNavigation";
+import useAppNavigation from "lib/useAppNavigation";
 import useLocalStorage, { useStoreObjectFactory } from "lib/useLocalStorage";
 import {
   MenuItemsOpenState,

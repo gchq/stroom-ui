@@ -3,7 +3,9 @@ import { SubMenuProps } from "../types";
 import { MenuItemType } from "../../MenuItem/types";
 
 const useIndexingMenu = ({
-  navigateApp: { goToIndexVolumes, goToIndexVolumeGroups },
+  navigateApp: {
+    nav: { goToIndexVolumes, goToIndexVolumeGroups },
+  },
   menuItemToggled,
 }: SubMenuProps): MenuItemType =>
   React.useMemo(

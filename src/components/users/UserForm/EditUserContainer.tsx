@@ -16,7 +16,7 @@
 
 import * as React from "react";
 import { useEffect } from "react";
-import useAppNavigation from "lib/useAppNavigation/useAppNavigation";
+import useAppNavigation from "lib/useAppNavigation";
 import { PasswordValidationRequest } from "components/authentication/types";
 import Loader from "components/Loader";
 import useIdFromPath from "lib/useIdFromPath";
@@ -31,7 +31,9 @@ const EditUserContainer = () => {
   const { updateUser, fetchUser, user } = useUsers();
   const userId = useIdFromPath("user/");
   const { authenticationServiceUrl } = useConfig();
-  const { goToUsers } = useAppNavigation();
+  const {
+    nav: { goToUsers },
+  } = useAppNavigation();
   if (!authenticationServiceUrl)
     throw Error("Configuration not ready or misconfigured!");
   useEffect(() => {

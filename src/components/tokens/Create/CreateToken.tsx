@@ -16,7 +16,7 @@
 
 import { Formik } from "formik";
 import * as React from "react";
-import useAppNavigation from "lib/useAppNavigation/useAppNavigation";
+import useAppNavigation from "lib/useAppNavigation";
 import Button from "components/Button";
 import { AsyncUserSelect } from "components/users";
 import { useAuthenticationContext } from "startup/Authentication";
@@ -29,7 +29,9 @@ interface DropDownValues {
 }
 
 const TokenCreateForm = () => {
-  const { goToApiKeys } = useAppNavigation();
+  const {
+    nav: { goToApiKeys },
+  } = useAppNavigation();
   const { createToken } = useTokens();
   const { userServiceUrl } = useConfig();
   const { idToken } = useAuthenticationContext();

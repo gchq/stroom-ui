@@ -4,10 +4,7 @@ import { MenuItemType } from "../../MenuItem/types";
 
 const useAdmin = ({
   navigateApp: {
-    goToUserSettings,
-    goToAuthorisationManager,
-    goToUsers,
-    goToApiKeys,
+    nav: { goToUserSettings, goToAuthorisationManager, goToUsers, goToApiKeys },
   },
   menuItemToggled,
 }: SubMenuProps): MenuItemType =>

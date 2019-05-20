@@ -39,7 +39,7 @@ import useSelectableItemListing, {
 } from "lib/useSelectableItemListing";
 import { useDocRefInfoDialog } from "../../DocRefInfoModal/DocRefInfoModal";
 import { useDocumentTree } from "components/DocumentEditors/api/explorer";
-import useAppNavigation from "../../../lib/useAppNavigation/useAppNavigation";
+import useAppNavigation from "lib/useAppNavigation";
 import { ButtonProps } from "components/Button/types";
 import useKeyIsDown from "lib/useKeyIsDown";
 
@@ -55,7 +55,9 @@ const FolderExplorer: React.FunctionComponent<SwitchedDocRefEditorProps> = ({
     deleteDocuments,
   } = useDocumentTree();
 
-  const { goToEditDocRef } = useAppNavigation();
+  const {
+    nav: { goToEditDocRef },
+  } = useAppNavigation();
   const folder = React.useMemo(() => findDocRefWithLineage(docRefUuid), [
     findDocRefWithLineage,
     docRefUuid,

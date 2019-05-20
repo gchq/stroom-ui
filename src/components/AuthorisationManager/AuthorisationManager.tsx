@@ -4,7 +4,7 @@ import Button from "components/Button";
 import ThemedConfirm, {
   useDialog as useThemedConfim,
 } from "components/ThemedConfirm";
-import useAppNavigation from "../../lib/useAppNavigation/useAppNavigation";
+import useAppNavigation from "lib/useAppNavigation";
 import NewUserDialog, {
   useDialog as useNewUserDialog,
 } from "./NewUserDialog/NewUserDialog";
@@ -22,7 +22,9 @@ interface Props {
 
 const Authorisation: React.FunctionComponent<Props> = ({ isGroup }) => {
   const [filterable, setFilteringEnabled] = React.useState(false);
-  const { goToAuthorisationsForUser } = useAppNavigation();
+  const {
+    nav: { goToAuthorisationsForUser },
+  } = useAppNavigation();
   const {
     findUsers,
     users,

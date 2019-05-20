@@ -1,5 +1,5 @@
 import { StroomUser } from "components/AuthorisationManager/api/userGroups";
-import { StreamAttributeMapResult } from "components/StreamBrowser/types";
+import { StreamAttributeMapResult } from "components/MetaBrowser/types";
 import {
   ElementDefinition,
   ElementPropertiesByElementIdType,

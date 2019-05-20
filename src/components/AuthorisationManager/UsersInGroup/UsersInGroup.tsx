@@ -1,5 +1,5 @@
 import * as React from "react";
-import useAppNavigation from "lib/useAppNavigation/useAppNavigation";
+import useAppNavigation from "lib/useAppNavigation";
 import Button from "components/Button";
 import ThemedConfirm, {
   useDialog as useThemedConfirm,
@@ -16,7 +16,9 @@ interface Props {
 
 const UsersInGroup = ({ group }: Props) => {
   const { users, addToGroup, removeFromGroup } = useUsersInGroup(group);
-  const { goToAuthorisationsForUser } = useAppNavigation();
+  const {
+    nav: { goToAuthorisationsForUser },
+  } = useAppNavigation();
 
   const { componentProps: tableProps } = useUsersTable(users);
   const {
