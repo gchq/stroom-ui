@@ -23,31 +23,31 @@ import {
 import AuthorisationManager, {
   UserAuthorisationEditor,
 } from "../AuthorisationManager";
-import DocumentPermissionEditor from "../AuthorisationManager/DocumentPermissionEditor";
-import DocumentPermissionForUserEditor from "../AuthorisationManager/DocumentPermissionForUserEditor";
-import DataViewer from "../DataViewer";
-import SwitchedDocRefEditor from "../DocumentEditors/SwitchedDocRefEditor";
-import ErrorPage from "../ErrorPage";
-import IndexVolumeGroups from "../IndexVolumeGroups";
-import IndexVolumeGroupEditor from "../IndexVolumeGroups/IndexVolumeGroupEditor";
-import IndexVolumes from "../IndexVolumes";
-import IndexVolumeEditor from "../IndexVolumes/IndexVolumeEditor";
-import { Login } from "../Login";
+import DocumentPermissionEditor from "components/AuthorisationManager/DocumentPermissionEditor";
+import DocumentPermissionForUserEditor from "components/AuthorisationManager/DocumentPermissionForUserEditor";
+import StreamBrowser from "components/StreamBrowser";
+import SwitchedDocRefEditor from "components/DocumentEditors/SwitchedDocRefEditor";
+import ErrorPage from "components/ErrorPage";
+import IndexVolumeGroups from "components/IndexVolumeGroups";
+import IndexVolumeGroupEditor from "components/IndexVolumeGroups/IndexVolumeGroupEditor";
+import IndexVolumes from "components/IndexVolumes";
+import IndexVolumeEditor from "components/IndexVolumes/IndexVolumeEditor";
+import { Login } from "components/Login";
 import {
   ChangePassword,
   ResetPassword,
   ResetPasswordRequest,
-} from "../password";
-import PathNotFound from "../PathNotFound";
-import { Processing } from "../Processing";
-import { CreateToken } from "../tokens";
-import { EditToken } from "../tokens/Create";
-import TokenSearch from "../tokens/Search/SearchToken";
-import { UserCreate, UserEdit, UserSearch } from "../users";
-import UserSettings from "../UserSettings";
-import Welcome from "../Welcome";
+} from "components/password";
+import PathNotFound from "components/PathNotFound";
+import { Processing } from "components/Processing";
+import { CreateToken } from "components/tokens";
+import { EditToken } from "components/tokens/Create";
+import TokenSearch from "components/tokens/Search/SearchToken";
+import { UserCreate, UserEdit, UserSearch } from "components/users";
+import UserSettings from "components/UserSettings";
+import Welcome from "components/Welcome";
 import AppChrome from "./AppChrome";
-import useUrlGenerator from "../../lib/useAppNavigation/useUrlGenerator";
+import useUrlGenerator from "lib/useAppNavigation/useUrlGenerator";
 
 const renderWelcome = ({
   match: {
@@ -84,7 +84,7 @@ const Routes: React.FunctionComponent = () => {
       <PrivateRoute exact path={urls.goToWelcome()} render={renderWelcome} />
       <PrivateRoute
         exact
-        path={urls.goToDataViewer()}
+        path={urls.goToStreamBrowser()}
         render={({
           match: {
             params: { urlPrefix },
@@ -93,7 +93,7 @@ const Routes: React.FunctionComponent = () => {
           <AppChrome
             activeMenuItem="data"
             urlPrefix={urlPrefix}
-            content={<DataViewer />}
+            content={<StreamBrowser />}
           />
         )}
       />

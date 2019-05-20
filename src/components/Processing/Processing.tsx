@@ -86,7 +86,7 @@ const ProcessingContainer: React.FunctionComponent = () => {
       <div className="page__search">
         <div className="processing__search">
           <input
-            className="border"
+            className="control border"
             placeholder="Search..."
             value={searchCriteria}
             onChange={onHandleSearchChange}

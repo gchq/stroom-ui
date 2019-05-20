@@ -14,7 +14,7 @@ const useSelectableItemListing = <TItem extends {}>({
   selectionBehaviour = SelectionBehaviour.NONE,
   preFocusWrap,
 }: InProps<TItem>): OutProps<TItem> => {
-  const { up, down, setByIndex, focusIndex, focussedItem } = useCustomFocus<
+  const { up, down, setByIndex, focusIndex, highlightedItem } = useCustomFocus<
     TItem
   >({
     items,
@@ -31,47 +31,47 @@ const useSelectableItemListing = <TItem extends {}>({
 
   const enterItemOnKey = React.useCallback(
     (e: React.KeyboardEvent) => {
-      if (focussedItem) {
+      if (highlightedItem) {
         if (!!openItem) {
-          openItem(focussedItem);
+          openItem(highlightedItem);
         } else {
-          toggleSelection(getKey(focussedItem));
+          toggleSelection(getKey(highlightedItem));
         }
       }
       e.preventDefault();
     },
-    [focussedItem, openItem, toggleSelection, getKey],
+    [highlightedItem, openItem, toggleSelection, getKey],
   );
   const goRight = React.useCallback(
     (e: React.KeyboardEvent) => {
-      if (!!focussedItem) {
+      if (!!highlightedItem) {
         if (!!enterItem) {
-          enterItem(focussedItem);
+          enterItem(highlightedItem);
         } else if (!!openItem) {
-          openItem(focussedItem);
+          openItem(highlightedItem);
         }
       }
       e.preventDefault();
     },
-    [focussedItem, enterItem, openItem],
+    [highlightedItem, enterItem, openItem],
   );
   const goLeft = React.useCallback(
     (e: React.KeyboardEvent) => {
-      if (!!focussedItem && !!goBack) {
-        goBack(focussedItem);
+      if (!!highlightedItem && !!goBack) {
+        goBack(highlightedItem);
       }
       e.preventDefault();
     },
-    [focussedItem, goBack],
+    [highlightedItem, goBack],
   );
   const spaceKey = React.useCallback(
     (e: React.KeyboardEvent) => {
       if (selectionBehaviour !== SelectionBehaviour.NONE) {
-        toggleSelection(getKey(focussedItem));
+        toggleSelection(getKey(highlightedItem));
         e.preventDefault();
       }
     },
-    [selectionBehaviour, toggleSelection, getKey, focussedItem],
+    [selectionBehaviour, toggleSelection, getKey, highlightedItem],
   );
 
   const toggleSelectionAndFocus = React.useCallback(
@@ -105,7 +105,7 @@ const useSelectableItemListing = <TItem extends {}>({
 
   return {
     focusIndex,
-    focussedItem,
+    highlightedItem,
     selectedItems,
     selectedIndexes,
     selectedItem,

@@ -46,7 +46,7 @@ const ThemedContainer: React.FunctionComponent<Props> = ({
 }) => (
   <div className={`${theme} raised-low`} style={styles.fullScreen}>
     {centerComponent ? (
-      <div className="flat" style={styles.center}>
+      <div className="page" style={styles.center}>
         {component()}
       </div>
     ) : (

@@ -47,7 +47,7 @@ const TokenSearch = () => {
     <div className="page">
       <div className="page__header">
         <IconHeader icon="key" text={`API Keys`} />
-        <div className="page__buttons button-container">
+        <div className="page__buttons Button__container">
           <Button onClick={() => goToNewApiKey()} icon="plus" text="Create" />
 
           {noTokenSelected ? (
@@ -76,7 +76,7 @@ const TokenSearch = () => {
           </div>
         </div>
       </div>
-      <div className="page__body">
+      <div className="page__body" tabIndex={0}>
         <ReactTable
           data={results}
           pages={totalPages}

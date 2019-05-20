@@ -45,7 +45,7 @@ const TestHarness: React.FunctionComponent<Props> = ({ initialItems }) => {
     up,
     clear,
     focusIndex,
-    focussedItem,
+    highlightedItem,
   } = useCustomFocus({
     items,
     preFocusWrap,
@@ -80,7 +80,7 @@ const TestHarness: React.FunctionComponent<Props> = ({ initialItems }) => {
       <button onClick={down}>Down</button>
       <button onClick={clear}>Clear</button>
       <button onClick={removeFirstItem}>Remove First</button>
-      <JsonDebug value={{ focusIndex, focussedItem }} />
+      <JsonDebug value={{ focusIndex, highlightedItem }} />
     </div>
   );
 };

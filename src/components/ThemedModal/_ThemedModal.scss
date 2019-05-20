@@ -1,5 +1,5 @@
 .themed-modal {
-  box-shadow: 4px 4px 8px 0px rgba(0, 0, 0, 0.2);
+  box-shadow: 4px 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
 
 .themed-modal__container {
@@ -14,8 +14,8 @@
 }
 
 .themed-modal__header h2 {
-  padding: 0px;
-  margin: 0px;
+  padding: 0;
+  margin: 0;
 }
 
 .themed-modal__content {

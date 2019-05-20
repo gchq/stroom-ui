@@ -2,7 +2,7 @@ import { DocRefType } from "components/DocumentEditors/useDocumentApi/types/base
 
 export interface RawNavigateApp<IN, OUT> {
   goToWelcome: () => OUT;
-  goToDataViewer: () => OUT;
+  goToStreamBrowser: () => OUT;
   goToProcessing: () => OUT;
   goToUserSettings: () => OUT;
   goToAuthorisationManager: (isGroup: IN) => OUT;

@@ -19,13 +19,13 @@ const SingleValue: React.FunctionComponent<SingleValueProps<BasicOption>> = ({
 }) => {
   if (!!props.data) {
     return (
-      <div>
+      <div className="DocRefTypePicker">
         <DocRefImage
-          className="DocRefTypePicker--image"
-          size="sm"
+          className="DocRefTypePicker__image"
+          size="lg"
           docRefType={props.data.value}
         />
-        {children}
+        <div className="DocRefTypePicker__text">{children}</div>
       </div>
     );
   } else {
@@ -37,12 +37,14 @@ const SingleValue: React.FunctionComponent<SingleValueProps<BasicOption>> = ({
 
 const Option: React.FunctionComponent<OptionProps<BasicOption>> = props => (
   <components.Option {...props}>
-    <DocRefImage
-      className="DocRefTypePicker--image"
-      size="sm"
-      docRefType={props.data.value}
-    />
-    {props.children}
+    <div className="DocRefTypePicker">
+      <DocRefImage
+        className="DocRefTypePicker__image"
+        size="lg"
+        docRefType={props.data.value}
+      />
+      <div className="DocRefTypePicker__text">{props.children}</div>
+    </div>
   </components.Option>
 );
 

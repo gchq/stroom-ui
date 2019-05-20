@@ -12,5 +12,5 @@ export interface Props {
   children?: React.ReactNode;
   toggleSelection: (itemKey: string) => void;
   selectedDocRefs: DocRefType[];
-  focussedDocRef?: DocRefType;
+  highlightedDocRef?: DocRefType;
 }

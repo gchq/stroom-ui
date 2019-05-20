@@ -20,7 +20,7 @@ export interface InProps<TItem> {
 
 export interface OutProps<TItem> {
   focusIndex: number;
-  focussedItem?: any;
+  highlightedItem?: any;
   selectedIndexes: number[];
   lastSelectedIndex?: number;
   selectedItem?: TItem;

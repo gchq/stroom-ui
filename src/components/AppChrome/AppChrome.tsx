@@ -39,7 +39,7 @@ const AppChrome: React.FunctionComponent<AppChromeProps> = ({
 
   return (
     <div className={theme}>
-      <div className="app-chrome flat">
+      <div className="app-chrome page">
         {includeSidebar && <Sidebar {...{ activeMenuItem }} />}
         <div className="app-chrome__content">
           <div className="content-tabs">

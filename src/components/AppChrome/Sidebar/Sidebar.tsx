@@ -18,6 +18,7 @@ import {
 import MenuItem from "./MenuItem";
 import { useDocumentTree } from "components/DocumentEditors/api/explorer";
 import { ActiveMenuItem } from "../types";
+import ActivitySummary from "components/Activity";
 
 interface Props {
   activeMenuItem: ActiveMenuItem;
@@ -33,7 +34,7 @@ const getMenuItems = (
   showCopyDialog: ShowCopyDocRefDialog,
   showMoveDialog: ShowCopyDocRefDialog,
   selectedItems: string[],
-  focussedItem?: MenuItemType,
+  highlightedItem?: MenuItemType,
   depth: number = 0,
 ) =>
   menuItems.map(menuItem => (
@@ -41,7 +42,7 @@ const getMenuItems = (
       <MenuItem
         keyIsDown={keyIsDown}
         selectedItems={selectedItems}
-        focussedItem={focussedItem}
+        highlightedItem={highlightedItem}
         className={`sidebar__text-color ${isCollapsed ? "collapsed" : ""} ${
           depth > 0 ? "child" : ""
         }`}
@@ -68,7 +69,7 @@ const getMenuItems = (
             showCopyDialog,
             showMoveDialog,
             selectedItems,
-            focussedItem,
+            highlightedItem,
             depth + 1,
           )}
         </div>
@@ -136,9 +137,11 @@ const Sidebar: React.FunctionComponent<Props> = ({ activeMenuItem }) => {
   );
 
   const keyIsDown = useKeyIsDown();
-  const { onKeyDown, selectedItems, focussedItem } = useSelectableItemListing<
-    string
-  >({
+  const {
+    onKeyDown,
+    selectedItems,
+    highlightedItem,
+  } = useSelectableItemListing<string>({
     items: openMenuItemKeys,
     getKey,
     openItem,
@@ -199,8 +202,12 @@ const Sidebar: React.FunctionComponent<Props> = ({ activeMenuItem }) => {
               showCopyDialog,
               showMoveDialog,
               selectedItems,
-              focussedItem,
+              highlightedItem,
             )}
+          </div>
+
+          <div className="app-chrome__sidebar-menu__activity-summary">
+            <ActivitySummary />
           </div>
         </div>
       </React.Fragment>

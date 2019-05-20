@@ -17,7 +17,7 @@
 .Login__container {
   width: 300px;
   padding: 15px;
-  border: 1px solid lightgrey;
+  border: thin solid lightgrey;
 }
 
 /* We need to force the width on the input otherwise it'll be a bit short */
@@ -38,7 +38,7 @@
 }
 
 .Login__reset-password {
-  font-size: 9pt;
+  font-size: .7rem;
 }
 
 .Login__content .field-container {

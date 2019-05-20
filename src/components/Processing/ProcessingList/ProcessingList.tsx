@@ -75,7 +75,7 @@ const ProcessingList: React.FunctionComponent<Props> = ({
       ) : (
         <Button
           disabled={allRecordsRetrieved}
-          className="border hoverable processing-list__load-more-button"
+          className="border hoverable clickable processing-list__load-more-button"
           onClick={fetchMore}
           text={retrievalStave}
         />
@@ -88,7 +88,7 @@ const ProcessingList: React.FunctionComponent<Props> = ({
       row.original.filterId !== undefined ? (
         <Progress
           percent={row.original.trackerPercent}
-          symbolClassName="flat-text"
+          symbolClassName="page__text"
         />
       ) : (
         "UNKNOWN"
@@ -168,15 +168,17 @@ const ProcessingList: React.FunctionComponent<Props> = ({
   );
 
   return (
-    <ReactTable
-      manual
-      sortable
-      className="tracker-table border-color -striped -highlight"
-      showPagination={false}
-      pageSize={pageSize}
-      {...tableProps}
-      onFetchData={state => onHandleSort(state.sorted[0])}
-    />
+    <div className="fill-space" tabIndex={0}>
+      <ReactTable
+        manual
+        sortable
+        className="tracker-table border-color -striped -highlight"
+        showPagination={false}
+        pageSize={pageSize}
+        {...tableProps}
+        onFetchData={state => onHandleSort(state.sorted[0])}
+      />
+    </div>
   );
 };
 

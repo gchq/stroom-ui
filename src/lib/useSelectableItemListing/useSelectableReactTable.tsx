@@ -9,7 +9,11 @@ function useSelectableReactTable<TItem>(
 ): TableOutProps<TItem> {
   const selectableItemProps = useSelectableItemListing<TItem>(props);
   const { getKey, items } = props;
-  const { toggleSelection, selectedItems, focussedItem } = selectableItemProps;
+  const {
+    toggleSelection,
+    selectedItems,
+    highlightedItem,
+  } = selectableItemProps;
 
   const getTdProps: ComponentPropsGetterR = React.useCallback(
     (state: any, rowInfo: RowInfo | undefined) => {
@@ -36,23 +40,25 @@ function useSelectableReactTable<TItem>(
         !!rowInfo && !!rowInfo.original ? getKey(rowInfo.original) : undefined;
       const isSelected =
         selectedItems.findIndex(v => getKey(v) === rowId) !== -1;
-      const hasFocus = !!focussedItem && getKey(focussedItem) === rowId;
+      const hasHighlight =
+        !!highlightedItem && getKey(highlightedItem) === rowId;
       const hasData = rowId !== undefined;
       let classNames = [];
       if (hasData) {
-        classNames.push("hoverable");
+        classNames.push("hoverable-item");
+        classNames.push("clickable-item");
         if (isSelected) {
-          classNames.push("selected");
+          classNames.push("selected-item");
         }
-        if (hasFocus) {
-          classNames.push("focussed");
+        if (hasHighlight) {
+          classNames.push("highlighted-item");
         }
       }
       return {
         className: classNames.join(" "),
       };
     },
-    [selectedItems, focussedItem, getKey],
+    [selectedItems, highlightedItem, getKey],
   );
 
   return {

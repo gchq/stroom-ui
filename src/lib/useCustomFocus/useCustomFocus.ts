@@ -7,7 +7,7 @@ interface InProps<T extends {}> {
 
 interface OutProps<T extends {}> {
   focusIndex: number;
-  focussedItem: T | undefined;
+  highlightedItem: T | undefined;
   setByIndex: (index: number) => void;
   setByItem: (item: T) => void;
   up: () => void;
@@ -94,7 +94,7 @@ const useCustomFocus = <T extends {}>({
     [items, dispatch],
   );
 
-  const focussedItem: T | undefined = React.useMemo(() => {
+  const highlightedItem: T | undefined = React.useMemo(() => {
     if (focusIndex > 0 && focusIndex < items.length) {
       return items[focusIndex];
     } else {
@@ -124,7 +124,7 @@ const useCustomFocus = <T extends {}>({
 
   return {
     focusIndex,
-    focussedItem,
+    highlightedItem,
     setByIndex,
     setByItem,
     up,

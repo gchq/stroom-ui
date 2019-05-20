@@ -12,7 +12,7 @@ let DocRefListingEntry: React.FunctionComponent<Props> = ({
   children,
   toggleSelection,
   selectedDocRefs,
-  focussedDocRef,
+  highlightedDocRef,
 }) => {
   const onSelect: React.MouseEventHandler<HTMLDivElement> = React.useCallback(
     e => {
@@ -38,6 +38,7 @@ let DocRefListingEntry: React.FunctionComponent<Props> = ({
     const additionalClasses = [];
     additionalClasses.push("DocRefListingEntry");
     additionalClasses.push("hoverable");
+    additionalClasses.push("clickable");
 
     if (dndIsOver) {
       additionalClasses.push("dndIsOver");
@@ -50,21 +51,21 @@ let DocRefListingEntry: React.FunctionComponent<Props> = ({
       }
     }
 
-    const inFocus: boolean =
-      !!focussedDocRef && focussedDocRef.uuid === docRef.uuid;
+    const hasHighlight: boolean =
+      !!highlightedDocRef && highlightedDocRef.uuid === docRef.uuid;
     const isSelected: boolean =
       selectedDocRefs.map((d: DocRefType) => d.uuid).indexOf(docRef.uuid) !==
       -1;
 
     if (isSelected) {
-      additionalClasses.push("selected");
+      additionalClasses.push("selected-item");
     }
-    if (inFocus) {
-      additionalClasses.push("inFocus");
+    if (hasHighlight) {
+      additionalClasses.push("highlighted-item");
     }
 
     return additionalClasses.join(" ");
-  }, [docRef, selectedDocRefs, focussedDocRef, dndCanDrop, dndIsOver]);
+  }, [docRef, selectedDocRefs, highlightedDocRef, dndCanDrop, dndIsOver]);
 
   return (
     <div className={className} onClick={onSelect}>

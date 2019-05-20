@@ -109,14 +109,14 @@ const ExpressionSearchBar: React.FunctionComponent<Props> = ({
   }, [dataSource, searchString, isExpression, setExpression, setIsExpression]);
 
   return (
-    <div className="dropdown search-bar borderless">
+    <div className="dropdown search-bar control borderless">
       <div className="search-bar__header">
         <input
           placeholder="I.e. field1=value1 field2=value2"
           value={
             isExpression && !!expression ? toString(expression) : searchString
           }
-          className="search-bar__input"
+          className="search-bar__input control"
           onChange={onChange}
         />
         <Button
@@ -127,7 +127,10 @@ const ExpressionSearchBar: React.FunctionComponent<Props> = ({
           onClick={onClickSearch}
         />
       </div>
-      <div tabIndex={0} className={`dropdown__content search-bar__content`}>
+      <div
+        tabIndex={0}
+        className={`dropdown__content search-bar__content control`}
+      >
         <div className="search-bar__content__header">
           <Button
             text="Text search"

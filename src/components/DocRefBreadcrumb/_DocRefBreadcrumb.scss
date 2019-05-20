@@ -6,7 +6,7 @@
   cursor: pointer;
   color: rgba(0,0,0,0.5);
   text-decoration: none;
-  font-size: 8pt;
+  font-size: .7rem;
 }
 
 .DocRefBreadcrumb__link:hover {
@@ -19,13 +19,13 @@
   padding-left: 0.2rem;
   padding-right: 0.2rem;
   color: rgba(0,0,0,0.3);
-  font-size: 8pt;
+  font-size: .7rem;
 }
 
 .DocRefBreadcrumb__name {
   display: inline-block;
   color: rgba(0,0,0,0.5);
-  font-size: 8pt;
+  font-size: .7rem;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -33,24 +33,24 @@
 ////////////////////////////////////////////////////////////////////////////////
 .DocRefBreadcrumb__link {
   @include themify($themes) {
-    color: themed("breadcrumb-text__color");
+    color: themed("breadcrumb__text__color");
   }
 }
 
 .DocRefBreadcrumb__link:hover {
   @include themify($themes) {
-    color: themed("breadcrumb-text__color--hover");
+    color: themed("breadcrumb__text__color--hover");
   }
 }
 
 .DocRefBreadcrumb__divider {
   @include themify($themes) {
-    color: themed("breadcrumb-divider__color");
+    color: themed("breadcrumb__divider__color");
   }
 }
 
 .DocRefBreadcrumb__name {
   @include themify($themes) {
-    color: themed("breadcrumb-text__color");
+    color: themed("breadcrumb__text__color");
   }
 }

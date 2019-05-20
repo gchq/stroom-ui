@@ -26,8 +26,8 @@ const ActivitySummary: React.FunctionComponent = () => {
   const activity = useActivity();
 
   return (
-    <div>
-      <h2>Current Activity</h2>
+    <button className="ActivitySummary control border">
+      <div className="ActivitySummary__header">Current Activity</div>
       {activity &&
         activity.details &&
         activity.details.properties &&
@@ -35,13 +35,13 @@ const ActivitySummary: React.FunctionComponent = () => {
           .filter(({ showInSelection }) => showInSelection)
           .map(({ name, value }, i: number) => {
             return (
-              <div key={i}>
+              <div className="ActivitySummary__row" key={i}>
                 <b>{name}: </b>
                 {value}
               </div>
             );
           })}
-    </div>
+    </button>
   );
 };
 

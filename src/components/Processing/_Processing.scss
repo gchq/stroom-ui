@@ -49,7 +49,7 @@
 // }
 
 .processing__table .horizontal-panel {
-  border-top: 1px solid rgba(0,0,0,0.1);
+  border-top: thin solid rgba(0,0,0,0.1);
 }
 
 
@@ -57,7 +57,7 @@
 // .processing__header-container .header {
 //   // We don't want this header to be obnoxious about it's surrounding space
 //   // -- this is a header bar not a flowing page of text.
-//   margin-bottom: 0px;
+//   margin-bottom: 0;
 //   // We want to space the header from the left hand-edge.
 //   padding-left: 6px;
 // }
@@ -98,14 +98,14 @@
 
 .tracker-table {
   border: none;
-  border-top: 1px solid;
+  border-top: thin solid;
   border-bottom: 2px solid;
   box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.15) !important;
 }
 
 // TODO doesn't seem to be used, but didn't want to throw away
 // .headerDivider {
-//   border-left: 1px solid #38546d;
+//   border-left: thin solid #38546d;
 //   height: 80px;
 //   top: 10px;
 // }
@@ -114,21 +114,21 @@
 //   width: 900px;
 // }
 // .tracker-details-table .progress {
-//   margin: 0px;
-//   padding: 0px;
+//   margin: 0;
+//   padding: 0;
 // }
 
 // .tracker-details-table {
-//   border: 5px 0px 0px 0px;
+//   border: 5px 0 0 0;
 //   padding: 10px;
 // }
 
 // .search-container {
 //   width: 100%;
-//   top: 0px;
-//   left: 0px;
+//   top: 0;
+//   left: 0;
 //   height: 45px;
-//   right: 0px;
+//   right: 0;
 //   overflow: hidden;
 // }
 
@@ -141,14 +141,14 @@
 // }
 // .tracker-dashboard .table-container {
 //   top: 45px;
-//   bottom: 0px;
-//   left: 0px;
-//   right: 0px;
+//   bottom: 0;
+//   left: 0;
+//   right: 0;
 //   overflow: auto;
 // }
 
 // .tracker-dashboard .table-container table {
-//   margin-bottom: 0px;
+//   margin-bottom: 0;
 // }
 
 // .tracker-dashboard .table-container.showing-details {
@@ -159,24 +159,24 @@
 //   border-top: solid 3px lightgray;
 //   overflow: hidden;
 //   width: 100%;
-//   bottom: 0px;
+//   bottom: 0;
 //   height: 295px;
-//   left: 0px;
-//   right: 0px;
+//   left: 0;
+//   right: 0;
 // }
 
 // .tracker-dashboard .details-container .details-grid {
-//   border-bottom: 1px solid rgba(34, 36, 38, 0.15);
+//   border-bottom: thin solid rgba(34, 36, 38, 0.15);
 // }
 
 // .tracker-dashboard .details-container .card {
-//   padding: 0px;
+//   padding: 0;
 // }
 
 // .tracker-dashboard .pagination-container {
 //   width: 100%;
 //   text-align: center;
-//   border: solid 1px lightgray;
+//   border: thin solid lightgray;
 // }
 
 // .tracker-dashboard .pagination-container .ui.menu {

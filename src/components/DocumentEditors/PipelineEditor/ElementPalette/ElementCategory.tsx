@@ -38,7 +38,7 @@ const ElementCategory: React.FunctionComponent<Props> = ({
         />{" "}
         {displayTitle}
       </div>
-      <div className="flat">
+      <div className="page">
         <div
           className={`element-palette-category__elements--${
             isOpen ? "open" : "closed"
