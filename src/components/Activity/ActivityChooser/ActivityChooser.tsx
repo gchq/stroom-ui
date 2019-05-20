@@ -15,7 +15,7 @@ import Button from "components/Button";
 //   useActivityGroupModalPicker,
 // } from "../ActivityGroups/ActivityGroupPickerDialog";
 // import { useActivities, Activity } from "components/Activities/api";
-import useAppNavigation from "lib/useAppNavigation/useAppNavigation";
+import useAppNavigation from "lib/useAppNavigation";
 import useActivities from "../api/useActivities";
 import Toggle from "react-toggle";
 // import DocRefIconHeader from "components/DocRefIconHeader";
@@ -28,7 +28,9 @@ import IconHeader from "components/IconHeader";
 
 const ActivityChooser: React.FunctionComponent = () => {
   const [filterable, setFilteringEnabled] = React.useState(false);
-  const { goToActivity } = useAppNavigation();
+  const {
+    nav: { goToActivity },
+  } = useAppNavigation();
 
   const {
     activities,
