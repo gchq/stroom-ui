@@ -145,12 +145,15 @@ const ExpressionTerm: React.FunctionComponent<EnhancedProps> = ({
     <div className={className}>
       <div className={"ExpressionTerm__expression"}>
         {connectDragSource(
-          <div className="expression-operator-circle">
+          <div className="ExpressionOperator__circle">
             <LineEndpoint
               lineEndpointId={idWithinExpression}
-              className="expression-operator-circle"
+              className="ExpressionOperator__circle"
             >
-              <FontAwesomeIcon size="sm" icon="bars" />
+              <FontAwesomeIcon
+                className="ExpressionOperator__gripper"
+                icon="grip-vertical"
+              />
             </LineEndpoint>
           </div>,
         )}

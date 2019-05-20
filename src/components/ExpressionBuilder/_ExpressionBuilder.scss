@@ -23,6 +23,17 @@
   display: flex;
 }
 
+.expression-term:hover {
+  //TODO: themify
+  background-color: rgba(144, 202, 249, 0.1);
+}
+
+.expression-item__row:hover {
+  //TODO: themify
+  background-color: rgba(144, 202, 249, 0.1);
+}
+
+
 /** The next two styles hide/show the buttons on expression terms */
 .expression-term .expression-term__actions {
   visibility: hidden;
@@ -44,13 +55,16 @@
   visibility: visible;
 }
 
+.expression-item__root:hover>div>div>div>.ExpressionOperator__gripper {
+  color: #2185d0;
+}
+
 .expression-item__root {
   margin-right: 0.5rem;
   margin-left: 0.75rem;
 }
 
 .expression-item {
-  margin-top: 0.5rem;
   width: 100%;
 }
 
@@ -67,9 +81,17 @@
   float: right;
 }
 
-.expression-operator-circle {
+.ExpressionOperator__circle {
   display: inline;
   padding-right: 4px;
+}
+
+.ExpressionOperator__gripper {
+  color: #e4e4e4;
+}
+
+.operator__child:hover>div>div>div>div>.ExpressionOperator__gripper {
+  color: #2185d0;
 }
 
 .operator__placeholder {

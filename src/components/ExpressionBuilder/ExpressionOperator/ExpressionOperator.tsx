@@ -233,12 +233,16 @@ const ExpressionOperator: React.FunctionComponent<EnhancedProps> = ({
       {connectDropTarget(
         <div className={"expression-item__row"}>
           {connectDragSource(
-            <div className="expression-operator-circle">
+            <div className="ExpressionOperator__circle">
               <LineEndpoint
-                className="expression-operator-circle"
+                className="ExpressionOperator__circle"
                 lineEndpointId={idWithinExpression}
               >
-                <FontAwesomeIcon size="sm" color={dndBarColour} icon="bars" />
+                <FontAwesomeIcon
+                  className="ExpressionOperator__gripper"
+                  color={dndBarColour}
+                  icon="grip-vertical"
+                />
               </LineEndpoint>
             </div>,
           )}
