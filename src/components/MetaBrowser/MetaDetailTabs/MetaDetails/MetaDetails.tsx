@@ -1,10 +1,10 @@
 import * as React from "react";
 import * as moment from "moment";
 
-import { StreamMetaRow } from "../../types";
+import { MetaRow } from "../../types";
 
 interface Props {
-  dataRow: StreamMetaRow;
+  dataRow: MetaRow;
 }
 
 const MetaDetails: React.FunctionComponent<Props> = ({ dataRow }) => (

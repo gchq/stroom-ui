@@ -20,13 +20,13 @@ import "react-tabs/style/react-tabs.css";
 
 import { useStreamDataRow } from "components/MetaBrowser/api";
 import Loader from "components/Loader";
-import { StreamMetaRow } from "../types";
+import { MetaRow } from "../types";
 import MetaDetails from "./MetaDetails";
 import MetaAttributes from "./MetaAttributes";
 import DataRetention from "./DataRetention";
 
 interface Props {
-  data: StreamMetaRow;
+  data: MetaRow;
 }
 
 const MetaDetailTabs: React.FunctionComponent<Props> = ({ data }) => {

@@ -12,7 +12,7 @@ export interface PageResponse {
   exact: boolean;
 }
 
-export interface StreamMeta {
+export interface Meta {
   id: number;
   feedName: string;
   typeName: string;
@@ -26,8 +26,8 @@ export interface StreamMeta {
   effectiveMs: number;
 }
 
-export interface StreamMetaRow {
-  meta: StreamMeta;
+export interface MetaRow {
+  meta: Meta;
   attributes?: {
     [key: string]: string;
   };
@@ -35,7 +35,7 @@ export interface StreamMetaRow {
 
 export interface StreamAttributeMapResult {
   pageResponse: PageResponse;
-  streamAttributeMaps: StreamMetaRow[];
+  streamAttributeMaps: MetaRow[];
 }
 
 export interface OffsetRange {
@@ -78,7 +78,7 @@ export interface FetchDataParams {
 }
 
 export interface PagedData {
-  streamAttributeMaps: StreamMetaRow[];
+  streamAttributeMaps: MetaRow[];
   total: number;
 }
 

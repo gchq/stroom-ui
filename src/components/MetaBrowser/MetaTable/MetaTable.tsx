@@ -15,7 +15,7 @@
  */
 
 import * as React from "react";
-import { StreamAttributeMapResult, StreamMetaRow } from "../types";
+import { StreamAttributeMapResult, MetaRow } from "../types";
 import {
   useSelectableReactTable,
   SelectionBehaviour,
@@ -35,7 +35,7 @@ import { TableOutProps } from "lib/useSelectableItemListing/types";
 
 // import Loader from "components/Loader";
 // import Button from "components/Button";
-// import { Direction, ExpressionOperatorType, StreamMetaRow } from "types";
+// import { Direction, ExpressionOperatorType, MetaRow } from "types";
 
 // interface TableData {
 //   metaId?: string;
@@ -49,16 +49,16 @@ const COLUMNS: Column[] = [
   {
     id: "id",
     Header: "ID",
-    accessor: (u: StreamMetaRow) => u && u.meta && u.meta.id,
+    accessor: (u: MetaRow) => u && u.meta && u.meta.id,
   },
   {
     id: "feedName",
     Header: "Feed",
-    accessor: (u: StreamMetaRow) => u && u.meta && u.meta.feedName,
+    accessor: (u: MetaRow) => u && u.meta && u.meta.feedName,
   },
 ];
 
-const MetaTable: React.FunctionComponent<TableOutProps<StreamMetaRow>> = ({
+const MetaTable: React.FunctionComponent<TableOutProps<MetaRow>> = ({
   tableProps,
 }) => (
   <ReactTable
@@ -161,7 +161,7 @@ const MetaTable: React.FunctionComponent<TableOutProps<StreamMetaRow>> = ({
   }
 
   let tableData: TableData[] = streamAttributeMaps.map(
-    (streamAttributeMap: StreamMetaRow) => {
+    (streamAttributeMap: MetaRow) => {
       return {
         metaId: `${streamAttributeMap.data.id}`,
         created: moment(streamAttributeMap.data.createMs).format(
@@ -192,7 +192,7 @@ const MetaTable: React.FunctionComponent<TableOutProps<StreamMetaRow>> = ({
       Cell: (row: RowInfo): React.ReactNode => {
         // This block of code is mostly about making a sensible looking popup.
         const stream = streamAttributeMaps.find(
-          (streamAttributeMap: StreamMetaRow) =>
+          (streamAttributeMap: MetaRow) =>
             streamAttributeMap.data.id === row.original.metaId
         );
 
@@ -294,8 +294,8 @@ const MetaTable: React.FunctionComponent<TableOutProps<StreamMetaRow>> = ({
 
 export const useTable = (
   streams: StreamAttributeMapResult,
-): TableOutProps<StreamMetaRow> =>
-  useSelectableReactTable<StreamMetaRow>(
+): TableOutProps<MetaRow> =>
+  useSelectableReactTable<MetaRow>(
     {
       items: streams.streamAttributeMaps,
       getKey: React.useCallback(

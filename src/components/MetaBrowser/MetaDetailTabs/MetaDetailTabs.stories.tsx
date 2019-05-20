@@ -3,9 +3,9 @@ import { storiesOf } from "@storybook/react";
 import { addThemedStories } from "testing/storybook/themedStoryGenerator";
 import fullTestData from "testing/data";
 import MetaDetailTabs from "./MetaDetailTabs";
-import { StreamMetaRow } from "../types";
+import { MetaRow } from "../types";
 
-const data: StreamMetaRow = fullTestData.dataList.streamAttributeMaps[0];
+const data: MetaRow = fullTestData.dataList.streamAttributeMaps[0];
 
 const stories = storiesOf("Sections/Meta Browser/Detail Tabs/Tabs", module);
 

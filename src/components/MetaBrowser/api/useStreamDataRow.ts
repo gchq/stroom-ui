@@ -1,10 +1,10 @@
 import * as React from "react";
 
 import useApi from "./useApi";
-import { StreamMetaRow } from "../types";
+import { MetaRow } from "../types";
 
-const useStreamDataRow = (metaId: number): StreamMetaRow | undefined => {
-  const [dataRow, setDataRow] = React.useState<StreamMetaRow | undefined>(
+const useStreamDataRow = (metaId: number): MetaRow | undefined => {
+  const [dataRow, setDataRow] = React.useState<MetaRow | undefined>(
     undefined,
   );
   const { getDetailsForSelectedStream } = useApi();

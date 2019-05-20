@@ -3,9 +3,9 @@ import { storiesOf } from "@storybook/react";
 import { addThemedStories } from "testing/storybook/themedStoryGenerator";
 import fullTestData from "testing/data";
 import DataRetention from "./DataRetention";
-import { StreamMetaRow } from "components/MetaBrowser/types";
+import { MetaRow } from "components/MetaBrowser/types";
 
-const dataRow: StreamMetaRow = fullTestData.dataList.streamAttributeMaps[0];
+const dataRow: MetaRow = fullTestData.dataList.streamAttributeMaps[0];
 
 const stories = storiesOf(
   "Sections/Meta Browser/Detail Tabs/Data Retention",

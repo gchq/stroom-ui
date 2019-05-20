@@ -5,7 +5,7 @@ import {
   DataSourceType,
   ExpressionOperatorType,
 } from "components/ExpressionBuilder/types";
-import { StreamAttributeMapResult, PageRequest, StreamMetaRow } from "../types";
+import { StreamAttributeMapResult, PageRequest, MetaRow } from "../types";
 
 interface Api {
   fetch: (props: PageRequest) => Promise<StreamAttributeMapResult>;
@@ -14,7 +14,7 @@ interface Api {
     page: PageRequest,
   ) => Promise<StreamAttributeMapResult>;
   fetchDataSource: () => Promise<DataSourceType>;
-  getDetailsForSelectedStream: (metaId: number) => Promise<StreamMetaRow>;
+  getDetailsForSelectedStream: (metaId: number) => Promise<MetaRow>;
 }
 
 export const useApi = (): Api => {
