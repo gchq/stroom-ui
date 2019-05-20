@@ -13,7 +13,6 @@ const DataRetention: React.FunctionComponent<Props> = ({ dataRow }) => (
           <tbody>
             <tr>
               <td>Age</td>
-              TODO
               {/* <td>{details.nameValueMap.Age}</td> */}
             </tr>
             <tr>

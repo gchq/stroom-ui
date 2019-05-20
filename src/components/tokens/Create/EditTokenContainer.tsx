@@ -23,7 +23,9 @@ import EditTokenForm from "./EditTokenForm";
 
 const EditTokenContainer = () => {
   const { toggleEnabledState, fetchApiKey, token } = useTokens();
-  const { goToApiKeys } = useAppNavigation();
+  const {
+    nav: { goToApiKeys },
+  } = useAppNavigation();
 
   const tokenId = useIdFromPath("apikey/");
   React.useEffect(() => {

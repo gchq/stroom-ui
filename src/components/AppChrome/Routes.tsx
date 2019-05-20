@@ -47,7 +47,7 @@ import { UserCreate, UserEdit, UserSearch } from "components/users";
 import UserSettings from "components/UserSettings";
 import Welcome from "components/Welcome";
 import AppChrome from "./AppChrome";
-import useUrlGenerator from "lib/useAppNavigation/useUrlGenerator";
+import useAppNavigation from "lib/useAppNavigation";
 
 const renderWelcome = ({
   match: {
@@ -62,7 +62,7 @@ const renderWelcome = ({
 );
 
 const Routes: React.FunctionComponent = () => {
-  const urls = useUrlGenerator(":urlPrefix");
+  const { urlGenerator } = useAppNavigation();
   return (
     <Switch>
       <Route
@@ -81,10 +81,14 @@ const Routes: React.FunctionComponent = () => {
       <Route exact path={"/login"} component={Login} />
       <Route exact path={"/changepassword"} component={ChangePassword} />
       <PrivateRoute exact path="/" render={renderWelcome} />
-      <PrivateRoute exact path={urls.goToWelcome()} render={renderWelcome} />
       <PrivateRoute
         exact
-        path={urls.goToStreamBrowser()}
+        path={urlGenerator.goToWelcome()}
+        render={renderWelcome}
+      />
+      <PrivateRoute
+        exact
+        path={urlGenerator.goToStreamBrowser()}
         render={({
           match: {
             params: { urlPrefix },
@@ -99,7 +103,7 @@ const Routes: React.FunctionComponent = () => {
       />
       <PrivateRoute
         exact
-        path={urls.goToProcessing()}
+        path={urlGenerator.goToProcessing()}
         render={({
           match: {
             params: { urlPrefix },
@@ -114,7 +118,7 @@ const Routes: React.FunctionComponent = () => {
       />
       <PrivateRoute
         exact
-        path={urls.goToUserSettings()}
+        path={urlGenerator.goToUserSettings()}
         render={({
           match: {
             params: { urlPrefix },
@@ -131,7 +135,7 @@ const Routes: React.FunctionComponent = () => {
         <PrivateRoute
           key={isGroup ? "Group" : "User"}
           exact
-          path={urls.goToAuthorisationManager(isGroup.toString())}
+          path={urlGenerator.goToAuthorisationManager(isGroup.toString())}
           render={({
             match: {
               params: { urlPrefix },
@@ -148,7 +152,7 @@ const Routes: React.FunctionComponent = () => {
 
       <PrivateRoute
         exact
-        path={urls.goToAuthorisationsForUser(undefined)}
+        path={urlGenerator.goToAuthorisationsForUser(undefined)}
         render={({
           match: {
             params: { urlPrefix, userUuid },
@@ -163,7 +167,7 @@ const Routes: React.FunctionComponent = () => {
       />
       <PrivateRoute
         exact
-        path={urls.goToAuthorisationsForDocument(undefined)}
+        path={urlGenerator.goToAuthorisationsForDocument(undefined)}
         render={({
           match: {
             params: { urlPrefix, docRefUuid },
@@ -178,7 +182,10 @@ const Routes: React.FunctionComponent = () => {
       />
       <PrivateRoute
         exact
-        path={urls.goToAuthorisationsForDocumentForUser(undefined, undefined)}
+        path={urlGenerator.goToAuthorisationsForDocumentForUser(
+          undefined,
+          undefined,
+        )}
         render={({
           match: {
             params: { urlPrefix, userUuid, docRefUuid },
@@ -198,7 +205,7 @@ const Routes: React.FunctionComponent = () => {
       />
       <PrivateRoute
         exact
-        path={urls.goToIndexVolumes()}
+        path={urlGenerator.goToIndexVolumes()}
         render={({
           match: {
             params: { urlPrefix },
@@ -213,7 +220,7 @@ const Routes: React.FunctionComponent = () => {
       />
       <PrivateRoute
         exact
-        path={urls.goToIndexVolume(undefined)}
+        path={urlGenerator.goToIndexVolume(undefined)}
         render={({
           match: {
             params: { urlPrefix, volumeId },
@@ -228,7 +235,7 @@ const Routes: React.FunctionComponent = () => {
       />
       <PrivateRoute
         exact
-        path={urls.goToIndexVolumeGroups()}
+        path={urlGenerator.goToIndexVolumeGroups()}
         render={({
           match: {
             params: { urlPrefix },
@@ -243,7 +250,7 @@ const Routes: React.FunctionComponent = () => {
       />
       <PrivateRoute
         exact
-        path={urls.goToIndexVolumeGroup(undefined)}
+        path={urlGenerator.goToIndexVolumeGroup(undefined)}
         render={({
           match: {
             params: { urlPrefix, groupName },
@@ -258,7 +265,7 @@ const Routes: React.FunctionComponent = () => {
       />
       <PrivateRoute
         exact
-        path={urls.goToError()}
+        path={urlGenerator.goToError()}
         render={({
           match: {
             params: { urlPrefix },
@@ -273,7 +280,7 @@ const Routes: React.FunctionComponent = () => {
       />
       <PrivateRoute
         exact
-        path={urls.goToEditDocRefByUuid(undefined)}
+        path={urlGenerator.goToEditDocRefByUuid(undefined)}
         render={({
           match: {
             params: { urlPrefix, docRefUuid },
@@ -289,7 +296,7 @@ const Routes: React.FunctionComponent = () => {
 
       <PrivateRoute
         exact
-        path={urls.goToUsers()}
+        path={urlGenerator.goToUsers()}
         render={({
           match: {
             params: { urlPrefix },
@@ -304,7 +311,7 @@ const Routes: React.FunctionComponent = () => {
       />
       <PrivateRoute
         exact
-        path={urls.goToNewUser()}
+        path={urlGenerator.goToNewUser()}
         render={({
           match: {
             params: { urlPrefix },
@@ -319,7 +326,7 @@ const Routes: React.FunctionComponent = () => {
       />
       <PrivateRoute
         exact
-        path={urls.goToUser(":userId")}
+        path={urlGenerator.goToUser(":userId")}
         render={({
           match: {
             params: { urlPrefix },
@@ -335,7 +342,7 @@ const Routes: React.FunctionComponent = () => {
 
       <PrivateRoute
         exact
-        path={urls.goToApiKeys()}
+        path={urlGenerator.goToApiKeys()}
         render={({
           match: {
             params: { urlPrefix },
@@ -351,7 +358,7 @@ const Routes: React.FunctionComponent = () => {
 
       <PrivateRoute
         exact
-        path={urls.goToNewApiKey()}
+        path={urlGenerator.goToNewApiKey()}
         render={({
           match: {
             params: { urlPrefix },
@@ -367,7 +374,7 @@ const Routes: React.FunctionComponent = () => {
 
       <PrivateRoute
         exact
-        path={urls.goToApiKey(":id")}
+        path={urlGenerator.goToApiKey(":id")}
         render={({
           match: {
             params: { urlPrefix },

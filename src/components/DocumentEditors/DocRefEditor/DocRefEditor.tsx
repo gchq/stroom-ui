@@ -11,7 +11,7 @@ import DocRefIconHeader from "../../DocRefIconHeader";
 import DocRefBreadcrumb from "../../DocRefBreadcrumb";
 import Button from "../../Button";
 import { useDocumentTree } from "components/DocumentEditors/api/explorer";
-import useAppNavigation from "../../../lib/useAppNavigation/useAppNavigation";
+import useAppNavigation from "lib/useAppNavigation";
 import { DocumentApi } from "components/DocumentEditors/useDocumentApi/types/documentApi";
 import { ButtonProps } from "components/Button/types";
 
@@ -22,7 +22,9 @@ const DocRefEditor = <T extends {}>({
   additionalActionBarItems,
   isDirty,
 }: DocRefEditorProps<T>) => {
-  const { goToAuthorisationsForDocument, goToEditDocRef } = useAppNavigation();
+  const {
+    nav: { goToAuthorisationsForDocument, goToEditDocRef },
+  } = useAppNavigation();
   const { findDocRefWithLineage } = useDocumentTree();
   const { node: docRef } = React.useMemo(
     () => findDocRefWithLineage(docRefUuid),

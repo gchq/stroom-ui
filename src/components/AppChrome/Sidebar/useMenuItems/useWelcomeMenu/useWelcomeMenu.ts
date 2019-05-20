@@ -3,7 +3,9 @@ import { SubMenuProps } from "../types";
 import { MenuItemType } from "../../MenuItem/types";
 
 const useWelcomeMenu = ({
-  navigateApp: { goToWelcome },
+  navigateApp: {
+    nav: { goToWelcome },
+  },
 }: SubMenuProps): MenuItemType =>
   React.useMemo(
     () => ({

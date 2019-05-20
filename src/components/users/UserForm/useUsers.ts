@@ -1,5 +1,5 @@
 import { useCallback } from "react";
-import useAppNavigation from "lib/useAppNavigation/useAppNavigation";
+import useAppNavigation from "lib/useAppNavigation";
 import { useApi as useAuthorisationApi } from "components/authorisation";
 import useApi from "../api/useApi";
 import { User } from "../types";
@@ -11,7 +11,9 @@ import useUserState from "./useUserState";
 const useUsers = () => {
   const { user, setUser, setIsCreating } = useUserState();
 
-  const { goToUsers } = useAppNavigation();
+  const {
+    nav: { goToUsers },
+  } = useAppNavigation();
 
   /**
    * Updates the user

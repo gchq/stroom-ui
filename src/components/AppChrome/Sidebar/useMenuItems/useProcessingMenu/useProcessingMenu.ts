@@ -3,7 +3,9 @@ import { SubMenuProps } from "../types";
 import { MenuItemType } from "../../MenuItem/types";
 
 const useProcessingMenu = ({
-  navigateApp: { goToProcessing },
+  navigateApp: {
+    nav: { goToProcessing },
+  },
 }: SubMenuProps): MenuItemType =>
   React.useMemo(
     () => ({
