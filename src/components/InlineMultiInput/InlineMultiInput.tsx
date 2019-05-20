@@ -19,7 +19,7 @@ import InlineInput from "components/InlineInput/InlineInput";
 import { ControlledInput } from "lib/useForm/types";
 import useListReducer from "lib/useListReducer";
 import * as React from "react";
-import { useCallback, useEffect, useMemo } from "react";
+import { ChangeEvent, useCallback, useEffect, useMemo } from "react";
 
 const getKey = (k: string) => k;
 
@@ -53,7 +53,7 @@ const InlineMultiInput: React.FunctionComponent<ControlledInput<string[]>> = ({
       values.map((value, valueIndex) => ({
         onChange: ({
           target: { value: newValue },
-        }: React.ChangeEvent<HTMLInputElement>) =>
+        }: ChangeEvent<HTMLInputElement>) =>
           updateItemAtIndex(valueIndex, newValue),
         onRemove: () => removeItemAtIndex(valueIndex),
         value,

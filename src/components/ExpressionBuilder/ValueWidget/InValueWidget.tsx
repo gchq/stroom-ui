@@ -14,15 +14,9 @@
  * limitations under the License.
  */
 
-import * as React from "react";
-
+import InlineMultiInput from "components/InlineMultiInput/InlineMultiInput";
 import { ControlledInput } from "lib/useForm/types";
-import CreatableSelect from "react-select/lib/Creatable";
-
-interface InOption {
-  value: string;
-  label: string;
-}
+import * as React from "react";
 
 /**
  * Capture multiple values for comparison. The value and onChange transact in CSV
@@ -35,21 +29,12 @@ const InValueWidget: React.FunctionComponent<ControlledInput<any>> = ({
     () => (!!value && value.length > 0 ? value.split(",") : []),
     [value],
   );
-  const options: InOption[] = React.useMemo(
-    () =>
-      splitValues.map(c => ({
-        value: c,
-        label: c,
-      })),
-    [splitValues],
-  );
 
   const handleChange = React.useCallback(
-    (newValue: InOption[]) => onChange(newValue.map(i => i.value).join(",")),
+    (newValue: string[]) => onChange(newValue.join(",")),
     [onChange],
   );
-
-  return <CreatableSelect isMulti options={options} onChange={handleChange} />;
+  return <InlineMultiInput value={splitValues} onChange={handleChange} />;
 };
 
 export default InValueWidget;

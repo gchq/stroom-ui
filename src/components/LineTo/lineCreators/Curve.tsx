@@ -1,11 +1,7 @@
 import * as React from "react";
 import { LineElementCreator, LineDefinition } from "../types";
 
-const Curve: LineElementCreator = ({
-  lineId,
-  fromRect,
-  toRect,
-}: LineDefinition) => {
+const Curve: LineElementCreator = ({ fromRect, toRect }: LineDefinition) => {
   let from = {
     x: fromRect.left + fromRect.width / 2,
     y: fromRect.bottom,
@@ -33,11 +29,10 @@ const Curve: LineElementCreator = ({
     to.y;
   return (
     <path
-      key={lineId}
       d={pathSpec}
       style={{
         stroke: "black",
-        strokeWidth: 2,
+        strokeWidth: 1,
         fill: "none",
       }}
     />

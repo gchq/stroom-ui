@@ -18,14 +18,21 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import InlineSelect from "components/InlineSelect/InlineSelect";
 import { LineEndpoint } from "components/LineTo";
 import * as React from "react";
-import { ChangeEvent } from "react";
+import { ChangeEvent, useCallback } from "react";
 import { DragSource, DragSourceCollector, DragSourceSpec } from "react-dnd";
 import Button from "../../Button";
 import ConditionPicker from "../ConditionPicker/ConditionPicker";
-import { ConditionType, DataSourceFieldType, DataSourceType, DragCollectedProps, DragDropTypes, DragObject, ExpressionTermType } from "../types";
+import {
+  ConditionType,
+  DataSourceFieldType,
+  DataSourceType,
+  DragCollectedProps,
+  DragDropTypes,
+  DragObject,
+  ExpressionTermType,
+} from "../types";
 import ValueWidget from "../ValueWidget";
 import withValueType from "../withValueType";
-
 
 interface Props {
   index: number;
@@ -37,7 +44,7 @@ interface Props {
   onChange: (e: ExpressionTermType, index: number) => void;
 }
 
-interface EnhancedProps extends Props, DragCollectedProps { }
+interface EnhancedProps extends Props, DragCollectedProps {}
 
 const dragSource: DragSourceSpec<Props, DragObject> = {
   beginDrag(props) {
@@ -69,11 +76,11 @@ const ExpressionTerm: React.FunctionComponent<EnhancedProps> = ({
   index,
   idWithinExpression,
 }) => {
-  const onDeleteThis = React.useCallback(() => {
+  const onDeleteThis = useCallback(() => {
     onDelete(index);
   }, [index, onDelete]);
 
-  const onEnabledToggled = React.useCallback(() => {
+  const onEnabledToggled = useCallback(() => {
     onChange(
       {
         ...value,
@@ -83,7 +90,7 @@ const ExpressionTerm: React.FunctionComponent<EnhancedProps> = ({
     );
   }, [index, value, onChange]);
 
-  const onFieldChange = React.useCallback(
+  const onFieldChange = useCallback(
     (event: ChangeEvent<HTMLSelectElement>) => {
       const field = event.target.value;
       onChange(
@@ -97,7 +104,7 @@ const ExpressionTerm: React.FunctionComponent<EnhancedProps> = ({
     [index, value, onChange],
   );
 
-  const onConditionChange = React.useCallback(
+  const onConditionChange = useCallback(
     (condition: ConditionType) => {
       onChange(
         {
@@ -110,7 +117,7 @@ const ExpressionTerm: React.FunctionComponent<EnhancedProps> = ({
     [index, value, onChange],
   );
 
-  const onValueChange = React.useCallback(
+  const onValueChange = useCallback(
     (v: string) => onChange({ ...value, value: v }, index),
     [index, value, onChange],
   );
@@ -136,19 +143,24 @@ const ExpressionTerm: React.FunctionComponent<EnhancedProps> = ({
 
   return (
     <div className={className}>
-      <div>
+      <div className={"ExpressionTerm__expression"}>
         {connectDragSource(
-          <div className="expression-operator-circle">
+          <div className="ExpressionOperator__circle">
             <LineEndpoint
               lineEndpointId={idWithinExpression}
-              className="expression-operator-circle"
+              className="ExpressionOperator__circle"
             >
-              <FontAwesomeIcon icon="bars" />
+              <FontAwesomeIcon
+                className="ExpressionOperator__gripper"
+                icon="grip-vertical"
+              />
             </LineEndpoint>
           </div>,
         )}
         <InlineSelect
-          simpleOptions={dataSource.fields.map(field => field.name)}
+          options={dataSource.fields.map(field => {
+            return { value: field.name, label: field.name };
+          })}
           selected={value.field}
           onChange={onFieldChange}
         />
@@ -168,11 +180,18 @@ const ExpressionTerm: React.FunctionComponent<EnhancedProps> = ({
       <div className="expression-term__actions">
         <Button
           appearance="icon"
+          size="small"
           icon="check"
           disabled={value.enabled}
           onClick={onEnabledToggled}
         />
-        <Button icon="trash" appearance="icon" action="secondary" onClick={onDeleteThis} />
+        <Button
+          icon="trash"
+          size="small"
+          appearance="icon"
+          action="secondary"
+          onClick={onDeleteThis}
+        />
       </div>
     </div>
   );

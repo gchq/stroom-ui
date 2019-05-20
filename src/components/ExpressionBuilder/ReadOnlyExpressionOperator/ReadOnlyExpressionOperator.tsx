@@ -33,7 +33,7 @@ const ReadOnlyExpressionOperator: React.FunctionComponent<Props> = ({
     <div className={className}>
       <div>
         <LineEndpoint
-          className="expression-operator-circle"
+          className="ExpressionOperator__circle"
           lineEndpointId={idWithinExpression}
         >
           <FontAwesomeIcon icon="circle" />

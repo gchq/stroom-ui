@@ -22,16 +22,18 @@ import ExpressionBuilder from "./ExpressionBuilder";
 import { testExpression, testDataSource, simplestExpression } from "./test";
 
 import { ExpressionOperatorType } from "./types";
+import { useCallback } from "react";
 
 const PopulatedEditable = () => {
   const [value, onChange] = React.useState<ExpressionOperatorType>(
     testExpression,
   );
+  const handleChange = useCallback(value => onChange(value), [onChange]);
 
   return (
     <ExpressionBuilder
       value={value}
-      onChange={onChange}
+      onChange={handleChange}
       showModeToggle
       editMode
       dataSource={testDataSource}

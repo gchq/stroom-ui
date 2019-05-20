@@ -25,15 +25,15 @@ import LineEndpoint from "./LineEndpoint";
 let testBlockStyle: React.CSSProperties = {
   position: "absolute",
   width: "50px",
-  backgroundColor: "red",
-  borderStyle: "thin",
-  color: "white",
+  border: "solid thin black",
 };
 
 const DefaultLineTest: React.FunctionComponent = () => {
   return (
     <div>
       <LineContainer>
+        <h1>Some stuff</h1>
+        <p>This is some actual content for this page</p>
         <LineEndpoint
           lineEndpointId="myFirst"
           style={{
