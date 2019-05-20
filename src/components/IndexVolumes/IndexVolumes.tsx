@@ -15,13 +15,15 @@ import {
   useIndexVolumeGroupModalPicker,
 } from "../IndexVolumeGroups/IndexVolumeGroupPickerDialog";
 import { useIndexVolumes, IndexVolume } from "components/IndexVolumes/api";
-import useAppNavigation from "../../lib/useAppNavigation/useAppNavigation";
+import useAppNavigation from "lib/useAppNavigation";
 import Toggle from "react-toggle";
 import DocRefIconHeader from "components/DocRefIconHeader";
 
 const IndexVolumes: React.FunctionComponent = () => {
   const [filterable, setFilteringEnabled] = React.useState(false);
-  const { goToIndexVolume } = useAppNavigation();
+  const {
+    nav: { goToIndexVolume },
+  } = useAppNavigation();
 
   const {
     indexVolumes,

@@ -15,9 +15,13 @@
  */
 
 import * as React from "react";
-
 import Button from "../Button/Button";
-import { DialogActionButtonProps } from "./types";
+
+export type IconSize = "small" | "medium" | "large" | "xlarge";
+export interface DialogActionButtonProps {
+  onCancel: React.MouseEventHandler;
+  onConfirm: React.MouseEventHandler;
+}
 
 const DialogActionButtons = ({
   onCancel,

@@ -3,8 +3,9 @@ import * as React from "react";
 import SingleValueWidget from "./SingleValueWidget";
 import BetweenValueWidget from "./BetweenValueWidget";
 import InValueWidget from "./InValueWidget";
-import AppSearchBar from "../../AppSearchBar";
 import { ExpressionTermType } from "../types";
+import AppSearchBarWidget from "./AppSearchBarWidget";
+import { useCallback } from "react";
 
 interface Props {
   onChange: (value: any) => any;
@@ -17,6 +18,9 @@ const ValueWidget: React.FunctionComponent<Props> = ({
   onChange,
   valueType,
 }) => {
+  const handleChange = useCallback(event => onChange(event.target.value), [
+    onChange,
+  ]);
   switch (condition) {
     case "CONTAINS":
     case "EQUALS":
@@ -28,7 +32,7 @@ const ValueWidget: React.FunctionComponent<Props> = ({
         <SingleValueWidget
           value={value}
           valueType={valueType}
-          onChange={onChange}
+          onChange={handleChange}
         />
       );
     }
@@ -45,13 +49,7 @@ const ValueWidget: React.FunctionComponent<Props> = ({
       return <InValueWidget value={value} onChange={onChange} />;
     }
     case "IN_DICTIONARY": {
-      return (
-        <AppSearchBar
-          typeFilter="Dictionary"
-          onChange={onChange}
-          value={value}
-        />
-      );
+      return <AppSearchBarWidget value={value} onChange={onChange} />;
     }
     default:
       throw new Error(`Invalid condition: ${condition}`);

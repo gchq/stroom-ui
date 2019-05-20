@@ -1,7 +1,7 @@
 import {
   FetchMarkerResult,
   FetchDataResult,
-} from "components/StreamBrowser/DataDisplay/types";
+} from "components/MetaBrowser/DataDisplay/types";
 
 export const errorData: FetchMarkerResult = {
   streamType: "Error",

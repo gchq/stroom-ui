@@ -31,7 +31,9 @@ const getDocumentTreeMenuItems = (
 });
 
 const useDocumentMenu = ({
-  navigateApp: { goToEditDocRef },
+  navigateApp: {
+    nav: { goToEditDocRef },
+  },
 }: SubMenuProps): MenuItemType => {
   const { documentTree } = useDocumentTree();
 

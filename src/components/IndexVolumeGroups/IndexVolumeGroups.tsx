@@ -11,13 +11,15 @@ import NewIndexVolumeGroupDialog, {
 import ThemedConfirm, {
   useDialog as useConfirmDialog,
 } from "components/ThemedConfirm";
-import useAppNavigation from "../../lib/useAppNavigation/useAppNavigation";
+import useAppNavigation from "lib/useAppNavigation";
 import Toggle from "react-toggle";
 import DocRefIconHeader from "components/DocRefIconHeader";
 
 const IndexVolumeGroups: React.FunctionComponent = () => {
   const [filterable, setFilteringEnabled] = React.useState(false);
-  const { goToIndexVolumeGroup } = useAppNavigation();
+  const {
+    nav: { goToIndexVolumeGroup },
+  } = useAppNavigation();
 
   const {
     groups,

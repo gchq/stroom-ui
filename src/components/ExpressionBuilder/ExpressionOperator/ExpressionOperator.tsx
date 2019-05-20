@@ -20,11 +20,29 @@ import { LineEndpoint, LineTo } from "components/LineTo";
 import { canMove } from "lib/treeUtils/treeUtils";
 import { pipe } from "ramda";
 import * as React from "react";
-import { DragSource, DragSourceCollector, DragSourceSpec, DropTarget, DropTargetCollector, DropTargetSpec } from "react-dnd";
+import {
+  DragSource,
+  DragSourceCollector,
+  DragSourceSpec,
+  DropTarget,
+  DropTargetCollector,
+  DropTargetSpec,
+} from "react-dnd";
 import { getNewOperator, getNewTerm } from "../expressionUtils";
-import { DataSourceType, DragCollectedProps, DragDropTypes, DragObject, DropCollectedProps, ExpressionItem, ExpressionOperatorType, ExpressionTermType, OperatorType, OperatorTypeValues } from "../types";
-
-
+import {
+  DataSourceType,
+  DragCollectedProps,
+  DragDropTypes,
+  DragObject,
+  DropCollectedProps,
+  ExpressionItem,
+  ExpressionOperatorType,
+  ExpressionTermType,
+  OperatorType,
+  OperatorTypeValues,
+} from "../types";
+import InlineSelect from "components/InlineSelect/InlineSelect";
+import { useCallback } from "react";
 
 interface Props {
   index?: number; // If this is undefined, assume this is the root
@@ -109,13 +127,13 @@ const ExpressionOperator: React.FunctionComponent<EnhancedProps> = ({
 }) => {
   const isRoot = index === undefined;
 
-  const onDeleteThis = React.useCallback(() => {
+  const onDeleteThis = useCallback(() => {
     if (!!index && onDelete) {
       onDelete(index);
     }
   }, [index, onDelete]);
 
-  const onAddOperator = React.useCallback(() => {
+  const onAddOperator = useCallback(() => {
     onChange(
       {
         ...value,
@@ -125,7 +143,7 @@ const ExpressionOperator: React.FunctionComponent<EnhancedProps> = ({
     );
   }, [index, value, onChange]);
 
-  const onAddTerm = React.useCallback(() => {
+  const onAddTerm = useCallback(() => {
     onChange(
       {
         ...value,
@@ -135,7 +153,7 @@ const ExpressionOperator: React.FunctionComponent<EnhancedProps> = ({
     );
   }, [index, value, onChange]);
 
-  const onOpChange = React.useCallback(
+  const onOpChange = useCallback(
     (op: OperatorType) => {
       onChange(
         {
@@ -148,7 +166,7 @@ const ExpressionOperator: React.FunctionComponent<EnhancedProps> = ({
     [value, index, onChange],
   );
 
-  const onEnabledToggled = React.useCallback(() => {
+  const onEnabledToggled = useCallback(() => {
     if (!!index) {
       onChange(
         {
@@ -160,7 +178,7 @@ const ExpressionOperator: React.FunctionComponent<EnhancedProps> = ({
     }
   }, [index, value, onChange]);
 
-  const onChildUpdated = React.useCallback(
+  const onChildUpdated = useCallback(
     (_value: ExpressionTermType | ExpressionOperatorType, _index: number) => {
       onChange(
         {
@@ -173,7 +191,7 @@ const ExpressionOperator: React.FunctionComponent<EnhancedProps> = ({
     [index, value, onChange],
   );
 
-  const onChildDeleted = React.useCallback(
+  const onChildDeleted = useCallback(
     (_index: number) => {
       onChange(
         {
@@ -206,41 +224,58 @@ const ExpressionOperator: React.FunctionComponent<EnhancedProps> = ({
 
   const className = classNames.join(" ");
 
+  const operatorTypeValues = OperatorTypeValues.map(o => {
+    return { value: o, label: o };
+  });
+
   return (
     <div className={className}>
       {connectDropTarget(
-        <div>
+        <div className={"expression-item__row"}>
           {connectDragSource(
-            <div className="expression-operator-circle">
+            <div className="ExpressionOperator__circle">
               <LineEndpoint
-                className="expression-operator-circle"
+                className="ExpressionOperator__circle"
                 lineEndpointId={idWithinExpression}
               >
-                <FontAwesomeIcon color={dndBarColour} icon="bars" />
+                <FontAwesomeIcon
+                  className="ExpressionOperator__gripper"
+                  color={dndBarColour}
+                  icon="grip-vertical"
+                />
               </LineEndpoint>
             </div>,
           )}
 
-          {OperatorTypeValues.map((l, i) => (
-            <Button
-              selected={value.op === l}
-              key={l}
-              onClick={() => onOpChange(l)}
-              text={l}
-            />
-          ))}
+          <InlineSelect
+            selected={value.op}
+            onChange={event => onOpChange(event.target.value as OperatorType)}
+            options={operatorTypeValues}
+          />
 
           <div className="ExpressionItem__buttons">
-            <Button icon="plus" text="Term" onClick={onAddTerm} />
-            <Button icon="plus" text="Group" onClick={onAddOperator} />
+            <Button size="small" icon="plus" text="Term" onClick={onAddTerm} />
+            <Button
+              size="small"
+              icon="plus"
+              text="Group"
+              onClick={onAddOperator}
+            />
             {!isRoot && (
               <React.Fragment>
                 <Button
+                  appearance="icon"
+                  size="small"
                   icon="check"
                   disabled={!value.enabled}
                   onClick={onEnabledToggled}
                 />
-                <Button icon="trash" onClick={onDeleteThis} />
+                <Button
+                  appearance="icon"
+                  size="small"
+                  icon="trash"
+                  onClick={onDeleteThis}
+                />
               </React.Fragment>
             )}
           </div>
@@ -258,15 +293,15 @@ const ExpressionOperator: React.FunctionComponent<EnhancedProps> = ({
             switch (c.type) {
               case "term":
                 itemElement = (
-                    <ExpressionTerm
-                      index={i}
-                      idWithinExpression={itemLineEndpointId}
-                      dataSource={dataSource}
-                      isEnabled={isEnabled && c.enabled}
-                      value={c as ExpressionTermType}
-                      onDelete={onChildDeleted}
-                      onChange={onChildUpdated}
-                    />
+                  <ExpressionTerm
+                    index={i}
+                    idWithinExpression={itemLineEndpointId}
+                    dataSource={dataSource}
+                    isEnabled={isEnabled && c.enabled}
+                    value={c as ExpressionTermType}
+                    onDelete={onChildDeleted}
+                    onChange={onChildUpdated}
+                  />
                 );
                 break;
               case "operator":

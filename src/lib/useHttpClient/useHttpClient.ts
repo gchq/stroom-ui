@@ -5,7 +5,7 @@ import cogoToast from "cogo-toast";
 
 import { useAuthenticationContext } from "startup/Authentication";
 import { useErrorReporting } from "components/ErrorPage";
-import useAppNavigation from "lib/useAppNavigation/useAppNavigation";
+import useAppNavigation from "lib/useAppNavigation";
 
 const useCheckStatus = (status: number) =>
   React.useCallback(
@@ -62,7 +62,9 @@ let cache = {};
 export const useHttpClient = (): HttpClient => {
   const { idToken } = useAuthenticationContext();
   const { reportError } = useErrorReporting();
-  const { goToError } = useAppNavigation();
+  const {
+    nav: { goToError },
+  } = useAppNavigation();
 
   const handle200 = useCheckStatus(200);
   const handle204 = useCheckStatus(204);

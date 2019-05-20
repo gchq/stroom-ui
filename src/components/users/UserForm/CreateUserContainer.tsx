@@ -15,7 +15,7 @@
  */
 
 import * as React from "react";
-import useAppNavigation from "lib/useAppNavigation/useAppNavigation";
+import useAppNavigation from "lib/useAppNavigation";
 import { PasswordValidationRequest } from "components/authentication/types";
 import useConfig from "startup/config/useConfig";
 import { useUsers } from "../api";
@@ -30,7 +30,9 @@ const CreateUserContainer = () => {
   if (!authenticationServiceUrl)
     throw Error("Configuration not ready or misconfigured!");
 
-  const { goToUsers } = useAppNavigation();
+  const {
+    nav: { goToUsers },
+  } = useAppNavigation();
   const initialValues: UserFormData = {
     firstName: "",
     lastName: "",

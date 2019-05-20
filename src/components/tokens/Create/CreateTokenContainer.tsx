@@ -22,7 +22,9 @@ import CreateTokenForm from "./CreateTokenForm";
 import useAppNavigation from "lib/useAppNavigation";
 
 const CreateFormContainer = () => {
-  const { goToApiKeys } = useAppNavigation();
+  const {
+    nav: { goToApiKeys },
+  } = useAppNavigation();
   const { createToken } = useTokens();
   const { userServiceUrl } = useConfig();
   const { idToken } = useAuthenticationContext();

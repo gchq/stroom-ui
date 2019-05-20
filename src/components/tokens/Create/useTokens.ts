@@ -2,7 +2,7 @@ import { useTokenState } from "./useTokenState";
 import { useApi } from "../api/";
 import { Token } from "../api/types";
 import { useCallback } from "react";
-import useAppNavigation from "lib/useAppNavigation/useAppNavigation";
+import useAppNavigation from "lib/useAppNavigation";
 
 const useTokens = () => {
   const { token, setEnabled, setToken } = useTokenState();
@@ -26,7 +26,9 @@ const useTokens = () => {
   );
 
   const { createToken: createTokenApi } = useApi();
-  const { goToApiKey } = useAppNavigation();
+  const {
+    nav: { goToApiKey },
+  } = useAppNavigation();
   const createToken = useCallback(
     (email: string) => {
       createTokenApi(email).then((newToken: Token) => {

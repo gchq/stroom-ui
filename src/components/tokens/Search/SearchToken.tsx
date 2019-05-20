@@ -20,7 +20,7 @@ import ReactTable, { RowInfo, Column } from "react-table";
 import "react-table/react-table.css";
 import Toggle from "react-toggle";
 import "react-toggle/style.css";
-import useAppNavigation from "lib/useAppNavigation/useAppNavigation";
+import useAppNavigation from "lib/useAppNavigation";
 import Button from "components/Button";
 import useColumns from "./useColumns";
 import useTokenSearch from "./useTokenSearch";
@@ -40,7 +40,9 @@ const TokenSearch = () => {
   } = useTokenSearch();
   const columns: Column<Token>[] = useColumns(selectedTokenRowId, toggleState);
 
-  const { goToNewApiKey, goToApiKey } = useAppNavigation();
+  const {
+    nav: { goToNewApiKey, goToApiKey },
+  } = useAppNavigation();
   const [isFilteringEnabled, setFilteringEnabled] = useState(false);
   const noTokenSelected = !selectedTokenRowId;
   return (

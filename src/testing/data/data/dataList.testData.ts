@@ -1,4 +1,4 @@
-import { StreamAttributeMapResult } from "components/StreamBrowser/types";
+import { StreamAttributeMapResult } from "components/MetaBrowser/types";
 
 export default {
   pageResponse: {

@@ -33,9 +33,9 @@ const LineContainer: React.FunctionComponent<Props> = ({
   children,
 }) => {
   const {
-    addItem: lineCreated,
+    addItem: createLine,
     items: rawLines,
-    removeItem: lineDestroyed,
+    removeItem: destroyLine,
   } = useListReducer<LineType>(l => l.lineId);
 
   const lineContextId = React.useMemo(() => uuidv4(), []);
@@ -49,12 +49,13 @@ const LineContainer: React.FunctionComponent<Props> = ({
       value={{
         lineContextId,
         getEndpointId,
-        lineCreated,
-        lineDestroyed,
+        createLine,
+        destroyLine,
+        rawLines,
       }}
     >
       <div className={className}>
-        <LinesSvg LineElementCreator={LineElementCreator} rawLines={rawLines} />
+        <LinesSvg LineElementCreator={LineElementCreator} />
         {children}
       </div>
     </LineContext.Provider>

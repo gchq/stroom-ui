@@ -24,14 +24,14 @@ interface Props {
 }
 
 const LineTo: React.FunctionComponent<Props> = ({ fromId, toId }) => {
-  const { lineCreated, lineDestroyed } = React.useContext(LineContext);
+  const { createLine, destroyLine } = React.useContext(LineContext);
   const lineId = React.useMemo(() => uuidv4(), []);
 
   React.useEffect(() => {
-    lineCreated({ lineId, fromId, toId });
+    createLine({ lineId, fromId, toId });
 
-    return () => lineDestroyed(lineId);
-  }, [lineId, toId, fromId, lineCreated, lineDestroyed]);
+    return () => destroyLine(lineId);
+  }, [lineId, toId, fromId, createLine, destroyLine]);
 
   return null;
 };

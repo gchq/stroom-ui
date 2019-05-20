@@ -25,4 +25,7 @@ export interface RawNavigateApp<IN, OUT> {
   goToEditDocRef: (docRef: DocRefType) => OUT;
 }
 
-export type NavigateApp = RawNavigateApp<string, void>;
+export interface NavigateApp {
+  nav: RawNavigateApp<string, void>;
+  urlGenerator: RawNavigateApp<string | undefined, string>;
+}

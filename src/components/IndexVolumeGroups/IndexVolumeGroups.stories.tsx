@@ -22,19 +22,33 @@ import { Switch, Route, RouteComponentProps } from "react-router";
 import IndexVolumeGroups from "./IndexVolumeGroups";
 import IndexVolumeGroupEditor from "./IndexVolumeGroupEditor";
 import { addThemedStories } from "testing/storybook/themedStoryGenerator";
+import useAppNavigation from "lib/useAppNavigation";
 
-const TestHarness = () => (
-  <Switch>
-    <Route
-      exact
-      path="/s/indexing/groups/:groupName"
-      render={(props: RouteComponentProps<any>) => (
-        <IndexVolumeGroupEditor groupName={props.match.params.groupName} />
-      )}
-    />
-    <Route component={IndexVolumeGroups} />
-  </Switch>
-);
+const TestHarness: React.FunctionComponent = () => {
+  const {
+    urlGenerator: { goToIndexVolumeGroup },
+  } = useAppNavigation();
+  return (
+    <Switch>
+      <Route
+        exact
+        path={goToIndexVolumeGroup(":groupName")}
+        render={(props: RouteComponentProps<any>) => (
+          <IndexVolumeGroupEditor groupName={props.match.params.groupName} />
+        )}
+      />
+      <Route
+        render={(props: RouteComponentProps<any>) => (
+          <div>
+            {props.location.pathname}
+            <IndexVolumeGroups />
+          </div>
+        )}
+      />
+      <Route component={IndexVolumeGroups} />
+    </Switch>
+  );
+};
 
 const stories = storiesOf("Sections/Index Volume Groups", module);
 

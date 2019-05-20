@@ -1,5 +1,5 @@
 import * as React from "react";
-import useAppNavigation from "lib/useAppNavigation/useAppNavigation";
+import useAppNavigation from "lib/useAppNavigation";
 import {
   StroomUser,
   useGroupsForUser,
@@ -20,7 +20,9 @@ interface Props {
 
 const GroupsForUser: React.FunctionComponent<Props> = ({ user }) => {
   const { groups, addToGroup, removeFromGroup } = useGroupsForUser(user);
-  const { goToAuthorisationsForUser } = useAppNavigation();
+  const {
+    nav: { goToAuthorisationsForUser },
+  } = useAppNavigation();
 
   const { componentProps: tableProps } = useUsersTable(groups);
   const {

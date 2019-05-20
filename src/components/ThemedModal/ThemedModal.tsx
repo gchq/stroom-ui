@@ -14,11 +14,10 @@
  * limitations under the License.
  */
 
+import { useTheme } from "lib/useTheme/useTheme";
 import * as React from "react";
 import * as ReactModal from "react-modal";
-
 import reactModalOptions from "./reactModalOptions";
-import { useTheme } from "lib/useTheme/useTheme";
 
 interface ContentProps {
   header: JSX.Element;
@@ -26,16 +25,7 @@ interface ContentProps {
   actions: JSX.Element;
 }
 
-interface Props extends ContentProps, ReactModal.Props {}
-
-/**
- * A themed modal is required because Semantic UI modals are mounted
- * outside the application's root div. This means it won't inherit the
- * 'theme-dark' or 'theme-light' class name. We can add it here easily
- * enough.
- * property, or not.
- */
-const ThemedModal: React.FunctionComponent<Props> = ({
+const ThemedModal: React.FunctionComponent<ContentProps & ReactModal.Props> = ({
   header,
   content,
   actions,

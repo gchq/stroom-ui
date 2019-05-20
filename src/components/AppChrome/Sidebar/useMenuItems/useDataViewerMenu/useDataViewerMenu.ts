@@ -3,7 +3,9 @@ import { SubMenuProps } from "../types";
 import { MenuItemType } from "../../MenuItem/types";
 
 const useDataViewerMenu = ({
-  navigateApp: { goToStreamBrowser },
+  navigateApp: {
+    nav: { goToStreamBrowser },
+  },
 }: SubMenuProps): MenuItemType =>
   React.useMemo(
     () => ({

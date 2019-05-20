@@ -23,11 +23,9 @@ import JsonDebug from "testing/JsonDebug";
 const stories = storiesOf("General Purpose/InlineMultiInput", module);
 
 addThemedStories(stories, () => {
-  const [firstList, setFirstList] = React.useState<string[]>([
-    "Jar-Jar Binks",
-    "Darth Maul",
-  ]);
-  const [secondList, setSecondList] = React.useState<string[]>([
+  const [empty, setEmpty] = React.useState<string[]>([]);
+  const [single, setSingle] = React.useState<string[]>(["Leia"]);
+  const [multi, setMulti] = React.useState<string[]>([
     "Han Solo",
     "Jabba The Hut",
     "C3PO",
@@ -43,25 +41,20 @@ addThemedStories(stories, () => {
       <form>
         <h2>Empty</h2>
         <span>I would like to feed </span>
-        <InlineMultiInput value={firstList} onChange={setFirstList} />
+        <InlineMultiInput value={empty} onChange={setEmpty} />
+        <span> to the sarlacc.</span>
+
+        <h2>Empty</h2>
+        <span>I would like to feed </span>
+        <InlineMultiInput value={single} onChange={setSingle} />
         <span> to the sarlacc.</span>
 
         <h2>With some default values</h2>
         <span>I would like to feed </span>
-        <InlineMultiInput value={secondList} onChange={setSecondList} />
+        <InlineMultiInput value={multi} onChange={setMulti} />
         <span> to the sarlacc.</span>
-        {/*
-      <h2>Multiple selection</h2>
-      <span>I would like to feed </span>
-      <InlineMultiInput />
-      <span> to the sarlacc.</span>
-
-      <h2>Same thing selected more than one</h2>
-      <span>I would like to feed </span>
-      <InlineMultiInput />
-      <span> to the sarlacc.</span> */}
       </form>
-      <JsonDebug value={{ firstList, secondList }} />
+      <JsonDebug value={{ empty, single, multi }} />
     </div>
   );
 });

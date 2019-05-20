@@ -12,37 +12,43 @@ const useAppNavigation = (): NavigateApp => {
   const u = useUrlGenerator(urlPrefix); // just to make all the following rote lines short
   return React.useMemo(
     () => ({
-      goToActivity: (activityId: string) => h.push(u.goToActivity(activityId)),
-      goToWelcome: () => h.push(u.goToWelcome()),
-      goToStreamBrowser: () => h.push(u.goToStreamBrowser()),
-      goToProcessing: () => h.push(u.goToProcessing()),
-      goToUserSettings: () => h.push(u.goToUserSettings()),
-      goToAuthorisationManager: (isGroup: string) =>
-        h.push(u.goToAuthorisationManager(isGroup)),
-      goToAuthorisationsForUser: (userUuid: string) =>
-        h.push(u.goToAuthorisationsForUser(userUuid)),
-      goToAuthorisationsForDocument: (docRefUuid: string) =>
-        h.push(u.goToAuthorisationsForDocument(docRefUuid)),
-      goToAuthorisationsForDocumentForUser: (
-        docRefUuid: string,
-        userUuid: string,
-      ) => h.push(u.goToAuthorisationsForDocumentForUser(docRefUuid, userUuid)),
-      goToIndexVolumes: () => h.push(u.goToIndexVolumes()),
-      goToIndexVolume: (volumeId: string) =>
-        h.push(u.goToIndexVolume(volumeId)),
-      goToIndexVolumeGroups: () => h.push(u.goToIndexVolumeGroups()),
-      goToIndexVolumeGroup: (groupName: string) =>
-        h.push(u.goToIndexVolumeGroup(groupName)),
-      goToUsers: () => h.push(u.goToUsers()),
-      goToUser: (userId: string) => h.push(u.goToUser(userId)),
-      goToNewUser: () => h.push(u.goToNewUser()),
-      goToNewApiKey: () => h.push(u.goToNewApiKey()),
-      goToApiKey: (id: string) => h.push(u.goToApiKey(id)),
-      goToApiKeys: () => h.push(u.goToApiKeys()),
-      goToError: () => h.push(u.goToError()),
-      goToEditDocRefByUuid: (docRefUuid: string) =>
-        h.push(u.goToEditDocRefByUuid(docRefUuid)),
-      goToEditDocRef: (docRef: DocRefType) => h.push(u.goToEditDocRef(docRef)),
+      urlGenerator: u,
+      nav: {
+        goToActivity: (activityId: string) =>
+          h.push(u.goToActivity(activityId)),
+        goToWelcome: () => h.push(u.goToWelcome()),
+        goToStreamBrowser: () => h.push(u.goToStreamBrowser()),
+        goToProcessing: () => h.push(u.goToProcessing()),
+        goToUserSettings: () => h.push(u.goToUserSettings()),
+        goToAuthorisationManager: (isGroup: string) =>
+          h.push(u.goToAuthorisationManager(isGroup)),
+        goToAuthorisationsForUser: (userUuid: string) =>
+          h.push(u.goToAuthorisationsForUser(userUuid)),
+        goToAuthorisationsForDocument: (docRefUuid: string) =>
+          h.push(u.goToAuthorisationsForDocument(docRefUuid)),
+        goToAuthorisationsForDocumentForUser: (
+          docRefUuid: string,
+          userUuid: string,
+        ) =>
+          h.push(u.goToAuthorisationsForDocumentForUser(docRefUuid, userUuid)),
+        goToIndexVolumes: () => h.push(u.goToIndexVolumes()),
+        goToIndexVolume: (volumeId: string) =>
+          h.push(u.goToIndexVolume(volumeId)),
+        goToIndexVolumeGroups: () => h.push(u.goToIndexVolumeGroups()),
+        goToIndexVolumeGroup: (groupName: string) =>
+          h.push(u.goToIndexVolumeGroup(groupName)),
+        goToUsers: () => h.push(u.goToUsers()),
+        goToUser: (userId: string) => h.push(u.goToUser(userId)),
+        goToNewUser: () => h.push(u.goToNewUser()),
+        goToNewApiKey: () => h.push(u.goToNewApiKey()),
+        goToApiKey: (id: string) => h.push(u.goToApiKey(id)),
+        goToApiKeys: () => h.push(u.goToApiKeys()),
+        goToError: () => h.push(u.goToError()),
+        goToEditDocRefByUuid: (docRefUuid: string) =>
+          h.push(u.goToEditDocRefByUuid(docRefUuid)),
+        goToEditDocRef: (docRef: DocRefType) =>
+          h.push(u.goToEditDocRef(docRef)),
+      },
     }),
     [h, u],
   );

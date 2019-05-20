@@ -14,7 +14,7 @@ import ThemedConfirm, {
   useDialog as useThemedConfirm,
 } from "components/ThemedConfirm";
 import useRouter from "lib/useRouter";
-import useAppNavigation from "../../../lib/useAppNavigation/useAppNavigation";
+import useAppNavigation from "lib/useAppNavigation";
 import UsersTable, { useTable as useUsersTable } from "../UsersTable";
 
 interface Props {
@@ -24,7 +24,9 @@ interface Props {
 export const DocumentPermissionEditor: React.FunctionComponent<Props> = ({
   docRefUuid,
 }) => {
-  const { goToAuthorisationsForDocumentForUser } = useAppNavigation();
+  const {
+    nav: { goToAuthorisationsForDocumentForUser },
+  } = useAppNavigation();
   const {
     clearPermissions,
     clearPermissionForUser,
