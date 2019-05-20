@@ -11,7 +11,7 @@ interface Props {
 const TEST_NAV_STRINGS = ["one", "two", "three"];
 
 const TestNavigated: React.FunctionComponent<Props> = ({ routing }) => {
-  const appNav = useAppNavigation();
+  const { nav: appNav } = useAppNavigation();
 
   return (
     <div>
