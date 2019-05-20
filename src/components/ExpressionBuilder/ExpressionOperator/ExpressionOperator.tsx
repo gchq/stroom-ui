@@ -250,16 +250,28 @@ const ExpressionOperator: React.FunctionComponent<EnhancedProps> = ({
           />
 
           <div className="ExpressionItem__buttons">
-            <Button icon="plus" text="Term" onClick={onAddTerm} />
-            <Button icon="plus" text="Group" onClick={onAddOperator} />
+            <Button size="small" icon="plus" text="Term" onClick={onAddTerm} />
+            <Button
+              size="small"
+              icon="plus"
+              text="Group"
+              onClick={onAddOperator}
+            />
             {!isRoot && (
               <React.Fragment>
                 <Button
+                  appearance="icon"
+                  size="small"
                   icon="check"
                   disabled={!value.enabled}
                   onClick={onEnabledToggled}
                 />
-                <Button icon="trash" onClick={onDeleteThis} />
+                <Button
+                  appearance="icon"
+                  size="small"
+                  icon="trash"
+                  onClick={onDeleteThis}
+                />
               </React.Fragment>
             )}
           </div>

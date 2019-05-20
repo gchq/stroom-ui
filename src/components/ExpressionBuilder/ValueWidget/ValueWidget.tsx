@@ -3,7 +3,6 @@ import * as React from "react";
 import SingleValueWidget from "./SingleValueWidget";
 import BetweenValueWidget from "./BetweenValueWidget";
 import InValueWidget from "./InValueWidget";
-import AppSearchBar from "../../AppSearchBar";
 import { ExpressionTermType } from "../types";
 import AppSearchBarWidget from "./AppSearchBarWidget";
 import { useCallback } from "react";

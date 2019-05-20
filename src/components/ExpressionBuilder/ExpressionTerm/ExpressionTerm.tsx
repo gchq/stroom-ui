@@ -177,12 +177,14 @@ const ExpressionTerm: React.FunctionComponent<EnhancedProps> = ({
       <div className="expression-term__actions">
         <Button
           appearance="icon"
+          size="small"
           icon="check"
           disabled={value.enabled}
           onClick={onEnabledToggled}
         />
         <Button
           icon="trash"
+          size="small"
           appearance="icon"
           action="secondary"
           onClick={onDeleteThis}

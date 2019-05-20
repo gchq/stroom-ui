@@ -13,12 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@import "./ExpressionTerm/ExpressionTerm";
 @import "./ValueWidget/valueWidget";
 
 .operator__children {
   padding-left: 2rem;
 }
+
 .operator__child {
   display: flex;
 }
@@ -27,26 +27,31 @@
 .expression-term .expression-term__actions {
   visibility: hidden;
 }
-.operator__child:hover > div > div.expression-term__actions {
+
+.operator__child:hover>div>div.expression-term__actions {
   visibility: visible;
 }
 
 .ExpressionItem__buttons {
   visibility: hidden;
 }
+
+.expression-item__row {
+  display: flex;
+}
+
 .expression-item__row:hover .ExpressionItem__buttons {
   visibility: visible;
 }
 
 .expression-item__root {
   margin-right: 0.5rem;
-  margin-left: 0.5rem;
+  margin-left: 0.75rem;
 }
 
 .expression-item {
   margin-top: 0.5rem;
   width: 100%;
-  justify-content: space-between;
 }
 
 .expression-item--disabled {
@@ -79,6 +84,7 @@
 .expression-term {
   display: flex;
 }
+
 .expression-term__select {
   width: 12rem;
 }
