@@ -16,22 +16,36 @@
 
 import * as React from "react";
 
+import PanelGroup, { PanelWidth } from "react-panelgroup";
 import {
   useStreamSearch,
   useStreamDataSource,
 } from "components/MetaBrowser/api";
 import IconHeader from "../IconHeader";
 import ExpressionSearchBar from "../ExpressionSearchBar";
-import HorizontalMainDetails from "../HorizontalMainDetails";
 import MetaDetailTabs from "./MetaDetailTabs";
 import { ExpressionOperatorType } from "../ExpressionBuilder/types";
 import { PageRequest } from "./types";
 import MetaTable, { useTable } from "./MetaTable";
+import useLocalStorage, { useStoreObjectFactory } from "lib/useLocalStorage";
 
 const defaultPageRequest: PageRequest = {
   pageOffset: 0,
   pageSize: 10,
 };
+
+const defaultPanelWidths: PanelWidth[] = [
+  {
+    resize: "dynamic",
+    minSize: 100,
+    size: 150,
+  },
+  {
+    resize: "dynamic",
+    minSize: 100,
+    size: 150,
+  },
+];
 
 const MetaBrowser = () => {
   const dataSource = useStreamDataSource();
@@ -45,8 +59,24 @@ const MetaBrowser = () => {
     [search],
   );
 
+  const {
+    value: panelWidths,
+    reduceValue: reducePanelWidths,
+  } = useLocalStorage<PanelWidth[]>(
+    "metaBrowserPanels",
+    defaultPanelWidths,
+    useStoreObjectFactory(),
+  );
+
+  const onPanelUpdate = React.useCallback(
+    (panelWidths: any[]) => {
+      reducePanelWidths(() => panelWidths as PanelWidth[]);
+    },
+    [reducePanelWidths],
+  );
+
   const tableProps = useTable(streams);
-  const { clearSelection, selectedItem } = tableProps;
+  const { selectedItem } = tableProps;
 
   return (
     <div className="page">
@@ -61,20 +91,18 @@ const MetaBrowser = () => {
         />
       </div>
       <div className="page__body">
-        <HorizontalMainDetails
-          storageKey="dataViewer"
-          title=""
-          onClose={clearSelection}
-          isOpen={true}
-          mainContent={<MetaTable {...tableProps} />}
-          detailContent={
-            !!selectedItem ? (
-              <MetaDetailTabs data={selectedItem} />
-            ) : (
-              <div>Please Select a Single Row</div>
-            )
-          }
-        />
+        <PanelGroup
+          direction="column"
+          panelWidths={panelWidths}
+          onUpdate={onPanelUpdate}
+        >
+          <MetaTable {...tableProps} />
+          {!!selectedItem ? (
+            <MetaDetailTabs data={selectedItem} />
+          ) : (
+            <div>Please Select a Single Row</div>
+          )}
+        </PanelGroup>
       </div>
     </div>
   );
