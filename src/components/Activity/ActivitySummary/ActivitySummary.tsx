@@ -15,7 +15,7 @@
  */
 
 import * as React from "react";
-import useActivity from "./api/useActivity";
+import useActivitySummary from "../api/useActivitySummary";
 
 interface Props {
   name: string;
@@ -23,7 +23,7 @@ interface Props {
 }
 
 const ActivitySummary: React.FunctionComponent = () => {
-  const activity = useActivity();
+  const activity = useActivitySummary();
 
   return (
     <button className="ActivitySummary control border">

@@ -1,14 +1,14 @@
 import * as React from "react";
 import { storiesOf } from "@storybook/react";
-import useActivity from "./useActivity";
+import useActivitySummary from "./useActivitySummary";
 import JsonDebug from "testing/JsonDebug";
 
 const TestHarness: React.FunctionComponent = () => {
-  const activity = useActivity();
+  const activity = useActivitySummary();
 
   return <JsonDebug value={activity} />;
 };
 
-storiesOf("Sections/Activity/useActivity", module).add("test", () => (
+storiesOf("Sections/Activity/useActivitySummary", module).add("test", () => (
   <TestHarness />
 ));

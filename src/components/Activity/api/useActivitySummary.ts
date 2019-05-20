@@ -4,12 +4,12 @@ import * as React from "react";
 import useApi from "./useApi";
 import { Activity } from "./types";
 
-const useActivity = (): Activity => {
+const useActivitySummary = (): Activity => {
   // Get the API object the provides the function that returns the promise
-  const { getActivity } = useApi();
+  const { getCurrentActivity } = useApi();
 
   // Declare the React state object to hold the response from the REST API
-  const [activity, setActivity] = React.useState<Activity>({
+  const [currentActivity, setCurrentActivity] = React.useState<Activity>({
     userId: "TBD",
     details: {
       properties: [
@@ -33,10 +33,10 @@ const useActivity = (): Activity => {
 
   // Use an effect to set the build info state when the component is mounted
   React.useEffect(() => {
-    getActivity().then(setActivity);
-  }, [setActivity, getActivity]);
+    getCurrentActivity().then(setCurrentActivity);
+  }, [setCurrentActivity, getCurrentActivity]);
 
-  return activity;
+  return currentActivity;
 };
 
-export default useActivity;
+export default useActivitySummary;

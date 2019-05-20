@@ -1,8 +1,12 @@
-// import { string } from "yup";
-
 export interface Activity {
-  userId: string;
-  details: ActivityDetails;
+  id?: string;
+  version?: number;
+  createTimeMs?: number;
+  createUser?: string;
+  updateTimeMs?: number;
+  updateUser?: string;
+  userId?: string;
+  details?: ActivityDetails;
 }
 
 export interface ActivityDetails {

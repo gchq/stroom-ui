@@ -5,20 +5,41 @@ import { storiesOf } from "@storybook/react";
 import useApi from "./useApi";
 import JsonDebug from "testing/JsonDebug";
 import { Activity } from "./types";
-const TestHarness: React.FunctionComponent = () => {
+const CurrentActivityTestHarness: React.FunctionComponent = () => {
   // REST call promise
-  const { getActivity } = useApi();
-  const [activity, setActivity] = React.useState<Activity>(undefined);
+  const { getCurrentActivity } = useApi();
+
+  const [currentActivity, setCurrentActivity] = React.useState<Activity>(
+    undefined,
+  );
   React.useEffect(() => {
-    getActivity().then(setActivity);
-  }, [getActivity, setActivity]);
+    getCurrentActivity().then(setCurrentActivity);
+  }, [getCurrentActivity, setCurrentActivity]);
   return (
     <div>
-      <JsonDebug value={{ activity }} />
+      <JsonDebug value={{ currentActivity }} />
+    </div>
+  );
+};
+
+const ActivitiesTestHarness: React.FunctionComponent = () => {
+  // REST call promise
+  const { getActivities } = useApi();
+
+  const [activities, setActivities] = React.useState<Activity[]>(undefined);
+  React.useEffect(() => {
+    getActivities().then(setActivities);
+  }, [getActivities, setActivities]);
+  return (
+    <div>
+      <JsonDebug value={{ activities }} />
     </div>
   );
 };
 
 storiesOf("Sections/Activity/useApi", module).add("test", () => (
-  <TestHarness />
+  <div>
+    <CurrentActivityTestHarness />
+    <ActivitiesTestHarness />
+  </div>
 ));

@@ -5,6 +5,7 @@ import { ResourceBuilder } from "./types";
 import { Activity } from "components/Activity/api/types";
 
 const ACTIVITY: Activity = {
+  id: "1",
   userId: "testuser",
   details: {
     properties: [
@@ -26,15 +27,26 @@ const ACTIVITY: Activity = {
   },
 };
 
+const ACTIVITY2: Activity = JSON.parse(JSON.stringify(ACTIVITY));
+ACTIVITY2.id = "2";
+
+const ACTIVITIES: Activity[] = [ACTIVITY, ACTIVITY2];
+
 const resourceBuilder: ResourceBuilder = (
   server: any,
   { stroomBaseServiceUrl }: Config,
 ) => {
-  const resource = `${stroomBaseServiceUrl}/activity/`;
+  server
+    .get(`${stroomBaseServiceUrl}/activity/v1/current`)
+    .intercept((req: HttpRequest, res: HttpResponse) => {
+      res.json(ACTIVITY);
+    });
 
-  server.get(resource).intercept((req: HttpRequest, res: HttpResponse) => {
-    res.json(ACTIVITY);
-  });
+  server
+    .get(`${stroomBaseServiceUrl}/activity/v1`)
+    .intercept((req: HttpRequest, res: HttpResponse) => {
+      res.json(ACTIVITIES);
+    });
 };
 
 export default resourceBuilder;

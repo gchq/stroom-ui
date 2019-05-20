@@ -18,7 +18,7 @@ import {
 import MenuItem from "./MenuItem";
 import { useDocumentTree } from "components/DocumentEditors/api/explorer";
 import { ActiveMenuItem } from "../types";
-import ActivitySummary from "components/Activity";
+import ActivitySummary from "components/Activity/ActivitySummary";
 
 interface Props {
   activeMenuItem: ActiveMenuItem;

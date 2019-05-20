@@ -15,12 +15,28 @@
  */
 
 import * as React from "react";
+
 import { storiesOf } from "@storybook/react";
+import { Switch, Route, RouteComponentProps } from "react-router";
 
-import ActivitySummary from "./ActivitySummary";
+import ActivityChooser from "./ActivityChooser";
 
+// import IndexVolumeEditor from "./ActivityChooser";
 import { addThemedStories } from "testing/storybook/themedStoryGenerator";
 
-const stories = storiesOf("Sections/Activity", module);
+const TestHarness = () => (
+  <Switch>
+    {/* <Route
+      exact
+      path="/s/indexing/volumes/:id"
+      render={(props: RouteComponentProps<any>) => (
+        <IndexVolumeEditor volumeId={props.match.params.id} />
+      )}
+    /> */}
+    <Route component={ActivityChooser} />
+  </Switch>
+);
 
-addThemedStories(stories, () => <ActivitySummary />);
+const stories = storiesOf("Sections/Activity/Chooser", module);
+
+addThemedStories(stories, () => <TestHarness />);

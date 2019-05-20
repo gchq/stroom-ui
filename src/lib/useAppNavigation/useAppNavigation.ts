@@ -12,6 +12,7 @@ const useAppNavigation = (): NavigateApp => {
   const u = useUrlGenerator(urlPrefix); // just to make all the following rote lines short
   return React.useMemo(
     () => ({
+      goToActivity: (activityId: string) => h.push(u.goToActivity(activityId)),
       goToWelcome: () => h.push(u.goToWelcome()),
       goToStreamBrowser: () => h.push(u.goToStreamBrowser()),
       goToProcessing: () => h.push(u.goToProcessing()),
