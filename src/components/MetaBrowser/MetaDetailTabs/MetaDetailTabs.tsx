@@ -18,18 +18,18 @@ import * as React from "react";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 
-import { useStreamDataRow } from "components/StreamBrowser/api";
+import { useStreamDataRow } from "components/MetaBrowser/api";
 import Loader from "components/Loader";
 import { StreamMetaRow } from "../types";
-import StreamDetails from "./StreamDetails";
-import StreamAttributes from "./StreamAttributes";
+import MetaDetails from "./MetaDetails";
+import MetaAttributes from "./MetaAttributes";
 import DataRetention from "./DataRetention";
 
 interface Props {
   data: StreamMetaRow;
 }
 
-const StreamDetailTabs: React.FunctionComponent<Props> = ({ data }) => {
+const MetaDetailTabs: React.FunctionComponent<Props> = ({ data }) => {
   const dataRow = useStreamDataRow(data.meta.id);
 
   if (!dataRow) {
@@ -49,10 +49,10 @@ const StreamDetailTabs: React.FunctionComponent<Props> = ({ data }) => {
         <div>I O U Data Display</div>
       </TabPanel>
       <TabPanel>
-        <StreamDetails dataRow={dataRow} />
+        <MetaDetails dataRow={dataRow} />
       </TabPanel>
       <TabPanel>
-        <StreamAttributes dataRow={dataRow} />
+        <MetaAttributes dataRow={dataRow} />
       </TabPanel>
       <TabPanel>
         <DataRetention dataRow={dataRow} />
@@ -61,4 +61,4 @@ const StreamDetailTabs: React.FunctionComponent<Props> = ({ data }) => {
   );
 };
 
-export default StreamDetailTabs;
+export default MetaDetailTabs;

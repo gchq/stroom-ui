@@ -30,7 +30,7 @@ import { TableOutProps } from "lib/useSelectableItemListing/types";
 // import "react-table/react-table.css";
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-// import useStreamAttributeMapApi from "components/StreamBrowser/api/streamAttributeMap/useApi";
+// import useStreamAttributeMapApi from "components/MetaBrowser/api/streamAttributeMap/useApi";
 // import useDataApi from "api/data/useApi";
 
 // import Loader from "components/Loader";
@@ -58,7 +58,7 @@ const COLUMNS: Column[] = [
   },
 ];
 
-const StreamTable: React.FunctionComponent<TableOutProps<StreamMetaRow>> = ({
+const MetaTable: React.FunctionComponent<TableOutProps<StreamMetaRow>> = ({
   tableProps,
 }) => (
   <ReactTable
@@ -309,4 +309,4 @@ export const useTable = (
     },
   );
 
-export default StreamTable;
+export default MetaTable;

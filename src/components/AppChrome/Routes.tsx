@@ -25,7 +25,7 @@ import AuthorisationManager, {
 } from "../AuthorisationManager";
 import DocumentPermissionEditor from "components/AuthorisationManager/DocumentPermissionEditor";
 import DocumentPermissionForUserEditor from "components/AuthorisationManager/DocumentPermissionForUserEditor";
-import StreamBrowser from "components/StreamBrowser";
+import MetaBrowser from "components/MetaBrowser";
 import SwitchedDocRefEditor from "components/DocumentEditors/SwitchedDocRefEditor";
 import ErrorPage from "components/ErrorPage";
 import IndexVolumeGroups from "components/IndexVolumeGroups";
@@ -93,7 +93,7 @@ const Routes: React.FunctionComponent = () => {
           <AppChrome
             activeMenuItem="data"
             urlPrefix={urlPrefix}
-            content={<StreamBrowser />}
+            content={<MetaBrowser />}
           />
         )}
       />

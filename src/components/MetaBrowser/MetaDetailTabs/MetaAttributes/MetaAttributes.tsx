@@ -1,5 +1,5 @@
 import * as React from "react";
-import { StreamMetaRow } from "components/StreamBrowser/types";
+import { StreamMetaRow } from "components/MetaBrowser/types";
 
 interface Props {
   dataRow: StreamMetaRow;
@@ -9,7 +9,7 @@ const defaultAttributes = {
   none: "none",
 };
 
-const StreamAttributes: React.FunctionComponent<Props> = ({ dataRow }) => (
+const MetaAttributes: React.FunctionComponent<Props> = ({ dataRow }) => (
   <div className="tab-pane">
     <div className="StreamDetails__container">
       <div className="StreamDetails__table__container">
@@ -37,4 +37,4 @@ const StreamAttributes: React.FunctionComponent<Props> = ({ dataRow }) => (
   </div>
 );
 
-export default StreamAttributes;
+export default MetaAttributes;

@@ -6,7 +6,7 @@ import ErrorTable from "./ErrorTable";
 import { errorData } from "testing/data/data";
 
 const stories = storiesOf(
-  "Sections/Stream Browser/Data Display/Error Table",
+  "Sections/Meta Browser/Data Display/Error Table",
   module,
 );
 

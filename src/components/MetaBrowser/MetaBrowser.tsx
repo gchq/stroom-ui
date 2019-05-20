@@ -19,21 +19,21 @@ import * as React from "react";
 import {
   useStreamSearch,
   useStreamDataSource,
-} from "components/StreamBrowser/api";
+} from "components/MetaBrowser/api";
 import IconHeader from "../IconHeader";
 import ExpressionSearchBar from "../ExpressionSearchBar";
 import HorizontalMainDetails from "../HorizontalMainDetails";
-import StreamDetailTabs from "./StreamDetailTabs";
+import MetaDetailTabs from "./MetaDetailTabs";
 import { ExpressionOperatorType } from "../ExpressionBuilder/types";
 import { PageRequest } from "./types";
-import StreamTable, { useTable } from "./StreamTable";
+import MetaTable, { useTable } from "./MetaTable";
 
 const defaultPageRequest: PageRequest = {
   pageOffset: 0,
   pageSize: 10,
 };
 
-const StreamBrowser = () => {
+const MetaBrowser = () => {
   const dataSource = useStreamDataSource();
   const { streams, search } = useStreamSearch();
 
@@ -66,10 +66,10 @@ const StreamBrowser = () => {
           title=""
           onClose={clearSelection}
           isOpen={true}
-          mainContent={<StreamTable {...tableProps} />}
+          mainContent={<MetaTable {...tableProps} />}
           detailContent={
             !!selectedItem ? (
-              <StreamDetailTabs data={selectedItem} />
+              <MetaDetailTabs data={selectedItem} />
             ) : (
               <div>Please Select a Single Row</div>
             )
@@ -80,4 +80,4 @@ const StreamBrowser = () => {
   );
 };
 
-export default StreamBrowser;
+export default MetaBrowser;

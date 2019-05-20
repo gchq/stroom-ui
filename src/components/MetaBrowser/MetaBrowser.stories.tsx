@@ -17,9 +17,9 @@
 import * as React from "react";
 import { storiesOf } from "@storybook/react";
 
-import StreamBrowser from "./StreamBrowser";
+import MetaBrowser from "./MetaBrowser";
 import { addThemedStories } from "testing/storybook/themedStoryGenerator";
 
-const stories = storiesOf("Sections/Stream Browser/Browser", module);
+const stories = storiesOf("Sections/Meta Browser/Browser", module);
 
-addThemedStories(stories, () => <StreamBrowser />);
+addThemedStories(stories, () => <MetaBrowser />);

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { StreamMetaRow } from "components/StreamBrowser/types";
+import { StreamMetaRow } from "components/MetaBrowser/types";
 
 interface Props {
   dataRow: StreamMetaRow;
