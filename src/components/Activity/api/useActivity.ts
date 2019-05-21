@@ -5,10 +5,17 @@ import useApi from "./useApi";
 interface UseActivity {
   activity: Activity | undefined;
   onPropChange: (id: string, value: string) => any;
+  onSave: () => void;
+  isDirty: boolean;
 }
 
 interface SetActivity {
   type: "set";
+  activity: Activity;
+}
+
+interface SavedActivity {
+  type: "saved";
   activity: Activity;
 }
 
@@ -18,24 +25,40 @@ interface SetPropValue {
   value: string;
 }
 
-const reducer = (state: Activity, action: SetActivity | SetPropValue) => {
+interface ReducerState {
+  activity: Activity;
+  isDirty: boolean;
+}
+
+const reducer = (
+  state: ReducerState,
+  action: SetActivity | SetPropValue | SavedActivity,
+): ReducerState => {
   switch (action.type) {
     case "set":
-      return action.activity;
+      return {
+        activity: action.activity,
+        isDirty: false,
+      };
     case "prop":
       return {
-        ...state,
-        properties: state.properties.map(prop => {
-          if (prop.id === action.id) {
-            return {
-              ...prop,
-              value: action.value,
-            };
-          } else {
-            return prop;
-          }
-        }),
+        activity: {
+          ...state.activity,
+          properties: state.activity.properties.map(prop => {
+            if (prop.id === action.id) {
+              return {
+                ...prop,
+                value: action.value,
+              };
+            } else {
+              return prop;
+            }
+          }),
+        },
+        isDirty: true,
       };
+    case "saved":
+      return { activity: action.activity, isDirty: false };
   }
 
   return state;
@@ -46,9 +69,12 @@ const useActivity = (activityId: string): UseActivity => {
   //   undefined,
   // );
 
-  const [activity, dispatch] = React.useReducer(reducer, undefined);
+  const [{ activity, isDirty }, dispatch] = React.useReducer(reducer, {
+    activity: undefined,
+    isDirty: false,
+  });
 
-  const { getActivity } = useApi();
+  const { getActivity, updateActivity } = useApi();
 
   React.useEffect(() => {
     getActivity(activityId).then(activity =>
@@ -61,7 +87,15 @@ const useActivity = (activityId: string): UseActivity => {
     [dispatch],
   );
 
-  return { activity, onPropChange };
+  const onSave = React.useCallback(
+    () =>
+      updateActivity(activity).then(activity =>
+        dispatch({ type: "saved", activity }),
+      ),
+    [updateActivity, dispatch, activity],
+  );
+
+  return { activity, isDirty, onPropChange, onSave };
 };
 
 export default useActivity;

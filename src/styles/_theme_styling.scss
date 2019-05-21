@@ -44,7 +44,7 @@ table {
 //   }
 // }
 
-input {
+input, textarea, select {
   @include themify($themes) {
     background-color: themed("control__background-color");
     color: themed("control__text-color");

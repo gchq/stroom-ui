@@ -18,6 +18,7 @@ import useActivity from "../api/useActivity";
 import Loader from "components/Loader";
 import useActivityConfig from "../api/useActivityConfig";
 import parse, { HTMLReactParserOptions, DomElement } from "html-react-parser";
+import parser from "style-to-object";
 import domToReact from "html-react-parser/lib/dom-to-react";
 import { Prop, Activity } from "../api/types";
 import ConfirmPasswordResetEmailContainer from "components/password/ConfirmPasswordResetEmail/ConfirmPasswordResetEmailContainer";
@@ -27,8 +28,7 @@ interface Props {
   activityId: string;
 }
 
-const getId = (element: DomElement): string => {
-  const id: string = element.attribs.id;
+const getId = ({ attribs: { id } }: DomElement): string => {
   if (id) {
     const trimmed: string = id.trim();
     if (trimmed.length > 0) {
@@ -38,8 +38,7 @@ const getId = (element: DomElement): string => {
   return null;
 };
 
-const getName = (element: DomElement): string => {
-  const name: string = element.attribs.name;
+const getName = ({ attribs: { name } }: DomElement): string => {
   if (name) {
     const trimmed: string = name.trim();
     if (trimmed.length > 0) {
@@ -59,8 +58,9 @@ const getValue = (activity: Activity, propertyId: string): string => {
   return null;
 };
 
-const isShowInSelection = (element: DomElement): boolean => {
-  const showInSelection: string = element.attribs.showInSelection;
+const isShowInSelection = ({
+  attribs: { showInSelection },
+}: DomElement): boolean => {
   if (showInSelection) {
     const trimmed: string = showInSelection.trim();
     if (trimmed.length > 0) {
@@ -70,8 +70,7 @@ const isShowInSelection = (element: DomElement): boolean => {
   return true;
 };
 
-const isShowInList = (element: DomElement): boolean => {
-  const showInList: string = element.attribs.showInList;
+const isShowInList = ({ attribs: { showInList } }: DomElement): boolean => {
   if (showInList) {
     const trimmed: string = showInList.trim();
     if (trimmed.length > 0) {
@@ -110,16 +109,24 @@ interface FormState {
 const ActivityEditor: React.FunctionComponent<Props> = ({ activityId }) => {
   const { history } = useRouter();
   const activityConfig = useActivityConfig();
-  const { activity, onPropChange } = useActivity(activityId);
+  const { activity, onPropChange, onSave, isDirty } = useActivity(activityId);
 
   const options: HTMLReactParserOptions = {
     replace: element => {
-      if (element.attribs) {
+      const { attribs } = element;
+      if (attribs) {
+        const style: React.CSSProperties =
+          attribs && attribs.style && parser(attribs.style);
+        const customAttribs = {
+          ...attribs,
+          style,
+        };
+
         const elemName = element.name.toLowerCase();
         if ("input" === elemName) {
           const prop: Prop = createProp(element);
           const value: string = getValue(activity, prop.id);
-          const type: string = element.attribs.type.toLowerCase();
+          const type: string = attribs.type.toLowerCase();
 
           if ("checkbox" === type) {
             return (
@@ -130,6 +137,7 @@ const ActivityEditor: React.FunctionComponent<Props> = ({ activityId }) => {
                 }
                 checked={value !== "false"}
                 defaultChecked={value !== "false"}
+                {...customAttribs}
               />
             );
           } else if ("radio" === type) {
@@ -141,6 +149,7 @@ const ActivityEditor: React.FunctionComponent<Props> = ({ activityId }) => {
                 }
                 checked={value !== "false"}
                 defaultChecked={value !== "false"}
+                {...customAttribs}
               />
             );
           } else {
@@ -150,6 +159,7 @@ const ActivityEditor: React.FunctionComponent<Props> = ({ activityId }) => {
                   onPropChange(prop.id, value)
                 }
                 value={value}
+                {...customAttribs}
               />
             );
           }
@@ -161,7 +171,7 @@ const ActivityEditor: React.FunctionComponent<Props> = ({ activityId }) => {
             <textarea
               onChange={({ target: { value } }) => onPropChange(prop.id, value)}
               value={value}
-              // {...element.attribs}
+              {...customAttribs}
             />
           );
         } else if ("select" === elemName) {
@@ -172,6 +182,7 @@ const ActivityEditor: React.FunctionComponent<Props> = ({ activityId }) => {
             <select
               onChange={({ target: { value } }) => onPropChange(prop.id, value)}
               value={value}
+              {...customAttribs}
             />
           );
         }
@@ -356,12 +367,18 @@ const ActivityEditor: React.FunctionComponent<Props> = ({ activityId }) => {
         <IconHeader icon="tasks" text={activityConfig.editorTitle} />
         <div className="page__buttons Button__container">
           <Button text="Back" onClick={history.goBack} />
-
+          <Button
+            icon="save"
+            text="Save"
+            title="Save"
+            disabled={!isDirty}
+            onClick={onSave}
+          />
           {/* <ThemedConfirm {...removeDialogProps} /> */}
         </div>
       </div>
       <div className="page__search" />
-      <div className="page__body">
+      <div className="page__body page__padding">
         <div>{elements}</div>
       </div>
       <p>{JSON.stringify(activity)}</p>
