@@ -19,8 +19,6 @@ interface SetPropValue {
 }
 
 const reducer = (state: Activity, action: SetActivity | SetPropValue) => {
-  console.log("Hit reducer");
-
   switch (action.type) {
     case "set":
       return action.activity;

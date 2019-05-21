@@ -144,8 +144,6 @@ const ActivityEditor: React.FunctionComponent<Props> = ({ activityId }) => {
               />
             );
           } else {
-            console.log("Creating input");
-
             return (
               <input
                 onChange={({ target: { value } }) =>
