@@ -161,7 +161,7 @@ const ActivityEditor: React.FunctionComponent<Props> = ({ activityId }) => {
             <textarea
               onChange={({ target: { value } }) => onPropChange(prop.id, value)}
               value={value}
-              {...element.attribs}
+              // {...element.attribs}
             />
           );
         } else if ("select" === elemName) {
