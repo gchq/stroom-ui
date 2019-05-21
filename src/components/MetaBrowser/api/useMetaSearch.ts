@@ -15,7 +15,7 @@ const defaultStreams: StreamAttributeMapResult = {
   },
 };
 
-const useStreamSearch = (): UseStreamSearch => {
+const useMetaSearch = (): UseStreamSearch => {
   const [streams, setStreams] = React.useState<StreamAttributeMapResult>(
     defaultStreams,
   );
@@ -35,4 +35,4 @@ const useStreamSearch = (): UseStreamSearch => {
   };
 };
 
-export default useStreamSearch;
+export default useMetaSearch;
