@@ -17,10 +17,7 @@
 import * as React from "react";
 
 import PanelGroup, { PanelWidth } from "react-panelgroup";
-import {
-  useStreamSearch,
-  useStreamDataSource,
-} from "components/MetaBrowser/api";
+import { useMetaSearch, useMetaDataSource } from "components/MetaBrowser/api";
 import IconHeader from "../IconHeader";
 import ExpressionSearchBar from "../ExpressionSearchBar";
 import MetaDetailTabs from "./MetaDetailTabs";
@@ -48,8 +45,8 @@ const defaultPanelWidths: PanelWidth[] = [
 ];
 
 const MetaBrowser = () => {
-  const dataSource = useStreamDataSource();
-  const { streams, search } = useStreamSearch();
+  const dataSource = useMetaDataSource();
+  const { streams, search } = useMetaSearch();
 
   // The expression search bar will call this on mount
   const onSearch = React.useCallback(
