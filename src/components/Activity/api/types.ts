@@ -6,10 +6,6 @@ export interface Activity {
   updateTimeMs?: number;
   updateUser?: string;
   userId?: string;
-  details?: ActivityDetails;
-}
-
-export interface ActivityDetails {
   properties: Prop[];
 }
 
@@ -19,4 +15,12 @@ export interface Prop {
   value: string;
   showInSelection: boolean;
   showInList: boolean;
+}
+
+export interface ActivityConfig {
+  enabled: boolean;
+  chooseOnStartup: boolean;
+  managerTitle: string;
+  editorTitle: string;
+  editorBody: string;
 }

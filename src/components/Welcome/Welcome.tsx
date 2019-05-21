@@ -19,6 +19,7 @@ import * as React from "react";
 import BuildInfo from "components/BuildInfo";
 import IconHeader from "components/IconHeader";
 import useWelcomeHtml from "./api/useWelcomeHtml";
+import parse from "html-react-parser";
 
 const Welcome: React.FunctionComponent = () => {
   const welcomeData = useWelcomeHtml();
@@ -33,7 +34,7 @@ const Welcome: React.FunctionComponent = () => {
           alt="Stroom logo"
           src={require("../../images/logo_orange.svg")}
         />
-        <div dangerouslySetInnerHTML={welcomeData} />
+        <div>{parse(welcomeData.html)}</div>
         <div className="welcome__shortcuts">
           <h4>Global shortcut keys</h4>
           <table className="welcome__shortcuts__table">

@@ -2,9 +2,12 @@ import * as React from "react";
 import { useCallback } from "react";
 import useHttpClient from "lib/useHttpClient";
 import useConfig from "startup/config/useConfig";
-import { Activity } from "./types";
+import { Activity, ActivityConfig } from "./types";
 
 interface UseApi {
+  // Get the configuration for activities.
+  getConfig: () => Promise<ActivityConfig>;
+
   // Get the current activity for the summary.
   getCurrentActivity: () => Promise<Activity>;
   setCurrentActivity: (activity: Activity) => Promise<Activity>;
@@ -27,6 +30,11 @@ const useApi = (): UseApi => {
   } = useHttpClient();
   const { stroomBaseServiceUrl } = useConfig();
   return {
+    getConfig: useCallback(
+      () => httpGetJson(`${stroomBaseServiceUrl}/activity/v1/config`),
+      [stroomBaseServiceUrl, httpGetJson],
+    ),
+
     getCurrentActivity: useCallback(
       () => httpGetJson(`${stroomBaseServiceUrl}/activity/v1/current`),
       [stroomBaseServiceUrl, httpGetJson],

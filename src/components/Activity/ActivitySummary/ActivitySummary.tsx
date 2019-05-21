@@ -29,9 +29,8 @@ const ActivitySummary: React.FunctionComponent = () => {
     <button className="ActivitySummary control border">
       <div className="ActivitySummary__header">Current Activity</div>
       {activity &&
-        activity.details &&
-        activity.details.properties &&
-        activity.details.properties
+        activity.properties &&
+        activity.properties
           .filter(({ showInSelection }) => showInSelection)
           .map(({ name, value }, i: number) => {
             return (

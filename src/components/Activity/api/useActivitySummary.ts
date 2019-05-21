@@ -11,24 +11,22 @@ const useActivitySummary = (): Activity => {
   // Declare the React state object to hold the response from the REST API
   const [currentActivity, setCurrentActivity] = React.useState<Activity>({
     userId: "TBD",
-    details: {
-      properties: [
-        {
-          id: "prop1",
-          name: "name1",
-          value: "value1",
-          showInSelection: true,
-          showInList: true,
-        },
-        {
-          id: "prop2",
-          name: "name2",
-          value: "value2",
-          showInSelection: true,
-          showInList: true,
-        },
-      ],
-    },
+    properties: [
+      {
+        id: "prop1",
+        name: "name1",
+        value: "value1",
+        showInSelection: true,
+        showInList: true,
+      },
+      {
+        id: "prop2",
+        name: "name2",
+        value: "value2",
+        showInSelection: true,
+        showInList: true,
+      },
+    ],
   });
 
   // Use an effect to set the build info state when the component is mounted

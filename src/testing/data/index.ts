@@ -72,7 +72,7 @@ import { generateTestGroup, generateTestUser } from "./usersAndGroups";
 import { generate as generateVisualisation } from "./visualisation";
 import { generate as generateXmlSchema } from "./xmlSchema";
 import { generate as generateXslt } from "./xslt";
-import { Activity } from "components/Activity/api/types";
+import { Activity, ActivityConfig } from "components/Activity/api/types";
 
 let docPermissionByType = testDocRefsTypes.reduce(
   (acc, curr) => ({ ...acc, [curr]: documentPermissionNames }),
@@ -175,31 +175,40 @@ let indexes: IndexDoc[] = Array(5)
   .fill(null)
   .map(generateIndex);
 
+const ACTIVITY_CONFIG: ActivityConfig = {
+  enabled: true,
+  chooseOnStartup: true,
+  managerTitle: "Choose Activity",
+  editorTitle: "Edit Activity",
+  editorBody:
+    'Activity Code:</br><input type="text" name="code"></input></br></br>Activity Description:</br><textarea rows="4" style="width:100%;height:80px" name="description"></textarea>Explain what the activity is',
+};
+
 const ACTIVITY: Activity = {
   id: "1",
   userId: "testuser",
-  details: {
-    properties: [
-      {
-        id: "prop1",
-        name: "name1",
-        value: "value1",
-        showInSelection: true,
-        showInList: true,
-      },
-      {
-        id: "prop2",
-        name: "name2",
-        value: "value2",
-        showInSelection: true,
-        showInList: true,
-      },
-    ],
-  },
+  properties: [
+    {
+      id: "code",
+      name: "code",
+      value: "value1",
+      showInSelection: true,
+      showInList: true,
+    },
+    {
+      id: "description",
+      name: "description",
+      value: "value2",
+      showInSelection: true,
+      showInList: true,
+    },
+  ],
 };
 
-const ACTIVITY2: Activity = JSON.parse(JSON.stringify(ACTIVITY));
-ACTIVITY2.id = "2";
+const ACTIVITY2: Activity = {
+  ...ACTIVITY,
+  id: "2",
+};
 
 const ACTIVITIES: Activity[] = [ACTIVITY, ACTIVITY2];
 
@@ -341,7 +350,11 @@ iterateNodes(docTree, (_, node) => {
 });
 
 export const fullTestData: TestData = {
-  activities: ACTIVITIES,
+  activity: {
+    config: ACTIVITY_CONFIG,
+    activityList: ACTIVITIES,
+    currentActivity: ACTIVITY,
+  },
   documentTree: docTree,
   docRefTypes: testDocRefsTypes,
   elements,

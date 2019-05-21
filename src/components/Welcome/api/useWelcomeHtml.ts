@@ -4,11 +4,7 @@ import * as React from "react";
 import useApi from "./useApi";
 import { WelcomeData } from "./types";
 
-interface DangerousInnerHtml {
-  __html: string;
-}
-
-const useWelcomeHtml = (): DangerousInnerHtml => {
+const useWelcomeHtml = (): WelcomeData => {
   // Get the API object the provides the function that returns the promise
   const { getWelcomeHtml } = useApi();
 
@@ -25,7 +21,7 @@ const useWelcomeHtml = (): DangerousInnerHtml => {
   }, [setWelcomeData, getWelcomeHtml]);
 
   // Memoise the transformed return object so that any effect that uses the return value will not rerender
-  return React.useMemo(() => ({ __html: welcomeData.html }), [welcomeData]);
+  return welcomeData;
 };
 
 export default useWelcomeHtml;

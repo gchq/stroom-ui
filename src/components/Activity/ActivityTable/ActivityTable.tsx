@@ -22,9 +22,8 @@ const ActivityCell: React.FunctionComponent<Row> = ({ value: activity }) => {
   return (
     <div className="ActivityTable__row">
       {activity &&
-        activity.details &&
-        activity.details.properties &&
-        activity.details.properties
+        activity.properties &&
+        activity.properties
           .filter(({ showInList }) => showInList)
           .map(({ name, value }, i: number) => {
             return (
