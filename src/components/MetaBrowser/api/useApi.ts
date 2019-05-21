@@ -15,6 +15,7 @@ interface Api {
   ) => Promise<StreamAttributeMapResult>;
   fetchDataSource: () => Promise<DataSourceType>;
   getDetailsForSelectedStream: (metaId: number) => Promise<MetaRow>;
+  getRelations: (metaId: number, anyStatus: boolean) => Promise<MetaRow[]>;
 }
 
 export const useApi = (): Api => {
@@ -66,6 +67,13 @@ export const useApi = (): Api => {
           body: JSON.stringify(expression),
         }),
       [getPageUrl, httpPostJsonResponse],
+    ),
+    getRelations: React.useCallback(
+      (metaId: number, anyStatus: boolean) =>
+        httpGetJson(
+          `${stroomBaseServiceUrl}/streamattributemap/v1/${metaId}/${anyStatus}/relations`,
+        ),
+      [stroomBaseServiceUrl, httpGetJson],
     ),
   };
 };

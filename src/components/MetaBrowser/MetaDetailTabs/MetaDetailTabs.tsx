@@ -18,7 +18,7 @@ import * as React from "react";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 
-import { useStreamDataRow } from "components/MetaBrowser/api";
+import { useMetaRow } from "components/MetaBrowser/api";
 import Loader from "components/Loader";
 import { MetaRow } from "../types";
 import MetaDetails from "./MetaDetails";
@@ -30,7 +30,7 @@ interface Props {
 }
 
 const MetaDetailTabs: React.FunctionComponent<Props> = ({ data }) => {
-  const dataRow = useStreamDataRow(data.meta.id);
+  const dataRow = useMetaRow(data.meta.id);
 
   if (!dataRow) {
     return <Loader message="Loading Data" />;
