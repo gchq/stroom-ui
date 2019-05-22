@@ -19,21 +19,12 @@ import { AuthenticationContext } from "startup/Authentication";
 import { DocumentTreeContextProvider } from "components/DocumentEditors/api/explorer";
 import { ErrorReportingContextProvider } from "components/ErrorPage";
 
-const WithTestServer: React.FunctionComponent = ({ children }) => {
-  useTestServer(testData);
-
-  return <div>{children}</div>;
-};
-
 const RouteWrapper: React.StatelessComponent<RouteComponentProps> = ({
   children,
   history,
 }) => {
-  return (
-    <CustomRouter history={history}>
-      <WithTestServer>{children}</WithTestServer>
-    </CustomRouter>
-  );
+  useTestServer(testData);
+  return <CustomRouter history={history}>{children}</CustomRouter>;
 };
 const DragDropRouted = pipe(
   DragDropContext(HTML5Backend),

@@ -53,11 +53,14 @@ interface HttpClient {
   httpPutEmptyResponse: HttpCall;
   httpDeleteEmptyResponse: HttpCall;
   httpPatchEmptyResponse: HttpCall;
-  clearCache: () => void;
 }
 
 // Cache GET Promises by URL -- Effectively static/global to the application
 let cache = {};
+
+export const clearHttpCache = () => {
+  cache = {};
+};
 
 export const useHttpClient = (): HttpClient => {
   const { idToken } = useAuthenticationContext();
@@ -218,9 +221,6 @@ export const useHttpClient = (): HttpClient => {
     httpPutEmptyResponse: useFetchWithBodyAndEmptyResponse("put"),
     httpDeleteEmptyResponse: useFetchWithBodyAndEmptyResponse("delete"),
     httpPatchEmptyResponse: useFetchWithBodyAndEmptyResponse("patch"),
-    clearCache: () => {
-      cache = {};
-    },
   };
 };
 

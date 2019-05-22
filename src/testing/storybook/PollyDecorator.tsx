@@ -19,7 +19,7 @@ import FetchAdapter, {
   HttpResponse,
 } from "@pollyjs/adapter-fetch";
 
-import { useHttpClient } from "lib/useHttpClient";
+import { clearHttpCache } from "lib/useHttpClient";
 import { Config } from "startup/config/types";
 import { TestData } from "../testTypes";
 
@@ -73,11 +73,9 @@ export interface Props {
 }
 
 export const useTestServer = (testData: TestData) => {
-  const { clearCache } = useHttpClient();
-
   React.useEffect(() => {
-    clearCache();
+    clearHttpCache();
     // Make a deep copy so that each test gets it's own data
     testCache.data = JSON.parse(JSON.stringify(testData));
-  }, [testData, clearCache]);
+  }, [testData]);
 };

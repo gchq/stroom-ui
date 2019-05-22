@@ -69,6 +69,10 @@ const resourceBuilder: ResourceBuilder = (
 
   // Manage activities.
   server.get(resource).intercept((req: HttpRequest, res: HttpResponse) => {
+    console.log("Getting activities", {
+      list: testCache.data!.activity.activityList,
+    });
+
     res.json(testCache.data!.activity.activityList);
   });
 
@@ -130,7 +134,10 @@ const resourceBuilder: ResourceBuilder = (
         },
       );
 
-      console.log("Updating activity", savedActivity);
+      console.log("Updating activity", {
+        savedActivity,
+        list: testCache.data!.activity.activityList,
+      });
       res.json(savedActivity);
     });
 

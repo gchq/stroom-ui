@@ -1,5 +1,5 @@
-import useHttpClient from "./useHttpClient";
+import useHttpClient, { clearHttpCache } from "./useHttpClient";
 
-export { useHttpClient };
+export { useHttpClient, clearHttpCache };
 
 export default useHttpClient;
