@@ -1,0 +1,15 @@
+input[type="radio"] {
+  width: unset;
+}
+
+.DataRetentionRuleEditor__header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.DataRetentionRuleEditor__header .inline-input__editing {
+  width: 15em;
+  height: 1.3em;
+  font-size: 1em;
+  font-weight: bold;
+}
