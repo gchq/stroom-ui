@@ -127,7 +127,6 @@ const useFocusSteal = <T extends HTMLElement>(
   const inputRef = React.useRef<T>();
 
   React.useEffect(() => {
-    console.log("use effect", inputRef.current);
     if (takesFocus && inputRef.current) {
       inputRef.current.focus();
     }
@@ -420,7 +419,6 @@ const ActivityEditor: React.FunctionComponent<Props> = ({ activityId }) => {
   let elements;
 
   if (activityConfig) {
-    console.log(activityConfig.editorBody);
     elements = parse(activityConfig.editorBody, options);
   }
 
@@ -448,7 +446,6 @@ const ActivityEditor: React.FunctionComponent<Props> = ({ activityId }) => {
       <div className="page__body page__padding">
         <div>{elements}</div>
       </div>
-      <p>{JSON.stringify(activity)}</p>
     </div>
   );
 };

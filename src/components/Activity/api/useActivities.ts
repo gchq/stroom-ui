@@ -42,7 +42,12 @@ const reducer = (
     case "created":
       return state.concat([action.activity]);
     case "updated":
-      return state.concat([action.activity]);
+      return state.map(v => {
+        if (v.id === action.activity.id) {
+          return action.activity;
+        }
+        return v;
+      });
     case "deleted":
       return state.filter(v => v.id !== action.id);
     default:
@@ -105,3 +110,30 @@ const useActivities = (): UseActivities => {
 };
 
 export default useActivities;
+
+// indexVolumes,
+// createIndexVolume: React.useCallback(
+//   (newIndexVolume: NewIndexVolume) =>
+//     createIndexVolume(newIndexVolume).then(indexVolume =>
+//       dispatch({
+//         type: "created",
+//         indexVolume,
+//       }),
+//     ),
+//   [createIndexVolume],
+// ),
+// deleteIndexVolume: React.useCallback(
+//   (id: string) =>
+//     deleteIndexVolume(id).then(() =>
+//       dispatch({
+//         type: "deleted",
+//         id,
+//       }),
+//     ),
+//   [deleteIndexVolume],
+// ),
+// addVolumeToGroup: React.useCallback(
+//   (volumeId: string, groupName: string) =>
+//     addVolumeToGroup(volumeId, groupName),
+//   [addVolumeToGroup],
+// ),
