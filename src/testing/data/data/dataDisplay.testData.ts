@@ -13,699 +13,699 @@ export const errorData: FetchMarkerResult = {
   availableChildStreamTypes: [],
   markers: [
     {
-      severity: "WARNING",
+      severity: "WARN",
       count: 1000,
       total: 1000,
       expander: { depth: 0, expanded: true, leaf: false },
     },
     {
-      severity: "WARNING",
+      severity: "WARN",
       location: { streamNo: 1, lineNo: 2, colNo: 1 },
       elementId: "translationFilter",
       message:
         "Lookup - Lookup failed (map = FILENO_TO_LOCATION_MAP, key = 1, eventTime = 2010-01-01T00:10:24.000Z)",
     },
     {
-      severity: "WARNING",
+      severity: "WARN",
       location: { streamNo: 1, lineNo: 2, colNo: 1 },
       elementId: "translationFilter",
       message:
         "BitmapLookup - Lookup failed (map = GreekAlphabet, key = {0,11}, eventTime = 2010-01-01T00:10:24.000Z)",
     },
     {
-      severity: "WARNING",
+      severity: "WARN",
       location: { streamNo: 1, lineNo: 2, colNo: 1 },
       elementId: "translationFilter",
       message:
         "Lookup - Lookup failed (map = IPToLocation, key = 3232235777, eventTime = 2018-07-06T06:43:32.603Z)",
     },
     {
-      severity: "WARNING",
+      severity: "WARN",
       location: { streamNo: 1, lineNo: 2, colNo: 1 },
       elementId: "translationFilter",
       message:
         "Lookup - Lookup failed (map = IPToLocation, key = 3232236805, eventTime = 2018-07-06T06:43:32.603Z)",
     },
     {
-      severity: "WARNING",
+      severity: "WARN",
       location: { streamNo: 1, lineNo: 2, colNo: 1 },
       elementId: "translationFilter",
       message:
         "Lookup - Lookup failed (map = IPToLocation, key = 3232238597, eventTime = 2018-07-06T06:43:32.603Z)",
     },
     {
-      severity: "WARNING",
+      severity: "WARN",
       location: { streamNo: 1, lineNo: 2, colNo: 1 },
       elementId: "translationFilter",
       message:
         "Lookup - Lookup failed (map = IPToLocation, key = 3232241419, eventTime = 2018-07-06T06:43:32.603Z)",
     },
     {
-      severity: "WARNING",
+      severity: "WARN",
       location: { streamNo: 1, lineNo: 2, colNo: 1 },
       elementId: "translationFilter",
       message:
         "Lookup - Lookup failed (map = IPToLocation, key = 3232243711, eventTime = 2018-07-06T06:43:32.603Z)",
     },
     {
-      severity: "WARNING",
+      severity: "WARN",
       location: { streamNo: 1, lineNo: 3, colNo: 1 },
       elementId: "translationFilter",
       message:
         "Lookup - Lookup failed (map = FILENO_TO_LOCATION_MAP, key = 3, eventTime = 2010-01-01T00:00:56.000Z)",
     },
     {
-      severity: "WARNING",
+      severity: "WARN",
       location: { streamNo: 1, lineNo: 3, colNo: 1 },
       elementId: "translationFilter",
       message:
         "BitmapLookup - Lookup failed (map = GreekAlphabet, key = {0,11}, eventTime = 2010-01-01T00:00:56.000Z)",
     },
     {
-      severity: "WARNING",
+      severity: "WARN",
       location: { streamNo: 1, lineNo: 3, colNo: 1 },
       elementId: "translationFilter",
       message:
         "Lookup - Lookup failed (map = IPToLocation, key = 3232235777, eventTime = 2018-07-06T06:43:32.603Z)",
     },
     {
-      severity: "WARNING",
+      severity: "WARN",
       location: { streamNo: 1, lineNo: 3, colNo: 1 },
       elementId: "translationFilter",
       message:
         "Lookup - Lookup failed (map = IPToLocation, key = 3232236805, eventTime = 2018-07-06T06:43:32.603Z)",
     },
     {
-      severity: "WARNING",
+      severity: "WARN",
       location: { streamNo: 1, lineNo: 3, colNo: 1 },
       elementId: "translationFilter",
       message:
         "Lookup - Lookup failed (map = IPToLocation, key = 3232238597, eventTime = 2018-07-06T06:43:32.603Z)",
     },
     {
-      severity: "WARNING",
+      severity: "WARN",
       location: { streamNo: 1, lineNo: 3, colNo: 1 },
       elementId: "translationFilter",
       message:
         "Lookup - Lookup failed (map = IPToLocation, key = 3232241419, eventTime = 2018-07-06T06:43:32.603Z)",
     },
     {
-      severity: "WARNING",
+      severity: "WARN",
       location: { streamNo: 1, lineNo: 3, colNo: 1 },
       elementId: "translationFilter",
       message:
         "Lookup - Lookup failed (map = IPToLocation, key = 3232243711, eventTime = 2018-07-06T06:43:32.603Z)",
     },
     {
-      severity: "WARNING",
+      severity: "WARN",
       location: { streamNo: 1, lineNo: 4, colNo: 1 },
       elementId: "translationFilter",
       message:
         "Lookup - Lookup failed (map = FILENO_TO_LOCATION_MAP, key = 1, eventTime = 2010-01-01T00:07:14.000Z)",
     },
     {
-      severity: "WARNING",
+      severity: "WARN",
       location: { streamNo: 1, lineNo: 4, colNo: 1 },
       elementId: "translationFilter",
       message:
         "BitmapLookup - Lookup failed (map = GreekAlphabet, key = {0,11}, eventTime = 2010-01-01T00:07:14.000Z)",
     },
     {
-      severity: "WARNING",
+      severity: "WARN",
       location: { streamNo: 1, lineNo: 4, colNo: 1 },
       elementId: "translationFilter",
       message:
         "Lookup - Lookup failed (map = IPToLocation, key = 3232235777, eventTime = 2018-07-06T06:43:32.603Z)",
     },
     {
-      severity: "WARNING",
+      severity: "WARN",
       location: { streamNo: 1, lineNo: 4, colNo: 1 },
       elementId: "translationFilter",
       message:
         "Lookup - Lookup failed (map = IPToLocation, key = 3232236805, eventTime = 2018-07-06T06:43:32.603Z)",
     },
     {
-      severity: "WARNING",
+      severity: "WARN",
       location: { streamNo: 1, lineNo: 4, colNo: 1 },
       elementId: "translationFilter",
       message:
         "Lookup - Lookup failed (map = IPToLocation, key = 3232238597, eventTime = 2018-07-06T06:43:32.603Z)",
     },
     {
-      severity: "WARNING",
+      severity: "WARN",
       location: { streamNo: 1, lineNo: 4, colNo: 1 },
       elementId: "translationFilter",
       message:
         "Lookup - Lookup failed (map = IPToLocation, key = 3232241419, eventTime = 2018-07-06T06:43:32.603Z)",
     },
     {
-      severity: "WARNING",
+      severity: "WARN",
       location: { streamNo: 1, lineNo: 4, colNo: 1 },
       elementId: "translationFilter",
       message:
         "Lookup - Lookup failed (map = IPToLocation, key = 3232243711, eventTime = 2018-07-06T06:43:32.603Z)",
     },
     {
-      severity: "WARNING",
+      severity: "WARN",
       location: { streamNo: 1, lineNo: 5, colNo: 1 },
       elementId: "translationFilter",
       message:
         "Lookup - Lookup failed (map = FILENO_TO_LOCATION_MAP, key = 3, eventTime = 2010-01-01T02:17:02.000Z)",
     },
     {
-      severity: "WARNING",
+      severity: "WARN",
       location: { streamNo: 1, lineNo: 5, colNo: 1 },
       elementId: "translationFilter",
       message:
         "BitmapLookup - Lookup failed (map = GreekAlphabet, key = {0,11}, eventTime = 2010-01-01T02:17:02.000Z)",
     },
     {
-      severity: "WARNING",
+      severity: "WARN",
       location: { streamNo: 1, lineNo: 5, colNo: 1 },
       elementId: "translationFilter",
       message:
         "Lookup - Lookup failed (map = IPToLocation, key = 3232235777, eventTime = 2018-07-06T06:43:32.603Z)",
     },
     {
-      severity: "WARNING",
+      severity: "WARN",
       location: { streamNo: 1, lineNo: 5, colNo: 1 },
       elementId: "translationFilter",
       message:
         "Lookup - Lookup failed (map = IPToLocation, key = 3232236805, eventTime = 2018-07-06T06:43:32.603Z)",
     },
     {
-      severity: "WARNING",
+      severity: "WARN",
       location: { streamNo: 1, lineNo: 5, colNo: 1 },
       elementId: "translationFilter",
       message:
         "Lookup - Lookup failed (map = IPToLocation, key = 3232238597, eventTime = 2018-07-06T06:43:32.603Z)",
     },
     {
-      severity: "WARNING",
+      severity: "WARN",
       location: { streamNo: 1, lineNo: 5, colNo: 1 },
       elementId: "translationFilter",
       message:
         "Lookup - Lookup failed (map = IPToLocation, key = 3232241419, eventTime = 2018-07-06T06:43:32.603Z)",
     },
     {
-      severity: "WARNING",
+      severity: "WARN",
       location: { streamNo: 1, lineNo: 5, colNo: 1 },
       elementId: "translationFilter",
       message:
         "Lookup - Lookup failed (map = IPToLocation, key = 3232243711, eventTime = 2018-07-06T06:43:32.603Z)",
     },
     {
-      severity: "WARNING",
+      severity: "WARN",
       location: { streamNo: 1, lineNo: 6, colNo: 1 },
       elementId: "translationFilter",
       message:
         "Lookup - Lookup failed (map = FILENO_TO_LOCATION_MAP, key = 3, eventTime = 2010-01-01T01:49:02.000Z)",
     },
     {
-      severity: "WARNING",
+      severity: "WARN",
       location: { streamNo: 1, lineNo: 6, colNo: 1 },
       elementId: "translationFilter",
       message:
         "BitmapLookup - Lookup failed (map = GreekAlphabet, key = {0,11}, eventTime = 2010-01-01T01:49:02.000Z)",
     },
     {
-      severity: "WARNING",
+      severity: "WARN",
       location: { streamNo: 1, lineNo: 6, colNo: 1 },
       elementId: "translationFilter",
       message:
         "Lookup - Lookup failed (map = IPToLocation, key = 3232235777, eventTime = 2018-07-06T06:43:32.603Z)",
     },
     {
-      severity: "WARNING",
+      severity: "WARN",
       location: { streamNo: 1, lineNo: 6, colNo: 1 },
       elementId: "translationFilter",
       message:
         "Lookup - Lookup failed (map = IPToLocation, key = 3232236805, eventTime = 2018-07-06T06:43:32.603Z)",
     },
     {
-      severity: "WARNING",
+      severity: "WARN",
       location: { streamNo: 1, lineNo: 6, colNo: 1 },
       elementId: "translationFilter",
       message:
         "Lookup - Lookup failed (map = IPToLocation, key = 3232238597, eventTime = 2018-07-06T06:43:32.603Z)",
     },
     {
-      severity: "WARNING",
+      severity: "WARN",
       location: { streamNo: 1, lineNo: 6, colNo: 1 },
       elementId: "translationFilter",
       message:
         "Lookup - Lookup failed (map = IPToLocation, key = 3232241419, eventTime = 2018-07-06T06:43:32.603Z)",
     },
     {
-      severity: "WARNING",
+      severity: "WARN",
       location: { streamNo: 1, lineNo: 6, colNo: 1 },
       elementId: "translationFilter",
       message:
         "Lookup - Lookup failed (map = IPToLocation, key = 3232243711, eventTime = 2018-07-06T06:43:32.603Z)",
     },
     {
-      severity: "WARNING",
+      severity: "WARN",
       location: { streamNo: 1, lineNo: 7, colNo: 1 },
       elementId: "translationFilter",
       message:
         "Lookup - Lookup failed (map = FILENO_TO_LOCATION_MAP, key = 3, eventTime = 2010-01-01T02:43:13.000Z)",
     },
     {
-      severity: "WARNING",
+      severity: "WARN",
       location: { streamNo: 1, lineNo: 7, colNo: 1 },
       elementId: "translationFilter",
       message:
         "BitmapLookup - Lookup failed (map = GreekAlphabet, key = {0,11}, eventTime = 2010-01-01T02:43:13.000Z)",
     },
     {
-      severity: "WARNING",
+      severity: "WARN",
       location: { streamNo: 1, lineNo: 7, colNo: 1 },
       elementId: "translationFilter",
       message:
         "Lookup - Lookup failed (map = IPToLocation, key = 3232235777, eventTime = 2018-07-06T06:43:32.603Z)",
     },
     {
-      severity: "WARNING",
+      severity: "WARN",
       location: { streamNo: 1, lineNo: 7, colNo: 1 },
       elementId: "translationFilter",
       message:
         "Lookup - Lookup failed (map = IPToLocation, key = 3232236805, eventTime = 2018-07-06T06:43:32.603Z)",
     },
     {
-      severity: "WARNING",
+      severity: "WARN",
       location: { streamNo: 1, lineNo: 7, colNo: 1 },
       elementId: "translationFilter",
       message:
         "Lookup - Lookup failed (map = IPToLocation, key = 3232238597, eventTime = 2018-07-06T06:43:32.603Z)",
     },
     {
-      severity: "WARNING",
+      severity: "WARN",
       location: { streamNo: 1, lineNo: 7, colNo: 1 },
       elementId: "translationFilter",
       message:
         "Lookup - Lookup failed (map = IPToLocation, key = 3232241419, eventTime = 2018-07-06T06:43:32.603Z)",
     },
     {
-      severity: "WARNING",
+      severity: "WARN",
       location: { streamNo: 1, lineNo: 7, colNo: 1 },
       elementId: "translationFilter",
       message:
         "Lookup - Lookup failed (map = IPToLocation, key = 3232243711, eventTime = 2018-07-06T06:43:32.603Z)",
     },
     {
-      severity: "WARNING",
+      severity: "WARN",
       location: { streamNo: 1, lineNo: 8, colNo: 1 },
       elementId: "translationFilter",
       message:
         "Lookup - Lookup failed (map = FILENO_TO_LOCATION_MAP, key = 4, eventTime = 2010-01-01T01:27:34.000Z)",
     },
     {
-      severity: "WARNING",
+      severity: "WARN",
       location: { streamNo: 1, lineNo: 8, colNo: 1 },
       elementId: "translationFilter",
       message:
         "BitmapLookup - Lookup failed (map = GreekAlphabet, key = {0,11}, eventTime = 2010-01-01T01:27:34.000Z)",
     },
     {
-      severity: "WARNING",
+      severity: "WARN",
       location: { streamNo: 1, lineNo: 8, colNo: 1 },
       elementId: "translationFilter",
       message:
         "Lookup - Lookup failed (map = IPToLocation, key = 3232235777, eventTime = 2018-07-06T06:43:32.603Z)",
     },
     {
-      severity: "WARNING",
+      severity: "WARN",
       location: { streamNo: 1, lineNo: 8, colNo: 1 },
       elementId: "translationFilter",
       message:
         "Lookup - Lookup failed (map = IPToLocation, key = 3232236805, eventTime = 2018-07-06T06:43:32.603Z)",
     },
     {
-      severity: "WARNING",
+      severity: "WARN",
       location: { streamNo: 1, lineNo: 8, colNo: 1 },
       elementId: "translationFilter",
       message:
         "Lookup - Lookup failed (map = IPToLocation, key = 3232238597, eventTime = 2018-07-06T06:43:32.603Z)",
     },
     {
-      severity: "WARNING",
+      severity: "WARN",
       location: { streamNo: 1, lineNo: 8, colNo: 1 },
       elementId: "translationFilter",
       message:
         "Lookup - Lookup failed (map = IPToLocation, key = 3232241419, eventTime = 2018-07-06T06:43:32.603Z)",
     },
     {
-      severity: "WARNING",
+      severity: "WARN",
       location: { streamNo: 1, lineNo: 8, colNo: 1 },
       elementId: "translationFilter",
       message:
         "Lookup - Lookup failed (map = IPToLocation, key = 3232243711, eventTime = 2018-07-06T06:43:32.603Z)",
     },
     {
-      severity: "WARNING",
+      severity: "WARN",
       location: { streamNo: 1, lineNo: 9, colNo: 1 },
       elementId: "translationFilter",
       message:
         "Lookup - Lookup failed (map = FILENO_TO_LOCATION_MAP, key = 4, eventTime = 2010-01-01T02:16:08.000Z)",
     },
     {
-      severity: "WARNING",
+      severity: "WARN",
       location: { streamNo: 1, lineNo: 9, colNo: 1 },
       elementId: "translationFilter",
       message:
         "BitmapLookup - Lookup failed (map = GreekAlphabet, key = {0,11}, eventTime = 2010-01-01T02:16:08.000Z)",
     },
     {
-      severity: "WARNING",
+      severity: "WARN",
       location: { streamNo: 1, lineNo: 9, colNo: 1 },
       elementId: "translationFilter",
       message:
         "Lookup - Lookup failed (map = IPToLocation, key = 3232235777, eventTime = 2018-07-06T06:43:32.603Z)",
     },
     {
-      severity: "WARNING",
+      severity: "WARN",
       location: { streamNo: 1, lineNo: 9, colNo: 1 },
       elementId: "translationFilter",
       message:
         "Lookup - Lookup failed (map = IPToLocation, key = 3232236805, eventTime = 2018-07-06T06:43:32.603Z)",
     },
     {
-      severity: "WARNING",
+      severity: "WARN",
       location: { streamNo: 1, lineNo: 9, colNo: 1 },
       elementId: "translationFilter",
       message:
         "Lookup - Lookup failed (map = IPToLocation, key = 3232238597, eventTime = 2018-07-06T06:43:32.603Z)",
     },
     {
-      severity: "WARNING",
+      severity: "WARN",
       location: { streamNo: 1, lineNo: 9, colNo: 1 },
       elementId: "translationFilter",
       message:
         "Lookup - Lookup failed (map = IPToLocation, key = 3232241419, eventTime = 2018-07-06T06:43:32.603Z)",
     },
     {
-      severity: "WARNING",
+      severity: "WARN",
       location: { streamNo: 1, lineNo: 9, colNo: 1 },
       elementId: "translationFilter",
       message:
         "Lookup - Lookup failed (map = IPToLocation, key = 3232243711, eventTime = 2018-07-06T06:43:32.603Z)",
     },
     {
-      severity: "WARNING",
+      severity: "WARN",
       location: { streamNo: 1, lineNo: 10, colNo: 1 },
       elementId: "translationFilter",
       message:
         "Lookup - Lookup failed (map = FILENO_TO_LOCATION_MAP, key = 4, eventTime = 2010-01-01T00:18:03.000Z)",
     },
     {
-      severity: "WARNING",
+      severity: "WARN",
       location: { streamNo: 1, lineNo: 10, colNo: 1 },
       elementId: "translationFilter",
       message:
         "BitmapLookup - Lookup failed (map = GreekAlphabet, key = {0,11}, eventTime = 2010-01-01T00:18:03.000Z)",
     },
     {
-      severity: "WARNING",
+      severity: "WARN",
       location: { streamNo: 1, lineNo: 10, colNo: 1 },
       elementId: "translationFilter",
       message:
         "Lookup - Lookup failed (map = IPToLocation, key = 3232235777, eventTime = 2018-07-06T06:43:32.603Z)",
     },
     {
-      severity: "WARNING",
+      severity: "WARN",
       location: { streamNo: 1, lineNo: 10, colNo: 1 },
       elementId: "translationFilter",
       message:
         "Lookup - Lookup failed (map = IPToLocation, key = 3232236805, eventTime = 2018-07-06T06:43:32.603Z)",
     },
     {
-      severity: "WARNING",
+      severity: "WARN",
       location: { streamNo: 1, lineNo: 10, colNo: 1 },
       elementId: "translationFilter",
       message:
         "Lookup - Lookup failed (map = IPToLocation, key = 3232238597, eventTime = 2018-07-06T06:43:32.603Z)",
     },
     {
-      severity: "WARNING",
+      severity: "WARN",
       location: { streamNo: 1, lineNo: 10, colNo: 1 },
       elementId: "translationFilter",
       message:
         "Lookup - Lookup failed (map = IPToLocation, key = 3232241419, eventTime = 2018-07-06T06:43:32.603Z)",
     },
     {
-      severity: "WARNING",
+      severity: "WARN",
       location: { streamNo: 1, lineNo: 10, colNo: 1 },
       elementId: "translationFilter",
       message:
         "Lookup - Lookup failed (map = IPToLocation, key = 3232243711, eventTime = 2018-07-06T06:43:32.603Z)",
     },
     {
-      severity: "WARNING",
+      severity: "WARN",
       location: { streamNo: 1, lineNo: 11, colNo: 1 },
       elementId: "translationFilter",
       message:
         "Lookup - Lookup failed (map = FILENO_TO_LOCATION_MAP, key = 4, eventTime = 2010-01-01T01:58:18.000Z)",
     },
     {
-      severity: "WARNING",
+      severity: "WARN",
       location: { streamNo: 1, lineNo: 11, colNo: 1 },
       elementId: "translationFilter",
       message:
         "BitmapLookup - Lookup failed (map = GreekAlphabet, key = {0,11}, eventTime = 2010-01-01T01:58:18.000Z)",
     },
     {
-      severity: "WARNING",
+      severity: "WARN",
       location: { streamNo: 1, lineNo: 11, colNo: 1 },
       elementId: "translationFilter",
       message:
         "Lookup - Lookup failed (map = IPToLocation, key = 3232235777, eventTime = 2018-07-06T06:43:32.603Z)",
     },
     {
-      severity: "WARNING",
+      severity: "WARN",
       location: { streamNo: 1, lineNo: 11, colNo: 1 },
       elementId: "translationFilter",
       message:
         "Lookup - Lookup failed (map = IPToLocation, key = 3232236805, eventTime = 2018-07-06T06:43:32.603Z)",
     },
     {
-      severity: "WARNING",
+      severity: "WARN",
       location: { streamNo: 1, lineNo: 11, colNo: 1 },
       elementId: "translationFilter",
       message:
         "Lookup - Lookup failed (map = IPToLocation, key = 3232238597, eventTime = 2018-07-06T06:43:32.603Z)",
     },
     {
-      severity: "WARNING",
+      severity: "WARN",
       location: { streamNo: 1, lineNo: 11, colNo: 1 },
       elementId: "translationFilter",
       message:
         "Lookup - Lookup failed (map = IPToLocation, key = 3232241419, eventTime = 2018-07-06T06:43:32.603Z)",
     },
     {
-      severity: "WARNING",
+      severity: "WARN",
       location: { streamNo: 1, lineNo: 11, colNo: 1 },
       elementId: "translationFilter",
       message:
         "Lookup - Lookup failed (map = IPToLocation, key = 3232243711, eventTime = 2018-07-06T06:43:32.603Z)",
     },
     {
-      severity: "WARNING",
+      severity: "WARN",
       location: { streamNo: 1, lineNo: 12, colNo: 1 },
       elementId: "translationFilter",
       message:
         "Lookup - Lookup failed (map = FILENO_TO_LOCATION_MAP, key = 4, eventTime = 2010-01-01T01:29:58.000Z)",
     },
     {
-      severity: "WARNING",
+      severity: "WARN",
       location: { streamNo: 1, lineNo: 12, colNo: 1 },
       elementId: "translationFilter",
       message:
         "BitmapLookup - Lookup failed (map = GreekAlphabet, key = {0,11}, eventTime = 2010-01-01T01:29:58.000Z)",
     },
     {
-      severity: "WARNING",
+      severity: "WARN",
       location: { streamNo: 1, lineNo: 12, colNo: 1 },
       elementId: "translationFilter",
       message:
         "Lookup - Lookup failed (map = IPToLocation, key = 3232235777, eventTime = 2018-07-06T06:43:32.603Z)",
     },
     {
-      severity: "WARNING",
+      severity: "WARN",
       location: { streamNo: 1, lineNo: 12, colNo: 1 },
       elementId: "translationFilter",
       message:
         "Lookup - Lookup failed (map = IPToLocation, key = 3232236805, eventTime = 2018-07-06T06:43:32.603Z)",
     },
     {
-      severity: "WARNING",
+      severity: "WARN",
       location: { streamNo: 1, lineNo: 12, colNo: 1 },
       elementId: "translationFilter",
       message:
         "Lookup - Lookup failed (map = IPToLocation, key = 3232238597, eventTime = 2018-07-06T06:43:32.603Z)",
     },
     {
-      severity: "WARNING",
+      severity: "WARN",
       location: { streamNo: 1, lineNo: 12, colNo: 1 },
       elementId: "translationFilter",
       message:
         "Lookup - Lookup failed (map = IPToLocation, key = 3232241419, eventTime = 2018-07-06T06:43:32.603Z)",
     },
     {
-      severity: "WARNING",
+      severity: "WARN",
       location: { streamNo: 1, lineNo: 12, colNo: 1 },
       elementId: "translationFilter",
       message:
         "Lookup - Lookup failed (map = IPToLocation, key = 3232243711, eventTime = 2018-07-06T06:43:32.603Z)",
     },
     {
-      severity: "WARNING",
+      severity: "WARN",
       location: { streamNo: 1, lineNo: 13, colNo: 1 },
       elementId: "translationFilter",
       message:
         "Lookup - Lookup failed (map = FILENO_TO_LOCATION_MAP, key = 3, eventTime = 2010-01-01T02:21:39.000Z)",
     },
     {
-      severity: "WARNING",
+      severity: "WARN",
       location: { streamNo: 1, lineNo: 13, colNo: 1 },
       elementId: "translationFilter",
       message:
         "BitmapLookup - Lookup failed (map = GreekAlphabet, key = {0,11}, eventTime = 2010-01-01T02:21:39.000Z)",
     },
     {
-      severity: "WARNING",
+      severity: "WARN",
       location: { streamNo: 1, lineNo: 13, colNo: 1 },
       elementId: "translationFilter",
       message:
         "Lookup - Lookup failed (map = IPToLocation, key = 3232235777, eventTime = 2018-07-06T06:43:32.603Z)",
     },
     {
-      severity: "WARNING",
+      severity: "WARN",
       location: { streamNo: 1, lineNo: 13, colNo: 1 },
       elementId: "translationFilter",
       message:
         "Lookup - Lookup failed (map = IPToLocation, key = 3232236805, eventTime = 2018-07-06T06:43:32.603Z)",
     },
     {
-      severity: "WARNING",
+      severity: "WARN",
       location: { streamNo: 1, lineNo: 13, colNo: 1 },
       elementId: "translationFilter",
       message:
         "Lookup - Lookup failed (map = IPToLocation, key = 3232238597, eventTime = 2018-07-06T06:43:32.603Z)",
     },
     {
-      severity: "WARNING",
+      severity: "WARN",
       location: { streamNo: 1, lineNo: 13, colNo: 1 },
       elementId: "translationFilter",
       message:
         "Lookup - Lookup failed (map = IPToLocation, key = 3232241419, eventTime = 2018-07-06T06:43:32.603Z)",
     },
     {
-      severity: "WARNING",
+      severity: "WARN",
       location: { streamNo: 1, lineNo: 13, colNo: 1 },
       elementId: "translationFilter",
       message:
         "Lookup - Lookup failed (map = IPToLocation, key = 3232243711, eventTime = 2018-07-06T06:43:32.603Z)",
     },
     {
-      severity: "WARNING",
+      severity: "WARN",
       location: { streamNo: 1, lineNo: 14, colNo: 1 },
       elementId: "translationFilter",
       message:
         "Lookup - Lookup failed (map = FILENO_TO_LOCATION_MAP, key = 2, eventTime = 2010-01-01T00:22:24.000Z)",
     },
     {
-      severity: "WARNING",
+      severity: "WARN",
       location: { streamNo: 1, lineNo: 14, colNo: 1 },
       elementId: "translationFilter",
       message:
         "BitmapLookup - Lookup failed (map = GreekAlphabet, key = {0,11}, eventTime = 2010-01-01T00:22:24.000Z)",
     },
     {
-      severity: "WARNING",
+      severity: "WARN",
       location: { streamNo: 1, lineNo: 14, colNo: 1 },
       elementId: "translationFilter",
       message:
         "Lookup - Lookup failed (map = IPToLocation, key = 3232235777, eventTime = 2018-07-06T06:43:32.603Z)",
     },
     {
-      severity: "WARNING",
+      severity: "WARN",
       location: { streamNo: 1, lineNo: 14, colNo: 1 },
       elementId: "translationFilter",
       message:
         "Lookup - Lookup failed (map = IPToLocation, key = 3232236805, eventTime = 2018-07-06T06:43:32.603Z)",
     },
     {
-      severity: "WARNING",
+      severity: "WARN",
       location: { streamNo: 1, lineNo: 14, colNo: 1 },
       elementId: "translationFilter",
       message:
         "Lookup - Lookup failed (map = IPToLocation, key = 3232238597, eventTime = 2018-07-06T06:43:32.603Z)",
     },
     {
-      severity: "WARNING",
+      severity: "WARN",
       location: { streamNo: 1, lineNo: 14, colNo: 1 },
       elementId: "translationFilter",
       message:
         "Lookup - Lookup failed (map = IPToLocation, key = 3232241419, eventTime = 2018-07-06T06:43:32.603Z)",
     },
     {
-      severity: "WARNING",
+      severity: "WARN",
       location: { streamNo: 1, lineNo: 14, colNo: 1 },
       elementId: "translationFilter",
       message:
         "Lookup - Lookup failed (map = IPToLocation, key = 3232243711, eventTime = 2018-07-06T06:43:32.603Z)",
     },
     {
-      severity: "WARNING",
+      severity: "WARN",
       location: { streamNo: 1, lineNo: 15, colNo: 1 },
       elementId: "translationFilter",
       message:
         "Lookup - Lookup failed (map = FILENO_TO_LOCATION_MAP, key = 3, eventTime = 2010-01-01T00:32:23.000Z)",
     },
     {
-      severity: "WARNING",
+      severity: "WARN",
       location: { streamNo: 1, lineNo: 15, colNo: 1 },
       elementId: "translationFilter",
       message:
         "BitmapLookup - Lookup failed (map = GreekAlphabet, key = {0,11}, eventTime = 2010-01-01T00:32:23.000Z)",
     },
     {
-      severity: "WARNING",
+      severity: "WARN",
       location: { streamNo: 1, lineNo: 15, colNo: 1 },
       elementId: "translationFilter",
       message:
         "Lookup - Lookup failed (map = IPToLocation, key = 3232235777, eventTime = 2018-07-06T06:43:32.603Z)",
     },
     {
-      severity: "WARNING",
+      severity: "WARN",
       location: { streamNo: 1, lineNo: 15, colNo: 1 },
       elementId: "translationFilter",
       message:
         "Lookup - Lookup failed (map = IPToLocation, key = 3232236805, eventTime = 2018-07-06T06:43:32.603Z)",
     },
     {
-      severity: "WARNING",
+      severity: "WARN",
       location: { streamNo: 1, lineNo: 15, colNo: 1 },
       elementId: "translationFilter",
       message:
         "Lookup - Lookup failed (map = IPToLocation, key = 3232238597, eventTime = 2018-07-06T06:43:32.603Z)",
     },
     {
-      severity: "WARNING",
+      severity: "WARN",
       location: { streamNo: 1, lineNo: 15, colNo: 1 },
       elementId: "translationFilter",
       message:
         "Lookup - Lookup failed (map = IPToLocation, key = 3232241419, eventTime = 2018-07-06T06:43:32.603Z)",
     },
     {
-      severity: "WARNING",
+      severity: "WARN",
       location: { streamNo: 1, lineNo: 15, colNo: 1 },
       elementId: "translationFilter",
       message:
         "Lookup - Lookup failed (map = IPToLocation, key = 3232243711, eventTime = 2018-07-06T06:43:32.603Z)",
     },
     {
-      severity: "WARNING",
+      severity: "WARN",
       location: { streamNo: 1, lineNo: 16, colNo: 1 },
       elementId: "translationFilter",
       message:

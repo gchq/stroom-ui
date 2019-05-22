@@ -37,8 +37,10 @@ export const isFetchMarkerResult = (
 
 export type AnyFetchDataResult = FetchDataResult | FetchMarkerResult;
 
+export type Severity = "INFO" | "WARN" | "ERROR" | "FATAL";
+
 export interface AbstractMarker {
-  severity: string;
+  severity: Severity;
 }
 
 export interface StoredError extends AbstractMarker {
@@ -70,4 +72,15 @@ export interface Location {
   streamNo: number;
   lineNo: number;
   colNo: number;
+}
+
+export interface FetchDataParams {
+  metaId?: number;
+  pageSize?: number;
+  pageOffset?: number;
+}
+
+export interface UseData {
+  data: AnyFetchDataResult;
+  getDataForSelectedRow: () => void;
 }

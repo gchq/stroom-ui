@@ -18,21 +18,21 @@ import * as React from "react";
 
 import ErrorTable from "./ErrorTable";
 import EventView from "./EventView";
-import {
-  AnyFetchDataResult,
-  isFetchMarkerResult,
-  isFetchDataResult,
-} from "./types";
+import { isFetchMarkerResult, isFetchDataResult } from "./types";
+import useData from "./api";
+import { MetaRow } from "../types";
 
 interface Props {
-  meta: AnyFetchDataResult;
+  metaRow: MetaRow;
 }
 
-const DataDisplay: React.FunctionComponent<Props> = ({ meta }) => {
-  if (isFetchMarkerResult(meta)) {
-    return <ErrorTable errors={meta.markers} />;
-  } else if (isFetchDataResult(meta)) {
-    return <EventView events={meta.data} />;
+const DataDisplay: React.FunctionComponent<Props> = ({ metaRow }) => {
+  const { data } = useData(metaRow.meta.id);
+
+  if (isFetchMarkerResult(data)) {
+    return <ErrorTable errors={data.markers} />;
+  } else if (isFetchDataResult(data)) {
+    return <EventView events={data.data} />;
   }
   return <div>TODO</div>;
 };
