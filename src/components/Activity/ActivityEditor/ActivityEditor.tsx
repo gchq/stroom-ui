@@ -19,10 +19,10 @@ import Loader from "components/Loader";
 import useActivityConfig from "../api/useActivityConfig";
 import parse, { HTMLReactParserOptions, DomElement } from "html-react-parser";
 import parser from "style-to-object";
-import domToReact from "html-react-parser/lib/dom-to-react";
+// import domToReact from "html-react-parser/lib/dom-to-react";
 import { Prop, Activity } from "../api/types";
-import ConfirmPasswordResetEmailContainer from "components/password/ConfirmPasswordResetEmail/ConfirmPasswordResetEmailContainer";
-import { acequire } from "brace";
+// import ConfirmPasswordResetEmailContainer from "components/password/ConfirmPasswordResetEmail/ConfirmPasswordResetEmailContainer";
+// import { acequire } from "brace";
 
 interface Props {
   activityId: string;
@@ -106,55 +106,143 @@ interface FormState {
   [s: string]: string;
 }
 
+interface FocusStealingInputProps
+  extends React.InputHTMLAttributes<HTMLInputElement> {
+  takesFocus: boolean;
+}
+
+interface FocusStealingTextAreaProps
+  extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
+  takesFocus: boolean;
+}
+
+interface FocusStealingSelectProps
+  extends React.SelectHTMLAttributes<HTMLSelectElement> {
+  takesFocus: boolean;
+}
+
+const useFocusSteal = <T extends HTMLElement>(
+  takesFocus: boolean,
+): React.MutableRefObject<T> => {
+  const inputRef = React.useRef<T>();
+
+  React.useEffect(() => {
+    console.log("use effect", inputRef.current);
+    if (takesFocus && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [takesFocus]);
+
+  return inputRef;
+};
+
+const FocusStealingInput: React.FunctionComponent<FocusStealingInputProps> = ({
+  takesFocus,
+  ...props
+}) => <input {...props} ref={useFocusSteal<HTMLInputElement>(takesFocus)} />;
+
+const FocusStealingTextArea: React.FunctionComponent<
+  FocusStealingTextAreaProps
+> = ({ takesFocus, ...props }) => (
+  <textarea {...props} ref={useFocusSteal<HTMLTextAreaElement>(takesFocus)} />
+);
+
+const FocusStealingSelect: React.FunctionComponent<
+  FocusStealingSelectProps
+> = ({ takesFocus, ...props }) => (
+  <select {...props} ref={useFocusSteal<HTMLSelectElement>(takesFocus)} />
+);
+
 const ActivityEditor: React.FunctionComponent<Props> = ({ activityId }) => {
   const { history } = useRouter();
   const activityConfig = useActivityConfig();
-  const { activity, onPropChange, onSave, isDirty } = useActivity(activityId);
+  const { activity, onPropChange, onCreateOrUpdate, isDirty } = useActivity(
+    activityId,
+  );
 
-  const options: HTMLReactParserOptions = {
-    replace: element => {
-      const { attribs } = element;
-      if (attribs) {
-        const style: React.CSSProperties =
-          attribs && attribs.style && parser(attribs.style);
-        const customAttribs = {
-          ...attribs,
-          style,
-        };
+  let doneFocus = false;
+  const options: HTMLReactParserOptions = React.useMemo(
+    () => ({
+      replace: (
+        element: DomElement,
+      ): React.ReactElement | object | undefined | false => {
+        const { attribs } = element;
+        if (attribs) {
+          const style: React.CSSProperties =
+            attribs && attribs.style && parser(attribs.style);
 
-        const elemName = element.name.toLowerCase();
-        if ("input" === elemName) {
-          const prop: Prop = createProp(element);
-          const value: string = getValue(activity, prop.id);
-          const type: string = attribs.type.toLowerCase();
+          let takesFocus = false; //attribs.takefocus === "true";
+          if (!doneFocus) {
+            takesFocus = true;
+            doneFocus = true;
+          }
 
-          if ("checkbox" === type) {
+          const customAttribs = {
+            ...attribs,
+            style,
+            takesFocus,
+          };
+
+          const elemName = element.name.toLowerCase();
+          if ("input" === elemName) {
+            const prop: Prop = createProp(element);
+            const value: string = getValue(activity, prop.id);
+            const type: string = attribs.type.toLowerCase();
+
+            if ("checkbox" === type) {
+              return (
+                <FocusStealingInput
+                  type="checkbox"
+                  onChange={({ target: { checked } }) =>
+                    onPropChange(prop.id, checked.toString())
+                  }
+                  checked={value !== "false"}
+                  defaultChecked={value !== "false"}
+                  {...customAttribs}
+                />
+              );
+            } else if ("radio" === type) {
+              return (
+                <FocusStealingInput
+                  type="radio"
+                  onChange={({ target: { checked } }) =>
+                    onPropChange(prop.id, checked.toString())
+                  }
+                  checked={value !== "false"}
+                  defaultChecked={value !== "false"}
+                  {...customAttribs}
+                />
+              );
+            } else {
+              return (
+                <FocusStealingInput
+                  onChange={({ target: { value } }) =>
+                    onPropChange(prop.id, value)
+                  }
+                  value={value}
+                  {...customAttribs}
+                />
+              );
+            }
+          } else if ("textarea" === elemName) {
+            const prop: Prop = createProp(element);
+            const value: string = getValue(activity, prop.id);
+
             return (
-              <input
-                type="checkbox"
-                onChange={({ target: { checked } }) =>
-                  onPropChange(prop.id, checked.toString())
+              <FocusStealingTextArea
+                onChange={({ target: { value } }) =>
+                  onPropChange(prop.id, value)
                 }
-                checked={value !== "false"}
-                defaultChecked={value !== "false"}
+                value={value}
                 {...customAttribs}
               />
             );
-          } else if ("radio" === type) {
+          } else if ("select" === elemName) {
+            const prop: Prop = createProp(element);
+            const value: string = getValue(activity, prop.id);
+
             return (
-              <input
-                type="radio"
-                onChange={({ target: { checked } }) =>
-                  onPropChange(prop.id, checked.toString())
-                }
-                checked={value !== "false"}
-                defaultChecked={value !== "false"}
-                {...customAttribs}
-              />
-            );
-          } else {
-            return (
-              <input
+              <FocusStealingSelect
                 onChange={({ target: { value } }) =>
                   onPropChange(prop.id, value)
                 }
@@ -163,160 +251,139 @@ const ActivityEditor: React.FunctionComponent<Props> = ({ activityId }) => {
               />
             );
           }
-        } else if ("textarea" === elemName) {
-          const prop: Prop = createProp(element);
-          const value: string = getValue(activity, prop.id);
-
-          return (
-            <textarea
-              onChange={({ target: { value } }) => onPropChange(prop.id, value)}
-              value={value}
-              {...customAttribs}
-            />
-          );
-        } else if ("select" === elemName) {
-          const prop: Prop = createProp(element);
-          const value: string = getValue(activity, prop.id);
-
-          return (
-            <select
-              onChange={({ target: { value } }) => onPropChange(prop.id, value)}
-              value={value}
-              {...customAttribs}
-            />
-          );
         }
 
-        //     } else if ("text".equalsIgnoreCase(tagName)) {
-        //         // Focus the first input.
-        //         if (!doneFocus) {
-        //             doneFocus = true;
-        //             element.focus();
-        //         }
+        return undefined;
+      },
+    }),
+    [activity, onPropChange],
+  );
 
-        //         final Prop prop = createProp(element);
-        //         final String value = getValue(activity, prop.getId());
-        //         if (value != null) {
-        //             final InputElement inputElement = element.cast();
-        //             inputElement.setValue(value);
-        //         }
-        //     } else if ("textarea".equalsIgnoreCase(tagName)) {
-        //         // Focus the first input.
-        //         if (!doneFocus) {
-        //             doneFocus = true;
-        //             element.focus();
-        //         }
+  //     } else if ("text".equalsIgnoreCase(tagName)) {
+  //         // Focus the first input.
+  //         if (!doneFocus) {
+  //             doneFocus = true;
+  //             element.focus();
+  //         }
 
-        //         final Prop prop = createProp(element);
-        //         final String value = getValue(activity, prop.getId());
-        //         if (value != null) {
-        //             final TextAreaElement inputElement = element.cast();
-        //             inputElement.setValue(value);
-        //         }
-        //     } else if ("select".equalsIgnoreCase(tagName)) {
-        //         // Focus the first input.
-        //         if (!doneFocus) {
-        //             doneFocus = true;
-        //             element.focus();
-        //         }
+  //         final Prop prop = createProp(element);
+  //         final String value = getValue(activity, prop.getId());
+  //         if (value != null) {
+  //             final InputElement inputElement = element.cast();
+  //             inputElement.setValue(value);
+  //         }
+  //     } else if ("textarea".equalsIgnoreCase(tagName)) {
+  //         // Focus the first input.
+  //         if (!doneFocus) {
+  //             doneFocus = true;
+  //             element.focus();
+  //         }
 
-        //         final Prop prop = createProp(element);
-        //         final String value = getValue(activity, prop.getId());
-        //         if (value != null) {
-        //             final SelectElement selectElement = element.cast();
-        //             selectElement.setValue(value);
-        //         }
-        //     }
-      }
+  //         final Prop prop = createProp(element);
+  //         final String value = getValue(activity, prop.getId());
+  //         if (value != null) {
+  //             final TextAreaElement inputElement = element.cast();
+  //             inputElement.setValue(value);
+  //         }
+  //     } else if ("select".equalsIgnoreCase(tagName)) {
+  //         // Focus the first input.
+  //         if (!doneFocus) {
+  //             doneFocus = true;
+  //             element.focus();
+  //         }
 
-      // boolean doneFocus = false;
+  //         final Prop prop = createProp(element);
+  //         final String value = getValue(activity, prop.getId());
+  //         if (value != null) {
+  //             final SelectElement selectElement = element.cast();
+  //             selectElement.setValue(value);
+  //         }
+  //     }
 
-      // final List<Element> inputElements = new ArrayList<>();
-      // findInputElements(getView().getHtml().getElement().getChildNodes(), inputElements);
+  // boolean doneFocus = false;
 
-      // for (final Element element : inputElements) {
-      //     final String tagName = element.getTagName();
-      //     if ("input".equalsIgnoreCase(tagName)) {
-      //         // Focus the first input.
-      //         if (!doneFocus) {
-      //             doneFocus = true;
-      //             element.focus();
-      //         }
+  // final List<Element> inputElements = new ArrayList<>();
+  // findInputElements(getView().getHtml().getElement().getChildNodes(), inputElements);
 
-      //         final Prop prop = createProp(element);
-      //         final String value = getValue(activity, prop.getId());
-      //         if (value != null) {
-      //             final InputElement inputElement = element.cast();
+  // for (final Element element : inputElements) {
+  //     final String tagName = element.getTagName();
+  //     if ("input".equalsIgnoreCase(tagName)) {
+  //         // Focus the first input.
+  //         if (!doneFocus) {
+  //             doneFocus = true;
+  //             element.focus();
+  //         }
 
-      //             if ("checkbox".equalsIgnoreCase(inputElement.getType()) || "radio".equalsIgnoreCase(inputElement.getType())) {
-      //                 try {
-      //                     inputElement.setChecked(Boolean.valueOf(value));
-      //                 } catch (final RuntimeException e) {
-      //                     // Ignore.
-      //                 }
-      //             } else {
-      //                 inputElement.setValue(value);
-      //             }
-      //         }
-      //     } else if ("text".equalsIgnoreCase(tagName)) {
-      //         // Focus the first input.
-      //         if (!doneFocus) {
-      //             doneFocus = true;
-      //             element.focus();
-      //         }
+  //         final Prop prop = createProp(element);
+  //         final String value = getValue(activity, prop.getId());
+  //         if (value != null) {
+  //             final InputElement inputElement = element.cast();
 
-      //         final Prop prop = createProp(element);
-      //         final String value = getValue(activity, prop.getId());
-      //         if (value != null) {
-      //             final InputElement inputElement = element.cast();
-      //             inputElement.setValue(value);
-      //         }
-      //     } else if ("textarea".equalsIgnoreCase(tagName)) {
-      //         // Focus the first input.
-      //         if (!doneFocus) {
-      //             doneFocus = true;
-      //             element.focus();
-      //         }
+  //             if ("checkbox".equalsIgnoreCase(inputElement.getType()) || "radio".equalsIgnoreCase(inputElement.getType())) {
+  //                 try {
+  //                     inputElement.setChecked(Boolean.valueOf(value));
+  //                 } catch (final RuntimeException e) {
+  //                     // Ignore.
+  //                 }
+  //             } else {
+  //                 inputElement.setValue(value);
+  //             }
+  //         }
+  //     } else if ("text".equalsIgnoreCase(tagName)) {
+  //         // Focus the first input.
+  //         if (!doneFocus) {
+  //             doneFocus = true;
+  //             element.focus();
+  //         }
 
-      //         final Prop prop = createProp(element);
-      //         final String value = getValue(activity, prop.getId());
-      //         if (value != null) {
-      //             final TextAreaElement inputElement = element.cast();
-      //             inputElement.setValue(value);
-      //         }
-      //     } else if ("select".equalsIgnoreCase(tagName)) {
-      //         // Focus the first input.
-      //         if (!doneFocus) {
-      //             doneFocus = true;
-      //             element.focus();
-      //         }
+  //         final Prop prop = createProp(element);
+  //         final String value = getValue(activity, prop.getId());
+  //         if (value != null) {
+  //             final InputElement inputElement = element.cast();
+  //             inputElement.setValue(value);
+  //         }
+  //     } else if ("textarea".equalsIgnoreCase(tagName)) {
+  //         // Focus the first input.
+  //         if (!doneFocus) {
+  //             doneFocus = true;
+  //             element.focus();
+  //         }
 
-      //         final Prop prop = createProp(element);
-      //         final String value = getValue(activity, prop.getId());
-      //         if (value != null) {
-      //             final SelectElement selectElement = element.cast();
-      //             selectElement.setValue(value);
-      //         }
-      //     }
-      // }
+  //         final Prop prop = createProp(element);
+  //         final String value = getValue(activity, prop.getId());
+  //         if (value != null) {
+  //             final TextAreaElement inputElement = element.cast();
+  //             inputElement.setValue(value);
+  //         }
+  //     } else if ("select".equalsIgnoreCase(tagName)) {
+  //         // Focus the first input.
+  //         if (!doneFocus) {
+  //             doneFocus = true;
+  //             element.focus();
+  //         }
 
-      // if (attribs) {
-      //   if (attribs.id === "main") {
-      //     return (
-      //       <h1 style={{ fontSize: 42 }}>{domToReact(children, options)}</h1>
-      //     );
-      //   } else if (attribs.class === "prettify") {
-      //     return (
-      //       <span style={{ color: "hotpink" }}>
-      //         {domToReact(children, options)}
-      //       </span>
-      //     );
-      //   }
-      // }
+  //         final Prop prop = createProp(element);
+  //         final String value = getValue(activity, prop.getId());
+  //         if (value != null) {
+  //             final SelectElement selectElement = element.cast();
+  //             selectElement.setValue(value);
+  //         }
+  //     }
+  // }
 
-      return undefined;
-    },
-  };
+  // if (attribs) {
+  //   if (attribs.id === "main") {
+  //     return (
+  //       <h1 style={{ fontSize: 42 }}>{domToReact(children, options)}</h1>
+  //     );
+  //   } else if (attribs.class === "prettify") {
+  //     return (
+  //       <span style={{ color: "hotpink" }}>
+  //         {domToReact(children, options)}
+  //       </span>
+  //     );
+  //   }
+  // }
 
   // const { componentProps: tableProps } = useActivityGroupTable(groupNames);
 
@@ -372,7 +439,7 @@ const ActivityEditor: React.FunctionComponent<Props> = ({ activityId }) => {
             text="Save"
             title="Save"
             disabled={!isDirty}
-            onClick={onSave}
+            onClick={onCreateOrUpdate}
           />
           {/* <ThemedConfirm {...removeDialogProps} /> */}
         </div>

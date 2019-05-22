@@ -29,51 +29,54 @@ const useApi = (): UseApi => {
     httpDeleteEmptyResponse,
   } = useHttpClient();
   const { stroomBaseServiceUrl } = useConfig();
-  return {
-    getConfig: useCallback(
-      () => httpGetJson(`${stroomBaseServiceUrl}/activity/v1/config`),
-      [stroomBaseServiceUrl, httpGetJson],
-    ),
+  const resource = `${stroomBaseServiceUrl}/activity/v1`;
+  const activityConfigUrl = `${resource}/config`;
+  const currentActivityUrl = `${resource}/current`;
 
-    getCurrentActivity: useCallback(
-      () => httpGetJson(`${stroomBaseServiceUrl}/activity/v1/current`),
-      [stroomBaseServiceUrl, httpGetJson],
-    ),
+  return {
+    getConfig: useCallback(() => httpGetJson(activityConfigUrl), [
+      activityConfigUrl,
+      httpGetJson,
+    ]),
+
+    getCurrentActivity: useCallback(() => httpGetJson(currentActivityUrl), [
+      currentActivityUrl,
+      httpGetJson,
+    ]),
     setCurrentActivity: useCallback(
       (activity: Activity) =>
-        httpPostJsonResponse(`${stroomBaseServiceUrl}/activity/v1/current`, {
-          body: JSON.stringify({ activity }),
+        httpPostJsonResponse(currentActivityUrl, {
+          body: JSON.stringify(activity),
         }),
-      [stroomBaseServiceUrl, httpPostJsonResponse],
+      [currentActivityUrl, httpPostJsonResponse],
     ),
 
-    getActivities: React.useCallback(
-      () => httpGetJson(`${stroomBaseServiceUrl}/activity/v1`),
-      [stroomBaseServiceUrl, httpGetJson],
-    ),
+    getActivities: React.useCallback(() => httpGetJson(resource), [
+      resource,
+      httpGetJson,
+    ]),
 
     createActivity: React.useCallback(
       (activity: Activity) =>
-        httpPostJsonResponse(`${stroomBaseServiceUrl}/activity/v1`, {
-          body: JSON.stringify({ activity }),
+        httpPostJsonResponse(resource, {
+          body: JSON.stringify(activity),
         }),
-      [stroomBaseServiceUrl, httpPostJsonResponse],
+      [resource, httpPostJsonResponse],
     ),
     getActivity: React.useCallback(
-      (id: string) => httpGetJson(`${stroomBaseServiceUrl}/activity/v1/${id}`),
-      [stroomBaseServiceUrl, httpGetJson],
+      (id: string) => httpGetJson(`${resource}/${id}`),
+      [resource, httpGetJson],
     ),
     updateActivity: React.useCallback(
       (activity: Activity) =>
-        httpPostJsonResponse(`${stroomBaseServiceUrl}/activity/v1`, {
-          body: JSON.stringify({ activity }),
+        httpPostJsonResponse(`${resource}/${activity.id}`, {
+          body: JSON.stringify(activity),
         }),
-      [stroomBaseServiceUrl, httpPostJsonResponse],
+      [resource, httpPostJsonResponse],
     ),
     deleteActivity: React.useCallback(
-      (id: string) =>
-        httpDeleteEmptyResponse(`${stroomBaseServiceUrl}/activity/v1/${id}`),
-      [stroomBaseServiceUrl, httpDeleteEmptyResponse],
+      (id: string) => httpDeleteEmptyResponse(`${resource}/${id}`),
+      [resource, httpDeleteEmptyResponse],
     ),
   };
 };

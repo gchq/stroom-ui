@@ -181,7 +181,7 @@ const ACTIVITY_CONFIG: ActivityConfig = {
   managerTitle: "Choose Activity",
   editorTitle: "Edit Activity",
   editorBody:
-    'Activity Code:</br><input type="text" name="code"></input></br></br>Activity Description:</br><textarea rows="4" style="width:100%;height:80px" name="description"></textarea>Explain what the activity is',
+    'Activity Code:</br><input takefocus="true" type="text" name="code"></input></br></br>Activity Description:</br><textarea rows="4" style="width:100%;height:80px" name="description"></textarea>Explain what the activity is',
 };
 
 const ACTIVITY: Activity = {

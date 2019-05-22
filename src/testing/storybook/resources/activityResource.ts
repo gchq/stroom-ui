@@ -38,33 +38,67 @@ const resourceBuilder: ResourceBuilder = (
   { stroomBaseServiceUrl }: Config,
   testCache: TestCache,
 ) => {
+  const resource = `${stroomBaseServiceUrl}/activity/v1`;
+  const activityConfigUrl = `${resource}/config`;
+  const currentActivityUrl = `${resource}/current`;
+
   // Get the configuration for activities.
+  // getConfig
   server
-    .get(`${stroomBaseServiceUrl}/activity/v1/config`)
+    .get(activityConfigUrl)
     .intercept((req: HttpRequest, res: HttpResponse) => {
       res.json(testCache.data!.activity.config);
     });
 
   // Get the current activity for the summary.
+  // getCurrentActivity
   server
-    .get(`${stroomBaseServiceUrl}/activity/v1/current`)
+    .get(currentActivityUrl)
     .intercept((req: HttpRequest, res: HttpResponse) => {
       res.json(testCache.data!.activity.currentActivity);
     });
-
-  // Get activity list.
+  // setCurrentActivity
   server
-    .get(`${stroomBaseServiceUrl}/activity/v1`)
+    .post(currentActivityUrl)
     .intercept((req: HttpRequest, res: HttpResponse) => {
-      res.json(testCache.data!.activity.activityList);
+      const activity = JSON.parse(req.body);
+      testCache.data!.activity.currentActivity = activity;
+      console.log("Setting current activity", activity);
+      res.send(200);
     });
 
-  // Get By ID
+  // Manage activities.
+  server.get(resource).intercept((req: HttpRequest, res: HttpResponse) => {
+    res.json(testCache.data!.activity.activityList);
+  });
+
+  // Activity CRUD
+  // createActivity
+  server.post(resource).intercept((req: HttpRequest, res: HttpResponse) => {
+    const activity = JSON.parse(req.body);
+
+    let maxId = 0;
+    const ids: number[] = testCache.data!.activity.activityList.map(({ id }) =>
+      parseInt(id),
+    );
+    maxId = Math.max.apply(Math, ids);
+
+    const savedActivity = {
+      id: `${maxId + 1}`,
+      ...activity,
+    };
+
+    testCache.data!.activity.activityList.push(savedActivity);
+    console.log("Created new activity", savedActivity);
+    res.json(savedActivity);
+  });
+
+  // getActivity
   server
-    .get(`${stroomBaseServiceUrl}/activity/v1/:activityId`)
+    .get(`${resource}/:activityId`)
     .intercept((req: HttpRequest, res: HttpResponse) => {
-      let activityId: string = req.params.activityId;
-      let activity = testCache.data!.activity.activityList.find(
+      const activityId: string = req.params.activityId;
+      const activity = testCache.data!.activity.activityList.find(
         a => `${a.id}` === activityId,
       );
       if (!!activity) {
@@ -72,6 +106,47 @@ const resourceBuilder: ResourceBuilder = (
       } else {
         res.sendStatus(404);
       }
+    });
+
+  // updateActivity
+  server
+    .post(`${resource}/:activityId`)
+    .intercept((req: HttpRequest, res: HttpResponse) => {
+      const activityId: string = req.params.activityId;
+      const activity = JSON.parse(req.body);
+
+      const savedActivity = {
+        version: activity.version + 1,
+        ...activity,
+      };
+
+      testCache.data!.activity.activityList = testCache.data!.activity.activityList.map(
+        a => {
+          if (a.id === activityId) {
+            return savedActivity;
+          }
+
+          return a;
+        },
+      );
+
+      console.log("Updating activity", savedActivity);
+      res.json(savedActivity);
+    });
+
+  // deleteActivity
+  server
+    .delete(`${resource}/:activityId`)
+    .intercept((req: HttpRequest, res: HttpResponse) => {
+      const activityId: string = req.params.activityId;
+
+      testCache.data!.activity.activityList = testCache.data!.activity.activityList.filter(
+        a => {
+          return a.id !== activityId;
+        },
+      );
+
+      res.status(204).send(undefined);
     });
 };
 

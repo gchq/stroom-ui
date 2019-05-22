@@ -1,21 +1,17 @@
 import * as React from "react";
 import { Activity } from "./types";
 import useApi from "./useApi";
+import cogoToast from "cogo-toast";
 
 interface UseActivity {
   activity: Activity | undefined;
   onPropChange: (id: string, value: string) => any;
-  onSave: () => void;
+  onCreateOrUpdate: () => void;
   isDirty: boolean;
 }
 
 interface SetActivity {
   type: "set";
-  activity: Activity;
-}
-
-interface SavedActivity {
-  type: "saved";
   activity: Activity;
 }
 
@@ -32,7 +28,7 @@ interface ReducerState {
 
 const reducer = (
   state: ReducerState,
-  action: SetActivity | SetPropValue | SavedActivity,
+  action: SetActivity | SetPropValue,
 ): ReducerState => {
   switch (action.type) {
     case "set":
@@ -57,8 +53,6 @@ const reducer = (
         },
         isDirty: true,
       };
-    case "saved":
-      return { activity: action.activity, isDirty: false };
   }
 
   return state;
@@ -74,7 +68,7 @@ const useActivity = (activityId: string): UseActivity => {
     isDirty: false,
   });
 
-  const { getActivity, updateActivity } = useApi();
+  const { createActivity, getActivity, updateActivity } = useApi();
 
   React.useEffect(() => {
     getActivity(activityId).then(activity =>
@@ -87,15 +81,30 @@ const useActivity = (activityId: string): UseActivity => {
     [dispatch],
   );
 
-  const onSave = React.useCallback(
-    () =>
-      updateActivity(activity).then(activity =>
-        dispatch({ type: "saved", activity }),
-      ),
-    [updateActivity, dispatch, activity],
-  );
+  const onCreateOrUpdate = React.useCallback(() => {
+    if (activity.id) {
+      updateActivity(activity).then(activity => {
+        dispatch({ type: "set", activity });
+        cogoToast.info(`Activity Saved`);
+      });
+    } else {
+      createActivity(activity).then(activity => {
+        dispatch({ type: "set", activity });
+        cogoToast.info(`Activity Created`);
+      });
+    }
+  }, [createActivity, updateActivity, dispatch, activity]);
 
-  return { activity, isDirty, onPropChange, onSave };
+  // const onUpdate = React.useCallback(
+  //   () =>
+  //     updateActivity(activity).then(activity => {
+  //       dispatch({ type: "set", activity });
+  //       cogoToast.info(`Activity Saved`);
+  //     }),
+  //   [updateActivity, dispatch, activity],
+  // );
+
+  return { activity, isDirty, onPropChange, onCreateOrUpdate };
 };
 
 export default useActivity;
