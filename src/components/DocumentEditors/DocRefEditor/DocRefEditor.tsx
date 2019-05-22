@@ -10,10 +10,10 @@ import AppSearchBar from "../../AppSearchBar";
 import DocRefIconHeader from "../../DocRefIconHeader";
 import DocRefBreadcrumb from "../../DocRefBreadcrumb";
 import Button from "../../Button";
-import { useDocumentTree } from "components/DocumentEditors/api/explorer";
 import useAppNavigation from "lib/useAppNavigation";
 import { DocumentApi } from "components/DocumentEditors/useDocumentApi/types/documentApi";
 import { ButtonProps } from "components/Button/types";
+import useDocument from "../api/explorer/useDocument";
 
 const DocRefEditor = <T extends {}>({
   onClickSave,
@@ -25,11 +25,7 @@ const DocRefEditor = <T extends {}>({
   const {
     nav: { goToAuthorisationsForDocument, goToEditDocRef },
   } = useAppNavigation();
-  const { findDocRefWithLineage } = useDocumentTree();
-  const { node: docRef } = React.useMemo(
-    () => findDocRefWithLineage(docRefUuid),
-    [findDocRefWithLineage, docRefUuid],
-  );
+  const { node: docRef } = useDocument(docRefUuid);
 
   const openDocRefPermissions = React.useCallback(
     () => goToAuthorisationsForDocument(docRefUuid),

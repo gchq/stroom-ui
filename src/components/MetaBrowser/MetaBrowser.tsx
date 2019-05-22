@@ -25,6 +25,7 @@ import { ExpressionOperatorType } from "../ExpressionBuilder/types";
 import { PageRequest } from "./types";
 import MetaTable, { useTable } from "./MetaTable";
 import useLocalStorage, { useStoreObjectFactory } from "lib/useLocalStorage";
+import MetaRelations from "./MetaRelations";
 
 const defaultPageRequest: PageRequest = {
   pageOffset: 0,
@@ -42,9 +43,18 @@ const defaultPanelWidths: PanelWidth[] = [
     minSize: 100,
     size: 150,
   },
+  {
+    resize: "dynamic",
+    minSize: 100,
+    size: 150,
+  },
 ];
 
-const MetaBrowser = () => {
+interface Props {
+  feedName?: string;
+}
+
+const MetaBrowser: React.FunctionComponent<Props> = ({ feedName }) => {
   const dataSource = useMetaDataSource();
   const { streams, search } = useMetaSearch();
 
@@ -54,6 +64,29 @@ const MetaBrowser = () => {
       search(expression, defaultPageRequest);
     },
     [search],
+  );
+
+  const initialSearchExpression:
+    | ExpressionOperatorType
+    | undefined = React.useMemo(
+    () =>
+      !!feedName
+        ? ({
+            type: "operator",
+            op: "AND",
+            children: [
+              {
+                type: "term",
+                field: "Feed",
+                condition: "EQUALS",
+                value: feedName,
+                enabled: true,
+              },
+            ],
+            enabled: true,
+          } as ExpressionOperatorType)
+        : undefined,
+    [feedName],
   );
 
   const {
@@ -82,7 +115,7 @@ const MetaBrowser = () => {
       </div>
       <div className="page__search">
         <ExpressionSearchBar
-          // className="data-viewer__search-bar"
+          initialSearchExpression={initialSearchExpression}
           dataSource={dataSource}
           onSearch={onSearch}
         />
@@ -95,9 +128,14 @@ const MetaBrowser = () => {
         >
           <MetaTable {...tableProps} />
           {!!selectedItem ? (
+            <MetaRelations metaRow={selectedItem} />
+          ) : (
+            <div>Please Select a Single Row (Relations)</div>
+          )}
+          {!!selectedItem ? (
             <MetaDetailTabs data={selectedItem} />
           ) : (
-            <div>Please Select a Single Row</div>
+            <div>Please Select a Single Row (Details)</div>
           )}
         </PanelGroup>
       </div>
