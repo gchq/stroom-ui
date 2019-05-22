@@ -1,11 +1,11 @@
 import * as React from "react";
-import { Activity } from "./types";
+import { Activity, Prop } from "./types";
 import useApi from "./useApi";
 import cogoToast from "cogo-toast";
 
 interface UseActivity {
   activity: Activity | undefined;
-  onPropChange: (id: string, value: string) => any;
+  onPropChange: (prop: Prop) => any;
   onCreateOrUpdate: () => void;
   isDirty: boolean;
 }
@@ -17,8 +17,7 @@ interface SetActivity {
 
 interface SetPropValue {
   type: "prop";
-  id: string;
-  value: string;
+  prop: Prop;
 }
 
 interface ReducerState {
@@ -37,19 +36,14 @@ const reducer = (
         isDirty: false,
       };
     case "prop":
+      console.log("setting prop on ", state.activity);
+
       return {
         activity: {
           ...state.activity,
-          properties: state.activity.properties.map(prop => {
-            if (prop.id === action.id) {
-              return {
-                ...prop,
-                value: action.value,
-              };
-            } else {
-              return prop;
-            }
-          }),
+          properties: state.activity.properties
+            .filter(prop => prop.id !== action.prop.id)
+            .concat(action.prop),
         },
         isDirty: true,
       };
@@ -85,7 +79,7 @@ const useActivity = (activityId: string): UseActivity => {
   }, [activityId, getActivity, dispatch]);
 
   const onPropChange = React.useCallback(
-    (id: string, value: string) => dispatch({ type: "prop", id, value }),
+    (prop: Prop) => dispatch({ type: "prop", prop }),
     [dispatch],
   );
 

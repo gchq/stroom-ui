@@ -193,7 +193,7 @@ const ActivityEditor: React.FunctionComponent<Props> = ({ activityId }) => {
                 <FocusStealingInput
                   type="checkbox"
                   onChange={({ target: { checked } }) =>
-                    onPropChange(prop.id, checked.toString())
+                    onPropChange({ ...prop, value: checked.toString() })
                   }
                   checked={value !== "false"}
                   defaultChecked={value !== "false"}
@@ -205,7 +205,7 @@ const ActivityEditor: React.FunctionComponent<Props> = ({ activityId }) => {
                 <FocusStealingInput
                   type="radio"
                   onChange={({ target: { checked } }) =>
-                    onPropChange(prop.id, checked.toString())
+                    onPropChange({ ...prop, value: checked.toString() })
                   }
                   checked={value !== "false"}
                   defaultChecked={value !== "false"}
@@ -216,7 +216,7 @@ const ActivityEditor: React.FunctionComponent<Props> = ({ activityId }) => {
               return (
                 <FocusStealingInput
                   onChange={({ target: { value } }) =>
-                    onPropChange(prop.id, value)
+                    onPropChange({ ...prop, value })
                   }
                   value={value}
                   {...customAttribs}
@@ -230,7 +230,7 @@ const ActivityEditor: React.FunctionComponent<Props> = ({ activityId }) => {
             return (
               <FocusStealingTextArea
                 onChange={({ target: { value } }) =>
-                  onPropChange(prop.id, value)
+                  onPropChange({ ...prop, value })
                 }
                 value={value}
                 {...customAttribs}
@@ -243,7 +243,7 @@ const ActivityEditor: React.FunctionComponent<Props> = ({ activityId }) => {
             return (
               <FocusStealingSelect
                 onChange={({ target: { value } }) =>
-                  onPropChange(prop.id, value)
+                  onPropChange({ ...prop, value })
                 }
                 value={value}
                 {...customAttribs}

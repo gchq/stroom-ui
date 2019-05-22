@@ -23,7 +23,7 @@ interface Props {
 }
 
 const ActivitySummary: React.FunctionComponent = () => {
-  const activity = useActivitySummary();
+  const { activity } = useActivitySummary();
 
   return (
     <button className="ActivitySummary control border">

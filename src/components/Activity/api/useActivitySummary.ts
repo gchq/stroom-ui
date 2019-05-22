@@ -4,12 +4,17 @@ import * as React from "react";
 import useApi from "./useApi";
 import { Activity } from "./types";
 
-const useActivitySummary = (): Activity => {
+interface UseActivitySummary {
+  activity: Activity;
+  setCurrentActivity: (a: Activity) => void;
+}
+
+const useActivitySummary = (): UseActivitySummary => {
   // Get the API object the provides the function that returns the promise
-  const { getCurrentActivity } = useApi();
+  const { getCurrentActivity, setCurrentActivity } = useApi();
 
   // Declare the React state object to hold the response from the REST API
-  const [currentActivity, setCurrentActivity] = React.useState<Activity>({
+  const [activity, setActivity] = React.useState<Activity>({
     userId: "TBD",
     properties: [
       {
@@ -31,10 +36,17 @@ const useActivitySummary = (): Activity => {
 
   // Use an effect to set the build info state when the component is mounted
   React.useEffect(() => {
-    getCurrentActivity().then(setCurrentActivity);
-  }, [setCurrentActivity, getCurrentActivity]);
+    getCurrentActivity().then(setActivity);
+  }, [setActivity, getCurrentActivity]);
 
-  return currentActivity;
+  const _setCurrentActivity = React.useCallback(
+    (activity: Activity) => {
+      setCurrentActivity(activity).then(setActivity);
+    },
+    [setCurrentActivity, setActivity],
+  );
+
+  return { activity, setCurrentActivity: _setCurrentActivity };
 };
 
 export default useActivitySummary;
