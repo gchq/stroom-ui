@@ -76,57 +76,56 @@ const DataRetentionRuleEditor: React.FunctionComponent<Props> = ({
   return (
     <div>
       <div className="DataRetentionRuleEditor__header">
-        <h2>
-          <InlineInput value={rule.name} onChange={handleNameChange} />
-        </h2>
+        <InlineInput value={rule.name} onChange={handleNameChange} />
         <Toggle checked={rule.enabled} onChange={handleEnabledChange} />
       </div>
 
-      <h3>Match the following</h3>
-      <ExpressionBuilder
-        value={rule.expression}
-        onChange={handleExpressionChange}
-        editMode={true}
-        dataSource={dataSource}
-      />
-
-      <div>
+      <div className="DataRetentionRuleEditor__content">
+        <h3>Match the following</h3>
+        <ExpressionBuilder
+          value={rule.expression}
+          onChange={handleExpressionChange}
+          editMode={true}
+          dataSource={dataSource}
+        />
         <h3>and...</h3>
-        <div>
-          <label>
-            <input
-              type="radio"
-              name="forever"
-              value="keep_forever"
-              checked={rule.forever}
-              onChange={handleForeverChange}
-            />
-            keep forever
-          </label>
-        </div>
-        <div>
-          <label>
-            <input
-              type="radio"
-              name="forever"
-              value="keep_then_delete"
-              checked={!rule.forever}
-              onChange={handleForeverChange}
-            />
-            <span>delete after </span>
-          </label>
-          <span>
-            <InlineInput
-              type="number"
-              value={rule.age}
-              onChange={handleAgeChange}
-            />
-            <span> </span>
-            <TimeUnitSelect
-              selected={rule.timeUnit}
-              onChange={handleTimeUnitChange}
-            />
-          </span>
+        <div className="DataRetentionRuleEditor__retention">
+          <div>
+            <label>
+              <input
+                type="radio"
+                name="forever"
+                value="keep_forever"
+                checked={rule.forever}
+                onChange={handleForeverChange}
+              />
+              <span>keep forever</span>
+            </label>
+          </div>
+          <div>
+            <label>
+              <input
+                type="radio"
+                name="forever"
+                value="keep_then_delete"
+                checked={!rule.forever}
+                onChange={handleForeverChange}
+              />
+              <span>delete after </span>
+            </label>
+            <span>
+              <InlineInput
+                type="number"
+                value={rule.age}
+                onChange={handleAgeChange}
+              />
+              <span> </span>
+              <TimeUnitSelect
+                selected={rule.timeUnit}
+                onChange={handleTimeUnitChange}
+              />
+            </span>
+          </div>
         </div>
       </div>
     </div>

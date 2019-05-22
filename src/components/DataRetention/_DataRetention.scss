@@ -3,13 +3,31 @@ input[type="radio"] {
 }
 
 .DataRetentionRuleEditor__header {
+  margin: 0.5em;
   display: flex;
   justify-content: space-between;
+}
+
+.DataRetentionRuleEditor__header .inline-input__not-editing {
+  font-size: 2em;
+  font-weight: bold;
 }
 
 .DataRetentionRuleEditor__header .inline-input__editing {
   width: 15em;
   height: 1.3em;
-  font-size: 1em;
+  font-size: 2em;
   font-weight: bold;
+}
+
+.DataRetentionRuleEditor__content {
+  padding: 1em;
+}
+
+.DataRetentionRuleEditor__retention {
+  padding: 0em 0em 0em 1em;
+}
+
+.DataRetentionRuleEditor__retention label span {
+  padding-left: 0.5em;
 }
