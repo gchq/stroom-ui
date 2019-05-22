@@ -9,8 +9,6 @@ import { Activity } from "./types";
  */
 interface UseActivities {
   activities: Activity[];
-  createActivity: (activity: Activity) => void;
-  updateActivity: (activity: Activity) => void;
   deleteActivity: (id: string) => void;
 }
 
@@ -19,14 +17,6 @@ interface ReceiveAction {
   activities: Activity[];
 }
 
-interface CreateAction {
-  type: "created";
-  activity: Activity;
-}
-interface UpdateAction {
-  type: "updated";
-  activity: Activity;
-}
 interface DeleteAction {
   type: "deleted";
   id: string;
@@ -34,20 +24,11 @@ interface DeleteAction {
 
 const reducer = (
   state: Activity[],
-  action: ReceiveAction | CreateAction | UpdateAction | DeleteAction,
+  action: ReceiveAction | DeleteAction,
 ): Activity[] => {
   switch (action.type) {
     case "received":
       return action.activities;
-    case "created":
-      return state.concat([action.activity]);
-    case "updated":
-      return state.map(v => {
-        if (v.id === action.activity.id) {
-          return action.activity;
-        }
-        return v;
-      });
     case "deleted":
       return state.filter(v => v.id !== action.id);
     default:
@@ -58,12 +39,7 @@ const reducer = (
 const useActivities = (): UseActivities => {
   const [activities, dispatch] = React.useReducer(reducer, []);
 
-  const {
-    getActivities,
-    createActivity,
-    updateActivity,
-    deleteActivity,
-  } = useApi();
+  const { getActivities, deleteActivity } = useApi();
 
   React.useEffect(() => {
     getActivities().then(v =>
@@ -76,26 +52,6 @@ const useActivities = (): UseActivities => {
 
   return {
     activities,
-    createActivity: React.useCallback(
-      (activity: Activity) =>
-        createActivity(activity).then(activity =>
-          dispatch({
-            type: "created",
-            activity,
-          }),
-        ),
-      [createActivity],
-    ),
-    updateActivity: React.useCallback(
-      (activity: Activity) =>
-        updateActivity(activity).then(activity =>
-          dispatch({
-            type: "updated",
-            activity,
-          }),
-        ),
-      [updateActivity],
-    ),
     deleteActivity: React.useCallback(
       (id: string) =>
         deleteActivity(id).then(() =>

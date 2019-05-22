@@ -25,13 +25,18 @@ import useAppNavigation from "lib/useAppNavigation";
 
 const TestHarness = () => {
   const {
-    urlGenerator: { goToActivity },
+    urlGenerator: { goToCreateActivity, goToEditActivity },
   } = useAppNavigation();
   return (
     <Switch>
       <Route
         exact
-        path={goToActivity(":id")}
+        path={goToCreateActivity()}
+        render={(props: RouteComponentProps<any>) => <ActivityEditor />}
+      />
+      <Route
+        exact
+        path={goToEditActivity(":id")}
         render={(props: RouteComponentProps<any>) => (
           <ActivityEditor activityId={props.match.params.id} />
         )}

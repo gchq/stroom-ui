@@ -29,15 +29,10 @@ import IconHeader from "components/IconHeader";
 const ActivityChooser: React.FunctionComponent = () => {
   const [filterable, setFilteringEnabled] = React.useState(false);
   const {
-    nav: { goToActivity },
+    nav: { goToCreateActivity, goToEditActivity },
   } = useAppNavigation();
 
-  const {
-    activities,
-    createActivity,
-    updateActivity,
-    deleteActivity,
-  } = useActivities();
+  const { activities, deleteActivity } = useActivities();
 
   const { componentProps: tableProps } = useTable(activities, {
     filterable,
@@ -67,18 +62,16 @@ const ActivityChooser: React.FunctionComponent = () => {
   const onCreateClick: React.MouseEventHandler<
     HTMLButtonElement
   > = React.useCallback(() => {
-    if (selectedActivities.length === 1) {
-      goToActivity(selectedActivities[0].id);
-    }
-  }, [goToActivity, selectedActivities]);
+    goToCreateActivity();
+  }, [goToCreateActivity, selectedActivities]);
 
   const onEditClick: React.MouseEventHandler<
     HTMLButtonElement
   > = React.useCallback(() => {
     if (selectedActivities.length === 1) {
-      goToActivity(selectedActivities[0].id);
+      goToEditActivity(selectedActivities[0].id);
     }
-  }, [goToActivity, selectedActivities]);
+  }, [goToEditActivity, selectedActivities]);
 
   const {
     showDialog: onDeleteClick,

@@ -25,7 +25,7 @@ import { Prop, Activity } from "../api/types";
 // import { acequire } from "brace";
 
 interface Props {
-  activityId: string;
+  activityId?: string;
 }
 
 const getId = ({ attribs: { id } }: DomElement): string => {
@@ -429,7 +429,10 @@ const ActivityEditor: React.FunctionComponent<Props> = ({ activityId }) => {
   return (
     <div className="page">
       <div className="page__header">
-        <IconHeader icon="tasks" text={activityConfig.editorTitle} />
+        <IconHeader
+          icon="tasks"
+          text={activityConfig && activityConfig.editorTitle}
+        />
         <div className="page__buttons Button__container">
           <Button text="Back" onClick={history.goBack} />
           <Button

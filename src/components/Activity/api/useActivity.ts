@@ -58,6 +58,10 @@ const reducer = (
   return state;
 };
 
+const newActivity: Activity = {
+  properties: [],
+};
+
 const useActivity = (activityId: string): UseActivity => {
   // const [activity, setActivity] = React.useState<Activity | undefined>(
   //   undefined,
@@ -71,9 +75,13 @@ const useActivity = (activityId: string): UseActivity => {
   const { createActivity, getActivity, updateActivity } = useApi();
 
   React.useEffect(() => {
-    getActivity(activityId).then(activity =>
-      dispatch({ type: "set", activity }),
-    );
+    if (activityId) {
+      getActivity(activityId).then(activity =>
+        dispatch({ type: "set", activity }),
+      );
+    } else {
+      dispatch({ type: "set", activity: newActivity });
+    }
   }, [activityId, getActivity, dispatch]);
 
   const onPropChange = React.useCallback(

@@ -1,7 +1,8 @@
 import { DocRefType } from "components/DocumentEditors/useDocumentApi/types/base";
 
 export interface RawNavigateApp<IN, OUT> {
-  goToActivity: (activityId: IN) => OUT;
+  goToCreateActivity: () => OUT;
+  goToEditActivity: (activityId: IN) => OUT;
   goToWelcome: () => OUT;
   goToStreamBrowser: () => OUT;
   goToProcessing: () => OUT;
