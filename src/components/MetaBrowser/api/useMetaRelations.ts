@@ -9,7 +9,7 @@ const useMetaRelations = (metaId: number, anyStatus: boolean): MetaRow[] => {
 
   React.useEffect(() => {
     getRelations(metaId, anyStatus).then(setRelations);
-  }, [metaId, setRelations, getRelations]);
+  }, [metaId, anyStatus, setRelations, getRelations]);
 
   return relations;
 };
