@@ -1,12 +1,31 @@
-import * as React from "react";
+/*
+ * Copyright 2019 Crown Copyright
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 import Button from "components/Button";
-import Toggle from "react-toggle";
 import IconHeader from "components/IconHeader";
-import { useState, useCallback } from "react";
+import * as React from "react";
+import { useCallback } from "react";
+import DataRetentionRuleList from "../List/DataRetentionRuleList";
+import { DataRetentionPolicy } from "../types/DataRetentionPolicy";
 
-const DataRetentionSection: React.FunctionComponent = () => {
-  const [isFilteringEnabled, setFilteringEnabled] = useState(false);
+interface Props {
+  policy: DataRetentionPolicy;
+}
 
+const DataRetentionSection: React.FunctionComponent<Props> = ({ policy }) => {
   const handleCreate = useCallback(() => console.log("todo"), []);
   const handleDelete = useCallback(() => console.log("todo"), []);
   const handleEdit = useCallback(() => console.log("todo"), []);
@@ -36,18 +55,12 @@ const DataRetentionSection: React.FunctionComponent = () => {
             icon="trash"
             text="Delete"
           />
-          <div className="DataRetention__header__filtering">
-            <label>Show filtering</label>
-            <Toggle
-              icons={false}
-              checked={isFilteringEnabled}
-              onChange={event => setFilteringEnabled(event.target.checked)}
-            />
-          </div>
         </div>
       </div>
       <div className="page__search" />
-      <div className="page__body" />
+      <div className="DataRetentionSection__content">
+        <DataRetentionRuleList policy={policy} />
+      </div>
     </div>
   );
 };

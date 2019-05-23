@@ -19,29 +19,9 @@ import * as React from "react";
 import JsonDebug from "testing/JsonDebug";
 import { addThemedStories } from "testing/storybook/themedStoryGenerator";
 import DataRetentionRuleEditor from "./DataRetentionRuleEditor";
-import { DataRetentionRule } from "./types/DataRetentionRule";
+import { DataRetentionRule } from "../types/DataRetentionRule";
 
 const stories = storiesOf("Sections/DataRetention/Rule", module);
-// const policy = {
-//   name: "rule2",
-//   type: "DataRetentionRules",
-//   rules: [
-//     {
-//       ruleNumber: "1",
-//       name: "some rule name",
-//       enabled: "true",
-//       age: "1",
-//       timeUnit: "Years",
-//       forever: "false",
-//       expression: {
-//         op: "AND",
-//         children: [],
-//         enabled: "true",
-//         type: "operator",
-//       },
-//     },
-//   ],
-// };
 
 const rule1: DataRetentionRule = {
   ruleNumber: 1,
