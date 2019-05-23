@@ -18,6 +18,7 @@ import { AuthorisationContextProvider } from "startup/Authorisation";
 import { AuthenticationContext } from "startup/Authentication";
 import { DocumentTreeContextProvider } from "components/DocumentEditors/api/explorer";
 import { ErrorReportingContextProvider } from "components/ErrorPage";
+import CurrentActivityContextProvider from "components/Activity/api/CurrentActivityContextProvider";
 
 const RouteWrapper: React.StatelessComponent<RouteComponentProps> = ({
   children,
@@ -53,7 +54,9 @@ export default (storyFn: RenderFunction) =>
             <ThemeContextProvider>
               <DragDropRouted>
                 <DocumentTreeContextProvider>
-                  {storyFn()}
+                  <CurrentActivityContextProvider>
+                    {storyFn()}
+                  </CurrentActivityContextProvider>
                 </DocumentTreeContextProvider>
               </DragDropRouted>
             </ThemeContextProvider>

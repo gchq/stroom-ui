@@ -19,6 +19,7 @@ import { AuthorisationContextProvider } from "startup/Authorisation";
 import { AuthenticationContextProvider } from "startup/Authentication";
 import { DocumentTreeContextProvider } from "components/DocumentEditors/api/explorer";
 import { ErrorReportingContextProvider } from "components/ErrorPage";
+import CurrentActivityContextProvider from "components/Activity/api/CurrentActivityContextProvider";
 
 export const history = createHistory();
 
@@ -34,7 +35,9 @@ const App: React.FunctionComponent = () => (
           <ThemeContextProvider>
             <CustomRouter history={history}>
               <DocumentTreeContextProvider>
-                <DndRoutes />
+                <CurrentActivityContextProvider>
+                  <DndRoutes />
+                </CurrentActivityContextProvider>
               </DocumentTreeContextProvider>
             </CustomRouter>
           </ThemeContextProvider>

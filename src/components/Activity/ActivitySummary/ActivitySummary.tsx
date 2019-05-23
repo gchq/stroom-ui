@@ -15,7 +15,10 @@
  */
 
 import * as React from "react";
-import useActivitySummary from "../api/useActivitySummary";
+import useCurrentActivity from "../api/useCurrentActivity";
+import ActivityChooserDialog, {
+  useDialog,
+} from "../ActivityChooser/ActivityChooserDialog";
 
 interface Props {
   name: string;
@@ -23,24 +26,27 @@ interface Props {
 }
 
 const ActivitySummary: React.FunctionComponent = () => {
-  const { activity } = useActivitySummary();
-
+  const { currentActivity } = useCurrentActivity();
+  const { componentProps, showDialog } = useDialog();
   return (
-    <button className="ActivitySummary control border">
-      <div className="ActivitySummary__header">Current Activity</div>
-      {activity &&
-        activity.properties &&
-        activity.properties
-          .filter(({ showInSelection }) => showInSelection)
-          .map(({ name, value }, i: number) => {
-            return (
-              <div className="ActivitySummary__row" key={i}>
-                <b>{name}: </b>
-                {value}
-              </div>
-            );
-          })}
-    </button>
+    <React.Fragment>
+      <button className="ActivitySummary control border" onClick={showDialog}>
+        <div className="ActivitySummary__header">Current Activity</div>
+        {currentActivity &&
+          currentActivity.properties &&
+          currentActivity.properties
+            .filter(({ showInSelection }) => showInSelection)
+            .map(({ name, value }, i: number) => {
+              return (
+                <div className="ActivitySummary__row" key={i}>
+                  <b>{name}: </b>
+                  {value}
+                </div>
+              );
+            })}
+      </button>
+      <ActivityChooserDialog {...componentProps} />
+    </React.Fragment>
   );
 };
 

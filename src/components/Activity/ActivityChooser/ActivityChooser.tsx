@@ -25,6 +25,7 @@ import ThemedConfirm, {
 import ActivityTable, { useTable } from "../ActivityTable";
 import { Activity } from "../api/types";
 import IconHeader from "components/IconHeader";
+import useCurrentActivity from "../api/useCurrentActivity";
 
 const ActivityChooser: React.FunctionComponent = () => {
   const [filterable, setFilteringEnabled] = React.useState(false);
@@ -34,11 +35,13 @@ const ActivityChooser: React.FunctionComponent = () => {
 
   const { activities, deleteActivity } = useActivities();
 
+  const { setCurrentActivity } = useCurrentActivity();
+
   const { componentProps: tableProps } = useTable(activities, {
     filterable,
   });
   const {
-    selectableTableProps: { selectedItems: selectedActivities },
+    selectableTableProps: { selectedItem },
   } = tableProps;
 
   // const {
@@ -59,19 +62,25 @@ const ActivityChooser: React.FunctionComponent = () => {
   //   ),
   // });
 
+  const onSetClick: React.MouseEventHandler<
+    HTMLButtonElement
+  > = React.useCallback(() => {
+    setCurrentActivity(selectedItem);
+  }, [setCurrentActivity, selectedItem]);
+
   const onCreateClick: React.MouseEventHandler<
     HTMLButtonElement
   > = React.useCallback(() => {
     goToCreateActivity();
-  }, [goToCreateActivity, selectedActivities]);
+  }, [goToCreateActivity]);
 
   const onEditClick: React.MouseEventHandler<
     HTMLButtonElement
   > = React.useCallback(() => {
-    if (selectedActivities.length === 1) {
-      goToEditActivity(selectedActivities[0].id);
+    if (selectedItem) {
+      goToEditActivity(selectedItem.id);
     }
-  }, [goToEditActivity, selectedActivities]);
+  }, [goToEditActivity, selectedItem]);
 
   const {
     showDialog: onDeleteClick,
@@ -81,29 +90,34 @@ const ActivityChooser: React.FunctionComponent = () => {
       () => `Are you sure you want to delete the selected activities`,
       [],
     ),
-    getDetails: React.useCallback(
-      () => selectedActivities.map((v: Activity) => v.id).join(", "),
-      [selectedActivities],
-    ),
+    getDetails: React.useCallback(() => selectedItem && selectedItem.id, [
+      selectedItem,
+    ]),
     onConfirm: React.useCallback(() => {
-      selectedActivities.forEach((v: Activity) => deleteActivity(v.id));
-    }, [selectedActivities, deleteActivity]),
+      deleteActivity(selectedItem.id);
+    }, [selectedItem, deleteActivity]),
   });
 
   return (
     <div className="page">
       <div className="page__header">
-        <IconHeader text="Activities" icon="tasks" />
+        {/* <IconHeader text="Activities" icon="tasks" /> */}
         <div className="page__buttons Button__container">
+          <Button
+            disabled={!selectedItem}
+            onClick={onSetClick}
+            icon="check"
+            text="Set"
+          />
           <Button onClick={onCreateClick} icon="plus" text="Create" />
           <Button
-            disabled={selectedActivities.length !== 1}
+            disabled={!selectedItem}
             onClick={onEditClick}
             icon="edit"
             text="Edit"
           />
           <Button
-            disabled={selectedActivities.length !== 1}
+            disabled={!selectedItem}
             onClick={onDeleteClick}
             icon="trash"
             text="Delete"
@@ -122,6 +136,8 @@ const ActivityChooser: React.FunctionComponent = () => {
       <div className="page__body">
         <ActivityTable {...tableProps} />
       </div>
+
+      <ThemedConfirm {...deleteDialogProps} />
     </div>
   );
 };
