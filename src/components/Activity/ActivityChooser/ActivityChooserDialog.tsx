@@ -14,8 +14,7 @@ const ActivityChooserDialog: React.FunctionComponent<Props> = ({
   isOpen,
   setIsOpen,
 }) => {
-  // const { managerTitle } = useActivityConfig();
-  const managerTitle = "HELLO";
+  const { managerTitle } = useActivityConfig();
   const onClose = React.useCallback(() => {
     setIsOpen(false);
   }, [setIsOpen]);

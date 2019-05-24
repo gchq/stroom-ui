@@ -55,6 +55,10 @@ const resourceBuilder: ResourceBuilder = (
   server
     .get(currentActivityUrl)
     .intercept((req: HttpRequest, res: HttpResponse) => {
+      console.log(
+        "Getting current activity",
+        testCache.data!.activity.currentActivity,
+      );
       res.json(testCache.data!.activity.currentActivity);
     });
   // setCurrentActivity
@@ -64,7 +68,7 @@ const resourceBuilder: ResourceBuilder = (
       const activity = JSON.parse(req.body);
       testCache.data!.activity.currentActivity = activity;
       console.log("Setting current activity", activity);
-      res.send(200);
+      res.json(testCache.data!.activity.currentActivity);
     });
 
   // Manage activities.

@@ -40,7 +40,7 @@ const ThemedModal: React.FunctionComponent<ContentProps & ReactModal.Props> = ({
       style={reactModalOptions}
     >
       <div className="themed-modal__container">
-        <header className="themed-modal__header">{header}</header>
+        <div className="themed-modal__header">{header}</div>
         <div className="themed-modal__content">{content}</div>
         <div className="themed-modal__footer__actions">{actions}</div>
       </div>

@@ -184,21 +184,21 @@ const ACTIVITY_CONFIG: ActivityConfig = {
     'Activity Code:</br><input takefocus="true" type="text" name="code"></input></br></br>Activity Description:</br><textarea rows="4" style="width:100%;height:80px" name="description"></textarea>Explain what the activity is',
 };
 
-const ACTIVITY: Activity = {
+const ACTIVITY1: Activity = {
   id: "1",
   userId: "testuser",
   properties: [
     {
       id: "code",
       name: "code",
-      value: "value1",
+      value: "code value 1",
       showInSelection: true,
       showInList: true,
     },
     {
       id: "description",
       name: "description",
-      value: "value2",
+      value: "description value 1",
       showInSelection: true,
       showInList: true,
     },
@@ -206,11 +206,27 @@ const ACTIVITY: Activity = {
 };
 
 const ACTIVITY2: Activity = {
-  ...ACTIVITY,
   id: "2",
+  userId: "testuser",
+  properties: [
+    {
+      id: "code",
+      name: "code",
+      value: "code value 2",
+      showInSelection: true,
+      showInList: true,
+    },
+    {
+      id: "description",
+      name: "description",
+      value: "description value 2",
+      showInSelection: true,
+      showInList: true,
+    },
+  ],
 };
 
-const ACTIVITIES: Activity[] = [ACTIVITY, ACTIVITY2];
+const ACTIVITIES: Activity[] = [ACTIVITY1, ACTIVITY2];
 
 // let users: User[] = Array(5)
 // .fill(null)
@@ -353,7 +369,7 @@ export const fullTestData: TestData = {
   activity: {
     config: ACTIVITY_CONFIG,
     activityList: ACTIVITIES,
-    currentActivity: ACTIVITY,
+    currentActivity: ACTIVITY1,
   },
   documentTree: docTree,
   docRefTypes: testDocRefsTypes,

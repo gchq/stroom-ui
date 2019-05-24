@@ -23,8 +23,8 @@ import ThemedConfirm, {
   useDialog as useThemedConfirmDialog,
 } from "components/ThemedConfirm";
 import ActivityTable, { useTable } from "../ActivityTable";
-import { Activity } from "../api/types";
-import IconHeader from "components/IconHeader";
+// import { Activity } from "../api/types";
+// import IconHeader from "components/IconHeader";
 import useCurrentActivity from "../api/useCurrentActivity";
 
 const ActivityChooser: React.FunctionComponent = () => {
@@ -65,6 +65,7 @@ const ActivityChooser: React.FunctionComponent = () => {
   const onSetClick: React.MouseEventHandler<
     HTMLButtonElement
   > = React.useCallback(() => {
+    console.log("Setting current activity to: ", selectedItem);
     setCurrentActivity(selectedItem);
   }, [setCurrentActivity, selectedItem]);
 
@@ -101,7 +102,6 @@ const ActivityChooser: React.FunctionComponent = () => {
   return (
     <div className="page">
       <div className="page__header">
-        {/* <IconHeader text="Activities" icon="tasks" /> */}
         <div className="page__buttons Button__container">
           <Button
             disabled={!selectedItem}

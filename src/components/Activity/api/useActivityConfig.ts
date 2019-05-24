@@ -3,7 +3,13 @@ import { ActivityConfig } from "./types";
 import useApi from "./useApi";
 
 const useActivityConfig = (): ActivityConfig => {
-  const [config, setConfig] = React.useState<ActivityConfig>(undefined);
+  const [config, setConfig] = React.useState<ActivityConfig>({
+    enabled: false,
+    chooseOnStartup: false,
+    managerTitle: "TBD",
+    editorTitle: "TBD",
+    editorBody: "TBD",
+  });
 
   const { getConfig } = useApi();
 
