@@ -39,7 +39,7 @@ const CurrentActivityContextProvider: React.FunctionComponent = ({
 
   const _setCurrentActivity = React.useCallback(
     (activity: Activity) => {
-      console.log("Setting current activity context", activity);
+      // console.log("Setting current activity context", activity);
       setCurrentActivity(activity).then(setCurrentActivityState);
     },
     [setCurrentActivity, setCurrentActivityState],

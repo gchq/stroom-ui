@@ -65,7 +65,7 @@ const ActivityChooser: React.FunctionComponent = () => {
   const onSetClick: React.MouseEventHandler<
     HTMLButtonElement
   > = React.useCallback(() => {
-    console.log("Setting current activity to: ", selectedItem);
+    // console.log("Setting current activity to: ", selectedItem);
     setCurrentActivity(selectedItem);
   }, [setCurrentActivity, selectedItem]);
 

@@ -28,7 +28,7 @@ interface Props {
 const ActivitySummary: React.FunctionComponent = () => {
   const { currentActivity } = useCurrentActivity();
   const { componentProps, showDialog } = useDialog();
-  console.log("Receiving current activity", currentActivity);
+  // console.log("Receiving current activity", currentActivity);
 
   return (
     <React.Fragment>
