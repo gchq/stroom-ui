@@ -24,7 +24,7 @@ export const useApi = (): Api => {
 
       return httpGetJson(url.href);
     },
-    [httpGetJson],
+    [stroomBaseServiceUrl, httpGetJson],
   );
 
   return {
