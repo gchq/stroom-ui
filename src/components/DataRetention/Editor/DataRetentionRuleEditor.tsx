@@ -95,7 +95,7 @@ const DataRetentionRuleEditor: React.FunctionComponent<Props> = ({
         <InlineInput value={rule.name} onChange={handleNameChange} />
         <div className="DataRetentionRuleEditor__header__actions">
           <Popconfirm
-            title="Are you sure delete this data retention rule?"
+            title="Delete this retention rule?"
             onConfirm={handleDelete}
             okText="Yes"
             cancelText="No"

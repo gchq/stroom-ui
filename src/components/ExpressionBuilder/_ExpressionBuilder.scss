@@ -82,12 +82,24 @@
 }
 
 .ExpressionOperator__circle {
-  display: inline;
+  display: flex;
+  align-items: center;
   padding-right: 4px;
+}
+
+.ExpressionTerm__expression {
+  display: flex;
 }
 
 .ExpressionOperator__gripper {
   color: #e4e4e4;
+}
+
+.ExpressionOperator__expression {
+  width: 20em;
+  display: grid;
+  grid-template-columns: 10em 10em 10em;
+  grid-template-rows: 100%;
 }
 
 .operator__child:hover>div>div>div>div>.ExpressionOperator__gripper {

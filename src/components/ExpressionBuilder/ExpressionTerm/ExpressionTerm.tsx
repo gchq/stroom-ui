@@ -157,25 +157,25 @@ const ExpressionTerm: React.FunctionComponent<EnhancedProps> = ({
             </LineEndpoint>
           </div>,
         )}
-        <InlineSelect
-          options={dataSource.fields.map(field => {
-            return { value: field.name, label: field.name };
-          })}
-          selected={value.field}
-          onChange={onFieldChange}
-        />
-        {"\u00A0"}
-        <ConditionPicker
-          value={value.condition}
-          onChange={onConditionChange}
-          conditionOptions={conditionOptions}
-        />
-        {"\u00A0"}
-        <ValueWidget
-          valueType={valueType}
-          term={value}
-          onChange={onValueChange}
-        />
+        <div className="ExpressionOperator__expression">
+          <InlineSelect
+            options={dataSource.fields.map(field => {
+              return { value: field.name, label: field.name };
+            })}
+            selected={value.field}
+            onChange={onFieldChange}
+          />
+          <ConditionPicker
+            value={value.condition}
+            onChange={onConditionChange}
+            conditionOptions={conditionOptions}
+          />
+          <ValueWidget
+            valueType={valueType}
+            term={value}
+            onChange={onValueChange}
+          />
+        </div>
       </div>
       <div className="expression-term__actions">
         <Button
