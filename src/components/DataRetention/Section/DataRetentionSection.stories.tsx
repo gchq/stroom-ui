@@ -22,6 +22,7 @@ import { addThemedStories } from "testing/storybook/themedStoryGenerator";
 import DataRetentionSection from "./DataRetentionSection";
 import { DataRetentionPolicy } from "../types/DataRetentionPolicy";
 import { useState } from "react";
+import JsonDebug from "testing/JsonDebug";
 
 const stories = storiesOf("Sections/DataRetention/Main view", module);
 const policy1: DataRetentionPolicy = {
@@ -78,5 +79,10 @@ const policy1: DataRetentionPolicy = {
 };
 addThemedStories(stories, () => {
   const [policy, setPolicy] = useState(policy1);
-  return <DataRetentionSection policy={policy} />;
+  return (
+    <div>
+      <DataRetentionSection policy={policy} />
+      <JsonDebug value={{ policy }} />
+    </div>
+  );;
 });

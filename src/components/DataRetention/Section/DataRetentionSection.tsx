@@ -59,7 +59,12 @@ const DataRetentionSection: React.FunctionComponent<Props> = ({ policy }) => {
       </div>
       <div className="page__search" />
       <div className="DataRetentionSection__content">
-        <DataRetentionRuleList policy={policy} />
+        <DataRetentionRuleList
+          value={policy.rules}
+          onChange={() => {
+            console.log("TODO");
+          }}
+        />
       </div>
     </div>
   );
