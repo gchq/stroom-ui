@@ -105,7 +105,7 @@ const DataRetentionRuleEditor: React.FunctionComponent<Props> = ({
 
       <div className="DataRetentionRuleEditor__content">
         <div>
-          <h3>Match the following</h3>
+          <h4>Match the following:</h4>
           <ExpressionBuilder
             value={rule.expression}
             onChange={handleExpressionChange}
@@ -114,7 +114,7 @@ const DataRetentionRuleEditor: React.FunctionComponent<Props> = ({
           />
         </div>
         <div>
-          <h3>and...</h3>
+          <h4>And then:</h4>
           <div className="DataRetentionRuleEditor__retention">
             <div>
               <label>

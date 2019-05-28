@@ -13,14 +13,16 @@ input[type="radio"] {
 }
 
 .DataRetentionRuleEditor__header .inline-input__not-editing {
-  font-size: 1.5em;
-  font-weight: bold;
+  padding: 0.1em;
+  background-color: rgb(255, 255, 241);
+  border-radius: 0.3em;
+  border: thin solid rgb(241, 241, 241);
 }
 
 .DataRetentionRuleEditor__header .inline-input__editing {
   width: 15em;
   height: 1.3em;
-  font-size: 1.5em;
+  font-size: 1.25em;
   font-weight: bold;
 }
 
