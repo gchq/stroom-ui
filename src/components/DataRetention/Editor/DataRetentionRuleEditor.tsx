@@ -55,7 +55,7 @@ const useHandlers = (
   );
 
   const handleEnabledChange = useCallback(
-    e => onChange({ ...rule, enabled: e.target.checked }),
+    e => onChange({ ...rule, enabled: e }),
     [rule, onChange],
   );
 
@@ -77,7 +77,6 @@ const useHandlers = (
 const DataRetentionRuleEditor: React.FunctionComponent<
   ControlledInput<DataRetentionRule>
 > = ({ value: rule, onChange }) => {
-  useEffect(() => onChange(rule), [onChange, rule]);
   const dataSource = useMetaDataSource();
   const {
     handleNameChange,
