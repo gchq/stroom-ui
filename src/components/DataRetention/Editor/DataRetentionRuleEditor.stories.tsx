@@ -42,7 +42,7 @@ addThemedStories(stories, () => {
   const [rule, setRule] = React.useState<DataRetentionRule>(rule1);
   return (
     <div>
-      <DataRetentionRuleEditor rule={rule} onChange={rule => setRule(rule)} />
+      <DataRetentionRuleEditor value={rule} onChange={rule => setRule(rule)} />
       <JsonDebug value={{ rule }} />
     </div>
   );

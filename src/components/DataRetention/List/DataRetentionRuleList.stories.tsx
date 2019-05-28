@@ -18,71 +18,73 @@ import { storiesOf } from "@storybook/react";
 import * as React from "react";
 import JsonDebug from "testing/JsonDebug";
 import { addThemedStories } from "testing/storybook/themedStoryGenerator";
-import DataRetentionRuleEditor from "../Editor/DataRetentionRuleEditor";
 import { DataRetentionRule } from "../types/DataRetentionRule";
 import DataRetentionRuleList from "./DataRetentionRuleList";
-import { DataRetentionPolicy } from "../types/DataRetentionPolicy";
+import { useCallback } from "react";
 
 const stories = storiesOf("Sections/DataRetention/List", module);
-const policy1: DataRetentionPolicy = {
-  name: "rule2",
-  type: "DataRetentionRules",
-  rules: [
-    {
-      ruleNumber: 1,
-      name: "First rule",
+
+const rules1: DataRetentionRule[] = [
+  {
+    ruleNumber: 1,
+    name: "First rule",
+    enabled: true,
+    age: 1,
+    timeUnit: "Years",
+    forever: false,
+    expression: {
+      op: "AND",
+      children: [],
       enabled: true,
-      age: 1,
-      timeUnit: "Years",
-      forever: false,
-      expression: {
-        op: "AND",
-        children: [],
-        enabled: true,
-        type: "operator",
-      },
+      type: "operator",
     },
-    {
-      ruleNumber: 2,
-      name: "Second rule",
+  },
+  {
+    ruleNumber: 2,
+    name: "Second rule",
+    enabled: true,
+    age: 2,
+    timeUnit: "Months",
+    forever: false,
+    expression: {
+      op: "AND",
+      children: [],
       enabled: true,
-      age: 2,
-      timeUnit: "Months",
-      forever: false,
-      expression: {
-        op: "AND",
-        children: [],
-        enabled: true,
-        type: "operator",
-      },
+      type: "operator",
     },
-    {
-      ruleNumber: 3,
-      name: "Third rule",
+  },
+  {
+    ruleNumber: 3,
+    name: "Third rule",
+    enabled: true,
+    age: 1,
+    timeUnit: "Weeks",
+    forever: false,
+    expression: {
+      op: "AND",
+      children: [],
       enabled: true,
-      age: 1,
-      timeUnit: "Weeks",
-      forever: false,
-      expression: {
-        op: "AND",
-        children: [],
-        enabled: true,
-        type: "operator",
-      },
+      type: "operator",
     },
-  ],
-  updateTime: "2019-01-01T01:01:01Z000",
-  updateUser: "Some user",
-  uuid: "blah-blah-uuid-blah",
-  version: "1",
-};
+  },
+];
 
 addThemedStories(stories, () => {
-  const [policy, setPolicy] = React.useState<DataRetentionPolicy>(policy1);
+  const [rules, setRules] = React.useState<DataRetentionRule[]>(rules1);
+  console.log("Story: func");
+  console.log({ rules });
+  const onRulesChange = useCallback(
+    rules => {
+      console.log("onRulesChange");
+      console.log({ rules });
+      setRules(rules);
+    },
+    [setRules],
+  );
   return (
     <div>
-      <DataRetentionRuleList policy={policy} />
-      <JsonDebug value={{ policy }} />
+      <DataRetentionRuleList value={rules} onChange={onRulesChange} />
+      <JsonDebug value={{ rules }} />
     </div>
   );
 });

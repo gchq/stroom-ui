@@ -16,25 +16,56 @@
 
 import * as React from "react";
 import DataRetentionRuleEditor from "../Editor/DataRetentionRuleEditor";
-import { DataRetentionPolicy } from "../types/DataRetentionPolicy";
+import useListReducer from "lib/useListReducer";
+import { DataRetentionRule } from "../types/DataRetentionRule";
+import { useCallback, useEffect, useMemo } from "react";
+import { ControlledInput } from "lib/useForm/types";
 
-interface Props {
-  policy: DataRetentionPolicy;
+const getKey = (k: DataRetentionRule) => k.ruleNumber.toString();
+
+interface ValueAndChangeHandler {
+  value: DataRetentionRule;
+  onChange: (rule: DataRetentionRule) => void;
+  onRemove: () => void;
 }
+const DataRetentionRuleList: React.FunctionComponent<
+  ControlledInput<DataRetentionRule[]>
+> = ({ value: values, onChange }) => {
+  console.log({ values });
+  const {
+    items,
+    addItem,
+    updateItemAtIndex,
+    removeItemAtIndex,
+  } = useListReducer<DataRetentionRule>(getKey, values);
 
-const DataRetentionRuleList: React.FunctionComponent<Props> = ({ policy }) => {
+  useEffect(() => onChange(items), [onChange, items]);
+
+  const valuesAndChangeHandlers: ValueAndChangeHandler[] = useMemo(
+    () =>
+      values.map((value, valueIndex) => ({
+        onChange: (newRule: DataRetentionRule) => {
+          updateItemAtIndex(valueIndex, newRule);
+          console.log("DataRetentionRuleList.valueOnChangeHandlers");
+          console.log({ newRule });
+        },
+        onRemove: () => removeItemAtIndex(valueIndex),
+        value,
+      })),
+    [values, updateItemAtIndex, removeItemAtIndex],
+  );
+
   return (
     <div className="DataRetentionRuleList__content">
-      {policy.rules.map((rule, index) => {
-        return (
-          <div key={index} className="DataRetentionRuleList__rule">
-            <DataRetentionRuleEditor
-              rule={rule}
-              onChange={() => console.log("sdfsd")}
-            />
-          </div>
-        );
-      })}
+      {valuesAndChangeHandlers.map(
+        ({ value: rule, onChange: onRuleChange, onRemove }, index) => {
+          return (
+            <div key={index} className="DataRetentionRuleList__rule">
+              <DataRetentionRuleEditor value={rule} onChange={onRuleChange} />
+            </div>
+          );
+        },
+      )}
     </div>
   );
 };

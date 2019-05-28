@@ -21,9 +21,9 @@ import * as React from "react";
 import { ChangeEventHandler, useCallback, useEffect } from "react";
 import TimeUnitSelect from "../TimeUnitSelect";
 import { DataRetentionRule } from "../types/DataRetentionRule";
-import Toggle from "react-toggle";
 import "antd/dist/antd.css";
 import { Switch } from "antd";
+import { ControlledInput } from "lib/useForm/types";
 
 interface Props {
   rule: DataRetentionRule;
@@ -74,14 +74,11 @@ const useHandlers = (
   };
 };
 
-const DataRetentionRuleEditor: React.FunctionComponent<Props> = ({
-  rule,
-  onChange,
-}) => {
+const DataRetentionRuleEditor: React.FunctionComponent<
+  ControlledInput<DataRetentionRule>
+> = ({ value: rule, onChange }) => {
   useEffect(() => onChange(rule), [onChange, rule]);
-
   const dataSource = useMetaDataSource();
-
   const {
     handleNameChange,
     handleAgeChange,
