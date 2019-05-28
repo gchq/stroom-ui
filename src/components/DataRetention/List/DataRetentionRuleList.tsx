@@ -18,7 +18,7 @@ import * as React from "react";
 import DataRetentionRuleEditor from "../Editor/DataRetentionRuleEditor";
 import useListReducer from "lib/useListReducer";
 import { DataRetentionRule } from "../types/DataRetentionRule";
-import { useCallback, useEffect, useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { ControlledInput } from "lib/useForm/types";
 
 const getKey = (k: DataRetentionRule) => k.ruleNumber.toString();
@@ -31,7 +31,6 @@ interface ValueAndChangeHandler {
 const DataRetentionRuleList: React.FunctionComponent<
   ControlledInput<DataRetentionRule[]>
 > = ({ value: values, onChange }) => {
-  console.log({ values });
   const {
     items,
     addItem,
@@ -46,8 +45,6 @@ const DataRetentionRuleList: React.FunctionComponent<
       values.map((value, valueIndex) => ({
         onChange: (newRule: DataRetentionRule) => {
           updateItemAtIndex(valueIndex, newRule);
-          console.log("DataRetentionRuleList.valueOnChangeHandlers");
-          console.log({ newRule });
         },
         onRemove: () => removeItemAtIndex(valueIndex),
         value,

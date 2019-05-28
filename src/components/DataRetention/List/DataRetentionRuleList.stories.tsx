@@ -71,16 +71,7 @@ const rules1: DataRetentionRule[] = [
 
 addThemedStories(stories, () => {
   const [rules, setRules] = React.useState<DataRetentionRule[]>(rules1);
-  console.log("Story: func");
-  console.log({ rules });
-  const onRulesChange = useCallback(
-    rules => {
-      console.log("onRulesChange");
-      console.log({ rules });
-      setRules(rules);
-    },
-    [setRules],
-  );
+  const onRulesChange = useCallback(rules => setRules(rules), [setRules]);
   return (
     <div>
       <DataRetentionRuleList value={rules} onChange={onRulesChange} />

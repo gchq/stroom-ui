@@ -14,9 +14,7 @@ input[type="radio"] {
 
 .DataRetentionRuleEditor__header .inline-input__not-editing {
   padding: 0.1em;
-  background-color: rgb(255, 255, 241);
   border-radius: 0.3em;
-  border: thin solid rgb(241, 241, 241);
   font-size: 1.25em;
   font-weight: bold;
 }
@@ -62,6 +60,11 @@ input[type="radio"] {
   border-radius: 0.3em;
   border: solid 0.1em lightgray;
   box-shadow: 0.1em 0.1em 0.1em lightgray;
+}
+
+.DataRetentionRuleList__rule .inline-input__not-editing {
+  border: thin solid rgb(241, 241, 241);
+  background-color: rgb(255, 255, 241);
 }
 
 .DataRetentionRuleList__rule:hover {

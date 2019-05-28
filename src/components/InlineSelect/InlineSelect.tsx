@@ -67,7 +67,7 @@ const InlineSelect: FunctionComponent<
   } else {
     let placeholderText = placeholder || <em>click to choose</em>;
     let textToDisplay: string = undefined;
-    if (!!selected) {
+    if (!!selected && selected !== "__default__") {
       const selectedOption = options.find(option => option.value === selected);
       textToDisplay = !!selectedOption
         ? selectedOption.label
