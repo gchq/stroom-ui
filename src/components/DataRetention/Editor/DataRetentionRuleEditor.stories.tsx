@@ -20,6 +20,7 @@ import JsonDebug from "testing/JsonDebug";
 import { addThemedStories } from "testing/storybook/themedStoryGenerator";
 import DataRetentionRuleEditor from "./DataRetentionRuleEditor";
 import { DataRetentionRule } from "../types/DataRetentionRule";
+import { action } from "@storybook/addon-actions";
 
 const stories = storiesOf("Sections/DataRetention/Rule", module);
 
@@ -42,7 +43,11 @@ addThemedStories(stories, () => {
   const [rule, setRule] = React.useState<DataRetentionRule>(rule1);
   return (
     <div>
-      <DataRetentionRuleEditor value={rule} onChange={rule => setRule(rule)} />
+      <DataRetentionRuleEditor
+        value={rule}
+        onChange={rule => setRule(rule)}
+        onDelete={action("onDelete")}
+      />
       <JsonDebug value={{ rule }} />
     </div>
   );

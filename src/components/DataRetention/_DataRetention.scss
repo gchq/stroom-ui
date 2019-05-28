@@ -28,6 +28,10 @@ input[type="radio"] {
   font-weight: bold;
 }
 
+.DataRetentionRuleEditor__header__actions button:not(:last-child) {
+  margin-right: 0.5em;
+}
+
 .DataRetentionRuleEditor__content {
   padding: 1em;
   display: flex;

@@ -22,13 +22,8 @@ import { ChangeEventHandler, useCallback, useEffect } from "react";
 import TimeUnitSelect from "../TimeUnitSelect";
 import { DataRetentionRule } from "../types/DataRetentionRule";
 import "antd/dist/antd.css";
-import { Switch } from "antd";
+import { Switch, Button, Popconfirm, Tooltip } from "antd";
 import { ControlledInput } from "lib/useForm/types";
-
-interface Props {
-  rule: DataRetentionRule;
-  onChange: (dataRetentionRule: DataRetentionRule) => void;
-}
 
 const useHandlers = (
   rule: DataRetentionRule,
@@ -74,9 +69,15 @@ const useHandlers = (
   };
 };
 
-const DataRetentionRuleEditor: React.FunctionComponent<
-  ControlledInput<DataRetentionRule>
-> = ({ value: rule, onChange }) => {
+interface Props extends ControlledInput<DataRetentionRule> {
+  onDelete: (v: number) => void;
+}
+
+const DataRetentionRuleEditor: React.FunctionComponent<Props> = ({
+  value: rule,
+  onChange,
+  onDelete,
+}) => {
   const dataSource = useMetaDataSource();
   const {
     handleNameChange,
@@ -87,16 +88,30 @@ const DataRetentionRuleEditor: React.FunctionComponent<
     handleForeverChange,
   } = useHandlers(rule, onChange);
 
+  const handleDelete = useCallback(e => onDelete(e.target.value), [onDelete]);
   return (
     <div>
       <div className="DataRetentionRuleEditor__header">
         <InlineInput value={rule.name} onChange={handleNameChange} />
-        <Switch
-          size="small"
-          checked={rule.enabled}
-          onChange={handleEnabledChange}
-          defaultChecked
-        />
+        <div className="DataRetentionRuleEditor__header__actions">
+          <Popconfirm
+            title="Are you sure delete this data retention rule?"
+            onConfirm={handleDelete}
+            okText="Yes"
+            cancelText="No"
+            placement="left"
+          >
+            <Button shape="circle" icon="delete" type="danger" />
+          </Popconfirm>
+          <Tooltip placement="rightBottom" title="Enabled/disable this rule">
+            <Switch
+              size="small"
+              checked={rule.enabled}
+              onChange={handleEnabledChange}
+              defaultChecked
+            />
+          </Tooltip>
+        </div>
       </div>
 
       <div className="DataRetentionRuleEditor__content">

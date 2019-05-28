@@ -58,7 +58,11 @@ const DataRetentionRuleList: React.FunctionComponent<
         ({ value: rule, onChange: onRuleChange, onRemove }, index) => {
           return (
             <div key={index} className="DataRetentionRuleList__rule">
-              <DataRetentionRuleEditor value={rule} onChange={onRuleChange} />
+              <DataRetentionRuleEditor
+                value={rule}
+                onChange={onRuleChange}
+                onDelete={onRemove}
+              />
             </div>
           );
         },
