@@ -159,7 +159,9 @@ const ActivityEditor: React.FunctionComponent<Props> = ({ activityId }) => {
     activityId,
   );
 
-  let doneFocus = false;
+  const doneFocus = React.useRef(false);
+  doneFocus.current = false;
+
   const options: HTMLReactParserOptions = React.useMemo(
     () => ({
       replace: (
@@ -173,7 +175,7 @@ const ActivityEditor: React.FunctionComponent<Props> = ({ activityId }) => {
           let takesFocus = false; //attribs.takefocus === "true";
           if (!doneFocus) {
             takesFocus = true;
-            doneFocus = true;
+            doneFocus.current = true;
           }
 
           const customAttribs = {
@@ -427,29 +429,29 @@ const ActivityEditor: React.FunctionComponent<Props> = ({ activityId }) => {
   }
 
   return (
-    <div className="page">
-      <div className="page__header">
-        <IconHeader
-          icon="tasks"
-          text={activityConfig && activityConfig.editorTitle}
-        />
-        <div className="page__buttons Button__container">
-          <Button text="Back" onClick={history.goBack} />
-          <Button
-            icon="save"
-            text="Save"
-            title="Save"
-            disabled={!isDirty}
-            onClick={onCreateOrUpdate}
-          />
-          {/* <ThemedConfirm {...removeDialogProps} /> */}
-        </div>
-      </div>
-      <div className="page__search" />
-      <div className="page__body page__padding">
-        <div>{elements}</div>
-      </div>
+    // <div className="page">
+    //   <div className="page__header">
+    //     <IconHeader
+    //       icon="tasks"
+    //       text={activityConfig && activityConfig.editorTitle}
+    //     />
+    //     <div className="page__buttons Button__container">
+    //       <Button text="Back" onClick={history.goBack} />
+    //       <Button
+    //         icon="save"
+    //         text="Save"
+    //         title="Save"
+    //         disabled={!isDirty}
+    //         onClick={onCreateOrUpdate}
+    //       />
+    //       {/* <ThemedConfirm {...removeDialogProps} /> */}
+    //     </div>
+    //   </div>
+    //   <div className="page__search" />
+    <div className="page__body page__padding">
+      <div>{elements}</div>
     </div>
+    // </div>
   );
 };
 

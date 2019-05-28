@@ -16,6 +16,7 @@
 
 import * as React from "react";
 import Button from "../Button/Button";
+import ButtonContainer from "components/Button/ButtonContainer";
 
 export type IconSize = "small" | "medium" | "large" | "xlarge";
 export interface DialogActionButtonProps {
@@ -27,7 +28,7 @@ const DialogActionButtons = ({
   onCancel,
   onConfirm,
 }: DialogActionButtonProps) => (
-  <React.Fragment>
+  <ButtonContainer>
     <Button
       appearance="contained"
       action="primary"
@@ -42,7 +43,7 @@ const DialogActionButtons = ({
       text="Cancel"
       onClick={onCancel}
     />
-  </React.Fragment>
+  </ButtonContainer>
 );
 
 export default DialogActionButtons;

@@ -15,24 +15,8 @@
  */
 import * as React from "react";
 
-import { storiesOf } from "@storybook/react";
-import { Switch, Route } from "react-router";
-
-import ActivityChooser from "./ActivityChooser";
-import { addThemedStories } from "testing/storybook/themedStoryGenerator";
-// import useAppNavigation from "lib/useAppNavigation";
-
-const TestHarness = () => {
-  // const {
-  //   urlGenerator: { goToCreateActivity, goToEditActivity },
-  // } = useAppNavigation();
-  return (
-    <Switch>
-      <Route component={ActivityChooser} />
-    </Switch>
-  );
+const ButtonContainer: React.FunctionComponent = ({ children }) => {
+  return <div className="Button__container">{children}</div>;
 };
 
-const stories = storiesOf("Sections/Activity", module);
-
-addThemedStories(stories, () => <TestHarness />);
+export default ButtonContainer;

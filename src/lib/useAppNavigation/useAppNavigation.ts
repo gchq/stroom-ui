@@ -14,9 +14,6 @@ const useAppNavigation = (): NavigateApp => {
     () => ({
       urlGenerator: u,
       nav: {
-        goToCreateActivity: () => h.push(u.goToCreateActivity()),
-        goToEditActivity: (activityId: string) =>
-          h.push(u.goToEditActivity(activityId)),
         goToWelcome: () => h.push(u.goToWelcome()),
         goToStreamBrowser: () => h.push(u.goToStreamBrowser()),
         goToProcessing: () => h.push(u.goToProcessing()),

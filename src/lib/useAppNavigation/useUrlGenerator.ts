@@ -7,9 +7,6 @@ const useUrlGenerator = (
 ): RawNavigateApp<string | undefined, string> => {
   return React.useMemo(
     () => ({
-      goToCreateActivity: () => `/${urlPrefix}/activity/create`,
-      goToEditActivity: (activityId: string = ":activityId") =>
-        `/${urlPrefix}/activity/${activityId}`,
       goToWelcome: () => `/${urlPrefix}/welcome`,
       goToStreamBrowser: () => `/${urlPrefix}/data`,
       goToProcessing: () => `/${urlPrefix}/processing`,

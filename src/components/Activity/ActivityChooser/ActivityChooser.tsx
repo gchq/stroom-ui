@@ -15,7 +15,7 @@ import Button from "components/Button";
 //   useActivityGroupModalPicker,
 // } from "../ActivityGroups/ActivityGroupPickerDialog";
 // import { useActivities, Activity } from "components/Activities/api";
-import useAppNavigation from "lib/useAppNavigation";
+// import useAppNavigation from "lib/useAppNavigation";
 import useActivities from "../api/useActivities";
 import Toggle from "react-toggle";
 // import DocRefIconHeader from "components/DocRefIconHeader";
@@ -26,12 +26,15 @@ import ActivityTable, { useTable } from "../ActivityTable";
 // import { Activity } from "../api/types";
 // import IconHeader from "components/IconHeader";
 import useCurrentActivity from "../api/useCurrentActivity";
+import { useDialog as useEditorDialog } from "../ActivityEditor/ActivityEditorDialog";
+import ActivityEditorDialog from "../ActivityEditor/ActivityEditorDialog";
 
 const ActivityChooser: React.FunctionComponent = () => {
   const [filterable, setFilteringEnabled] = React.useState(false);
-  const {
-    nav: { goToCreateActivity, goToEditActivity },
-  } = useAppNavigation();
+  // const {
+  //   nav: { goToCreateActivity, goToEditActivity },
+  // } = useAppNavigation();
+  const { componentProps, showDialog } = useEditorDialog();
 
   const { activities, deleteActivity } = useActivities();
 
@@ -72,16 +75,20 @@ const ActivityChooser: React.FunctionComponent = () => {
   const onCreateClick: React.MouseEventHandler<
     HTMLButtonElement
   > = React.useCallback(() => {
-    goToCreateActivity();
-  }, [goToCreateActivity]);
+    showDialog();
+
+    // goToCreateActivity();
+  }, [showDialog]);
 
   const onEditClick: React.MouseEventHandler<
     HTMLButtonElement
   > = React.useCallback(() => {
     if (selectedItem) {
-      goToEditActivity(selectedItem.id);
+      showDialog(selectedItem.id);
+
+      // goToEditActivity(selectedItem.id);
     }
-  }, [goToEditActivity, selectedItem]);
+  }, [showDialog, selectedItem]);
 
   const {
     showDialog: onDeleteClick,
@@ -138,6 +145,7 @@ const ActivityChooser: React.FunctionComponent = () => {
       </div>
 
       <ThemedConfirm {...deleteDialogProps} />
+      <ActivityEditorDialog {...componentProps} />
     </div>
   );
 };
