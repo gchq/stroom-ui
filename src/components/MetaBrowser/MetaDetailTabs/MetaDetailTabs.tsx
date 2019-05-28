@@ -24,13 +24,14 @@ import { MetaRow } from "../types";
 import MetaDetails from "./MetaDetails";
 import MetaAttributes from "./MetaAttributes";
 import DataRetention from "./DataRetention";
+import DataDisplay from "../DataDisplay";
 
 interface Props {
-  data: MetaRow;
+  metaRow: MetaRow;
 }
 
-const MetaDetailTabs: React.FunctionComponent<Props> = ({ data }) => {
-  const dataRow = useMetaRow(data.meta.id);
+const MetaDetailTabs: React.FunctionComponent<Props> = ({ metaRow }) => {
+  const dataRow = useMetaRow(metaRow.meta.id);
 
   if (!dataRow) {
     return <Loader message="Loading Data" />;
@@ -46,7 +47,7 @@ const MetaDetailTabs: React.FunctionComponent<Props> = ({ data }) => {
       </TabList>
 
       <TabPanel>
-        <div>I O U Data Display</div>
+        <DataDisplay metaRow={dataRow} />
       </TabPanel>
       <TabPanel>
         <MetaDetails dataRow={dataRow} />

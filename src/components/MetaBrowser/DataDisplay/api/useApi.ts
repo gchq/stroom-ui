@@ -1,12 +1,12 @@
 import * as React from "react";
 import useHttpClient from "lib/useHttpClient";
 import useConfig from "startup/config/useConfig";
-import { FetchDataParams, AbstractFetchDataResult } from "../../types";
+import { FetchDataParams, AnyFetchDataResult } from "../types";
 
 interface Api {
   getDataForSelectedRow: (
     fetchParams: FetchDataParams,
-  ) => Promise<AbstractFetchDataResult>;
+  ) => Promise<AnyFetchDataResult>;
 }
 
 export const useApi = (): Api => {
@@ -24,7 +24,7 @@ export const useApi = (): Api => {
 
       return httpGetJson(url.href);
     },
-    [httpGetJson],
+    [stroomBaseServiceUrl, httpGetJson],
   );
 
   return {

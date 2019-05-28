@@ -133,7 +133,7 @@ const MetaBrowser: React.FunctionComponent<Props> = ({ feedName }) => {
             <div>Please Select a Single Row (Relations)</div>
           )}
           {!!selectedItem ? (
-            <MetaDetailTabs data={selectedItem} />
+            <MetaDetailTabs metaRow={selectedItem} />
           ) : (
             <div>Please Select a Single Row (Details)</div>
           )}
