@@ -11,6 +11,8 @@ select {
 
 .inline-input__not-editing:hover {
   background-color: rgba(144, 202, 249, 0.4);
+  border-radius: 0.3em;
+  cursor: text;
 }
 
 .inline-input__editing {
