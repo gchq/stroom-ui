@@ -39,7 +39,7 @@
   visibility: hidden;
 }
 
-.operator__child:hover>div>div.expression-term__actions {
+.operator__child:hover>div>div>.ExpressionOperator__expression>.expression-term__actions {
   visibility: visible;
 }
 
@@ -66,6 +66,8 @@
 
 .expression-item {
   width: 100%;
+  justify-content: space-between;
+  margin-right: 2em;
 }
 
 .expression-item--disabled {
@@ -98,7 +100,7 @@
 .ExpressionOperator__expression {
   width: 20em;
   display: grid;
-  grid-template-columns: 10em 10em 10em;
+  grid-template-columns: 10em 10em 10em 10em;
   grid-template-rows: 100%;
 }
 
