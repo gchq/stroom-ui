@@ -7,7 +7,7 @@ input[type="radio"] {
 }
 
 .DataRetentionRuleEditor__header {
-  margin: 0.5em;
+  margin: 0.2em 0.5em 0.2em 0.5em;
   display: flex;
   justify-content: space-between;
 }
@@ -33,13 +33,17 @@ input[type="radio"] {
 }
 
 .DataRetentionRuleEditor__content {
-  padding: 1em;
+  padding: 0.2em 1em 0.5em 1em;
   display: flex;
   flex-direction: row;
 }
 
 .DataRetentionRuleEditor__content>div {
   flex-grow: 1;
+}
+
+.DataRetentionRuleEditor__content h4 {
+  margin-bottom: 0.1em;
 }
 
 .DataRetentionRuleEditor__retention {
