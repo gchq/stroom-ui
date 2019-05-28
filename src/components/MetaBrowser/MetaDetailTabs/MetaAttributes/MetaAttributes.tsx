@@ -20,7 +20,7 @@ const MetaAttributes: React.FunctionComponent<Props> = ({ dataRow }) => (
               .map(({ key, value }) => {
                 if (key !== "Until" && key !== "Rule" && key !== "Age") {
                   return (
-                    <tr>
+                    <tr key={key}>
                       <td>{key}</td>
                       <td>
                         <code>{value}</code>

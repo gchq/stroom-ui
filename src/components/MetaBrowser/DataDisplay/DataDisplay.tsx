@@ -21,6 +21,7 @@ import EventView from "./EventView";
 import { isFetchMarkerResult, isFetchDataResult } from "./types";
 import useData from "./api";
 import { MetaRow } from "../types";
+import Loader from "components/Loader";
 
 interface Props {
   metaRow: MetaRow;
@@ -29,12 +30,15 @@ interface Props {
 const DataDisplay: React.FunctionComponent<Props> = ({ metaRow }) => {
   const { data } = useData(metaRow.meta.id);
 
-  if (isFetchMarkerResult(data)) {
+  if (!data) {
+    return <Loader message="Awaiting Data" />;
+  } else if (isFetchMarkerResult(data)) {
     return <ErrorTable errors={data.markers} />;
   } else if (isFetchDataResult(data)) {
     return <EventView events={data.data} />;
+  } else {
+    return <div>Unrecognised Data Format</div>;
   }
-  return <div>TODO</div>;
 };
 
 export default DataDisplay;
