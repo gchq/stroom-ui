@@ -131,7 +131,7 @@ const DataRetentionRuleEditor: React.FunctionComponent<Props> = ({
               <label>
                 <input
                   type="radio"
-                  name="forever"
+                  name={"forever_" + rule.ruleNumber}
                   value="keep_forever"
                   checked={rule.forever}
                   onChange={handleForeverChange}
@@ -143,7 +143,7 @@ const DataRetentionRuleEditor: React.FunctionComponent<Props> = ({
               <label>
                 <input
                   type="radio"
-                  name="forever"
+                  name={"forever_" + rule.ruleNumber}
                   value="keep_then_delete"
                   checked={!rule.forever}
                   onChange={handleForeverChange}
