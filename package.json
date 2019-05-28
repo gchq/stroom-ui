@@ -30,6 +30,7 @@
     "@types/storybook__addon-actions": "3.4.2",
     "@types/uuid": "3.4.4",
     "@types/yup": "0.26.12",
+    "antd": "^3.18.2",
     "cogo-toast": "1.0.4",
     "cookies-js": "1.2.3",
     "dateformat": "3.0.3",

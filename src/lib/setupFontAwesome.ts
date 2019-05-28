@@ -59,6 +59,7 @@ import {
   faTasks,
   faTimes,
   faTrash,
+  faTrashAlt,
   faUser,
   faUsers,
 } from "@fortawesome/free-solid-svg-icons";
@@ -107,6 +108,7 @@ export default () =>
     faTasks,
     faTimes,
     faTrash,
+    faTrashAlt,
     faUser,
     faUsers,
   );
