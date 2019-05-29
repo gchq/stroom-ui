@@ -16,24 +16,23 @@
 
 import * as React from "react";
 
-import ThemedAceEditor from "components/ThemedAceEditor";
+// import ThemedAceEditor from "components/ThemedAceEditor";
 
 interface Props {
   events: string;
 }
 
-const EventView: React.FunctionComponent<Props> = ({ events }) => (
-  <div className="EventView__container">
-    <div className="EventView__aceEditor__container">
-      <ThemedAceEditor
-        className="EventView__aceEditor"
-        style={{ width: "100%", height: "100%" }}
-        mode="xml"
-        value={events}
-        readOnly
-      />
-    </div>
-  </div>
-);
+// Good luck styling this!
+// const EventView: React.FunctionComponent<Props> = ({ events }) => (
+//   <ThemedAceEditor
+//     className="EventView__aceEditor"
+//     style={{ width: "100%", height: "100%" }}
+//     value={events}
+//     readOnly
+//   />
+// );
 
+const EventView: React.FunctionComponent<Props> = ({ events }) => (
+  <pre style={{ width: "100%", height: "100%" }}>{events}</pre>
+);
 export default EventView;

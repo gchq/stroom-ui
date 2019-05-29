@@ -9,7 +9,7 @@
     ],
     "sourceMap": true,
     "allowJs": true,
-    "jsx": "react",
+    "jsx": "preserve",
     "moduleResolution": "node",
     "outDir": "build/dist",
     "baseUrl": "src",
@@ -25,7 +25,9 @@
     "esModuleInterop": false,
     "allowSyntheticDefaultImports": false,
     "strict": false,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true
   },
   "exclude": [
     "node_modules",
