@@ -9,6 +9,11 @@ interface UseUpdateableState<T extends object> {
   update: (updates: Partial<T>) => void;
 }
 
+const reducer = <T extends object>(state: T, action: Partial<T>) => ({
+  ...state,
+  ...action,
+});
+
 /**
  * This hook adds the ability to partially update a React.useState.
  *
@@ -17,19 +22,11 @@ interface UseUpdateableState<T extends object> {
 export const useUpdateableState = <T extends object>(
   initialValue: T,
 ): UseUpdateableState<T> => {
-  const [value, setValue] = React.useState<T>(initialValue);
+  const [value, update] = React.useReducer(reducer, initialValue);
 
   return {
     value,
-    update: React.useCallback(
-      (updates: Partial<T>) => {
-        setValue({
-          ...value,
-          ...updates,
-        });
-      },
-      [value, setValue],
-    ),
+    update,
   };
 };
 

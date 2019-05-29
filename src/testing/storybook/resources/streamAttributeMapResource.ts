@@ -42,6 +42,18 @@ const resourceBuilder: ResourceBuilder = (
     });
 
   /**
+   * This responds to getRelations
+   */
+  server
+    .get(`${resource}/:metaId/:anyStatus/relations`)
+    .intercept(({ params: { metaId } }: HttpRequest, res: HttpResponse) => {
+      const row = testCache.data!.dataList.streamAttributeMaps.find(
+        s => `${s.meta.id}` === metaId,
+      );
+      res.json([row]);
+    });
+
+  /**
    * This responds with a list of streamAttributeMaps, body is a search
    */
   server.post(resource).intercept((req: HttpRequest, res: HttpResponse) => {

@@ -7,6 +7,6 @@ import { MetaRow } from "../types";
 
 const data: MetaRow = fullTestData.dataList.streamAttributeMaps[0];
 
-const stories = storiesOf("Sections/Meta Browser/Detail Tabs/Tabs", module);
+const stories = storiesOf("Sections/Meta Browser/Detail Tabs", module);
 
-addThemedStories(stories, () => <MetaDetailTabs data={data} />);
+addThemedStories(stories, () => <MetaDetailTabs metaRow={data} />);

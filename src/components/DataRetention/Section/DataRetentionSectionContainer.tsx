@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Crown Copyright
+ * Copyright 2019 Crown Copyright
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,11 +15,18 @@
  */
 
 import * as React from "react";
-import { storiesOf } from "@storybook/react";
+import DataRetentionSection from "./DataRetentionSection";
+import Loader from "components/Loader";
+import useDataRetention from "../useDataRetention";
 
-import MetaBrowser from "./MetaBrowser";
-import { addThemedStories } from "testing/storybook/themedStoryGenerator";
+const DataRetentionSectionContainer = () => {
+  const { policy } = useDataRetention();
 
-const stories = storiesOf("Sections/Meta Browser", module);
+  if (!!policy) {
+    return <DataRetentionSection policy={policy} />;
+  } else {
+    return <Loader message="Loading data retention policy" />;
+  }
+};
 
-addThemedStories(stories, () => <MetaBrowser />);
+export default DataRetentionSectionContainer;

@@ -1,45 +1,35 @@
 import * as React from "react";
 
 import useApi from "./useApi";
-import { UseData, PagedData, FetchDataParams } from "../../types";
-import useUpdateableState from "lib/useUpdateableState";
-
-const defaultPagedData: PagedData = {
-  streamAttributeMaps: [],
-  total: 0,
-};
+import { AnyFetchDataResult, UseData, FetchDataParams } from "../types";
 
 const defaultFetchParams: FetchDataParams = {
-  metaId: undefined,
   pageOffset: 0,
   pageSize: 20,
 };
 
-const useData = (): UseData => {
+const useData = (metaId: number): UseData => {
   const { getDataForSelectedRow } = useApi();
 
-  const { value: pagedData, update: updatePagedData } = useUpdateableState<
-    PagedData
-  >(defaultPagedData);
-  const { value: fetchParams, update: updateFetchParams } = useUpdateableState<
-    FetchDataParams
-  >(defaultFetchParams);
+  const [data, setData] = React.useState<AnyFetchDataResult>(undefined);
 
-  const getDataForSelectedRowWrapped = React.useCallback(() => {
-    getDataForSelectedRow(fetchParams).then(d => {
+  const _getDataForSelectedRow = React.useCallback(() => {
+    getDataForSelectedRow({ metaId, ...defaultFetchParams }).then(d => {
       console.log("D", d);
       // setPagedData({
       //   streamAttributeMaps: d.
       // })
+      setData(d);
     });
-  }, [fetchParams, getDataForSelectedRow]);
+  }, [metaId, getDataForSelectedRow]);
+
+  React.useEffect(() => {
+    _getDataForSelectedRow();
+  }, [_getDataForSelectedRow]);
 
   return {
-    pagedData,
-    updatePagedData,
-    fetchParams,
-    updateFetchParams,
-    getDataForSelectedRow: getDataForSelectedRowWrapped,
+    data,
+    getDataForSelectedRow: _getDataForSelectedRow,
   };
 };
 
