@@ -31,7 +31,6 @@ const useKeyIsDown = function(
       if (filters.includes(e.key)) {
         dispatch({ key: e.key, isDown: true });
       }
-      e.preventDefault();
     };
     document.addEventListener("keydown", onkeydown);
 
@@ -39,7 +38,6 @@ const useKeyIsDown = function(
       if (filters.includes(e.key)) {
         dispatch({ key: e.key, isDown: false });
       }
-      e.preventDefault();
     };
     document.addEventListener("keyup", onkeyup);
 
