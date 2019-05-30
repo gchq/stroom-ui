@@ -14,61 +14,18 @@
  * limitations under the License.
  */
 
+import { Card } from "antd";
+import "antd/dist/antd.css";
 import ExpressionBuilder from "components/ExpressionBuilder";
 import InlineInput from "components/InlineInput/InlineInput";
 import { useMetaDataSource } from "components/MetaBrowser/api";
+import { ControlledInput } from "lib/useForm/types";
 import * as React from "react";
-import { ChangeEventHandler, useCallback } from "react";
+import { useCallback } from "react";
 import TimeUnitSelect from "../TimeUnitSelect";
 import { DataRetentionRule } from "../types/DataRetentionRule";
-import "antd/dist/antd.css";
-import { Switch, Button, Popconfirm, Tooltip } from "antd";
-import { ControlledInput } from "lib/useForm/types";
 import DataRetentionRuleEditHeader from "./DataRetentionRuleEditHeader";
-
-const useHandlers = (
-  rule: DataRetentionRule,
-  onChange: (dataRetentionRule: DataRetentionRule) => void,
-) => {
-  const handleNameChange: ChangeEventHandler<HTMLInputElement> = useCallback(
-    e => onChange({ ...rule, name: e.target.value }),
-    [rule, onChange],
-  );
-
-  const handleAgeChange: ChangeEventHandler<HTMLInputElement> = useCallback(
-    e => onChange({ ...rule, age: Number(e.target.value) }),
-    [rule, onChange],
-  );
-
-  const handleExpressionChange = useCallback(
-    expression => onChange({ ...rule, expression }),
-    [rule, onChange],
-  );
-
-  const handleTimeUnitChange = useCallback(
-    e => onChange({ ...rule, timeUnit: e.target.value }),
-    [rule, onChange],
-  );
-
-  const handleEnabledChange = useCallback(
-    e => onChange({ ...rule, enabled: e }),
-    [rule, onChange],
-  );
-
-  const handleForeverChange = useCallback(
-    e => onChange({ ...rule, forever: e.target.value === "keep_forever" }),
-    [rule, onChange],
-  );
-
-  return {
-    handleNameChange,
-    handleAgeChange,
-    handleExpressionChange,
-    handleTimeUnitChange,
-    handleEnabledChange,
-    handleForeverChange,
-  };
-};
+import useHandlers from "./useHandlers";
 
 interface Props extends ControlledInput<DataRetentionRule> {
   onDelete: (v: number) => void;
@@ -91,11 +48,16 @@ const DataRetentionRuleEditor: React.FunctionComponent<Props> = ({
 
   const handleDelete = useCallback(e => onDelete(e.target.value), [onDelete]);
   return (
-    <div>
-      <DataRetentionRuleEditHeader
-        {...{ rule, handleNameChange, handleEnabledChange, handleDelete }}
-      />
-
+    <Card
+      size="small"
+      title={
+        <DataRetentionRuleEditHeader
+          {...{ rule, handleNameChange, handleEnabledChange, handleDelete }}
+        />
+      }
+      extra={<div />}
+      style={{ width: "100%" }}
+    >
       <div className="DataRetentionRuleEditor__content">
         <div>
           <h4>Match the following:</h4>
@@ -148,7 +110,7 @@ const DataRetentionRuleEditor: React.FunctionComponent<Props> = ({
           </div>
         </div>
       </div>
-    </div>
+    </Card>
   );
 };
 

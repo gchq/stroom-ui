@@ -10,6 +10,7 @@ import { DragDropTypes } from "../../types/DragDropTypes";
 import InlineInput from "components/InlineInput/InlineInput";
 import { Switch, Button, Popconfirm, Tooltip } from "antd";
 import { MouseEventHandler } from "react-select/lib/types";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 interface Props {
   rule: DataRetentionRule;
@@ -50,10 +51,18 @@ const DataRetentionRuleEditHeader: React.FunctionComponent<EnhancedProps> = ({
   handleDelete,
   handleEnabledChange,
   connectDragSource,
+  isDragging,
 }) => {
+  // TODO: Use a context to register dnd dragging status, so we can apply
+  // styles to the whole edit component.
+  const opacity = isDragging ? 0.5 : 1;
   return connectDragSource(
-    <div className="DataRetentionRuleEditor__header">
-      <InlineInput value={rule.name} onChange={handleNameChange} />
+    <div className="DataRetentionRuleEditor__header" style={{ opacity }}>
+      <div>
+        <FontAwesomeIcon icon="grip-vertical" />
+        <InlineInput value={rule.name} onChange={handleNameChange} />
+      </div>
+
       <div className="DataRetentionRuleEditor__header__actions">
         <Popconfirm
           title="Delete this retention rule?"
