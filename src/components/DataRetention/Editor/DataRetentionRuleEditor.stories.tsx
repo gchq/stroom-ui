@@ -45,7 +45,7 @@ addThemedStories(stories, () => {
     <div>
       <DataRetentionRuleEditor
         value={rule}
-        onChange={rule => setRule(rule)}
+        onChange={(rule: DataRetentionRule) => setRule(rule)}
         onDelete={action("onDelete")}
       />
       <JsonDebug value={{ rule }} />

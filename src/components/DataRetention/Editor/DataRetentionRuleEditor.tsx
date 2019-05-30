@@ -24,6 +24,14 @@ import { DataRetentionRule } from "../types/DataRetentionRule";
 import "antd/dist/antd.css";
 import { Switch, Button, Popconfirm, Tooltip } from "antd";
 import { ControlledInput } from "lib/useForm/types";
+import {
+  DragSourceSpec,
+  DragSourceCollector,
+  ConnectDragSource,
+  DragSource,
+} from "react-dnd";
+import { ExpressionOperatorType } from "components/ExpressionBuilder/types";
+import { DragDropTypes } from "../types/DragDropTypes";
 
 const useHandlers = (
   rule: DataRetentionRule,
@@ -72,11 +80,46 @@ const useHandlers = (
 interface Props extends ControlledInput<DataRetentionRule> {
   onDelete: (v: number) => void;
 }
+interface DragObject {
+  name: string;
+  ruleNumber: number;
+  enabled: boolean;
+  age: number;
+  forever: boolean;
+  timeUnit: "Minutes" | "Hours" | "Days" | "Weeks" | "Months" | "Years";
+  expression: ExpressionOperatorType;
+}
 
-const DataRetentionRuleEditor: React.FunctionComponent<Props> = ({
+interface DragCollectedProps {
+  connectDragSource: ConnectDragSource;
+  isDragging: boolean;
+}
+const dragSource: DragSourceSpec<Props, DragObject> = {
+  beginDrag(props) {
+    return { ...props.value };
+  },
+};
+
+const dragCollect: DragSourceCollector<DragCollectedProps, Props> = (
+  connect,
+  monitor,
+) => ({
+  connectDragSource: connect.dragSource(),
+  isDragging: monitor.isDragging(),
+});
+
+interface EnhancedProps extends Props, DragCollectedProps {}
+
+const enhance = DragSource<Props, DragCollectedProps>(
+  DragDropTypes.RULE,
+  dragSource,
+  dragCollect,
+);
+const DataRetentionRuleEditor: React.FunctionComponent<EnhancedProps> = ({
   value: rule,
   onChange,
   onDelete,
+  connectDragSource,
 }) => {
   const dataSource = useMetaDataSource();
   const {
@@ -89,7 +132,7 @@ const DataRetentionRuleEditor: React.FunctionComponent<Props> = ({
   } = useHandlers(rule, onChange);
 
   const handleDelete = useCallback(e => onDelete(e.target.value), [onDelete]);
-  return (
+  return connectDragSource(
     <div>
       <div className="DataRetentionRuleEditor__header">
         <InlineInput value={rule.name} onChange={handleNameChange} />
@@ -166,8 +209,8 @@ const DataRetentionRuleEditor: React.FunctionComponent<Props> = ({
           </div>
         </div>
       </div>
-    </div>
+    </div>,
   );
 };
 
-export default DataRetentionRuleEditor;
+export default enhance(DataRetentionRuleEditor);
