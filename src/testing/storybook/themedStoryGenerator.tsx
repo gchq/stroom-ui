@@ -17,10 +17,8 @@
 import * as React from "react";
 import { RenderFunction } from "@storybook/react";
 import { themeOptions, useTheme, ThemeOption } from "lib/useTheme/useTheme";
-import Select from "react-select";
 import { storiesOf } from "@storybook/react";
 import Toggle from "react-toggle";
-import { AutoComplete } from "antd";
 
 const styles = {
   outer: {
@@ -117,16 +115,6 @@ const ThemedContainer: React.FunctionComponent<Props> = ({
     </div>
   );
 };
-
-// export const addThemedStory = (
-//   stories: Story,
-//   component: RenderFunction,
-//   centerComponent?: React.ReactNode,
-// ) => {
-//   stories.add("story", () => (
-//     <ThemedContainer component={component} centerComponent={centerComponent} />
-//   ));
-// };
 
 export const addStory = (
   folder: string,
