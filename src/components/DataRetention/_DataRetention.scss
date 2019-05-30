@@ -7,9 +7,19 @@ input[type="radio"] {
 }
 
 .DataRetentionRuleEditor__header {
-  margin: 0.2em 0.5em 0.2em 0.5em;
+  margin: 0;
   display: flex;
   justify-content: space-between;
+}
+
+.DataRetentionRuleEditor__header > div > svg {
+  margin-right: 0.5em;
+  margin-bottom: 0.15em;
+  color: gray;
+}
+
+.DataRetentionRuleEditor__header:hover > div > svg {
+  color: #2185d0;
 }
 
 .DataRetentionRuleEditor__header .inline-input__not-editing {
@@ -38,7 +48,7 @@ input[type="radio"] {
   flex-direction: row;
 }
 
-.DataRetentionRuleEditor__content>div {
+.DataRetentionRuleEditor__content > div {
   flex-grow: 1;
 }
 
