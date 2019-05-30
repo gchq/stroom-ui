@@ -26,13 +26,38 @@ interface Props {
   initialRule: DataRetentionRule;
 }
 
+const reducer = (
+  state: DataRetentionRule,
+  updates: Partial<DataRetentionRule>,
+) => ({
+  ...state,
+  ...updates,
+});
+
 const TestHarness: React.FunctionComponent<Props> = ({ initialRule }) => {
+  const [rule, updateRule] = React.useReducer(reducer, initialRule);
+
+  const onNameChange: React.ChangeEventHandler<
+    HTMLInputElement
+  > = React.useCallback(
+    ({ target: { value } }) => {
+      updateRule({ name: value });
+    },
+    [updateRule],
+  );
+  const onEnabledChange: (
+    checked: boolean,
+    event: MouseEvent,
+  ) => void = React.useCallback(enabled => updateRule({ enabled }), [
+    updateRule,
+  ]);
+
   return (
     <DataRetentionRuleEditHeader
-      rule={initialRule}
-      handleNameChange={action("onNameChange")}
+      rule={rule}
+      handleNameChange={onNameChange}
       handleDelete={action("onDelete")}
-      handleEnabledChange={action("enabledChanged")}
+      handleEnabledChange={onEnabledChange}
     />
   );
 };
