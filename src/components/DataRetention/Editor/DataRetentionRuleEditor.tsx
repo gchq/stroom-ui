@@ -18,20 +18,13 @@ import ExpressionBuilder from "components/ExpressionBuilder";
 import InlineInput from "components/InlineInput/InlineInput";
 import { useMetaDataSource } from "components/MetaBrowser/api";
 import * as React from "react";
-import { ChangeEventHandler, useCallback, useEffect } from "react";
+import { ChangeEventHandler, useCallback } from "react";
 import TimeUnitSelect from "../TimeUnitSelect";
 import { DataRetentionRule } from "../types/DataRetentionRule";
 import "antd/dist/antd.css";
 import { Switch, Button, Popconfirm, Tooltip } from "antd";
 import { ControlledInput } from "lib/useForm/types";
-import {
-  DragSourceSpec,
-  DragSourceCollector,
-  ConnectDragSource,
-  DragSource,
-} from "react-dnd";
-import { ExpressionOperatorType } from "components/ExpressionBuilder/types";
-import { DragDropTypes } from "../types/DragDropTypes";
+import DataRetentionRuleEditHeader from "./DataRetentionRuleEditHeader";
 
 const useHandlers = (
   rule: DataRetentionRule,
@@ -80,46 +73,11 @@ const useHandlers = (
 interface Props extends ControlledInput<DataRetentionRule> {
   onDelete: (v: number) => void;
 }
-interface DragObject {
-  name: string;
-  ruleNumber: number;
-  enabled: boolean;
-  age: number;
-  forever: boolean;
-  timeUnit: "Minutes" | "Hours" | "Days" | "Weeks" | "Months" | "Years";
-  expression: ExpressionOperatorType;
-}
 
-interface DragCollectedProps {
-  connectDragSource: ConnectDragSource;
-  isDragging: boolean;
-}
-const dragSource: DragSourceSpec<Props, DragObject> = {
-  beginDrag(props) {
-    return { ...props.value };
-  },
-};
-
-const dragCollect: DragSourceCollector<DragCollectedProps, Props> = (
-  connect,
-  monitor,
-) => ({
-  connectDragSource: connect.dragSource(),
-  isDragging: monitor.isDragging(),
-});
-
-interface EnhancedProps extends Props, DragCollectedProps {}
-
-const enhance = DragSource<Props, DragCollectedProps>(
-  DragDropTypes.RULE,
-  dragSource,
-  dragCollect,
-);
-const DataRetentionRuleEditor: React.FunctionComponent<EnhancedProps> = ({
+const DataRetentionRuleEditor: React.FunctionComponent<Props> = ({
   value: rule,
   onChange,
   onDelete,
-  connectDragSource,
 }) => {
   const dataSource = useMetaDataSource();
   const {
@@ -132,30 +90,11 @@ const DataRetentionRuleEditor: React.FunctionComponent<EnhancedProps> = ({
   } = useHandlers(rule, onChange);
 
   const handleDelete = useCallback(e => onDelete(e.target.value), [onDelete]);
-  return connectDragSource(
+  return (
     <div>
-      <div className="DataRetentionRuleEditor__header">
-        <InlineInput value={rule.name} onChange={handleNameChange} />
-        <div className="DataRetentionRuleEditor__header__actions">
-          <Popconfirm
-            title="Delete this retention rule?"
-            onConfirm={handleDelete}
-            okText="Yes"
-            cancelText="No"
-            placement="left"
-          >
-            <Button shape="circle" icon="delete" type="danger" />
-          </Popconfirm>
-          <Tooltip placement="rightBottom" title="Enabled/disable this rule">
-            <Switch
-              size="small"
-              checked={rule.enabled}
-              onChange={handleEnabledChange}
-              defaultChecked
-            />
-          </Tooltip>
-        </div>
-      </div>
+      <DataRetentionRuleEditHeader
+        {...{ rule, handleNameChange, handleEnabledChange, handleDelete }}
+      />
 
       <div className="DataRetentionRuleEditor__content">
         <div>
@@ -209,8 +148,8 @@ const DataRetentionRuleEditor: React.FunctionComponent<EnhancedProps> = ({
           </div>
         </div>
       </div>
-    </div>,
+    </div>
   );
 };
 
-export default enhance(DataRetentionRuleEditor);
+export default DataRetentionRuleEditor;

@@ -39,8 +39,12 @@ const rule1: DataRetentionRule = {
   },
 };
 
-addThemedStories(stories, () => {
-  const [rule, setRule] = React.useState<DataRetentionRule>(rule1);
+interface Props {
+  initialRule: DataRetentionRule;
+}
+
+const TestHarness: React.FunctionComponent<Props> = ({ initialRule }) => {
+  const [rule, setRule] = React.useState<DataRetentionRule>(initialRule);
   return (
     <div>
       <DataRetentionRuleEditor
@@ -51,4 +55,6 @@ addThemedStories(stories, () => {
       <JsonDebug value={{ rule }} />
     </div>
   );
-});
+};
+
+addThemedStories(stories, () => <TestHarness initialRule={rule1} />);
