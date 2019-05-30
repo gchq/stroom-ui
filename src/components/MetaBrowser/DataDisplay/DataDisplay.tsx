@@ -37,7 +37,12 @@ const DataDisplay: React.FunctionComponent<Props> = ({ metaRow }) => {
   } else if (isFetchDataResult(data)) {
     return <EventView events={data.data} />;
   } else {
-    return <div>Unrecognised Data Format</div>;
+    return (
+      <div>
+        Unrecognised Data Format
+        <code>{JSON.stringify(data)}</code>
+      </div>
+    );
   }
 };
 
