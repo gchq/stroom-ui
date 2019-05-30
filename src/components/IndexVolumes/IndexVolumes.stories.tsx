@@ -16,12 +16,11 @@
 
 import * as React from "react";
 
-import { storiesOf } from "@storybook/react";
 import { Switch, Route, RouteComponentProps } from "react-router";
 
 import IndexVolumes from "./IndexVolumes";
 import IndexVolumeEditor from "./IndexVolumeEditor";
-import { addThemedStories } from "testing/storybook/themedStoryGenerator";
+import { addStory } from "testing/storybook/themedStoryGenerator";
 import useAppNavigation from "lib/useAppNavigation";
 
 const TestHarness = () => {
@@ -42,6 +41,4 @@ const TestHarness = () => {
   );
 };
 
-const stories = storiesOf("Sections/Index Volumes", module);
-
-addThemedStories(stories, () => <TestHarness />);
+addStory("Sections", "Index Volumes", module, () => <TestHarness />);

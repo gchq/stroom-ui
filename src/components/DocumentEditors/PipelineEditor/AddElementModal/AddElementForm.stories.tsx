@@ -1,8 +1,7 @@
 import * as React from "react";
-import { storiesOf } from "@storybook/react";
 
 import AddElementForm, { useThisForm } from "./AddElementForm";
-import { addThemedStories } from "testing/storybook/themedStoryGenerator";
+import { addStory } from "testing/storybook/themedStoryGenerator";
 import useElements from "../useElements";
 import JsonDebug from "testing/JsonDebug";
 
@@ -23,6 +22,4 @@ const TestHarness: React.FunctionComponent = () => {
   );
 };
 
-const stories = storiesOf("Document Editors/Pipeline/Add Element/Form", module);
-
-addThemedStories(stories, () => <TestHarness />);
+addStory("Document Editors/Pipeline/Add Element", "Form", module, () => <TestHarness />);

@@ -16,10 +16,8 @@
 
 import * as React from "react";
 
-import { storiesOf } from "@storybook/react";
-
 import IndexVolumeGroupPicker from "./IndexVolumeGroupPicker";
-import { addThemedStories } from "testing/storybook/themedStoryGenerator";
+import { addStory } from "testing/storybook/themedStoryGenerator";
 
 import useForm from "lib/useForm";
 import JsonDebug from "testing/JsonDebug";
@@ -57,5 +55,4 @@ const TestHarness: React.FunctionComponent = () => {
   );
 };
 
-const stories = storiesOf("Sections/Index Volume Groups/Group Picker", module);
-addThemedStories(stories, () => <TestHarness />);
+addStory("Sections/Index Volume Groups", "Group Picker", module, () => <TestHarness />);

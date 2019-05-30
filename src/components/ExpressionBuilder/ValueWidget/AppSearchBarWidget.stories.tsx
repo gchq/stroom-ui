@@ -1,14 +1,11 @@
-import { storiesOf } from "@storybook/react";
 import * as React from "react";
 import JsonDebug from "testing/JsonDebug";
-import { addThemedStories } from "testing/storybook/themedStoryGenerator";
+import { addStory } from "testing/storybook/themedStoryGenerator";
 import AppSearchBarWidget from "./AppSearchBarWidget";
 import { DocRefType } from "components/DocumentEditors/useDocumentApi/types/base";
 import { useState } from "react";
 
-const stories = storiesOf("Expression/Value Widgets/Dictionary", module);
-
-addThemedStories(stories, () => {
+addStory("Expression/Value Widgets", "Dictionary", module, () => {
   const [value, setValue] = useState<DocRefType>(undefined);
   return (
     <div>

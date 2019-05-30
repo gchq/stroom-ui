@@ -1,6 +1,5 @@
 import * as React from "react";
-import { storiesOf } from "@storybook/react";
-import { addThemedStories } from "testing/storybook/themedStoryGenerator";
+import { addStory } from "testing/storybook/themedStoryGenerator";
 import MetaTable, { useTable } from "./MetaTable";
 import fullTestData from "testing/data";
 
@@ -10,6 +9,4 @@ const TestHarness: React.FunctionComponent = () => {
   return <MetaTable {...props} />;
 };
 
-const stories = storiesOf("Sections/Meta Browser/Meta Table", module);
-
-addThemedStories(stories, () => <TestHarness />);
+addStory("Sections/Meta Browser", "Meta Table", module, () => <TestHarness />);

@@ -1,11 +1,8 @@
 import * as React from "react";
-import { storiesOf } from "@storybook/react";
-import { addThemedStories } from "testing/storybook/themedStoryGenerator";
+import { addStory } from "testing/storybook/themedStoryGenerator";
 import EditTokenForm from "./EditTokenForm";
 import { action } from "@storybook/addon-actions";
 import { Token } from "../api/types";
-
-const stories = storiesOf("Tokens/Edit", module);
 
 const token: Token = {
   id: "tokenId",
@@ -19,7 +16,7 @@ const token: Token = {
   token: "token string",
 };
 
-addThemedStories(stories, () => (
+addStory("Tokens", "Edit", module, () => (
   <EditTokenForm
     onChangeState={action("onChangeState")}
     onBack={action("onBack")}

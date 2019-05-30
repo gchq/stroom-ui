@@ -1,8 +1,7 @@
 import * as React from "react";
 import * as uuidv4 from "uuid/v4";
 
-import { storiesOf } from "@storybook/react";
-import { addThemedStories } from "testing/storybook/themedStoryGenerator";
+import { addStory } from "testing/storybook/themedStoryGenerator";
 import AddElementModal, { useDialog } from "./AddElementModal";
 import Button from "components/Button";
 import JsonDebug from "testing/JsonDebug";
@@ -56,9 +55,5 @@ const TestHarness: React.FunctionComponent = () => {
   );
 };
 
-const stories = storiesOf(
-  "Document Editors/Pipeline/Add Element/Dialog",
-  module,
-);
-
-addThemedStories(stories, () => <TestHarness />);
+addStory( "Document Editors/Pipeline/Add Element", "Dialog",
+module, () => <TestHarness />);

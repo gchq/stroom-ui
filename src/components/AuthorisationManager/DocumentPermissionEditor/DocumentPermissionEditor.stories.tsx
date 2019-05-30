@@ -16,11 +16,10 @@
 
 import * as React from "react";
 
-import { storiesOf } from "@storybook/react";
 import { Switch, Route, RouteComponentProps } from "react-router";
 
 import fullTestData from "testing/data";
-import { addThemedStories } from "testing/storybook/themedStoryGenerator";
+import { addStory } from "testing/storybook/themedStoryGenerator";
 
 import DocumentPermissionEditor from "./DocumentPermissionEditor";
 import DocumentPermissionForUserEditor from "../DocumentPermissionForUserEditor";
@@ -53,9 +52,5 @@ const TestHarness: React.FunctionComponent<Props> = ({ docRefUuid }) => (
   </Switch>
 );
 
-const stories = storiesOf(
-  "Sections/Authorisation Manager/Document Permission Editor",
-  module,
-);
-
-addThemedStories(stories, () => <TestHarness docRefUuid={testDocRef.uuid} />);
+addStory( "Sections/Authorisation Manager", "Document Permission Editor",
+module, () => <TestHarness docRefUuid={testDocRef.uuid} />);

@@ -16,17 +16,14 @@
 
 import * as React from "react";
 
-import { storiesOf } from "@storybook/react";
-
 import Routes from "./Routes";
-import { addThemedStories } from "testing/storybook/themedStoryGenerator";
+import { addStory } from "testing/storybook/themedStoryGenerator";
 import useAppNavigation from "lib/useAppNavigation";
 import { WithChromeContext } from "lib/useRouter/BrowserRouter";
 import Button from "components/Button";
 import useRouter from "lib/useRouter";
 
-const storiesWithChrome = storiesOf("App Chrome/With Chrome", module);
-addThemedStories(storiesWithChrome, () => <Routes />);
+addStory("App Chrome", "With Chrome", module, () => <Routes />);
 
 const TestHarness: React.FunctionComponent = () => {
   const {
@@ -70,6 +67,4 @@ const TestHarness: React.FunctionComponent = () => {
   );
 };
 
-const storiesFullScreen = storiesOf("App Chrome/Full Screen", module);
-
-addThemedStories(storiesFullScreen, () => <TestHarness />);
+addStory("App Chrome", "Full Screen", module, () => <TestHarness />);

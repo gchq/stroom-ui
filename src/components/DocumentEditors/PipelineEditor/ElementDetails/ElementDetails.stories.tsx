@@ -15,8 +15,6 @@
  */
 import * as React from "react";
 
-import { storiesOf } from "@storybook/react";
-
 import ElementDetails from "./ElementDetails";
 
 import { fullTestData } from "testing/data";
@@ -25,7 +23,7 @@ import {
   PipelineDocumentType,
   PipelineElementType,
 } from "components/DocumentEditors/useDocumentApi/types/pipelineDoc";
-import { addThemedStories } from "testing/storybook/themedStoryGenerator";
+import { addStory } from "testing/storybook/themedStoryGenerator";
 
 interface Props {
   pipelineId: string;
@@ -67,13 +65,8 @@ Object.values(fullTestData.documents.Pipeline)
     pipeline.merged.elements
       .add!.filter(e => testDeduplicator.isUnique(e))
       .forEach(element => {
-        const stories = storiesOf(
-          `Document Editors/Pipeline/Element Details/Element Types/${
-            element.type
-          }`,
-          module,
-        );
-        addThemedStories(stories, () => (
+        addStory(          "Document Editors/Pipeline/Element Details/Element Types", `${element.type}`,
+        module, () => (
           <TestHarness pipelineId={pipeline.uuid} testElementId={element.id} />
         ));
       });

@@ -14,14 +14,11 @@
  * limitations under the License.
  */
 import * as React from "react";
-import { storiesOf } from "@storybook/react";
 
-import { addThemedStories } from "testing/storybook/themedStoryGenerator";
+import { addStory } from "testing/storybook/themedStoryGenerator";
 import ConditionPicker from "./ConditionPicker";
 import { ConditionType } from "../types";
 import JsonDebug from "testing/JsonDebug";
-
-const stories = storiesOf("Expression/Condition Picker", module);
 
 const TestHarness: React.FunctionComponent = () => {
   const [value, onChange] = React.useState<ConditionType | undefined>(
@@ -36,4 +33,4 @@ const TestHarness: React.FunctionComponent = () => {
   );
 };
 
-addThemedStories(stories, () => <TestHarness />);
+addStory("Expression", "Condition Picker", module, () => <TestHarness />);

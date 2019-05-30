@@ -16,9 +16,7 @@
 
 import * as React from "react";
 
-import { storiesOf } from "@storybook/react";
-
-import { addThemedStories } from "testing/storybook/themedStoryGenerator";
+import { addStory } from "testing/storybook/themedStoryGenerator";
 
 import UserPickerDialog, { useDialog } from "./UserPickerDialog";
 import Button from "components/Button";
@@ -50,12 +48,6 @@ const TestHarness: React.FunctionComponent<Props> = ({ isGroup }) => {
 };
 
 [true, false].forEach(isGroup => {
-  const stories = storiesOf(
-    `Sections/Authorisation Manager/User Picker Dialog/${
-      isGroup ? "Group" : "User"
-    }`,
-    module,
-  );
-
-  addThemedStories(stories, () => <TestHarness {...{ isGroup }} />);
+  addStory("Sections/Authorisation Manager/User Picker Dialog", `${isGroup ? "Group" : "User"}`,
+  module, () => <TestHarness {...{ isGroup }} />);
 });

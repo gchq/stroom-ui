@@ -1,10 +1,7 @@
 import * as React from "react";
 
-import { storiesOf } from "@storybook/react";
-import { addThemedStories } from "../../storybook/themedStoryGenerator";
+import { addStory } from "../../storybook/themedStoryGenerator";
 
 import Step2 from "./Step2";
 
-const stories = storiesOf("New Developer/Step 2", module);
-
-addThemedStories(stories, () => <Step2 />);
+addStory("New Developer", "Step 2", module, () => <Step2 />);

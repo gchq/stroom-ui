@@ -1,16 +1,81 @@
+// .themed-modal {
+//   box-shadow: 4px 4px 8px 0 rgba(0, 0, 0, 0.2);
+// }
+
 .themed-modal {
-  box-shadow: 4px 4px 8px 0 rgba(0, 0, 0, 0.2);
+        // position: "absolute",
+    // top: "50%",
+    // left: "50%",
+    // transform: "translate(-50%, -50%)",
+    // right: '40px',
+    // bottom: '40px',
+    // border: "thin solid #ccc",
+    // background: "#fff",
+    // overflow: "auto",
+    // WebkitOverflowScrolling: "touch",
+    // borderRadius: "4px",
+    outline: none;
+    // padding: "0",
+
+    bottom: unset;
+    overflow: visible;
+    padding: 0;
+    border: none;
+    border-radius: 0;
+    position: static;
+    background: none;
+    pointer-events: none;
+}
+
+.themed-modal__overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+
+    opacity: 1;
+    transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
 }
 
 .themed-modal__container {
-  height:100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  // height:100%;
+  // display: flex;
+  // flex-direction: column;
+  // justify-content: space-between;
+
+  border-radius: 4px;
+  background: white;
+  border: 1px solid rgb(204, 204, 204);
+  padding: 10px;
+  /* 👇 because of the drag handle */
+  padding-top: 0px;
+  pointer-events: all;
+  // box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.05), 0 2px 4px rgba(0, 0, 0, 0.2);
+  // box-shadow: 4px 4px 8px 0 rgba(0, 0, 0, 0.2);
+
+  box-shadow: 0px 11px 15px -7px rgba(0,0,0,0.2), 0px 24px 38px 3px rgba(0,0,0,0.14), 0px 9px 46px 8px rgba(0,0,0,0.12);
+  transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+
+  overflow: hidden;
 }
 
 .themed-modal__header {
-  padding: 1rem 1rem 0rem 1rem;
+  // padding: 1rem 1rem 0rem 1rem;
+
+  // height: 10px;
+  // background: #ddd;
+  // border-bottom: 5px solid white;
+  cursor: move;
+  width: 200%;
+  margin-left: -50%;
+  padding: 1rem 50%;
 }
 
 .themed-modal__header h2 {

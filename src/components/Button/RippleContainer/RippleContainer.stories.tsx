@@ -1,6 +1,5 @@
 import * as React from "react";
-import { storiesOf } from "@storybook/react";
-import { addThemedStories } from "testing/storybook/themedStoryGenerator";
+import { addStory } from "testing/storybook/themedStoryGenerator";
 import RippleContainer, { useRipple } from "./RippleContainer";
 
 const TestHarness: React.FunctionComponent = () => {
@@ -26,6 +25,4 @@ const TestHarness: React.FunctionComponent = () => {
   );
 };
 
-const stories = storiesOf("General Purpose/Button/Ripple Container", module);
-
-addThemedStories(stories, () => <TestHarness />);
+addStory("General Purpose/Button", "Ripple Container", module, () => <TestHarness />);

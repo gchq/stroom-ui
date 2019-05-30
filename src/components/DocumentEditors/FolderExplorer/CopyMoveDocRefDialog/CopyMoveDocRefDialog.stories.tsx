@@ -1,5 +1,4 @@
 import * as React from "react";
-import { storiesOf } from "@storybook/react";
 
 import {
   CopyMoveDocRefDialog,
@@ -9,7 +8,7 @@ import {
 import JsonDebug from "testing/JsonDebug";
 import { DocRefType } from "components/DocumentEditors/useDocumentApi/types/base";
 import { PermissionInheritance } from "../PermissionInheritancePicker/types";
-import { addThemedStories } from "testing/storybook/themedStoryGenerator";
+import { addStory } from "testing/storybook/themedStoryGenerator";
 import fullTestData from "testing/data";
 
 const testFolder2 = fullTestData.documentTree.children![1];
@@ -45,12 +44,8 @@ const TestHarness: React.FunctionComponent<Props> = ({
   );
 };
 
-const stories = storiesOf(
-  "Document Editors/Folder/Copy Doc Ref/Dialog",
-  module,
-);
-
-addThemedStories(stories, () => (
+addStory( "Document Editors/Folder/Copy Doc Ref", "Dialog",
+module, () => (
   <TestHarness
     testUuids={testFolder2.children!.map(d => d.uuid)}
     testDestination={testFolder2}

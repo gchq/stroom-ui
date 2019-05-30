@@ -14,20 +14,17 @@
  * limitations under the License.
  */
 import * as React from "react";
-import { storiesOf } from "@storybook/react";
 
 import ElementPalette from "./ElementPalette";
 
 import { fullTestData } from "testing/data";
 import { PipelineDocumentType } from "components/DocumentEditors/useDocumentApi/types/pipelineDoc";
-import { addThemedStories } from "testing/storybook/themedStoryGenerator";
+import { addStory } from "testing/storybook/themedStoryGenerator";
 
 const showDeleteElementDialog = () =>
   console.error("Deleting Elements Not Supported in this Story");
 
-const stories = storiesOf("Document Editors/Pipeline/Element Palette", module);
-
-addThemedStories(stories, () => {
+addStory("Document Editors/Pipeline", "Element Palette", module, () => {
   return (
     <ElementPalette
       pipeline={

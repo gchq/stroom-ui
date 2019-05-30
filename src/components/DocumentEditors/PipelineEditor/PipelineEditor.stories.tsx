@@ -14,17 +14,13 @@
  * limitations under the License.
  */
 import * as React from "react";
-import { storiesOf } from "@storybook/react";
 
 import PipelineEditor from "./PipelineEditor";
 
 import { testPipelines } from "testing/data/pipelines";
-import { addThemedStories } from "testing/storybook/themedStoryGenerator";
+import { addStory } from "testing/storybook/themedStoryGenerator";
 
 Object.entries(testPipelines).forEach(k => {
-  const stories = storiesOf(
-    `Document Editors/Pipeline/Topologies/${k[0]}`,
-    module,
-  );
-  addThemedStories(stories, () => <PipelineEditor docRefUuid={k[1].uuid} />);
+  addStory(  "Document Editors/Pipeline/Topologies", `${k[0]}`,
+  module, () => <PipelineEditor docRefUuid={k[1].uuid} />);
 });

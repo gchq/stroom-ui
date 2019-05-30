@@ -16,12 +16,11 @@
 
 import * as React from "react";
 
-import { storiesOf } from "@storybook/react";
 import { Switch, Route, RouteComponentProps } from "react-router";
 
 import AuthorisationManager from ".";
 
-import { addThemedStories } from "testing/storybook/themedStoryGenerator";
+import { addStory } from "testing/storybook/themedStoryGenerator";
 
 import UserAuthorisationEditor from "./UserAuthorisationEditor";
 interface Props {
@@ -42,10 +41,6 @@ const TestHarness: React.FunctionComponent<Props> = ({ isGroup }) => (
 );
 
 [true, false].forEach(isGroup => {
-  const stories = storiesOf(
-    `Sections/Authorisation Manager/${isGroup ? "Group" : "User"}`,
-    module,
-  );
-
-  addThemedStories(stories, () => <TestHarness isGroup={isGroup} />);
+  addStory("Sections/Authorisation Manager", `${isGroup ? "Group" : "User"}`,
+  module, () => <TestHarness isGroup={isGroup} />);
 });

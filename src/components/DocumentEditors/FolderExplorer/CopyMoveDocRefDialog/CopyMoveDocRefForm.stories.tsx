@@ -1,6 +1,5 @@
 import * as React from "react";
-import { storiesOf } from "@storybook/react";
-import { addThemedStories } from "testing/storybook/themedStoryGenerator";
+import { addStory } from "testing/storybook/themedStoryGenerator";
 import CopyMoveDocRefForm, { useThisForm } from "./CopyMoveDocRefForm";
 import JsonDebug from "testing/JsonDebug";
 import fullTestData from "testing/data";
@@ -25,16 +24,10 @@ const TestHarness: React.FunctionComponent<Props> = ({ testDestination }) => {
   );
 };
 
-const storiesPreFilled = storiesOf(
-  "Document Editors/Folder/Copy Doc Ref/Form/preFilled",
-  module,
-);
-addThemedStories(storiesPreFilled, () => (
+addStory(  "Document Editors/Folder/Copy Doc Ref/Form", "preFilled",
+module, () => (
   <TestHarness testDestination={testFolder2} />
 ));
 
-const storiesBlankSlate = storiesOf(
-  "Document Editors/Folder/Copy Doc Ref/Form/blankSlate",
-  module,
-);
-addThemedStories(storiesBlankSlate, () => <TestHarness />);
+addStory( "Document Editors/Folder/Copy Doc Ref/Form", "blankSlate",
+module, () => <TestHarness />);

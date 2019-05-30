@@ -1,7 +1,6 @@
 import * as React from "react";
 
-import { storiesOf } from "@storybook/react";
-import { addThemedStories } from "testing/storybook/themedStoryGenerator";
+import { addStory } from "testing/storybook/themedStoryGenerator";
 import DocRefEditor, { useDocRefEditor } from ".";
 import { useDocumentTree } from "components/DocumentEditors/api/explorer";
 import { iterateNodes } from "lib/treeUtils/treeUtils";
@@ -10,8 +9,6 @@ import useDocumentApi, {
   ResourcesByDocType,
 } from "components/DocumentEditors/useDocumentApi";
 import JsonDebug from "testing/JsonDebug";
-
-const stories = storiesOf("Document Editors", module);
 
 const TestHarness: React.FunctionComponent = () => {
   const { documentTree } = useDocumentTree();
@@ -59,4 +56,4 @@ const TestHarness: React.FunctionComponent = () => {
   );
 };
 
-addThemedStories(stories, () => <TestHarness />);
+addStory("", "Document Editors", module, () => <TestHarness />);

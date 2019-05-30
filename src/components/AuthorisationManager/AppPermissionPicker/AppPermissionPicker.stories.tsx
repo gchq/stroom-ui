@@ -16,12 +16,11 @@
 import * as React from "react";
 
 import fullTestData from "testing/data";
-import { storiesOf } from "@storybook/react";
 
 import AppPermissionPicker from "./AppPermissionPicker";
 
 import JsonDebug from "testing/JsonDebug";
-import { addThemedStories } from "testing/storybook/themedStoryGenerator";
+import { addStory } from "testing/storybook/themedStoryGenerator";
 
 const TestForm = () => {
   const [value, setAppPermissions] = React.useState<string[]>(
@@ -55,9 +54,5 @@ const TestForm = () => {
   );
 };
 
-const stories = storiesOf(
-  "Sections/Authorisation Manager/App Permission Picker",
-  module,
-);
-
-addThemedStories(stories, () => <TestForm />);
+addStory("Sections/Authorisation Manager", "App Permission Picker",
+module, () => <TestForm />);

@@ -15,14 +15,12 @@
  */
 
 import * as React from "react";
-import { storiesOf } from "@storybook/react";
 
-import { addThemedStories } from "testing/storybook/themedStoryGenerator";
+import { addStory } from "testing/storybook/themedStoryGenerator";
 import IconHeader from "./IconHeader";
 
-const stories = storiesOf("General Purpose/Icon Header", module);
-addThemedStories(
-  stories,
+addStory(
+  "General Purpose", "Icon Header", module,
   () => <IconHeader icon="angle-up" text="Good morrow fellow human" />,
   true,
 );

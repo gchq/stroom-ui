@@ -1,11 +1,10 @@
 import * as React from "react";
-import { storiesOf } from "@storybook/react";
 
 import SingleValueWidget from "./SingleValueWidget";
 import InValueWidget from "./InValueWidget";
 import BetweenValueWidget from "./BetweenValueWidget";
 import JsonDebug from "testing/JsonDebug";
-import { addThemedStories } from "testing/storybook/themedStoryGenerator";
+import { addStory } from "testing/storybook/themedStoryGenerator";
 import { ChangeEventHandler, useCallback, useState } from "react";
 
 [
@@ -13,10 +12,6 @@ import { ChangeEventHandler, useCallback, useState } from "react";
   { valueType: "number", defaultValue: "10" },
   { valueType: "datetime-local", defaultValue: "2018-06-12T19:30" },
 ].forEach(({ valueType, defaultValue }) => {
-  const stories = storiesOf(
-    `Expression/Value Widgets/Single/${valueType}`,
-    module,
-  );
   const TestHarness: React.FunctionComponent = () => {
     const [value, setValue] = useState(defaultValue);
     const onChange: ChangeEventHandler<HTMLInputElement> = useCallback(
@@ -35,7 +30,8 @@ import { ChangeEventHandler, useCallback, useState } from "react";
     );
   };
 
-  addThemedStories(stories, () => <TestHarness />);
+  addStory( "Expression/Value Widgets/Single", `${valueType}`,
+  module, () => <TestHarness />);
 });
 
 [
@@ -54,8 +50,7 @@ import { ChangeEventHandler, useCallback, useState } from "react";
     );
   };
 
-  const stories = storiesOf(`Expression/Value Widgets/In/${valueType}`, module);
-  addThemedStories(stories, () => <TestHarness />);
+  addStory("Expression/Value Widgets/In", `${valueType}`, module, () => <TestHarness />);
 });
 
 [
@@ -78,9 +73,6 @@ import { ChangeEventHandler, useCallback, useState } from "react";
     );
   };
 
-  const stories = storiesOf(
-    `Expression/Value Widgets/Between/${valueType}`,
-    module,
-  );
-  addThemedStories(stories, () => <TestHarness />);
+  addStory( "Expression/Value Widgets/Between", `${valueType}`,
+  module, () => <TestHarness />);
 });

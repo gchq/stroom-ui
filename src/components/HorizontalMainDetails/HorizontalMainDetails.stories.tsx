@@ -21,7 +21,7 @@ import { storiesOf } from "@storybook/react";
 import { Color } from "csstype";
 
 import HorizontalMainDetails from "./HorizontalMainDetails";
-import { addThemedStories } from "testing/storybook/themedStoryGenerator";
+import { addStory } from "testing/storybook/themedStoryGenerator";
 
 const EnabledCheckbox = () => (
   <label>
@@ -149,8 +149,5 @@ const PanelTest = () => {
   );
 };
 
-const stories = storiesOf(
-  "General Purpose/Horizontal Main Details/Mounting Issue",
-  module,
-);
-addThemedStories(stories, () => <PanelTest />);
+addStory( "General Purpose/Horizontal Main Details", "Mounting Issue",
+module, () => <PanelTest />);

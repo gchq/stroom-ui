@@ -14,14 +14,11 @@
  * limitations under the License.
  */
 
-import { storiesOf } from "@storybook/react";
 import * as React from "react";
 import { ChangeEventHandler, useCallback, useState } from "react";
 import JsonDebug from "testing/JsonDebug";
-import { addThemedStories } from "testing/storybook/themedStoryGenerator";
+import { addStory } from "testing/storybook/themedStoryGenerator";
 import InlineSelect, { SelectOption } from "./InlineSelect";
-
-const stories = storiesOf("General Purpose/InlineSelect", module);
 
 const options: SelectOption[] = [
   { value: "leia", label: "Princess Leia" },
@@ -31,7 +28,7 @@ const options: SelectOption[] = [
   { value: "everyone", label: "everyone" },
 ];
 
-addThemedStories(stories, () => {
+addStory("General Purpose", "InlineSelect", module, () => {
   const [empty, setEmpty] = useState<string>("");
   const onEmptyChangeHandler: ChangeEventHandler<
     HTMLSelectElement

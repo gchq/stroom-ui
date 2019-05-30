@@ -1,14 +1,11 @@
 import * as React from "react";
 
-import { storiesOf } from "@storybook/react";
-import { addThemedStories } from "testing/storybook/themedStoryGenerator";
+import { addStory } from "testing/storybook/themedStoryGenerator";
 import PipelineSettings, { useDialog } from "./PipelineSettings";
 import { PipelineSettingsValues } from "../types";
 import useUpdateableState from "lib/useUpdateableState";
 import Button from "components/Button";
 import JsonDebug from "testing/JsonDebug";
-
-const stories = storiesOf("Document Editors/Pipeline/Settings", module);
 
 const TestHarness: React.FunctionComponent = () => {
   const { value, update } = useUpdateableState<PipelineSettingsValues>({
@@ -31,4 +28,4 @@ const TestHarness: React.FunctionComponent = () => {
   );
 };
 
-addThemedStories(stories, () => <TestHarness />);
+addStory("Document Editors/Pipeline", "Settings", module, () => <TestHarness />);

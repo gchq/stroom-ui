@@ -1,6 +1,5 @@
 import * as React from "react";
-import { storiesOf } from "@storybook/react";
-import { addThemedStories } from "testing/storybook/themedStoryGenerator";
+import { addStory } from "testing/storybook/themedStoryGenerator";
 import ReadOnlyExpressionOperator from ".";
 import { testExpression } from "../test";
 import { LineContainer } from "components/LineTo";
@@ -14,6 +13,4 @@ const TestHarness: React.FunctionComponent = () => {
   );
 };
 
-const stories = storiesOf("Expression/Read Only Operator", module);
-
-addThemedStories(stories, () => <TestHarness />);
+addStory("Expression", "Read Only Operator", module, () => <TestHarness />);

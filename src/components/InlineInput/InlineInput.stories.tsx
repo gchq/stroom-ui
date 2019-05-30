@@ -14,16 +14,13 @@
  * limitations under the License.
  */
 
-import { storiesOf } from "@storybook/react";
 import * as React from "react";
 import { ChangeEventHandler } from "react";
 import JsonDebug from "testing/JsonDebug";
-import { addThemedStories } from "testing/storybook/themedStoryGenerator";
+import { addStory } from "testing/storybook/themedStoryGenerator";
 import InlineInput from "./InlineInput";
 
-const stories = storiesOf("General Purpose/InlineInput", module);
-
-addThemedStories(stories, () => {
+addStory("General Purpose", "InlineInput", module, () => {
   const [stringValue, setStringValue] = React.useState<string>("Yoda");
   const onStringValueChange: ChangeEventHandler<
     HTMLInputElement

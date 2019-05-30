@@ -16,6 +16,7 @@
 import * as React from "react";
 import * as storybook from "@storybook/react";
 import { addParameters, configure, addDecorator } from "@storybook/react";
+import { themes } from '@storybook/theming';
 import StoryRouter from "storybook-react-router";
 import StroomDecorator from "../src/testing/storybook/StroomDecorator";
 
@@ -94,7 +95,7 @@ addParameters({
     /**
      * theme storybook, see link below
      */
-    theme: undefined
+    theme: themes.dark,
   }
 });
 

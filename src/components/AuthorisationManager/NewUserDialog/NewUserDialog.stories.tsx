@@ -14,19 +14,13 @@
  * limitations under the License.
  */
 import * as React from "react";
-import { storiesOf } from "@storybook/react";
 
-import { addThemedStories } from "testing/storybook/themedStoryGenerator";
+import { addStory } from "testing/storybook/themedStoryGenerator";
 
 import NewUserDialog, { useDialog } from "./NewUserDialog";
 import Button from "components/Button";
 
 import JsonDebug from "testing/JsonDebug";
-
-const stories = storiesOf(
-  "Sections/Authorisation Manager/New User/Dialog",
-  module,
-);
 
 interface Props {
   isGroup: boolean;
@@ -52,4 +46,5 @@ const TestHarness: React.FunctionComponent<Props> = ({ isGroup }) => {
   );
 };
 
-addThemedStories(stories, () => <TestHarness isGroup={false} />);
+addStory("Sections/Authorisation Manager/New User", "Dialog",
+module, () => <TestHarness isGroup={false} />);

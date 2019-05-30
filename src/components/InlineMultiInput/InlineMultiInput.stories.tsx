@@ -14,15 +14,12 @@
  * limitations under the License.
  */
 
-import { storiesOf } from "@storybook/react";
 import * as React from "react";
-import { addThemedStories } from "testing/storybook/themedStoryGenerator";
+import { addStory } from "testing/storybook/themedStoryGenerator";
 import InlineMultiInput from "./InlineMultiInput";
 import JsonDebug from "testing/JsonDebug";
 
-const stories = storiesOf("General Purpose/InlineMultiInput", module);
-
-addThemedStories(stories, () => {
+addStory("General Purpose", "InlineMultiInput", module, () => {
   const [empty, setEmpty] = React.useState<string[]>([]);
   const [single, setSingle] = React.useState<string[]>(["Leia"]);
   const [multi, setMulti] = React.useState<string[]>([

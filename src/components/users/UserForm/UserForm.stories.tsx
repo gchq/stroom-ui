@@ -1,5 +1,4 @@
 import { action } from "@storybook/addon-actions";
-import { storiesOf } from "@storybook/react";
 import * as React from "react";
 import { User } from "../types";
 import {
@@ -10,7 +9,7 @@ import {
   wellUsedUser,
 } from "testing/data/users";
 import UserForm from "./UserForm";
-import { addThemedStories } from "testing/storybook/themedStoryGenerator";
+import { addStory } from "testing/storybook/themedStoryGenerator";
 
 interface Props {
   user: User;
@@ -52,6 +51,5 @@ Object.entries(tests)
     user: k[1],
   }))
   .forEach(({ name, user }) => {
-    const stories = storiesOf(`Users/User Form/${name}`, module);
-    addThemedStories(stories, () => <TestHarness user={user} />);
+    addStory("Users/User Form", `${name}`, module, () => <TestHarness user={user} />);
   });

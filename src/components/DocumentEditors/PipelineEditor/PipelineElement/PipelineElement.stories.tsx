@@ -1,9 +1,8 @@
 import * as React from "react";
 
-import { storiesOf } from "@storybook/react";
 import PipelineElement from "./PipelineElement";
 import { testPipelines } from "testing/data/pipelines";
-import { addThemedStories } from "testing/storybook/themedStoryGenerator";
+import { addStory } from "testing/storybook/themedStoryGenerator";
 import { PipelineDocumentType } from "components/DocumentEditors/useDocumentApi/types/pipelineDoc";
 import usePipelineState from "../usePipelineState/usePipelineState";
 import JsonDebug from "testing/JsonDebug";
@@ -27,8 +26,6 @@ const TestHarness: React.FunctionComponent<Props> = ({
   );
 };
 
-const stories = storiesOf("Document Editors/Pipeline/Pipeline Element", module);
-
 const testPipeline: PipelineDocumentType = Object.values(testPipelines).find(
   d => {
     if (d !== undefined) {
@@ -41,7 +38,7 @@ const testPipeline: PipelineDocumentType = Object.values(testPipelines).find(
   },
 );
 
-addThemedStories(stories, () => (
+addStory("Document Editors/Pipeline", "Pipeline Element", module, () => (
   <TestHarness
     pipelineId={testPipeline.uuid}
     elementId={testPipeline.merged.elements.add[0].id}

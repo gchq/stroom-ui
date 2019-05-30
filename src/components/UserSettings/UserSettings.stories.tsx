@@ -16,12 +16,8 @@
 
 import * as React from "react";
 
-import { storiesOf } from "@storybook/react";
-
 import UserSettings from "./UserSettings";
 
-import { addThemedStories } from "testing/storybook/themedStoryGenerator";
+import { addStory } from "testing/storybook/themedStoryGenerator";
 
-const stories = storiesOf("Sections/User Settings", module);
-
-addThemedStories(stories, () => <UserSettings />);
+addStory("Sections", "User Settings", module, () => <UserSettings />);

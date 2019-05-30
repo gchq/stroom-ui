@@ -15,14 +15,12 @@
  */
 import * as React from "react";
 
-import { storiesOf } from "@storybook/react";
-
 import { DocRefInfoModal } from ".";
 
 import { useDocRefInfoDialog } from "./DocRefInfoModal";
 import Button from "../Button";
 import fullTestData from "testing/data";
-import { addThemedStories } from "testing/storybook/themedStoryGenerator";
+import { addStory } from "testing/storybook/themedStoryGenerator";
 
 const testFolder1 = fullTestData.documentTree.children![0];
 
@@ -37,6 +35,4 @@ const TestHarness: React.FunctionComponent = () => {
   );
 };
 
-const stories = storiesOf("Doc Ref/Info/Dialog", module);
-
-addThemedStories(stories, () => <TestHarness />);
+addStory("Doc Ref/Info", "Dialog", module, () => <TestHarness />);

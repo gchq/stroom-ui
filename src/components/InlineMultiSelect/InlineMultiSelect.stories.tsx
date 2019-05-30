@@ -14,15 +14,12 @@
  * limitations under the License.
  */
 
-import { storiesOf } from "@storybook/react";
 import { SelectOption } from "components/InlineSelect/InlineSelect";
 import * as React from "react";
 import { useState } from "react";
 import JsonDebug from "testing/JsonDebug";
-import { addThemedStories } from "testing/storybook/themedStoryGenerator";
+import { addStory } from "testing/storybook/themedStoryGenerator";
 import InlineMultiSelect from "./InlineMultiSelect";
-
-const stories = storiesOf("General Purpose/InlineMultiSelect", module);
 
 const options: SelectOption[] = [
   { value: "leia", label: "Princess Leia" },
@@ -32,7 +29,7 @@ const options: SelectOption[] = [
   { value: "everyone", label: "everyone" },
 ];
 
-addThemedStories(stories, () => {
+addStory("General Purpose", "InlineMultiSelect", module, () => {
   const [emptySelection, setEmptySelection] = useState<string[]>([]);
   const [singleSelection, setSingleSelection] = useState<string[]>(["leia"]);
   const [multiSelection, setMultiSelection] = useState<string[]>([

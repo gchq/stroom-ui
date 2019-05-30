@@ -14,23 +14,18 @@
  * limitations under the License.
  */
 
-import { storiesOf } from "@storybook/react";
 import * as React from "react";
 import { DocRefType } from "components/DocumentEditors/useDocumentApi/types/base";
 import fullTestData from "testing/data";
-import { addThemedStories } from "testing/storybook/themedStoryGenerator";
+import { addStory } from "testing/storybook/themedStoryGenerator";
 import { StroomUser } from "../api/userGroups";
 import DocumentPermissionForUserEditor from "./DocumentPermissionForUserEditor";
 
 const testUser: StroomUser = fullTestData.usersAndGroups.users[0];
 const testDocRef: DocRefType = fullTestData.documentTree.children![0];
 
-const stories = storiesOf(
-  "Sections/Authorisation Manager/Document Permission For User Editor",
-  module,
-);
-
-addThemedStories(stories, () => (
+addStory("Sections/Authorisation Manager", "Document Permission For User Editor",
+module, () => (
   <DocumentPermissionForUserEditor
     userUuid={testUser.uuid}
     docRefUuid={testDocRef.uuid}

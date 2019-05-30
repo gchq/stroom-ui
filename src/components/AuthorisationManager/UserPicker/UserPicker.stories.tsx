@@ -14,12 +14,11 @@
  * limitations under the License.
  */
 
-import { storiesOf } from "@storybook/react";
 import * as React from "react";
 import Button from "components/Button";
 import fullTestData from "testing/data";
 import JsonDebug from "testing/JsonDebug";
-import { addThemedStories } from "testing/storybook/themedStoryGenerator";
+import { addStory } from "testing/storybook/themedStoryGenerator";
 import { StroomUser } from "../api/userGroups";
 import UserPicker, { usePicker } from "./UserPicker";
 
@@ -56,9 +55,6 @@ const TestHarness: React.FunctionComponent<Props> = ({ isGroup }) => {
 };
 
 [true, false].forEach(isGroup => {
-  const stories = storiesOf(
-    `Sections/Authorisation Manager/User Picker/${isGroup ? "Group" : "User"}`,
-    module,
-  );
-  addThemedStories(stories, () => <TestHarness {...{ isGroup }} />);
+  addStory("Sections/Authorisation Manager/User Picker", `${isGroup ? "Group" : "User"}`,
+  module, () => <TestHarness {...{ isGroup }} />);
 });

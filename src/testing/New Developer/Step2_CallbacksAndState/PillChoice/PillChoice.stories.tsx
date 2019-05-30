@@ -1,13 +1,10 @@
 import * as React from "react";
 
-import { storiesOf } from "@storybook/react";
-import { addThemedStories } from "../../../storybook/themedStoryGenerator";
+import { addStory } from "../../../storybook/themedStoryGenerator";
 
 import PillChoice from "./PillChoice";
 
-const stories = storiesOf("New Developer/Step 2/Pill Choice", module);
-
-addThemedStories(stories, () => {
+addStory("New Developer/Step 2", "Pill Choice", module, () => {
   return (
     <div>
       <h2>Pill Choice Test Harness</h2>

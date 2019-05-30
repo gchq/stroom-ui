@@ -15,12 +15,11 @@
  */
 
 import * as React from "react";
-import { storiesOf } from "@storybook/react";
 
 import Button from "../Button";
 import ThemedModal from "./ThemedModal";
 
-import { addThemedStories } from "testing/storybook/themedStoryGenerator";
+import { addStory } from "testing/storybook/themedStoryGenerator";
 
 const TestHarness: React.FunctionComponent = () => {
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
@@ -44,6 +43,4 @@ const TestHarness: React.FunctionComponent = () => {
   );
 };
 
-const stories = storiesOf("General Purpose/Themed Modal", module);
-
-addThemedStories(stories, () => <TestHarness />);
+addStory("General Purpose", "Themed Modal", module, () => <TestHarness />);

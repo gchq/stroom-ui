@@ -1,10 +1,9 @@
 import * as React from "react";
-import { storiesOf } from "@storybook/react";
 
 import CreateDocRefDialog, { useDialog } from "./CreateDocRefDialog";
 
 import JsonDebug from "testing/JsonDebug";
-import { addThemedStories } from "testing/storybook/themedStoryGenerator";
+import { addStory } from "testing/storybook/themedStoryGenerator";
 
 const TestHarness: React.FunctionComponent = () => {
   const [lastConfirmed, setLastConfirmed] = React.useState<object>({});
@@ -24,8 +23,5 @@ const TestHarness: React.FunctionComponent = () => {
   );
 };
 
-const stories = storiesOf(
-  "Document Editors/Folder/Create Doc Ref/Dialog",
-  module,
-);
-addThemedStories(stories, () => <TestHarness />);
+addStory("Document Editors/Folder/Create Doc Ref", "Dialog",
+module, () => <TestHarness />);

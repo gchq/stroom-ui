@@ -16,7 +16,8 @@
 
 import { useTheme } from "lib/useTheme/useTheme";
 import * as React from "react";
-import * as ReactModal from "react-modal";
+import * as Modal from "react-modal";
+import Draggable from "react-draggable";
 import reactModalOptions from "./reactModalOptions";
 
 interface ContentProps {
@@ -24,6 +25,24 @@ interface ContentProps {
   content: JSX.Element;
   actions: JSX.Element;
 }
+
+// const styleOverrides = {
+//   overlay: {
+//     display: "flex",
+//     justifyContent: "center",
+//     alignItems: "center",
+//   },
+//   content: {
+//     bottom: "unset",
+//     overflow: "visible",
+//     padding: 0,
+//     border: "none",
+//     borderRadius: 0,
+//     position: "static",
+//     background: "none",
+//     pointerEvents: "none",
+//   },
+// };
 
 const ThemedModal: React.FunctionComponent<ContentProps & ReactModal.Props> = ({
   header,
@@ -34,17 +53,21 @@ const ThemedModal: React.FunctionComponent<ContentProps & ReactModal.Props> = ({
   const { theme } = useTheme();
 
   return (
-    <ReactModal
+    <Modal
       className={`themed-modal ${theme}`}
+      // className={`themed-modal`}
+      overlayClassName={`themed-modal__overlay`}
       {...rest}
-      style={reactModalOptions}
+      // style={reactModalOptions}
     >
-      <div className="themed-modal__container">
-        <div className="themed-modal__header">{header}</div>
-        <div className="themed-modal__content">{content}</div>
-        <div className="themed-modal__footer__actions">{actions}</div>
-      </div>
-    </ReactModal>
+      <Draggable handle=".themed-modal__header" bounds="body">
+        <div className="themed-modal__container">
+          <div className="themed-modal__header">{header}</div>
+          <div className="themed-modal__content">{content}</div>
+          <div className="themed-modal__footer__actions">{actions}</div>
+        </div>
+      </Draggable>
+    </Modal>
   );
 };
 

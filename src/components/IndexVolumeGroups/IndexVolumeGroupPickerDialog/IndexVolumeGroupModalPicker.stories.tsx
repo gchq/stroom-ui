@@ -16,10 +16,8 @@
 
 import * as React from "react";
 
-import { storiesOf } from "@storybook/react";
-
 import IndexVolumeGroupModalPicker from "./IndexVolumeGroupModalPicker";
-import { addThemedStories } from "testing/storybook/themedStoryGenerator";
+import { addStory } from "testing/storybook/themedStoryGenerator";
 
 import { useDialog } from "./IndexVolumeGroupModalPicker";
 import Button from "components/Button";
@@ -49,8 +47,5 @@ const TestHarness: React.FunctionComponent = () => {
   );
 };
 
-const stories = storiesOf(
-  "Sections/Index Volume Groups/Group Picker Modal",
-  module,
-);
-addThemedStories(stories, () => <TestHarness />);
+addStory( "Sections/Index Volume Groups", "Group Picker Modal",
+module, () => <TestHarness />);

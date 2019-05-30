@@ -14,9 +14,8 @@
  * limitations under the License.
  */
 
-import { storiesOf } from "@storybook/react";
 import * as React from "react";
-import { addThemedStories } from "testing/storybook/themedStoryGenerator";
+import { addStory } from "testing/storybook/themedStoryGenerator";
 import Button from "./Button";
 
 interface Variant {
@@ -222,6 +221,4 @@ const TestHarness: React.FunctionComponent = () => {
   );
 };
 
-const stories = storiesOf("General Purpose/Button", module);
-
-addThemedStories(stories, () => <TestHarness />, true);
+addStory("General Purpose", "Button", module, () => <TestHarness />, true);

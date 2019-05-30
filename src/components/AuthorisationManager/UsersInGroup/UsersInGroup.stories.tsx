@@ -14,10 +14,9 @@
  * limitations under the License.
  */
 
-import { storiesOf } from "@storybook/react";
 import * as React from "react";
 import fullTestData from "testing/data";
-import { addThemedStories } from "testing/storybook/themedStoryGenerator";
+import { addStory } from "testing/storybook/themedStoryGenerator";
 import { StroomUser } from "../api/userGroups";
 import UsersInGroup from "./UsersInGroup";
 
@@ -26,9 +25,5 @@ let aGroup: StroomUser = fullTestData.usersAndGroups.users
   .filter(u => u.group)
   .pop()!;
 
-const stories = storiesOf(
-  "Sections/Authorisation Manager/Users In Group",
-  module,
-);
-
-addThemedStories(stories, () => <UsersInGroup group={aGroup} />);
+addStory(  "Sections/Authorisation Manager", "Users In Group",
+module, () => <UsersInGroup group={aGroup} />);

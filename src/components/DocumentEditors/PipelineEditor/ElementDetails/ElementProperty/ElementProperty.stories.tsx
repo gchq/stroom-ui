@@ -1,7 +1,6 @@
 import * as React from "react";
 
-import { storiesOf } from "@storybook/react";
-import { addThemedStories } from "testing/storybook/themedStoryGenerator";
+import { addStory } from "testing/storybook/themedStoryGenerator";
 import usePipelineState from "components/DocumentEditors/PipelineEditor/usePipelineState";
 import ElementProperty from "./ElementProperty";
 import { fullTestData } from "testing/data";
@@ -102,13 +101,8 @@ fullTestData.documents.Pipeline.forEach((pipeline: PipelineDocumentType) => {
       .map(p => testDeduplicator.isUnique(pipeline, element, p))
       .filter(p => p !== undefined)
       .forEach(props => {
-        const stories = storiesOf(
-          `Document Editors/Pipeline/Element Details/Element Property/${
-            props.property.type
-          }-${props.hasParentValue ? "parent" : "noParent"}`,
-          module,
-        );
-        addThemedStories(stories, () => <TestHarness {...props} />);
+        addStory( "Document Editors/Pipeline/Element Details/Element Property", `${props.property.type}-${props.hasParentValue ? "parent" : "noParent"}`,
+        module, () => <TestHarness {...props} />);
       });
   });
 });

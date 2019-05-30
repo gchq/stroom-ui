@@ -15,12 +15,9 @@
  */
 
 import * as React from "react";
-import { storiesOf } from "@storybook/react";
 
 import Welcome from "./Welcome";
 
-import { addThemedStories } from "testing/storybook/themedStoryGenerator";
+import { addStory } from "testing/storybook/themedStoryGenerator";
 
-const stories = storiesOf("Sections/Welcome", module);
-
-addThemedStories(stories, () => <Welcome />);
+addStory("Sections", "Welcome", module, () => <Welcome />);

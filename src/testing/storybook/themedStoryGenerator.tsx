@@ -15,12 +15,47 @@
  */
 
 import * as React from "react";
-import { Story, RenderFunction } from "@storybook/react";
+import { RenderFunction } from "@storybook/react";
+import { themeOptions, useTheme, ThemeOption } from "lib/useTheme/useTheme";
+import Select from "react-select";
+import { storiesOf } from "@storybook/react";
+import Toggle from "react-toggle";
+import { AutoComplete } from "antd";
 
 const styles = {
-  fullScreen: {
+  outer: {
+    display: "flex",
     width: "100%",
     height: "100%",
+    minWidth: "100%",
+    minHeight: "100%",
+    maxWidth: "100%",
+    maxHeight: "100%",
+    overflow: "hidden",
+    flexDirection: "column" as "column",
+  },
+  top: {
+    position: "relative" as "relative",
+    // width: "100%",
+    // background: "#333333 linear-gradient(to top,transparent calc(100% - 1px),rgba(255,255,255,.1) calc(100% - 1px)",
+    // position: "absolute" as "absolute",
+    flexGrow: 1,
+    flexShrink: 0,
+    overflow: "auto",
+    // bottom: 0,
+  },
+  bottom: {
+    position: "relative" as "relative",
+    // width: "100%",
+    background:
+      "#333333 linear-gradient(to top,transparent calc(100% - 1px),rgba(255,255,255,.1) calc(100% - 1px)",
+    // position: "absolute" as "absolute",
+    // flexGrow: 0,
+    // flexShrink: 0,
+    display: "flex",
+    // bottom: 0,
+    padding: "0.2rem",
+    flexDirection: "row-reverse" as "row-reverse",
   },
   center: {
     width: "100%",
@@ -29,44 +64,80 @@ const styles = {
     justifyContent: "center",
     alignItems: "center",
   },
+  themeChooser: {
+    display: "flex",
+    width: "400px",
+  },
 };
 
-const themes = ["theme-light", "theme-dark"];
+// const themes = ["theme-light", "theme-dark"];
 
 interface Props {
-  theme: string;
   component: RenderFunction;
   centerComponent?: React.ReactNode;
 }
 
 const ThemedContainer: React.FunctionComponent<Props> = ({
-  theme,
   component,
   centerComponent,
-}) => (
-  <div className={`${theme} raised-low`} style={styles.fullScreen}>
-    {centerComponent ? (
-      <div className="page" style={styles.center}>
-        {component()}
-      </div>
-    ) : (
-      <React.Fragment>{component()}</React.Fragment>
-    )}
-  </div>
-);
+}) => {
+  const { theme, setTheme } = useTheme();
 
-export const addThemedStories = (
-  stories: Story,
+  const value: ThemeOption = React.useMemo(
+    () => themeOptions.find(t => t.value === theme) || themeOptions[0],
+    [theme],
+  );
+  const onChange = React.useCallback(
+    (d: ThemeOption) => {
+      setTheme(d.value);
+    },
+    [setTheme],
+  );
+
+  return (
+    <div className={`${theme}`} style={styles.outer}>
+      <div style={styles.top}>
+        <div className="page">
+          {centerComponent ? (
+            <div style={styles.center}>{component()}</div>
+          ) : (
+            <React.Fragment>{component()}</React.Fragment>
+          )}
+        </div>
+      </div>
+      <div style={styles.bottom}>
+        <Toggle
+          icons={false}
+          checked={value === themeOptions[1]}
+          onChange={event =>
+            onChange(event.target.checked ? themeOptions[1] : themeOptions[0])
+          }
+        />
+      </div>
+    </div>
+  );
+};
+
+// export const addThemedStory = (
+//   stories: Story,
+//   component: RenderFunction,
+//   centerComponent?: React.ReactNode,
+// ) => {
+//   stories.add("story", () => (
+//     <ThemedContainer component={component} centerComponent={centerComponent} />
+//   ));
+// };
+
+export const addStory = (
+  folder: string,
+  story: string,
+  module: NodeModule,
   component: RenderFunction,
   centerComponent?: React.ReactNode,
 ) => {
-  themes.forEach(theme =>
-    stories.add(theme, () => (
-      <ThemedContainer
-        theme={theme}
-        component={component}
-        centerComponent={centerComponent}
-      />
-    )),
-  );
+  const stories = storiesOf(folder, module);
+
+  stories.add(story, () => (
+    <ThemedContainer component={component} centerComponent={centerComponent} />
+  ));
 };

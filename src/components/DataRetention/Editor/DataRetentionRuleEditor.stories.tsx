@@ -14,15 +14,12 @@
  * limitations under the License.
  */
 
-import { storiesOf } from "@storybook/react";
 import * as React from "react";
 import JsonDebug from "testing/JsonDebug";
-import { addThemedStories } from "testing/storybook/themedStoryGenerator";
+import { addStory } from "testing/storybook/themedStoryGenerator";
 import DataRetentionRuleEditor from "./DataRetentionRuleEditor";
 import { DataRetentionRule } from "../types/DataRetentionRule";
 import { action } from "@storybook/addon-actions";
-
-const stories = storiesOf("Sections/DataRetention/Rule", module);
 
 const rule1: DataRetentionRule = {
   ruleNumber: 1,
@@ -39,7 +36,7 @@ const rule1: DataRetentionRule = {
   },
 };
 
-addThemedStories(stories, () => {
+addStory("Sections", "DataRetention/Rule", module, () => {
   const [rule, setRule] = React.useState<DataRetentionRule>(rule1);
   return (
     <div>

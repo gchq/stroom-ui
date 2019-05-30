@@ -15,11 +15,10 @@
  */
 import * as React from "react";
 
-import { storiesOf } from "@storybook/react";
 import { Switch, Route } from "react-router";
 
 import ActivityChooser from "./ActivityChooser";
-import { addThemedStories } from "testing/storybook/themedStoryGenerator";
+import { addStory } from "testing/storybook/themedStoryGenerator";
 // import useAppNavigation from "lib/useAppNavigation";
 
 const TestHarness = () => {
@@ -33,6 +32,4 @@ const TestHarness = () => {
   );
 };
 
-const stories = storiesOf("Sections/Activity", module);
-
-addThemedStories(stories, () => <TestHarness />);
+addStory("Sections", "Activity", module, () => <TestHarness />);
