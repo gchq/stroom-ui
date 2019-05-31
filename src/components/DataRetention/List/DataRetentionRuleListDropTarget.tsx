@@ -1,20 +1,36 @@
 import * as React from "react";
 import { DragDropTypes } from "../types/DragDropTypes";
-import { DropTarget, DropTargetSpec, DropTargetCollector } from "react-dnd";
-import { DropCollectedProps } from "./DataRetentionRuleList";
+import {
+  DropTarget,
+  DropTargetSpec,
+  DropTargetCollector,
+  ConnectDropTarget,
+} from "react-dnd";
+
+export interface DropCollectedProps {
+  connectDropTarget: ConnectDropTarget;
+  isOver: boolean;
+  draggingItemType?: string | null | symbol;
+  canDrop: boolean;
+}
 
 interface Props {
   foobar: string;
 }
+
 interface EnhancedProps extends Props, DropCollectedProps {}
+
 const dropTarget: DropTargetSpec<Props> = {
-  canDrop() {
+  canDrop(wat) {
+    console.log({ wat });
     return true;
   },
-  drop({}, monitor) {
-    //TODO
+  drop(dropEvent, monitor) {
+    console.log({ dropEvent });
+    console.log({ monitor });
   },
 };
+
 const dropCollect: DropTargetCollector<DropCollectedProps, Props> = (
   connect,
   monitor,
@@ -24,6 +40,7 @@ const dropCollect: DropTargetCollector<DropCollectedProps, Props> = (
   draggingItemType: monitor.getItemType(),
   canDrop: monitor.canDrop(),
 });
+
 const enhance = DropTarget<Props, DropCollectedProps>(
   [DragDropTypes.RULE],
   dropTarget,
@@ -33,17 +50,14 @@ const enhance = DropTarget<Props, DropCollectedProps>(
 const DataRetentionRuleListDropTarget: React.FunctionComponent<
   EnhancedProps
 > = ({ connectDropTarget, draggingItemType, isOver }) => {
-  return (
-    <div>
-      {draggingItemType === DragDropTypes.RULE ? (
-        <div>
-          <div>drop3</div>
-          {isOver ? <div>drop4</div> : <div>drop5</div>}
-        </div>
+  return connectDropTarget(
+    <div className="DataRetentionRuleListDropTarget">
+      {draggingItemType === DragDropTypes.RULE && isOver ? (
+        <div className="DataRetentionRuleListDropTarget--highlighted" />
       ) : (
-        <div>drop6</div>
+        undefined
       )}
-    </div>
+    </div>,
   );
 };
 

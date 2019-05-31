@@ -12,13 +12,13 @@ input[type="radio"] {
   justify-content: space-between;
 }
 
-.DataRetentionRuleEditor__header > div > svg {
+.DataRetentionRuleEditor__header>div>svg {
   margin-right: 0.5em;
   margin-bottom: 0.15em;
   color: gray;
 }
 
-.DataRetentionRuleEditor__header:hover > div > svg {
+.DataRetentionRuleEditor__header:hover>div>svg {
   color: #2185d0;
 }
 
@@ -48,7 +48,7 @@ input[type="radio"] {
   flex-direction: row;
 }
 
-.DataRetentionRuleEditor__content > div {
+.DataRetentionRuleEditor__content>div {
   flex-grow: 1;
 }
 
@@ -88,4 +88,15 @@ input[type="radio"] {
 .DataRetentionSection__content {
   width: 100%;
   height: 100%;
+}
+
+.DataRetentionRuleListDropTarget {
+  height: 1em;
+  width: 100%;
+}
+
+.DataRetentionRuleListDropTarget--highlighted {
+  height: 100%;
+  width: 100%;
+  background-color: #c1e4ff;
 }
