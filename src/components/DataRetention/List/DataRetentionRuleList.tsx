@@ -20,17 +20,65 @@ import useListReducer from "lib/useListReducer";
 import { DataRetentionRule } from "../types/DataRetentionRule";
 import { useEffect, useMemo } from "react";
 import { ControlledInput } from "lib/useForm/types";
+import {
+  DropTargetSpec,
+  DropTargetCollector,
+  DropTarget,
+  ConnectDropTarget,
+} from "react-dnd";
+import { DragDropTypes } from "../types/DragDropTypes";
+import DataRetentionRuleListDropTarget from "./DataRetentionRuleListDropTarget";
+
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+interface Props extends ControlledInput<DataRetentionRule[]> {}
+interface EnhancedProps extends Props, DropCollectedProps {}
+
+export interface DropCollectedProps {
+  connectDropTarget: ConnectDropTarget;
+  isOver: boolean;
+  draggingItemType?: string | null | symbol;
+  canDrop: boolean;
+}
+const dropTarget: DropTargetSpec<Props> = {
+  canDrop() {
+    return true;
+  },
+  drop({}, monitor) {
+    const thing = monitor.getItem();
+    //Wat?
+  },
+};
+
+const dropCollect: DropTargetCollector<DropCollectedProps, Props> = (
+  connect,
+  monitor,
+) => ({
+  connectDropTarget: connect.dropTarget(),
+  isOver: monitor.isOver(),
+  draggingItemType: monitor.getItemType(),
+  canDrop: monitor.canDrop(),
+});
+
+const enhance = DropTarget<Props, DropCollectedProps>(
+  [DragDropTypes.RULE],
+  dropTarget,
+  dropCollect,
+);
 
 const getKey = (k: DataRetentionRule) => k.ruleNumber.toString();
-
 interface ValueAndChangeHandler {
   value: DataRetentionRule;
   onChange: (rule: DataRetentionRule) => void;
   onRemove: () => void;
 }
-const DataRetentionRuleList: React.FunctionComponent<
-  ControlledInput<DataRetentionRule[]>
-> = ({ value: values, onChange }) => {
+const DataRetentionRuleList: React.FunctionComponent<EnhancedProps> = ({
+  value: values,
+  onChange,
+  connectDropTarget,
+  isOver,
+  canDrop,
+  draggingItemType,
+}) => {
   const {
     items,
     addItem,
@@ -52,23 +100,32 @@ const DataRetentionRuleList: React.FunctionComponent<
     [values, updateItemAtIndex, removeItemAtIndex],
   );
 
-  return (
+  return connectDropTarget(
     <div className="DataRetentionRuleList__content">
+      {draggingItemType === DragDropTypes.RULE ? (
+        <div>drop1{isOver ? <div>drop2</div> : undefined}</div>
+      ) : (
+        undefined
+      )}
+      <DataRetentionRuleListDropTarget />
       {valuesAndChangeHandlers.map(
         ({ value: rule, onChange: onRuleChange, onRemove }, index) => {
           return (
-            <div key={index} className="DataRetentionRuleList__rule">
-              <DataRetentionRuleEditor
-                value={rule}
-                onChange={onRuleChange}
-                onDelete={onRemove}
-              />
-            </div>
+            <React.Fragment key={index}>
+              <div key={index} className="DataRetentionRuleList__rule">
+                <DataRetentionRuleEditor
+                  value={rule}
+                  onChange={onRuleChange}
+                  onDelete={onRemove}
+                />
+              </div>
+              <DataRetentionRuleListDropTarget />
+            </React.Fragment>
           );
         },
       )}
-    </div>
+    </div>,
   );
 };
 
-export default DataRetentionRuleList;
+export default enhance(DataRetentionRuleList);
