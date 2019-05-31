@@ -17,8 +17,13 @@
 import { useTheme } from "lib/useTheme/useTheme";
 import * as React from "react";
 import * as Modal from "react-modal";
+import Draggable from "react-draggable";
+import { ResizableBox } from "react-resizable";
+import ResizeBottomRight from "../ResizeHandle/ResizeBottomRight";
 
 interface ContentProps {
+  width: number;
+  height: number;
   header: JSX.Element;
   content: JSX.Element;
   actions: JSX.Element;
@@ -42,12 +47,9 @@ interface ContentProps {
 //   },
 // };
 
-const ThemedModal: React.FunctionComponent<ContentProps & ReactModal.Props> = ({
-  header,
-  content,
-  actions,
-  ...rest
-}) => {
+const ResizableThemedModal: React.FunctionComponent<
+  ContentProps & ReactModal.Props
+> = ({ width, height, header, content, actions, ...rest }) => {
   const { theme } = useTheme();
 
   return (
@@ -58,13 +60,27 @@ const ThemedModal: React.FunctionComponent<ContentProps & ReactModal.Props> = ({
       {...rest}
       // style={reactModalOptions}
     >
-      <div className="themed-modal__container">
-        <div className="themed-modal__header">{header}</div>
-        <div className="themed-modal__content">{content}</div>
-        <div className="themed-modal__footer__actions">{actions}</div>
-      </div>
+      <Draggable handle=".themed-modal__header" bounds="body">
+        <div className="themed-modal__container">
+          <ResizableBox
+            className="custom-box box"
+            width={width}
+            height={height}
+            handle={
+              <span className="custom-handle custom-handle-se">
+                <ResizeBottomRight />
+              </span>
+            }
+            handleSize={[20, 20]}
+          >
+            <div className="themed-modal__header">{header}</div>
+            <div className="themed-modal__content">{content}</div>
+            <div className="themed-modal__footer__actions">{actions}</div>
+          </ResizableBox>
+        </div>
+      </Draggable>
     </Modal>
   );
 };
 
-export default ThemedModal;
+export default ResizableThemedModal;

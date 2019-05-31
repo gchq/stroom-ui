@@ -4,6 +4,8 @@ import ActivityChooser from ".";
 import useActivityConfig from "../api/useActivityConfig";
 import IconHeader from "components/IconHeader";
 import Button from "components/Button";
+import ButtonContainer from "components/Button/ButtonContainer";
+import zipWith from "ramda/es/zipWith";
 
 interface Props {
   isOpen: boolean;
@@ -23,7 +25,17 @@ const ActivityChooserDialog: React.FunctionComponent<Props> = ({
     <ThemedModal
       header={<IconHeader icon="tasks" text={managerTitle} />}
       content={<ActivityChooser />}
-      actions={<Button text="Close" onClick={onClose} />}
+      actions={
+        <ButtonContainer>
+          <Button
+            action="primary"
+            appearance="contained"
+            icon="check"
+            text="Close"
+            onClick={onClose}
+          />
+        </ButtonContainer>
+      }
       isOpen={isOpen}
     />
   );

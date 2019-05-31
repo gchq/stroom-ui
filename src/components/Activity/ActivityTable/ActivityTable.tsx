@@ -46,10 +46,12 @@ const COLUMNS = [
   },
 ];
 
+const style = { width: "800px", height: "600px" };
+
 const ActivityTable: React.FunctionComponent<Props> = ({
   selectableTableProps: { onKeyDown, tableProps },
 }) => (
-  <div className="fill-space" tabIndex={0} onKeyDown={onKeyDown}>
+  <div style={style} tabIndex={0} onKeyDown={onKeyDown}>
     <ReactTable className="fill-space -striped -highlight" {...tableProps} />
   </div>
 );

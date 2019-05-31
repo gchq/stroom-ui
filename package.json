@@ -53,6 +53,7 @@
     "react-loader": "2.4.5",
     "react-modal": "3.8.1",
     "react-panelgroup": "1.0.7",
+    "react-resizable": "1.8.0",
     "react-router-dom": "4.3.1",
     "react-scripts": "3.0.0",
     "react-select": "2.4.3",

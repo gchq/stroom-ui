@@ -30,12 +30,14 @@ const ActivityEditorDialog: React.FunctionComponent<Props> = ({
         <ButtonContainer>
           <Button
             text="Save"
+            icon="save"
             appearance="contained"
             action="primary"
             onClick={onClose}
           />
           <Button
             text="Close"
+            icon="times"
             appearance="contained"
             action="secondary"
             onClick={onClose}
