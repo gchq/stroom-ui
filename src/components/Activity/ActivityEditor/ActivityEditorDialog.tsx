@@ -1,10 +1,13 @@
 import * as React from "react";
 import ThemedModal from "components/ThemedModal";
 import { ActivityEditor } from ".";
+import useActivity from "../api/useActivity";
 import useActivityConfig from "../api/useActivityConfig";
 import IconHeader from "components/IconHeader";
 import Button from "components/Button";
 import ButtonContainer from "components/Button/ButtonContainer";
+import Loader from "components/Loader";
+import cogoToast from "cogo-toast";
 
 interface Props {
   isOpen: boolean;
@@ -17,15 +20,39 @@ const ActivityEditorDialog: React.FunctionComponent<Props> = ({
   setIsOpen,
   activityId,
 }) => {
-  const { editorTitle } = useActivityConfig();
   const onClose = React.useCallback(() => {
     setIsOpen(false);
   }, [setIsOpen]);
 
+  const onAfterUpdate = React.useCallback(
+    (message: string) => {
+      cogoToast.info(message);
+      onClose();
+    },
+    [onClose],
+  );
+
+  const { activity, onPropChange, onCreateOrUpdate, isDirty } = useActivity(
+    activityId,
+    onAfterUpdate,
+  );
+  const { editorTitle, editorBody } = useActivityConfig();
+
+  if (!activity || !editorTitle || !editorBody) {
+    return <Loader message={`Loading Activity ${activityId}`} />;
+  }
+
   return (
     <ThemedModal
       header={<IconHeader icon="tasks" text={editorTitle} />}
-      content={<ActivityEditor activityId={activityId} />}
+      content={
+        <ActivityEditor
+          activity={activity}
+          editorTitle={editorTitle}
+          editorBody={editorBody}
+          onPropChange={onPropChange}
+        />
+      }
       actions={
         <ButtonContainer>
           <Button
@@ -33,7 +60,8 @@ const ActivityEditorDialog: React.FunctionComponent<Props> = ({
             icon="save"
             appearance="contained"
             action="primary"
-            onClick={onClose}
+            onClick={onCreateOrUpdate}
+            disabled={!isDirty}
           />
           <Button
             text="Close"

@@ -56,7 +56,10 @@ const newActivity: Activity = {
   properties: [],
 };
 
-const useActivity = (activityId: string): UseActivity => {
+const useActivity = (
+  activityId: string,
+  onAfterUpdate: (message: string) => void,
+): UseActivity => {
   // const [activity, setActivity] = React.useState<Activity | undefined>(
   //   undefined,
   // );
@@ -87,7 +90,7 @@ const useActivity = (activityId: string): UseActivity => {
     if (activity.id) {
       updateActivity(activity).then(activity => {
         dispatch({ type: "set", activity });
-        cogoToast.info(`Activity Saved`);
+        onAfterUpdate("Activity Saved");
       });
     } else {
       createActivity(activity).then(activity => {

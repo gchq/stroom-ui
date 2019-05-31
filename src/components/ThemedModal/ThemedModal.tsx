@@ -22,6 +22,8 @@ interface ContentProps {
   header: JSX.Element;
   content: JSX.Element;
   actions: JSX.Element;
+  width?: string;
+  height?: string;
 }
 
 // const styleOverrides = {
@@ -46,9 +48,16 @@ const ThemedModal: React.FunctionComponent<ContentProps & ReactModal.Props> = ({
   header,
   content,
   actions,
+  width,
+  height,
   ...rest
 }) => {
   const { theme } = useTheme();
+
+  const style = {
+    width: width,
+    height: height,
+  };
 
   return (
     <Modal
@@ -58,7 +67,7 @@ const ThemedModal: React.FunctionComponent<ContentProps & ReactModal.Props> = ({
       {...rest}
       // style={reactModalOptions}
     >
-      <div className="themed-modal__container">
+      <div className="themed-modal__container" style={style}>
         <div className="themed-modal__header">{header}</div>
         <div className="themed-modal__content">{content}</div>
         <div className="themed-modal__footer__actions">{actions}</div>

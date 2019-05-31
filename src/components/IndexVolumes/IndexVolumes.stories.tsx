@@ -41,4 +41,6 @@ const TestHarness = () => {
   );
 };
 
-addStory("Sections", "Index Volumes", module, () => <TestHarness />);
+addStory("Sections/Index Volumes", "Index Volumes", module, () => (
+  <TestHarness />
+));

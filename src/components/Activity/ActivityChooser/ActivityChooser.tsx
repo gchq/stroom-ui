@@ -38,6 +38,8 @@ const ActivityChooser: React.FunctionComponent = () => {
 
   const { activities, deleteActivity } = useActivities();
 
+  console.log("rendering activity list", activities);
+
   const { setCurrentActivity } = useCurrentActivity();
 
   const { componentProps: tableProps } = useTable(activities, {
@@ -98,9 +100,9 @@ const ActivityChooser: React.FunctionComponent = () => {
       () => `Are you sure you want to delete the selected activities`,
       [],
     ),
-    getDetails: React.useCallback(() => selectedItem && selectedItem.id, [
-      selectedItem,
-    ]),
+    // getDetails: React.useCallback(() => selectedItem && selectedItem.id, [
+    //   selectedItem,
+    // ]),
     onConfirm: React.useCallback(() => {
       deleteActivity(selectedItem.id);
     }, [selectedItem, deleteActivity]),
@@ -139,7 +141,6 @@ const ActivityChooser: React.FunctionComponent = () => {
           </div>
         </div>
       </div>
-      <div className="page__search" />
       <div className="page__body">
         <ActivityTable {...tableProps} />
       </div>

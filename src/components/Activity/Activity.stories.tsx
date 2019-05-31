@@ -32,4 +32,4 @@ const TestHarness = () => {
   );
 };
 
-addStory("Sections", "Activity", module, () => <TestHarness />);
+addStory("Sections/Activity", "Chooser", module, () => <TestHarness />);

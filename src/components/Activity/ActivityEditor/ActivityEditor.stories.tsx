@@ -4,7 +4,11 @@ import ActivityEditor from "./ActivityEditor";
 import fullTestData from "testing/data";
 
 const TestHarness: React.FunctionComponent = () => (
-  <ActivityEditor activityId={fullTestData.activity.activityList[0].id} />
+  <ActivityEditor
+    activity={fullTestData.activity.activityList[0]}
+    editorTitle={fullTestData.activity.config.editorTitle}
+    editorBody={fullTestData.activity.config.editorBody}
+  />
 );
 
 addStory("Sections/Activity", "Editor", module, () => <TestHarness />);

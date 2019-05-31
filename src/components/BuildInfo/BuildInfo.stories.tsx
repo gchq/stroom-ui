@@ -20,4 +20,4 @@ import BuildInfo from "./BuildInfo";
 
 import { addStory } from "testing/storybook/themedStoryGenerator";
 
-addStory("Sections", "BuildInfo", module, () => <BuildInfo />);
+addStory("Sections/BuildInfo", "BuildInfo", module, () => <BuildInfo />);

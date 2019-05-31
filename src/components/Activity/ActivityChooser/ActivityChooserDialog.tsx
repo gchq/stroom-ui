@@ -5,7 +5,6 @@ import useActivityConfig from "../api/useActivityConfig";
 import IconHeader from "components/IconHeader";
 import Button from "components/Button";
 import ButtonContainer from "components/Button/ButtonContainer";
-import zipWith from "ramda/es/zipWith";
 
 interface Props {
   isOpen: boolean;
@@ -23,6 +22,8 @@ const ActivityChooserDialog: React.FunctionComponent<Props> = ({
 
   return (
     <ThemedModal
+      width="800px"
+      height="600px"
       header={<IconHeader icon="tasks" text={managerTitle} />}
       content={<ActivityChooser />}
       actions={

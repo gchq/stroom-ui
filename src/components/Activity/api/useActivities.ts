@@ -37,11 +37,15 @@ const reducer = (
 };
 
 const useActivities = (): UseActivities => {
+  console.log("useActivities");
+
   const [activities, dispatch] = React.useReducer(reducer, []);
 
   const { getActivities, deleteActivity } = useApi();
 
   React.useEffect(() => {
+    console.log("1111 React.useEffect(() => {", activities, getActivities);
+
     getActivities().then(v =>
       dispatch({
         type: "received",
@@ -49,6 +53,8 @@ const useActivities = (): UseActivities => {
       }),
     );
   }, [dispatch, getActivities]);
+
+  console.log("222 React.useEffect(() => {", dispatch, getActivities);
 
   return {
     activities,

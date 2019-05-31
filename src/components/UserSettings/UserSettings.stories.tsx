@@ -20,4 +20,6 @@ import UserSettings from "./UserSettings";
 
 import { addStory } from "testing/storybook/themedStoryGenerator";
 
-addStory("Sections", "User Settings", module, () => <UserSettings />);
+addStory("Sections/User Settings", "User Settings", module, () => (
+  <UserSettings />
+));

@@ -20,4 +20,4 @@ import Welcome from "./Welcome";
 
 import { addStory } from "testing/storybook/themedStoryGenerator";
 
-addStory("Sections", "Welcome", module, () => <Welcome />);
+addStory("Sections/Welcome", "Welcome", module, () => <Welcome />);

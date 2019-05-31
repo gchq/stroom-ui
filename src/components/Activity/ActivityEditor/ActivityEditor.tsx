@@ -1,9 +1,7 @@
 import * as React from "react";
 
-import IconHeader from "components/IconHeader";
-import Button from "components/Button";
-import useRouter from "lib/useRouter";
-import useActivity from "../api/useActivity";
+// import useRouter from "lib/useRouter";
+
 // import {
 //   useTable as useActivityGroupTable,
 //   ActivityGroupNamesTable,
@@ -15,8 +13,8 @@ import useActivity from "../api/useActivity";
 // import ThemedConfirm, {
 //   useDialog as useConfirmDialog,
 // } from "components/ThemedConfirm";
-import Loader from "components/Loader";
-import useActivityConfig from "../api/useActivityConfig";
+
+// import useActivityConfig from "../api/useActivityConfig";
 import parse, { HTMLReactParserOptions, DomElement } from "html-react-parser";
 import parser from "style-to-object";
 // import domToReact from "html-react-parser/lib/dom-to-react";
@@ -25,7 +23,10 @@ import { Prop, Activity } from "../api/types";
 // import { acequire } from "brace";
 
 interface Props {
-  activityId?: string;
+  activity: Activity;
+  editorTitle: string;
+  editorBody: string;
+  onPropChange?: (prop: Prop) => any;
 }
 
 const getId = ({ attribs: { id } }: DomElement): string => {
@@ -152,12 +153,14 @@ const FocusStealingSelect: React.FunctionComponent<
   <select {...props} ref={useFocusSteal<HTMLSelectElement>(takesFocus)} />
 );
 
-const ActivityEditor: React.FunctionComponent<Props> = ({ activityId }) => {
-  const { history } = useRouter();
-  const activityConfig = useActivityConfig();
-  const { activity, onPropChange, onCreateOrUpdate, isDirty } = useActivity(
-    activityId,
-  );
+const ActivityEditor: React.FunctionComponent<Props> = ({
+  activity,
+  editorTitle,
+  editorBody,
+  onPropChange,
+}) => {
+  // const { history } = useRouter();
+  // const activityConfig = useActivityConfig();
 
   const doneFocus = React.useRef(false);
   doneFocus.current = false;
@@ -420,12 +423,8 @@ const ActivityEditor: React.FunctionComponent<Props> = ({ activityId }) => {
 
   let elements;
 
-  if (activityConfig) {
-    elements = parse(activityConfig.editorBody, options);
-  }
-
-  if (!activity) {
-    return <Loader message={`Loading Activity ${activityId}`} />;
+  if (editorBody) {
+    elements = parse(editorBody, options);
   }
 
   return (

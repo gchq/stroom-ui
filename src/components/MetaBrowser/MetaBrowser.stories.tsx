@@ -19,4 +19,6 @@ import * as React from "react";
 import MetaBrowser from "./MetaBrowser";
 import { addStory } from "testing/storybook/themedStoryGenerator";
 
-addStory("Sections", "Meta Browser", module, () => <MetaBrowser />);
+addStory("Sections/Meta Browser", "Meta Browser", module, () => (
+  <MetaBrowser />
+));

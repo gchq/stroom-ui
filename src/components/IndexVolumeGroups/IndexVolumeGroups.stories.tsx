@@ -49,4 +49,6 @@ const TestHarness: React.FunctionComponent = () => {
   );
 };
 
-addStory("Sections", "Index Volume Groups", module, () => <TestHarness />);
+addStory("Sections/Index Volume Groups", "Index Volume Groups", module, () => (
+  <TestHarness />
+));

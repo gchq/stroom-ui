@@ -21,6 +21,7 @@ import Button from "../Button";
 import IconHeader from "../IconHeader";
 import reactModalOptions from "../ThemedModal/reactModalOptions";
 import { useTheme } from "lib/useTheme/useTheme";
+import ButtonContainer from "components/Button/ButtonContainer";
 
 interface NewProps {
   getQuestion: () => string;
@@ -56,15 +57,25 @@ const ThemedConfirm: React.FunctionComponent<Props> = ({
         </header>
         {details && <div className="themed-modal__content">{details}</div>}
         <div className="themed-modal__footer__actions">
-          <Button icon="times" text="Cancel" onClick={onCloseDialog} />
-          <Button
-            onClick={() => {
-              onConfirm();
-              onCloseDialog();
-            }}
-            icon="check"
-            text="Confirm"
-          />
+          <ButtonContainer>
+            <Button
+              action="primary"
+              appearance="contained"
+              onClick={() => {
+                onConfirm();
+                onCloseDialog();
+              }}
+              icon="check"
+              text="Confirm"
+            />
+            <Button
+              action="secondary"
+              appearance="contained"
+              icon="times"
+              text="Cancel"
+              onClick={onCloseDialog}
+            />
+          </ButtonContainer>
         </div>
       </div>
     </ReactModal>

@@ -123,7 +123,7 @@ export const addStory = (
   component: RenderFunction,
   centerComponent?: React.ReactNode,
 ) => {
-  const stories = storiesOf(folder, module);
+  const stories = storiesOf(folder + "/" + story, module);
 
   stories.add(story, () => (
     <ThemedContainer component={component} centerComponent={centerComponent} />

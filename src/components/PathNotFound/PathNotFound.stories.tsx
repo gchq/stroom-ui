@@ -20,4 +20,6 @@ import PathNotFound from "./PathNotFound";
 
 import { addStory } from "testing/storybook/themedStoryGenerator";
 
-addStory("Sections", "Path not found", module, () => <PathNotFound />);
+addStory("Sections/Path not found", "Path not found", module, () => (
+  <PathNotFound />
+));

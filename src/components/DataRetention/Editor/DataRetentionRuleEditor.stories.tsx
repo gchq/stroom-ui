@@ -36,7 +36,7 @@ const rule1: DataRetentionRule = {
   },
 };
 
-addStory("Sections", "DataRetention/Rule", module, () => {
+addStory("Sections/DataRetention", "Rule", module, () => {
   const [rule, setRule] = React.useState<DataRetentionRule>(rule1);
   return (
     <div>

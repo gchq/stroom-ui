@@ -14,10 +14,7 @@ interface Props {
 }
 
 const TestHarness: React.FunctionComponent<Props> = ({ initialItems }) => {
-  const { items, addItem, removeItem } = useListReducer(
-    c => c,
-    initialItems,
-  );
+  const { items, addItem, removeItem } = useListReducer(c => c, initialItems);
 
   const [newName, setNewName] = React.useState<string>(generateItem());
 
