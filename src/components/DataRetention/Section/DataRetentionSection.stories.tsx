@@ -23,6 +23,7 @@ import DataRetentionSection from "./DataRetentionSection";
 import { DataRetentionPolicy } from "../types/DataRetentionPolicy";
 import { useState } from "react";
 import JsonDebug from "testing/JsonDebug";
+import { action } from "@storybook/addon-actions";
 
 const stories = storiesOf("Sections/DataRetention/Main view", module);
 const policy1: DataRetentionPolicy = {
@@ -81,7 +82,11 @@ addThemedStories(stories, () => {
   const [policy] = useState(policy1);
   return (
     <div>
-      <DataRetentionSection policy={policy} />
+      <DataRetentionSection
+        policy={policy}
+        onCreate={action("onCreate")}
+        onUpdate={action("onUpdate")}
+      />
       <JsonDebug value={{ policy }} />
     </div>
   );

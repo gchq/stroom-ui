@@ -20,10 +20,16 @@ import Loader from "components/Loader";
 import useDataRetention from "../useDataRetention";
 
 const DataRetentionSectionContainer = () => {
-  const { policy } = useDataRetention();
+  const { policy, create } = useDataRetention();
 
   if (!!policy) {
-    return <DataRetentionSection policy={policy} />;
+    return (
+      <DataRetentionSection
+        policy={policy}
+        onCreate={() => console.log("TODO")}
+        onUpdate={() => console.log("TODO")}
+      />
+    );
   } else {
     return <Loader message="Loading data retention policy" />;
   }

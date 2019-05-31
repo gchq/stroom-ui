@@ -17,54 +17,40 @@
 import Button from "components/Button";
 import IconHeader from "components/IconHeader";
 import * as React from "react";
-import { useCallback } from "react";
 import DataRetentionRuleList from "../List/DataRetentionRuleList";
 import { DataRetentionPolicy } from "../types/DataRetentionPolicy";
+import { DataRetentionRule } from "../types/DataRetentionRule";
 
 interface Props {
   policy: DataRetentionPolicy;
+  onCreate: () => void;
+  onUpdate: (dataRetentionPolicy: DataRetentionPolicy) => void;
 }
 
-const DataRetentionSection: React.FunctionComponent<Props> = ({ policy }) => {
-  const handleCreate = useCallback(() => console.log("todo"), []);
-  const handleDelete = useCallback(() => console.log("todo"), []);
-  const handleEdit = useCallback(() => console.log("todo"), []);
-  const handleCopy = useCallback(() => console.log("todo"), []);
-  const isItemSelected = false;
+const DataRetentionSection: React.FunctionComponent<Props> = ({
+  policy,
+  onCreate,
+  onUpdate,
+}) => {
+  const handleUpdate = React.useCallback(
+    (rules: DataRetentionRule[]) => {
+      policy.rules = rules;
+      onUpdate(policy);
+    },
+    [onUpdate, policy],
+  );
+
   return (
     <div className="page">
       <div className="page__header">
         <IconHeader text="Data Retention Policy" icon="trash-alt" />
         <div className="page__buttons Button__container">
-          <Button onClick={handleCreate} icon="plus" text="Create" />
-          <Button
-            disabled={isItemSelected}
-            onClick={handleEdit}
-            icon="edit"
-            text="Edit"
-          />
-          <Button
-            disabled={isItemSelected}
-            onClick={handleCopy}
-            icon="copy"
-            text="Copy"
-          />
-          <Button
-            disabled={isItemSelected}
-            onClick={handleDelete}
-            icon="trash"
-            text="Delete"
-          />
+          <Button onClick={onCreate} icon="plus" text="Create" />
         </div>
       </div>
       <div className="page__search" />
       <div className="DataRetentionSection__content">
-        <DataRetentionRuleList
-          value={policy.rules}
-          onChange={() => {
-            console.log("TODO");
-          }}
-        />
+        <DataRetentionRuleList value={policy.rules} onChange={handleUpdate} />
       </div>
     </div>
   );
