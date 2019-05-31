@@ -52,9 +52,11 @@ const enhance = DropTarget<Props, DropCollectedProps>(
 const DataRetentionRuleListDropTarget: React.FunctionComponent<
   EnhancedProps
 > = ({ connectDropTarget, draggingItemType, isOver, canDrop }) => {
+  const showTarget =
+    draggingItemType === DragDropTypes.RULE && isOver && canDrop;
   return connectDropTarget(
     <div className="DataRetentionRuleListDropTarget">
-      {draggingItemType === DragDropTypes.RULE && isOver && canDrop ? (
+      {showTarget ? (
         <div className="DataRetentionRuleListDropTarget--highlighted" />
       ) : (
         undefined
