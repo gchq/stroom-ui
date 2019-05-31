@@ -15,19 +15,21 @@ export interface DropCollectedProps {
 }
 
 interface Props {
-  foobar: string;
+  position: number;
+  moveRule: (ruleNumber: number, newPosition: number) => void;
 }
 
 interface EnhancedProps extends Props, DropCollectedProps {}
 
 const dropTarget: DropTargetSpec<Props> = {
-  canDrop(wat) {
-    console.log({ wat });
-    return true;
+  canDrop({ position }, monitor) {
+    const { ruleNumber } = monitor.getItem();
+    const cannotDrop = position == ruleNumber || position == ruleNumber - 1;
+    return !cannotDrop;
   },
-  drop(dropEvent, monitor) {
-    console.log({ dropEvent });
-    console.log({ monitor });
+  drop({ position, moveRule }, monitor) {
+    const { ruleNumber } = monitor.getItem();
+    moveRule(ruleNumber, position);
   },
 };
 
@@ -49,10 +51,10 @@ const enhance = DropTarget<Props, DropCollectedProps>(
 
 const DataRetentionRuleListDropTarget: React.FunctionComponent<
   EnhancedProps
-> = ({ connectDropTarget, draggingItemType, isOver }) => {
+> = ({ connectDropTarget, draggingItemType, isOver, canDrop }) => {
   return connectDropTarget(
     <div className="DataRetentionRuleListDropTarget">
-      {draggingItemType === DragDropTypes.RULE && isOver ? (
+      {draggingItemType === DragDropTypes.RULE && isOver && canDrop ? (
         <div className="DataRetentionRuleListDropTarget--highlighted" />
       ) : (
         undefined

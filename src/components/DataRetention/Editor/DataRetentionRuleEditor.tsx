@@ -46,7 +46,7 @@ interface DragCollectedProps {
 
 const dragSource: DragSourceSpec<Props, DataRetentionRule> = {
   beginDrag(props) {
-    return { ...props.rule };
+    return { ...props.value };
   },
 };
 

@@ -24,6 +24,8 @@ import { useCallback } from "react";
 
 const stories = storiesOf("Sections/DataRetention/List", module);
 
+// These are out of order in this list because they should be
+// correctly ordered by ruleNumber the component
 const rules1: DataRetentionRule[] = [
   {
     ruleNumber: 1,
@@ -31,6 +33,20 @@ const rules1: DataRetentionRule[] = [
     enabled: true,
     age: 1,
     timeUnit: "Years",
+    forever: false,
+    expression: {
+      op: "AND",
+      children: [],
+      enabled: true,
+      type: "operator",
+    },
+  },
+  {
+    ruleNumber: 3,
+    name: "Third rule",
+    enabled: true,
+    age: 1,
+    timeUnit: "Weeks",
     forever: false,
     expression: {
       op: "AND",
@@ -54,8 +70,22 @@ const rules1: DataRetentionRule[] = [
     },
   },
   {
-    ruleNumber: 3,
-    name: "Third rule",
+    ruleNumber: 4,
+    name: "Forth rule",
+    enabled: true,
+    age: 1,
+    timeUnit: "Weeks",
+    forever: false,
+    expression: {
+      op: "AND",
+      children: [],
+      enabled: true,
+      type: "operator",
+    },
+  },
+  {
+    ruleNumber: 5,
+    name: "Fifth rule",
     enabled: true,
     age: 1,
     timeUnit: "Weeks",
