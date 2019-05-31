@@ -48,6 +48,7 @@ const TestHarness: React.FunctionComponent<Props> = ({ initialRule }) => {
   return (
     <div>
       <DataRetentionRuleEditor
+        index={1}
         value={rule}
         onChange={(rule: DataRetentionRule) => setRule(rule)}
         onDelete={action("onDelete")}

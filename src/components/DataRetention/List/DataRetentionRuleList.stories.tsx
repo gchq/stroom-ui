@@ -28,7 +28,7 @@ const stories = storiesOf("Sections/DataRetention/List", module);
 // correctly ordered by ruleNumber the component
 const rules1: DataRetentionRule[] = [
   {
-    ruleNumber: 1,
+    ruleNumber: 0,
     name: "First rule",
     enabled: true,
     age: 1,
@@ -42,7 +42,7 @@ const rules1: DataRetentionRule[] = [
     },
   },
   {
-    ruleNumber: 3,
+    ruleNumber: 2,
     name: "Third rule",
     enabled: true,
     age: 1,
@@ -56,7 +56,7 @@ const rules1: DataRetentionRule[] = [
     },
   },
   {
-    ruleNumber: 2,
+    ruleNumber: 1,
     name: "Second rule",
     enabled: true,
     age: 2,
@@ -70,7 +70,7 @@ const rules1: DataRetentionRule[] = [
     },
   },
   {
-    ruleNumber: 4,
+    ruleNumber: 3,
     name: "Forth rule",
     enabled: true,
     age: 1,
@@ -84,7 +84,7 @@ const rules1: DataRetentionRule[] = [
     },
   },
   {
-    ruleNumber: 5,
+    ruleNumber: 4,
     name: "Fifth rule",
     enabled: true,
     age: 1,

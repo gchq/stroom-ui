@@ -78,11 +78,11 @@ const policy1: DataRetentionPolicy = {
   version: "1",
 };
 addThemedStories(stories, () => {
-  const [policy, setPolicy] = useState(policy1);
+  const [policy] = useState(policy1);
   return (
     <div>
       <DataRetentionSection policy={policy} />
       <JsonDebug value={{ policy }} />
     </div>
-  );;
+  );
 });

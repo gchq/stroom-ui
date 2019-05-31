@@ -17,10 +17,10 @@
 import { ControlledInput } from "lib/useForm/types";
 import useListReducer from "lib/useListReducer";
 import * as React from "react";
-import { useEffect, useMemo, useCallback } from "react";
+import { useCallback, useEffect, useMemo } from "react";
+import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
 import DataRetentionRuleEditor from "../Editor/DataRetentionRuleEditor";
 import { DataRetentionRule } from "../types/DataRetentionRule";
-import DataRetentionRuleListDropTarget from "./DataRetentionRuleListDropTarget";
 
 const getKey = (k: DataRetentionRule) => k.ruleNumber.toString();
 
@@ -38,10 +38,9 @@ const DataRetentionRuleList: React.FunctionComponent<
     [values],
   );
 
-  console.log({ sortedRules });
   const {
     items,
-    addItem,
+    // addItem, //TODO: allow a user to add rules
     updateItemAtIndex,
     removeItemAtIndex,
   } = useListReducer<DataRetentionRule>(getKey, sortedRules);
@@ -60,58 +59,54 @@ const DataRetentionRuleList: React.FunctionComponent<
     [sortedRules, updateItemAtIndex, removeItemAtIndex],
   );
 
-  const handleRuleMove = useCallback(
-    (ruleNumber: number, newPosition: number) => {
-      // We stop caring about maintaining the items array using the reducer.
-      // We'll move the rule to its new position in the items array
-      // then re-calcualte all the ruleNumbers, then call onChange to refresh
-      // everything.
-      const movingRuleIndex = items.findIndex(
-        item => item.ruleNumber === ruleNumber,
-      );
+  const handleOnDragEnd = useCallback(
+    (result: DropResult) => {
+      if (!!result.destination) {
+        const {
+          source: { index: sourceIndex },
+          destination: { index: destinationIndex },
+        } = result;
 
-      let newRuleIndex = newPosition;
-      if (newRuleIndex > movingRuleIndex) {
-        newRuleIndex = newRuleIndex - 1;
+        items.splice(destinationIndex, 0, items.splice(sourceIndex, 1)[0]);
+        const itemsWithUpdatedRuleNumbers = items.map((item, index) => {
+          item.ruleNumber = index + 1;
+          return item;
+        });
+        onChange(itemsWithUpdatedRuleNumbers);
       }
-
-      // Move rule to its new position in the array
-      items.splice(newRuleIndex, 0, items.splice(movingRuleIndex, 1)[0]);
-
-      // Update the ruleNumbers according to their position in the array
-      const itemsWithUpdatedRuleNumbers = items.map((item, index) => {
-        item.ruleNumber = index + 1;
-        return item;
-      });
-
-      onChange(itemsWithUpdatedRuleNumbers);
     },
     [updateItemAtIndex, onChange],
   );
-
   return (
-    <div className="DataRetentionRuleList__content">
-      <DataRetentionRuleListDropTarget position={0} moveRule={handleRuleMove} />
-      {valuesAndChangeHandlers
-        .sort((l, r) => (l.value.ruleNumber >= r.value.ruleNumber ? 1 : -1))
-        .map(({ value: rule, onChange: onRuleChange, onRemove }, index) => {
-          return (
-            <React.Fragment key={index}>
-              <div key={index} className="DataRetentionRuleList__rule">
-                <DataRetentionRuleEditor
-                  value={rule}
-                  onChange={onRuleChange}
-                  onDelete={onRemove}
-                />
-              </div>
-              <DataRetentionRuleListDropTarget
-                position={index + 1}
-                moveRule={handleRuleMove}
-              />
-            </React.Fragment>
-          );
-        })}
-    </div>
+    <DragDropContext onDragEnd={handleOnDragEnd}>
+      <Droppable droppableId="dataRetentionRuleListDroppable">
+        {provided => (
+          <div ref={provided.innerRef} {...provided.droppableProps}>
+            {valuesAndChangeHandlers
+              .sort((l, r) =>
+                l.value.ruleNumber >= r.value.ruleNumber ? 1 : -1,
+              )
+              .map(
+                ({ value: rule, onChange: onRuleChange, onRemove }, index) => {
+                  return (
+                    <React.Fragment key={index}>
+                      <div key={index} className="DataRetentionRuleList__rule">
+                        <DataRetentionRuleEditor
+                          value={rule}
+                          onChange={onRuleChange}
+                          onDelete={onRemove}
+                          index={index}
+                        />
+                      </div>
+                    </React.Fragment>
+                  );
+                },
+              )}
+            {provided.placeholder}
+          </div>
+        )}
+      </Droppable>
+    </DragDropContext>
   );
 };
 
