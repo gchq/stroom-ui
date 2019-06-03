@@ -123,7 +123,7 @@ const DataRetentionRuleEditor: React.FunctionComponent<Props> = ({
                       <span>keep forever</span>
                     </label>
                   </div>
-                  <div>
+                  <div className="DataRetentionRuleEditor__retention__delete-after">
                     <label>
                       <input
                         type="radio"
@@ -134,18 +134,15 @@ const DataRetentionRuleEditor: React.FunctionComponent<Props> = ({
                       />
                       <span>delete after </span>
                     </label>
-                    <span>
-                      <InlineInput
-                        type="number"
-                        value={rule.age}
-                        onChange={handleAgeChange}
-                      />
-                      <span> </span>
-                      <TimeUnitSelect
-                        selected={rule.timeUnit}
-                        onChange={handleTimeUnitChange}
-                      />
-                    </span>
+                    <InlineInput
+                      type="number"
+                      value={rule.age}
+                      onChange={handleAgeChange}
+                    />
+                    <TimeUnitSelect
+                      selected={rule.timeUnit}
+                      onChange={handleTimeUnitChange}
+                    />
                   </div>
                 </div>
               </div>

@@ -12,13 +12,13 @@ input[type="radio"] {
   justify-content: space-between;
 }
 
-.DataRetentionRuleEditor__header>div>svg {
+.DataRetentionRuleEditor__header > div > svg {
   margin-right: 0.5em;
   margin-bottom: 0.15em;
   color: gray;
 }
 
-.DataRetentionRuleEditor__header:hover>div>svg {
+.DataRetentionRuleEditor__header:hover > div > svg {
   color: #2185d0;
 }
 
@@ -48,7 +48,7 @@ input[type="radio"] {
   flex-direction: row;
 }
 
-.DataRetentionRuleEditor__content>div {
+.DataRetentionRuleEditor__content > div {
   flex-grow: 1;
 }
 
@@ -60,8 +60,17 @@ input[type="radio"] {
   padding: 0em 0em 0em 1em;
 }
 
+.DataRetentionRuleEditor__retention .inline-input__editing {
+  width: 3em;
+}
+
 .DataRetentionRuleEditor__retention label span {
   padding-left: 0.5em;
+}
+
+.DataRetentionRuleEditor__retention__delete-after {
+  display: grid;
+  grid-template-columns: 7.5em 3em 6em;
 }
 
 .DataRetentionRuleList__content {
