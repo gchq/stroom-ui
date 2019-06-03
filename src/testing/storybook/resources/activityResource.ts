@@ -43,7 +43,7 @@ const resourceBuilder: ResourceBuilder = (
   const currentActivityUrl = `${resource}/current`;
 
   const getActivity = (id: string) => {
-    return testCache.data!.activity.activityList.find(a => `${a.id}` === id);
+    return testCache.data!.activity.activityList.find(a => `${a.id}` === id) || "";
   };
 
   // Get the configuration for activities.
@@ -70,7 +70,10 @@ const resourceBuilder: ResourceBuilder = (
   server
     .post(currentActivityUrl)
     .intercept((req: HttpRequest, res: HttpResponse) => {
-      const activityId = JSON.parse(req.body);
+      let activityId = null;
+      if (req) {
+        activityId = JSON.parse(req.body);
+      }
       testCache.data!.activity.currentActivityId = activityId;
       console.log("Setting current activity", activityId);
       res.json(getActivity(testCache.data!.activity.currentActivityId));

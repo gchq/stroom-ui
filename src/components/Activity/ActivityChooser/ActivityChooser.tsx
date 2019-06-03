@@ -68,9 +68,11 @@ const ActivityChooser: React.FunctionComponent = () => {
   const onSetClick: React.MouseEventHandler<
     HTMLButtonElement
   > = React.useCallback(() => {
+    let id = null;
     if (selectedItem && selectedItem.id) {
-      setCurrentActivity(selectedItem.id);
+      id = selectedItem.id;
     }
+    setCurrentActivity(id);
   }, [setCurrentActivity, selectedItem]);
 
   const onCreateClick: React.MouseEventHandler<
@@ -123,7 +125,7 @@ const ActivityChooser: React.FunctionComponent = () => {
       <div className="page__header">
         <div className="page__buttons Button__container">
           <Button
-            disabled={!selectedItem}
+            // disabled={!selectedItem}
             onClick={onSetClick}
             icon="check"
             text="Set"

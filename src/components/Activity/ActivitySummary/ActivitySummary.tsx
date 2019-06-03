@@ -28,24 +28,25 @@ interface Props {
 const ActivitySummary: React.FunctionComponent = () => {
   const { currentActivity } = useCurrentActivity();
   const { componentProps, showDialog } = useDialog();
-  // console.log("Receiving current activity", currentActivity);
 
+  const details =
+    currentActivity &&
+    currentActivity.properties &&
+    currentActivity.properties
+      .filter(({ showInSelection }) => showInSelection)
+      .map(({ name, value }, i: number) => {
+        return (
+          <div className="ActivitySummary__row" key={i}>
+            <b>{name}: </b>
+            {value}
+          </div>
+        );
+      });
   return (
     <React.Fragment>
       <button className="ActivitySummary control border" onClick={showDialog}>
         <div className="ActivitySummary__header">Current Activity</div>
-        {currentActivity &&
-          currentActivity.properties &&
-          currentActivity.properties
-            .filter(({ showInSelection }) => showInSelection)
-            .map(({ name, value }, i: number) => {
-              return (
-                <div className="ActivitySummary__row" key={i}>
-                  <b>{name}: </b>
-                  {value}
-                </div>
-              );
-            })}
+        {details ? details : <b>None</b>}
       </button>
       <ActivityChooserDialog {...componentProps} />
     </React.Fragment>
