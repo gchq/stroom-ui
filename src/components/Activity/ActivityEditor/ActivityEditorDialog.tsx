@@ -11,23 +11,23 @@ import cogoToast from "cogo-toast";
 
 interface Props {
   isOpen: boolean;
-  setIsOpen: (i: boolean) => void;
+  onCloseRequest: (ok: boolean) => void;
   activityId?: string;
 }
 
 const ActivityEditorDialog: React.FunctionComponent<Props> = ({
   isOpen,
-  setIsOpen,
+  onCloseRequest,
   activityId,
 }) => {
   const onClose = React.useCallback(() => {
-    setIsOpen(false);
-  }, [setIsOpen]);
+    onCloseRequest(false);
+  }, [onCloseRequest]);
 
   const onAfterUpdate = React.useCallback(
     (message: string) => {
       cogoToast.info(message);
-      onClose();
+      onCloseRequest(true);
     },
     [onClose],
   );
@@ -48,7 +48,6 @@ const ActivityEditorDialog: React.FunctionComponent<Props> = ({
       content={
         <ActivityEditor
           activity={activity}
-          editorTitle={editorTitle}
           editorBody={editorBody}
           onPropChange={onPropChange}
         />
@@ -78,16 +77,22 @@ const ActivityEditorDialog: React.FunctionComponent<Props> = ({
   );
 };
 
+interface DialogStateProps {
+  isOpen: boolean;
+  activityId?: string;
+}
+
 interface UseDialog {
-  componentProps: Props;
-  showDialog: (activityId?: string) => void;
+  componentProps: DialogStateProps;
+  show: (activityId?: string) => void;
+  hide: () => void;
 }
 
 export const useDialog = (): UseDialog => {
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
   const [activityId, setActivityId] = React.useState<string>(undefined);
 
-  const showDialog = React.useCallback(
+  const show = React.useCallback(
     activityId => {
       setActivityId(activityId);
       setIsOpen(true);
@@ -95,13 +100,15 @@ export const useDialog = (): UseDialog => {
     [setIsOpen, setActivityId],
   );
 
+  const hide = React.useCallback(() => setIsOpen(false), [setIsOpen]);
+
   return {
     componentProps: {
       isOpen,
-      setIsOpen,
       activityId,
     },
-    showDialog,
+    show,
+    hide,
   };
 };
 

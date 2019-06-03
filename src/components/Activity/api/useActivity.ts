@@ -1,7 +1,6 @@
 import * as React from "react";
 import { Activity, Prop } from "./types";
 import useApi from "./useApi";
-import cogoToast from "cogo-toast";
 
 interface UseActivity {
   activity: Activity | undefined;
@@ -36,8 +35,6 @@ const reducer = (
         isDirty: false,
       };
     case "prop":
-      console.log("setting prop on ", state.activity);
-
       return {
         activity: {
           ...state.activity,
@@ -95,7 +92,7 @@ const useActivity = (
     } else {
       createActivity(activity).then(activity => {
         dispatch({ type: "set", activity });
-        cogoToast.info(`Activity Created`);
+        onAfterUpdate(`Activity Created`);
       });
     }
   }, [createActivity, updateActivity, dispatch, activity]);

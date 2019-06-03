@@ -42,6 +42,10 @@ const resourceBuilder: ResourceBuilder = (
   const activityConfigUrl = `${resource}/config`;
   const currentActivityUrl = `${resource}/current`;
 
+  const getActivity = (id: string) => {
+    return testCache.data!.activity.activityList.find(a => `${a.id}` === id);
+  };
+
   // Get the configuration for activities.
   // getConfig
   server
@@ -57,18 +61,19 @@ const resourceBuilder: ResourceBuilder = (
     .intercept((req: HttpRequest, res: HttpResponse) => {
       console.log(
         "Getting current activity",
-        testCache.data!.activity.currentActivity,
+        testCache.data!.activity.currentActivityId,
       );
-      res.json(testCache.data!.activity.currentActivity);
+
+      res.json(getActivity(testCache.data!.activity.currentActivityId));
     });
   // setCurrentActivity
   server
     .post(currentActivityUrl)
     .intercept((req: HttpRequest, res: HttpResponse) => {
-      const activity = JSON.parse(req.body);
-      testCache.data!.activity.currentActivity = activity;
-      console.log("Setting current activity", activity);
-      res.json(testCache.data!.activity.currentActivity);
+      const activityId = JSON.parse(req.body);
+      testCache.data!.activity.currentActivityId = activityId;
+      console.log("Setting current activity", activityId);
+      res.json(getActivity(testCache.data!.activity.currentActivityId));
     });
 
   // Manage activities.
@@ -85,7 +90,7 @@ const resourceBuilder: ResourceBuilder = (
   server.post(resource).intercept((req: HttpRequest, res: HttpResponse) => {
     const activity = JSON.parse(req.body);
 
-    let maxId = 0;
+    let maxId;
     const ids: number[] = testCache.data!.activity.activityList.map(({ id }) =>
       parseInt(id),
     );
@@ -106,9 +111,7 @@ const resourceBuilder: ResourceBuilder = (
     .get(`${resource}/:activityId`)
     .intercept((req: HttpRequest, res: HttpResponse) => {
       const activityId: string = req.params.activityId;
-      const activity = testCache.data!.activity.activityList.find(
-        a => `${a.id}` === activityId,
-      );
+      const activity = getActivity(activityId);
       if (!!activity) {
         res.json(activity);
       } else {

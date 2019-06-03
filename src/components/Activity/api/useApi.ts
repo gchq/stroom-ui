@@ -10,7 +10,7 @@ interface UseApi {
 
   // Get the current activity for the summary.
   getCurrentActivity: () => Promise<Activity>;
-  setCurrentActivity: (activity: Activity) => Promise<Activity>;
+  setCurrentActivity: (activityId: string) => Promise<Activity>;
 
   // Manage activities.
   getActivities: () => Promise<Activity[]>;
@@ -44,9 +44,9 @@ const useApi = (): UseApi => {
       httpGetJson,
     ]),
     setCurrentActivity: useCallback(
-      (activity: Activity) =>
+      (activityId: string) =>
         httpPostJsonResponse(currentActivityUrl, {
-          body: JSON.stringify(activity),
+          body: JSON.stringify(activityId),
         }),
       [currentActivityUrl, httpPostJsonResponse],
     ),

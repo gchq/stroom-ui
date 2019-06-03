@@ -369,7 +369,7 @@ export const fullTestData: TestData = {
   activity: {
     config: ACTIVITY_CONFIG,
     activityList: ACTIVITIES,
-    currentActivity: ACTIVITY1,
+    currentActivityId: "1",
   },
   documentTree: docTree,
   docRefTypes: testDocRefsTypes,

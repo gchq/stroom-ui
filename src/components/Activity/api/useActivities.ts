@@ -9,7 +9,8 @@ import { Activity } from "./types";
  */
 interface UseActivities {
   activities: Activity[];
-  deleteActivity: (id: string) => void;
+  deleteActivity: (id: string, onComplete: () => void) => void;
+  refresh: () => void;
 }
 
 interface ReceiveAction {
@@ -37,65 +38,43 @@ const reducer = (
 };
 
 const useActivities = (): UseActivities => {
-  console.log("useActivities");
-
   const [activities, dispatch] = React.useReducer(reducer, []);
 
   const { getActivities, deleteActivity } = useApi();
 
-  React.useEffect(() => {
-    console.log("1111 React.useEffect(() => {", activities, getActivities);
-
-    getActivities().then(v =>
-      dispatch({
-        type: "received",
-        activities: v,
+  const doDelete = React.useCallback(
+    (id: string, onComplete) =>
+      deleteActivity(id).then(() => {
+        dispatch({
+          type: "deleted",
+          id,
+        });
+        onComplete();
       }),
-    );
-  }, [dispatch, getActivities]);
+    [deleteActivity],
+  );
 
-  console.log("222 React.useEffect(() => {", dispatch, getActivities);
+  const doRefresh = React.useCallback(
+    () => {
+      getActivities().then(v => {
+        dispatch({
+          type: "received",
+          activities: v,
+        });
+      });
+    },
+    [dispatch, getActivities],
+  );
+
+  React.useEffect(() => {
+    doRefresh();
+  }, [doRefresh]);
 
   return {
     activities,
-    deleteActivity: React.useCallback(
-      (id: string) =>
-        deleteActivity(id).then(() =>
-          dispatch({
-            type: "deleted",
-            id,
-          }),
-        ),
-      [deleteActivity],
-    ),
+    deleteActivity: doDelete,
+    refresh: doRefresh,
   };
 };
 
 export default useActivities;
-
-// indexVolumes,
-// createIndexVolume: React.useCallback(
-//   (newIndexVolume: NewIndexVolume) =>
-//     createIndexVolume(newIndexVolume).then(indexVolume =>
-//       dispatch({
-//         type: "created",
-//         indexVolume,
-//       }),
-//     ),
-//   [createIndexVolume],
-// ),
-// deleteIndexVolume: React.useCallback(
-//   (id: string) =>
-//     deleteIndexVolume(id).then(() =>
-//       dispatch({
-//         type: "deleted",
-//         id,
-//       }),
-//     ),
-//   [deleteIndexVolume],
-// ),
-// addVolumeToGroup: React.useCallback(
-//   (volumeId: string, groupName: string) =>
-//     addVolumeToGroup(volumeId, groupName),
-//   [addVolumeToGroup],
-// ),

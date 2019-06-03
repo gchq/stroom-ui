@@ -34,7 +34,7 @@ export interface TestData {
   activity: {
     config: ActivityConfig;
     activityList: Activity[];
-    currentActivity: Activity;
+    currentActivityId: string;
   };
   docRefTypes: string[];
   documentTree: DocRefTree;

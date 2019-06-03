@@ -34,13 +34,11 @@ const ActivityChooser: React.FunctionComponent = () => {
   // const {
   //   nav: { goToCreateActivity, goToEditActivity },
   // } = useAppNavigation();
-  const { componentProps, showDialog } = useEditorDialog();
+  const { componentProps, show, hide } = useEditorDialog();
 
-  const { activities, deleteActivity } = useActivities();
+  const { activities, deleteActivity, refresh } = useActivities();
 
-  console.log("rendering activity list", activities);
-
-  const { setCurrentActivity } = useCurrentActivity();
+  const { setCurrentActivity, refreshCurrentActivity } = useCurrentActivity();
 
   const { componentProps: tableProps } = useTable(activities, {
     filterable,
@@ -70,27 +68,28 @@ const ActivityChooser: React.FunctionComponent = () => {
   const onSetClick: React.MouseEventHandler<
     HTMLButtonElement
   > = React.useCallback(() => {
-    // console.log("Setting current activity to: ", selectedItem);
-    setCurrentActivity(selectedItem);
+    if (selectedItem && selectedItem.id) {
+      setCurrentActivity(selectedItem.id);
+    }
   }, [setCurrentActivity, selectedItem]);
 
   const onCreateClick: React.MouseEventHandler<
     HTMLButtonElement
   > = React.useCallback(() => {
-    showDialog();
+    show();
 
     // goToCreateActivity();
-  }, [showDialog]);
+  }, [show]);
 
   const onEditClick: React.MouseEventHandler<
     HTMLButtonElement
   > = React.useCallback(() => {
     if (selectedItem) {
-      showDialog(selectedItem.id);
+      show(selectedItem.id);
 
       // goToEditActivity(selectedItem.id);
     }
-  }, [showDialog, selectedItem]);
+  }, [show, selectedItem]);
 
   const {
     showDialog: onDeleteClick,
@@ -104,9 +103,20 @@ const ActivityChooser: React.FunctionComponent = () => {
     //   selectedItem,
     // ]),
     onConfirm: React.useCallback(() => {
-      deleteActivity(selectedItem.id);
+      deleteActivity(selectedItem.id, () => refreshCurrentActivity());
     }, [selectedItem, deleteActivity]),
   });
+
+  const onCloseRequest = React.useCallback(
+    (ok: boolean) => {
+      if (ok) {
+        refresh();
+        refreshCurrentActivity();
+      }
+      hide();
+    },
+    [refresh, hide],
+  );
 
   return (
     <div className="page">
@@ -146,7 +156,10 @@ const ActivityChooser: React.FunctionComponent = () => {
       </div>
 
       <ThemedConfirm {...deleteDialogProps} />
-      <ActivityEditorDialog {...componentProps} />
+      <ActivityEditorDialog
+        onCloseRequest={onCloseRequest}
+        {...componentProps}
+      />
     </div>
   );
 };

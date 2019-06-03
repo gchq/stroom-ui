@@ -6,7 +6,6 @@ import fullTestData from "testing/data";
 const TestHarness: React.FunctionComponent = () => (
   <ActivityEditor
     activity={fullTestData.activity.activityList[0]}
-    editorTitle={fullTestData.activity.config.editorTitle}
     editorBody={fullTestData.activity.config.editorBody}
   />
 );

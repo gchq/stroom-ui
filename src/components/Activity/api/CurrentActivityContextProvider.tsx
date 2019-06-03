@@ -32,22 +32,26 @@ const CurrentActivityContextProvider: React.FunctionComponent = ({
     ],
   });
 
-  // Use an effect to set the build info state when the component is mounted
-  React.useEffect(() => {
+  const refreshCurrentActivity = React.useCallback(() => {
     getCurrentActivity().then(setCurrentActivityState);
   }, [setCurrentActivityState, getCurrentActivity]);
 
   const _setCurrentActivity = React.useCallback(
-    (activity: Activity) => {
-      // console.log("Setting current activity context", activity);
-      setCurrentActivity(activity).then(setCurrentActivityState);
+    (activityId: string) => {
+      setCurrentActivity(activityId).then(setCurrentActivityState);
     },
     [setCurrentActivity, setCurrentActivityState],
   );
 
+  // Use an effect to set the current activity state when the component is mounted
+  React.useEffect(() => {
+    refreshCurrentActivity();
+  }, [refreshCurrentActivity]);
+
   const contextValue: CurrentActivityContextValue = {
     currentActivity,
     setCurrentActivity: _setCurrentActivity,
+    refreshCurrentActivity,
   };
 
   return (
