@@ -20,6 +20,7 @@ import * as Modal from "react-modal";
 import Draggable from "react-draggable";
 import { ResizableBox } from "react-resizable";
 import ResizeBottomRight from "../ResizeHandle/ResizeBottomRight";
+import * as ReactModal from "react-modal";
 
 interface ContentProps {
   width: number;

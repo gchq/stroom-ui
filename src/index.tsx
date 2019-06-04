@@ -7,7 +7,7 @@ import HTML5Backend from "react-dnd-html5-backend";
 import { Routes } from "components/AppChrome";
 import setupFontAwesome from "./lib/setupFontAwesome";
 
-import { ThemeContextProvider } from "./lib/useTheme/useTheme";
+import { ThemeContextProvider } from "./lib/useTheme";
 import { CustomRouter } from "./lib/useRouter";
 
 import { createBrowserHistory as createHistory } from "history";
