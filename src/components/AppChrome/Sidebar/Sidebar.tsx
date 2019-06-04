@@ -234,9 +234,8 @@ const Sidebar: React.FunctionComponent<Props> = ({ activeMenuItem }) => {
             highlightedItem,
           )}
         </div>
-
-        {activityElements}
       </div>
+      {activityElements}
     </div>
   );
 };
