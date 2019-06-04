@@ -28,7 +28,7 @@ const Tooltip: React.FunctionComponent<Props> = ({ trigger, content }) => {
 
   return (
     <React.Fragment>
-      <button data-tip data-for={uuid}>
+      <button className="ToolTip__button" data-tip data-for={uuid}>
         {trigger}
       </button>
       <ReactTooltip
