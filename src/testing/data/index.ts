@@ -228,6 +228,13 @@ const ACTIVITY2: Activity = {
 
 const ACTIVITIES: Activity[] = [ACTIVITY1, ACTIVITY2];
 
+const SPLASH_CONFIG = {
+  enabled: true,
+  title: "Splash Screen",
+  body: "<h1>About Stroom</h1><p>Stroom is designed to receive data from multiple systems.</p>",
+  version: "v0.1",
+};
+
 // let users: User[] = Array(5)
 // .fill(null)
 // .map(generateUsers);
@@ -406,6 +413,7 @@ export const fullTestData: TestData = {
   allAppPermissions,
   userAppPermissions,
   docPermissionByType,
+  splash: SPLASH_CONFIG,
   userDocPermission,
   users: [disabledUser, inactiveUser, lockedUser, newUser, wellUsedUser],
 };

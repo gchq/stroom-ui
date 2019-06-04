@@ -26,24 +26,6 @@ interface ContentProps {
   height?: string;
 }
 
-// const styleOverrides = {
-//   overlay: {
-//     display: "flex",
-//     justifyContent: "center",
-//     alignItems: "center",
-//   },
-//   content: {
-//     bottom: "unset",
-//     overflow: "visible",
-//     padding: 0,
-//     border: "none",
-//     borderRadius: 0,
-//     position: "static",
-//     background: "none",
-//     pointerEvents: "none",
-//   },
-// };
-
 const ThemedModal: React.FunctionComponent<ContentProps & ReactModal.Props> = ({
   header,
   content,
@@ -62,10 +44,8 @@ const ThemedModal: React.FunctionComponent<ContentProps & ReactModal.Props> = ({
   return (
     <Modal
       className={`themed-modal ${theme}`}
-      // className={`themed-modal`}
       overlayClassName={`themed-modal__overlay`}
       {...rest}
-      // style={reactModalOptions}
     >
       <div className="themed-modal__container" style={style}>
         <div className="themed-modal__header">{header}</div>

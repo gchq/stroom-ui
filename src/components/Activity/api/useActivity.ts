@@ -95,7 +95,7 @@ const useActivity = (
         onAfterUpdate(`Activity Created`);
       });
     }
-  }, [createActivity, updateActivity, dispatch, activity]);
+  }, [createActivity, updateActivity, dispatch, activity, onAfterUpdate]);
 
   // const onUpdate = React.useCallback(
   //   () =>

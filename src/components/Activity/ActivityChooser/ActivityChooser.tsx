@@ -106,7 +106,7 @@ const ActivityChooser: React.FunctionComponent = () => {
     // ]),
     onConfirm: React.useCallback(() => {
       deleteActivity(selectedItem.id, () => refreshCurrentActivity());
-    }, [selectedItem, deleteActivity]),
+    }, [deleteActivity, selectedItem, refreshCurrentActivity]),
   });
 
   const onCloseRequest = React.useCallback(
@@ -117,7 +117,7 @@ const ActivityChooser: React.FunctionComponent = () => {
       }
       hide();
     },
-    [refresh, hide],
+    [refresh, refreshCurrentActivity, hide],
   );
 
   return (

@@ -16,19 +16,13 @@
 
 import * as React from "react";
 import useCurrentActivity from "../api/useCurrentActivity";
-import ActivityChooserDialog, {
-  useDialog,
-} from "../ActivityChooser/ActivityChooserDialog";
 
 interface Props {
-  name: string;
-  value: string;
+  onClick?: () => void;
 }
 
-const ActivitySummary: React.FunctionComponent = () => {
+const ActivitySummary: React.FunctionComponent<Props> = ({ onClick }) => {
   const { currentActivity } = useCurrentActivity();
-  const { componentProps, showDialog } = useDialog();
-
   const details =
     currentActivity &&
     currentActivity.properties &&
@@ -44,11 +38,10 @@ const ActivitySummary: React.FunctionComponent = () => {
       });
   return (
     <React.Fragment>
-      <button className="ActivitySummary control border" onClick={showDialog}>
+      <button className="ActivitySummary control border" onClick={onClick}>
         <div className="ActivitySummary__header">Current Activity</div>
         {details ? details : <b>None</b>}
       </button>
-      <ActivityChooserDialog {...componentProps} />
     </React.Fragment>
   );
 };

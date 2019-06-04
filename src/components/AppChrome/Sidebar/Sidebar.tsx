@@ -19,6 +19,10 @@ import MenuItem from "./MenuItem";
 import { useDocumentTree } from "components/DocumentEditors/api/explorer";
 import { ActiveMenuItem } from "../types";
 import ActivitySummary from "components/Activity/ActivitySummary";
+import SplashDialog from "components/Splash/SplashDialog";
+import { useDialog } from "../../Activity/ActivityChooser/ActivityChooserDialog";
+import useActivityConfig from "../../Activity/api/useActivityConfig";
+import ActivityChooserDialog from "../../Activity/ActivityChooser/ActivityChooserDialog";
 
 interface Props {
   activeMenuItem: ActiveMenuItem;
@@ -158,59 +162,81 @@ const Sidebar: React.FunctionComponent<Props> = ({ activeMenuItem }) => {
     componentProps: moveDialogComponentProps,
   } = useCopyMoveDocRefDialog(moveDocuments);
 
+  const { componentProps, showDialog } = useDialog();
+  const { enabled, chooseOnStartup } = useActivityConfig();
+  const afterSplashAccept = React.useCallback(() => {
+    if (enabled && chooseOnStartup) {
+      showDialog();
+    }
+  }, [enabled, chooseOnStartup, showDialog]);
+
+  // React.useEffect(() => {
+  //     if (enabled && chooseOnStartup) {
+  //         showDialog();
+  //     }
+  // }, [enabled, chooseOnStartup]);
+  //
+
+  let activityElements;
+  if (enabled) {
+    activityElements = (
+      <div className="app-chrome__sidebar-menu__activity-summary">
+        <ActivitySummary onClick={showDialog} />
+        <ActivityChooserDialog {...componentProps} />
+      </div>
+    );
+  }
+
   return (
     <div className={`app-chrome__sidebar ${sidebarClassName}`}>
+      <SplashDialog afterAccept={afterSplashAccept} />
       <CopyMoveDocRefDialog {...copyDialogComponentProps} />
       <CopyMoveDocRefDialog {...moveDialogComponentProps} />
-      <React.Fragment>
-        <div className="app-chrome__sidebar_header">
-          {isExpanded ? (
-            <img
-              className="sidebar__logo"
-              alt="Stroom logo"
-              src={require("../../../images/logo.svg")}
-            />
-          ) : (
-            undefined
-          )}
-          <div
-            className="app-chrome__sidebar_header_icon"
-            onClick={toggleIsExpanded}
-          >
-            <FontAwesomeIcon
-              aria-label="Show/hide the sidebar"
-              className="menu-item__menu-icon sidebar__toggle sidebar__menu-item borderless "
-              icon="bars"
-              size="2x"
-            />
-          </div>
-        </div>
+      <div className="app-chrome__sidebar_header">
+        {isExpanded ? (
+          <img
+            className="sidebar__logo"
+            alt="Stroom logo"
+            src={require("../../../images/logo.svg")}
+          />
+        ) : (
+          undefined
+        )}
         <div
-          tabIndex={0}
-          onKeyDown={onKeyDown}
-          className="app-chrome__sidebar-menu"
-          data-simplebar
+          className="app-chrome__sidebar_header_icon"
+          onClick={toggleIsExpanded}
         >
-          <div className="app-chrome__sidebar-menu__container">
-            {getMenuItems(
-              activeMenuItem,
-              !isExpanded,
-              menuItems,
-              menuItemIsOpenByKey,
-              menuItemToggled,
-              keyIsDown,
-              showCopyDialog,
-              showMoveDialog,
-              selectedItems,
-              highlightedItem,
-            )}
-          </div>
-
-          <div className="app-chrome__sidebar-menu__activity-summary">
-            <ActivitySummary />
-          </div>
+          <FontAwesomeIcon
+            aria-label="Show/hide the sidebar"
+            className="menu-item__menu-icon sidebar__toggle sidebar__menu-item borderless "
+            icon="bars"
+            size="2x"
+          />
         </div>
-      </React.Fragment>
+      </div>
+      <div
+        tabIndex={0}
+        onKeyDown={onKeyDown}
+        className="app-chrome__sidebar-menu"
+        data-simplebar
+      >
+        <div className="app-chrome__sidebar-menu__container">
+          {getMenuItems(
+            activeMenuItem,
+            !isExpanded,
+            menuItems,
+            menuItemIsOpenByKey,
+            menuItemToggled,
+            keyIsDown,
+            showCopyDialog,
+            showMoveDialog,
+            selectedItems,
+            highlightedItem,
+          )}
+        </div>
+
+        {activityElements}
+      </div>
     </div>
   );
 };

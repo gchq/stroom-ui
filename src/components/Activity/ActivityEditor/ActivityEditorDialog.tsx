@@ -29,7 +29,7 @@ const ActivityEditorDialog: React.FunctionComponent<Props> = ({
       cogoToast.info(message);
       onCloseRequest(true);
     },
-    [onClose],
+    [onCloseRequest],
   );
 
   const { activity, onPropChange, onCreateOrUpdate, isDirty } = useActivity(
@@ -44,6 +44,8 @@ const ActivityEditorDialog: React.FunctionComponent<Props> = ({
 
   return (
     <ThemedModal
+      width="800px"
+      height="600px"
       header={<IconHeader icon="tasks" text={editorTitle} />}
       content={
         <ActivityEditor
