@@ -36,16 +36,23 @@ const rule1: DataRetentionRule = {
   },
 };
 
-addStory("Sections/DataRetention", "Rule", module, () => {
-  const [rule, setRule] = React.useState<DataRetentionRule>(rule1);
+interface Props {
+  initialRule: DataRetentionRule;
+}
+
+const TestHarness: React.FunctionComponent<Props> = ({ initialRule }) => {
+  const [rule, setRule] = React.useState<DataRetentionRule>(initialRule);
   return (
     <div>
       <DataRetentionRuleEditor
+        index={1}
         value={rule}
-        onChange={rule => setRule(rule)}
+        onChange={(rule: DataRetentionRule) => setRule(rule)}
         onDelete={action("onDelete")}
       />
       <JsonDebug value={{ rule }} />
     </div>
   );
-});
+};
+
+addStory("Sections/DataRetention", "Rule", module, () => <TestHarness initialRule={rule1} />);

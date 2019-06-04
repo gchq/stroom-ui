@@ -14,12 +14,13 @@
  * limitations under the License.
  */
 
-import * as React from "react";
-import DataRetentionRuleEditor from "../Editor/DataRetentionRuleEditor";
-import useListReducer from "lib/useListReducer";
-import { DataRetentionRule } from "../types/DataRetentionRule";
-import { useEffect, useMemo } from "react";
 import { ControlledInput } from "lib/useForm/types";
+import useListReducer from "lib/useListReducer";
+import * as React from "react";
+import { useCallback, useEffect, useMemo } from "react";
+import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
+import DataRetentionRuleEditor from "../Editor/DataRetentionRuleEditor";
+import { DataRetentionRule } from "../types/DataRetentionRule";
 
 const getKey = (k: DataRetentionRule) => k.ruleNumber.toString();
 
@@ -28,46 +29,84 @@ interface ValueAndChangeHandler {
   onChange: (rule: DataRetentionRule) => void;
   onRemove: () => void;
 }
+
 const DataRetentionRuleList: React.FunctionComponent<
   ControlledInput<DataRetentionRule[]>
 > = ({ value: values, onChange }) => {
+  const sortedRules = useMemo(
+    () => values.sort((l, r) => (l.ruleNumber >= r.ruleNumber ? 1 : -1)),
+    [values],
+  );
+
   const {
     items,
-    addItem,
+    // addItem, //TODO: allow a user to add rules
     updateItemAtIndex,
     removeItemAtIndex,
-  } = useListReducer<DataRetentionRule>(getKey, values);
+  } = useListReducer<DataRetentionRule>(getKey, sortedRules);
 
   useEffect(() => onChange(items), [onChange, items]);
 
   const valuesAndChangeHandlers: ValueAndChangeHandler[] = useMemo(
     () =>
-      values.map((value, valueIndex) => ({
+      sortedRules.map((value, valueIndex) => ({
         onChange: (newRule: DataRetentionRule) => {
           updateItemAtIndex(valueIndex, newRule);
         },
         onRemove: () => removeItemAtIndex(valueIndex),
         value,
       })),
-    [values, updateItemAtIndex, removeItemAtIndex],
+    [sortedRules, updateItemAtIndex, removeItemAtIndex],
   );
 
+  const handleOnDragEnd = useCallback(
+    (result: DropResult) => {
+      if (!!result.destination) {
+        const {
+          source: { index: sourceIndex },
+          destination: { index: destinationIndex },
+        } = result;
+
+        items.splice(destinationIndex, 0, items.splice(sourceIndex, 1)[0]);
+        const itemsWithUpdatedRuleNumbers = items.map((item, index) => {
+          item.ruleNumber = index + 1;
+          return item;
+        });
+        onChange(itemsWithUpdatedRuleNumbers);
+      }
+    },
+    [updateItemAtIndex, onChange],
+  );
   return (
-    <div className="DataRetentionRuleList__content">
-      {valuesAndChangeHandlers.map(
-        ({ value: rule, onChange: onRuleChange, onRemove }, index) => {
-          return (
-            <div key={index} className="DataRetentionRuleList__rule">
-              <DataRetentionRuleEditor
-                value={rule}
-                onChange={onRuleChange}
-                onDelete={onRemove}
-              />
-            </div>
-          );
-        },
-      )}
-    </div>
+    <DragDropContext onDragEnd={handleOnDragEnd}>
+      <Droppable droppableId="dataRetentionRuleListDroppable">
+        {provided => (
+          <div ref={provided.innerRef} {...provided.droppableProps}>
+            {valuesAndChangeHandlers
+              .sort((l, r) =>
+                l.value.ruleNumber >= r.value.ruleNumber ? 1 : -1,
+              )
+              .map(
+                ({ value: rule, onChange: onRuleChange, onRemove }, index) => {
+                  return (
+                    <React.Fragment key={index}>
+                      <div key={index} className="DataRetentionRuleList__rule">
+                        <DataRetentionRuleEditor
+                          value={rule}
+                          onChange={onRuleChange}
+                          onDelete={onRemove}
+                          index={index}
+                        />
+                      </div>
+                    </React.Fragment>
+                  );
+                },
+              )}
+            {provided.placeholder}
+          </div>
+        )}
+      </Droppable>
+    </DragDropContext>
   );
 };
 

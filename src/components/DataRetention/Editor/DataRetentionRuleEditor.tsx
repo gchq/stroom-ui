@@ -14,69 +14,30 @@
  * limitations under the License.
  */
 
+import { Card, Button, Popconfirm, Tooltip, Switch } from "antd";
+import "antd/dist/antd.css";
 import ExpressionBuilder from "components/ExpressionBuilder";
 import InlineInput from "components/InlineInput/InlineInput";
 import { useMetaDataSource } from "components/MetaBrowser/api";
+import { ControlledInput } from "lib/useForm/types";
 import * as React from "react";
-import { ChangeEventHandler, useCallback, useEffect } from "react";
+import { useCallback } from "react";
 import TimeUnitSelect from "../TimeUnitSelect";
 import { DataRetentionRule } from "../types/DataRetentionRule";
-import "antd/dist/antd.css";
-import { Switch, Button, Popconfirm, Tooltip } from "antd";
-import { ControlledInput } from "lib/useForm/types";
-
-const useHandlers = (
-  rule: DataRetentionRule,
-  onChange: (dataRetentionRule: DataRetentionRule) => void,
-) => {
-  const handleNameChange: ChangeEventHandler<HTMLInputElement> = useCallback(
-    e => onChange({ ...rule, name: e.target.value }),
-    [rule, onChange],
-  );
-
-  const handleAgeChange: ChangeEventHandler<HTMLInputElement> = useCallback(
-    e => onChange({ ...rule, age: Number(e.target.value) }),
-    [rule, onChange],
-  );
-
-  const handleExpressionChange = useCallback(
-    expression => onChange({ ...rule, expression }),
-    [rule, onChange],
-  );
-
-  const handleTimeUnitChange = useCallback(
-    e => onChange({ ...rule, timeUnit: e.target.value }),
-    [rule, onChange],
-  );
-
-  const handleEnabledChange = useCallback(
-    e => onChange({ ...rule, enabled: e }),
-    [rule, onChange],
-  );
-
-  const handleForeverChange = useCallback(
-    e => onChange({ ...rule, forever: e.target.value === "keep_forever" }),
-    [rule, onChange],
-  );
-
-  return {
-    handleNameChange,
-    handleAgeChange,
-    handleExpressionChange,
-    handleTimeUnitChange,
-    handleEnabledChange,
-    handleForeverChange,
-  };
-};
+import useHandlers from "./useHandlers";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Draggable } from "react-beautiful-dnd";
 
 interface Props extends ControlledInput<DataRetentionRule> {
   onDelete: (v: number) => void;
+  index: number;
 }
 
 const DataRetentionRuleEditor: React.FunctionComponent<Props> = ({
   value: rule,
   onChange,
   onDelete,
+  index,
 }) => {
   const dataSource = useMetaDataSource();
   const {
@@ -90,83 +51,106 @@ const DataRetentionRuleEditor: React.FunctionComponent<Props> = ({
 
   const handleDelete = useCallback(e => onDelete(e.target.value), [onDelete]);
   return (
-    <div>
-      <div className="DataRetentionRuleEditor__header">
-        <InlineInput value={rule.name} onChange={handleNameChange} />
-        <div className="DataRetentionRuleEditor__header__actions">
-          <Popconfirm
-            title="Delete this retention rule?"
-            onConfirm={handleDelete}
-            okText="Yes"
-            cancelText="No"
-            placement="left"
-          >
-            <Button shape="circle" icon="delete" type="danger" />
-          </Popconfirm>
-          <Tooltip placement="rightBottom" title="Enabled/disable this rule">
-            <Switch
-              size="small"
-              checked={rule.enabled}
-              onChange={handleEnabledChange}
-              defaultChecked
-            />
-          </Tooltip>
-        </div>
-      </div>
+    <Draggable
+      draggableId={rule.ruleNumber.toString()}
+      index={index}
+      key={rule.ruleNumber.toString()}
+    >
+      {provided => (
+        <div
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
+          ref={provided.innerRef}
+        >
+          <Card
+            size="small"
+            title={
+              <div className="DataRetentionRuleEditor__header">
+                <div>
+                  <FontAwesomeIcon icon="grip-vertical" />
+                  <InlineInput value={rule.name} onChange={handleNameChange} />
+                </div>
 
-      <div className="DataRetentionRuleEditor__content">
-        <div>
-          <h4>Match the following:</h4>
-          <ExpressionBuilder
-            value={rule.expression}
-            onChange={handleExpressionChange}
-            editMode={true}
-            dataSource={dataSource}
-          />
-        </div>
-        <div>
-          <h4>And then:</h4>
-          <div className="DataRetentionRuleEditor__retention">
-            <div>
-              <label>
-                <input
-                  type="radio"
-                  name={"forever_" + rule.ruleNumber}
-                  value="keep_forever"
-                  checked={rule.forever}
-                  onChange={handleForeverChange}
+                <div className="DataRetentionRuleEditor__header__actions">
+                  <Popconfirm
+                    title="Delete this retention rule?"
+                    onConfirm={handleDelete}
+                    okText="Yes"
+                    cancelText="No"
+                    placement="left"
+                  >
+                    <Button shape="circle" icon="delete" type="danger" />
+                  </Popconfirm>
+                  <Tooltip
+                    placement="rightBottom"
+                    title="Enabled/disable this rule"
+                  >
+                    <Switch
+                      size="small"
+                      checked={rule.enabled}
+                      onChange={handleEnabledChange}
+                      defaultChecked
+                    />
+                  </Tooltip>
+                </div>
+              </div>
+            }
+            extra={<div />}
+            style={{ width: "100%" }}
+          >
+            <div className="DataRetentionRuleEditor__content">
+              <div>
+                <h4>Match the following:</h4>
+                <ExpressionBuilder
+                  value={rule.expression}
+                  onChange={handleExpressionChange}
+                  editMode={true}
+                  dataSource={dataSource}
                 />
-                <span>keep forever</span>
-              </label>
+              </div>
+              <div>
+                <h4>And then:</h4>
+                <div className="DataRetentionRuleEditor__retention">
+                  <div>
+                    <label>
+                      <input
+                        type="radio"
+                        name={"forever_" + rule.ruleNumber}
+                        value="keep_forever"
+                        checked={rule.forever}
+                        onChange={handleForeverChange}
+                      />
+                      <span>keep forever</span>
+                    </label>
+                  </div>
+                  <div className="DataRetentionRuleEditor__retention__delete-after">
+                    <label>
+                      <input
+                        type="radio"
+                        name={"forever_" + rule.ruleNumber}
+                        value="keep_then_delete"
+                        checked={!rule.forever}
+                        onChange={handleForeverChange}
+                      />
+                      <span>delete after </span>
+                    </label>
+                    <InlineInput
+                      type="number"
+                      value={rule.age}
+                      onChange={handleAgeChange}
+                    />
+                    <TimeUnitSelect
+                      selected={rule.timeUnit}
+                      onChange={handleTimeUnitChange}
+                    />
+                  </div>
+                </div>
+              </div>
             </div>
-            <div>
-              <label>
-                <input
-                  type="radio"
-                  name={"forever_" + rule.ruleNumber}
-                  value="keep_then_delete"
-                  checked={!rule.forever}
-                  onChange={handleForeverChange}
-                />
-                <span>delete after </span>
-              </label>
-              <span>
-                <InlineInput
-                  type="number"
-                  value={rule.age}
-                  onChange={handleAgeChange}
-                />
-                <span> </span>
-                <TimeUnitSelect
-                  selected={rule.timeUnit}
-                  onChange={handleTimeUnitChange}
-                />
-              </span>
-            </div>
-          </div>
+          </Card>
         </div>
-      </div>
-    </div>
+      )}
+    </Draggable>
   );
 };
 

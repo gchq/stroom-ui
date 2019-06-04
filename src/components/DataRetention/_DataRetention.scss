@@ -7,9 +7,19 @@ input[type="radio"] {
 // }
 
 .DataRetentionRuleEditor__header {
-  margin: 0.2em 0.5em 0.2em 0.5em;
+  margin: 0;
   display: flex;
   justify-content: space-between;
+}
+
+.DataRetentionRuleEditor__header > div > svg {
+  margin-right: 0.5em;
+  margin-bottom: 0.15em;
+  color: gray;
+}
+
+.DataRetentionRuleEditor__header:hover > div > svg {
+  color: #2185d0;
 }
 
 .DataRetentionRuleEditor__header .inline-input__not-editing {
@@ -38,7 +48,7 @@ input[type="radio"] {
   flex-direction: row;
 }
 
-.DataRetentionRuleEditor__content>div {
+.DataRetentionRuleEditor__content > div {
   flex-grow: 1;
 }
 
@@ -50,8 +60,17 @@ input[type="radio"] {
   padding: 0em 0em 0em 1em;
 }
 
+.DataRetentionRuleEditor__retention .inline-input__editing {
+  width: 3em;
+}
+
 .DataRetentionRuleEditor__retention label span {
   padding-left: 0.5em;
+}
+
+.DataRetentionRuleEditor__retention__delete-after {
+  display: grid;
+  grid-template-columns: 7.5em 3em 6em;
 }
 
 .DataRetentionRuleList__content {
@@ -78,4 +97,15 @@ input[type="radio"] {
 .DataRetentionSection__content {
   width: 100%;
   height: 100%;
+}
+
+.DataRetentionRuleListDropTarget {
+  height: 1em;
+  width: 100%;
+}
+
+.DataRetentionRuleListDropTarget--highlighted {
+  height: 100%;
+  width: 100%;
+  background-color: #c1e4ff;
 }

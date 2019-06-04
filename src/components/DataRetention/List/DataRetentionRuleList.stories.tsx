@@ -21,9 +21,11 @@ import { DataRetentionRule } from "../types/DataRetentionRule";
 import DataRetentionRuleList from "./DataRetentionRuleList";
 import { useCallback } from "react";
 
+// These are out of order in this list because they should be
+// correctly ordered by ruleNumber the component
 const rules1: DataRetentionRule[] = [
   {
-    ruleNumber: 1,
+    ruleNumber: 0,
     name: "First rule",
     enabled: true,
     age: 1,
@@ -38,6 +40,20 @@ const rules1: DataRetentionRule[] = [
   },
   {
     ruleNumber: 2,
+    name: "Third rule",
+    enabled: true,
+    age: 1,
+    timeUnit: "Weeks",
+    forever: false,
+    expression: {
+      op: "AND",
+      children: [],
+      enabled: true,
+      type: "operator",
+    },
+  },
+  {
+    ruleNumber: 1,
     name: "Second rule",
     enabled: true,
     age: 2,
@@ -52,7 +68,21 @@ const rules1: DataRetentionRule[] = [
   },
   {
     ruleNumber: 3,
-    name: "Third rule",
+    name: "Forth rule",
+    enabled: true,
+    age: 1,
+    timeUnit: "Weeks",
+    forever: false,
+    expression: {
+      op: "AND",
+      children: [],
+      enabled: true,
+      type: "operator",
+    },
+  },
+  {
+    ruleNumber: 4,
+    name: "Fifth rule",
     enabled: true,
     age: 1,
     timeUnit: "Weeks",
