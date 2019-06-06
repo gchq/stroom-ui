@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 import { useCallback } from "react";
-import useConfig from "startup/config/useConfig";
 import { User } from "../types";
 import useHttpClient from "lib/useHttpClient";
+import useServiceUrl from "startup/config/useServiceUrl";
 
 interface Api {
   add: (user: User) => Promise<void>;
@@ -35,10 +35,8 @@ export const useApi = (): Api => {
     httpPostJsonResponse,
     httpDeleteEmptyResponse,
   } = useHttpClient();
-  const { authBaseServiceUrl } = useConfig();
-  if (!authBaseServiceUrl)
-    throw Error("Configuration not ready or misconfigured!");
-  const userServiceUrl = `${authBaseServiceUrl}/user/v1`;
+
+  const { userServiceUrl } = useServiceUrl();
 
   const change = useCallback(
     user =>

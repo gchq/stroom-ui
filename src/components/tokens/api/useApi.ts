@@ -17,7 +17,7 @@
 import { useCallback } from "react";
 import { Filter } from "react-table";
 import useHttpClient from "lib/useHttpClient";
-import useConfig from "startup/config/useConfig";
+import useServiceUrl from "startup/config/useServiceUrl";
 import { SearchConfig, Token, TokenSearchResponse } from "./types";
 
 interface Api {
@@ -37,10 +37,8 @@ export const useApi = (): Api => {
     httpDeleteEmptyResponse,
     httpGetEmptyResponse,
   } = useHttpClient();
-  const { authBaseServiceUrl } = useConfig();
-  if (!authBaseServiceUrl)
-    throw Error("Configuration not ready or misconfigured!");
-  const tokenServiceUrl = `${authBaseServiceUrl}/token/v1`;
+
+  const { tokenServiceUrl } = useServiceUrl();
 
   return {
     deleteToken: useCallback(

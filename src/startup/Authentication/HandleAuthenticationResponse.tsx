@@ -19,12 +19,10 @@ import * as React from "react";
 import { handleAuthenticationResponse } from "./authentication";
 import useRouter from "lib/useRouter";
 import useAuthenticationContext from "./useAuthenticationContext";
-import useConfig from "startup/config/useConfig";
+import useServiceUrl from "startup/config/useServiceUrl";
 
 export const HandleAuthenticationResponse: React.FunctionComponent = () => {
-  const { authBaseServiceUrl, stroomBaseServiceUrl } = useConfig();
-  const authorisationServiceUrl = `${stroomBaseServiceUrl}/authorisation/v1`;
-  const authenticationServiceUrl = `${authBaseServiceUrl}/authentication/v1`;
+  const { authenticationServiceUrl, authorisationServiceUrl } = useServiceUrl();
   const {
     router: { location },
     history,

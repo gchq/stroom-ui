@@ -20,8 +20,8 @@ import useAppNavigation from "lib/useAppNavigation";
 import Button from "components/Button";
 import { AsyncUserSelect } from "components/users";
 import { useAuthenticationContext } from "startup/Authentication";
-import useConfig from "startup/config/useConfig";
 import useTokens from "./useTokens";
+import useServiceUrl from "startup/config/useServiceUrl";
 
 interface DropDownValues {
   label: string;
@@ -33,11 +33,8 @@ const TokenCreateForm = () => {
     nav: { goToApiKeys },
   } = useAppNavigation();
   const { createToken } = useTokens();
-  const { authBaseServiceUrl } = useConfig();
+  const { userServiceUrl } = useServiceUrl();
   const { idToken } = useAuthenticationContext();
-  if (!authBaseServiceUrl)
-    throw Error("Configuration not ready or misconfigured!");
-  const userServiceUrl = `${authBaseServiceUrl}/user/v1`;
 
   return (
     <div className="CreateTokenForm-card">

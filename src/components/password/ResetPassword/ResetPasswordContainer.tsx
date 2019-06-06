@@ -17,18 +17,15 @@
 import * as React from "react";
 import { PasswordValidationRequest } from "components/authentication/types";
 import { validateAsync } from "components/users/validation";
-import useConfig from "startup/config/useConfig";
 import ChangePasswordFormData from "../ChangePassword/ChangePasswordFormData";
 import ResetPassword from "./ResetPassword";
 import useResetPassword from "./useResetPassword";
 import { useTokenValidityCheck } from "./useTokenValidityCheck";
+import useServiceUrl from "startup/config/useServiceUrl";
 
 const ResetPasswordContainer = () => {
   const { resetPassword } = useResetPassword();
-  const { authBaseServiceUrl } = useConfig();
-  const authenticationServiceUrl = `${authBaseServiceUrl}/authentication/v1`;
-  if (!authenticationServiceUrl)
-    throw Error("Config not ready or misconfigured!");
+  const { authenticationServiceUrl } = useServiceUrl();
 
   const {
     isTokenMissing,

@@ -18,10 +18,11 @@ import { Route, RouteProps } from "react-router-dom";
 import useConfig from "../config/useConfig";
 import AuthenticationRequest from "./AuthenticationRequest";
 import useAuthenticationContext from "./useAuthenticationContext";
+import useServiceUrl from "startup/config/useServiceUrl";
 
 const PrivateRoute = ({ render, ...rest }: RouteProps) => {
-  const { advertisedUrl, clientId, stroomBaseServiceUrl } = useConfig();
-  const authenticationServiceUrl = `${stroomBaseServiceUrl}/authentication/v1`;
+  const { advertisedUrl, clientId } = useConfig();
+  const { authenticationServiceUrl } = useServiceUrl();
   const { idToken } = useAuthenticationContext();
 
   if (

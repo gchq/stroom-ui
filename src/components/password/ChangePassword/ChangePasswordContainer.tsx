@@ -21,20 +21,16 @@ import { useEffect, useState } from "react";
 import { PasswordValidationRequest } from "components/authentication/types";
 import { validateAsync } from "components/users/validation";
 import useRouter from "lib/useRouter";
-import useConfig from "startup/config/useConfig";
 import ChangePasswordForm from "./ChangePasswordForm";
 import usePassword from "./useChangePassword";
+import useServiceUrl from "startup/config/useServiceUrl";
 
 const ChangePasswordContainer = () => {
   const { changePassword, showChangeConfirmation } = usePassword();
   const { router } = useRouter();
   const [redirectUrl, setRedirectUrl] = useState("");
   const [email, setEmail] = useState("");
-
-  const { authBaseServiceUrl } = useConfig();
-  const authenticationServiceUrl = `${authBaseServiceUrl}/authentication/v1`;
-  if (!authenticationServiceUrl)
-    throw Error("Config not ready or misconfigured!");
+  const { authenticationServiceUrl } = useServiceUrl();
 
   useEffect(() => {
     if (!!router.location) {

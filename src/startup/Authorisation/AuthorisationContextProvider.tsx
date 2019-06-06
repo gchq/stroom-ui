@@ -1,8 +1,8 @@
 import * as React from "react";
 import { useAuthenticationContext } from "startup/Authentication";
-import useConfig from "startup/config/useConfig";
 import { AppPermissions } from "./types";
 import AuthorisationContext from "./AuthorisationContext";
+import useServiceUrl from "startup/config/useServiceUrl";
 
 const AuthorisationContextProvider: React.FunctionComponent = ({
   children,
@@ -12,8 +12,8 @@ const AuthorisationContextProvider: React.FunctionComponent = ({
   );
   const { idToken } = useAuthenticationContext();
 
-  const { stroomBaseServiceUrl } = useConfig();
-  const authorisationServiceUrl = `${stroomBaseServiceUrl}/authorisation/v1`;
+  const { authorisationServiceUrl } = useServiceUrl();
+
   const setHasAppPermission = React.useCallback(
     (permissionName: string, hasPermission: boolean) => {
       setAppPermissions({

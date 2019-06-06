@@ -16,26 +16,24 @@
 
 import * as React from "react";
 import { useAuthenticationContext } from "startup/Authentication";
-import useConfig from "startup/config/useConfig";
 import useTokens from "./useTokens";
 import CreateTokenForm from "./CreateTokenForm";
 import useAppNavigation from "lib/useAppNavigation";
+import useServiceUrl from "startup/config/useServiceUrl";
 
 const CreateFormContainer = () => {
   const {
     nav: { goToApiKeys },
   } = useAppNavigation();
   const { createToken } = useTokens();
-  const { authBaseServiceUrl } = useConfig();
+  const { userServiceUrl } = useServiceUrl();
   const { idToken } = useAuthenticationContext();
-  if (!authBaseServiceUrl)
-    throw Error("Configuration not ready or misconfigured!");
 
   return (
     <CreateTokenForm
       onSubmit={createToken}
       idToken={idToken}
-      userServiceUrl={`${authBaseServiceUrl}/user/v1`}
+      userServiceUrl={userServiceUrl}
       onBack={goToApiKeys}
     />
   );

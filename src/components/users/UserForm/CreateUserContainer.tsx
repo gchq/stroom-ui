@@ -17,19 +17,16 @@
 import * as React from "react";
 import useAppNavigation from "lib/useAppNavigation";
 import { PasswordValidationRequest } from "components/authentication/types";
-import useConfig from "startup/config/useConfig";
 import { useUsers } from "../api";
 import { User } from "../types";
 import { validateAsync } from "../validation";
 import UserForm from "./UserForm";
 import UserFormData from "./UserFormData";
+import useServiceUrl from "startup/config/useServiceUrl";
 
 const CreateUserContainer = () => {
   const { createUser } = useUsers();
-  const { authBaseServiceUrl } = useConfig();
-  const authenticationServiceUrl = `${authBaseServiceUrl}/authentication/v1`;
-  if (!authenticationServiceUrl)
-    throw Error("Configuration not ready or misconfigured!");
+  const { authenticationServiceUrl } = useServiceUrl();
 
   const {
     nav: { goToUsers },

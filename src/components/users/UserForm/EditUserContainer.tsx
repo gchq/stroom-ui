@@ -20,12 +20,12 @@ import useAppNavigation from "lib/useAppNavigation";
 import { PasswordValidationRequest } from "components/authentication/types";
 import Loader from "components/Loader";
 import useIdFromPath from "lib/useIdFromPath";
-import useConfig from "startup/config/useConfig";
 import { User } from "../types";
 import { useUsers } from "../api";
 import { validateAsync } from "../validation";
 import UserForm from "./UserForm";
 import UserFormData from "./UserFormData";
+import useServiceUrl from "startup/config/useServiceUrl";
 
 const EditUserContainer = () => {
   const { updateUser, fetchUser, user } = useUsers();
@@ -34,11 +34,7 @@ const EditUserContainer = () => {
     nav: { goToUsers },
   } = useAppNavigation();
 
-  const { authBaseServiceUrl } = useConfig();
-  if (!authBaseServiceUrl) {
-    throw Error("Configuration not ready or misconfigured!");
-  }
-  const authenticationServiceUrl = `${authBaseServiceUrl}/authentication/v1`;
+  const { authenticationServiceUrl } = useServiceUrl();
 
   useEffect(() => {
     if (!!userId && !user) fetchUser(userId);
