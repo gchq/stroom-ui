@@ -14,6 +14,7 @@ import {
   PasswordValidationResponse,
   ResetPasswordRequest,
 } from "./types";
+import useServiceUrl from "startup/config/useServiceUrl";
 
 interface Api {
   apiLogin: (credentials: Credentials) => Promise<LoginResponse>;
@@ -34,8 +35,8 @@ interface Api {
 
 export const useApi = (): Api => {
   const { httpGetJson, httpPostJsonResponse } = useHttpClient();
-  let { authBaseServiceUrl, clientId } = useConfig();
-  const authenticationServiceUrl = `${authBaseServiceUrl}/authentication/v1`;
+  let { clientId } = useConfig();
+  const { authenticationServiceUrl } = useServiceUrl();
 
   // If we have a clientId on the URL we'll use that. It means we're logging
   // in on behalf of a relying party so we need to identify as them.
