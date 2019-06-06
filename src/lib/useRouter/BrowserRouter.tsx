@@ -18,7 +18,7 @@ export const DEFAULT_CHROME_MODE = "withChrome";
 
 export const WithChromeContext = React.createContext<ChromeContext>({
   urlPrefix: DEFAULT_CHROME_MODE,
-  includeSidebar: true,
+  includeSidebar: false,
   setUrlPrefix: () =>
     console.error("Setting Include Chrome on Default Implementation"),
 });
@@ -34,6 +34,35 @@ interface Props {
   children?: React.ReactNode;
 }
 
+/**
+ * Determine whether or not we want to show the chrome, based on either:
+ *  - the requested path from history
+ *  - a redirect stored earlier as part of the authentication flow
+ *
+ * Which we need depends on whether or not we're already authenticated.
+ *
+ * FIXME: I'm not certain that there isn't another/better way to do this.
+ * FIXME: dynamic paths for not using chrome is not nice.
+ * FIXME: 'withChrome' is a horrible path
+ * @param pathname The current pathname, i.e. from history.location.pathname
+ * @returns An object with 'prefix' and 'includeSidebar' properties.
+ */
+const showChrome = (pathname: string) => {
+  let prefix: string;
+  let includeSidebar = false;
+  // If we're handling an authentication redirect then we need to get the path
+  // from local storage.
+  const actualPath =
+    pathname.indexOf("handleAuthenticationResponse") > -1
+      ? localStorage.getItem("preAuthenticationRequestReferrer")
+      : pathname;
+
+  const parts = actualPath.split("/");
+  prefix = parts[1];
+  includeSidebar = prefix === DEFAULT_CHROME_MODE;
+  return { includeSidebar, prefix };
+};
+
 const CustomRouter: React.FunctionComponent<Props> = ({
   history,
   children,
@@ -42,8 +71,10 @@ const CustomRouter: React.FunctionComponent<Props> = ({
     DEFAULT_CHROME_MODE,
   );
 
+  const { includeSidebar, prefix } = showChrome(history.location.pathname);
+
   const setUrlPrefix = React.useCallback(
-    (_urlPrefix = DEFAULT_CHROME_MODE) => setUrlPrefixRaw(_urlPrefix),
+    (_urlPrefix = prefix) => setUrlPrefixRaw(_urlPrefix),
     [setUrlPrefixRaw],
   );
 
@@ -55,7 +86,7 @@ const CustomRouter: React.FunctionComponent<Props> = ({
             value={{
               urlPrefix,
               setUrlPrefix,
-              includeSidebar: urlPrefix === DEFAULT_CHROME_MODE,
+              includeSidebar: includeSidebar,
             }}
           >
             <HistoryContext.Provider value={history}>
