@@ -37,9 +37,10 @@ export const useApi = (): Api => {
     httpDeleteEmptyResponse,
     httpGetEmptyResponse,
   } = useHttpClient();
-  const { tokenServiceUrl } = useConfig();
-  if (!tokenServiceUrl)
+  const { authBaseServiceUrl } = useConfig();
+  if (!authBaseServiceUrl)
     throw Error("Configuration not ready or misconfigured!");
+  const tokenServiceUrl = `${authBaseServiceUrl}/token/v1`;
 
   return {
     deleteToken: useCallback(

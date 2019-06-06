@@ -10,4 +10,4 @@ const stories = storiesOf(
   module,
 );
 
-addThemedStories(stories, () => <ErrorTable errors={errorData.markers} />);
+// addThemedStories(stories, () => <ErrorTable errors={errorData.markers} />);

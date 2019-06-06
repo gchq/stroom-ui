@@ -31,10 +31,11 @@ const useActivitySummary = (): Activity => {
     },
   });
 
+  // TODO: JC 2019-06-05: Commenting out until there's an activity backend
   // Use an effect to set the build info state when the component is mounted
-  React.useEffect(() => {
-    getCurrentActivity().then(setCurrentActivity);
-  }, [setCurrentActivity, getCurrentActivity]);
+  // React.useEffect(() => {
+  //   getCurrentActivity().then(setCurrentActivity);
+  // }, [setCurrentActivity, getCurrentActivity]);
 
   return currentActivity;
 };

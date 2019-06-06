@@ -35,8 +35,10 @@ export const useApi = (): Api => {
     httpPostJsonResponse,
     httpDeleteEmptyResponse,
   } = useHttpClient();
-  const { userServiceUrl } = useConfig();
-  if (!userServiceUrl) throw Error("Configuration not ready or misconfigured!");
+  const { authBaseServiceUrl } = useConfig();
+  if (!authBaseServiceUrl)
+    throw Error("Configuration not ready or misconfigured!");
+  const userServiceUrl = `${authBaseServiceUrl}/user/v1`;
 
   const change = useCallback(
     user =>

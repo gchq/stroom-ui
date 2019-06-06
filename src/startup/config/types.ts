@@ -6,6 +6,7 @@ export interface Config {
   authorisationServiceUrl?: string;
   stroomBaseServiceUrl?: string;
   stroomUiUrl?: string;
-  tokenServiceUrl?: string;
-  userServiceUrl?: string;
+  // tokenServiceUrl?: string;
+  // userServiceUrl?: string;
+  authBaseServiceUrl?: string;
 }

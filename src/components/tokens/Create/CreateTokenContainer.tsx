@@ -26,15 +26,16 @@ const CreateFormContainer = () => {
     nav: { goToApiKeys },
   } = useAppNavigation();
   const { createToken } = useTokens();
-  const { userServiceUrl } = useConfig();
+  const { authBaseServiceUrl } = useConfig();
   const { idToken } = useAuthenticationContext();
-  if (!userServiceUrl) throw Error("Configuration not ready or misconfigured!");
+  if (!authBaseServiceUrl)
+    throw Error("Configuration not ready or misconfigured!");
 
   return (
     <CreateTokenForm
       onSubmit={createToken}
       idToken={idToken}
-      userServiceUrl={userServiceUrl}
+      userServiceUrl={`${authBaseServiceUrl}/user/v1`}
       onBack={goToApiKeys}
     />
   );

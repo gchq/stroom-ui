@@ -37,8 +37,8 @@ const testConfig: Config = {
   authorisationServiceUrl: "http://localhost:9001",
   stroomBaseServiceUrl: "http://localhost:9001",
   stroomUiUrl: "http://localhost:8080/stroom",
-  tokenServiceUrl: "http://localhost:8099/token/v1",
-  userServiceUrl: "http://localhost:8099/user/v1",
+  // tokenServiceUrl: "http://localhost:8099/token/v1",
+  // userServiceUrl: "http://localhost:8099/user/v1",
 };
 
 // The server is created as a singular thing for the whole app
