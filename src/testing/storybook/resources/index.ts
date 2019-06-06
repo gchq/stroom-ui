@@ -15,7 +15,6 @@ import streamAttributeMapResource from "./streamAttributeMapResource";
 import streamTaskResource from "./streamTaskResource";
 import stroomUserResource from "./userAndGroupsResource";
 import documentResources from "./documentResources";
-import userResource from "./userResource";
 import welcomeResource from "./welcomeResource";
 
 const resourceBuilders: ResourceBuilder[] = [
@@ -34,7 +33,6 @@ const resourceBuilders: ResourceBuilder[] = [
   streamAttributeMapResource,
   streamTaskResource,
   stroomUserResource,
-  userResource,
   welcomeResource,
 ];
 

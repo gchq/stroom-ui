@@ -10,5 +10,5 @@
 
   "tokenServiceUrl": "https://IP_ADDRESS/token/v1",
   "userServiceUrl": "https://IP_ADDRESS/user/v1",
-  "authenticationServiceUrl": "https://IP_ADDRESS/authApi/authentication/v1"
+  "authenticationServiceUrl": "https://IP_ADDRESS/api/auth/authentication/v1"
 }
