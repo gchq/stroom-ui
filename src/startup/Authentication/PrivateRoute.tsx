@@ -20,7 +20,8 @@ import AuthenticationRequest from "./AuthenticationRequest";
 import useAuthenticationContext from "./useAuthenticationContext";
 
 const PrivateRoute = ({ render, ...rest }: RouteProps) => {
-  const { advertisedUrl, clientId, authenticationServiceUrl } = useConfig();
+  const { advertisedUrl, clientId, stroomBaseServiceUrl } = useConfig();
+  const authenticationServiceUrl = `${stroomBaseServiceUrl}/authentication/v1`;
   const { idToken } = useAuthenticationContext();
 
   if (
