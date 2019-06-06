@@ -25,7 +25,8 @@ import { useTokenValidityCheck } from "./useTokenValidityCheck";
 
 const ResetPasswordContainer = () => {
   const { resetPassword } = useResetPassword();
-  const { authenticationServiceUrl } = useConfig();
+  const { authBaseServiceUrl } = useConfig();
+  const authenticationServiceUrl = `${authBaseServiceUrl}/authentication/v1`;
   if (!authenticationServiceUrl)
     throw Error("Config not ready or misconfigured!");
 

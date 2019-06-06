@@ -26,7 +26,8 @@ import UserFormData from "./UserFormData";
 
 const CreateUserContainer = () => {
   const { createUser } = useUsers();
-  const { authenticationServiceUrl } = useConfig();
+  const { authBaseServiceUrl } = useConfig();
+  const authenticationServiceUrl = `${authBaseServiceUrl}/authentication/v1`;
   if (!authenticationServiceUrl)
     throw Error("Configuration not ready or misconfigured!");
 

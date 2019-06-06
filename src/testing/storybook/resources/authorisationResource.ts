@@ -6,9 +6,10 @@ import { ResourceBuilder } from "./types";
 
 const resourceBuilder: ResourceBuilder = (
   server: any,
-  { authorisationServiceUrl }: Config,
+  { stroomBaseServiceUrl }: Config,
   testCache: TestCache,
 ) => {
+  const authorisationServiceUrl = `${stroomBaseServiceUrl}/authorisation/v1`;
   server
     .post(`${authorisationServiceUrl}/hasAppPermission`)
     .intercept((req: HttpRequest, res: HttpResponse) => {

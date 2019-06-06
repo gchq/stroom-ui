@@ -75,7 +75,7 @@ const CustomRouter: React.FunctionComponent<Props> = ({
 
   const setUrlPrefix = React.useCallback(
     (_urlPrefix = prefix) => setUrlPrefixRaw(_urlPrefix),
-    [setUrlPrefixRaw],
+    [setUrlPrefixRaw, prefix],
   );
 
   return (

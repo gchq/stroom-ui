@@ -6,8 +6,9 @@ import { PasswordValidationRequest } from "components/authentication/types";
 
 const resourceBuilder: ResourceBuilder = (
   server: any,
-  { authenticationServiceUrl }: Config,
+  { authBaseServiceUrl }: Config,
 ) => {
+  const authenticationServiceUrl = `${authBaseServiceUrl}/authentication/v1`;
   server
     .get(`${authenticationServiceUrl}/idToken`)
     .intercept((req: HttpRequest, res: HttpResponse) => {

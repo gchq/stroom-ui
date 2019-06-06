@@ -11,8 +11,9 @@ const AuthorisationContextProvider: React.FunctionComponent = ({
     {},
   );
   const { idToken } = useAuthenticationContext();
-  const { authorisationServiceUrl } = useConfig();
 
+  const { stroomBaseServiceUrl } = useConfig();
+  const authorisationServiceUrl = `${stroomBaseServiceUrl}/authorisation/v1`;
   const setHasAppPermission = React.useCallback(
     (permissionName: string, hasPermission: boolean) => {
       setAppPermissions({

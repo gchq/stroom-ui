@@ -30,12 +30,16 @@ import UserFormData from "./UserFormData";
 const EditUserContainer = () => {
   const { updateUser, fetchUser, user } = useUsers();
   const userId = useIdFromPath("user/");
-  const { authenticationServiceUrl } = useConfig();
   const {
     nav: { goToUsers },
   } = useAppNavigation();
-  if (!authenticationServiceUrl)
+
+  const { authBaseServiceUrl } = useConfig();
+  if (!authBaseServiceUrl) {
     throw Error("Configuration not ready or misconfigured!");
+  }
+  const authenticationServiceUrl = `${authBaseServiceUrl}/authentication/v1`;
+
   useEffect(() => {
     if (!!userId && !user) fetchUser(userId);
   }, [fetchUser, userId, user]);

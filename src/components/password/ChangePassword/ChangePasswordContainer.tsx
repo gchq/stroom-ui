@@ -31,7 +31,8 @@ const ChangePasswordContainer = () => {
   const [redirectUrl, setRedirectUrl] = useState("");
   const [email, setEmail] = useState("");
 
-  const { authenticationServiceUrl } = useConfig();
+  const { authBaseServiceUrl } = useConfig();
+  const authenticationServiceUrl = `${authBaseServiceUrl}/authentication/v1`;
   if (!authenticationServiceUrl)
     throw Error("Config not ready or misconfigured!");
 

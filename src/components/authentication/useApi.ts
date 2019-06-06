@@ -34,7 +34,8 @@ interface Api {
 
 export const useApi = (): Api => {
   const { httpGetJson, httpPostJsonResponse } = useHttpClient();
-  let { authenticationServiceUrl, clientId } = useConfig();
+  let { authBaseServiceUrl, clientId } = useConfig();
+  const authenticationServiceUrl = `${authBaseServiceUrl}/authentication/v1`;
 
   // If we have a clientId on the URL we'll use that. It means we're logging
   // in on behalf of a relying party so we need to identify as them.
