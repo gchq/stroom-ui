@@ -25,7 +25,7 @@ export const sendAuthenticationRequest = (
   authenticationServiceUrl: string,
   appPermission?: string,
 ) => {
-  const redirectUrl = `${uiUrl}/handleAuthenticationResponse`;
+  const redirectUrl = `${uiUrl}/s/handleAuthenticationResponse`;
   const state = "";
 
   // Create nonce and store, and create nonce hash

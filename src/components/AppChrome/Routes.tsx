@@ -61,25 +61,43 @@ const renderWelcome = ({
   />
 );
 
+/**
+ * This doesn't have to be 's', but that's the convention we've
+ * settled on.
+ */
+const singlePagePrefix = "/s";
+
 const Routes: React.FunctionComponent = () => {
   const { urlGenerator } = useAppNavigation();
   return (
     <Switch>
       <Route
         exact
-        path="/handleAuthenticationResponse"
+        path={`${singlePagePrefix}/handleAuthenticationResponse`}
         render={() => <HandleAuthenticationResponse />}
       />
-      <Route exact path="/error" component={ErrorPage} />
-      <Route exact path="/openWelcome" component={Welcome} />
-      <Route exact path={"/resetPassword"} component={ResetPassword} />
+      <Route exact path={`${singlePagePrefix}/error`} component={ErrorPage} />
       <Route
         exact
-        path={"/resetPasswordRequest"}
+        path={`${singlePagePrefix}/openWelcome`}
+        component={Welcome}
+      />
+      <Route
+        exact
+        path={`${singlePagePrefix}/resetPassword`}
+        component={ResetPassword}
+      />
+      <Route
+        exact
+        path={`${singlePagePrefix}/resetPasswordRequest`}
         component={ResetPasswordRequest}
       />
-      <Route exact path={"/login"} component={Login} />
-      <Route exact path={"/changepassword"} component={ChangePassword} />
+      <Route exact path={`${singlePagePrefix}/login`} component={Login} />
+      <Route
+        exact
+        path={`${singlePagePrefix}/changepassword`}
+        component={ChangePassword}
+      />
       <PrivateRoute exact path="/" render={renderWelcome} />
       <PrivateRoute
         exact
