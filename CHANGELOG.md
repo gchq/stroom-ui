@@ -6,7 +6,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [v7.0-alpha.4] - 2019-06-11
+
+- Fix build
+
 ## [v7.0-alpha.3] - 2019-06-11
+
 - Add features
 
 - Change paths

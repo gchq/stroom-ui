@@ -1,12 +1,9 @@
 #!/bin/bash
 #
-# Copy in files
+# Build the app and copy the files into the work area
 
+cd ../
+yarn build
+cd docker
 mkdir -p work
-cp ../package.json work/
-cp ../tsconfig.json work/
-cp ../tsconfig.prod.json work/
-cp ../tslint.json work/
-cp ../images.d.ts work/
-cp -r ../src work/
-cp -r ../public work/
+cp -r ../build/* work/
