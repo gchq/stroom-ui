@@ -1,7 +1,6 @@
-language: java
+language: node_js
 dist: trusty
 group: edge
-jdk: openjdk8
 sudo: required # To ensure we get a VM rather than a container for more memory and for all the apt-get stuff
 
 env:
