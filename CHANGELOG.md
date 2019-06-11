@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [v7.0-alpha.5] - 2019-06-11
+
+- Fix build
+
 ## [v7.0-alpha.4] - 2019-06-11
 
 - Fix build
@@ -59,7 +63,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Experimental first tag
 
-[unreleased]: https://github.com/gchq/stroom-auth/compare/v7.0-alpha.4...master
+[unreleased]: https://github.com/gchq/stroom-auth/compare/v7.0-alpha.5...master
+[v7.0-alpha.5]: https://github.com/gchq/stroom-auth/compare/v7.0-alpha.4...v7.0-alpha.5
 [v7.0-alpha.4]: https://github.com/gchq/stroom-auth/compare/v7.0-alpha.3...v7.0-alpha.4
 [v7.0-alpha.3]: https://github.com/gchq/stroom-auth/compare/v7.0-alpha.2...v7.0-alpha.3
 [v7.0-alpha.2]: https://github.com/gchq/stroom-auth/compare/v7.0-alpha.1...v7.0-alpha.2
