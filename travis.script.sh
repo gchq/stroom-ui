@@ -100,7 +100,8 @@ do_docker_build() {
         echo -e "all_docker_tags: [${GREEN}${all_docker_tags}${NC}]"
 
         echo -e "Preparing for ui docker build"
-        prep_ui_build 
+        mkdir -p "${CONTEXT_ROOT}/work"
+        cp -r build/* "${CONTEXT_ROOT}/work"
         release_to_docker_hub "${REPO}" "${CONTEXT_ROOT}" ${all_docker_tags}
     fi
 }
