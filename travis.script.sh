@@ -150,6 +150,11 @@ main() {
     echo_travis_env_vars
     extract_build_vars
     echo_build_vars
+
+    # Build the project
+    yarn install
+    yarn build
+
     do_docker_build
     exit 0
 }
