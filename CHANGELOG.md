@@ -7,25 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
-## [v7.0-alpha.8] - 2019-06-11
+## [v7.0-alpha.9] - 2019-06-11
 
 - Fix CI
-
-## [v7.0-alpha.7] - 2019-06-11
-
-- Fix CI
-
-## [v7.0-alpha.6] - 2019-06-11
-
-- Fix CI
-
-## [v7.0-alpha.5] - 2019-06-11
-
-- Fix build
-
-## [v7.0-alpha.4] - 2019-06-11
-
-- Fix build
 
 ## [v7.0-alpha.3] - 2019-06-11
 
@@ -75,12 +59,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Experimental first tag
 
-[unreleased]: https://github.com/gchq/stroom-auth/compare/v7.0-alpha.8...master
-[v7.0-alpha.8]: https://github.com/gchq/stroom-auth/compare/v7.0-alpha.7...v7.0-alpha.8
-[v7.0-alpha.7]: https://github.com/gchq/stroom-auth/compare/v7.0-alpha.6...v7.0-alpha.7
-[v7.0-alpha.6]: https://github.com/gchq/stroom-auth/compare/v7.0-alpha.5...v7.0-alpha.6
-[v7.0-alpha.5]: https://github.com/gchq/stroom-auth/compare/v7.0-alpha.4...v7.0-alpha.5
-[v7.0-alpha.4]: https://github.com/gchq/stroom-auth/compare/v7.0-alpha.3...v7.0-alpha.4
+[unreleased]: https://github.com/gchq/stroom-auth/compare/v7.0-alpha.9...master
+[v7.0-alpha.9]: https://github.com/gchq/stroom-auth/compare/v7.0-alpha.3...v7.0-alpha.9
 [v7.0-alpha.3]: https://github.com/gchq/stroom-auth/compare/v7.0-alpha.2...v7.0-alpha.3
 [v7.0-alpha.2]: https://github.com/gchq/stroom-auth/compare/v7.0-alpha.1...v7.0-alpha.2
 [v7.0-alpha.1]: https://github.com/gchq/stroom-auth/compare/v1.0-alpha.8...v7.0-alpha.1
