@@ -57,7 +57,7 @@ RUN apk add --no-cache \
     sed \
     --repository http://dl-3.alpinelinux.org/alpine/edge/testing/ jo
 
-COPY work/* /usr/share/nginx/html/
+COPY work /usr/share/nginx/html/
 COPY nginx.conf /etc/nginx/nginx.conf
 
 # Label the image so we can see what commit/tag it came from
