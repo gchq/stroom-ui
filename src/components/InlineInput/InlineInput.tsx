@@ -16,17 +16,23 @@
 
 import * as React from "react";
 import { FunctionComponent, InputHTMLAttributes, useCallback } from "react";
+import styled from "styled-components";
 
 const InlineInput: FunctionComponent<InputHTMLAttributes<HTMLInputElement>> = ({
   onChange,
   value,
+  width,
   ...rest
 }) => {
   const [isEditing, setEditing] = React.useState(false);
   const handleEdit = useCallback(() => setEditing(true), [setEditing]);
   if (isEditing) {
+    const StyledInput = styled.input`
+      width: ${width}em;
+    `;
+
     return (
-      <input
+      <StyledInput
         autoFocus={true}
         className="inline-input__editing"
         onBlur={() => {
