@@ -16,7 +16,7 @@
 
 import * as React from "react";
 import { storiesOf } from "@storybook/react";
-import IndexVolumesSection from "./IndexVolumesSection";
+import IndexVolumesSection from "../IndexVolumesSection";
 import { addThemedStories } from "testing/storybook/themedStoryGenerator";
 import JsonDebug from "testing/JsonDebug";
 import {
@@ -26,13 +26,13 @@ import {
   indexVolumeGroupMemberships,
   indexVolume02,
   indexVolume03,
-} from "./testData";
+} from "../testData";
 import {
   IndexVolumeGroup,
   IndexVolumeGroupMembership,
-} from "./indexVolumeGroupApi";
+} from "../indexVolumeGroupApi";
 import { useCallback } from "react";
-import { IndexVolume } from "./indexVolumeApi";
+import { IndexVolume } from "../indexVolumeApi";
 const stories = storiesOf("Sections/Index Volumes 2", module);
 
 const TestHarness: React.FunctionComponent = () => {
@@ -58,8 +58,6 @@ const TestHarness: React.FunctionComponent = () => {
   const [volumes, setVolumes] = React.useState<IndexVolume[]>(initialVolumes);
   const handleAddVolume = useCallback(
     (destinationGroupName: string) => {
-      console.log("HANDLE_ADD_VOLUME");
-      console.log({ destinationGroupName });
       const newVolumeId = "-1";
       const newVolume: IndexVolume = {
         id: newVolumeId,

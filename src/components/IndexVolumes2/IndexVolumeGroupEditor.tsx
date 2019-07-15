@@ -48,16 +48,12 @@ const IndexVolumeGroupEditor: React.FunctionComponent<Props> = ({
   onVolumeAdd,
   onGroupAdd,
 }) => {
-  console.log("EDITOR");
   const onDragEnd = (result: DropResult) => {
-    console.log({ result });
     if (!result.destination) {
-      console.log("Not dopped anywhere");
       return;
     }
 
     if (result.destination.droppableId === result.source.droppableId) {
-      console.log("Dropped in it's own list");
       return;
     }
 

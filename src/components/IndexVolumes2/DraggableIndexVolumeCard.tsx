@@ -5,6 +5,7 @@ import { IndexVolume } from "./indexVolumeApi";
 import InlineInput from "components/InlineInput/InlineInput";
 import { DraggableProvided, DraggableStateSnapshot } from "react-beautiful-dnd";
 import { Component } from "react";
+
 interface Props {
   indexVolume: IndexVolume;
   provided: DraggableProvided;
@@ -12,17 +13,9 @@ interface Props {
 }
 
 const getItemStyle = (isDragging: boolean, draggableStyle: any) => ({
-  // some basic styles to make the items look a bit nicer
   userSelect: "none",
-  // padding: grid * 2,
-  // margin: `0 0 ${grid}px 0`,
-
-  // change background colour if dragging
-  // background: "white",
   background: isDragging ? "rgba(255, 143, 0, 0.2)" : "white",
   border: isDragging ? "1 solid lightgrey" : "1 solid blue",
-
-  // styles we need to apply on draggables
   ...draggableStyle,
 });
 

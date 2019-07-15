@@ -18,7 +18,7 @@ import * as React from "react";
 
 import { storiesOf } from "@storybook/react";
 
-import IndexVolumeGroupEditor from "./IndexVolumeGroupEditor";
+import IndexVolumeGroupEditor from "../IndexVolumeGroupEditor";
 import { addThemedStories } from "testing/storybook/themedStoryGenerator";
 
 import {
@@ -28,7 +28,7 @@ import {
   indexVolumeGroupMemberships,
   indexVolume02,
   indexVolume03,
-} from "./testData";
+} from "../testData";
 
 const stories = storiesOf(
   "Sections/Index Volumes 2/IndexVolumeGroupEditor",
