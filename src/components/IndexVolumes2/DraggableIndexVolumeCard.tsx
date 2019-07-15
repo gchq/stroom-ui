@@ -12,6 +12,7 @@ interface Props {
   provided: DraggableProvided;
   snapshot: DraggableStateSnapshot;
   onDelete: (volumeId: string) => void;
+  onChange: (indexVolume: IndexVolume) => void;
 }
 
 const getItemStyle = (isDragging: boolean, draggableStyle: any) => ({
@@ -80,7 +81,15 @@ const Contents = styled.div`
  */
 class DraggableIndexVolumeCard extends Component<Props> {
   render() {
-    const { indexVolume, provided, snapshot, onDelete } = this.props;
+    const { indexVolume, provided, snapshot, onDelete, onChange } = this.props;
+
+    const handleNodeNameChange = (newNodeName: string) => {
+      const newIndexVolume = {
+        ...indexVolume,
+        nodeName: newNodeName,
+      };
+      onChange(newIndexVolume);
+    };
     return (
       <StyledCard
         ref={provided.innerRef}
@@ -98,6 +107,7 @@ class DraggableIndexVolumeCard extends Component<Props> {
               <InlineInput
                 value={indexVolume.nodeName}
                 width={inlineInputWidth}
+                onChange={event => handleNodeNameChange(event.target.value)}
               />
             </Field>
             <Field>

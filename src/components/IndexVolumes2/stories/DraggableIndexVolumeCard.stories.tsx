@@ -62,6 +62,7 @@ addThemedStories(stories, () => (
       snapshot={snapshot}
       indexVolume={indexVolume01}
       onDelete={() => console.log("onDelete")}
+      onChange={() => console.log("onChange")}
     />
   </div>
 ));
