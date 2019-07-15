@@ -92,7 +92,7 @@ const indexVolume03: IndexVolume = {
   updateUser: "Updating user",
 };
 
-const indexVolumeGroupMemberships: IndexVolumeGroupMembership[] = [
+var indexVolumeGroupMemberships: IndexVolumeGroupMembership[] = [
   { volumeId: "1", groupName: "Index volume group 01" },
   { volumeId: "2", groupName: "Index volume group 01" },
   { volumeId: "3", groupName: "Index volume group 02" },
@@ -110,6 +110,10 @@ addThemedStories(stories, () => (
         destinationVolumeGroupName,
       ) => {
         console.log("change");
+        var membership = indexVolumeGroupMemberships.find(
+          ivgm => ivgm.volumeId === volumeId,
+        );
+        membership.groupName = destinationVolumeGroupName;
       }}
     />
   </div>
