@@ -11,24 +11,32 @@ import {
   IndexVolumeGroup,
   IndexVolumeGroupMembership,
 } from "./indexVolumeGroupApi";
-import DraggableIndexVolumeCard from "./DraggableIndexVolumeCard";
+import DraggableIndexVolumeCard, {
+  StyledCard,
+} from "./DraggableIndexVolumeCard";
+import Button from "components/Button";
 
 interface Props {
   indexVolumeGroups: IndexVolumeGroup[];
   indexVolumes: IndexVolume[];
   indexVolumeGroupMemberships: IndexVolumeGroupMembership[];
-  onGroupChange: (
+  onVolumeMove: (
     volumeId: string,
     sourceVolumeGroupName: string,
     destinationVolumeGroupName: string,
   ) => void;
+  onVolumeAdd: (destinationGroupName: string) => void;
+  onGroupAdd: () => void;
 }
 
 const getListStyle = (isDraggingOver: boolean) => ({
   background: isDraggingOver ? "rgba(144,202,249,0.3)" : "white",
   border: "0.1em solid lightgrey",
   width: "100%",
-  padding: "1em",
+  paddingTop: "1em",
+  paddingRight: "1em",
+  paddingLeft: "1em",
+  paddingBottom: "0.6em",
   marginBottom: "1.5em",
 });
 
@@ -36,8 +44,11 @@ const IndexVolumeGroupEditor: React.FunctionComponent<Props> = ({
   indexVolumes,
   indexVolumeGroups,
   indexVolumeGroupMemberships,
-  onGroupChange,
+  onVolumeMove,
+  onVolumeAdd,
+  onGroupAdd,
 }) => {
+  console.log("EDITOR");
   const onDragEnd = (result: DropResult) => {
     console.log({ result });
     if (!result.destination) {
@@ -50,7 +61,7 @@ const IndexVolumeGroupEditor: React.FunctionComponent<Props> = ({
       return;
     }
 
-    onGroupChange(
+    onVolumeMove(
       result.draggableId,
       result.source.droppableId,
       result.destination.droppableId,
@@ -65,8 +76,14 @@ const IndexVolumeGroupEditor: React.FunctionComponent<Props> = ({
   const List = styled.div`
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
   `;
-
+  const AddVolumeCard = styled(StyledCard)`
+    width: 10em;
+  `;
+  const AddVolumeGroupCard = styled(StyledCard)`
+    width: 15em;
+  `;
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       {indexVolumeGroups.map((indexVolumeGroup, index) => {
@@ -85,6 +102,9 @@ const IndexVolumeGroupEditor: React.FunctionComponent<Props> = ({
                   <GroupTitle>{indexVolumeGroup.name}</GroupTitle>
                   <List>
                     {indexVolumes.map((indexVolume, index) => {
+                      console.log("PRINTING VOLS");
+                      console.log({ indexVolume });
+                      console.log({ indexVolumeGroupMemberships });
                       const found = indexVolumeGroupMemberships.find(
                         ivgm =>
                           ivgm.groupName === indexVolumeGroup.name &&
@@ -109,14 +129,29 @@ const IndexVolumeGroupEditor: React.FunctionComponent<Props> = ({
                         undefined
                       );
                     })}
+                    <AddVolumeCard>
+                      <Button
+                        text="Add volume"
+                        icon="plus"
+                        onClick={() => onVolumeAdd(indexVolumeGroup.name)}
+                      />
+                    </AddVolumeCard>
+                    {provided.placeholder}
                   </List>
-                  {provided.placeholder}
                 </div>
               </div>
             )}
           </Droppable>
         );
       })}
+
+      <AddVolumeGroupCard>
+        <Button
+          text="Add volume group"
+          icon="plus"
+          onClick={() => onGroupAdd()}
+        />
+      </AddVolumeGroupCard>
     </DragDropContext>
   );
 };

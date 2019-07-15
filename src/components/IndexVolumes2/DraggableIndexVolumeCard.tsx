@@ -26,10 +26,12 @@ const getItemStyle = (isDragging: boolean, draggableStyle: any) => ({
   ...draggableStyle,
 });
 
-var StyledCard = styled.div`
+export const StyledCard = styled.div`
   width: 24em;
   cursor: grab;
   margin-right: 1em;
+  margin-bottom: 0.5em;
+  margin-top: 0.5em;
   border: 0.01em solid lightgrey;
   padding: 0.7em;
 `;

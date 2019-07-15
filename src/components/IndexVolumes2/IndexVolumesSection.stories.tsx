@@ -15,15 +15,105 @@
  */
 
 import * as React from "react";
-
 import { storiesOf } from "@storybook/react";
-
 import IndexVolumesSection from "./IndexVolumesSection";
-
 import { addThemedStories } from "testing/storybook/themedStoryGenerator";
-
+import JsonDebug from "testing/JsonDebug";
+import {
+  indexVolume01,
+  indexVolumeGroup01,
+  indexVolumeGroup02,
+  indexVolumeGroupMemberships,
+  indexVolume02,
+  indexVolume03,
+} from "./testData";
+import {
+  IndexVolumeGroup,
+  IndexVolumeGroupMembership,
+} from "./indexVolumeGroupApi";
+import { useCallback } from "react";
+import { IndexVolume } from "./indexVolumeApi";
 const stories = storiesOf("Sections/Index Volumes 2", module);
 
-addThemedStories(stories, () => (
-  <IndexVolumesSection indexVolumeGroups={[]} indexVolumes={[]} />
-));
+const TestHarness: React.FunctionComponent = () => {
+  var initialGroups = [indexVolumeGroup01, indexVolumeGroup02];
+  var initialVolumes = [indexVolume01, indexVolume02, indexVolume03];
+
+  const [memberships, setMemberships] = React.useState<
+    IndexVolumeGroupMembership[]
+  >(indexVolumeGroupMemberships);
+
+  const [groups, setGroups] = React.useState<IndexVolumeGroup[]>(initialGroups);
+  const handleAddGroup = useCallback(() => {
+    const newGroup: IndexVolumeGroup = {
+      name: "New group",
+      createTimeMs: -1,
+      createUser: "",
+      updateTimeMs: -1,
+      updateUser: "",
+    };
+    setGroups([...groups, newGroup]);
+  }, [setGroups, groups]);
+
+  const [volumes, setVolumes] = React.useState<IndexVolume[]>(initialVolumes);
+  const handleAddVolume = useCallback(
+    (destinationGroupName: string) => {
+      console.log("HANDLE_ADD_VOLUME");
+      console.log({ destinationGroupName });
+      const newVolumeId = "-1";
+      const newVolume: IndexVolume = {
+        id: newVolumeId,
+        path: "",
+        nodeName: "New volume",
+        bytesLimit: -1,
+        bytesUsed: -1,
+        bytesFree: -1,
+        bytesTotal: -1,
+        statusMs: -1,
+        createTimeMs: -1,
+        createUser: "",
+        updateTimeMs: -1,
+        updateUser: "",
+      };
+      const newMembership: IndexVolumeGroupMembership = {
+        volumeId: newVolumeId,
+        groupName: destinationGroupName,
+      };
+      setMemberships([...memberships, newMembership]);
+      setVolumes([...volumes, newVolume]);
+    },
+    [setVolumes, setMemberships],
+  );
+  return (
+    <div>
+      <IndexVolumesSection
+        indexVolumeGroups={groups}
+        indexVolumes={volumes}
+        indexVolumeGroupMemberships={memberships}
+        onGroupAdd={handleAddGroup}
+        onGroupChange={() => console.log("onGroupChange")}
+        onGroupDelete={() => console.log("onGroupDelete")}
+        onVolumeAdd={handleAddVolume}
+        onVolumeChange={() => console.log("onVolumeChange")}
+        onVolumeDelete={() => console.log("onVolumeDelete")}
+        onVolumeMove={(
+          volumeId,
+          sourceVolumeGroupName,
+          destinationVolumeGroupName,
+        ) => {
+          console.log("onVolumeMove");
+          var membership = indexVolumeGroupMemberships.find(
+            ivgm => ivgm.volumeId === volumeId,
+          );
+          membership.groupName = destinationVolumeGroupName;
+        }}
+      />
+
+      <JsonDebug value={{ groups }} />
+      <JsonDebug value={{ memberships }} />
+      <JsonDebug value={{ volumes }} />
+    </div>
+  );
+};
+
+addThemedStories(stories, () => <TestHarness />);
