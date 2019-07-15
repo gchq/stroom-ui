@@ -1,67 +1,128 @@
 import * as React from "react";
-import { Card } from "antd";
+// import { Card } from "antd";
 import styled from "styled-components";
-import DocRefImage from "../DocRefImage";
+import {
+  DragDropContext,
+  Droppable,
+  Draggable,
+  DropResult,
+} from "react-beautiful-dnd";
 import { IndexVolume } from "./indexVolumeApi";
-import { IndexVolumeGroup } from "./indexVolumeGroupApi";
-import InlineInput from "components/InlineInput/InlineInput";
+import {
+  IndexVolumeGroup,
+  IndexVolumeGroupMembership,
+} from "./indexVolumeGroupApi";
+import IndexVolumeCard from "./IndexVolumeCard";
+import DraggableIndexVolumeCard from "./DraggableIndexVolumeCard";
+import move from "ramda/es/move";
 
 interface Props {
-  indexVolumeGroup: IndexVolumeGroup;
+  indexVolumeGroups: IndexVolumeGroup[];
   indexVolumes: IndexVolume[];
+  indexVolumeGroupMemberships: IndexVolumeGroupMembership[];
+  onGroupChange: (
+    volumeId: string,
+    sourceVolumeGroupName: string,
+    destinationVolumeGroupName: string,
+  ) => void;
 }
+
+const getListStyle = (isDraggingOver: boolean) => ({
+  background: isDraggingOver ? "rgba(144,202,249,0.3)" : "white",
+  border: "0.1em solid lightgrey",
+  width: "100%",
+  padding: "1em",
+  marginBottom: "1.5em",
+  // padding: grid,
+  // width: 250,
+});
 
 const IndexVolumeGroupEditor: React.FunctionComponent<Props> = ({
   indexVolumes,
-  indexVolumeGroup,
+  indexVolumeGroups,
+  indexVolumeGroupMemberships,
+  onGroupChange,
 }) => {
-  var StyledCard = styled(Card)`
-    width: 24em;
-    cursor: grab;
+  const onDragEnd = (result: DropResult) => {
+    console.log({ result });
+    if (!result.destination) {
+      console.log("Not dopped anywhere");
+      return;
+    }
+
+    if (result.destination.droppableId === result.source.droppableId) {
+      console.log("Dropped in it's own list");
+      return;
+    }
+
+    onGroupChange(
+      result.draggableId,
+      result.source.droppableId,
+      result.destination.droppableId,
+    );
+  };
+
+  var GroupTitle = styled.div`
+    margin-bottom: 0.5em;
+    font-size: 1.25em;
   `;
 
-  const Field = styled.div`
+  const List = styled.div`
     display: flex;
     flex-direction: row;
-    text-align: right;
   `;
 
-  const Label = styled.label`
-    width: 5.8em;
-    margin-right: 0.5em;
-  `;
-
-  const inlineInputWidth = 18;
-
-  const { Meta } = Card;
-
-  const StyledMeta = styled(Meta)`
-    margin-bottom: 0.5em;
-  `;
   return (
-    <StyledCard size="small">
-      <StyledMeta
-        avatar={<DocRefImage docRefType="Index" />}
-        title={indexVolumeGroup.name}
-      />
-      {indexVolumes.map(indexVolume => {
+    <DragDropContext onDragEnd={onDragEnd}>
+      {indexVolumeGroups.map((indexVolumeGroup, index) => {
         return (
-          <div key={indexVolume.id}>
-            <Field>
-              <Label>Node name: </Label>
-              <InlineInput
-                value={indexVolume.nodeName}
-                width={inlineInputWidth}
-              />
-            </Field>
-            <Field>
-              <Label>Path: </Label>
-              <InlineInput value={indexVolume.path} width={inlineInputWidth} />
-            </Field>
-          </div>
+          <Droppable
+            key={index}
+            droppableId={indexVolumeGroup.name}
+            direction="horizontal"
+          >
+            {(provided, snapshot) => (
+              <div
+                ref={provided.innerRef}
+                style={getListStyle(snapshot.isDraggingOver)}
+              >
+                <div>
+                  <GroupTitle>{indexVolumeGroup.name}</GroupTitle>
+                  <List>
+                    {indexVolumes.map((indexVolume, index) => {
+                      const found = indexVolumeGroupMemberships.find(
+                        ivgm =>
+                          ivgm.groupName === indexVolumeGroup.name &&
+                          ivgm.volumeId === indexVolume.id,
+                      );
+                      return found ? (
+                        <Draggable
+                          key={indexVolume.id}
+                          draggableId={indexVolume.id}
+                          index={index}
+                        >
+                          {(provided, snapshot) => (
+                            <DraggableIndexVolumeCard
+                              provided={provided}
+                              snapshot={snapshot}
+                              key={indexVolume.id}
+                              indexVolume={indexVolume}
+                            />
+                          )}
+                        </Draggable>
+                      ) : (
+                        undefined
+                      );
+                    })}
+                  </List>
+                  {provided.placeholder}
+                </div>
+              </div>
+            )}
+          </Droppable>
         );
       })}
-    </StyledCard>
+    </DragDropContext>
   );
 };
 

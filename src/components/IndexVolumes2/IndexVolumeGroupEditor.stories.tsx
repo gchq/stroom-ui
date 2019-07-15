@@ -19,7 +19,10 @@ import * as React from "react";
 import { storiesOf } from "@storybook/react";
 
 import IndexVolumeGroupEditor from "./IndexVolumeGroupEditor";
-import { IndexVolumeGroup } from "./indexVolumeGroupApi";
+import {
+  IndexVolumeGroup,
+  IndexVolumeGroupMembership,
+} from "./indexVolumeGroupApi";
 import { addThemedStories } from "testing/storybook/themedStoryGenerator";
 import { IndexVolume } from "./indexVolumeApi";
 
@@ -28,8 +31,16 @@ const stories = storiesOf(
   module,
 );
 
-const indexVolumeGroup: IndexVolumeGroup = {
-  name: "Index Volume Group 1",
+const indexVolumeGroup01: IndexVolumeGroup = {
+  name: "Index volume group 01",
+  createTimeMs: Date.now(),
+  updateTimeMs: Date.now(),
+  createUser: "Test user",
+  updateUser: "Updating user",
+};
+
+const indexVolumeGroup02: IndexVolumeGroup = {
+  name: "Index volume group 02",
   createTimeMs: Date.now(),
   updateTimeMs: Date.now(),
   createUser: "Test user",
@@ -37,8 +48,8 @@ const indexVolumeGroup: IndexVolumeGroup = {
 };
 
 const indexVolume01: IndexVolume = {
-  nodeName: "Index volume name",
-  path: "/some/amazing/pathj",
+  nodeName: "Index volume name 01",
+  path: "/some/amazing/path",
   bytesFree: 1,
   bytesLimit: 1,
   bytesTotal: 1,
@@ -51,11 +62,55 @@ const indexVolume01: IndexVolume = {
   updateUser: "Updating user",
 };
 
+const indexVolume02: IndexVolume = {
+  nodeName: "Index volume name 02",
+  path: "/some/amazing/path",
+  bytesFree: 1,
+  bytesLimit: 1,
+  bytesTotal: 1,
+  bytesUsed: 1,
+  createTimeMs: Date.now(),
+  createUser: "Creating user",
+  id: "2",
+  statusMs: Date.now(),
+  updateTimeMs: Date.now(),
+  updateUser: "Updating user",
+};
+
+const indexVolume03: IndexVolume = {
+  nodeName: "Index volume name 03",
+  path: "/some/amazing/path",
+  bytesFree: 1,
+  bytesLimit: 1,
+  bytesTotal: 1,
+  bytesUsed: 1,
+  createTimeMs: Date.now(),
+  createUser: "Creating user",
+  id: "3",
+  statusMs: Date.now(),
+  updateTimeMs: Date.now(),
+  updateUser: "Updating user",
+};
+
+const indexVolumeGroupMemberships: IndexVolumeGroupMembership[] = [
+  { volumeId: "1", groupName: "Index volume group 01" },
+  { volumeId: "2", groupName: "Index volume group 01" },
+  { volumeId: "3", groupName: "Index volume group 02" },
+];
+
 addThemedStories(stories, () => (
   <div style={{ padding: "1em" }}>
     <IndexVolumeGroupEditor
-      indexVolumeGroup={indexVolumeGroup}
-      indexVolumes={[indexVolume01]}
+      indexVolumeGroups={[indexVolumeGroup01, indexVolumeGroup02]}
+      indexVolumeGroupMemberships={indexVolumeGroupMemberships}
+      indexVolumes={[indexVolume01, indexVolume02, indexVolume03]}
+      onGroupChange={(
+        volumeId,
+        sourceVolumeGroupName,
+        destinationVolumeGroupName,
+      ) => {
+        console.log("change");
+      }}
     />
   </div>
 ));
