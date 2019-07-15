@@ -54,6 +54,7 @@ addThemedStories(stories, () => (
       }}
       onGroupAdd={() => console.log("onGroupAdd")}
       onVolumeAdd={() => console.log("onVolumeAdd")}
+      onVolumeDelete={() => console.log("onVolumeDelete")}
     />
   </div>
 ));

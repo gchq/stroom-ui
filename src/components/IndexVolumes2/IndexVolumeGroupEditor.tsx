@@ -27,6 +27,7 @@ interface Props {
   ) => void;
   onVolumeAdd: (destinationGroupName: string) => void;
   onGroupAdd: () => void;
+  onVolumeDelete: (volumeId: string) => void;
 }
 
 const getListStyle = (isDraggingOver: boolean) => ({
@@ -38,6 +39,7 @@ const getListStyle = (isDraggingOver: boolean) => ({
   paddingLeft: "1em",
   paddingBottom: "0.6em",
   marginBottom: "1.5em",
+  boxShadow: "4px 4px 5px -1px rgba(0, 0, 0, 0.06)",
 });
 
 const IndexVolumeGroupEditor: React.FunctionComponent<Props> = ({
@@ -46,6 +48,7 @@ const IndexVolumeGroupEditor: React.FunctionComponent<Props> = ({
   indexVolumeGroupMemberships,
   onVolumeMove,
   onVolumeAdd,
+  onVolumeDelete,
   onGroupAdd,
 }) => {
   const onDragEnd = (result: DropResult) => {
@@ -75,10 +78,18 @@ const IndexVolumeGroupEditor: React.FunctionComponent<Props> = ({
     flex-wrap: wrap;
   `;
   const AddVolumeCard = styled(StyledCard)`
+    background-color: white;
     width: 10em;
+    -webkit-box-shadow: 4px 4px 5px -1px rgba(0, 0, 0, 0.06);
+    -moz-box-shadow: 4px 4px 5px -1px rgba(0, 0, 0, 0.06);
+    box-shadow: 4px 4px 5px -1px rgba(0, 0, 0, 0.06);
   `;
   const AddVolumeGroupCard = styled(StyledCard)`
+    background-color: white;
     width: 15em;
+    -webkit-box-shadow: 4px 4px 5px -1px rgba(0, 0, 0, 0.06);
+    -moz-box-shadow: 4px 4px 5px -1px rgba(0, 0, 0, 0.06);
+    box-shadow: 4px 4px 5px -1px rgba(0, 0, 0, 0.06);
   `;
   return (
     <DragDropContext onDragEnd={onDragEnd}>
@@ -98,9 +109,6 @@ const IndexVolumeGroupEditor: React.FunctionComponent<Props> = ({
                   <GroupTitle>{indexVolumeGroup.name}</GroupTitle>
                   <List>
                     {indexVolumes.map((indexVolume, index) => {
-                      console.log("PRINTING VOLS");
-                      console.log({ indexVolume });
-                      console.log({ indexVolumeGroupMemberships });
                       const found = indexVolumeGroupMemberships.find(
                         ivgm =>
                           ivgm.groupName === indexVolumeGroup.name &&
@@ -118,6 +126,7 @@ const IndexVolumeGroupEditor: React.FunctionComponent<Props> = ({
                               snapshot={snapshot}
                               key={indexVolume.id}
                               indexVolume={indexVolume}
+                              onDelete={onVolumeDelete}
                             />
                           )}
                         </Draggable>

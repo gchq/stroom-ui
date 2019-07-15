@@ -57,6 +57,7 @@ const IndexVolumesSection: React.FunctionComponent<Props> = ({
           onVolumeMove={onVolumeMove}
           onGroupAdd={onGroupAdd}
           onVolumeAdd={onVolumeAdd}
+          onVolumeDelete={onVolumeDelete}
         />
       </Body>
     </Page>

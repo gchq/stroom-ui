@@ -5,19 +5,28 @@ import { IndexVolume } from "./indexVolumeApi";
 import InlineInput from "components/InlineInput/InlineInput";
 import { DraggableProvided, DraggableStateSnapshot } from "react-beautiful-dnd";
 import { Component } from "react";
+import Button from "components/Button";
 
 interface Props {
   indexVolume: IndexVolume;
   provided: DraggableProvided;
   snapshot: DraggableStateSnapshot;
+  onDelete: (volumeId: string) => void;
 }
 
 const getItemStyle = (isDragging: boolean, draggableStyle: any) => ({
   userSelect: "none",
   background: isDragging ? "rgba(255, 143, 0, 0.2)" : "white",
   border: isDragging ? "1 solid lightgrey" : "1 solid blue",
+  boxShadow: "4px 4px 5px -1px rgba(0, 0, 0, 0.06)",
   ...draggableStyle,
 });
+const ActionColumn = styled.div`
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  visibility: hidden;
+`;
 
 export const StyledCard = styled.div`
   width: 24em;
@@ -27,6 +36,17 @@ export const StyledCard = styled.div`
   margin-top: 0.5em;
   border: 0.01em solid lightgrey;
   padding: 0.7em;
+
+  -webkit-box-shadow: 4px 4px 5px -1px rgba(0, 0, 0, 0.06);
+  -moz-box-shadow: 4px 4px 5px -1px rgba(0, 0, 0, 0.06);
+  box-shadow: 4px 4px 5px -1px rgba(0, 0, 0, 0.06);
+
+  :hover {
+    border: 0.01em solid rgba(255, 143, 0, 0.8);
+  }
+  &:hover ${ActionColumn} {
+    visibility: visible;
+  }
 `;
 
 const Field = styled.div`
@@ -42,16 +62,16 @@ const Label = styled.label`
 
 const inlineInputWidth = 15;
 
-const Contents = styled.div`
-  display: flex;
-  flex-direction: row;
-`;
-
 const IconColumn = styled.div`
   padding-right: 1em;
   justify-content: center;
   align-items: center;
   display: flex;
+`;
+
+const Contents = styled.div`
+  display: flex;
+  flex-direction: row;
 `;
 
 /**
@@ -60,7 +80,7 @@ const IconColumn = styled.div`
  */
 class DraggableIndexVolumeCard extends Component<Props> {
   render() {
-    const { indexVolume, provided, snapshot } = this.props;
+    const { indexVolume, provided, snapshot, onDelete } = this.props;
     return (
       <StyledCard
         ref={provided.innerRef}
@@ -85,6 +105,14 @@ class DraggableIndexVolumeCard extends Component<Props> {
               <InlineInput value={indexVolume.path} width={inlineInputWidth} />
             </Field>
           </div>
+          <ActionColumn>
+            <Button
+              appearance="icon"
+              icon="trash"
+              action="secondary"
+              onClick={() => onDelete(indexVolume.id)}
+            />
+          </ActionColumn>
         </Contents>
       </StyledCard>
     );

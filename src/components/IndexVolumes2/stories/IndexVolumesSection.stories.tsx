@@ -82,6 +82,14 @@ const TestHarness: React.FunctionComponent = () => {
     },
     [setVolumes, setMemberships],
   );
+
+  const handleDeleteVolume = useCallback(
+    (volumeId: string) => {
+      setVolumes(volumes.filter(v => v.id !== volumeId));
+      setMemberships(memberships.filter(m => m.volumeId !== volumeId));
+    },
+    [setVolumes, setMemberships],
+  );
   return (
     <div>
       <IndexVolumesSection
@@ -93,7 +101,7 @@ const TestHarness: React.FunctionComponent = () => {
         onGroupDelete={() => console.log("onGroupDelete")}
         onVolumeAdd={handleAddVolume}
         onVolumeChange={() => console.log("onVolumeChange")}
-        onVolumeDelete={() => console.log("onVolumeDelete")}
+        onVolumeDelete={handleDeleteVolume}
         onVolumeMove={(
           volumeId,
           sourceVolumeGroupName,
