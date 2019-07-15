@@ -4,9 +4,7 @@ import DocRefImage from "../DocRefImage";
 import { IndexVolume } from "./indexVolumeApi";
 import InlineInput from "components/InlineInput/InlineInput";
 import { DraggableProvided, DraggableStateSnapshot } from "react-beautiful-dnd";
-import { render } from "react-dom";
 import { Component } from "react";
-
 interface Props {
   indexVolume: IndexVolume;
   provided: DraggableProvided;

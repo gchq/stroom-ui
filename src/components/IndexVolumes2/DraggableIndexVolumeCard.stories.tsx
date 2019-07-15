@@ -15,9 +15,7 @@
  */
 
 import * as React from "react";
-
 import { storiesOf } from "@storybook/react";
-
 import { addThemedStories } from "testing/storybook/themedStoryGenerator";
 import { IndexVolume } from "./indexVolumeApi";
 import DraggableIndexVolumeCard from "./DraggableIndexVolumeCard";

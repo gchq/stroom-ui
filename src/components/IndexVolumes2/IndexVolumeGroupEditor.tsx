@@ -1,5 +1,4 @@
 import * as React from "react";
-// import { Card } from "antd";
 import styled from "styled-components";
 import {
   DragDropContext,
@@ -12,9 +11,7 @@ import {
   IndexVolumeGroup,
   IndexVolumeGroupMembership,
 } from "./indexVolumeGroupApi";
-import IndexVolumeCard from "./IndexVolumeCard";
 import DraggableIndexVolumeCard from "./DraggableIndexVolumeCard";
-import move from "ramda/es/move";
 
 interface Props {
   indexVolumeGroups: IndexVolumeGroup[];
@@ -33,8 +30,6 @@ const getListStyle = (isDraggingOver: boolean) => ({
   width: "100%",
   padding: "1em",
   marginBottom: "1.5em",
-  // padding: grid,
-  // width: 250,
 });
 
 const IndexVolumeGroupEditor: React.FunctionComponent<Props> = ({
