@@ -80,7 +80,7 @@ const TestHarness: React.FunctionComponent = () => {
       setMemberships([...memberships, newMembership]);
       setVolumes([...volumes, newVolume]);
     },
-    [setVolumes, setMemberships],
+    [setVolumes, setMemberships, memberships, volumes],
   );
 
   const handleDeleteVolume = useCallback(
@@ -88,13 +88,16 @@ const TestHarness: React.FunctionComponent = () => {
       setVolumes(volumes.filter(v => v.id !== volumeId));
       setMemberships(memberships.filter(m => m.volumeId !== volumeId));
     },
-    [setVolumes, setMemberships],
+    [setVolumes, setMemberships, memberships, volumes],
   );
 
-  const handleVolumeChange = useCallback((indexVolume: IndexVolume) => {
-    const otherVolumes = volumes.filter(v => v.id !== indexVolume.id);
-    setVolumes([...otherVolumes, indexVolume]);
-  }, []);
+  const handleVolumeChange = useCallback(
+    (indexVolume: IndexVolume) => {
+      const otherVolumes = volumes.filter(v => v.id !== indexVolume.id);
+      setVolumes([...otherVolumes, indexVolume]);
+    },
+    [volumes],
+  );
 
   return (
     <div>

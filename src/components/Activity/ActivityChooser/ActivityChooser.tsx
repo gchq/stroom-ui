@@ -1,27 +1,10 @@
 import * as React from "react";
 
 import Button from "components/Button";
-// import NewActivityDialog, {
-//   useDialog as useCreateNewActivityDialog,
-// } from "./NewActivityDialog/NewActivityDialog";
-// import ThemedConfirm, {
-//   useDialog as useThemedConfirmDialog,
-// } from "components/ThemedConfirm";
-// import ActivitiesTable, {
-//   useTable,
-// } from "./ActivitiesTable/ActivitiesTable";
-// import {
-//   ActivityGroupModalPicker,
-//   useActivityGroupModalPicker,
-// } from "../ActivityGroups/ActivityGroupPickerDialog";
-// import { useActivities, Activity } from "components/Activities/api";
 import useAppNavigation from "lib/useAppNavigation";
 import useActivities from "../api/useActivities";
 import Toggle from "react-toggle";
-// import DocRefIconHeader from "components/DocRefIconHeader";
-import ThemedConfirm, {
-  useDialog as useThemedConfirmDialog,
-} from "components/ThemedConfirm";
+import { useDialog as useThemedConfirmDialog } from "components/ThemedConfirm";
 import ActivityTable, { useTable } from "../ActivityTable";
 import { Activity } from "../api/types";
 import IconHeader from "components/IconHeader";
@@ -32,12 +15,7 @@ const ActivityChooser: React.FunctionComponent = () => {
     nav: { goToActivity },
   } = useAppNavigation();
 
-  const {
-    activities,
-    createActivity,
-    updateActivity,
-    deleteActivity,
-  } = useActivities();
+  const { activities, deleteActivity } = useActivities();
 
   const { componentProps: tableProps } = useTable(activities, {
     filterable,
@@ -45,24 +23,6 @@ const ActivityChooser: React.FunctionComponent = () => {
   const {
     selectableTableProps: { selectedItems: selectedActivities },
   } = tableProps;
-
-  // const {
-  //   showDialog: showCreateNewDialog,
-  //   componentProps: createNewDialogProps,
-  // } = useCreateNewActivityDialog(createActivity);
-
-  // const {
-  //   showDialog: showAddToGroupDialog,
-  //   componentProps: addToGroupProps,
-  // } = useActivityGroupModalPicker({
-  //   onConfirm: React.useCallback(
-  //     groupName =>
-  //       selectedActivities
-  //         .map((v: Activity) => v.id)
-  //         .forEach((vId: string) => addVolumeToGroup(vId, groupName)),
-  //     [addVolumeToGroup, selectedActivities],
-  //   ),
-  // });
 
   const onCreateClick: React.MouseEventHandler<
     HTMLButtonElement
@@ -80,10 +40,7 @@ const ActivityChooser: React.FunctionComponent = () => {
     }
   }, [goToActivity, selectedActivities]);
 
-  const {
-    showDialog: onDeleteClick,
-    componentProps: deleteDialogProps,
-  } = useThemedConfirmDialog({
+  const { showDialog: onDeleteClick } = useThemedConfirmDialog({
     getQuestion: React.useCallback(
       () => `Are you sure you want to delete the selected activities`,
       [],

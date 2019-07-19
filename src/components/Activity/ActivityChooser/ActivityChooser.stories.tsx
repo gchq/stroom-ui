@@ -17,7 +17,7 @@
 import * as React from "react";
 
 import { storiesOf } from "@storybook/react";
-import { Switch, Route, RouteComponentProps } from "react-router";
+import { Switch, Route } from "react-router";
 
 import ActivityChooser from "./ActivityChooser";
 

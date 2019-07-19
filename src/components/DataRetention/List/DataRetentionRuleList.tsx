@@ -75,7 +75,7 @@ const DataRetentionRuleList: React.FunctionComponent<
         onChange(itemsWithUpdatedRuleNumbers);
       }
     },
-    [updateItemAtIndex, onChange],
+    [onChange, items],
   );
   return (
     <DragDropContext onDragEnd={handleOnDragEnd}>
