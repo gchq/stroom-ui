@@ -6,6 +6,7 @@ import InlineInput from "components/InlineInput/InlineInput";
 import { DraggableProvided, DraggableStateSnapshot } from "react-beautiful-dnd";
 import { Component } from "react";
 import Button from "components/Button";
+import MinimalInput from "./MinimalInput";
 
 interface Props {
   indexVolume: IndexVolume;
@@ -22,7 +23,7 @@ const getItemStyle = (isDragging: boolean, draggableStyle: any) => ({
   boxShadow: "4px 4px 5px -1px rgba(0, 0, 0, 0.06)",
   ...draggableStyle,
 });
-const ActionColumn = styled.div`
+const ActionContainer = styled.div`
   justify-content: center;
   align-items: center;
   display: flex;
@@ -45,12 +46,13 @@ export const StyledCard = styled.div`
   :hover {
     border: 0.01em solid rgba(255, 143, 0, 0.8);
   }
-  &:hover ${ActionColumn} {
+  &:hover ${ActionContainer} {
     visibility: visible;
   }
 `;
 
 const Field = styled.div`
+  height: 2.3em;
   display: flex;
   flex-direction: row;
   text-align: right;
@@ -61,18 +63,22 @@ const Label = styled.label`
   margin-right: 0.5em;
 `;
 
-const inlineInputWidth = 15;
-
 const IconColumn = styled.div`
   padding-right: 1em;
   justify-content: center;
   align-items: center;
   display: flex;
+  flex-direction: column;
 `;
 
 const Contents = styled.div`
   display: flex;
   flex-direction: row;
+`;
+
+const StyledMinimalInput = styled(MinimalInput)`
+  height: 1.8em;
+  width: 13em;
 `;
 
 /**
@@ -90,6 +96,15 @@ class DraggableIndexVolumeCard extends Component<Props> {
       };
       onChange(newIndexVolume);
     };
+
+    const handlePathChange = (newPath: string) => {
+      const newIndexVolume = {
+        ...indexVolume,
+        path: newPath,
+      };
+      onChange(newIndexVolume);
+    };
+
     return (
       <StyledCard
         ref={provided.innerRef}
@@ -100,29 +115,35 @@ class DraggableIndexVolumeCard extends Component<Props> {
         <Contents>
           <IconColumn>
             <DocRefImage docRefType="Index" size="lg" />
+            <ActionContainer>
+              <Button
+                appearance="icon"
+                icon="trash"
+                action="secondary"
+                onClick={() => onDelete(indexVolume.id)}
+              />
+            </ActionContainer>
           </IconColumn>
           <div>
             <Field>
               <Label>Node name: </Label>
-              <InlineInput
+              <StyledMinimalInput
                 value={indexVolume.nodeName}
-                width={inlineInputWidth}
-                onChange={event => handleNodeNameChange(event.target.value)}
+                onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                  handleNodeNameChange(event.target.value)
+                }
               />
             </Field>
             <Field>
               <Label>Path: </Label>
-              <InlineInput value={indexVolume.path} width={inlineInputWidth} />
+              <StyledMinimalInput
+                value={indexVolume.path}
+                onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                  handlePathChange(event.target.value)
+                }
+              />
             </Field>
           </div>
-          <ActionColumn>
-            <Button
-              appearance="icon"
-              icon="trash"
-              action="secondary"
-              onClick={() => onDelete(indexVolume.id)}
-            />
-          </ActionColumn>
         </Contents>
       </StyledCard>
     );

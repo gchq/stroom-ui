@@ -95,6 +95,7 @@ const IndexVolumesSection: React.FunctionComponent<Props> = ({
   const AddVolumeCard = styled(StyledCard)`
     background-color: white;
     width: 10em;
+    height: 4em;
     -webkit-box-shadow: 4px 4px 5px -1px rgba(0, 0, 0, 0.06);
     -moz-box-shadow: 4px 4px 5px -1px rgba(0, 0, 0, 0.06);
     box-shadow: 4px 4px 5px -1px rgba(0, 0, 0, 0.06);
@@ -102,10 +103,12 @@ const IndexVolumesSection: React.FunctionComponent<Props> = ({
   const AddVolumeGroupCard = styled(StyledCard)`
     background-color: white;
     width: 15em;
+    height: 4em;
     -webkit-box-shadow: 4px 4px 5px -1px rgba(0, 0, 0, 0.06);
     -moz-box-shadow: 4px 4px 5px -1px rgba(0, 0, 0, 0.06);
     box-shadow: 4px 4px 5px -1px rgba(0, 0, 0, 0.06);
   `;
+
   return (
     <Page className="page">
       <div className="page__header">
