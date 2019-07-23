@@ -1,8 +1,8 @@
 import { HasAuditInfo } from "components/DocumentEditors/api/explorer/types";
 
 export interface NewIndexVolume {
-  path: string;
-  nodeName: string;
+  path?: string;
+  nodeName?: string;
   indexVolumeGroupId: number;
 }
 
