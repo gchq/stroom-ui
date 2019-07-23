@@ -33,11 +33,8 @@ import {
 import { VisualisationDoc } from "components/DocumentEditors/useDocumentApi/types/visualisation";
 import { XMLSchemaDoc } from "components/DocumentEditors/useDocumentApi/types/xmlSchema";
 import { XsltDoc } from "components/DocumentEditors/useDocumentApi/types/xsltDoc";
-import {
-  IndexVolumeGroup,
-  IndexVolumeGroupMembership,
-} from "components/IndexVolumeGroups/api";
-import { IndexVolume } from "components/IndexVolumes/api";
+import { IndexVolumeGroup } from "components/IndexVolumes/indexVolumeGroupApi";
+import { IndexVolume } from "components/IndexVolumes/indexVolumeApi";
 import { StreamTaskType } from "components/Processing/types";
 import { iterateNodes } from "lib/treeUtils";
 import * as uuidv4 from "uuid/v4";
@@ -143,20 +140,6 @@ let visualisations: VisualisationDoc[] = Array(3)
 let xmlSchemas: XMLSchemaDoc[] = Array(3)
   .fill(1)
   .map(generateXmlSchema);
-
-let indexVolumeGroupMemberships: IndexVolumeGroupMembership[] = [];
-let indexVolumeIndex = 0; // Best variable name ever
-indexVolumeGroups.forEach(group => {
-  for (let x = 0; x < 10; x++) {
-    let indexVolume: IndexVolume = indexVolumes[indexVolumeIndex];
-    indexVolumeGroupMemberships.push({
-      groupName: group.name,
-      volumeId: indexVolume.id,
-    });
-
-    indexVolumeIndex = (indexVolumeIndex + 1) % indexVolumes.length;
-  }
-});
 
 let dictionaries: DictionaryDoc[] = Array(5)
   .fill(null)
@@ -342,7 +325,6 @@ export const fullTestData: TestData = {
   indexVolumesAndGroups: {
     volumes: indexVolumes,
     groups: indexVolumeGroups,
-    groupMemberships: indexVolumeGroupMemberships,
   },
   allAppPermissions,
   userAppPermissions,

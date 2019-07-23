@@ -23,14 +23,10 @@ import {
   indexVolume01,
   indexVolumeGroup01,
   indexVolumeGroup02,
-  indexVolumeGroupMemberships,
   indexVolume02,
   indexVolume03,
 } from "../testData";
-import {
-  IndexVolumeGroup,
-  IndexVolumeGroupMembership,
-} from "../indexVolumeGroupApi";
+import { IndexVolumeGroup } from "../indexVolumeGroupApi";
 import { useCallback } from "react";
 import { IndexVolume } from "../indexVolumeApi";
 const stories = storiesOf("Sections/Index Volumes 2", module);
@@ -39,13 +35,10 @@ const TestHarness: React.FunctionComponent = () => {
   var initialGroups = [indexVolumeGroup01, indexVolumeGroup02];
   var initialVolumes = [indexVolume01, indexVolume02, indexVolume03];
 
-  const [memberships, setMemberships] = React.useState<
-    IndexVolumeGroupMembership[]
-  >(indexVolumeGroupMemberships);
-
   const [groups, setGroups] = React.useState<IndexVolumeGroup[]>(initialGroups);
   const handleAddGroup = useCallback(() => {
     const newGroup: IndexVolumeGroup = {
+      id: -1,
       name: "New group",
       createTimeMs: -1,
       createUser: "",
@@ -57,10 +50,11 @@ const TestHarness: React.FunctionComponent = () => {
 
   const [volumes, setVolumes] = React.useState<IndexVolume[]>(initialVolumes);
   const handleAddVolume = useCallback(
-    (destinationGroupName: string) => {
+    (indexVolumeGroupId: number) => {
       const newVolumeId = "-1";
       const newVolume: IndexVolume = {
         id: newVolumeId,
+        indexVolumeGroupId,
         path: "",
         nodeName: "New volume",
         bytesLimit: -1,
@@ -73,22 +67,16 @@ const TestHarness: React.FunctionComponent = () => {
         updateTimeMs: -1,
         updateUser: "",
       };
-      const newMembership: IndexVolumeGroupMembership = {
-        volumeId: newVolumeId,
-        groupName: destinationGroupName,
-      };
-      setMemberships([...memberships, newMembership]);
       setVolumes([...volumes, newVolume]);
     },
-    [setVolumes, setMemberships, memberships, volumes],
+    [setVolumes, volumes],
   );
 
   const handleDeleteVolume = useCallback(
     (volumeId: string) => {
       setVolumes(volumes.filter(v => v.id !== volumeId));
-      setMemberships(memberships.filter(m => m.volumeId !== volumeId));
     },
-    [setVolumes, setMemberships, memberships, volumes],
+    [setVolumes, volumes],
   );
 
   const handleVolumeChange = useCallback(
@@ -104,7 +92,6 @@ const TestHarness: React.FunctionComponent = () => {
       <IndexVolumesSection
         indexVolumeGroups={groups}
         indexVolumes={volumes}
-        indexVolumeGroupMemberships={memberships}
         onGroupAdd={handleAddGroup}
         onGroupChange={() => console.log("onGroupChange")}
         onGroupDelete={() => console.log("onGroupDelete")}
@@ -117,15 +104,10 @@ const TestHarness: React.FunctionComponent = () => {
           destinationVolumeGroupName,
         ) => {
           console.log("onVolumeMove");
-          var membership = indexVolumeGroupMemberships.find(
-            ivgm => ivgm.volumeId === volumeId,
-          );
-          membership.groupName = destinationVolumeGroupName;
         }}
       />
 
       <JsonDebug value={{ groups }} />
-      <JsonDebug value={{ memberships }} />
       <JsonDebug value={{ volumes }} />
     </div>
   );

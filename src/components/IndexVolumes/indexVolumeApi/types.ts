@@ -3,10 +3,12 @@ import { HasAuditInfo } from "components/DocumentEditors/api/explorer/types";
 export interface NewIndexVolume {
   path: string;
   nodeName: string;
+  indexVolumeGroupId: number;
 }
 
 export interface IndexVolume extends HasAuditInfo {
-  id: string; // it's a number on the server side, but so many things will be easier if we just treat as string in JS
+  id: string;
+  indexVolumeGroupId: number;
   path: string;
   nodeName: string;
   bytesLimit: number;

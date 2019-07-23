@@ -2,7 +2,7 @@ import * as React from "react";
 
 import CreatableSelect from "react-select/lib/Creatable";
 
-import { useIndexVolumeGroups } from "components/IndexVolumeGroups/api";
+import { useIndexVolumeGroups } from "../api";
 import { PickerProps, UsePickerProps, PickerBaseProps } from "./types";
 import useReactSelect from "lib/useReactSelect";
 

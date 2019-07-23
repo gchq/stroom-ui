@@ -1,5 +1,5 @@
-import IndexVolumes from "./IndexVolumes";
+import IndexVolumesSection from "./IndexVolumesSectionContainer";
+import { IndexVolumeGroupPicker } from "./IndexVolumeGroupPicker";
+export { IndexVolumesSection, IndexVolumeGroupPicker };
 
-export { IndexVolumes };
-
-export default IndexVolumes;
+export default IndexVolumesSection;

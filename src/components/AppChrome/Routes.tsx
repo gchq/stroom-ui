@@ -28,10 +28,7 @@ import DocumentPermissionForUserEditor from "components/AuthorisationManager/Doc
 import MetaBrowser from "components/MetaBrowser";
 import SwitchedDocRefEditor from "components/DocumentEditors/SwitchedDocRefEditor";
 import ErrorPage from "components/ErrorPage";
-import IndexVolumeGroups from "components/IndexVolumeGroups";
-import IndexVolumeGroupEditor from "components/IndexVolumeGroups/IndexVolumeGroupEditor";
 import IndexVolumes from "components/IndexVolumes";
-import IndexVolumeEditor from "components/IndexVolumes/IndexVolumeEditor";
 import { Login } from "components/Login";
 import {
   ChangePassword,
@@ -233,51 +230,6 @@ const Routes: React.FunctionComponent = () => {
             activeMenuItem="indexVolumes"
             urlPrefix={urlPrefix}
             content={<IndexVolumes />}
-          />
-        )}
-      />
-      <PrivateRoute
-        exact
-        path={urlGenerator.goToIndexVolume(undefined)}
-        render={({
-          match: {
-            params: { urlPrefix, volumeId },
-          },
-        }: RouteComponentProps<any>) => (
-          <AppChrome
-            activeMenuItem="indexVolumes"
-            urlPrefix={urlPrefix}
-            content={<IndexVolumeEditor volumeId={volumeId} />}
-          />
-        )}
-      />
-      <PrivateRoute
-        exact
-        path={urlGenerator.goToIndexVolumeGroups()}
-        render={({
-          match: {
-            params: { urlPrefix },
-          },
-        }) => (
-          <AppChrome
-            activeMenuItem="indexVolumeGroups"
-            urlPrefix={urlPrefix}
-            content={<IndexVolumeGroups />}
-          />
-        )}
-      />
-      <PrivateRoute
-        exact
-        path={urlGenerator.goToIndexVolumeGroup(undefined)}
-        render={({
-          match: {
-            params: { urlPrefix, groupName },
-          },
-        }: RouteComponentProps<any>) => (
-          <AppChrome
-            activeMenuItem="indexVolumeGroups"
-            urlPrefix={urlPrefix}
-            content={<IndexVolumeGroupEditor groupName={groupName} />}
           />
         )}
       />

@@ -10,11 +10,8 @@ import {
 } from "components/DocumentEditors/useDocumentApi/types/base";
 import { ResourcesByDocType } from "components/DocumentEditors/useDocumentApi/types/resourceUrls";
 import { DataSourceType } from "components/ExpressionBuilder/types";
-import {
-  IndexVolumeGroup,
-  IndexVolumeGroupMembership,
-} from "components/IndexVolumeGroups/api";
-import { IndexVolume } from "components/IndexVolumes/api";
+import { IndexVolumeGroup } from "components/IndexVolumes/indexVolumeGroupApi";
+import { IndexVolume } from "components/IndexVolumes/indexVolumeApi";
 import { StreamTaskType } from "components/Processing/types";
 import { User } from "components/users/types";
 
@@ -47,7 +44,6 @@ export interface TestData {
   indexVolumesAndGroups: {
     volumes: IndexVolume[];
     groups: IndexVolumeGroup[];
-    groupMemberships: IndexVolumeGroupMembership[];
   };
   allAppPermissions: string[];
   userAppPermissions: {

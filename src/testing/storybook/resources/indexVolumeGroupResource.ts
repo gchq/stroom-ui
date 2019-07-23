@@ -44,6 +44,7 @@ const resourceBuilder: ResourceBuilder = (
       let name = req.params.name;
       let now = Date.now();
       let newIndexVolumeGroup = {
+        id: -1,
         name,
         createTimeMs: now,
         updateTimeMs: now,
@@ -69,9 +70,6 @@ const resourceBuilder: ResourceBuilder = (
         ...testCache.data!.indexVolumesAndGroups,
         groups: testCache.data!.indexVolumesAndGroups.groups.filter(
           g => g.name !== oldName,
-        ),
-        groupMemberships: testCache.data!.indexVolumesAndGroups.groupMemberships.filter(
-          m => m.groupName !== oldName,
         ),
       };
 

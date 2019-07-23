@@ -5,17 +5,14 @@ import useApi from "./useApi";
 
 interface UseIndexVolumeGroups {
   groups: IndexVolumeGroup[];
-  createIndexVolumeGroup: (name: string) => Promise<void>;
+  createIndexVolumeGroup: (name?: string) => Promise<void>;
   deleteIndexVolumeGroup: (name: string) => Promise<void>;
 }
 
 const useIndexVolumeGroups = (): UseIndexVolumeGroups => {
-  const {
-    items: groups,
-    receiveItems,
-    addItem,
-    removeItem,
-  } = useListReducer<IndexVolumeGroup>(g => g.name);
+  const { items: groups, receiveItems, addItem, removeItem } = useListReducer<
+    IndexVolumeGroup
+  >(g => g.name);
 
   const {
     createIndexVolumeGroup,
@@ -30,7 +27,7 @@ const useIndexVolumeGroups = (): UseIndexVolumeGroups => {
   return {
     groups,
     createIndexVolumeGroup: React.useCallback(
-      (groupName: string) => createIndexVolumeGroup(groupName).then(addItem),
+      (name?: string) => createIndexVolumeGroup(name).then(addItem),
       [createIndexVolumeGroup, addItem],
     ),
     deleteIndexVolumeGroup: React.useCallback(

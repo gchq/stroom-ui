@@ -10,12 +10,9 @@ interface UseIndexVolumeGroups {
 }
 
 const useIndexVolumeGroups = (): UseIndexVolumeGroups => {
-  const {
-    items: groups,
-    receiveItems,
-    addItem,
-    removeItem,
-  } = useListReducer<IndexVolumeGroup>(g => g.name);
+  const { items: groups, receiveItems, addItem, removeItem } = useListReducer<
+    IndexVolumeGroup
+  >(g => g.name);
 
   const {
     createIndexVolumeGroup,

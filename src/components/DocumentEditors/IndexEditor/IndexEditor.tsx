@@ -30,7 +30,7 @@ import Button from "../../Button";
 import IndexFieldEditor, {
   useEditor as useFieldEditor,
 } from "./IndexFieldEditor";
-import { IndexVolumeGroupPicker } from "../../IndexVolumeGroups/IndexVolumeGroupPicker";
+import { IndexVolumeGroupPicker } from "../../IndexVolumes/IndexVolumeGroupPicker";
 import {
   IndexDoc,
   IndexField,

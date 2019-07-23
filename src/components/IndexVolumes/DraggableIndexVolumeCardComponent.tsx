@@ -89,6 +89,9 @@ class DraggableIndexVolumeCard extends Component<Props> {
   render() {
     const { indexVolume, provided, snapshot, onDelete, onChange } = this.props;
 
+    const [nodeName, setNodeName] = React.useState(indexVolume.nodeName);
+    const [path, setPath] = React.useState(indexVolume.path);
+
     const handleNodeNameChange = (newNodeName: string) => {
       const newIndexVolume = {
         ...indexVolume,
@@ -129,8 +132,8 @@ class DraggableIndexVolumeCard extends Component<Props> {
               <Label>Node name: </Label>
               <StyledMinimalInput
                 value={indexVolume.nodeName}
-                onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                  handleNodeNameChange(event.target.value)
+                onBlur={(event: React.ChangeEvent<HTMLInputElement>) =>
+                  setNodeName(event.target.value)
                 }
               />
             </Field>
@@ -138,8 +141,8 @@ class DraggableIndexVolumeCard extends Component<Props> {
               <Label>Path: </Label>
               <StyledMinimalInput
                 value={indexVolume.path}
-                onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                  handlePathChange(event.target.value)
+                onBlue={(event: React.ChangeEvent<HTMLInputElement>) =>
+                  setPath(event.target.value)
                 }
               />
             </Field>

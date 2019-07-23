@@ -8,7 +8,7 @@ interface Api {
   getIndexVolumeGroupNames: () => Promise<string[]>;
   getIndexVolumeGroups: () => Promise<IndexVolumeGroup[]>;
   getIndexVolumeGroup: (name: string) => Promise<IndexVolumeGroup>;
-  createIndexVolumeGroup: (name: string) => Promise<IndexVolumeGroup>;
+  createIndexVolumeGroup: (name?: string) => Promise<IndexVolumeGroup>;
   deleteIndexVolumeGroup: (name: string) => Promise<void>;
 }
 
@@ -40,9 +40,10 @@ export const useApi = (): Api => {
       [stroomBaseServiceUrl, httpGetJson],
     ),
     createIndexVolumeGroup: React.useCallback(
-      (name: string) =>
+      (name?: string) =>
         httpPostJsonResponse(
-          `${stroomBaseServiceUrl}/stroom-index/volumeGroup/v1/${name}`,
+          `${stroomBaseServiceUrl}/stroom-index/volumeGroup/v1/`,
+          { body: JSON.stringify({ name }) },
         ),
       [stroomBaseServiceUrl, httpPostJsonResponse],
     ),

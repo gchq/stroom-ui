@@ -3,7 +3,7 @@ import * as React from "react";
 import useHttpClient from "lib/useHttpClient";
 import useConfig from "startup/config/useConfig";
 import { IndexVolume, NewIndexVolume } from "./types";
-import { IndexVolumeGroup } from "components/IndexVolumeGroups/api";
+import { IndexVolumeGroup } from "../indexVolumeGroupApi";
 
 interface Api {
   getIndexVolumes: () => Promise<IndexVolume[]>;
@@ -37,10 +37,10 @@ export const useApi = (): Api => {
       [stroomBaseServiceUrl, httpPostEmptyResponse],
     ),
     createIndexVolume: React.useCallback(
-      ({ nodeName, path }: NewIndexVolume) =>
+      ({ nodeName, path, indexVolumeGroupId }: NewIndexVolume) =>
         httpPostJsonResponse(
           `${stroomBaseServiceUrl}/stroom-index/volume/v1/${nodeName}`,
-          { body: JSON.stringify({ nodeName, path }) },
+          { body: JSON.stringify({ nodeName, path, indexVolumeGroupId }) },
         ),
       [stroomBaseServiceUrl, httpPostJsonResponse],
     ),

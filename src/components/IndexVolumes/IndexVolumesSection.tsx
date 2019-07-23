@@ -14,15 +14,11 @@ import DraggableIndexVolumeCard, {
 import Button from "components/Button";
 
 import { IndexVolume } from "./indexVolumeApi";
-import {
-  IndexVolumeGroup,
-  IndexVolumeGroupMembership,
-} from "./indexVolumeGroupApi";
+import { IndexVolumeGroup } from "./indexVolumeGroupApi";
 
 interface Props {
   indexVolumes: IndexVolume[];
   indexVolumeGroups: IndexVolumeGroup[];
-  indexVolumeGroupMemberships: IndexVolumeGroupMembership[];
   onVolumeMove: (
     volumeId: string,
     sourceVolumeGroupName: string,
@@ -31,7 +27,7 @@ interface Props {
   onGroupDelete: (groupName: string) => void;
   onGroupAdd: () => void;
   onGroupChange: (groupName: string) => void;
-  onVolumeAdd: (destinationGroupName: string) => void;
+  onVolumeAdd: (indexVolumeGroupId: number) => void;
   onVolumeChange: (indexVolume: IndexVolume) => void;
   onVolumeDelete: (indexVolumeId: string) => void;
 }
@@ -51,7 +47,6 @@ const getListStyle = (isDraggingOver: boolean) => ({
 const IndexVolumesSection: React.FunctionComponent<Props> = ({
   indexVolumes,
   indexVolumeGroups,
-  indexVolumeGroupMemberships,
   onVolumeMove,
   onGroupDelete,
   onGroupAdd,
@@ -116,10 +111,10 @@ const IndexVolumesSection: React.FunctionComponent<Props> = ({
       </div>
       <Body className="page__body">
         <DragDropContext onDragEnd={onDragEnd}>
-          {indexVolumeGroups.map((indexVolumeGroup, index) => {
+          {indexVolumeGroups.map(indexVolumeGroup => {
             return (
               <Droppable
-                key={index}
+                key={indexVolumeGroup.name}
                 droppableId={indexVolumeGroup.name}
                 direction="horizontal"
               >
@@ -131,13 +126,13 @@ const IndexVolumesSection: React.FunctionComponent<Props> = ({
                     <div>
                       <GroupTitle>{indexVolumeGroup.name}</GroupTitle>
                       <List>
-                        {indexVolumes.map((indexVolume, index) => {
-                          const found = indexVolumeGroupMemberships.find(
-                            ivgm =>
-                              ivgm.groupName === indexVolumeGroup.name &&
-                              ivgm.volumeId === indexVolume.id,
-                          );
-                          return found ? (
+                        {indexVolumes
+                          .filter(
+                            indexVolume =>
+                              indexVolume.indexVolumeGroupId ===
+                              indexVolumeGroup.id,
+                          )
+                          .map((indexVolume, index) => (
                             <Draggable
                               key={indexVolume.id}
                               draggableId={indexVolume.id}
@@ -147,22 +142,18 @@ const IndexVolumesSection: React.FunctionComponent<Props> = ({
                                 <DraggableIndexVolumeCard
                                   provided={provided}
                                   snapshot={snapshot}
-                                  key={indexVolume.id}
                                   indexVolume={indexVolume}
                                   onDelete={onVolumeDelete}
                                   onChange={onVolumeChange}
                                 />
                               )}
                             </Draggable>
-                          ) : (
-                            undefined
-                          );
-                        })}
+                          ))}
                         <AddVolumeCard>
                           <Button
                             text="Add volume"
                             icon="plus"
-                            onClick={() => onVolumeAdd(indexVolumeGroup.name)}
+                            onClick={() => onVolumeAdd(indexVolumeGroup.id)}
                           />
                         </AddVolumeCard>
                         {provided.placeholder}
