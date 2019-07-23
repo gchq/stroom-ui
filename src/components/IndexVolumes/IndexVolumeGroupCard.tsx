@@ -12,7 +12,7 @@ import { IndexVolumeGroup } from "./indexVolumeGroupApi";
 var GroupTitle = styled(MinimalInput)`
   margin-bottom: 0.5em;
   font-size: 1.25em;
-  height: 3em;
+  height: 2em;
 `;
 const List = styled.div`
   display: flex;

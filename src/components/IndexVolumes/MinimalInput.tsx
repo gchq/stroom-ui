@@ -13,16 +13,21 @@ import styled from "styled-components";
  *  - Focus shows a significant border and it looks like a normal input
  */
 const MinimalInput = ({ ...rest }) => {
+  // Using px instead of em because it makes the calculations for changing
+  // border width and padding easier. We're changing these for two reasons:
+  //  1. so the total size of the input doesn't change and move other stuff
+  //  2. so the text inside the input doesn't shift when focusing
   const Input = styled.input`
-    border: 0.063em solid white;
-    padding: 0.2em 0.5em 0.2em 0.5em;
+    border: 1px solid white;
+    padding: 3px 7px 3px 7px;
     margin: 0;
     :hover {
-      border: 0.063em solid lightgrey;
+      border: 1px solid lightgrey;
     }
 
     :focus {
-      border: 0.125em solid #2185d0;
+      padding: 3px 6px 3px 6px;
+      border: 2px solid #2185d0;
     }
   `;
 
