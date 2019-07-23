@@ -1,20 +1,14 @@
 import * as React from "react";
 import styled from "styled-components";
-import {
-  DragDropContext,
-  Droppable,
-  Draggable,
-  DropResult,
-} from "react-beautiful-dnd";
+import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
 import DocRefIconHeader from "components/DocRefIconHeader";
 
-import DraggableIndexVolumeCard, {
-  StyledCard,
-} from "./DraggableIndexVolumeCard";
+import { StyledCard } from "./DraggableIndexVolumeCard";
 import Button from "components/Button";
 
 import { IndexVolume } from "./indexVolumeApi";
 import { IndexVolumeGroup } from "./indexVolumeGroupApi";
+import IndexVolumeGroupCard from "./IndexVolumeGroupCard";
 
 interface Props {
   indexVolumes: IndexVolume[];
@@ -80,24 +74,6 @@ const IndexVolumesSection: React.FunctionComponent<Props> = ({
     );
   };
 
-  var GroupTitle = styled.div`
-    margin-bottom: 0.5em;
-    font-size: 1.25em;
-  `;
-
-  const List = styled.div`
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-  `;
-  const AddVolumeCard = styled(StyledCard)`
-    background-color: white;
-    width: 10em;
-    height: 4em;
-    -webkit-box-shadow: 4px 4px 5px -1px rgba(0, 0, 0, 0.06);
-    -moz-box-shadow: 4px 4px 5px -1px rgba(0, 0, 0, 0.06);
-    box-shadow: 4px 4px 5px -1px rgba(0, 0, 0, 0.06);
-  `;
   const AddVolumeGroupCard = styled(StyledCard)`
     background-color: white;
     width: 15em;
@@ -126,42 +102,14 @@ const IndexVolumesSection: React.FunctionComponent<Props> = ({
                     ref={provided.innerRef}
                     style={getListStyle(snapshot.isDraggingOver)}
                   >
-                    <div>
-                      <GroupTitle>{indexVolumeGroup.name}</GroupTitle>
-                      <List>
-                        {indexVolumes
-                          .filter(
-                            indexVolume =>
-                              indexVolume.indexVolumeGroupId ===
-                              indexVolumeGroup.id,
-                          )
-                          .map((indexVolume, index) => (
-                            <Draggable
-                              key={indexVolume.id}
-                              draggableId={indexVolume.id}
-                              index={index}
-                            >
-                              {(provided, snapshot) => (
-                                <DraggableIndexVolumeCard
-                                  provided={provided}
-                                  snapshot={snapshot}
-                                  indexVolume={indexVolume}
-                                  onDelete={onVolumeDelete}
-                                  onChange={onVolumeChange}
-                                />
-                              )}
-                            </Draggable>
-                          ))}
-                        <AddVolumeCard>
-                          <Button
-                            text="Add volume"
-                            icon="plus"
-                            onClick={() => onVolumeAdd(indexVolumeGroup.id)}
-                          />
-                        </AddVolumeCard>
-                        {provided.placeholder}
-                      </List>
-                    </div>
+                    <IndexVolumeGroupCard
+                      indexVolumeGroup={indexVolumeGroup}
+                      indexVolumes={indexVolumes}
+                      onVolumeAdd={onVolumeAdd}
+                      onVolumeDelete={onVolumeDelete}
+                      onVolumeChange={onVolumeChange}
+                      provided={provided}
+                    />
                   </div>
                 )}
               </Droppable>
