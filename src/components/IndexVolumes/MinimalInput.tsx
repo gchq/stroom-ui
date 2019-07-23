@@ -16,14 +16,13 @@ const MinimalInput = ({ ...rest }) => {
   const Input = styled.input`
     border: 0.063em solid white;
     padding: 0.2em 0.5em 0.2em 0.5em;
-
+    margin: 0;
     :hover {
       border: 0.063em solid lightgrey;
     }
 
     :focus {
       border: 0.125em solid #2185d0;
-      margin: -0.063em;
     }
   `;
 
