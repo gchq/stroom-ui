@@ -20,7 +20,7 @@ interface Props {
   ) => void;
   onGroupDelete: (groupName: string) => void;
   onGroupAdd: () => void;
-  onGroupChange: (groupName: string) => void;
+  onGroupChange: (indexVolumeGroup: IndexVolumeGroup) => void;
   onVolumeAdd: (indexVolumeGroupId: number) => void;
   onVolumeChange: (indexVolume: IndexVolume) => void;
   onVolumeDelete: (indexVolumeId: string) => void;
@@ -105,6 +105,7 @@ const IndexVolumesSection: React.FunctionComponent<Props> = ({
                     <IndexVolumeGroupCard
                       indexVolumeGroup={indexVolumeGroup}
                       indexVolumes={indexVolumes}
+                      onGroupChange={onGroupChange}
                       onVolumeAdd={onVolumeAdd}
                       onVolumeDelete={onVolumeDelete}
                       onVolumeChange={onVolumeChange}

@@ -9,7 +9,7 @@ import Button from "components/Button";
 import MinimalInput from "./MinimalInput";
 import { IndexVolumeGroup } from "./indexVolumeGroupApi";
 
-var GroupTitle = styled(MinimalInput)`
+var StyledMinimalInput = styled(MinimalInput)`
   margin-bottom: 0.5em;
   font-size: 1.25em;
   height: 2em;
@@ -32,6 +32,7 @@ interface Props {
   indexVolumeGroup: IndexVolumeGroup;
   indexVolumes: IndexVolume[];
   provided: DroppableProvided;
+  onGroupChange: (indexVolumeGroup: IndexVolumeGroup) => void;
   onVolumeAdd: (indexVolumeGroupId: number) => void;
   onVolumeChange: (indexVolume: IndexVolume) => void;
   onVolumeDelete: (indexVolumeId: string) => void;
@@ -40,13 +41,20 @@ const IndexVolumeGroupCard: React.FunctionComponent<Props> = ({
   indexVolumeGroup,
   indexVolumes,
   provided,
+  onGroupChange,
   onVolumeAdd,
   onVolumeChange,
   onVolumeDelete,
 }) => {
   return (
     <div>
-      <GroupTitle value={indexVolumeGroup.name} />
+      <StyledMinimalInput
+        defaultValue={indexVolumeGroup.name}
+        onBlur={(event: React.ChangeEvent<HTMLInputElement>) => {
+          indexVolumeGroup.name = event.target.value;
+          onGroupChange(indexVolumeGroup);
+        }}
+      />
       <List>
         {indexVolumes
           .filter(

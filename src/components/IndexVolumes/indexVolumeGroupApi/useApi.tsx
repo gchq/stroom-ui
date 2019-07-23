@@ -3,8 +3,10 @@ import * as React from "react";
 import useHttpClient from "lib/useHttpClient";
 import useConfig from "startup/config/useConfig";
 import { IndexVolumeGroup } from "./types";
+import { IndexVolume } from "../indexVolumeApi";
 
 interface Api {
+  update: (indexVolumeGroup: IndexVolumeGroup) => Promise<IndexVolumeGroup>;
   getIndexVolumeGroupNames: () => Promise<string[]>;
   getIndexVolumeGroups: () => Promise<IndexVolumeGroup[]>;
   getIndexVolumeGroup: (name: string) => Promise<IndexVolumeGroup>;
@@ -18,6 +20,7 @@ export const useApi = (): Api => {
     httpGetJson,
     httpPostJsonResponse,
     httpDeleteEmptyResponse,
+    httpPutJsonResponse,
   } = useHttpClient();
 
   return {
@@ -53,6 +56,14 @@ export const useApi = (): Api => {
           `${stroomBaseServiceUrl}/stroom-index/volumeGroup/v1/${name}`,
         ),
       [stroomBaseServiceUrl, httpDeleteEmptyResponse],
+    ),
+    update: React.useCallback(
+      (indexVolumeGroup: IndexVolumeGroup) =>
+        httpPutJsonResponse(
+          `${stroomBaseServiceUrl}/stroom-index/volumeGroup/v1/`,
+          { body: JSON.stringify(indexVolumeGroup) },
+        ),
+      [stroomBaseServiceUrl, httpPutJsonResponse],
     ),
   };
 };
