@@ -55,6 +55,9 @@ const IndexVolumesSection: React.FunctionComponent<Props> = ({
   onVolumeChange,
   onVolumeDelete,
 }) => {
+  if (!indexVolumes) {
+    indexVolumes = [];
+  }
   const Page = styled.div``;
 
   const Body = styled.div`
