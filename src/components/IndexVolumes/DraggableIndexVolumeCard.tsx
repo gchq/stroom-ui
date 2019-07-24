@@ -1,11 +1,10 @@
 import * as React from "react";
 import styled from "styled-components";
-import { Popconfirm, Button } from "antd";
+import { Popconfirm, Button, Card } from "antd";
 import "antd/dist/antd.css";
 import DocRefImage from "../DocRefImage";
 import { IndexVolume } from "./indexVolumeApi";
 import { DraggableProvided, DraggableStateSnapshot } from "react-beautiful-dnd";
-// import Button from "components/Button";
 import MinimalInput from "./MinimalInput";
 
 interface Props {
@@ -29,25 +28,9 @@ const TopRightButtons = styled.div`
   visibility: hidden;
 `;
 
-const ActionContainer = styled.div`
-  justify-content: center;
-  align-items: center;
-  display: flex;
-  visibility: hidden;
-`;
-
 export const StyledCard = styled.div`
   width: 30em;
   cursor: grab;
-  margin-right: 1em;
-  margin-bottom: 0.5em;
-  margin-top: 0.5em;
-  border: 0.01em solid lightgrey;
-  padding: 0.7em;
-
-  -webkit-box-shadow: 4px 4px 5px -1px rgba(0, 0, 0, 0.06);
-  -moz-box-shadow: 4px 4px 5px -1px rgba(0, 0, 0, 0.06);
-  box-shadow: 4px 4px 5px -1px rgba(0, 0, 0, 0.06);
 
   :hover {
     border: 0.01em solid rgba(255, 143, 0, 0.8);
@@ -102,51 +85,68 @@ const DraggableIndexVolumeCard: React.FunctionComponent<Props> = ({
   const providedInnerRef = React.useRef(provided.innerRef);
 
   return (
-    <StyledCard
+    <div
       ref={providedInnerRef.current}
       {...provided.draggableProps}
       {...provided.dragHandleProps}
       style={getItemStyle(snapshot.isDragging, provided.draggableProps.style)}
     >
-      <TopRightButtons>
-        <Popconfirm
-          title="Delete this index volume?"
-          onConfirm={() => onDelete(indexVolume.id)}
-          okText="Yes"
-          cancelText="No"
-          placement="left"
-        >
-          <Button type="danger" shape="circle" icon="delete" size="small" />
-        </Popconfirm>
-      </TopRightButtons>
-      <Contents>
-        <IconColumn>
-          <DocRefImage docRefType="Index" size="lg" />
-        </IconColumn>
-        <div>
-          <Field>
-            <Label>Node name: </Label>
-            <StyledMinimalInput
-              defaultValue={indexVolume.nodeName}
-              onBlur={(event: React.ChangeEvent<HTMLInputElement>) => {
-                indexVolume.nodeName = event.target.value;
-                onChange(indexVolume);
-              }}
-            />
-          </Field>
-          <Field>
-            <Label>Path: </Label>
-            <StyledMinimalInput
-              value={indexVolume.path}
-              onBlur={(event: React.ChangeEvent<HTMLInputElement>) => {
-                indexVolume.path = event.target.value;
-                onChange(indexVolume);
-              }}
-            />
-          </Field>
-        </div>
-      </Contents>
-    </StyledCard>
+      <Card
+        size="small"
+        type="inner"
+        title="Index volume"
+        extra={
+          <Popconfirm
+            title="Delete this index volume?"
+            onConfirm={() => onDelete(indexVolume.id)}
+            okText="Yes"
+            cancelText="No"
+            placement="left"
+          >
+            <Button type="danger" shape="circle" icon="delete" size="small" />
+          </Popconfirm>
+        }
+      >
+        <TopRightButtons>
+          <Popconfirm
+            title="Delete this index volume?"
+            onConfirm={() => onDelete(indexVolume.id)}
+            okText="Yes"
+            cancelText="No"
+            placement="left"
+          >
+            <Button type="danger" shape="circle" icon="delete" size="small" />
+          </Popconfirm>
+        </TopRightButtons>
+        <Contents>
+          <IconColumn>
+            <DocRefImage docRefType="Index" size="lg" />
+          </IconColumn>
+          <div>
+            <Field>
+              <Label>Node name: </Label>
+              <StyledMinimalInput
+                defaultValue={indexVolume.nodeName}
+                onBlur={(event: React.ChangeEvent<HTMLInputElement>) => {
+                  indexVolume.nodeName = event.target.value;
+                  onChange(indexVolume);
+                }}
+              />
+            </Field>
+            <Field>
+              <Label>Path: </Label>
+              <StyledMinimalInput
+                value={indexVolume.path}
+                onBlur={(event: React.ChangeEvent<HTMLInputElement>) => {
+                  indexVolume.path = event.target.value;
+                  onChange(indexVolume);
+                }}
+              />
+            </Field>
+          </div>
+        </Contents>
+      </Card>
+    </div>
   );
 };
 

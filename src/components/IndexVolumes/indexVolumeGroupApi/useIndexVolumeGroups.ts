@@ -6,7 +6,7 @@ import useApi from "./useApi";
 interface UseIndexVolumeGroups {
   groups: IndexVolumeGroup[];
   createIndexVolumeGroup: (name?: string) => Promise<void>;
-  deleteIndexVolumeGroup: (name: string) => Promise<void>;
+  deleteIndexVolumeGroup: (id: string) => Promise<void>;
   update: (entity: IndexVolumeGroup) => Promise<void>;
 }
 
@@ -17,7 +17,7 @@ const useIndexVolumeGroups = (): UseIndexVolumeGroups => {
     addItem,
     removeItem,
     updateItemAtIndex,
-  } = useListReducer<IndexVolumeGroup>(g => g.name);
+  } = useListReducer<IndexVolumeGroup>(g => g.id);
 
   const {
     createIndexVolumeGroup,
@@ -37,8 +37,7 @@ const useIndexVolumeGroups = (): UseIndexVolumeGroups => {
       [createIndexVolumeGroup, addItem],
     ),
     deleteIndexVolumeGroup: React.useCallback(
-      (groupName: string) =>
-        deleteIndexVolumeGroup(groupName).then(() => removeItem(groupName)),
+      (id: string) => deleteIndexVolumeGroup(id).then(() => removeItem(id)),
       [deleteIndexVolumeGroup, removeItem],
     ),
     update: React.useCallback(

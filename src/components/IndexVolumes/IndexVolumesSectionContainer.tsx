@@ -16,17 +16,16 @@ const IndexVolumes: React.FunctionComponent = () => {
     groups,
     createIndexVolumeGroup,
     update: updateIndexVolumeGroup,
+    deleteIndexVolumeGroup,
   } = useIndexVolumeGroups();
 
-  // TODO: All the retrieval of data is going to happen here, and it's going to
-  // be passed down. This area is pretty simple and this should be fine.
   return (
     <IndexVolumesSection
       onGroupAdd={() => createIndexVolumeGroup()}
       onGroupChange={(indexVolumeGroup: IndexVolumeGroup) =>
         updateIndexVolumeGroup(indexVolumeGroup)
       }
-      onGroupDelete={() => console.log("TODO: onGroupAdd")}
+      onGroupDelete={(id: string) => deleteIndexVolumeGroup(id)}
       onVolumeAdd={indexVolumeGroupId =>
         createIndexVolume({ indexVolumeGroupId })
       }

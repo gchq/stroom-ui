@@ -18,24 +18,17 @@ interface Props {
     sourceVolumeGroupName: string,
     destinationVolumeGroupName: string,
   ) => void;
-  onGroupDelete: (groupName: string) => void;
+  onGroupDelete: (id: string) => void;
   onGroupAdd: () => void;
   onGroupChange: (indexVolumeGroup: IndexVolumeGroup) => void;
-  onVolumeAdd: (indexVolumeGroupId: number) => void;
+  onVolumeAdd: (indexVolumeGroupId: string) => void;
   onVolumeChange: (indexVolume: IndexVolume) => void;
   onVolumeDelete: (indexVolumeId: string) => void;
 }
 
 const getListStyle = (isDraggingOver: boolean) => ({
   background: isDraggingOver ? "rgba(144,202,249,0.3)" : "white",
-  border: "0.1em solid lightgrey",
   width: "100%",
-  paddingTop: "1em",
-  paddingRight: "1em",
-  paddingLeft: "1em",
-  paddingBottom: "0.6em",
-  marginBottom: "1.5em",
-  boxShadow: "4px 4px 5px -1px rgba(0, 0, 0, 0.06)",
 });
 
 const IndexVolumesSection: React.FunctionComponent<Props> = ({
@@ -108,6 +101,7 @@ const IndexVolumesSection: React.FunctionComponent<Props> = ({
                     <IndexVolumeGroupCard
                       indexVolumeGroup={indexVolumeGroup}
                       indexVolumes={indexVolumes}
+                      onGroupDelete={onGroupDelete}
                       onGroupChange={onGroupChange}
                       onVolumeAdd={onVolumeAdd}
                       onVolumeDelete={onVolumeDelete}

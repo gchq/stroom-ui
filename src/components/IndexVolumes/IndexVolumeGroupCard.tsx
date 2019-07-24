@@ -1,11 +1,12 @@
 import * as React from "react";
 import styled from "styled-components";
+import { Popconfirm, Button, Card } from "antd";
+import "antd/dist/antd.css";
 import { Draggable, DroppableProvided } from "react-beautiful-dnd";
 import { IndexVolume } from "./indexVolumeApi";
 import DraggableIndexVolumeCard, {
   StyledCard,
 } from "./DraggableIndexVolumeCard";
-import Button from "components/Button";
 import MinimalInput from "./MinimalInput";
 import { IndexVolumeGroup } from "./indexVolumeGroupApi";
 
@@ -33,7 +34,8 @@ interface Props {
   indexVolumes: IndexVolume[];
   provided: DroppableProvided;
   onGroupChange: (indexVolumeGroup: IndexVolumeGroup) => void;
-  onVolumeAdd: (indexVolumeGroupId: number) => void;
+  onGroupDelete: (id: string) => void;
+  onVolumeAdd: (indexVolumeGroupId: string) => void;
   onVolumeChange: (indexVolume: IndexVolume) => void;
   onVolumeDelete: (indexVolumeId: string) => void;
 }
@@ -42,19 +44,44 @@ const IndexVolumeGroupCard: React.FunctionComponent<Props> = ({
   indexVolumes,
   provided,
   onGroupChange,
+  onGroupDelete,
   onVolumeAdd,
   onVolumeChange,
   onVolumeDelete,
 }) => {
   return (
-    <div>
-      <StyledMinimalInput
-        defaultValue={indexVolumeGroup.name}
-        onBlur={(event: React.ChangeEvent<HTMLInputElement>) => {
-          indexVolumeGroup.name = event.target.value;
-          onGroupChange(indexVolumeGroup);
-        }}
-      />
+    <Card
+      title={
+        <StyledMinimalInput
+          defaultValue={indexVolumeGroup.name}
+          onBlur={(event: React.ChangeEvent<HTMLInputElement>) => {
+            indexVolumeGroup.name = event.target.value;
+            onGroupChange(indexVolumeGroup);
+          }}
+        />
+      }
+      size="small"
+      extra={
+        <span>
+          <Button
+            icon="plus"
+            size="small"
+            onClick={() => onVolumeAdd(indexVolumeGroup.id)}
+          >
+            Add volume
+          </Button>
+          <Popconfirm
+            title="Delete this index volume group and all its index volumes?"
+            onConfirm={() => onGroupDelete(indexVolumeGroup.id)}
+            okText="Yes"
+            cancelText="No"
+            placement="left"
+          >
+            <Button type="danger" shape="circle" icon="delete" size="small" />
+          </Popconfirm>
+        </span>
+      }
+    >
       <List>
         {indexVolumes
           .filter(
@@ -78,16 +105,9 @@ const IndexVolumeGroupCard: React.FunctionComponent<Props> = ({
               )}
             </Draggable>
           ))}
-        <AddVolumeCard>
-          <Button
-            text="Add volume"
-            icon="plus"
-            onClick={() => onVolumeAdd(indexVolumeGroup.id)}
-          />
-        </AddVolumeCard>
         {provided.placeholder}
       </List>
-    </div>
+    </Card>
   );
 };
 

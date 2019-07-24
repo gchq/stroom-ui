@@ -4,7 +4,6 @@ import { TestCache } from "../PollyDecorator";
 import { Config } from "startup/config/types";
 import { ResourceBuilder } from "./types";
 import { IndexVolume } from "components/IndexVolumes/indexVolumeApi";
-import { IndexVolumeGroup } from "components/IndexVolumes/indexVolumeGroupApi";
 
 let nextIdToCreate = 100000;
 
@@ -43,7 +42,7 @@ const resourceBuilder: ResourceBuilder = (
       nodeName,
       path,
       id: `${nextIdToCreate++}`,
-      indexVolumeGroupId: -1,
+      indexVolumeGroupId: "-1",
       createTimeMs: now,
       updateTimeMs: now,
       createUser: "test",
@@ -79,76 +78,6 @@ const resourceBuilder: ResourceBuilder = (
 
       res.status(204).send(undefined);
     });
-
-  // Get Volumes in Group
-  //  server
-  //    .get(`${resource}/inGroup/:groupName`)
-  //    .intercept((req: HttpRequest, res: HttpResponse) => {
-  //      let groupName = req.params.groupName;
-  //
-  //      let indexVolumeIds: IndexVolume[] = testCache
-  //        .data!.indexVolumesAndGroups.groupMemberships.filter(
-  //          m => m.groupName === groupName,
-  //        )
-  //        .map(m => m.volumeId)
-  //        .map(vId =>
-  //          testCache.data!.indexVolumesAndGroups.volumes.find(v => v.id === vId),
-  //        )
-  //        .map(v => v!);
-  //
-  //      res.send(indexVolumeIds);
-  //    });
-
-  // Get Groups for Volume
-  //  server
-  //    .get(`${resource}/groupsFor/:indexVolumeId`)
-  //    .intercept((req: HttpRequest, res: HttpResponse) => {
-  //      let indexVolumeId = req.params.indexVolumeId;
-  //
-  //      let groups: IndexVolumeGroup[] = testCache
-  //        .data!.indexVolumesAndGroups.groupMemberships.filter(
-  //          m => m.volumeId === indexVolumeId,
-  //        )
-  //        .map(m => m.groupName)
-  //        .map(groupName =>
-  //          testCache.data!.indexVolumesAndGroups.groups.find(
-  //            g => g.name === groupName,
-  //          ),
-  //        )
-  //        .filter(g => g !== undefined)
-  //        .map(g => g!);
-  //
-  //      res.send(groups);
-  //    });
-  //
-  //  // Add Volume to Group
-  //  server
-  //    .post(`${resource}/inGroup/:volumeId/:groupName`)
-  //    .intercept((req: HttpRequest, res: HttpResponse) => {
-  //      testCache.data!.indexVolumesAndGroups.groupMemberships = testCache.data!.indexVolumesAndGroups.groupMemberships.concat(
-  //        [
-  //          {
-  //            groupName: req.params.groupName,
-  //            volumeId: req.params.volumeId,
-  //          },
-  //        ],
-  //      );
-  //
-  //      res.status(204).send(undefined);
-  //    });
-  //
-  //  // Remove Volume from Group
-  //  server
-  //    .delete(`${resource}/inGroup/:volumeId/:groupName`)
-  //    .intercept((req: HttpRequest, res: HttpResponse) => {
-  //      let groupName: string = req.params.groupName;
-  //      let volumeId: string = req.params.volumeId;
-  //      testCache.data!.indexVolumesAndGroups.groupMemberships = testCache.data!.indexVolumesAndGroups.groupMemberships.filter(
-  //        m => !(m.groupName === groupName && m.volumeId === volumeId),
-  //      );
-  //
-  //      res.status(204).send(undefined);
-  //    });
 };
 
 export default resourceBuilder;

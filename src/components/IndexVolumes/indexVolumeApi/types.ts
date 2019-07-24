@@ -3,12 +3,12 @@ import { HasAuditInfo } from "components/DocumentEditors/api/explorer/types";
 export interface NewIndexVolume {
   path?: string;
   nodeName?: string;
-  indexVolumeGroupId: number;
+  indexVolumeGroupId: string;
 }
 
 export interface IndexVolume extends HasAuditInfo {
   id: string;
-  indexVolumeGroupId: number;
+  indexVolumeGroupId: string;
   path: string;
   nodeName: string;
   bytesLimit: number;
@@ -20,7 +20,7 @@ export interface IndexVolume extends HasAuditInfo {
 
 export interface UpdateIndexVolumeDTO {
   id: string;
-  indexVolumeGroupId: number;
+  indexVolumeGroupId: string;
   path: string;
   nodeName: string;
 }

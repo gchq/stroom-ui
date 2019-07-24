@@ -38,7 +38,7 @@ const TestHarness: React.FunctionComponent = () => {
   const [groups, setGroups] = React.useState<IndexVolumeGroup[]>(initialGroups);
   const handleAddGroup = useCallback(() => {
     const newGroup: IndexVolumeGroup = {
-      id: -1,
+      id: "-1",
       name: "New group",
       createTimeMs: -1,
       createUser: "",
@@ -50,7 +50,7 @@ const TestHarness: React.FunctionComponent = () => {
 
   const [volumes, setVolumes] = React.useState<IndexVolume[]>(initialVolumes);
   const handleAddVolume = useCallback(
-    (indexVolumeGroupId: number) => {
+    (indexVolumeGroupId: string) => {
       const newVolumeId = "-1";
       const newVolume: IndexVolume = {
         id: newVolumeId,

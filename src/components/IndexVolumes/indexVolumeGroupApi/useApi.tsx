@@ -3,7 +3,6 @@ import * as React from "react";
 import useHttpClient from "lib/useHttpClient";
 import useConfig from "startup/config/useConfig";
 import { IndexVolumeGroup } from "./types";
-import { IndexVolume } from "../indexVolumeApi";
 
 interface Api {
   update: (indexVolumeGroup: IndexVolumeGroup) => Promise<IndexVolumeGroup>;
@@ -11,7 +10,7 @@ interface Api {
   getIndexVolumeGroups: () => Promise<IndexVolumeGroup[]>;
   getIndexVolumeGroup: (name: string) => Promise<IndexVolumeGroup>;
   createIndexVolumeGroup: (name?: string) => Promise<IndexVolumeGroup>;
-  deleteIndexVolumeGroup: (name: string) => Promise<void>;
+  deleteIndexVolumeGroup: (id: string) => Promise<void>;
 }
 
 export const useApi = (): Api => {
@@ -51,9 +50,9 @@ export const useApi = (): Api => {
       [stroomBaseServiceUrl, httpPostJsonResponse],
     ),
     deleteIndexVolumeGroup: React.useCallback(
-      (name: string) =>
+      (id: string) =>
         httpDeleteEmptyResponse(
-          `${stroomBaseServiceUrl}/stroom-index/volumeGroup/v1/${name}`,
+          `${stroomBaseServiceUrl}/stroom-index/volumeGroup/v1/${id}`,
         ),
       [stroomBaseServiceUrl, httpDeleteEmptyResponse],
     ),

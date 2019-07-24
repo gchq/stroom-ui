@@ -3,7 +3,7 @@ import { IndexVolume } from "./indexVolumeApi";
 
 export const indexVolumeGroup01: IndexVolumeGroup = {
   name: "Index volume group 01",
-  id: 1,
+  id: "1",
   createTimeMs: Date.now(),
   updateTimeMs: Date.now(),
   createUser: "Test user",
@@ -12,7 +12,7 @@ export const indexVolumeGroup01: IndexVolumeGroup = {
 
 export const indexVolumeGroup02: IndexVolumeGroup = {
   name: "Index volume group 02",
-  id: 2,
+  id: "2",
   createTimeMs: Date.now(),
   updateTimeMs: Date.now(),
   createUser: "Test user",
@@ -29,7 +29,7 @@ export const indexVolume01: IndexVolume = {
   createTimeMs: Date.now(),
   createUser: "Creating user",
   id: "1",
-  indexVolumeGroupId: 1,
+  indexVolumeGroupId: "1",
   statusMs: Date.now(),
   updateTimeMs: Date.now(),
   updateUser: "Updating user",
@@ -45,7 +45,7 @@ export const indexVolume02: IndexVolume = {
   createTimeMs: Date.now(),
   createUser: "Creating user",
   id: "2",
-  indexVolumeGroupId: 1,
+  indexVolumeGroupId: "1",
   statusMs: Date.now(),
   updateTimeMs: Date.now(),
   updateUser: "Updating user",
@@ -61,7 +61,7 @@ export const indexVolume03: IndexVolume = {
   createTimeMs: Date.now(),
   createUser: "Creating user",
   id: "3",
-  indexVolumeGroupId: 2,
+  indexVolumeGroupId: "2",
   statusMs: Date.now(),
   updateTimeMs: Date.now(),
   updateUser: "Updating user",

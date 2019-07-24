@@ -44,7 +44,7 @@ const resourceBuilder: ResourceBuilder = (
       let name = req.params.name;
       let now = Date.now();
       let newIndexVolumeGroup = {
-        id: -1,
+        id: "-1",
         name,
         createTimeMs: now,
         updateTimeMs: now,
