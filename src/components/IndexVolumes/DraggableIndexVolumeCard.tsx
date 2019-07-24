@@ -1,9 +1,11 @@
 import * as React from "react";
 import styled from "styled-components";
+import { Popconfirm, Button } from "antd";
+import "antd/dist/antd.css";
 import DocRefImage from "../DocRefImage";
 import { IndexVolume } from "./indexVolumeApi";
 import { DraggableProvided, DraggableStateSnapshot } from "react-beautiful-dnd";
-import Button from "components/Button";
+// import Button from "components/Button";
 import MinimalInput from "./MinimalInput";
 
 interface Props {
@@ -21,6 +23,11 @@ const getItemStyle = (isDragging: boolean, draggableStyle: any) => ({
   boxShadow: "4px 4px 5px -1px rgba(0, 0, 0, 0.06)",
   ...draggableStyle,
 });
+
+const TopRightButtons = styled.div`
+  float: right;
+  visibility: hidden;
+`;
 
 const ActionContainer = styled.div`
   justify-content: center;
@@ -45,7 +52,7 @@ export const StyledCard = styled.div`
   :hover {
     border: 0.01em solid rgba(255, 143, 0, 0.8);
   }
-  &:hover ${ActionContainer} {
+  &:hover ${TopRightButtons} {
     visibility: visible;
   }
 `;
@@ -101,17 +108,20 @@ const DraggableIndexVolumeCard: React.FunctionComponent<Props> = ({
       {...provided.dragHandleProps}
       style={getItemStyle(snapshot.isDragging, provided.draggableProps.style)}
     >
+      <TopRightButtons>
+        <Popconfirm
+          title="Delete this index volume?"
+          onConfirm={() => onDelete(indexVolume.id)}
+          okText="Yes"
+          cancelText="No"
+          placement="left"
+        >
+          <Button type="danger" shape="circle" icon="delete" size="small" />
+        </Popconfirm>
+      </TopRightButtons>
       <Contents>
         <IconColumn>
           <DocRefImage docRefType="Index" size="lg" />
-          <ActionContainer>
-            <Button
-              appearance="icon"
-              icon="trash"
-              action="secondary"
-              onClick={() => onDelete(indexVolume.id)}
-            />
-          </ActionContainer>
         </IconColumn>
         <div>
           <Field>
