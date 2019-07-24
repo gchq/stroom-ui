@@ -1,12 +1,10 @@
 import * as React from "react";
 import styled from "styled-components";
-import { Popconfirm, Button, Card } from "antd";
+import { Popconfirm, Button, Card, Empty } from "antd";
 import "antd/dist/antd.css";
 import { Draggable, DroppableProvided } from "react-beautiful-dnd";
 import { IndexVolume } from "./indexVolumeApi";
-import DraggableIndexVolumeCard, {
-  StyledCard,
-} from "./DraggableIndexVolumeCard";
+import DraggableIndexVolumeCard from "./DraggableIndexVolumeCard";
 import MinimalInput from "./MinimalInput";
 import { IndexVolumeGroup } from "./indexVolumeGroupApi";
 
@@ -19,14 +17,6 @@ const List = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-`;
-const AddVolumeCard = styled(StyledCard)`
-  background-color: white;
-  width: 10em;
-  height: 4em;
-  -webkit-box-shadow: 4px 4px 5px -1px rgba(0, 0, 0, 0.06);
-  -moz-box-shadow: 4px 4px 5px -1px rgba(0, 0, 0, 0.06);
-  box-shadow: 4px 4px 5px -1px rgba(0, 0, 0, 0.06);
 `;
 
 interface Props {
@@ -49,6 +39,10 @@ const IndexVolumeGroupCard: React.FunctionComponent<Props> = ({
   onVolumeChange,
   onVolumeDelete,
 }) => {
+  const indexVolumesInThisGroup = indexVolumes.filter(
+    indexVolume => indexVolume.indexVolumeGroupId === indexVolumeGroup.id,
+  );
+
   return (
     <Card
       title={
@@ -68,7 +62,7 @@ const IndexVolumeGroupCard: React.FunctionComponent<Props> = ({
             size="small"
             onClick={() => onVolumeAdd(indexVolumeGroup.id)}
           >
-            Add volume
+            Add index volume
           </Button>
           <Popconfirm
             title="Delete this index volume group and all its index volumes?"
@@ -83,28 +77,39 @@ const IndexVolumeGroupCard: React.FunctionComponent<Props> = ({
       }
     >
       <List>
-        {indexVolumes
-          .filter(
-            indexVolume =>
-              indexVolume.indexVolumeGroupId === indexVolumeGroup.id,
-          )
-          .map((indexVolume, index) => (
-            <Draggable
-              key={indexVolume.id}
-              draggableId={indexVolume.id}
-              index={index}
+        {indexVolumesInThisGroup.length === 0 ? (
+          <Empty
+            description="No index volumes"
+            image={Empty.PRESENTED_IMAGE_SIMPLE}
+          >
+            <Button
+              icon="plus"
+              size="small"
+              onClick={() => onVolumeAdd(indexVolumeGroup.id)}
             >
-              {(provided, snapshot) => (
-                <DraggableIndexVolumeCard
-                  provided={provided}
-                  snapshot={snapshot}
-                  indexVolume={indexVolume}
-                  onDelete={onVolumeDelete}
-                  onChange={onVolumeChange}
-                />
-              )}
-            </Draggable>
-          ))}
+              Add index volume
+            </Button>
+          </Empty>
+        ) : (
+          undefined
+        )}
+        {indexVolumesInThisGroup.map((indexVolume, index) => (
+          <Draggable
+            key={indexVolume.id}
+            draggableId={indexVolume.id}
+            index={index}
+          >
+            {(provided, snapshot) => (
+              <DraggableIndexVolumeCard
+                provided={provided}
+                snapshot={snapshot}
+                indexVolume={indexVolume}
+                onDelete={onVolumeDelete}
+                onChange={onVolumeChange}
+              />
+            )}
+          </Draggable>
+        ))}
         {provided.placeholder}
       </List>
     </Card>
