@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import useApi from "./useApi";
-import { IndexVolume, NewIndexVolume } from "./types";
+import { IndexVolume, NewIndexVolume, UpdateIndexVolumeDTO } from "./types";
 
 /**
  * Convenience function for using Index Volume.
@@ -9,9 +9,9 @@ import { IndexVolume, NewIndexVolume } from "./types";
  */
 interface UseIndexVolumes {
   indexVolumes: IndexVolume[];
+  update: (indexVolume: IndexVolume) => Promise<IndexVolume>;
   createIndexVolume: (newIndexVolume: NewIndexVolume) => void;
   deleteIndexVolume: (id: string) => void;
-  addVolumeToGroup: (indexVolumeId: string, groupName: string) => void;
 }
 
 interface ReceiveAction {
@@ -49,8 +49,8 @@ const useIndexVolumes = (): UseIndexVolumes => {
   const {
     getIndexVolumes,
     deleteIndexVolume,
-    addVolumeToGroup,
     createIndexVolume,
+    update,
   } = useApi();
 
   React.useEffect(() => {
@@ -84,10 +84,17 @@ const useIndexVolumes = (): UseIndexVolumes => {
         ),
       [deleteIndexVolume],
     ),
-    addVolumeToGroup: React.useCallback(
-      (volumeId: string, groupName: string) =>
-        addVolumeToGroup(volumeId, groupName),
-      [addVolumeToGroup],
+    update: React.useCallback(
+      (indexVolume: IndexVolume) => {
+        let dto: UpdateIndexVolumeDTO = {
+          id: indexVolume.id,
+          indexVolumeGroupId: indexVolume.indexVolumeGroupId,
+          path: indexVolume.path,
+          nodeName: indexVolume.nodeName,
+        };
+        return update(dto);
+      },
+      [update],
     ),
   };
 };

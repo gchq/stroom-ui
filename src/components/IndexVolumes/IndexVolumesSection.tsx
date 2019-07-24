@@ -52,6 +52,9 @@ const IndexVolumesSection: React.FunctionComponent<Props> = ({
   if (!indexVolumes) {
     indexVolumes = [];
   }
+  if (!indexVolumeGroups) {
+    indexVolumeGroups = [];
+  }
   const Page = styled.div``;
 
   const Body = styled.div`

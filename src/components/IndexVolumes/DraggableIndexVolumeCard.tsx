@@ -2,9 +2,7 @@ import * as React from "react";
 import styled from "styled-components";
 import DocRefImage from "../DocRefImage";
 import { IndexVolume } from "./indexVolumeApi";
-import InlineInput from "components/InlineInput/InlineInput";
 import { DraggableProvided, DraggableStateSnapshot } from "react-beautiful-dnd";
-import { Component } from "react";
 import Button from "components/Button";
 import MinimalInput from "./MinimalInput";
 
@@ -94,15 +92,7 @@ const DraggableIndexVolumeCard: React.FunctionComponent<Props> = ({
   onDelete,
   onChange,
 }) => {
-  const [nodeName, setNodeName] = React.useState(indexVolume.nodeName);
-  const [path, setPath] = React.useState(indexVolume.path);
-
   const providedInnerRef = React.useRef(provided.innerRef);
-  const handleChange = () => {
-    indexVolume.nodeName = nodeName;
-    indexVolume.path = path;
-    onChange(indexVolume);
-  };
 
   return (
     <StyledCard
@@ -126,16 +116,22 @@ const DraggableIndexVolumeCard: React.FunctionComponent<Props> = ({
         <div>
           <Field>
             <Label>Node name: </Label>
-            <StyledMinimalInput defaultValue={nodeName} onBlur={handleChange} />
+            <StyledMinimalInput
+              defaultValue={indexVolume.nodeName}
+              onBlur={(event: React.ChangeEvent<HTMLInputElement>) => {
+                indexVolume.nodeName = event.target.value;
+                onChange(indexVolume);
+              }}
+            />
           </Field>
           <Field>
             <Label>Path: </Label>
             <StyledMinimalInput
-              value={path}
-              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                setPath(event.target.value)
-              }
-              onBlur={handleChange}
+              value={indexVolume.path}
+              onBlur={(event: React.ChangeEvent<HTMLInputElement>) => {
+                indexVolume.path = event.target.value;
+                onChange(indexVolume);
+              }}
             />
           </Field>
         </div>

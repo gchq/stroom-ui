@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import IndexVolumesSection from "./IndexVolumesSection";
-import { useIndexVolumes } from "./indexVolumeApi";
+import { useIndexVolumes, IndexVolume } from "./indexVolumeApi";
 import { useIndexVolumeGroups, IndexVolumeGroup } from "./indexVolumeGroupApi";
 
 const IndexVolumes: React.FunctionComponent = () => {
@@ -9,7 +9,7 @@ const IndexVolumes: React.FunctionComponent = () => {
     indexVolumes,
     createIndexVolume,
     deleteIndexVolume,
-    addVolumeToGroup,
+    update,
   } = useIndexVolumes();
 
   const {
@@ -30,7 +30,7 @@ const IndexVolumes: React.FunctionComponent = () => {
       onVolumeAdd={indexVolumeGroupId =>
         createIndexVolume({ indexVolumeGroupId })
       }
-      onVolumeChange={() => console.log("TODO: onGroupAdd")}
+      onVolumeChange={(indexVolume: IndexVolume) => update(indexVolume)}
       onVolumeDelete={() => console.log("TODO: onGroupAdd")}
       onVolumeMove={() => console.log("TODO: onGroupAdd")}
       indexVolumeGroups={groups}

@@ -17,3 +17,10 @@ export interface IndexVolume extends HasAuditInfo {
   bytesTotal: number;
   statusMs: number;
 }
+
+export interface UpdateIndexVolumeDTO {
+  id: string;
+  indexVolumeGroupId: number;
+  path: string;
+  nodeName: string;
+}
