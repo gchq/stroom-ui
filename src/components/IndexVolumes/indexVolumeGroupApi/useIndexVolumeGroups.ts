@@ -44,7 +44,7 @@ const useIndexVolumeGroups = (): UseIndexVolumeGroups => {
       (entity: IndexVolumeGroup) =>
         update(entity).then(response => {
           updateItemAtIndex(
-            groups.findIndex(group => group.id == entity.id),
+            groups.findIndex(group => group.id === entity.id),
             response,
           );
         }),

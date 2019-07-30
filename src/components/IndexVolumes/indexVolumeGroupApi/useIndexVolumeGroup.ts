@@ -16,7 +16,7 @@ const useIndexVolumeGroup = (groupName: string): UseIndexVolumeGroup => {
 
   React.useEffect(() => {
     getIndexVolumeGroup(groupName).then(setIndexVolumeGroup);
-  }, [groupName]);
+  }, [getIndexVolumeGroup, groupName]);
 
   return {
     indexVolumeGroup,
