@@ -98,13 +98,6 @@ const TestHarness: React.FunctionComponent = () => {
         onVolumeAdd={handleAddVolume}
         onVolumeChange={handleVolumeChange}
         onVolumeDelete={handleDeleteVolume}
-        onVolumeMove={(
-          volumeId,
-          sourceVolumeGroupName,
-          destinationVolumeGroupName,
-        ) => {
-          console.log("onVolumeMove");
-        }}
       />
 
       <JsonDebug value={{ groups }} />

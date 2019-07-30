@@ -11,11 +11,6 @@ import IndexVolumeGroupCard from "./IndexVolumeGroupCard";
 interface Props {
   indexVolumes: IndexVolume[];
   indexVolumeGroups: IndexVolumeGroup[];
-  onVolumeMove: (
-    volumeId: string,
-    sourceVolumeGroupName: string,
-    destinationVolumeGroupName: string,
-  ) => void;
   onGroupDelete: (id: string) => void;
   onGroupAdd: () => void;
   onGroupChange: (indexVolumeGroup: IndexVolumeGroup) => void;
@@ -32,7 +27,6 @@ const getListStyle = (isDraggingOver: boolean) => ({
 const IndexVolumesSection: React.FunctionComponent<Props> = ({
   indexVolumes,
   indexVolumeGroups,
-  onVolumeMove,
   onGroupDelete,
   onGroupAdd,
   onGroupChange,
