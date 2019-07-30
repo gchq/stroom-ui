@@ -1,7 +1,8 @@
 import * as React from "react";
 
 import useApi from "./useApi";
-import { IndexVolume, NewIndexVolume, UpdateIndexVolumeDTO } from "./types";
+import { IndexVolume, NewIndexVolume } from "./types";
+import useListReducer from "lib/useListReducer";
 
 /**
  * Convenience function for using Index Volume.
@@ -9,42 +10,19 @@ import { IndexVolume, NewIndexVolume, UpdateIndexVolumeDTO } from "./types";
  */
 interface UseIndexVolumes {
   indexVolumes: IndexVolume[];
-  update: (indexVolume: IndexVolume) => Promise<IndexVolume>;
+  update: (indexVolume: IndexVolume) => Promise<void>;
   createIndexVolume: (newIndexVolume: NewIndexVolume) => void;
   deleteIndexVolume: (id: string) => void;
 }
 
-interface ReceiveAction {
-  type: "received";
-  indexVolumes: IndexVolume[];
-}
-interface DeleteAction {
-  type: "deleted";
-  id: string;
-}
-interface CreateAction {
-  type: "created";
-  indexVolume: IndexVolume;
-}
-
-const reducer = (
-  state: IndexVolume[],
-  action: ReceiveAction | DeleteAction | CreateAction,
-): IndexVolume[] => {
-  switch (action.type) {
-    case "received":
-      return action.indexVolumes;
-    case "created":
-      return state.concat([action.indexVolume]);
-    case "deleted":
-      return state.filter(v => v.id !== action.id);
-    default:
-      return state;
-  }
-};
-
 const useIndexVolumes = (): UseIndexVolumes => {
-  const [indexVolumes, dispatch] = React.useReducer(reducer, []);
+  const {
+    items: indexVolumes,
+    receiveItems,
+    addItem,
+    removeItem,
+    updateItemAtIndex,
+  } = useListReducer<IndexVolume>(iv => iv.id);
 
   const {
     getIndexVolumes,
@@ -54,47 +32,34 @@ const useIndexVolumes = (): UseIndexVolumes => {
   } = useApi();
 
   React.useEffect(() => {
-    getIndexVolumes().then(v =>
-      dispatch({
-        type: "received",
-        indexVolumes: v,
-      }),
-    );
-  }, [dispatch, getIndexVolumes]);
+    getIndexVolumes().then(receiveItems);
+  }, [getIndexVolumes, receiveItems]);
 
   return {
     indexVolumes,
     createIndexVolume: React.useCallback(
       (newIndexVolume: NewIndexVolume) =>
-        createIndexVolume(newIndexVolume).then(indexVolume =>
-          dispatch({
-            type: "created",
-            indexVolume,
-          }),
-        ),
+        createIndexVolume(newIndexVolume).then(addItem),
       [createIndexVolume],
     ),
     deleteIndexVolume: React.useCallback(
-      (id: string) =>
-        deleteIndexVolume(id).then(() =>
-          dispatch({
-            type: "deleted",
-            id,
-          }),
-        ),
+      (id: string) => deleteIndexVolume(id).then(() => removeItem(id)),
       [deleteIndexVolume],
     ),
     update: React.useCallback(
-      (indexVolume: IndexVolume) => {
-        let dto: UpdateIndexVolumeDTO = {
+      (indexVolume: IndexVolume) =>
+        update({
           id: indexVolume.id,
           indexVolumeGroupId: indexVolume.indexVolumeGroupId,
           path: indexVolume.path,
           nodeName: indexVolume.nodeName,
-        };
-        return update(dto);
-      },
-      [update],
+        }).then(response => {
+          updateItemAtIndex(
+            indexVolumes.findIndex(iv => iv.id === indexVolume.id),
+            response,
+          );
+        }),
+      [update, updateItemAtIndex, indexVolumes],
     ),
   };
 };
