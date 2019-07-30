@@ -40,11 +40,11 @@ const useIndexVolumes = (): UseIndexVolumes => {
     createIndexVolume: React.useCallback(
       (newIndexVolume: NewIndexVolume) =>
         createIndexVolume(newIndexVolume).then(addItem),
-      [createIndexVolume],
+      [addItem, createIndexVolume],
     ),
     deleteIndexVolume: React.useCallback(
       (id: string) => deleteIndexVolume(id).then(() => removeItem(id)),
-      [deleteIndexVolume],
+      [removeItem, deleteIndexVolume],
     ),
     update: React.useCallback(
       (indexVolume: IndexVolume) =>
