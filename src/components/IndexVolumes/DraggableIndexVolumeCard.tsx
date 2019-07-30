@@ -19,25 +19,12 @@ const getItemStyle = (isDragging: boolean, draggableStyle: any) => ({
   userSelect: "none",
   background: isDragging ? "rgba(255, 143, 0, 0.2)" : "white",
   border: isDragging ? "1 solid lightgrey" : "1 solid blue",
-  boxShadow: "4px 4px 5px -1px rgba(0, 0, 0, 0.06)",
   ...draggableStyle,
 });
 
 const TopRightButtons = styled.div`
   float: right;
   visibility: hidden;
-`;
-
-export const StyledCard = styled.div`
-  width: 30em;
-  cursor: grab;
-
-  :hover {
-    border: 0.01em solid rgba(255, 143, 0, 0.8);
-  }
-  &:hover ${TopRightButtons} {
-    visibility: visible;
-  }
 `;
 
 const Field = styled.div`
@@ -84,6 +71,9 @@ const DraggableIndexVolumeCard: React.FunctionComponent<Props> = ({
 }) => {
   const providedInnerRef = React.useRef(provided.innerRef);
 
+    const StyledCard = styled(Card)`
+      margin-right: 1em;
+    `;
   return (
     <div
       ref={providedInnerRef.current}
@@ -91,7 +81,7 @@ const DraggableIndexVolumeCard: React.FunctionComponent<Props> = ({
       {...provided.dragHandleProps}
       style={getItemStyle(snapshot.isDragging, provided.draggableProps.style)}
     >
-      <Card
+      <StyledCard
         size="small"
         type="inner"
         title="Index volume"
@@ -145,7 +135,7 @@ const DraggableIndexVolumeCard: React.FunctionComponent<Props> = ({
             </Field>
           </div>
         </Contents>
-      </Card>
+      </StyledCard>
     </div>
   );
 };

@@ -10,6 +10,7 @@ import { IndexVolumeGroup } from "./indexVolumeGroupApi";
 
 var StyledMinimalInput = styled(MinimalInput)`
   margin-bottom: 0.5em;
+  margin-right: 1em;
   font-size: 1.25em;
   height: 2em;
 `;
@@ -47,6 +48,9 @@ const IndexVolumeGroupCard: React.FunctionComponent<Props> = ({
     margin-bottom: 1em;
   `;
 
+    const HeaderButtons = styled.span`
+        margin-left: 1em;
+        `;
   const HeaderButtonSpan = styled.span`
     margin-right: 1em;
   `;
@@ -64,7 +68,7 @@ const IndexVolumeGroupCard: React.FunctionComponent<Props> = ({
       }
       size="small"
       extra={
-        <span>
+        <HeaderButtons>
           <HeaderButtonSpan>
             <Button
               icon="plus"
@@ -84,7 +88,7 @@ const IndexVolumeGroupCard: React.FunctionComponent<Props> = ({
           >
             <Button type="danger" shape="circle" icon="delete" size="small" />
           </Popconfirm>
-        </span>
+        </HeaderButtons>
       }
     >
       <List>
