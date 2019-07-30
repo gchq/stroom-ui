@@ -19,11 +19,6 @@ interface Props {
   onVolumeDelete: (indexVolumeId: string) => void;
 }
 
-const getListStyle = (isDraggingOver: boolean) => ({
-  background: isDraggingOver ? "rgba(144,202,249,0.3)" : "white",
-  width: "100%",
-});
-
 const IndexVolumesSection: React.FunctionComponent<Props> = ({
   indexVolumes,
   indexVolumeGroups,
@@ -101,7 +96,6 @@ const IndexVolumesSection: React.FunctionComponent<Props> = ({
                   <div
                     {...provided.droppableProps}
                     ref={provided.innerRef}
-                    style={getListStyle(snapshot.isDraggingOver)}
                   >
                     <IndexVolumeGroupCard
                       indexVolumeGroup={indexVolumeGroup}
@@ -112,6 +106,7 @@ const IndexVolumesSection: React.FunctionComponent<Props> = ({
                       onVolumeDelete={onVolumeDelete}
                       onVolumeChange={onVolumeChange}
                       provided={provided}
+                      isDraggingOver={snapshot.isDraggingOver}
                     />
                   </div>
                 )}

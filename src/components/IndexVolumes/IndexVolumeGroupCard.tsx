@@ -12,6 +12,7 @@ interface Props {
   indexVolumeGroup: IndexVolumeGroup;
   indexVolumes: IndexVolume[];
   provided: DroppableProvided;
+  isDraggingOver: boolean;
   onGroupChange: (indexVolumeGroup: IndexVolumeGroup) => void;
   onGroupDelete: (id: string) => void;
   onVolumeAdd: (indexVolumeGroupId: string) => void;
@@ -48,6 +49,13 @@ const CardContainer = styled.div`
   flex-direction: row;
 `;
 
+const getListStyle = (isDraggingOver: boolean) => {
+  return {
+    background: isDraggingOver ? "rgba(144,202,249,0.3)" : "white",
+    width: "100%",
+  };
+};
+
 const getItemStyle = (isDragging: boolean, draggableStyle: any) => ({
   userSelect: "none",
   background: isDragging ? "rgba(255, 143, 0, 0.2)" : "white",
@@ -64,6 +72,7 @@ const IndexVolumeGroupCard: React.FunctionComponent<Props> = ({
   onVolumeAdd,
   onVolumeChange,
   onVolumeDelete,
+  isDraggingOver,
 }) => {
   const indexVolumesInThisGroup = indexVolumes.filter(
     indexVolume => indexVolume.indexVolumeGroupId === indexVolumeGroup.id,
@@ -108,7 +117,7 @@ const IndexVolumeGroupCard: React.FunctionComponent<Props> = ({
         </HeaderButtons>
       }
     >
-      <List>
+      <List style={getListStyle(isDraggingOver)}>
         {indexVolumesInThisGroup.length === 0 ? (
           <Empty
             description="No index volumes"
@@ -155,6 +164,7 @@ const IndexVolumeGroupCard: React.FunctionComponent<Props> = ({
             </CardContainer>
           );
         })}
+        <Spacer />
         {provided.placeholder}
       </List>
     </StyledCard>
