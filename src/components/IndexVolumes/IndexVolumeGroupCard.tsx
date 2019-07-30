@@ -43,8 +43,16 @@ const IndexVolumeGroupCard: React.FunctionComponent<Props> = ({
     indexVolume => indexVolume.indexVolumeGroupId === indexVolumeGroup.id,
   );
 
+  const StyledCard = styled(Card)`
+    margin-bottom: 1em;
+  `;
+
+  const HeaderButtonSpan = styled.span`
+    margin-right: 1em;
+  `;
+
   return (
-    <Card
+    <StyledCard
       title={
         <StyledMinimalInput
           defaultValue={indexVolumeGroup.name}
@@ -57,13 +65,16 @@ const IndexVolumeGroupCard: React.FunctionComponent<Props> = ({
       size="small"
       extra={
         <span>
-          <Button
-            icon="plus"
-            size="small"
-            onClick={() => onVolumeAdd(indexVolumeGroup.id)}
-          >
-            Add index volume
-          </Button>
+          <HeaderButtonSpan>
+            <Button
+              icon="plus"
+              size="small"
+              onClick={() => onVolumeAdd(indexVolumeGroup.id)}
+            >
+              Add index volume
+            </Button>
+          </HeaderButtonSpan>
+
           <Popconfirm
             title="Delete this index volume group and all its index volumes?"
             onConfirm={() => onGroupDelete(indexVolumeGroup.id)}
@@ -112,7 +123,7 @@ const IndexVolumeGroupCard: React.FunctionComponent<Props> = ({
         ))}
         {provided.placeholder}
       </List>
-    </Card>
+    </StyledCard>
   );
 };
 

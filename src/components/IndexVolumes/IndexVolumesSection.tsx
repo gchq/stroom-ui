@@ -1,10 +1,8 @@
 import * as React from "react";
 import styled from "styled-components";
+import { Button, Empty } from "antd";
 import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
 import DocRefIconHeader from "components/DocRefIconHeader";
-
-import { StyledCard } from "./DraggableIndexVolumeCard";
-import Button from "components/Button";
 
 import { IndexVolume } from "./indexVolumeApi";
 import { IndexVolumeGroup } from "./indexVolumeGroupApi";
@@ -70,22 +68,30 @@ const IndexVolumesSection: React.FunctionComponent<Props> = ({
     );
   };
 
-  const AddVolumeGroupCard = styled(StyledCard)`
-    background-color: white;
-    width: 15em;
-    height: 4em;
-    -webkit-box-shadow: 4px 4px 5px -1px rgba(0, 0, 0, 0.06);
-    -moz-box-shadow: 4px 4px 5px -1px rgba(0, 0, 0, 0.06);
-    box-shadow: 4px 4px 5px -1px rgba(0, 0, 0, 0.06);
-  `;
-
   return (
     <Page className="page">
       <div className="page__header">
         <DocRefIconHeader text="Index Volumes" docRefType="Index" />
+        <div className="page__buttons">
+          <Button icon="plus" onClick={() => onGroupAdd()}>
+            Add index volume group
+          </Button>
+        </div>
       </div>
       <Body className="page__body">
         <DragDropContext onDragEnd={onDragEnd}>
+          {indexVolumeGroups.length === 0 ? (
+            <Empty
+              description="No index volumes groups"
+              image={Empty.PRESENTED_IMAGE_SIMPLE}
+            >
+              <Button icon="plus" size="small" onClick={() => onGroupAdd()}>
+                Add index volume group
+              </Button>
+            </Empty>
+          ) : (
+            undefined
+          )}
           {indexVolumeGroups.map(indexVolumeGroup => {
             return (
               <Droppable
@@ -113,14 +119,6 @@ const IndexVolumesSection: React.FunctionComponent<Props> = ({
               </Droppable>
             );
           })}
-
-          <AddVolumeGroupCard>
-            <Button
-              text="Add volume group"
-              icon="plus"
-              onClick={() => onGroupAdd()}
-            />
-          </AddVolumeGroupCard>
         </DragDropContext>
       </Body>
     </Page>
