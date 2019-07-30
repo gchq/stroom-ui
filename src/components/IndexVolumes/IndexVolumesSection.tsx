@@ -61,11 +61,15 @@ const IndexVolumesSection: React.FunctionComponent<Props> = ({
       return;
     }
 
-    onVolumeMove(
-      result.draggableId,
-      result.source.droppableId,
+    const removePrefix = (prefixedId: string) =>
+      prefixedId.slice(prefixedId.indexOf("_") + 1, prefixedId.length);
+
+    const idToMove: string = removePrefix(result.draggableId);
+    let indexVolumeBeingMoved = indexVolumes.find(i => +i.id === +idToMove);
+    indexVolumeBeingMoved.indexVolumeGroupId = removePrefix(
       result.destination.droppableId,
     );
+    onVolumeChange(indexVolumeBeingMoved);
   };
 
   return (
@@ -80,7 +84,7 @@ const IndexVolumesSection: React.FunctionComponent<Props> = ({
       </div>
       <Body className="page__body">
         <DragDropContext onDragEnd={onDragEnd}>
-             {indexVolumeGroups.length === 0 ? (
+          {indexVolumeGroups.length === 0 ? (
             <Empty
               description="No index volumes groups"
               image={Empty.PRESENTED_IMAGE_SIMPLE}
