@@ -93,10 +93,7 @@ const IndexVolumesSection: React.FunctionComponent<Props> = ({
                 direction="horizontal"
               >
                 {(provided, snapshot) => (
-                  <div
-                    {...provided.droppableProps}
-                    ref={provided.innerRef}
-                  >
+                  <div {...provided.droppableProps} ref={provided.innerRef}>
                     <IndexVolumeGroupCard
                       indexVolumeGroup={indexVolumeGroup}
                       indexVolumes={indexVolumes}
