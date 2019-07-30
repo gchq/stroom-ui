@@ -80,7 +80,7 @@ const IndexVolumesSection: React.FunctionComponent<Props> = ({
       </div>
       <Body className="page__body">
         <DragDropContext onDragEnd={onDragEnd}>
-          {indexVolumeGroups.length === 0 ? (
+             {indexVolumeGroups.length === 0 ? (
             <Empty
               description="No index volumes groups"
               image={Empty.PRESENTED_IMAGE_SIMPLE}
@@ -95,12 +95,13 @@ const IndexVolumesSection: React.FunctionComponent<Props> = ({
           {indexVolumeGroups.map(indexVolumeGroup => {
             return (
               <Droppable
-                key={indexVolumeGroup.name}
-                droppableId={indexVolumeGroup.name}
+                key={"droppable_" + indexVolumeGroup.id}
+                droppableId={"droppable_" + indexVolumeGroup.id}
                 direction="horizontal"
               >
                 {(provided, snapshot) => (
                   <div
+                    {...provided.droppableProps}
                     ref={provided.innerRef}
                     style={getListStyle(snapshot.isDraggingOver)}
                   >

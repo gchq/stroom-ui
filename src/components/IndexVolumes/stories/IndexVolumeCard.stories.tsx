@@ -18,8 +18,7 @@ import * as React from "react";
 import { storiesOf } from "@storybook/react";
 import { addThemedStories } from "testing/storybook/themedStoryGenerator";
 import { IndexVolume } from "../indexVolumeApi";
-import DraggableIndexVolumeCard from "../DraggableIndexVolumeCard";
-import { DraggableProvided, DraggableStateSnapshot } from "react-beautiful-dnd";
+import IndexVolumeCard from "../IndexVolumeCard";
 
 const stories = storiesOf(
   "Sections/Index Volumes 2/DraggableIndexVolumeCard",
@@ -41,26 +40,10 @@ const indexVolume01: IndexVolume = {
   updateTimeMs: Date.now(),
   updateUser: "Updating user",
 };
-const provided: DraggableProvided = {
-  draggableProps: {
-    "data-react-beautiful-dnd-draggable": "wat",
-  },
-  dragHandleProps: null,
-  innerRef: () => {
-    console.log("innerRef()");
-  },
-};
-
-const snapshot: DraggableStateSnapshot = {
-  isDragging: false,
-  isDropAnimating: false,
-};
 
 addThemedStories(stories, () => (
   <div style={{ padding: "1em" }}>
-    <DraggableIndexVolumeCard
-      provided={provided}
-      snapshot={snapshot}
+    <IndexVolumeCard
       indexVolume={indexVolume01}
       onDelete={() => console.log("onDelete")}
       onChange={() => console.log("onChange")}

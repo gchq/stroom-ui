@@ -4,9 +4,20 @@ import { Popconfirm, Button, Card, Empty } from "antd";
 import "antd/dist/antd.css";
 import { Draggable, DroppableProvided } from "react-beautiful-dnd";
 import { IndexVolume } from "./indexVolumeApi";
-import DraggableIndexVolumeCard from "./DraggableIndexVolumeCard";
+import IndexVolumeCard from "./IndexVolumeCard";
 import MinimalInput from "./MinimalInput";
 import { IndexVolumeGroup } from "./indexVolumeGroupApi";
+
+interface Props {
+  indexVolumeGroup: IndexVolumeGroup;
+  indexVolumes: IndexVolume[];
+  provided: DroppableProvided;
+  onGroupChange: (indexVolumeGroup: IndexVolumeGroup) => void;
+  onGroupDelete: (id: string) => void;
+  onVolumeAdd: (indexVolumeGroupId: string) => void;
+  onVolumeChange: (indexVolume: IndexVolume) => void;
+  onVolumeDelete: (indexVolumeId: string) => void;
+}
 
 var StyledMinimalInput = styled(MinimalInput)`
   margin-bottom: 0.5em;
@@ -20,16 +31,25 @@ const List = styled.div`
   flex-wrap: wrap;
 `;
 
-interface Props {
-  indexVolumeGroup: IndexVolumeGroup;
-  indexVolumes: IndexVolume[];
-  provided: DroppableProvided;
-  onGroupChange: (indexVolumeGroup: IndexVolumeGroup) => void;
-  onGroupDelete: (id: string) => void;
-  onVolumeAdd: (indexVolumeGroupId: string) => void;
-  onVolumeChange: (indexVolume: IndexVolume) => void;
-  onVolumeDelete: (indexVolumeId: string) => void;
-}
+const StyledCard = styled(Card)`
+  margin-bottom: 1em;
+`;
+
+const HeaderButtons = styled.span`
+  margin-left: 1em;
+`;
+
+const HeaderButtonSpan = styled.span`
+  margin-right: 1em;
+`;
+
+const getItemStyle = (isDragging: boolean, draggableStyle: any) => ({
+  userSelect: "none",
+  background: isDragging ? "rgba(255, 143, 0, 0.2)" : "white",
+  border: isDragging ? "1 solid lightgrey" : "1 solid blue",
+  ...draggableStyle,
+});
+
 const IndexVolumeGroupCard: React.FunctionComponent<Props> = ({
   indexVolumeGroup,
   indexVolumes,
@@ -43,17 +63,6 @@ const IndexVolumeGroupCard: React.FunctionComponent<Props> = ({
   const indexVolumesInThisGroup = indexVolumes.filter(
     indexVolume => indexVolume.indexVolumeGroupId === indexVolumeGroup.id,
   );
-
-  const StyledCard = styled(Card)`
-    margin-bottom: 1em;
-  `;
-
-    const HeaderButtons = styled.span`
-        margin-left: 1em;
-        `;
-  const HeaderButtonSpan = styled.span`
-    margin-right: 1em;
-  `;
 
   return (
     <StyledCard
@@ -108,23 +117,35 @@ const IndexVolumeGroupCard: React.FunctionComponent<Props> = ({
         ) : (
           undefined
         )}
-        {indexVolumesInThisGroup.map((indexVolume, index) => (
-          <Draggable
-            key={indexVolume.id}
-            draggableId={indexVolume.id}
-            index={index}
-          >
-            {(provided, snapshot) => (
-              <DraggableIndexVolumeCard
-                provided={provided}
-                snapshot={snapshot}
-                indexVolume={indexVolume}
-                onDelete={onVolumeDelete}
-                onChange={onVolumeChange}
-              />
-            )}
-          </Draggable>
-        ))}
+        {indexVolumesInThisGroup.map((indexVolume, index) => {
+          console.log("CARDS");
+          console.log({ indexVolume });
+          return (
+            <Draggable
+              key={"draggable_" + indexVolume.id}
+              draggableId={"draggable_" + indexVolume.id}
+              index={index}
+            >
+              {(provided, snapshot) => (
+                <div
+                  ref={provided.innerRef}
+                  {...provided.draggableProps}
+                  {...provided.dragHandleProps}
+                  style={getItemStyle(
+                    snapshot.isDragging,
+                    provided.draggableProps.style,
+                  )}
+                >
+                  <IndexVolumeCard
+                    indexVolume={indexVolume}
+                    onDelete={onVolumeDelete}
+                    onChange={onVolumeChange}
+                  />
+                </div>
+              )}
+            </Draggable>
+          );
+        })}
         {provided.placeholder}
       </List>
     </StyledCard>
