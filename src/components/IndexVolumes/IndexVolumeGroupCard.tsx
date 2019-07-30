@@ -43,6 +43,11 @@ const HeaderButtonSpan = styled.span`
   margin-right: 1em;
 `;
 
+const CardContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
 const getItemStyle = (isDragging: boolean, draggableStyle: any) => ({
   userSelect: "none",
   background: isDragging ? "rgba(255, 143, 0, 0.2)" : "white",
@@ -64,6 +69,9 @@ const IndexVolumeGroupCard: React.FunctionComponent<Props> = ({
     indexVolume => indexVolume.indexVolumeGroupId === indexVolumeGroup.id,
   );
 
+  const Spacer = styled.div`
+    width: 1em;
+  `;
   return (
     <StyledCard
       title={
@@ -118,32 +126,33 @@ const IndexVolumeGroupCard: React.FunctionComponent<Props> = ({
           undefined
         )}
         {indexVolumesInThisGroup.map((indexVolume, index) => {
-          console.log("CARDS");
-          console.log({ indexVolume });
           return (
-            <Draggable
-              key={"draggable_" + indexVolume.id}
-              draggableId={"draggable_" + indexVolume.id}
-              index={index}
-            >
-              {(provided, snapshot) => (
-                <div
-                  ref={provided.innerRef}
-                  {...provided.draggableProps}
-                  {...provided.dragHandleProps}
-                  style={getItemStyle(
-                    snapshot.isDragging,
-                    provided.draggableProps.style,
-                  )}
-                >
-                  <IndexVolumeCard
-                    indexVolume={indexVolume}
-                    onDelete={onVolumeDelete}
-                    onChange={onVolumeChange}
-                  />
-                </div>
-              )}
-            </Draggable>
+            <CardContainer key={"draggable_" + indexVolume.id}>
+              <Draggable
+                key={"draggable_" + indexVolume.id}
+                draggableId={"draggable_" + indexVolume.id}
+                index={index}
+              >
+                {(provided, snapshot) => (
+                  <div
+                    ref={provided.innerRef}
+                    {...provided.draggableProps}
+                    {...provided.dragHandleProps}
+                    style={getItemStyle(
+                      snapshot.isDragging,
+                      provided.draggableProps.style,
+                    )}
+                  >
+                    <IndexVolumeCard
+                      indexVolume={indexVolume}
+                      onDelete={onVolumeDelete}
+                      onChange={onVolumeChange}
+                    />
+                  </div>
+                )}
+              </Draggable>
+              <Spacer />
+            </CardContainer>
           );
         })}
         {provided.placeholder}
