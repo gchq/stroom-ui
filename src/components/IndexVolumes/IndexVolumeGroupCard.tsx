@@ -78,9 +78,9 @@ const IndexVolumeGroupCard: React.FunctionComponent<Props> = ({
     indexVolume => indexVolume.indexVolumeGroupId === indexVolumeGroup.id,
   );
 
-  const Spacer = styled.div`
-    width: 1em;
-  `;
+  const StyledEmpty = styled(Empty)`
+    margin: 0;
+  `;  
   return (
     <StyledCard
       title={
@@ -119,7 +119,7 @@ const IndexVolumeGroupCard: React.FunctionComponent<Props> = ({
     >
       <List style={getListStyle(isDraggingOver)}>
         {indexVolumesInThisGroup.length === 0 ? (
-          <Empty
+          <StyledEmpty
             description="No index volumes"
             image={Empty.PRESENTED_IMAGE_SIMPLE}
           >
@@ -130,7 +130,7 @@ const IndexVolumeGroupCard: React.FunctionComponent<Props> = ({
             >
               Add index volume
             </Button>
-          </Empty>
+          </StyledEmpty>
         ) : (
           undefined
         )}
@@ -160,11 +160,9 @@ const IndexVolumeGroupCard: React.FunctionComponent<Props> = ({
                   </div>
                 )}
               </Draggable>
-              <Spacer />
             </CardContainer>
           );
         })}
-        <Spacer />
         {provided.placeholder}
       </List>
     </StyledCard>

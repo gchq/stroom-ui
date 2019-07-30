@@ -57,8 +57,11 @@ const DraggableIndexVolumeCard: React.FunctionComponent<Props> = ({
   onDelete,
   onChange,
 }) => {
+  const StyledCard = styled(Card)`
+    margin: 0.5em;
+  `;
   return (
-    <Card
+    <StyledCard
       size="small"
       type="inner"
       title="Index volume"
@@ -112,7 +115,7 @@ const DraggableIndexVolumeCard: React.FunctionComponent<Props> = ({
           </Field>
         </div>
       </Contents>
-    </Card>
+    </StyledCard>
   );
 };
 
