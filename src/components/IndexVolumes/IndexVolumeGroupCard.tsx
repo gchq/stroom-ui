@@ -80,7 +80,7 @@ const IndexVolumeGroupCard: React.FunctionComponent<Props> = ({
 
   const StyledEmpty = styled(Empty)`
     margin: 0;
-  `;  
+  `;
   return (
     <StyledCard
       title={
@@ -112,7 +112,13 @@ const IndexVolumeGroupCard: React.FunctionComponent<Props> = ({
             cancelText="No"
             placement="left"
           >
-            <Button type="danger" shape="circle" icon="delete" size="small" />
+            <Button
+              ghost
+              type="danger"
+              shape="circle"
+              icon="delete"
+              size="small"
+            />
           </Popconfirm>
         </HeaderButtons>
       }

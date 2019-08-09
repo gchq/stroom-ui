@@ -73,7 +73,13 @@ const DraggableIndexVolumeCard: React.FunctionComponent<Props> = ({
           cancelText="No"
           placement="left"
         >
-          <Button type="danger" shape="circle" icon="delete" size="small" />
+          <Button
+            ghost
+            type="danger"
+            shape="circle"
+            icon="delete"
+            size="small"
+          />
         </Popconfirm>
       }
     >
