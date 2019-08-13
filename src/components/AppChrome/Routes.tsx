@@ -45,6 +45,7 @@ import UserSettings from "components/UserSettings";
 import Welcome from "components/Welcome";
 import AppChrome from "./AppChrome";
 import useAppNavigation from "lib/useAppNavigation";
+import { IndexSection } from "components/Indexes";
 
 const renderWelcome = ({
   match: {
@@ -230,6 +231,21 @@ const Routes: React.FunctionComponent = () => {
             activeMenuItem="indexVolumes"
             urlPrefix={urlPrefix}
             content={<IndexVolumes />}
+          />
+        )}
+      />
+      <PrivateRoute
+        exact
+        path={urlGenerator.goToIndexes()}
+        render={({
+          match: {
+            params: { urlPrefix },
+          },
+        }) => (
+          <AppChrome
+            activeMenuItem="indexes"
+            urlPrefix={urlPrefix}
+            content={<IndexSection />}
           />
         )}
       />

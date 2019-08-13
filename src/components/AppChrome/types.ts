@@ -5,6 +5,7 @@ export type ActiveMenuItem =
   | "processing"
   | "groupPermissions"
   | "userPermissions"
+  | "indexes"
   | "indexVolumes"
   | "indexVolumeGroups"
   | "userIdentities"

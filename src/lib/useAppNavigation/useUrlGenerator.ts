@@ -33,6 +33,7 @@ const useUrlGenerator = (
         `/${urlPrefix}/indexing/groups/${groupName}`,
       goToIndexVolumeGroups: () => `/${urlPrefix}/indexing/groups`,
       goToIndexVolumes: () => `/${urlPrefix}/indexing/volumes`,
+      goToIndexes: () => `/${urlPrefix}/indexing/indexes`,
       goToLogin: () => `${urlPrefix}/login`,
       goToNewApiKey: () => `/${urlPrefix}/apikey/new`,
       goToNewUser: () => `/${urlPrefix}/user/new`,
