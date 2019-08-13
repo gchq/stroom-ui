@@ -1,9 +1,8 @@
-import * as React from "react";
-import styled from "styled-components";
 import { Button, Empty } from "antd";
-import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
 import DocRefIconHeader from "components/DocRefIconHeader";
-
+import * as React from "react";
+import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
+import styled from "styled-components";
 import { IndexVolume } from "./indexVolumeApi";
 import { IndexVolumeGroup } from "./indexVolumeGroupApi";
 import IndexVolumeGroupCard from "./IndexVolumeGroupCard";

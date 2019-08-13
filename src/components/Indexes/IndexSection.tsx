@@ -1,6 +1,6 @@
 import * as React from "react";
-interface Props{}
-const IndexSection: React.FunctionComponent<Props> = ({}) => {
+interface Props { }
+const IndexSection: React.FunctionComponent<Props> = ({ }) => {
   console.log("object");
   return (
     <div>

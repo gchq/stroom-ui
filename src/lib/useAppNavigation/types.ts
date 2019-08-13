@@ -2,7 +2,7 @@ import { DocRefType } from "components/DocumentEditors/useDocumentApi/types/base
 
 export interface RawNavigateApp<IN, OUT> {
   goToActivity: (activityId: IN) => OUT;
-  goToApiKey: (id: string) => OUT;
+  goToApiKey: (id: IN) => OUT;
   goToApiKeys: () => OUT;
   goToAuthorisationManager: (isGroup: IN) => OUT;
   goToAuthorisationsForDocument: (docRefUuid: IN) => OUT;
@@ -15,13 +15,13 @@ export interface RawNavigateApp<IN, OUT> {
   goToIndexVolumeGroup: (groupName: IN) => OUT;
   goToIndexVolumeGroups: () => OUT;
   goToIndexVolumes: () => OUT;
-  goToIndexes: () => OUT;
+  goToIndexes: (indexId: IN) => OUT;
   goToLogin: () => OUT;
   goToNewApiKey: () => OUT;
   goToNewUser: () => OUT;
   goToProcessing: () => OUT;
   goToStreamBrowser: () => OUT;
-  goToUser: (userId: string) => OUT;
+  goToUser: (userId: IN) => OUT;
   goToUserSettings: () => OUT;
   goToUsers: () => OUT;
   goToWelcome: () => OUT;

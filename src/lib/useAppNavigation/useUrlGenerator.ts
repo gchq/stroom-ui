@@ -1,6 +1,6 @@
+import { DocRefType } from "components/DocumentEditors/useDocumentApi/types/base";
 import * as React from "react";
 import { RawNavigateApp } from "./types";
-import { DocRefType } from "components/DocumentEditors/useDocumentApi/types/base";
 
 const useUrlGenerator = (
   urlPrefix: string,
@@ -20,20 +20,15 @@ const useUrlGenerator = (
         userUuid: string = ":userUuid",
       ) =>
         `/${urlPrefix}/authorisationManager/document/${docRefUuid}/${userUuid}`,
-      goToAuthorisationsForUser: (userUuid: string = ":userUuid") =>
-        `/${urlPrefix}/authorisationManager/${userUuid}`,
-      goToEditDocRef: (docRef: DocRefType) =>
-        `/${urlPrefix}/doc/${docRef.uuid}`,
-      goToEditDocRefByUuid: (docRefUuid: string = ":docRefUuid") =>
-        `/${urlPrefix}/doc/${docRefUuid}`,
+      goToAuthorisationsForUser: (userUuid: string = ":userUuid") => `/${urlPrefix}/authorisationManager/${userUuid}`,
+      goToEditDocRef: (docRef: DocRefType) => `/${urlPrefix}/doc/${docRef.uuid}`,
+      goToEditDocRefByUuid: (docRefUuid: string = ":docRefUuid") => `/${urlPrefix}/doc/${docRefUuid}`,
       goToError: () => `/${urlPrefix}/error`,
-      goToIndexVolume: (volumeId: string = ":volumeId") =>
-        `/${urlPrefix}/indexing/volumes/${volumeId}`,
-      goToIndexVolumeGroup: (groupName: string = ":groupName") =>
-        `/${urlPrefix}/indexing/groups/${groupName}`,
+      goToIndexVolume: (volumeId: string = ":volumeId") => `/${urlPrefix}/indexing/volumes/${volumeId}`,
+      goToIndexVolumeGroup: (groupName: string = ":groupName") => `/${urlPrefix}/indexing/groups/${groupName}`,
       goToIndexVolumeGroups: () => `/${urlPrefix}/indexing/groups`,
       goToIndexVolumes: () => `/${urlPrefix}/indexing/volumes`,
-      goToIndexes: () => `/${urlPrefix}/indexing/indexes`,
+      goToIndexes: (indexId: string = ":indexId") => `/${urlPrefix}/indexing/indexes/${indexId}`,
       goToLogin: () => `${urlPrefix}/login`,
       goToNewApiKey: () => `/${urlPrefix}/apikey/new`,
       goToNewUser: () => `/${urlPrefix}/user/new`,

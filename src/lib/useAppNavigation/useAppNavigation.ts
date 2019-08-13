@@ -14,33 +14,24 @@ const useAppNavigation = (): NavigateApp => {
     () => ({
       urlGenerator: u,
       nav: {
-        goToActivity: (activityId: string) =>
-          h.push(u.goToActivity(activityId)),
+        goToActivity: (activityId: string) => h.push(u.goToActivity(activityId)),
         goToApiKey: (id: string) => h.push(u.goToApiKey(id)),
         goToApiKeys: () => h.push(u.goToApiKeys()),
-        goToAuthorisationManager: (isGroup: string) =>
-          h.push(u.goToAuthorisationManager(isGroup)),
-        goToAuthorisationsForDocument: (docRefUuid: string) =>
-          h.push(u.goToAuthorisationsForDocument(docRefUuid)),
+        goToAuthorisationManager: (isGroup: string) => h.push(u.goToAuthorisationManager(isGroup)),
+        goToAuthorisationsForDocument: (docRefUuid: string) => h.push(u.goToAuthorisationsForDocument(docRefUuid)),
         goToAuthorisationsForDocumentForUser: (
           docRefUuid: string,
           userUuid: string,
-        ) =>
-          h.push(u.goToAuthorisationsForDocumentForUser(docRefUuid, userUuid)),
-        goToAuthorisationsForUser: (userUuid: string) =>
-          h.push(u.goToAuthorisationsForUser(userUuid)),
-        goToEditDocRef: (docRef: DocRefType) =>
-          h.push(u.goToEditDocRef(docRef)),
-        goToEditDocRefByUuid: (docRefUuid: string) =>
-          h.push(u.goToEditDocRefByUuid(docRefUuid)),
+        ) => h.push(u.goToAuthorisationsForDocumentForUser(docRefUuid, userUuid)),
+        goToAuthorisationsForUser: (userUuid: string) => h.push(u.goToAuthorisationsForUser(userUuid)),
+        goToEditDocRef: (docRef: DocRefType) => h.push(u.goToEditDocRef(docRef)),
+        goToEditDocRefByUuid: (docRefUuid: string) => h.push(u.goToEditDocRefByUuid(docRefUuid)),
         goToError: () => h.push(u.goToError()),
-        goToIndexVolume: (volumeId: string) =>
-          h.push(u.goToIndexVolume(volumeId)),
-        goToIndexVolumeGroup: (groupName: string) =>
-          h.push(u.goToIndexVolumeGroup(groupName)),
+        goToIndexVolume: (volumeId: string) => h.push(u.goToIndexVolume(volumeId)),
+        goToIndexVolumeGroup: (groupName: string) => h.push(u.goToIndexVolumeGroup(groupName)),
         goToIndexVolumeGroups: () => h.push(u.goToIndexVolumeGroups()),
         goToIndexVolumes: () => h.push(u.goToIndexVolumes()),
-          goToIndexes: () => h.push(u.goToIndexes()),
+        goToIndexes: (indexId: string) => h.push(u.goToIndexes(indexId)),
         goToLogin: () => h.push(u.goToLogin()),
         goToNewApiKey: () => h.push(u.goToNewApiKey()),
         goToNewUser: () => h.push(u.goToNewUser()),

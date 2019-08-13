@@ -236,7 +236,7 @@ const Routes: React.FunctionComponent = () => {
       />
       <PrivateRoute
         exact
-        path={urlGenerator.goToIndexes()}
+        path={urlGenerator.goToIndexes(":indexId")}
         render={({
           match: {
             params: { urlPrefix },
@@ -244,8 +244,8 @@ const Routes: React.FunctionComponent = () => {
         }) => (
           <AppChrome
             activeMenuItem="indexes"
-            urlPrefix={urlPrefix}
             content={<IndexSection />}
+            urlPrefix={urlPrefix}
           />
         )}
       />
@@ -319,9 +319,9 @@ const Routes: React.FunctionComponent = () => {
           },
         }) => (
           <AppChrome
-            urlPrefix={urlPrefix}
             activeMenuItem="userIdentities"
             content={<UserEdit />}
+            urlPrefix={urlPrefix}
           />
         )}
       />
