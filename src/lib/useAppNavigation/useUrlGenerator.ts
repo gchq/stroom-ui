@@ -28,7 +28,6 @@ const useUrlGenerator = (
       goToIndexVolumeGroup: (groupName: string = ":groupName") => `/${urlPrefix}/indexing/groups/${groupName}`,
       goToIndexVolumeGroups: () => `/${urlPrefix}/indexing/groups`,
       goToIndexVolumes: () => `/${urlPrefix}/indexing/volumes`,
-      goToIndexes: (indexId: string = ":indexId") => `/${urlPrefix}/indexing/indexes/${indexId}`,
       goToLogin: () => `${urlPrefix}/login`,
       goToNewApiKey: () => `/${urlPrefix}/apikey/new`,
       goToNewUser: () => `/${urlPrefix}/user/new`,

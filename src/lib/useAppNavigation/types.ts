@@ -15,7 +15,6 @@ export interface RawNavigateApp<IN, OUT> {
   goToIndexVolumeGroup: (groupName: IN) => OUT;
   goToIndexVolumeGroups: () => OUT;
   goToIndexVolumes: () => OUT;
-  goToIndexes: (indexId: IN) => OUT;
   goToLogin: () => OUT;
   goToNewApiKey: () => OUT;
   goToNewUser: () => OUT;

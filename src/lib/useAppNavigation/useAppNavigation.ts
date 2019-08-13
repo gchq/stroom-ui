@@ -31,7 +31,6 @@ const useAppNavigation = (): NavigateApp => {
         goToIndexVolumeGroup: (groupName: string) => h.push(u.goToIndexVolumeGroup(groupName)),
         goToIndexVolumeGroups: () => h.push(u.goToIndexVolumeGroups()),
         goToIndexVolumes: () => h.push(u.goToIndexVolumes()),
-        goToIndexes: (indexId: string) => h.push(u.goToIndexes(indexId)),
         goToLogin: () => h.push(u.goToLogin()),
         goToNewApiKey: () => h.push(u.goToNewApiKey()),
         goToNewUser: () => h.push(u.goToNewUser()),
