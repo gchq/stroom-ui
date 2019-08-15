@@ -21,6 +21,7 @@ const DocRefEditor = <T extends {}>({
   docRefUuid,
   additionalActionBarItems,
   isDirty,
+  showAppSearchBar,
 }: DocRefEditorProps<T>) => {
   const {
     nav: { goToAuthorisationsForDocument, goToEditDocRef },
@@ -71,12 +72,16 @@ const DocRefEditor = <T extends {}>({
           />
         </div>
       </div>
-      <div className="page__search">
-        <AppSearchBar
-          className="DocRefEditor__search"
-          onChange={goToEditDocRef}
-        />
-      </div>
+      {showAppSearchBar ? (
+        <div className="page__search">
+          <AppSearchBar
+            className="DocRefEditor__search"
+            onChange={goToEditDocRef}
+          />
+        </div>
+      ) : (
+        undefined
+      )}
       <div className="page__body">{children}</div>
     </div>
   );

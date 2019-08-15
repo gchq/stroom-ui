@@ -8,6 +8,7 @@ export interface DocRefEditorProps<T> {
   isDirty: boolean;
   docRefContents?: T;
   children?: React.ReactNode;
+  showAppSearchBar?: boolean;
 }
 
 export interface UseDocRefEditorPropsIn<T extends object> {
