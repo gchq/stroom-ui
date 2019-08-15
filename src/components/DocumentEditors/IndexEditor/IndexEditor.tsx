@@ -123,7 +123,6 @@ const IndexEditor = ({ docRefUuid }: SwitchedDocRefEditorProps) => {
             termPositions: false,
             analyzerType: "KEYWORD",
             caseSensitive: false,
-            conditions: [],
           },
         ],
       };

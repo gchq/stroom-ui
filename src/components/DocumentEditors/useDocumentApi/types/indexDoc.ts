@@ -37,7 +37,6 @@ export interface IndexField {
   termPositions: boolean;
   analyzerType: AnalyzerType;
   caseSensitive: boolean;
-  conditions: ConditionType[];
 }
 
 export interface IndexDoc extends DocumentBase<"Index"> {

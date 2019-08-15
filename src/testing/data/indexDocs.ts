@@ -13,7 +13,6 @@ export const generateTestField = (): IndexField => ({
   termPositions: false,
   analyzerType: "KEYWORD",
   caseSensitive: false,
-  conditions: [],
 });
 
 export const generate = (): IndexDoc => ({
@@ -29,7 +28,6 @@ export const generate = (): IndexDoc => ({
       termPositions: false,
       analyzerType: "KEYWORD",
       caseSensitive: false,
-      conditions: [],
     },
     {
       fieldName: loremIpsum({ count: 2, units: "words" }),
@@ -39,7 +37,6 @@ export const generate = (): IndexDoc => ({
       termPositions: false,
       analyzerType: "KEYWORD",
       caseSensitive: false,
-      conditions: [],
     },
     {
       fieldName: loremIpsum({ count: 2, units: "words" }),
@@ -49,7 +46,6 @@ export const generate = (): IndexDoc => ({
       termPositions: false,
       analyzerType: "KEYWORD",
       caseSensitive: false,
-      conditions: [],
     },
     {
       fieldName: loremIpsum({ count: 2, units: "words" }),
@@ -59,7 +55,6 @@ export const generate = (): IndexDoc => ({
       termPositions: false,
       analyzerType: "KEYWORD",
       caseSensitive: false,
-      conditions: [],
     },
     {
       fieldName: loremIpsum({ count: 2, units: "words" }),
@@ -69,7 +64,6 @@ export const generate = (): IndexDoc => ({
       termPositions: true,
       analyzerType: "ALPHA_NUMERIC",
       caseSensitive: false,
-      conditions: [],
     },
     {
       fieldName: loremIpsum({ count: 2, units: "words" }),
@@ -79,7 +73,6 @@ export const generate = (): IndexDoc => ({
       termPositions: true,
       analyzerType: "ALPHA_NUMERIC",
       caseSensitive: true,
-      conditions: [],
     },
   ],
 });
