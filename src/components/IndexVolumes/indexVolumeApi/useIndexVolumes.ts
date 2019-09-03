@@ -13,6 +13,7 @@ interface UseIndexVolumes {
   update: (indexVolume: IndexVolume) => Promise<IndexVolume>;
   createIndexVolume: (newIndexVolume: NewIndexVolume) => void;
   deleteIndexVolume: (id: string) => void;
+  refresh: () => void;
 }
 
 const useIndexVolumes = (): UseIndexVolumes => {
@@ -53,6 +54,10 @@ const useIndexVolumes = (): UseIndexVolumes => {
           nodeName: indexVolume.nodeName,
         }),
       [update, updateItemAtIndex, indexVolumes],
+    ),
+    refresh: React.useCallback(
+        () => getIndexVolumes().then(receiveItems),
+        [getIndexVolumes, receiveItems],
     ),
   };
 };

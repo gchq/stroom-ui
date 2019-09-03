@@ -10,6 +10,7 @@ const IndexVolumes: React.FunctionComponent = () => {
     createIndexVolume,
     deleteIndexVolume,
     update,
+    refresh: refreshIndexVolumes,
   } = useIndexVolumes();
 
   const {
@@ -23,7 +24,7 @@ const IndexVolumes: React.FunctionComponent = () => {
     <IndexVolumesSection
       onGroupAdd={() => createIndexVolumeGroup()}
       onGroupChange={(indexVolumeGroup: IndexVolumeGroup) =>
-        updateIndexVolumeGroup(indexVolumeGroup)
+        updateIndexVolumeGroup(indexVolumeGroup).then(() => refreshIndexVolumes())
       }
       onGroupDelete={(id: string) => deleteIndexVolumeGroup(id)}
       onVolumeAdd={indexVolumeGroupName =>
