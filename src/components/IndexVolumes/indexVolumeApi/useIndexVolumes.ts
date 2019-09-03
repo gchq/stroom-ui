@@ -10,7 +10,7 @@ import useListReducer from "lib/useListReducer";
  */
 interface UseIndexVolumes {
   indexVolumes: IndexVolume[];
-  update: (indexVolume: IndexVolume) => Promise<void>;
+  update: (indexVolume: IndexVolume) => Promise<IndexVolume>;
   createIndexVolume: (newIndexVolume: NewIndexVolume) => void;
   deleteIndexVolume: (id: string) => void;
 }
@@ -18,9 +18,7 @@ interface UseIndexVolumes {
 const useIndexVolumes = (): UseIndexVolumes => {
   const {
     items: indexVolumes,
-    receiveItems,
-    addItem,
-    removeItem,
+    receiveItems, addItem, removeItem,
     updateItemAtIndex,
   } = useListReducer<IndexVolume>(iv => iv.id);
 
@@ -53,11 +51,6 @@ const useIndexVolumes = (): UseIndexVolumes => {
           indexVolumeGroupName: indexVolume.indexVolumeGroupName,
           path: indexVolume.path,
           nodeName: indexVolume.nodeName,
-        }).then(response => {
-          updateItemAtIndex(
-            indexVolumes.findIndex(iv => iv.id === indexVolume.id),
-            response,
-          );
         }),
       [update, updateItemAtIndex, indexVolumes],
     ),
