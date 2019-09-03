@@ -23,10 +23,10 @@ export const useApi = (): Api => {
 
   return {
     createIndexVolume: React.useCallback(
-      ({ nodeName, path, indexVolumeGroupId }: NewIndexVolume) =>
+      ({ nodeName, path, indexVolumeGroupName }: NewIndexVolume) =>
         httpPostJsonResponse(
           `${stroomBaseServiceUrl}/stroom-index/volume/v1/`,
-          { body: JSON.stringify({ nodeName, path, indexVolumeGroupId }) },
+          { body: JSON.stringify({ nodeName, path, indexVolumeGroupName }) },
         ),
       [stroomBaseServiceUrl, httpPostJsonResponse],
     ),

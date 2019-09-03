@@ -15,7 +15,7 @@ interface Props {
   isDraggingOver: boolean;
   onGroupChange: (indexVolumeGroup: IndexVolumeGroup) => void;
   onGroupDelete: (id: string) => void;
-  onVolumeAdd: (indexVolumeGroupId: string) => void;
+  onVolumeAdd: (indexVolumeGroupName: string) => void;
   onVolumeChange: (indexVolume: IndexVolume) => void;
   onVolumeDelete: (indexVolumeId: string) => void;
 }
@@ -75,7 +75,7 @@ const IndexVolumeGroupCard: React.FunctionComponent<Props> = ({
   isDraggingOver,
 }) => {
   const indexVolumesInThisGroup = indexVolumes.filter(
-    indexVolume => indexVolume.indexVolumeGroupId === indexVolumeGroup.id,
+    indexVolume => indexVolume.indexVolumeGroupName === indexVolumeGroup.name,
   );
 
   const StyledEmpty = styled(Empty)`
@@ -99,7 +99,7 @@ const IndexVolumeGroupCard: React.FunctionComponent<Props> = ({
             <Button
               icon="plus"
               size="small"
-              onClick={() => onVolumeAdd(indexVolumeGroup.id)}
+              onClick={() => onVolumeAdd(indexVolumeGroup.name)}
             >
               Add index volume
             </Button>
@@ -132,7 +132,7 @@ const IndexVolumeGroupCard: React.FunctionComponent<Props> = ({
             <Button
               icon="plus"
               size="small"
-              onClick={() => onVolumeAdd(indexVolumeGroup.id)}
+              onClick={() => onVolumeAdd(indexVolumeGroup.name)}
             >
               Add index volume
             </Button>

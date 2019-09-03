@@ -13,7 +13,7 @@ interface Props {
   onGroupDelete: (id: string) => void;
   onGroupAdd: () => void;
   onGroupChange: (indexVolumeGroup: IndexVolumeGroup) => void;
-  onVolumeAdd: (indexVolumeGroupId: string) => void;
+  onVolumeAdd: (indexVolumeGroupName: string) => void;
   onVolumeChange: (indexVolume: IndexVolume) => void;
   onVolumeDelete: (indexVolumeId: string) => void;
 }
@@ -54,7 +54,7 @@ const IndexVolumesSection: React.FunctionComponent<Props> = ({
 
     const idToMove: string = removePrefix(result.draggableId);
     let indexVolumeBeingMoved = indexVolumes.find(i => +i.id === +idToMove);
-    indexVolumeBeingMoved.indexVolumeGroupId = removePrefix(
+    indexVolumeBeingMoved.indexVolumeGroupName = removePrefix(
       result.destination.droppableId,
     );
     onVolumeChange(indexVolumeBeingMoved);
@@ -87,8 +87,8 @@ const IndexVolumesSection: React.FunctionComponent<Props> = ({
           {indexVolumeGroups.map(indexVolumeGroup => {
             return (
               <Droppable
-                key={"droppable_" + indexVolumeGroup.id}
-                droppableId={"droppable_" + indexVolumeGroup.id}
+                key={"droppable_" + indexVolumeGroup.name}
+                droppableId={"droppable_" + indexVolumeGroup.name}
                 direction="horizontal"
               >
                 {(provided, snapshot) => (

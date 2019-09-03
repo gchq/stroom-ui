@@ -42,7 +42,7 @@ const resourceBuilder: ResourceBuilder = (
       nodeName,
       path,
       id: `${nextIdToCreate++}`,
-      indexVolumeGroupId: "-1",
+      indexVolumeGroupName: "No name",
       createTimeMs: now,
       updateTimeMs: now,
       createUser: "test",

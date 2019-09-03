@@ -50,7 +50,7 @@ const useIndexVolumes = (): UseIndexVolumes => {
       (indexVolume: IndexVolume) =>
         update({
           id: indexVolume.id,
-          indexVolumeGroupId: indexVolume.indexVolumeGroupId,
+          indexVolumeGroupName: indexVolume.indexVolumeGroupName,
           path: indexVolume.path,
           nodeName: indexVolume.nodeName,
         }).then(response => {

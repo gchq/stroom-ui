@@ -28,7 +28,7 @@ const stories = storiesOf(
 const indexVolume01: IndexVolume = {
   nodeName: "Index volume name",
   path: "/some/amazing/path",
-  indexVolumeGroupId: "1",
+  indexVolumeGroupName: "Group name 01",
   bytesFree: 1,
   bytesLimit: 1,
   bytesTotal: 1,

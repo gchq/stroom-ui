@@ -26,8 +26,8 @@ const IndexVolumes: React.FunctionComponent = () => {
         updateIndexVolumeGroup(indexVolumeGroup)
       }
       onGroupDelete={(id: string) => deleteIndexVolumeGroup(id)}
-      onVolumeAdd={indexVolumeGroupId =>
-        createIndexVolume({ indexVolumeGroupId })
+      onVolumeAdd={indexVolumeGroupName =>
+        createIndexVolume({ indexVolumeGroupName })
       }
       onVolumeChange={(indexVolume: IndexVolume) => update(indexVolume)}
       onVolumeDelete={id => deleteIndexVolume(id)}

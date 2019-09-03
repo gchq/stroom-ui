@@ -50,11 +50,11 @@ const TestHarness: React.FunctionComponent = () => {
 
   const [volumes, setVolumes] = React.useState<IndexVolume[]>(initialVolumes);
   const handleAddVolume = useCallback(
-    (indexVolumeGroupId: string) => {
+    (indexVolumeGroupName: string) => {
       const newVolumeId = "-1";
       const newVolume: IndexVolume = {
         id: newVolumeId,
-        indexVolumeGroupId,
+        indexVolumeGroupName,
         path: "",
         nodeName: "New volume",
         bytesLimit: -1,
