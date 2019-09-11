@@ -20,7 +20,6 @@ const useIndexVolumes = (): UseIndexVolumes => {
   const {
     items: indexVolumes,
     receiveItems, addItem, removeItem,
-    updateItemAtIndex,
   } = useListReducer<IndexVolume>(iv => iv.id);
 
   const {
@@ -53,7 +52,7 @@ const useIndexVolumes = (): UseIndexVolumes => {
           path: indexVolume.path,
           nodeName: indexVolume.nodeName,
         }),
-      [update, updateItemAtIndex, indexVolumes],
+      [update],
     ),
     refresh: React.useCallback(
         () => getIndexVolumes().then(receiveItems),
