@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [v7.0-beta.1] - 2019-09-11
+
+- Added Index Volumes
+
 ## [v7.0-alpha.11] - 2019-06-12
 
 - Fix Dockerfile build issue
@@ -67,7 +71,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Experimental first tag
 
-[unreleased]: https://github.com/gchq/stroom-auth/compare/v7.0-alpha.11...master
+[unreleased]: https://github.com/gchq/stroom-auth/compare/v7.0-beta.1...master
+[v7.0-beta.1]: https://github.com/gchq/stroom-auth/compare/v7.0-alpha.11...v7.0-beta.1
 [v7.0-alpha.11]: https://github.com/gchq/stroom-auth/compare/v7.0-alpha.10...v7.0-alpha.11
 [v7.0-alpha.10]: https://github.com/gchq/stroom-auth/compare/v7.0-alpha.9...v7.0-alpha.10
 [v7.0-alpha.9]: https://github.com/gchq/stroom-auth/compare/v7.0-alpha.3...v7.0-alpha.9
