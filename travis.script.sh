@@ -153,8 +153,8 @@ main() {
     echo_build_vars
 
     # Build the project
-    yarn install
-    yarn build
+    npm install
+    npm run build
 
     do_docker_build
     exit 0
