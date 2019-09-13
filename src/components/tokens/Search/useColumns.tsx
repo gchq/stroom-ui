@@ -34,17 +34,17 @@ const useColumns = (
 
   const EnabledCell: React.FunctionComponent<RowInfo> = React.useCallback(
     ({ row }) => {
-      const state = row.original.enabled;
-      const tokenId = row.original.id;
-      return (
-        <div className="TokenSearch__table__checkbox">
-          <input
-            type="checkbox"
-            checked={state}
-            onChange={() => setEnabledStateOnToken(tokenId, !state)}
-          />
-        </div>
-      );
+        const state = row.enabled;
+        const tokenId = row.id;
+        return (
+          <div className="TokenSearch__table__checkbox">
+            <input
+              type="checkbox"
+              checked={state}
+              onChange={() => setEnabledStateOnToken(tokenId, !state)}
+            />
+          </div>
+        );
     },
     [setEnabledStateOnToken],
   );
@@ -80,14 +80,14 @@ const useColumns = (
     {
       Header: "Expires on",
       accessor: "expiresOn",
-      Cell: (row: RowInfo) => formatDate(row.row.value),
+      Cell: (row: RowInfo) => formatDate(row.row.expiresOn),
       filterable: false,
       maxWidth: 165,
     },
     {
       Header: "Issued on",
       accessor: "issuedOn",
-      Cell: (row: RowInfo) => formatDate(row.row.value),
+      Cell: (row: RowInfo) => formatDate(row.row.issuedOn),
       filterable: false,
       maxWidth: 165,
     },
