@@ -4,7 +4,7 @@
 .ReactTable {
   width: 100%;
   border: none;
-  border-top: thin solid rgba(0,0,0,0.1);
+  border-top: thin solid rgba(0, 0, 0, 0.1);
 }
 
 .ReactTable .rt-thead.-filters input {
@@ -18,7 +18,7 @@
 .ReactTable .-pagination {
   display: grid;
   grid-template-columns: 4rem 1fr 4rem;
-  box-shadow: 0 0 4px 0 rgba(0,0,0,0.1);
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.1);
 }
 
 .ReactTable .rt-thead {
@@ -64,7 +64,7 @@
   // box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.15) !important;
 
   // border-bottom: 2px solid rgba(0,0,0,0.1);
-  box-shadow: 0 0 4px 0 rgba(0,0,0,0.15) !important;
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.15) !important;
 }
 
 .ReactTable .rt-tbody .rt-tr-group {

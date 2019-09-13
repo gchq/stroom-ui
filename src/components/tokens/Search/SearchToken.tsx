@@ -100,7 +100,7 @@ const TokenSearch = () => {
             }
 
             let className = "";
-            className += selected ? " table-row-selected" : "";
+            className += selected ? " selected-item highlighted-item " : "";
             className += enabled ? "" : " table-row-dimmed";
             return {
               onClick: () => {
