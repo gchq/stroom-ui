@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
-## [v7.0-beta.2] - 2019-09-13
+## [v7.0-beta.2] - 2019-09-16
 
 - Fix columns for apiKeys
 
