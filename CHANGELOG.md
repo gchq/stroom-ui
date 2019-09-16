@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [v7.0-beta.2] - 2019-09-11
+
+- Fix columns for apiKeys
+
+- Fix row highlighting
+
 ## [v7.0-beta.1] - 2019-09-11
 
 - Added Index Volumes
@@ -71,7 +77,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Experimental first tag
 
-[unreleased]: https://github.com/gchq/stroom-auth/compare/v7.0-beta.1...master
+[unreleased]: https://github.com/gchq/stroom-auth/compare/v7.0-beta.2...master
+[v7.0-beta.2]: https://github.com/gchq/stroom-auth/compare/v7.0-beta.1...v7.0-beta.2
 [v7.0-beta.1]: https://github.com/gchq/stroom-auth/compare/v7.0-alpha.11...v7.0-beta.1
 [v7.0-alpha.11]: https://github.com/gchq/stroom-auth/compare/v7.0-alpha.10...v7.0-alpha.11
 [v7.0-alpha.10]: https://github.com/gchq/stroom-auth/compare/v7.0-alpha.9...v7.0-alpha.10
