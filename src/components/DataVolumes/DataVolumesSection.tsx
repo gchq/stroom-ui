@@ -3,7 +3,7 @@ import DocRefIconHeader from "components/DocRefIconHeader";
 import * as React from "react";
 import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
 import styled from "styled-components";
-import { DataVolume } from "./DataVolume";
+import DataVolume from "./DataVolume";
 import DataVolumeCard from "./DataVolumeCard"
 // import { IndexVolumeGroup } from "./indexVolumeGroupApi";
 // import IndexVolumeGroupCard from "./IndexVolumeGroupCard";

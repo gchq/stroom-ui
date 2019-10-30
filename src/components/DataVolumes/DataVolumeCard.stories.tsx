@@ -17,11 +17,11 @@
 import * as React from "react";
 import { storiesOf } from "@storybook/react";
 import { addThemedStories } from "testing/storybook/themedStoryGenerator";
-import { DataVolume } from "./DataVolume";
+import DataVolume from "./DataVolume";
 import DataVolumeCard from "./DataVolumeCard";
 
 const stories = storiesOf(
-  "Sections/Index Volumes 2/DraggableIndexVolumeCard",
+  "Sections/Data Volumes/DataVolumeCard",
   module,
 );
 

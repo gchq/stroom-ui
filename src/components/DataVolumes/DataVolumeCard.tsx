@@ -1,8 +1,9 @@
+import * as React from "react";
 import styled from "styled-components";
 import { Popconfirm, Button, Card } from "antd";
 import "antd/dist/antd.css";
 import DocRefImage from "../DocRefImage";
-import { DataVolume } from "./DataVolume";
+import DataVolume from "./DataVolume";
 import MinimalInput from "components/MinimalInput";
 
 interface Props {
@@ -66,7 +67,7 @@ const DataVolumeCard: React.FunctionComponent<Props> = ({
       title="Index volume"
       extra={
         <Popconfirm
-          title="Delete this index volume?"
+          title="Delete this data volume?"
           onConfirm={() => onDelete(volume)}
           okText="Yes"
           cancelText="No"
@@ -84,7 +85,7 @@ const DataVolumeCard: React.FunctionComponent<Props> = ({
     >
       <TopRightButtons>
         <Popconfirm
-          title="Delete this index volume?"
+          title="Delete this data volume?"
           onConfirm={() => onDelete(volume)}
           okText="Yes"
           cancelText="No"
