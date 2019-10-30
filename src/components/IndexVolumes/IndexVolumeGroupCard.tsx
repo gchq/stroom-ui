@@ -5,7 +5,7 @@ import "antd/dist/antd.css";
 import { Draggable, DroppableProvided } from "react-beautiful-dnd";
 import { IndexVolume } from "./indexVolumeApi";
 import IndexVolumeCard from "./IndexVolumeCard";
-import MinimalInput from "./MinimalInput";
+import MinimalInput from "components/MinimalInput";
 import { IndexVolumeGroup } from "./indexVolumeGroupApi";
 
 interface Props {

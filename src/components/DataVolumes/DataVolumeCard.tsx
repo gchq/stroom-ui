@@ -1,15 +1,14 @@
-import * as React from "react";
 import styled from "styled-components";
 import { Popconfirm, Button, Card } from "antd";
 import "antd/dist/antd.css";
 import DocRefImage from "../DocRefImage";
-import { IndexVolume } from "./indexVolumeApi";
+import { DataVolume } from "./DataVolume";
 import MinimalInput from "components/MinimalInput";
 
 interface Props {
-  indexVolume: IndexVolume
-  onDelete: (volumeId: string) => void;
-  onChange: (indexVolume: IndexVolume) => void;
+  volume: DataVolume
+  onDelete: (volume: DataVolume) => void;
+  onChange: (volume: DataVolume) => void;
 }
 
 const TopRightButtons = styled.div`
@@ -52,8 +51,8 @@ const StyledMinimalInput = styled(MinimalInput)`
  * This has to be a class component instead of a functional component
  * because we need to use a 'ref' for BeautifulDnd to be able to handle drops.
  */
-const DraggableIndexVolumeCard: React.FunctionComponent<Props> = ({
-  indexVolume,
+const DataVolumeCard: React.FunctionComponent<Props> = ({
+  volume,
   onDelete,
   onChange,
 }) => {
@@ -68,7 +67,7 @@ const DraggableIndexVolumeCard: React.FunctionComponent<Props> = ({
       extra={
         <Popconfirm
           title="Delete this index volume?"
-          onConfirm={() => onDelete(indexVolume.id)}
+          onConfirm={() => onDelete(volume)}
           okText="Yes"
           cancelText="No"
           placement="left"
@@ -86,7 +85,7 @@ const DraggableIndexVolumeCard: React.FunctionComponent<Props> = ({
       <TopRightButtons>
         <Popconfirm
           title="Delete this index volume?"
-          onConfirm={() => onDelete(indexVolume.id)}
+          onConfirm={() => onDelete(volume)}
           okText="Yes"
           cancelText="No"
           placement="left"
@@ -100,22 +99,16 @@ const DraggableIndexVolumeCard: React.FunctionComponent<Props> = ({
         </IconColumn>
         <div>
           <Field>
-            <Label>Node name: </Label>
-            <StyledMinimalInput
-              defaultValue={indexVolume.nodeName}
-              onBlur={(event: React.ChangeEvent<HTMLInputElement>) => {
-                indexVolume.nodeName = event.target.value;
-                onChange(indexVolume);
-              }}
-            />
+            <Label>Stream</Label>
+            <p>TODO: How should we represent StreamID?</p>
           </Field>
           <Field>
             <Label>Path: </Label>
             <StyledMinimalInput
-              defaultValue={indexVolume.path}
+              defaultValue={volume.volumePath}
               onBlur={(event: React.ChangeEvent<HTMLInputElement>) => {
-                indexVolume.path = event.target.value;
-                onChange(indexVolume);
+                volume.volumePath = event.target.value;
+                onChange(volume);
               }}
             />
           </Field>
@@ -125,4 +118,4 @@ const DraggableIndexVolumeCard: React.FunctionComponent<Props> = ({
   );
 };
 
-export default DraggableIndexVolumeCard;
+export default DataVolumeCard;
