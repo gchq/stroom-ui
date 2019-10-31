@@ -17,21 +17,30 @@
 import * as React from "react";
 import { storiesOf } from "@storybook/react";
 import { addThemedStories } from "testing/storybook/themedStoryGenerator";
-import DataVolume from "./DataVolume";
+import FsVolume from "./types/FsVolume";
 import DataVolumeCard from "./DataVolumeCard";
+import { VolumeUseStatus } from "./types/VolumeUseStatus";
 
-const stories = storiesOf(
-  "Sections/Data Volumes/DataVolumeCard",
-  module,
-);
+const stories = storiesOf("Sections/Data Volumes/DataVolumeCard", module);
 
-const volume01: DataVolume = {
-  streamId: "123",
-  volumePath: "/some/amazing/path",
-  createTimeMs: Date.now(),
-  createUser: "Creating user",
+const volume01: FsVolume = {
+  id: 123,
+  version: 1,
+  path: "/some/amazing/path",
+  status: VolumeUseStatus.Active,
+  byteLimit: 1000,
+  volumeState: {
+    id: 1,
+    version: 1,
+    bytesUsed: 10343,
+    bytesFree: 345345,
+    bytesTotal: 23423423,
+    updateTimeMs: 2342,
+  },
   updateTimeMs: Date.now(),
   updateUser: "Updating user",
+  createTimeMs: 234534345,
+  createUser: "Creating user",
 };
 
 addThemedStories(stories, () => (

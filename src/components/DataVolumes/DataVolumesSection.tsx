@@ -1,18 +1,15 @@
 import { Button, Empty } from "antd";
 import DocRefIconHeader from "components/DocRefIconHeader";
 import * as React from "react";
-import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
 import styled from "styled-components";
-import DataVolume from "./DataVolume";
-import DataVolumeCard from "./DataVolumeCard"
-// import { IndexVolumeGroup } from "./indexVolumeGroupApi";
-// import IndexVolumeGroupCard from "./IndexVolumeGroupCard";
+import DataVolumeCard from "./DataVolumeCard";
+import FsVolume from "./types/FsVolume";
 
 interface Props {
-  volumes: DataVolume[];
+  volumes: FsVolume[];
   onVolumeAdd: () => void;
-  onVolumeChange: (volume: DataVolume) => void;
-  onVolumeDelete: (volume: DataVolume) => void;
+  onVolumeChange: (volume: FsVolume) => void;
+  onVolumeDelete: (volume: FsVolume) => void;
 }
 
 const IndexVolumesSection: React.FunctionComponent<Props> = ({
@@ -41,27 +38,28 @@ const IndexVolumesSection: React.FunctionComponent<Props> = ({
         </div>
       </div>
       <Body className="page__body">
-          {volumes.length === 0 ? (
-            <Empty
-              description="No data volumes"
-              image={Empty.PRESENTED_IMAGE_SIMPLE}
-            >
-              <Button icon="plus" size="small" onClick={() => onVolumeAdd()}>
-                Add data volume
-              </Button>
-            </Empty>
-          ) : (
-            undefined
-          )}
-          {volumes.map(volume => {
-            return (
-                    <DataVolumeCard
-                      volume={volume}
-                      onDelete={onVolumeDelete}
-                      onChange={onVolumeChange}
-                    />
-            );
-          })}
+        {volumes.length === 0 ? (
+          <Empty
+            description="No data volumes"
+            image={Empty.PRESENTED_IMAGE_SIMPLE}
+          >
+            <Button icon="plus" size="small" onClick={() => onVolumeAdd()}>
+              Add data volume
+            </Button>
+          </Empty>
+        ) : (
+          undefined
+        )}
+        {volumes.map(volume => {
+          return (
+            <DataVolumeCard
+              key={volume.id}
+              volume={volume}
+              onDelete={onVolumeDelete}
+              onChange={onVolumeChange}
+            />
+          );
+        })}
       </Body>
     </Page>
   );

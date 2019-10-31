@@ -17,80 +17,103 @@
 import * as React from "react";
 import { storiesOf } from "@storybook/react";
 import DataVolumesSection from "./DataVolumesSection";
-import DataVolume from "./DataVolume"
+import FsVolume from "./types/FsVolume";
 import { addThemedStories } from "testing/storybook/themedStoryGenerator";
 import JsonDebug from "testing/JsonDebug";
 
 import { useCallback } from "react";
+import { VolumeUseStatus } from "./types/VolumeUseStatus";
 
-const volume01: DataVolume = {
-  streamId: "1",
-  volumePath: "/some/path/1",
-  createTimeMs: -1,
-  createUser: "",
-  updateTimeMs: -1,
-  updateUser: ""
-}
+const volume01: FsVolume = {
+  id: 1,
+  version: 7,
+  path: "/some/amazing/path/1",
+  status: VolumeUseStatus.Active,
+  byteLimit: 1001,
+  volumeState: {
+    id: 1,
+    version: 1,
+    bytesUsed: 5676,
+    bytesFree: 674545,
+    bytesTotal: 23423456423,
+    updateTimeMs: 56556,
+  },
+  updateTimeMs: Date.now(),
+  updateUser: "Updating user",
+  createTimeMs: 234534345,
+  createUser: "Creating user",
+};
 
-const volume02: DataVolume = {
-  streamId: "2",
-  volumePath: "/some/path/2",
-  createTimeMs: -1,
-  createUser: "",
-  updateTimeMs: -1,
-  updateUser: ""
-}
+const volume02: FsVolume = {
+  id: 2,
+  version: 9,
+  path: "/some/amazing/path/2",
+  status: VolumeUseStatus.Closed,
+  byteLimit: 1002,
+  volumeState: {
+    id: 2,
+    version: 1,
+    bytesUsed: 78976,
+    bytesFree: 2312434,
+    bytesTotal: 3453475476,
+    updateTimeMs: 234342,
+  },
+  updateTimeMs: Date.now(),
+  updateUser: "Updating user",
+  createTimeMs: 234534345,
+  createUser: "Creating user",
+};
 
-const volume03: DataVolume = {
-  streamId: "3",
-  volumePath: "/some/path/3",
-  createTimeMs: -1,
-  createUser: "",
-  updateTimeMs: -1,
-  updateUser: ""
-}
-
+const volume03: FsVolume = {
+  id: 3,
+  version: 1,
+  path: "/some/amazing/path/3",
+  status: VolumeUseStatus.Inactive,
+  byteLimit: 1003,
+  volumeState: {
+    id: 3,
+    version: 1,
+    bytesUsed: 10343,
+    bytesFree: 345345,
+    bytesTotal: 23423423,
+    updateTimeMs: 2342,
+  },
+  updateTimeMs: Date.now(),
+  updateUser: "Updating user",
+  createTimeMs: 234534345,
+  createUser: "Creating user",
+};
 
 const stories = storiesOf("Sections/Data Volumes/DataVolumesSection", module);
 
 const TestHarness: React.FunctionComponent = () => {
-  // var initialVolumes = [indexVolume01, indexVolume02, indexVolume03];
+  var initialVolumes = [volume01, volume02, volume03];
 
-  // const [volumes, setVolumes] = React.useState<IndexVolume[]>(initialVolumes);
-  // const handleAddVolume = useCallback(
-  //   (indexVolumeGroupName: string) => {
-  //     const newVolumeId = "-1";
-  //     const newVolume: IndexVolume = {
-  //       id: newVolumeId,
-  //       indexVolumeGroupName,
-  //       path: "",
-  //       nodeName: "New volume",
-  //       bytesLimit: -1,
-  //       bytesUsed: -1,
-  //       bytesFree: -1,
-  //       bytesTotal: -1,
-  //       statusMs: -1,
-  //       createTimeMs: -1,
-  //       createUser: "",
-  //       updateTimeMs: -1,
-  //       updateUser: "",
-  //     };
-  //     setVolumes([...volumes, newVolume]);
-  //   },
-  //   [setVolumes, volumes],
-  // );
+  const [volumes, setVolumes] = React.useState<FsVolume[]>(initialVolumes);
+  const handleAddVolume = useCallback(() => {
+    // const newVolumeId = -1;
+    // const newVolume: FsVolume = {
+    //   id: newVolumeId,
+    //   volumePath: "",
+    //   createTimeMs: -1,
+    //   createUser: "",
+    //   updateTimeMs: -1,
+    //   updateUser: "",
+    // };
+    // setVolumes([...volumes, newVolume]);
+  }, [setVolumes, volumes]);
 
   const handleDeleteVolume = useCallback(
-    (volumeId: string) => {
-      setVolumes(volumes.filter(v => v.id !== volumeId));
+    (volume: FsVolume) => {
+      setVolumes(volumes.filter(v => v.id !== volume.id));
     },
     [setVolumes, volumes],
   );
 
   const handleVolumeChange = useCallback(
-    (dataVolume: DataVolume) => {
-      const otherVolumes = volumes.filter(v => v.id !== dataVolume.id);
-      setVolumes([...otherVolumes, dataVolume]);
+    (fsVolume: FsVolume) => {
+      const otherVolumes = volumes.filter(v => v.id !== fsVolume.id);
+      setVolumes([...otherVolumes, fsVolume]);
     },
     [volumes],
   );

@@ -3,13 +3,16 @@ import styled from "styled-components";
 import { Popconfirm, Button, Card } from "antd";
 import "antd/dist/antd.css";
 import DocRefImage from "../DocRefImage";
-import DataVolume from "./DataVolume";
+import FsVolume from "./types/FsVolume";
 import MinimalInput from "components/MinimalInput";
+import { Radio } from "antd";
+
+import { VolumeUseStatus } from "./types/VolumeUseStatus";
 
 interface Props {
-  volume: DataVolume
-  onDelete: (volume: DataVolume) => void;
-  onChange: (volume: DataVolume) => void;
+  volume: FsVolume;
+  onDelete: (volume: FsVolume) => void;
+  onChange: (volume: FsVolume) => void;
 }
 
 const TopRightButtons = styled.div`
@@ -46,6 +49,11 @@ const Contents = styled.div`
 const StyledMinimalInput = styled(MinimalInput)`
   height: 1.8em;
   width: 13em;
+`;
+
+const ByteLimitInput = styled(MinimalInput)`
+  height: 1.8em;
+  width: 8em;
 `;
 
 /**
@@ -100,15 +108,37 @@ const DataVolumeCard: React.FunctionComponent<Props> = ({
         </IconColumn>
         <div>
           <Field>
-            <Label>Stream</Label>
-            <p>TODO: How should we represent StreamID?</p>
-          </Field>
-          <Field>
             <Label>Path: </Label>
             <StyledMinimalInput
-              defaultValue={volume.volumePath}
+              defaultValue={volume.path}
               onBlur={(event: React.ChangeEvent<HTMLInputElement>) => {
-                volume.volumePath = event.target.value;
+                volume.path = event.target.value;
+                onChange(volume);
+              }}
+            />
+          </Field>
+          <Field>
+            <Label>Status:</Label>
+            <Radio.Group
+              defaultValue="0"
+              value={volume.status}
+              buttonStyle="solid"
+              size="small"
+            >
+              {Object.keys(VolumeUseStatus).map(key => (
+                <Radio.Button key={key} value={VolumeUseStatus[key]}>
+                  {key}
+                </Radio.Button>
+              ))}
+            </Radio.Group>
+          </Field>
+          <Field>
+            <Label>Byte limit:</Label>
+            <ByteLimitInput
+              type="number"
+              defaultValue={volume.byteLimit}
+              onBlur={(event: React.ChangeEvent<HTMLInputElement>) => {
+                volume.byteLimit = parseInt(event.target.value);
                 onChange(volume);
               }}
             />
