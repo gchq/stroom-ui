@@ -6,7 +6,7 @@ import FsVolumeState from "./FsVolumeState";
  * Represents a file system volume, matches FsVolume.java
  */
 export default interface FsVolume extends HasAuditInfo {
-  readonly id: number;
+  readonly id: string;
   readonly version: number;
   path: string;
   status: VolumeUseStatus;

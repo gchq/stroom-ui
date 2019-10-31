@@ -24,7 +24,7 @@ import { VolumeUseStatus } from "./types/VolumeUseStatus";
 const stories = storiesOf("Sections/Data Volumes/DataVolumeCard", module);
 
 const volume01: FsVolume = {
-  id: 123,
+  id: "123",
   version: 1,
   path: "/some/amazing/path",
   status: VolumeUseStatus.Active,
