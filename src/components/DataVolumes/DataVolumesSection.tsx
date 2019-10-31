@@ -12,7 +12,7 @@ interface Props {
   onVolumeDelete: (volume: FsVolume) => void;
 }
 
-const IndexVolumesSection: React.FunctionComponent<Props> = ({
+const DataVolumesSection: React.FunctionComponent<Props> = ({
   volumes,
   onVolumeAdd,
   onVolumeChange,
@@ -30,7 +30,7 @@ const IndexVolumesSection: React.FunctionComponent<Props> = ({
   return (
     <Page className="page">
       <div className="page__header">
-        <DocRefIconHeader text="Index Volumes" docRefType="Index" />
+        <DocRefIconHeader text="Data Volumes" docRefType="Index" />
         <div className="page__buttons">
           <Button icon="plus" onClick={() => onVolumeAdd()}>
             Add data volume
@@ -65,4 +65,4 @@ const IndexVolumesSection: React.FunctionComponent<Props> = ({
   );
 };
 
-export default IndexVolumesSection;
+export default DataVolumesSection;
