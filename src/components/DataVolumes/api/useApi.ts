@@ -12,6 +12,7 @@ interface Api {
   createVolume: () => Promise<FsVolume>;
 }
 
+const PATH = "datavolumes/v1";;
 export const useApi = (): Api => {
   const { stroomBaseServiceUrl } = useConfig();
   const {
@@ -24,31 +25,27 @@ export const useApi = (): Api => {
   return {
     createVolume: React.useCallback(
       () =>
-        httpPostJsonResponse(
-          `${stroomBaseServiceUrl}/stroom-index/volume/v1/`,
-          { body: JSON.stringify({ todo: "TODO" }) },
-        ),
+        httpPostJsonResponse(`${stroomBaseServiceUrl}/${PATH}`, {
+          body: JSON.stringify({ todo: "TODO" }),
+        }),
       [stroomBaseServiceUrl, httpPostJsonResponse],
     ),
     deleteVolume: React.useCallback(
       (id: string) =>
-        httpDeleteEmptyResponse(
-          `${stroomBaseServiceUrl}/stroom-index/volume/v1/${id}`,
-        ),
+        httpDeleteEmptyResponse(`${stroomBaseServiceUrl}/${PATH}/${id}`),
       [stroomBaseServiceUrl, httpDeleteEmptyResponse],
     ),
     getVolumeById: React.useCallback(
-      (id: string) =>
-        httpGetJson(`${stroomBaseServiceUrl}/stroom-index/volume/v1/${id}`),
+      (id: string) => httpGetJson(`${stroomBaseServiceUrl}/${PATH}/${id}`),
       [stroomBaseServiceUrl, httpGetJson],
     ),
     getVolumes: React.useCallback(
-      () => httpGetJson(`${stroomBaseServiceUrl}/stroom-index/volume/v1`),
+      () => httpGetJson(`${stroomBaseServiceUrl}/${PATH}`),
       [stroomBaseServiceUrl, httpGetJson],
     ),
     update: React.useCallback(
       (volume: FsVolume) =>
-        httpPutJsonResponse(`${stroomBaseServiceUrl}/stroom-index/volume/v1`, {
+        httpPutJsonResponse(`${stroomBaseServiceUrl}/${PATH}`, {
           body: JSON.stringify(volume),
         }),
       [stroomBaseServiceUrl, httpPutJsonResponse],
