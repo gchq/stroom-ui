@@ -27,7 +27,7 @@ const volume01: FsVolume = {
   id: "123",
   version: 1,
   path: "/some/amazing/path",
-  status: VolumeUseStatus.Active,
+  status: VolumeUseStatus.ACTIVE,
   byteLimit: 1000,
   volumeState: {
     id: 1,

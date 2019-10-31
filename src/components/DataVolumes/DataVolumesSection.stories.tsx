@@ -28,7 +28,7 @@ const volume01: FsVolume = {
   id: "1",
   version: 7,
   path: "/some/amazing/path/1",
-  status: VolumeUseStatus.Active,
+  status: VolumeUseStatus.ACTIVE,
   byteLimit: 1001,
   volumeState: {
     id: 1,
@@ -48,7 +48,7 @@ const volume02: FsVolume = {
   id: "2",
   version: 9,
   path: "/some/amazing/path/2",
-  status: VolumeUseStatus.Closed,
+  status: VolumeUseStatus.CLOSED,
   byteLimit: 1002,
   volumeState: {
     id: 2,
@@ -68,7 +68,7 @@ const volume03: FsVolume = {
   id: "3",
   version: 1,
   path: "/some/amazing/path/3",
-  status: VolumeUseStatus.Inactive,
+  status: VolumeUseStatus.INACTIVE,
   byteLimit: 1003,
   volumeState: {
     id: 3,
