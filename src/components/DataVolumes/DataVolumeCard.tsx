@@ -7,6 +7,7 @@ import MinimalInput from "components/MinimalInput";
 import { Radio, Progress, Tooltip } from "antd";
 
 import { VolumeUseStatus } from "./types/VolumeUseStatus";
+import DocRefImage from "components/DocRefImage";
 
 interface Props {
   volume: FsVolume;
@@ -71,7 +72,8 @@ const DataVolumeCard: React.FunctionComponent<Props> = ({
     <StyledCard
       size="small"
       type="inner"
-      title="Data volume"
+      // title="Dat>a volume"
+      title={<DocRefImage docRefType="Folder" />}
       extra={
         <Popconfirm
           title="Delete this data volume?"

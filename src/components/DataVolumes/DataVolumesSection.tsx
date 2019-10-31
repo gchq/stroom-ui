@@ -30,7 +30,7 @@ const DataVolumesSection: React.FunctionComponent<Props> = ({
   return (
     <Page className="page">
       <div className="page__header">
-        <DocRefIconHeader text="Data Volumes" docRefType="Index" />
+        <DocRefIconHeader text="Data Volumes" docRefType="Folder" />
         <div className="page__buttons">
           <Button icon="plus" onClick={() => onVolumeAdd()}>
             Add data volume
