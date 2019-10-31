@@ -7,18 +7,12 @@ import MinimalInput from "components/MinimalInput";
 import { Radio, Progress, Tooltip } from "antd";
 
 import { VolumeUseStatus } from "./types/VolumeUseStatus";
-import DocRefImage from "components/DocRefImage";
 
 interface Props {
   volume: FsVolume;
   onDelete: (volume: FsVolume) => void;
   onChange: (volume: FsVolume) => void;
 }
-
-const TopRightButtons = styled.div`
-  float: right;
-  visibility: hidden;
-`;
 
 const Field = styled.div`
   height: 2.3em;
@@ -53,7 +47,7 @@ const FieldDiv = styled.div`
 `;
 
 const StatsDiv = styled.div`
-  margin-left: 2em;
+  margin: 0.75em;
 `;
 
 const DataVolumeCard: React.FunctionComponent<Props> = ({
@@ -63,46 +57,15 @@ const DataVolumeCard: React.FunctionComponent<Props> = ({
 }) => {
   const StyledCard = styled(Card)`
     margin: 0.5em;
+    width: 40.75em;
+    margin-bottom: 1em;
   `;
 
   const { bytesFree, bytesUsed, bytesTotal } = volume.volumeState;
   const percent = Math.round((bytesUsed / bytesTotal) * 100);
   const status = percent < 95 ? "normal" : "exception";
   return (
-    <StyledCard
-      size="small"
-      type="inner"
-      // title="Dat>a volume"
-      title={<DocRefImage docRefType="Folder" />}
-      extra={
-        <Popconfirm
-          title="Delete this data volume?"
-          onConfirm={() => onDelete(volume)}
-          okText="Yes"
-          cancelText="No"
-          placement="left"
-        >
-          <Button
-            ghost
-            type="danger"
-            shape="circle"
-            icon="delete"
-            size="small"
-          />
-        </Popconfirm>
-      }
-    >
-      <TopRightButtons>
-        <Popconfirm
-          title="Delete this data volume?"
-          onConfirm={() => onDelete(volume)}
-          okText="Yes"
-          cancelText="No"
-          placement="left"
-        >
-          <Button type="danger" shape="circle" icon="delete" size="small" />
-        </Popconfirm>
-      </TopRightButtons>
+    <StyledCard size="small" type="inner">
       <Contents>
         <StatsDiv>
           <Tooltip
@@ -158,6 +121,21 @@ const DataVolumeCard: React.FunctionComponent<Props> = ({
             />
           </Field>
         </FieldDiv>
+        <Popconfirm
+          title="Delete this data volume?"
+          onConfirm={() => onDelete(volume)}
+          okText="Yes"
+          cancelText="No"
+          placement="left"
+        >
+          <Button
+            ghost
+            type="danger"
+            shape="circle"
+            icon="delete"
+            size="small"
+          />
+        </Popconfirm>
       </Contents>
     </StyledCard>
   );
