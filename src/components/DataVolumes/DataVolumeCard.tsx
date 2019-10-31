@@ -2,10 +2,9 @@ import * as React from "react";
 import styled from "styled-components";
 import { Popconfirm, Button, Card } from "antd";
 import "antd/dist/antd.css";
-import DocRefImage from "../DocRefImage";
 import FsVolume from "./types/FsVolume";
 import MinimalInput from "components/MinimalInput";
-import { Radio } from "antd";
+import { Radio, Progress, Tooltip } from "antd";
 
 import { VolumeUseStatus } from "./types/VolumeUseStatus";
 
@@ -33,22 +32,14 @@ const Label = styled.label`
   padding-top: 0.2em;
 `;
 
-const IconColumn = styled.div`
-  padding-right: 1em;
-  justify-content: center;
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-`;
-
 const Contents = styled.div`
   display: flex;
   flex-direction: row;
 `;
 
-const StyledMinimalInput = styled(MinimalInput)`
+const PathInput = styled(MinimalInput)`
   height: 1.8em;
-  width: 13em;
+  width: 20em;
 `;
 
 const ByteLimitInput = styled(MinimalInput)`
@@ -56,10 +47,14 @@ const ByteLimitInput = styled(MinimalInput)`
   width: 8em;
 `;
 
-/**
- * This has to be a class component instead of a functional component
- * because we need to use a 'ref' for BeautifulDnd to be able to handle drops.
- */
+const FieldDiv = styled.div`
+  margin-left: 3em;
+`;
+
+const StatsDiv = styled.div`
+  margin-left: 2em;
+`;
+
 const DataVolumeCard: React.FunctionComponent<Props> = ({
   volume,
   onDelete,
@@ -68,11 +63,15 @@ const DataVolumeCard: React.FunctionComponent<Props> = ({
   const StyledCard = styled(Card)`
     margin: 0.5em;
   `;
+
+  const { bytesFree, bytesUsed, bytesTotal } = volume.volumeState;
+  const percent = Math.round((bytesUsed / bytesTotal) * 100);
+  const status = percent < 95 ? "normal" : "exception";
   return (
     <StyledCard
       size="small"
       type="inner"
-      title="Index volume"
+      title="Data volume"
       extra={
         <Popconfirm
           title="Delete this data volume?"
@@ -103,13 +102,24 @@ const DataVolumeCard: React.FunctionComponent<Props> = ({
         </Popconfirm>
       </TopRightButtons>
       <Contents>
-        <IconColumn>
-          <DocRefImage docRefType="Index" size="lg" />
-        </IconColumn>
-        <div>
+        <StatsDiv>
+          <Tooltip
+            title={`Using ${bytesUsed} of ${bytesTotal} bytes, leaving ${bytesFree} bytes free.`}
+          >
+            <Progress
+              type="circle"
+              percent={percent}
+              format={() => `${percent}%`}
+              width={80}
+              status={status}
+            />
+          </Tooltip>
+        </StatsDiv>
+
+        <FieldDiv>
           <Field>
             <Label>Path: </Label>
-            <StyledMinimalInput
+            <PathInput
               defaultValue={volume.path}
               onBlur={(event: React.ChangeEvent<HTMLInputElement>) => {
                 volume.path = event.target.value;
@@ -117,6 +127,7 @@ const DataVolumeCard: React.FunctionComponent<Props> = ({
               }}
             />
           </Field>
+
           <Field>
             <Label>Status:</Label>
             <Radio.Group
@@ -132,6 +143,7 @@ const DataVolumeCard: React.FunctionComponent<Props> = ({
               ))}
             </Radio.Group>
           </Field>
+
           <Field>
             <Label>Byte limit:</Label>
             <ByteLimitInput
@@ -143,7 +155,7 @@ const DataVolumeCard: React.FunctionComponent<Props> = ({
               }}
             />
           </Field>
-        </div>
+        </FieldDiv>
       </Contents>
     </StyledCard>
   );

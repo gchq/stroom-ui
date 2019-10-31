@@ -32,7 +32,7 @@ const volume01: FsVolume = {
   volumeState: {
     id: 1,
     version: 1,
-    bytesUsed: 10343,
+    bytesUsed: 20423423,
     bytesFree: 345345,
     bytesTotal: 23423423,
     updateTimeMs: 2342,
