@@ -64,17 +64,21 @@ const DataVolumeCard: React.FunctionComponent<Props> = ({
   const { bytesFree, bytesUsed, bytesTotal } = volume.volumeState;
   const percent = Math.round((bytesUsed / bytesTotal) * 100);
   const status = percent < 95 ? "normal" : "exception";
+  let tooltip = `Using ${bytesUsed} of ${bytesTotal} bytes, leaving ${bytesFree} bytes free.`;
+  if (isNaN(percent)) {
+    tooltip = `We don't yet have any information about this volume.`;
+  }
+  const progressFormat = isNaN(percent) ? "?" : `${percent}%`;
+  const statusValue = VolumeUseStatus[volume.status];
   return (
     <StyledCard size="small" type="inner">
       <Contents>
         <StatsDiv>
-          <Tooltip
-            title={`Using ${bytesUsed} of ${bytesTotal} bytes, leaving ${bytesFree} bytes free.`}
-          >
+          <Tooltip title={tooltip}>
             <Progress
               type="circle"
               percent={percent}
-              format={() => `${percent}%`}
+              format={() => progressFormat}
               width={80}
               status={status}
             />
@@ -97,13 +101,15 @@ const DataVolumeCard: React.FunctionComponent<Props> = ({
             <Label>Status:</Label>
             <Radio.Group
               defaultValue="0"
-              value={volume.status}
+              value={statusValue}
               buttonStyle="solid"
               size="small"
             >
               {Object.keys(VolumeUseStatus).map(key => (
                 <Radio.Button key={key} value={VolumeUseStatus[key]}>
-                  {key}
+                  {// Switch to proper noun case
+                  key.substring(0, 1).toUpperCase() +
+                    key.substring(1).toLowerCase()}
                 </Radio.Button>
               ))}
             </Radio.Group>
