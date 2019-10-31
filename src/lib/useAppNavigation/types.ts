@@ -11,6 +11,7 @@ export interface RawNavigateApp<IN, OUT> {
   goToEditDocRef: (docRef: DocRefType) => OUT;
   goToEditDocRefByUuid: (docRefUuid: IN) => OUT;
   goToError: () => OUT;
+  goToDataVolumes: () => OUT;
   goToIndexVolume: (volumeId: IN) => OUT;
   goToIndexVolumeGroup: (groupName: IN) => OUT;
   goToIndexVolumeGroups: () => OUT;

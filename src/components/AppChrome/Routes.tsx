@@ -45,6 +45,7 @@ import UserSettings from "components/UserSettings";
 import Welcome from "components/Welcome";
 import AppChrome from "./AppChrome";
 import useAppNavigation from "lib/useAppNavigation";
+import DataVolumes from "components/DataVolumes/DataVolumesSectionContainer";
 
 const renderWelcome = ({
   match: {
@@ -215,6 +216,21 @@ const Routes: React.FunctionComponent = () => {
                 docRefUuid={docRefUuid}
               />
             }
+          />
+        )}
+      />
+      <PrivateRoute
+        exact
+        path={urlGenerator.goToDataVolumes()}
+        render={({
+          match: {
+            params: { urlPrefix },
+          },
+        }) => (
+          <AppChrome
+            activeMenuItem="dataVolumes"
+            urlPrefix={urlPrefix}
+            content={<DataVolumes />}
           />
         )}
       />

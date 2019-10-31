@@ -20,12 +20,18 @@ const useUrlGenerator = (
         userUuid: string = ":userUuid",
       ) =>
         `/${urlPrefix}/authorisationManager/document/${docRefUuid}/${userUuid}`,
-      goToAuthorisationsForUser: (userUuid: string = ":userUuid") => `/${urlPrefix}/authorisationManager/${userUuid}`,
-      goToEditDocRef: (docRef: DocRefType) => `/${urlPrefix}/doc/${docRef.uuid}`,
-      goToEditDocRefByUuid: (docRefUuid: string = ":docRefUuid") => `/${urlPrefix}/doc/${docRefUuid}`,
+      goToAuthorisationsForUser: (userUuid: string = ":userUuid") =>
+        `/${urlPrefix}/authorisationManager/${userUuid}`,
+      goToEditDocRef: (docRef: DocRefType) =>
+        `/${urlPrefix}/doc/${docRef.uuid}`,
+      goToEditDocRefByUuid: (docRefUuid: string = ":docRefUuid") =>
+        `/${urlPrefix}/doc/${docRefUuid}`,
       goToError: () => `/${urlPrefix}/error`,
-      goToIndexVolume: (volumeId: string = ":volumeId") => `/${urlPrefix}/indexing/volumes/${volumeId}`,
-      goToIndexVolumeGroup: (groupName: string = ":groupName") => `/${urlPrefix}/indexing/groups/${groupName}`,
+      goToDataVolumes: () => `/${urlPrefix}/data/volumes`,
+      goToIndexVolume: (volumeId: string = ":volumeId") =>
+        `/${urlPrefix}/indexing/volumes/${volumeId}`,
+      goToIndexVolumeGroup: (groupName: string = ":groupName") =>
+        `/${urlPrefix}/indexing/groups/${groupName}`,
       goToIndexVolumeGroups: () => `/${urlPrefix}/indexing/groups`,
       goToIndexVolumes: () => `/${urlPrefix}/indexing/volumes`,
       goToLogin: () => `${urlPrefix}/login`,
