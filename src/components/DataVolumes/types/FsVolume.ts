@@ -1,5 +1,4 @@
 import { HasAuditInfo } from "components/DocumentEditors/api/explorer/types";
-import { VolumeUseStatus } from "./VolumeUseStatus";
 import FsVolumeState from "./FsVolumeState";
 
 /**
@@ -9,7 +8,7 @@ export default interface FsVolume extends HasAuditInfo {
   readonly id: string;
   readonly version: number;
   path: string;
-  status: VolumeUseStatus;
+  status: "ACTIVE" | "INACTIVE" | "CLOSED";
   byteLimit: number;
   readonly volumeState: FsVolumeState;
 };

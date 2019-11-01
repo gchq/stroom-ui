@@ -22,13 +22,12 @@ import { addThemedStories } from "testing/storybook/themedStoryGenerator";
 import JsonDebug from "testing/JsonDebug";
 
 import { useCallback } from "react";
-import { VolumeUseStatus } from "./types/VolumeUseStatus";
 
 const volume01: FsVolume = {
   id: "1",
   version: 7,
   path: "/some/amazing/path/1",
-  status: VolumeUseStatus.ACTIVE,
+  status: "ACTIVE",
   byteLimit: 1001,
   volumeState: {
     id: 1,
@@ -48,7 +47,7 @@ const volume02: FsVolume = {
   id: "2",
   version: 9,
   path: "/some/amazing/path/2",
-  status: VolumeUseStatus.CLOSED,
+  status: "CLOSED",
   byteLimit: 1002,
   volumeState: {
     id: 2,
@@ -68,7 +67,7 @@ const volume03: FsVolume = {
   id: "3",
   version: 1,
   path: "/some/amazing/path/3",
-  status: VolumeUseStatus.INACTIVE,
+  status: "CLOSED",
   byteLimit: 1003,
   volumeState: {
     id: 3,

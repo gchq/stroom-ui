@@ -19,7 +19,6 @@ import { storiesOf } from "@storybook/react";
 import { addThemedStories } from "testing/storybook/themedStoryGenerator";
 import FsVolume from "./types/FsVolume";
 import DataVolumeCard from "./DataVolumeCard";
-import { VolumeUseStatus } from "./types/VolumeUseStatus";
 
 const stories = storiesOf("Sections/Data Volumes/DataVolumeCard", module);
 
@@ -27,7 +26,7 @@ const volume01: FsVolume = {
   id: "123",
   version: 1,
   path: "/some/amazing/path",
-  status: VolumeUseStatus.ACTIVE,
+  status: "ACTIVE",
   byteLimit: 1000,
   volumeState: {
     id: 1,

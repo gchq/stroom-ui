@@ -6,7 +6,9 @@ import FsVolume from "./types/FsVolume";
 import MinimalInput from "components/MinimalInput";
 import { Radio, Progress, Tooltip } from "antd";
 
-import { VolumeUseStatus } from "./types/VolumeUseStatus";
+// import { VolumeUseStatus } from "./types/VolumeUseStatus";
+import { RadioChangeEvent } from "antd/lib/radio";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 interface Props {
   volume: FsVolume;
@@ -50,6 +52,16 @@ const StatsDiv = styled.div`
   margin: 0.75em;
 `;
 
+const IconDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const SaveIcon = styled(FontAwesomeIcon)`
+  margin: 0.2em;
+  color: red;
+`;
+
 const DataVolumeCard: React.FunctionComponent<Props> = ({
   volume,
   onDelete,
@@ -61,6 +73,7 @@ const DataVolumeCard: React.FunctionComponent<Props> = ({
     margin-bottom: 1em;
   `;
 
+  const [disabled, setDisabled] = React.useState(false);
   const { bytesFree, bytesUsed, bytesTotal } = volume.volumeState;
   const percent = Math.round((bytesUsed / bytesTotal) * 100);
   const status = percent < 95 ? "normal" : "exception";
@@ -69,7 +82,6 @@ const DataVolumeCard: React.FunctionComponent<Props> = ({
     tooltip = `We don't yet have any information about this volume.`;
   }
   const progressFormat = isNaN(percent) ? "?" : `${percent}%`;
-  const statusValue = VolumeUseStatus[volume.status];
   return (
     <StyledCard size="small" type="inner">
       <Contents>
@@ -89,9 +101,11 @@ const DataVolumeCard: React.FunctionComponent<Props> = ({
           <Field>
             <Label>Path: </Label>
             <PathInput
+              disabled={disabled}
               defaultValue={volume.path}
               onBlur={(event: React.ChangeEvent<HTMLInputElement>) => {
                 volume.path = event.target.value;
+                setDisabled(true);
                 onChange(volume);
               }}
             />
@@ -100,48 +114,55 @@ const DataVolumeCard: React.FunctionComponent<Props> = ({
           <Field>
             <Label>Status:</Label>
             <Radio.Group
+              disabled={disabled}
               defaultValue="0"
-              value={statusValue}
+              value={volume.status}
               buttonStyle="solid"
               size="small"
+              onChange={(event: RadioChangeEvent) => {
+                volume.status = event.target.value;
+                setDisabled(true);
+                onChange(volume);
+              }}
             >
-              {Object.keys(VolumeUseStatus).map(key => (
-                <Radio.Button key={key} value={VolumeUseStatus[key]}>
-                  {// Switch to proper noun case
-                  key.substring(0, 1).toUpperCase() +
-                    key.substring(1).toLowerCase()}
-                </Radio.Button>
-              ))}
+              <Radio.Button value="ACTIVE">Active</Radio.Button>
+              <Radio.Button value="INACTIVE">Inactive</Radio.Button>
+              <Radio.Button value="CLOSED">Closed</Radio.Button>
             </Radio.Group>
           </Field>
 
           <Field>
             <Label>Byte limit:</Label>
             <ByteLimitInput
+              disabled={disabled}
               type="number"
               defaultValue={volume.byteLimit}
               onBlur={(event: React.ChangeEvent<HTMLInputElement>) => {
                 volume.byteLimit = parseInt(event.target.value);
+                setDisabled(true);
                 onChange(volume);
               }}
             />
           </Field>
         </FieldDiv>
-        <Popconfirm
-          title="Delete this data volume?"
-          onConfirm={() => onDelete(volume)}
-          okText="Yes"
-          cancelText="No"
-          placement="left"
-        >
-          <Button
-            ghost
-            type="danger"
-            shape="circle"
-            icon="delete"
-            size="small"
-          />
-        </Popconfirm>
+        <IconDiv>
+          <Popconfirm
+            title="Delete this data volume?"
+            onConfirm={() => onDelete(volume)}
+            okText="Yes"
+            cancelText="No"
+            placement="left"
+          >
+            <Button
+              ghost
+              type="danger"
+              shape="circle"
+              icon="delete"
+              size="small"
+            />
+          </Popconfirm>
+          {disabled ? <SaveIcon size="lg" icon="save" /> : undefined}
+        </IconDiv>
       </Contents>
     </StyledCard>
   );
