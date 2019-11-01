@@ -29,15 +29,12 @@ const useDataVolumes = (): UseDataVolumes => {
 
   return {
     volumes,
-    createVolume: React.useCallback(
-      () => console.log("TODO"),
-      // (newIndexVolume: NewIndexVolume) =>
-      // createIndexVolume(newIndexVolume).then(addItem),
-      [addItem, createVolume],
-    ),
+    createVolume: React.useCallback(() => createVolume().then(addItem), [
+      addItem,
+      createVolume,
+    ]),
     deleteVolume: React.useCallback(
-      (id: string) => console.log("TODO"),
-      // (id: string) => deleteVolume(id).then(() => removeItem(id)),
+      (id: string) => deleteVolume(id).then(() => removeItem(id)),
       [removeItem, deleteVolume],
     ),
     update: React.useCallback((volume: FsVolume) => update(volume), [update]),
