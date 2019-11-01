@@ -4,9 +4,11 @@ import * as React from "react";
 import styled from "styled-components";
 import DataVolumeCard from "./DataVolumeCard";
 import FsVolume from "./types/FsVolume";
+import Loader from "components/Loader";
 
 interface Props {
   volumes: FsVolume[];
+  isLoading: boolean;
   onVolumeAdd: () => void;
   onVolumeChange: (volume: FsVolume) => void;
   onVolumeDelete: (volume: FsVolume) => void;
@@ -14,6 +16,7 @@ interface Props {
 
 const DataVolumesSection: React.FunctionComponent<Props> = ({
   volumes,
+  isLoading,
   onVolumeAdd,
   onVolumeChange,
   onVolumeDelete,
@@ -43,30 +46,34 @@ const DataVolumesSection: React.FunctionComponent<Props> = ({
         </div>
       </div>
       <Body className="page__body">
-        <CardContainer>
-          {volumes.length === 0 ? (
-            <Empty
-              description="No data volumes"
-              image={Empty.PRESENTED_IMAGE_SIMPLE}
-            >
-              <Button icon="plus" size="small" onClick={() => onVolumeAdd()}>
-                Add data volume
-              </Button>
-            </Empty>
-          ) : (
-            undefined
-          )}
-          {volumes.map(volume => {
-            return (
-              <DataVolumeCard
-                key={volume.id}
-                volume={volume}
-                onDelete={onVolumeDelete}
-                onChange={onVolumeChange}
-              />
-            );
-          })}
-        </CardContainer>
+        {isLoading ? (
+          <Loader message="Loading data volumes..." />
+        ) : (
+          <CardContainer>
+            {volumes.length === 0 ? (
+              <Empty
+                description="No data volumes"
+                image={Empty.PRESENTED_IMAGE_SIMPLE}
+              >
+                <Button icon="plus" size="small" onClick={() => onVolumeAdd()}>
+                  Add data volume
+                </Button>
+              </Empty>
+            ) : (
+              undefined
+            )}
+            {volumes.map(volume => {
+              return (
+                <DataVolumeCard
+                  key={volume.id}
+                  volume={volume}
+                  onDelete={onVolumeDelete}
+                  onChange={onVolumeChange}
+                />
+              );
+            })}
+          </CardContainer>
+        )}
       </Body>
     </Page>
   );

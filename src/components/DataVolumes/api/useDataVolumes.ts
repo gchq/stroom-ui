@@ -10,6 +10,7 @@ import FsVolume from "../types/FsVolume";
  */
 interface UseDataVolumes {
   volumes: FsVolume[];
+  isLoading: boolean;
   update: (volume: FsVolume) => Promise<FsVolume>;
   createVolume: () => void;
   deleteVolume: (id: string) => void;
@@ -22,13 +23,17 @@ const useDataVolumes = (): UseDataVolumes => {
   >(iv => iv.id);
 
   const { getVolumes, deleteVolume, createVolume, update } = useApi();
-
+  const [isLoading, setIsLoading] = React.useState<boolean>(true);
   React.useEffect(() => {
-    getVolumes().then(receiveItems);
-  }, [getVolumes, receiveItems]);
+    getVolumes().then(items => {
+      receiveItems(items);
+      setIsLoading(false);
+    });
+  }, [getVolumes, isLoading, setIsLoading, receiveItems]);
 
   return {
     volumes,
+    isLoading,
     createVolume: React.useCallback(() => createVolume().then(addItem), [
       addItem,
       createVolume,

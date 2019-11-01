@@ -122,6 +122,7 @@ const TestHarness: React.FunctionComponent = () => {
     <div>
       <DataVolumesSection
         volumes={volumes}
+        isLoading={false}
         onVolumeAdd={handleAddVolume}
         onVolumeChange={handleVolumeChange}
         onVolumeDelete={handleDeleteVolume}
