@@ -29,6 +29,10 @@ const MinimalInput = ({ ...rest }) => {
       padding: 3px 6px 3px 6px;
       border: 2px solid #2185d0;
     }
+
+    :disabled {
+      background: #dddddd;
+    }
   `;
 
   return <Input {...rest} />;
