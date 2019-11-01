@@ -39,7 +39,7 @@ const PathInput = styled(MinimalInput)`
 
 const ByteLimitInput = styled(MinimalInput)`
   height: 1.8em;
-  width: 8em;
+  width: 12em;
 `;
 
 const FieldDiv = styled.div`

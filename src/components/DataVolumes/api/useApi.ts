@@ -12,7 +12,7 @@ interface Api {
   createVolume: () => Promise<FsVolume>;
 }
 
-const PATH = "datavolumes/v1";;
+const PATH = "datavolumes/v1";
 export const useApi = (): Api => {
   const { stroomBaseServiceUrl } = useConfig();
   const {
@@ -45,7 +45,7 @@ export const useApi = (): Api => {
     ),
     update: React.useCallback(
       (volume: FsVolume) =>
-        httpPutJsonResponse(`${stroomBaseServiceUrl}/${PATH}`, {
+        httpPutJsonResponse(`${stroomBaseServiceUrl}/${PATH}/${volume.id}`, {
           body: JSON.stringify(volume),
         }),
       [stroomBaseServiceUrl, httpPutJsonResponse],

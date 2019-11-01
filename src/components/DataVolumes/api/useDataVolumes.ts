@@ -11,16 +11,20 @@ import FsVolume from "../types/FsVolume";
 interface UseDataVolumes {
   volumes: FsVolume[];
   isLoading: boolean;
-  update: (volume: FsVolume) => Promise<FsVolume>;
+  update: (volume: FsVolume) => Promise<void>;
   createVolume: () => void;
   deleteVolume: (id: string) => void;
   refresh: () => void;
 }
 
 const useDataVolumes = (): UseDataVolumes => {
-  const { items: volumes, receiveItems, addItem, removeItem } = useListReducer<
-    FsVolume
-  >(iv => iv.id);
+  const {
+    items: volumes,
+    updateItemAtIndex,
+    receiveItems,
+    addItem,
+    removeItem,
+  } = useListReducer<FsVolume>(iv => iv.id);
 
   const { getVolumes, deleteVolume, createVolume, update } = useApi();
   const [isLoading, setIsLoading] = React.useState<boolean>(true);
@@ -42,7 +46,16 @@ const useDataVolumes = (): UseDataVolumes => {
       (id: string) => deleteVolume(id).then(() => removeItem(id)),
       [removeItem, deleteVolume],
     ),
-    update: React.useCallback((volume: FsVolume) => update(volume), [update]),
+    update: React.useCallback(
+      (volume: FsVolume) =>
+        update(volume).then(response => {
+          const indexToUpdate = volumes.findIndex(
+            item => item.id === response.id,
+          );
+          return updateItemAtIndex(indexToUpdate, response);
+        }),
+      [update, volumes],
+    ),
     refresh: React.useCallback(() => getVolumes().then(receiveItems), [
       getVolumes,
       receiveItems,
