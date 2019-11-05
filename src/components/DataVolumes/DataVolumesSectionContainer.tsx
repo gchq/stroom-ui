@@ -11,7 +11,6 @@ const DataVolumes: React.FunctionComponent = () => {
     createVolume,
     deleteVolume,
     update,
-    refresh: refreshDataVolumes,
   } = useDataVolumes();
 
   return (

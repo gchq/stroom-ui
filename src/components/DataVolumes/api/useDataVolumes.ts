@@ -54,7 +54,7 @@ const useDataVolumes = (): UseDataVolumes => {
           );
           return updateItemAtIndex(indexToUpdate, response);
         }),
-      [update, volumes],
+      [update, updateItemAtIndex, volumes],
     ),
     refresh: React.useCallback(() => getVolumes().then(receiveItems), [
       getVolumes,
