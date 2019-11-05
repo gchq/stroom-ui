@@ -37,9 +37,13 @@ const loadOptions = (
   })
     .then(response => response.json())
     .then(body => {
-      const options = body.map((result: User) => {
-        return { value: result.id, label: result.email };
-      });
+      const options = body
+        .sort((userA: User, userB: User) =>
+          userA.email > userB.email ? 1 : -1,
+        )
+        .map((result: User) => {
+          return { value: result.id, label: result.email };
+        });
       callback(options);
     });
 };
