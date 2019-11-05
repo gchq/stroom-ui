@@ -1,9 +1,14 @@
 import * as React from "react";
+import * as moment from "moment";
 import { Column, ReactTableFunction, RowInfo } from "react-table";
 import "react-table/react-table.css";
 import "react-toggle/style.css";
-import { formatDate } from "lib/lang";
 import { Token } from "../api/types";
+
+const DISPLAY_DATE_TIME_FORMAT = "YYYY-MM-DDTHH:mm:ss.SSSZ";
+moment.updateLocale("en", {
+  invalidDate: "No date",
+});
 
 /** There is a corresponding react-table type but doing it like this is neater. */
 interface FilterProps {
@@ -34,17 +39,17 @@ const useColumns = (
 
   const EnabledCell: React.FunctionComponent<RowInfo> = React.useCallback(
     ({ row }) => {
-        const state = row.enabled;
-        const tokenId = row.id;
-        return (
-          <div className="TokenSearch__table__checkbox">
-            <input
-              type="checkbox"
-              checked={state}
-              onChange={() => setEnabledStateOnToken(tokenId, !state)}
-            />
-          </div>
-        );
+      const state = row.enabled;
+      const tokenId = row.id;
+      return (
+        <div className="TokenSearch__table__checkbox">
+          <input
+            type="checkbox"
+            checked={state}
+            onChange={() => setEnabledStateOnToken(tokenId, !state)}
+          />
+        </div>
+      );
     },
     [setEnabledStateOnToken],
   );
@@ -80,16 +85,18 @@ const useColumns = (
     {
       Header: "Expires on",
       accessor: "expiresOn",
-      Cell: (row: RowInfo) => formatDate(row.row.expiresOn),
+      Cell: (row: RowInfo) =>
+        moment(row.row.expiresOn).format(DISPLAY_DATE_TIME_FORMAT),
       filterable: false,
-      maxWidth: 165,
+      maxWidth: 205,
     },
     {
       Header: "Issued on",
       accessor: "issuedOn",
-      Cell: (row: RowInfo) => formatDate(row.row.issuedOn),
+      Cell: (row: RowInfo) =>
+        moment(row.row.issuedOn).format(DISPLAY_DATE_TIME_FORMAT),
       filterable: false,
-      maxWidth: 165,
+      maxWidth: 205,
     },
   ] as Column[];
 };

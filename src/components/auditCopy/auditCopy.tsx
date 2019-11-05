@@ -17,7 +17,7 @@
 import * as React from "react";
 import * as moment from "moment";
 
-const DISPLAY_DATE_TIME_FORMAT = "MMMM Do YYYY, h:mm:ss a";
+const DISPLAY_DATE_TIME_FORMAT = "YYYY-MM-DDTHH:mm:ss.SSSZ";
 
 export const LoginStatsCopy = ({
   lastLogin,

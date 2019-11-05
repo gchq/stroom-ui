@@ -2,7 +2,12 @@ import * as React from "react";
 import { ReactTableFunction, RowInfo, Column } from "react-table";
 import StateCell from "./StateCell";
 import { User } from "../types";
-import { formatDate } from "lib/lang";
+import * as moment from "moment";
+
+const DISPLAY_DATE_TIME_FORMAT = "YYYY-MM-DDTHH:mm:ss.SSSZ";
+moment.updateLocale("en", {
+  invalidDate: "No date",
+});
 
 /** There is a corresponding react-table type but doing it like this is neater. */
 interface FilterProps {
@@ -69,8 +74,9 @@ const useColumns = (selectedUserRowId: string | undefined): Column<User>[] => {
     {
       Header: "Last login",
       accessor: "last_login",
-      Cell: (row: RowInfo) => formatDate(row.row.value),
-      maxWidth: 165,
+      Cell: (row: RowInfo) =>
+        moment(row.row.value).format(DISPLAY_DATE_TIME_FORMAT),
+      maxWidth: 205,
       filterable: false,
     },
     {
