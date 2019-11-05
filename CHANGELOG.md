@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+- Use ISO 8601 for dates, configurable
+
 ## [v7.0-beta.2] - 2019-09-16
 
 - Fix columns for apiKeys

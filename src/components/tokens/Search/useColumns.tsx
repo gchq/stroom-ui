@@ -4,8 +4,8 @@ import { Column, ReactTableFunction, RowInfo } from "react-table";
 import "react-table/react-table.css";
 import "react-toggle/style.css";
 import { Token } from "../api/types";
+import useConfig from "startup/config/useConfig";
 
-const DISPLAY_DATE_TIME_FORMAT = "YYYY-MM-DDTHH:mm:ss.SSSZ";
 moment.updateLocale("en", {
   invalidDate: "No date",
 });
@@ -20,6 +20,7 @@ const useColumns = (
   selectedTokenRowId: string | undefined,
   setEnabledStateOnToken: Function,
 ): Column<Token>[] => {
+  const { dateFormat } = useConfig();
   const getEnabledCellFilter = React.useCallback(
     ({ filter, onChange }: FilterProps) => {
       return (
@@ -85,16 +86,14 @@ const useColumns = (
     {
       Header: "Expires on",
       accessor: "expiresOn",
-      Cell: (row: RowInfo) =>
-        moment(row.row.expiresOn).format(DISPLAY_DATE_TIME_FORMAT),
+      Cell: (row: RowInfo) => moment(row.row.expiresOn).format(dateFormat),
       filterable: false,
       maxWidth: 205,
     },
     {
       Header: "Issued on",
       accessor: "issuedOn",
-      Cell: (row: RowInfo) =>
-        moment(row.row.issuedOn).format(DISPLAY_DATE_TIME_FORMAT),
+      Cell: (row: RowInfo) => moment(row.row.issuedOn).format(dateFormat),
       filterable: false,
       maxWidth: 205,
     },

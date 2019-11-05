@@ -4,5 +4,6 @@
   "clientId": "stroom-ui",
   "stroomBaseServiceUrl": "https://IP_ADDRESS/api",
   "authBaseServiceUrl": "https://IP_ADDRESS/api/auth",
-  "stroomUiUrl": "https://IP_ADDRESS/stroom"
+  "stroomUiUrl": "https://IP_ADDRESS/stroom",
+  "dateFormat": "YYYY-MM-DDTHH:mm:ss.SSSZ"
 }

@@ -5,4 +5,5 @@ export interface Config {
   stroomBaseServiceUrl?: string;
   stroomUiUrl?: string;
   authBaseServiceUrl?: string;
+  dateFormat?: string;
 }

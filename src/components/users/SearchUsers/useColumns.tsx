@@ -3,8 +3,8 @@ import { ReactTableFunction, RowInfo, Column } from "react-table";
 import StateCell from "./StateCell";
 import { User } from "../types";
 import * as moment from "moment";
+import useConfig from "startup/config/useConfig";
 
-const DISPLAY_DATE_TIME_FORMAT = "YYYY-MM-DDTHH:mm:ss.SSSZ";
 moment.updateLocale("en", {
   invalidDate: "No date",
 });
@@ -16,6 +16,7 @@ interface FilterProps {
 }
 
 const useColumns = (selectedUserRowId: string | undefined): Column<User>[] => {
+  const { dateFormat } = useConfig();
   const IdCell: React.FunctionComponent<RowInfo> = React.useCallback(
     ({ row }) => (
       <div>
@@ -74,8 +75,7 @@ const useColumns = (selectedUserRowId: string | undefined): Column<User>[] => {
     {
       Header: "Last login",
       accessor: "last_login",
-      Cell: (row: RowInfo) =>
-        moment(row.row.value).format(DISPLAY_DATE_TIME_FORMAT),
+      Cell: (row: RowInfo) => moment(row.row.value).format(dateFormat),
       maxWidth: 205,
       filterable: false,
     },
