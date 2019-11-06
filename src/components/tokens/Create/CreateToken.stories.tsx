@@ -7,10 +7,5 @@ import CreateTokenForm from "./CreateTokenForm";
 const stories = storiesOf("Tokens/Create", module);
 
 addThemedStories(stories, () => (
-  <CreateTokenForm
-    onSubmit={action("onSubmit")}
-    onBack={action("onBack")}
-    userServiceUrl="not_a_real_url"
-    idToken="not_a_real_idToken"
-  />
+  <CreateTokenForm onSubmit={action("onSubmit")} onBack={action("onBack")} />
 ));

@@ -22,7 +22,7 @@ import { SearchConfig, Token, TokenSearchResponse } from "./types";
 
 interface Api {
   deleteToken: (tokenId: string) => Promise<void>;
-  createToken: (email: string) => Promise<Token>;
+  createToken: (email: string, expiryDate: string) => Promise<Token>;
   fetchApiKey: (tokenId: string) => Promise<Token>;
   performTokenSearch: (
     tokenSearchRequest: Partial<SearchConfig>,
@@ -47,10 +47,11 @@ export const useApi = (): Api => {
     ),
 
     createToken: useCallback(
-      (email: string) =>
+      (email: string, expiryDate: string) =>
         httpPostJsonResponse(tokenServiceUrl, {
           body: JSON.stringify({
             userEmail: email,
+            expiryDate,
             tokenType: "api",
             enabled: true,
           }),

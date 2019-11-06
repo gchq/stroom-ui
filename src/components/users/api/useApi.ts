@@ -25,7 +25,7 @@ interface Api {
   fetch: (userId: string) => Promise<User>;
   fetchCurrentUser: () => Promise<User>;
   remove: (userId: string) => Promise<void>;
-  search: () => Promise<User[]>;
+  search: (email?: string) => Promise<User[]>;
 }
 
 export const useApi = (): Api => {
@@ -95,8 +95,10 @@ export const useApi = (): Api => {
   );
 
   const search = useCallback(
-    () =>
-      httpGetJson(`${userServiceUrl}/?fromEmail=&usersPerPage=100&orderBy=id`),
+    (email: string) =>
+      httpGetJson(
+        `${userServiceUrl}/?fromEmail=${email}&usersPerPage=100&orderBy=id`,
+      ),
     [userServiceUrl, httpGetJson],
   );
 

@@ -37,6 +37,7 @@
     "cookies-js": "1.2.3",
     "dateformat": "3.0.3",
     "formik": "1.5.2",
+    "fuse.js": "^3.4.5",
     "js-search": "1.4.2",
     "jwt-decode": "2.2.0",
     "lorem-ipsum": "1.0.6",

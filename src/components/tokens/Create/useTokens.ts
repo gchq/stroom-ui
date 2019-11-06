@@ -30,8 +30,8 @@ const useTokens = () => {
     nav: { goToApiKey },
   } = useAppNavigation();
   const createToken = useCallback(
-    (email: string) => {
-      createTokenApi(email).then((newToken: Token) => {
+    (email: string, expiryDate: string) => {
+      createTokenApi(email, expiryDate).then((newToken: Token) => {
         goToApiKey(newToken.id);
       });
     },

@@ -8,6 +8,7 @@ interface UserSearchApi {
   selectedUser: string;
   remove: (userId: string) => void;
   changeSelectedUser: (userId: string) => void;
+  search: (email: string) => void;
 }
 
 const useUserSearch = (): UserSearchApi => {
@@ -17,30 +18,35 @@ const useUserSearch = (): UserSearchApi => {
     setSelectedUser,
     setUsers,
   } = useUserSearchState();
-  const { search } = useApi();
+  const { search: searchApi } = useApi();
 
   React.useEffect(() => {
-    search().then(users => {
+    searchApi().then(users => {
       setUsers(users);
     });
-  }, [search, setUsers]);
+  }, [searchApi, setUsers]);
 
   const { remove: removeUserUsingApi } = useApi();
 
   const remove = React.useCallback(
     (userId: string) => {
       removeUserUsingApi(userId).then(() =>
-        search().then(users => setUsers(users)),
+        searchApi().then(users => setUsers(users)),
       );
     },
-    [removeUserUsingApi, search, setUsers],
+    [removeUserUsingApi, searchApi, setUsers],
   );
+
+  const search = React.useCallback((userId: string) => {
+    searchApi(userId).then(users => setUsers(users));
+  }, []);;
 
   return {
     users,
     selectedUser,
     remove,
     changeSelectedUser: setSelectedUser,
+    search,
   };
 };
 

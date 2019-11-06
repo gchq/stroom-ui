@@ -15,28 +15,17 @@
  */
 
 import * as React from "react";
-import { useAuthenticationContext } from "startup/Authentication";
 import useTokens from "./useTokens";
 import CreateTokenForm from "./CreateTokenForm";
 import useAppNavigation from "lib/useAppNavigation";
-import useServiceUrl from "startup/config/useServiceUrl";
 
 const CreateFormContainer = () => {
   const {
     nav: { goToApiKeys },
   } = useAppNavigation();
   const { createToken } = useTokens();
-  const { userServiceUrl } = useServiceUrl();
-  const { idToken } = useAuthenticationContext();
 
-  return (
-    <CreateTokenForm
-      onSubmit={createToken}
-      idToken={idToken}
-      userServiceUrl={userServiceUrl}
-      onBack={goToApiKeys}
-    />
-  );
+  return <CreateTokenForm onSubmit={createToken} onBack={goToApiKeys} />;
 };
 
 export default CreateFormContainer;

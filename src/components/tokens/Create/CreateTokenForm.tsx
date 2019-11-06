@@ -15,78 +15,90 @@
  */
 
 import Button from "components/Button";
-import { AsyncUserSelect } from "components/users";
-import { Formik } from "formik";
 import * as React from "react";
+import { DatePicker } from "antd";
+import styled from "styled-components";
+import UserSelect from "components/UserSelect";
+import * as moment from "moment";
 
-interface DropDownValues {
-  label: string;
-  value: number;
-}
+const Field = styled.div`
+  display: flex;
+  margin: 1em;
+  flex-direction: row;
+`;
+const StyledDatePicker = styled(DatePicker)`
+  width: 22.9em;
+`;
+
+const SectionFields = styled.div`
+  width: 45em;
+`;
+const Label = styled.div`
+  width: 15em;
+`;
+
+const UserSelectContainer = styled.div`
+  width: 25em;
+`;
 
 const CreateTokenForm: React.FunctionComponent<{
-  onSubmit: (userId: string) => void;
+  onSubmit: (userId: string, expiryDate: string) => void;
   onBack: () => void;
-  idToken: string;
-  userServiceUrl: string;
-}> = ({ onSubmit, onBack, userServiceUrl, idToken }) => {
+}> = ({ onSubmit, onBack }) => {
+  // TODO: make default validity customisable
+  const initialExpiryDate = moment().add(12, "M");
+  const [expiryDate, setExpiryDate] = React.useState(initialExpiryDate);
+  const [selectedUser, setSelectedUser] = React.useState("");
+  const handleSubmit = () => {
+    //TODO: add expiredate
+    onSubmit(selectedUser, expiryDate.toISOString());
+  };
+
+  const submitIsDisabled = expiryDate === undefined && selectedUser === "";
   return (
     <div className="CreateTokenForm-card">
-      <Formik
-        initialValues={
-          { user: { label: "", value: -1 } } as { user: DropDownValues }
-        }
-        onSubmit={(values, actions) => {
-          onSubmit(values.user.label);
-          actions.setSubmitting(false);
-        }}
-        render={({ handleSubmit, setFieldValue, values }) => {
-          const submitIsDisabled = values.user === undefined;
-          return (
-            <form onSubmit={handleSubmit}>
-              <div className="header">
-                <Button
-                  appearance="default"
-                  icon="arrow-left"
-                  text="Back"
-                  onClick={() => onBack()}
+      <form>
+        <div className="header">
+          <Button
+            appearance="default"
+            icon="arrow-left"
+            text="Back"
+            onClick={() => onBack()}
+          />
+        </div>
+        <div className="container">
+          <div className="section">
+            <div className="section__title">
+              <h3>Create a new API key</h3>
+            </div>
+            <SectionFields>
+              <Field>
+                <Label>Expiry date</Label>
+                <StyledDatePicker
+                  onChange={(date: moment.Moment) => setExpiryDate(date)}
                 />
-              </div>
-              <div className="container">
-                <div className="section">
-                  <div className="section__title">
-                    <h3>User&apos;s email</h3>
-                  </div>
-                  <div className="section__fields">
-                    <div className="section__fields__row">
-                      <div className="field-container">
-                        <div className="label-container">
-                          <label />
-                        </div>
-                        <AsyncUserSelect
-                          onChange={setFieldValue}
-                          userServiceUrl={userServiceUrl}
-                          idToken={`${idToken}`}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="footer">
-                <Button
-                  appearance="default"
-                  action="primary"
-                  disabled={submitIsDisabled}
-                  icon="plus"
-                  type="submit"
-                  text="Create"
-                />
-              </div>
-            </form>
-          );
-        }}
-      />
+              </Field>
+              <Field>
+                <Label>User</Label>
+                <UserSelectContainer>
+                  <UserSelect fuzzy={false} onChange={setSelectedUser} />
+                </UserSelectContainer>
+              </Field>
+            </SectionFields>
+          </div>
+        </div>
+        <div className="footer">
+          <Button
+            appearance="default"
+            action="primary"
+            disabled={submitIsDisabled}
+            icon="plus"
+            type="submit"
+            text="Create"
+            onClick={handleSubmit}
+          />
+        </div>
+      </form>
     </div>
   );
 };
