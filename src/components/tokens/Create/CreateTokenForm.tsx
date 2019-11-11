@@ -49,15 +49,15 @@ const CreateTokenForm: React.FunctionComponent<{
   const initialExpiryDate = moment().add(12, "M");
   const [expiryDate, setExpiryDate] = React.useState(initialExpiryDate);
   const [selectedUser, setSelectedUser] = React.useState("");
-  const handleSubmit = () => {
-    //TODO: add expiredate
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     onSubmit(selectedUser, expiryDate.toISOString());
+    event.preventDefault();
   };
 
   const submitIsDisabled = expiryDate === undefined && selectedUser === "";
   return (
     <div className="CreateTokenForm-card">
-      <form>
+      <form onSubmit={handleSubmit}>
         <div className="header">
           <Button
             appearance="default"
@@ -95,7 +95,6 @@ const CreateTokenForm: React.FunctionComponent<{
             icon="plus"
             type="submit"
             text="Create"
-            onClick={handleSubmit}
           />
         </div>
       </form>
