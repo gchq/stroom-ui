@@ -60,7 +60,7 @@ const UserSelectContainer: React.FunctionComponent<Props> = ({
         setUsers(searchResults);
       }
     },
-    [users, setUsers, fuzzy, initialUsers, options],
+    [setUsers, fuzzy, initialUsers, options],
   );
 
   return (
