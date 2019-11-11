@@ -6,4 +6,5 @@ export interface Config {
   stroomUiUrl?: string;
   authBaseServiceUrl?: string;
   dateFormat?: string;
+  defaultApiKeyExpiryInMinutes?: string;
 }

@@ -5,5 +5,6 @@
   "stroomBaseServiceUrl": "https://IP_ADDRESS/api",
   "authBaseServiceUrl": "https://IP_ADDRESS/api/auth",
   "stroomUiUrl": "https://IP_ADDRESS/stroom",
-  "dateFormat": "YYYY-MM-DDTHH:mm:ss.SSSZ"
+  "dateFormat": "YYYY-MM-DDTHH:mm:ss.SSSZ",
+  "defaultApiKeyExpiryInMinutes": "525600"
 }

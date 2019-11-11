@@ -20,6 +20,7 @@ import { DatePicker } from "antd";
 import styled from "styled-components";
 import UserSelect from "components/UserSelect";
 import * as moment from "moment";
+import useConfig from "startup/config/useConfig";
 
 const Field = styled.div`
   display: flex;
@@ -46,7 +47,8 @@ const CreateTokenForm: React.FunctionComponent<{
   onBack: () => void;
 }> = ({ onSubmit, onBack }) => {
   // TODO: make default validity customisable
-  const initialExpiryDate = moment().add(12, "M");
+  const { defaultApiKeyExpiryInMinutes } = useConfig();
+  const initialExpiryDate = moment().add(defaultApiKeyExpiryInMinutes, "m");
   const [expiryDate, setExpiryDate] = React.useState(initialExpiryDate);
   const [selectedUser, setSelectedUser] = React.useState("");
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -75,6 +77,7 @@ const CreateTokenForm: React.FunctionComponent<{
               <Field>
                 <Label>Expiry date</Label>
                 <StyledDatePicker
+                  value={expiryDate}
                   onChange={(date: moment.Moment) => setExpiryDate(date)}
                 />
               </Field>
