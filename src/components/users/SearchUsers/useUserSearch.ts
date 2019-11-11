@@ -37,9 +37,12 @@ const useUserSearch = (): UserSearchApi => {
     [removeUserUsingApi, searchApi, setUsers],
   );
 
-  const search = React.useCallback((userId: string) => {
-    searchApi(userId).then(users => setUsers(users));
-  }, []);;
+  const search = React.useCallback(
+    (userId: string) => {
+      searchApi(userId).then(users => setUsers(users));
+    },
+    [searchApi, setUsers],
+  );
 
   return {
     users,
