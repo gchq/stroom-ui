@@ -2,10 +2,16 @@ import { action } from "@storybook/addon-actions";
 import { storiesOf } from "@storybook/react";
 import * as React from "react";
 import ResetPassword from "./ResetPassword";
+import ChangePasswordFormData from "../ChangePassword/ChangePasswordFormData";
 
-const onValidate = () => {
+const onValidate = (
+  oldPassword: string,
+  password: string,
+  verifyPassword: string,
+  email: string,
+) => {
   action("onValidate");
-  return Promise.resolve();
+  return new Promise<string>(() => "");
 };
 
 storiesOf("Auth/ResetPassword", module)

@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-import { PasswordValidationRequest } from "components/authentication/types";
 import * as Yup from "yup";
 
 export const NewUserValidationSchema = Yup.object().shape({
@@ -33,11 +32,78 @@ interface PasswordValidationErrors {
   verifyPassword: string;
 }
 
-export const validateAsync = (
-  passwordValidationRequest: PasswordValidationRequest,
+function validateVerifyPassword(
+  newPassword: string,
+  verifyPassword: string,
+): string {
+  if (newPassword !== undefined && newPassword !== "") {
+    if (
+      verifyPassword !== undefined &&
+      verifyPassword !== "" &&
+      newPassword !== verifyPassword
+    ) {
+      return "Passwords do not match";
+    }
+  }
+  return "";
+}
+
+function validatePasswords(failedOn: string[]): PasswordValidationErrors {
+  let errors: PasswordValidationErrors = {
+    password: "",
+    oldPassword: "",
+    verifyPassword: "",
+  };
+
+  // First sort out async password checks
+  let passwordErrors: string[] = [];
+  let oldPasswordErrors: string[] = [];
+  if (failedOn.length > 0) {
+    failedOn.forEach(failureType => {
+      if (failureType === "LENGTH") {
+        passwordErrors.push("Your new password is not long enough.");
+      } else if (failureType === "COMPLEXITY") {
+        passwordErrors.push(
+          "Your new password not meet the password complexity requirements.",
+        );
+      } else if (failureType === "BAD_OLD_PASSWORD") {
+        oldPasswordErrors.push("Your old password is not correct.");
+      } else if (failureType === "REUSE") {
+        passwordErrors.push("You may not reuse your old password.");
+      } else {
+        passwordErrors.push(
+          "There is a problem with changing your password, please contact an administrator",
+        );
+      }
+    });
+  }
+  if (passwordErrors.length > 0) {
+    errors.password = passwordErrors.join("\n");
+  }
+
+  if (oldPasswordErrors.length > 0) {
+    errors.oldPassword = oldPasswordErrors.join("\n");
+  }
+
+  return errors;
+}
+
+/**
+ * A do-all async validation function for passwords.
+ * @param email
+ * @param newPassword
+ * @param verifyPassword
+ * @param url
+ * @param oldPassword
+ */
+export async function validateAsync(
+  email: string,
+  newPassword: string,
+  verifyPassword: string,
   url: string,
-): Promise<void> => {
-  return fetch(`${url}/isPasswordValid`, {
+  oldPassword?: string,
+) {
+  const result = await fetch(`${url}/isPasswordValid`, {
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
@@ -45,70 +111,31 @@ export const validateAsync = (
     method: "post",
     mode: "cors",
     body: JSON.stringify({
-      email: passwordValidationRequest.email,
-      newPassword: passwordValidationRequest.newPassword,
-      oldPassword: passwordValidationRequest.oldPassword,
+      email,
+      newPassword,
+      oldPassword,
     }),
-  })
-    .then(response => response.json())
-    .then((body: { failedOn: string[] }) => {
-      let errors: PasswordValidationErrors = {
-        password: "",
-        oldPassword: "",
-        verifyPassword: "",
-      };
+  });
 
-      // First sort out async password checks
-      let passwordErrors: string[] = [];
-      let oldPasswordErrors: string[] = [];
-      if (body.failedOn.length > 0) {
-        body.failedOn.forEach(failureType => {
-          if (failureType === "LENGTH") {
-            passwordErrors.push("Your new password is not long enough.");
-          } else if (failureType === "COMPLEXITY") {
-            passwordErrors.push(
-              "Your new password not meet the password complexity requirements.",
-            );
-          } else if (failureType === "BAD_OLD_PASSWORD") {
-            oldPasswordErrors.push("Your old password is not correct.");
-          } else if (failureType === "REUSE") {
-            passwordErrors.push("You may not reuse your old password.");
-          } else {
-            passwordErrors.push(
-              "There is a problem with changing your password, please contact an administrator",
-            );
-          }
-        });
-      }
-      if (passwordErrors.length > 0) {
-        errors.password = passwordErrors.join("\n");
-      }
-
-      if (oldPasswordErrors.length > 0) {
-        errors.oldPassword = oldPasswordErrors.join("\n");
-      }
-
-      // Do password checks
-      if (
-        passwordValidationRequest.newPassword !== undefined &&
-        passwordValidationRequest.newPassword !== ""
-      ) {
-        if (
-          passwordValidationRequest.verifyPassword !== undefined &&
-          passwordValidationRequest.verifyPassword !== "" &&
-          passwordValidationRequest.newPassword !==
-            passwordValidationRequest.verifyPassword
-        ) {
-          errors.verifyPassword = "Passwords do not match";
-        }
-      }
-
-      if (
-        errors.oldPassword !== "" ||
-        errors.password !== "" ||
-        errors.verifyPassword !== ""
-      ) {
-        throw errors;
-      }
-    });
-};
+  const { failedOn }: any = await result.json();
+  let errors: PasswordValidationErrors = {
+    oldPassword: "",
+    password: "",
+    verifyPassword: "",
+  };
+  if (failedOn) {
+    errors = validatePasswords(failedOn);
+  }
+  errors.verifyPassword = validateVerifyPassword(newPassword, verifyPassword);
+  let errorMessage = "";
+  if (errors.oldPassword !== "") {
+    errorMessage += errors.oldPassword;
+  }
+  if (errors.password !== "") {
+    errorMessage += errors.password;
+  }
+  if (errors.verifyPassword != "") {
+    errorMessage += errors.verifyPassword;
+  }
+  return errorMessage;
+}

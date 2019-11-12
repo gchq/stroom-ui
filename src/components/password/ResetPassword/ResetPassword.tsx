@@ -23,7 +23,12 @@ const ResetPassword: React.FunctionComponent<{
   isTokenInvalid: boolean;
   isTokenExpired: boolean;
   onSubmit: Function;
-  onValidate: (values: ChangePasswordFormData) => Promise<void>;
+  onValidate: (
+    oldPassword: string,
+    password: string,
+    verifyPassword: string,
+    email: string,
+  ) => Promise<string>;
 }> = ({
   isTokenExpired,
   isTokenInvalid,
@@ -60,7 +65,9 @@ const ResetPassword: React.FunctionComponent<{
           <ChangePasswordFields
             showOldPasswordField={false}
             onSubmit={onSubmit}
-            onValidate={values => onValidate(values)}
+            onValidate={(password, oldPassword, verifyPassword, email) =>
+              onValidate(oldPassword, password, verifyPassword, email)
+            }
           />
         ) : (
           undefined

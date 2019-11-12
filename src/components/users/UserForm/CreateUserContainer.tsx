@@ -20,7 +20,7 @@ import { PasswordValidationRequest } from "components/authentication/types";
 import { useUsers } from "../api";
 import { User } from "../types";
 import { validateAsync } from "../validation";
-import UserForm from "./UserForm";
+import UserForm from "./NewUserForm";
 import UserFormData from "./UserFormData";
 import useServiceUrl from "startup/config/useServiceUrl";
 
@@ -48,18 +48,13 @@ const CreateUserContainer = () => {
       onSubmit={(user: User) => createUser(user)}
       onBack={() => goToUsers()}
       onCancel={() => goToUsers()}
-      onValidate={(values: UserFormData) => {
-        if (!!values.password && !!values.verifyPassword && !!values.email) {
-          const passwordValidationRequest: PasswordValidationRequest = {
-            newPassword: values.password,
-            verifyPassword: values.verifyPassword,
-            email: values.email,
-          };
-          return validateAsync(
-            passwordValidationRequest,
-            authenticationServiceUrl,
-          );
-        } else return Promise.resolve();
+      onValidate={async (password, verifyPassword, email) => {
+        return validateAsync(
+          email,
+          password,
+          verifyPassword,
+          authenticationServiceUrl,
+        );
       }}
     />
   );

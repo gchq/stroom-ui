@@ -16,6 +16,15 @@ interface Props {
   user: User;
 }
 
+const onValidate = (
+  password: string,
+  verifyPassword: string,
+  email: string,
+) => {
+  action("onValidate");
+  return new Promise<string>(() => "");
+};
+
 const TestHarness: React.FunctionComponent<Props> = ({ user }) => {
   return (
     <UserForm
@@ -23,13 +32,7 @@ const TestHarness: React.FunctionComponent<Props> = ({ user }) => {
       onBack={action("onBack")}
       onSubmit={action("onSubmit")}
       onCancel={action("onCancel")}
-      onValidate={() => {
-        return new Promise(() => {
-          // FIXME: not sure why this isn't getting logged.
-          // FIXME: everything seems fine when run against a server
-          action("onValidate");
-        });
-      }}
+      onValidate={onValidate}
     />
   );
 };

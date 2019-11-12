@@ -33,21 +33,21 @@ const ResetPasswordContainer = () => {
     isTokenExpired,
   } = useTokenValidityCheck();
 
-  const onValidate = (values: ChangePasswordFormData) => {
-    if (
-      !!values.oldPassword &&
-      !!values.password &&
-      !!values.verifyPassword &&
-      !!values.email
-    ) {
-      const passwordValidationRequest: PasswordValidationRequest = {
-        oldPassword: values.oldPassword,
-        verifyPassword: values.verifyPassword,
-        email: values.email,
-      };
-      return validateAsync(passwordValidationRequest, authenticationServiceUrl);
-    } else return Promise.resolve();
+  const onValidate = (
+    oldPassword: string,
+    password: string,
+    verifyPassword: string,
+    email: string,
+  ) => {
+    return validateAsync(
+      email,
+      password,
+      verifyPassword,
+      authenticationServiceUrl,
+      oldPassword,
+    );
   };
+
   return (
     <ResetPassword
       onSubmit={resetPassword}

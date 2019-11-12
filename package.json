@@ -53,6 +53,7 @@
     "react-dnd": "7.4.5",
     "react-dnd-html5-backend": "7.4.4",
     "react-dom": "16.8.4",
+    "react-hook-form": "^3.27.0",
     "react-loader": "2.4.5",
     "react-modal": "3.8.1",
     "react-panelgroup": "1.0.7",
@@ -86,7 +87,7 @@
   "scripts": {
     "build-css": "node-sass-chokidar src/ -o src/",
     "watch-css": "node-sass-chokidar src/ -o src/ --watch --recursive",
-    "start-js": "./config.template.sh && BROWSER=NONE PORT=9446 HTTPS=true react-scripts start",
+    "start-js": "./config.template.sh && BROWSER=NONE PORT=9443 HTTPS=true react-scripts start",
     "start": "npm-run-all -p watch-css start-js",
     "build-js": "react-scripts build",
     "build": "npm-run-all build-css build-js",

@@ -31,7 +31,12 @@ const ChangePasswordFields = ({
   redirectUrl?: string;
   showOldPasswordField: boolean;
   onSubmit: Function;
-  onValidate: (values: ChangePasswordFormData) => Promise<void>;
+  onValidate: (
+    oldPassword: string,
+    newPassword: string,
+    verifyPassword: string,
+    email: string,
+  ) => Promise<string>;
 }) => {
   return (
     <Formik
@@ -46,7 +51,9 @@ const ChangePasswordFields = ({
       onSubmit={values => {
         onSubmit(values);
       }}
-      validate={values => onValidate(values)}
+      validate={({ oldPassword, password, email, verifyPassword }) =>
+        onValidate(oldPassword, password, verifyPassword, email)
+      }
     >
       {({ errors, touched }) => {
         const isPristine = !hasAnyProps(touched);

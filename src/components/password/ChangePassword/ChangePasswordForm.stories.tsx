@@ -3,9 +3,14 @@ import { storiesOf } from "@storybook/react";
 import * as React from "react";
 import ChangePasswordForm from "./ChangePasswordForm";
 
-const onValidate = () => {
+const onValidate = (
+  oldPassword: string,
+  password: string,
+  verifyPassword: string,
+  email: string,
+) => {
   action("onValidate");
-  return Promise.resolve();
+  return new Promise<string>(() => "");
 };
 
 storiesOf("Auth/ChangePassword", module)

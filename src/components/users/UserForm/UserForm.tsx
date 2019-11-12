@@ -50,7 +50,7 @@ const UserForm: React.FunctionComponent<EditUserFormProps> = ({
         neverExpires: user.neverExpires || false,
       }}
       validateOnBlur
-      validate={onValidate}
+      // validate={onValidate}
       validationSchema={UserValidationSchema}
     >
       {({ errors, touched, submitForm, setFieldTouched, setFieldValue }) => {

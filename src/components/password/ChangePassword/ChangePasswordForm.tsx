@@ -23,7 +23,12 @@ const ChangePasswordForm: React.FunctionComponent<{
   onSubmit: Function;
   showChangeConfirmation?: boolean;
   redirectUrl?: string;
-  onValidate: (values: ChangePasswordFormData) => Promise<void>;
+  onValidate: (
+    oldPassword: string,
+    newPassword: string,
+    verifyPassword: string,
+    email: string,
+  ) => Promise<string>;
 }> = ({ showChangeConfirmation, redirectUrl, email, onSubmit, onValidate }) => {
   let title = "Change your password";
   if (showChangeConfirmation && redirectUrl) {

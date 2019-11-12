@@ -59,31 +59,28 @@ const ChangePasswordContainer = () => {
     // Try and get the user's email from the query string, and fall back on a cookie.
   }, [router.location, setRedirectUrl, setEmail]);
 
+  const handleValidate = (
+    oldPassword: string,
+    newPassword: string,
+    verifyPassword: string,
+    email: string,
+  ) => {
+    return validateAsync(
+      email,
+      newPassword,
+      verifyPassword,
+      authenticationServiceUrl,
+      oldPassword,
+    );
+  };
+
   return (
     <ChangePasswordForm
       onSubmit={changePassword}
       redirectUrl={redirectUrl}
       email={email}
       showChangeConfirmation={showChangeConfirmation}
-      onValidate={values => {
-        if (
-          !!values.oldPassword &&
-          !!values.password &&
-          !!values.verifyPassword &&
-          !!values.email
-        ) {
-          const passwordValidationRequest: PasswordValidationRequest = {
-            oldPassword: values.oldPassword,
-            newPassword: values.password,
-            verifyPassword: values.verifyPassword,
-            email: values.email,
-          };
-          return validateAsync(
-            passwordValidationRequest,
-            authenticationServiceUrl,
-          );
-        } else return Promise.resolve();
-      }}
+      onValidate={handleValidate}
     />
   );
 };

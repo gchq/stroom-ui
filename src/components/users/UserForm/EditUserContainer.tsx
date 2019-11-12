@@ -47,18 +47,13 @@ const EditUserContainer = () => {
         onBack={() => goToUsers()}
         onSubmit={(user: User) => updateUser(user)}
         onCancel={() => goToUsers()}
-        onValidate={(values: UserFormData) => {
-          if (!!values.password && !!values.verifyPassword && !!values.email) {
-            const passwordValidationRequest: PasswordValidationRequest = {
-              newPassword: values.password,
-              verifyPassword: values.verifyPassword,
-              email: values.email,
-            };
-            return validateAsync(
-              passwordValidationRequest,
-              authenticationServiceUrl,
-            );
-          } else return Promise.resolve();
+        onValidate={async (password, verifyPassword, email) => {
+          return validateAsync(
+            email,
+            password,
+            verifyPassword,
+            authenticationServiceUrl,
+          );
         }}
       />
     );
