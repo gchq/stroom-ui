@@ -18,8 +18,13 @@ import * as React from "react";
 import { NavLink } from "react-router-dom";
 import { Credentials } from "components/authentication/types";
 import useForm from "react-hook-form";
-import { Button } from "antd";
+import { Button, Input, Icon } from "antd";
 import { RequiredFieldMessage } from "components/FormComponents";
+
+interface FormData {
+  email: string;
+  password: string;
+}
 
 const LoginForm: React.FunctionComponent<{
   onSubmit: (credentials: Credentials) => void;
@@ -27,15 +32,32 @@ const LoginForm: React.FunctionComponent<{
   loginResultMessage?: string;
   allowPasswordResets?: boolean;
 }> = ({ onSubmit, allowPasswordResets, loginResultMessage, isSubmitting }) => {
-  const { register, handleSubmit, getValues, errors } = useForm({
+  const {
+    triggerValidation,
+    setValue,
+    register,
+    handleSubmit,
+    getValues,
+    errors,
+  } = useForm<FormData>({
     defaultValues: {
       email: "",
       password: "",
     },
     mode: "onChange",
   });
+  React.useEffect(() => {
+    register({ name: "email", type: "custom" }, { required: true });
+    register({ name: "password", type: "custom" }, { required: true });
+  }, []);
+  console.log({ errors });
   const { email, password } = getValues();
   const disableSubmit = email === "" || password === "";
+
+  const handleInputChange = async (name: string, value: string) => {
+    setValue(name, value);
+    await triggerValidation({ name });
+  };
   return (
     <div className="content-floating-without-appbar">
       <div className="Login__container">
@@ -47,28 +69,21 @@ const LoginForm: React.FunctionComponent<{
                 alt="Stroom logo"
               />
             </div>
-            <div className="field-container vertical">
-              <div className="horizontal-label-and-validation-container">
-                <label>Email</label>
-              </div>
-              <input
-                ref={register({ required: true })}
-                name="email"
-                autoFocus
-              />
-              {errors.email && <RequiredFieldMessage />}
-            </div>
-            <div className="field-container vertical">
-              <div className="horizontal-label-and-validation-container">
-                <label>Password</label>
-              </div>
-              <input
-                ref={register({ required: true })}
-                name="password"
-                type="password"
-              />
-              {errors.password && <RequiredFieldMessage />}
-            </div>
+            <Input
+              placeholder="username or email"
+              prefix={<Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />}
+              name="email"
+              autoFocus
+              onChange={e => handleInputChange("email", e.target.value)}
+            />
+            {errors.email && <RequiredFieldMessage />}
+            <Input.Password
+              name="password"
+              placeholder="password"
+              onChange={e => handleInputChange("password", e.target.value)}
+            />
+            {errors.password && <RequiredFieldMessage />}
+            {/* </div> */}
             <div className="Login__status-container">
               {loginResultMessage ? (
                 <div className="validation-error">{loginResultMessage}</div>
@@ -92,6 +107,7 @@ const LoginForm: React.FunctionComponent<{
                 loading={isSubmitting}
                 disabled={disableSubmit}
                 htmlType="submit"
+                ref={register}
               >
                 Submit
               </Button>

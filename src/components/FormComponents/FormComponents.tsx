@@ -10,7 +10,7 @@ export const ValidationMessage = styled.span`
 
 export const RequiredFieldMessage = () => (
   <ValidationMessage>{requiredFieldText}</ValidationMessage>
-);;
+);
 
 export const MandatoryIndicator = () => (
   <Tooltip title={requiredFieldText}>
