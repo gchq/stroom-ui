@@ -21,9 +21,13 @@ import LoginForm from "./LoginForm";
 
 const LoginContainer = () => {
   const { allowPasswordResets } = useConfig();
-  const { login } = useAuthentication();
+  const { login, loginResultMessage } = useAuthentication();
   return (
-    <LoginForm allowPasswordResets={allowPasswordResets} onSubmit={login} />
+    <LoginForm
+      allowPasswordResets={allowPasswordResets}
+      onSubmit={login}
+      loginResultMessage={loginResultMessage}
+    />
   );
 };
 

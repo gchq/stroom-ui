@@ -31,7 +31,6 @@ const UserForm: React.FunctionComponent<EditUserFormProps> = ({
   } = useForm({
     mode: "onBlur",
   });
-  const { authenticationServiceUrl } = useServiceUrl();
   const [showBackConfirmation, setShowBackConfirmation] = React.useState(false);
 
   const hasErrors = errors.email !== undefined || errors.password !== undefined;

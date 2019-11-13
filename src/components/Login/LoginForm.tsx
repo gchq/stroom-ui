@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-import { ErrorMessage, Field, Form, Formik, FormikActions } from "formik";
 import * as React from "react";
 import { NavLink } from "react-router-dom";
 import { Credentials } from "components/authentication/types";
 import Button from "components/Button";
-import { hasAnyProps } from "lib/lang";
 import * as Yup from "yup";
+import useForm from "react-hook-form";
+import { RequiredFieldMessage } from "components/FormComponents";
 
 const LoginValidationSchema = Yup.object().shape({
   email: Yup.string().required("Required"),
@@ -28,88 +28,81 @@ const LoginValidationSchema = Yup.object().shape({
 });
 
 const LoginForm: React.FunctionComponent<{
-  onSubmit: (
-    credentials: Credentials,
-    formikActions: FormikActions<Credentials>,
-  ) => void;
+  onSubmit: (credentials: Credentials) => void;
+  loginResultMessage?: string;
   allowPasswordResets?: boolean;
-}> = ({ onSubmit, allowPasswordResets }) => (
-  <Formik
-    onSubmit={onSubmit}
-    initialValues={{ email: "", password: "" }}
-    validationSchema={LoginValidationSchema}
-  >
-    {({ errors, touched, status }) => {
-      const isPristine = !hasAnyProps(touched);
-      const hasErrors = hasAnyProps(errors);
-      return (
-        <div className="content-floating-without-appbar">
-          <div className="Login__container">
-            <Form>
-              <div className="Login__content">
-                <div className="Login__icon-container">
-                  <img
-                    src={require("../../images/infinity_logo.svg")}
-                    alt="Stroom logo"
-                  />
-                </div>
-                <div className="field-container vertical">
-                  <div className="horizontal-label-and-validation-container">
-                    <label>Email</label>
-                    <ErrorMessage
-                      name="email"
-                      render={msg => (
-                        <div className="validation-error">{msg}</div>
-                      )}
-                    />
-                  </div>
-                  <Field name="email" autoFocus />
-                </div>
-                <div className="field-container vertical">
-                  <div className="horizontal-label-and-validation-container">
-                    <label>Password</label>
-                    <ErrorMessage
-                      name="password"
-                      render={msg => (
-                        <div className="validation-error">{msg}</div>
-                      )}
-                    />
-                  </div>
-                  <Field name="password" type="password" />
-                </div>
-                <div className="Login__status-container">
-                  {status ? (
-                    <div className="validation-error">{status}</div>
-                  ) : (
-                    <div />
-                  )}
-                  {allowPasswordResets ? (
-                    <NavLink
-                      className="Login__reset-password"
-                      to={"/resetPasswordRequest"}
-                    >
-                      Reset password?
-                    </NavLink>
-                  ) : (
-                    undefined
-                  )}
-                </div>
-                <div className="Login__actions page__buttons Button__container">
-                  <Button
-                    appearance="contained"
-                    action="primary"
-                    disabled={isPristine || hasErrors}
-                    type="submit"
-                    text="Sign in"
-                  />
-                </div>
+}> = ({ onSubmit, allowPasswordResets, loginResultMessage }) => {
+  const { register, handleSubmit, errors, formState } = useForm({
+    validationSchema: LoginValidationSchema,
+  });
+
+  const isPristine = !formState.dirty;
+  const hasErrors = errors.email !== undefined || errors.password !== undefined;
+
+  return (
+    <div className="content-floating-without-appbar">
+      <div className="Login__container">
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div className="Login__content">
+            <div className="Login__icon-container">
+              <img
+                src={require("../../images/infinity_logo.svg")}
+                alt="Stroom logo"
+              />
+            </div>
+            <div className="field-container vertical">
+              <div className="horizontal-label-and-validation-container">
+                <label>Email</label>
               </div>
-            </Form>
+              <input
+                ref={register({ required: true })}
+                name="email"
+                autoFocus
+              />
+              {errors.email && <RequiredFieldMessage />}
+            </div>
+            <div className="field-container vertical">
+              <div className="horizontal-label-and-validation-container">
+                <label>Password</label>
+              </div>
+              <input
+                ref={register({ required: true })}
+                name="password"
+                type="password"
+              />
+              {errors.password && <RequiredFieldMessage />}
+            </div>
+            <div className="Login__status-container">
+              {loginResultMessage ? (
+                <div className="validation-error">{loginResultMessage}</div>
+              ) : (
+                <div />
+              )}
+              {allowPasswordResets ? (
+                <NavLink
+                  className="Login__reset-password"
+                  to={"/resetPasswordRequest"}
+                >
+                  Reset password?
+                </NavLink>
+              ) : (
+                undefined
+              )}
+            </div>
+            <div className="Login__actions page__buttons Button__container">
+              <Button
+                appearance="contained"
+                action="primary"
+                disabled={isPristine || hasErrors}
+                type="submit"
+                text="Sign in"
+              />
+            </div>
           </div>
-        </div>
-      );
-    }}
-  </Formik>
-);
+        </form>
+      </div>
+    </div>
+  );
+};
 
 export default LoginForm;

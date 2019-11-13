@@ -36,10 +36,13 @@ const TestHarness: React.FunctionComponent = () => {
   const [submitting, setSubmitting] = React.useState<boolean>(false);
   const [status, setStatus] = React.useState<string | undefined>(undefined);
 
-  const onLogin = React.useCallback(
-    () => login({ email, password }, { setSubmitting, setStatus }),
-    [email, password, login, setSubmitting, setStatus],
-  );
+  const onLogin = React.useCallback(() => login({ email, password }), [
+    email,
+    password,
+    login,
+    setSubmitting,
+    setStatus,
+  ]);
 
   return (
     <div>
