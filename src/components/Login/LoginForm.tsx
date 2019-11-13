@@ -18,7 +18,7 @@ import * as React from "react";
 import { NavLink } from "react-router-dom";
 import { Credentials } from "components/authentication/types";
 import useForm from "react-hook-form";
-import { Button, Input, Icon } from "antd";
+import { Button, Input, Icon, Form } from "antd";
 import { RequiredFieldMessage } from "components/FormComponents";
 import styled from "styled-components";
 
@@ -26,6 +26,23 @@ interface FormData {
   email: string;
   password: string;
 }
+
+const InputContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 5.5em;
+`;
+
+const StatusContainer = styled.div`
+  margin-top: 1em;
+  display: flex;
+  justify-content: space-between;
+
+  a > {
+    align-self: flex-end;
+  }
+`;
 
 const LoginForm: React.FunctionComponent<{
   onSubmit: (credentials: Credentials) => void;
@@ -62,20 +79,10 @@ const LoginForm: React.FunctionComponent<{
     await triggerValidation({ name });
   };
 
-  const StatusContainer = styled.div`
-    margin-top: 1em;
-    display: flex;
-    justify-content: space-between;
-
-    a > {
-      align-self: flex-end;
-    }
-  `;
-
   return (
     <div className="content-floating-without-appbar">
       <div className="Login__container">
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <Form onSubmit={handleSubmit(onSubmit)}>
           <div className="Login__content">
             <div className="Login__icon-container">
               <img
@@ -83,27 +90,29 @@ const LoginForm: React.FunctionComponent<{
                 alt="Stroom logo"
               />
             </div>
-
-            <Input
-              placeholder="username or email"
-              prefix={<Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />}
-              name="email"
-              autoFocus
-              onChange={async e => handleInputChange("email", e.target.value)}
-            />
-            {errors.email && <RequiredFieldMessage />}
-            <br />
-            <br />
-            <Input.Password
-              name="password"
-              placeholder="password"
-              prefix={<Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />}
-              onChange={async e =>
-                handleInputChange("password", e.target.value)
-              }
-            />
-            {errors.password && <RequiredFieldMessage />}
-
+            <InputContainer>
+              <Input
+                placeholder="username or email"
+                prefix={
+                  <Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />
+                }
+                name="email"
+                autoFocus
+                onChange={async e => handleInputChange("email", e.target.value)}
+              />
+              {errors.email && <RequiredFieldMessage />}
+              <Input.Password
+                name="password"
+                placeholder="password"
+                prefix={
+                  <Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />
+                }
+                onChange={async e =>
+                  handleInputChange("password", e.target.value)
+                }
+              />
+              {errors.password && <RequiredFieldMessage />}
+            </InputContainer>
             <StatusContainer>
               {loginResultMessage ? (
                 <div className="validation-error">{loginResultMessage}</div>
@@ -134,7 +143,7 @@ const LoginForm: React.FunctionComponent<{
               </Button>
             </div>
           </div>
-        </form>
+        </Form>
       </div>
     </div>
   );
