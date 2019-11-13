@@ -97,6 +97,7 @@ const LoginForm: React.FunctionComponent<{
             <Input.Password
               name="password"
               placeholder="password"
+              prefix={<Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />}
               onChange={async e =>
                 handleInputChange("password", e.target.value)
               }
