@@ -36,14 +36,16 @@ function validateVerifyPassword(
   newPassword: string,
   verifyPassword: string,
 ): string {
-  if (newPassword !== undefined && newPassword !== "") {
-    if (
-      verifyPassword !== undefined &&
-      verifyPassword !== "" &&
-      newPassword !== verifyPassword
-    ) {
+  if (
+    newPassword !== undefined &&
+    newPassword !== "" &&
+    verifyPassword !== undefined &&
+    verifyPassword !== ""
+  ) {
+    if (newPassword !== verifyPassword) {
       return "Passwords do not match";
     }
+    return "";
   }
   return "";
 }
@@ -103,28 +105,30 @@ export async function validateAsync(
   url: string,
   oldPassword?: string,
 ) {
-  const result = await fetch(`${url}/isPasswordValid`, {
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-    method: "post",
-    mode: "cors",
-    body: JSON.stringify({
-      email,
-      newPassword,
-      oldPassword,
-    }),
-  });
-
-  const { failedOn }: any = await result.json();
   let errors: PasswordValidationErrors = {
     oldPassword: "",
     password: "",
     verifyPassword: "",
   };
-  if (failedOn) {
-    errors = validatePasswords(failedOn);
+  if (newPassword !== undefined) {
+    const result = await fetch(`${url}/isPasswordValid`, {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      method: "post",
+      mode: "cors",
+      body: JSON.stringify({
+        email,
+        newPassword,
+        oldPassword,
+      }),
+    });
+
+    const { failedOn }: any = await result.json();
+    if (failedOn) {
+      errors = validatePasswords(failedOn);
+    }
   }
   errors.verifyPassword = validateVerifyPassword(newPassword, verifyPassword);
   let errorMessage = "";

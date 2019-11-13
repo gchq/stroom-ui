@@ -1,7 +1,7 @@
 import * as React from "react";
 import useForm from "react-hook-form";
 import Button from "components/Button";
-import { Select, Switch, Input, Tooltip } from "antd";
+import { Select, Switch, Input, Tooltip, Icon } from "antd";
 import BackConfirmation from "../BackConfirmation";
 import EditUserFormProps from "./EditUserFormProps";
 import useServiceUrl from "startup/config/useServiceUrl";
@@ -10,9 +10,59 @@ import {
   MandatoryIndicator,
   RequiredFieldMessage,
 } from "components/FormComponents";
+import { ErrorMessage } from "components/FormComponents/FormComponents";
 
 const { Option } = Select;
 const { TextArea } = Input;
+
+const Row = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
+const Label = styled.label`
+  width: 13em;
+  text-align: right;
+  padding-right: 1em;
+  line-height: 2.5em;
+`;
+
+// /** The select in the input makes the label drop too low and this fixes that. */
+// const LabelForSelect = styled(Label)`
+//   line-height: 2.5em;
+// `;
+const LabelForSwitch = styled(Label)`
+  line-height: 1.5em;
+`;
+
+const InputAndValidation = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 5em;
+  width: 100%;
+`;
+
+const StyledInput = styled(Input)`
+  height: 2.5em;
+  width: 27.5em;
+`;
+
+const StyledPasswordInput = styled(Input.Password)`
+  height: 2.5em;
+  width: 27.5em;
+`;
+
+const StyledSelect = styled(Select)`
+  width: 27.5em !important;
+`;
+
+const StyledTextArea = styled(TextArea)`
+  width: 27.4em !important;
+`;
+
+const ValidationMessage = styled.span`
+  color: red;
+`;
 
 const UserForm: React.FunctionComponent<EditUserFormProps> = ({
   onSubmit,
@@ -28,18 +78,48 @@ const UserForm: React.FunctionComponent<EditUserFormProps> = ({
     errors,
     getValues,
     formState,
+    setValue,
+    triggerValidation,
   } = useForm({
     mode: "onBlur",
   });
   const [showBackConfirmation, setShowBackConfirmation] = React.useState(false);
 
-  const hasErrors = errors.email !== undefined || errors.password !== undefined;
-  const { password, verifyPassword, email } = getValues();
-  console.log(watch("example"));
-  console.log("isValid: " + formState.isValid);
-  console.log("dirty: " + formState.dirty);
-  console.log({ errors });
-  console.log({ hasErrors });
+  const hasErrors = React.useMemo(
+    () => errors.email !== undefined || errors.password !== undefined,
+    [errors],
+  );
+
+  const password = watch("password");
+  const verifyPassword = watch("verifyPassword");
+  const email = watch("email");
+
+  //TODO this is used in LoginForm too -- move it somewhere?
+  const handleInputChange = async (name: string, value: string) => {
+    setValue(name, value);
+    await triggerValidation({ name });
+  };
+
+  React.useEffect(() => {
+    register({ name: "firstName", type: "custom" });
+    register({ name: "lastName", type: "custom" });
+    register({ name: "email", type: "custom" }, { required: true });
+    register({ name: "comments", type: "custom" });
+    register(
+      { name: "password", type: "custom" },
+      {
+        required: true,
+        validate: async value => onValidate(value, verifyPassword, email),
+      },
+    );
+    register(
+      { name: "verifyPassword", type: "custom" },
+      {
+        required: true,
+        validate: async value => onValidate(password, value, email),
+      },
+    );
+  }, [register, verifyPassword, password]);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -56,157 +136,148 @@ const UserForm: React.FunctionComponent<EditUserFormProps> = ({
       <div>
         <div className="container">
           <input name="id" type="hidden" />
-          <div className="section">
-            <div className="section__title">
-              <h3>Account</h3>
-            </div>
-            <div className="section__fields">
-              <div className="section__fields__row">
-                <div className="field-container vertical">
-                  <label>First name</label>
-                  <input name="firstName" type="text" ref={register} />
-                </div>
-                <div className="field-container__spacer" />
-                <div className="field-container vertical">
-                  <label>Last name</label>
-                  <input name="lastName" type="text" ref={register} />
-                </div>
-              </div>
-              <div className="section__fields">
-                <div className="section__fields__row">
-                  <div className="field-container vertical">
-                    <label>
-                      Email
-                      <MandatoryIndicator />
-                    </label>
-                    <div className="field-container--with-validation">
-                      <input name="email" ref={register({ required: true })} />
-                      {errors.email && <RequiredFieldMessage />}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+          <Row>
+            <Label>First name:</Label>
+            <InputAndValidation>
+              <StyledInput
+                name="firstName"
+                type="text"
+                onChange={async e =>
+                  handleInputChange("firstName", e.target.value)
+                }
+              />
+            </InputAndValidation>
+          </Row>
+          <Row>
+            <Label>Last name:</Label>
+            <InputAndValidation>
+              <StyledInput
+                name="lastName"
+                type="text"
+                onChange={async e =>
+                  handleInputChange("lastName", e.target.value)
+                }
+              />
+            </InputAndValidation>
+          </Row>
+          <Row>
+            <Label>
+              <MandatoryIndicator />
+              Email:
+            </Label>
+            <InputAndValidation>
+              <StyledInput
+                name="email"
+                onChange={async e => handleInputChange("email", e.target.value)}
+              />
+              <ValidationMessage>
+                {errors.email && errors.email.message}
+              </ValidationMessage>
+            </InputAndValidation>
+          </Row>
 
-            <div className="section">
-              <div className="section__title">
-                <h3>Status</h3>
-              </div>
-              <div className="section__fields">
-                <div className="section__fields__row">
-                  <div className="field-container vertical">
-                    <label>Account status</label>
-                    <Select>
-                      <Option value="enabled">Active</Option>
-                      <Option value="disabled">Disabled</Option>
-                      <Option disabled value="inactive">
-                        Inactive (because of disuse)
-                      </Option>
-                      <Option disabled value="locked">
-                        Locked (because of failed logins)
-                      </Option>
-                    </Select>
-                  </div>
-                  <div className="field-container__spacer" />
-                  <div className="field-container--with-validation">
-                    <label>Never expires?</label>
-                    <Switch ref={register} />
-                    {/* <input
-                      name="neverExpires"
-                      // label="neverExpires"
-                      component={CheckboxField}
-                      ref={register}
-                    /> */}
-                  </div>
-                </div>
-              </div>
-            </div>
+          <Row>
+            <Label>Account status:</Label>
+            <InputAndValidation>
+              <StyledSelect>
+                <Option value="enabled">Active</Option>
+                <Option value="disabled">Disabled</Option>
+                <Option disabled value="inactive">
+                  Inactive (because of disuse)
+                </Option>
+                <Option disabled value="locked">
+                  Locked (because of failed logins)
+                </Option>
+              </StyledSelect>
+            </InputAndValidation>
+          </Row>
 
-            <div className="section">
-              <div className="section__title">
-                <h3>Password</h3>
+          <Row>
+            <LabelForSwitch>Never expires?</LabelForSwitch>
+            <InputAndValidation>
+              <div>
+                <Switch ref={register} />
               </div>
-              <div className="section__fields">
-                <div className="section__fields__row">
-                  <div className="field-container vertical">
-                    <label>
-                      Password
-                      <MandatoryIndicator />
-                    </label>
-                    <div className="field-container--with-validation">
-                      <input
-                        name="password"
-                        type="password"
-                        ref={register({
-                          required: true,
-                          validate: value =>
-                            onValidate(value, verifyPassword, email),
-                        })}
-                      />
-                      {errors.password && <RequiredFieldMessage />}
-                    </div>
-                  </div>
-                  <div className="field-container__spacer" />
-                  <div className="field-container vertical">
-                    <label>
-                      Verify password
-                      <MandatoryIndicator />
-                    </label>
-                    <div className="field-container--with-validation">
-                      <input
-                        ref={register({
-                          required: true,
-                          validate: value =>
-                            onValidate(value, verifyPassword, email),
-                          // validateAsync(
-                          //   {
-                          //     newPassword: value,
-                          //     verifyPassword,
-                          //     email,
-                          //   },
-                          //   authenticationServiceUrl,
-                          // ),
-                        })}
-                        name="verifyPassword"
-                        type="password"
-                      />
-                      {errors.verifyPassword && <RequiredFieldMessage />}
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="section__fields__row">
-                <div className="field-container">
-                  <label>Force a password change at next login</label>
-                  <div className="field-container__spacer" />
-                  <div className="field-container--with-validation">
-                    <Switch ref={register} />
-                    {/* <input
-                      name="forcePasswordChange"
-                      label="forcePasswordChange"
-                      component={CheckboxField}
-                    /> */}
-                  </div>
-                </div>
-              </div>
-            </div>
+            </InputAndValidation>
+          </Row>
 
-            <div className="section">
-              <div className="section__title">
-                <h3>Comments</h3>
-              </div>
-              <div className="section__fields">
-                <div className="section__fields__row 1-column">
-                  <TextArea
-                    rows={3}
-                    className="section__fields__comments"
-                    name="comments"
-                  />
-                </div>
-              </div>
-            </div>
+          <Row>
+            <Label>
+              <MandatoryIndicator />
+              Password:
+            </Label>
+            <InputAndValidation>
+              <StyledPasswordInput
+                name="password"
+                type="password"
+                prefix={
+                  <Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />
+                }
+                onChange={async e =>
+                  handleInputChange("password", e.target.value)
+                }
+                // ref={register({
+                //   required: true,
+                //   validate: value => onValidate(value, verifyPassword, email),
+                // })}
+              />
+              <ValidationMessage>
+                {errors.password && errors.password.message}
+              </ValidationMessage>
+            </InputAndValidation>
+          </Row>
+          <Row>
+            <Label>
+              <MandatoryIndicator />
+              Verify password:
+            </Label>
+            <InputAndValidation>
+              <StyledPasswordInput
+                name="verifyPassword"
+                type="password"
+                prefix={
+                  <Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />
+                }
+                onChange={async e =>
+                  handleInputChange("verifyPassword", e.target.value)
+                }
+                // ref={register({
+                //   required: true,
+                //   validate: value => onValidate(value, verifyPassword, email),
+                // })}
+              />
+              <ValidationMessage>
+                {errors.verifyPassword && errors.verifyPassword.message}
+              </ValidationMessage>
+            </InputAndValidation>
+          </Row>
 
-            {/* {showCalculatedFields && !!userBeingEdited ? (
+          <Row>
+            <LabelForSwitch>
+              Force a password change at next login?
+            </LabelForSwitch>
+            <InputAndValidation>
+              <div>
+                <Switch ref={register} />
+              </div>
+            </InputAndValidation>
+          </Row>
+
+          <Row>
+            <Label>Comments:</Label>
+            <InputAndValidation>
+              <StyledTextArea
+                rows={3}
+                className="section__fields__comments"
+                name="comments"
+                onChange={async e =>
+                  handleInputChange("comments", e.target.value)
+                }
+              />
+            </InputAndValidation>
+          </Row>
+
+          {/* {showCalculatedFields && !!userBeingEdited ? (
               <React.Fragment>
                 {!!userBeingEdited.loginCount ? (
                   <div className="section">
@@ -250,35 +321,34 @@ const UserForm: React.FunctionComponent<EditUserFormProps> = ({
             ) : (
               undefined
             )} */}
-          </div>
         </div>
+      </div>
 
-        <div className="footer">
-          <Button
-            appearance="contained"
-            action="primary"
-            type="submit"
-            disabled={!formState.dirty || hasErrors}
-            icon="save"
-            text="Save"
-            // isLoading={isSaving}
-          />
-          <Button
-            appearance="contained"
-            action="secondary"
-            icon="times"
-            onClick={() => onCancel()}
-            text="Cancel"
-          />
-        </div>
-        <BackConfirmation
-          isOpen={showBackConfirmation}
-          onGoBack={() => onBack()}
-          hasErrors={hasErrors}
-          onSaveAndGoBack={onSubmit}
-          onContinueEditing={() => setShowBackConfirmation(false)}
+      <div className="footer">
+        <Button
+          appearance="contained"
+          action="primary"
+          type="submit"
+          disabled={!formState.dirty || hasErrors}
+          icon="save"
+          text="Save"
+          // isLoading={isSaving}
+        />
+        <Button
+          appearance="contained"
+          action="secondary"
+          icon="times"
+          onClick={() => onCancel()}
+          text="Cancel"
         />
       </div>
+      <BackConfirmation
+        isOpen={showBackConfirmation}
+        onGoBack={() => onBack()}
+        hasErrors={hasErrors}
+        onSaveAndGoBack={onSubmit}
+        onContinueEditing={() => setShowBackConfirmation(false)}
+      />
     </form>
   );
 };

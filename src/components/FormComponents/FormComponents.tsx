@@ -7,13 +7,17 @@ const requiredFieldText = "This field is required.";
 export const ValidationMessage = styled.span`
   color: red;
 `;
-
+//TODO are these used?
 export const RequiredFieldMessage = () => (
   <ValidationMessage>{requiredFieldText}</ValidationMessage>
 );
 
+export const ErrorMessage = (message: string) => (
+  <ValidationMessage>{message}</ValidationMessage>
+);
+
 export const MandatoryIndicator = () => (
   <Tooltip title={requiredFieldText}>
-    <ValidationMessage>*</ValidationMessage>
+    <ValidationMessage>* </ValidationMessage>
   </Tooltip>
 );
