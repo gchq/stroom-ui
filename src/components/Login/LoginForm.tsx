@@ -17,28 +17,25 @@
 import * as React from "react";
 import { NavLink } from "react-router-dom";
 import { Credentials } from "components/authentication/types";
-import Button from "components/Button";
-import * as Yup from "yup";
 import useForm from "react-hook-form";
+import { Button } from "antd";
 import { RequiredFieldMessage } from "components/FormComponents";
-
-const LoginValidationSchema = Yup.object().shape({
-  email: Yup.string().required("Required"),
-  password: Yup.string().required("Required"),
-});
 
 const LoginForm: React.FunctionComponent<{
   onSubmit: (credentials: Credentials) => void;
+  isSubmitting: boolean;
   loginResultMessage?: string;
   allowPasswordResets?: boolean;
-}> = ({ onSubmit, allowPasswordResets, loginResultMessage }) => {
-  const { register, handleSubmit, errors, formState } = useForm({
-    validationSchema: LoginValidationSchema,
+}> = ({ onSubmit, allowPasswordResets, loginResultMessage, isSubmitting }) => {
+  const { register, handleSubmit, getValues, errors } = useForm({
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+    mode: "onChange",
   });
-
-  const isPristine = !formState.dirty;
-  const hasErrors = errors.email !== undefined || errors.password !== undefined;
-
+  const { email, password } = getValues();
+  const disableSubmit = email === "" || password === "";
   return (
     <div className="content-floating-without-appbar">
       <div className="Login__container">
@@ -91,12 +88,13 @@ const LoginForm: React.FunctionComponent<{
             </div>
             <div className="Login__actions page__buttons Button__container">
               <Button
-                appearance="contained"
-                action="primary"
-                disabled={isPristine || hasErrors}
-                type="submit"
-                text="Sign in"
-              />
+                type="primary"
+                loading={isSubmitting}
+                disabled={disableSubmit}
+                htmlType="submit"
+              >
+                Submit
+              </Button>
             </div>
           </div>
         </form>

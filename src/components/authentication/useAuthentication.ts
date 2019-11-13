@@ -8,20 +8,24 @@ import { Credentials } from "./types";
 interface UseAuthentication {
   login: (credentials: Credentials) => void;
   loginResultMessage: string;
+  isSubmitting: boolean;
 }
 
 const useAuthentication = (): UseAuthentication => {
   const { apiLogin } = useApi();
   const [loginResultMessage, setLoginResultMessage] = React.useState(undefined);
+  const [isSubmitting, setSubmitting] = React.useState(false);
 
   const login = useCallback(
     (credentials: Credentials) => {
+      setSubmitting(true);;
       apiLogin(credentials).then(response => {
         if (response.loginSuccessful) {
           // Otherwise we'll extract what we expect to be the successful login redirect URL
           Cookies.set("username", credentials.email);
           window.location.href = response.redirectUrl;
         } else {
+          setSubmitting(false);
           setLoginResultMessage(response.message);
         }
         return;
@@ -30,7 +34,7 @@ const useAuthentication = (): UseAuthentication => {
     [apiLogin],
   );
 
-  return { login, loginResultMessage };
+  return { login, loginResultMessage, isSubmitting };
 };
 
 export default useAuthentication;
