@@ -6,6 +6,10 @@ import BackConfirmation from "../BackConfirmation";
 import EditUserFormProps from "./EditUserFormProps";
 import useServiceUrl from "startup/config/useServiceUrl";
 import styled from "styled-components";
+import {
+  MandatoryIndicator,
+  RequiredFieldMessage,
+} from "components/FormComponents";
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -38,16 +42,6 @@ const UserForm: React.FunctionComponent<EditUserFormProps> = ({
   console.log({ errors });
   console.log({ hasErrors });
 
-  const ValidationMessage = styled.span`
-    color: red;
-  `;
-
-  const requiredFieldText = "This field is required.";
-  const MandatoryIndicator = () => (
-    <Tooltip title={requiredFieldText}>
-      <ValidationMessage>*</ValidationMessage>
-    </Tooltip>
-  );
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="header">
@@ -88,11 +82,7 @@ const UserForm: React.FunctionComponent<EditUserFormProps> = ({
                     </label>
                     <div className="field-container--with-validation">
                       <input name="email" ref={register({ required: true })} />
-                      {errors.email && (
-                        <ValidationMessage>
-                          {requiredFieldText}
-                        </ValidationMessage>
-                      )}
+                      {errors.email && <RequiredFieldMessage />}
                     </div>
                   </div>
                 </div>
@@ -154,11 +144,7 @@ const UserForm: React.FunctionComponent<EditUserFormProps> = ({
                             onValidate(value, verifyPassword, email),
                         })}
                       />
-                      {errors.password && (
-                        <ValidationMessage>
-                          {errors.password.message}
-                        </ValidationMessage>
-                      )}
+                      {errors.password && <RequiredFieldMessage />}
                     </div>
                   </div>
                   <div className="field-container__spacer" />
@@ -185,11 +171,7 @@ const UserForm: React.FunctionComponent<EditUserFormProps> = ({
                         name="verifyPassword"
                         type="password"
                       />
-                      {errors.verifyPassword && (
-                        <ValidationMessage>
-                          {errors.verifyPassword.message}
-                        </ValidationMessage>
-                      )}
+                      {errors.verifyPassword && <RequiredFieldMessage />}
                     </div>
                   </div>
                 </div>
