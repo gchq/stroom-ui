@@ -22,7 +22,10 @@ import useAuthenticationContext from "./useAuthenticationContext";
 import useServiceUrl from "startup/config/useServiceUrl";
 
 export const HandleAuthenticationResponse: React.FunctionComponent = () => {
-  const { authenticationServiceUrl, authorisationServiceUrl } = useServiceUrl();
+  const {
+    stroomAuthenticationServiceUrl,
+    authorisationServiceUrl,
+  } = useServiceUrl();
   const {
     router: { location },
     history,
@@ -42,13 +45,13 @@ export const HandleAuthenticationResponse: React.FunctionComponent = () => {
       setIdToken,
       history,
       accessCode,
-      authenticationServiceUrl!,
+      stroomAuthenticationServiceUrl!,
     );
   }, [
     accessCode,
     setIdToken,
     history,
-    authenticationServiceUrl,
+    stroomAuthenticationServiceUrl,
     authorisationServiceUrl,
   ]);
 

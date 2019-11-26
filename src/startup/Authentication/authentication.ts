@@ -50,9 +50,9 @@ export const handleAuthenticationResponse = (
   tokenIdChange: (idToken: string) => void,
   history: History,
   accessCode: string,
-  authenticationServiceUrl: string,
+  stroomAuthenticationServiceUrl: string,
 ) => {
-  const idTokenRequestUrl = `${authenticationServiceUrl}/idToken?accessCode=${accessCode}`;
+  const idTokenRequestUrl = `${stroomAuthenticationServiceUrl}/noauth/exchange`;
 
   // The cookie including the sessionId will be sent along with this request.
   // The 'credentials' key makes this happen.
@@ -61,9 +61,10 @@ export const handleAuthenticationResponse = (
       Accept: "application/json",
       "Content-Type": "application/json",
     },
-    method: "get",
-    credentials: "include",
+    method: "post",
+    credentials: "include", // Send cookies, i.e. the sessionId
     mode: "cors",
+    body: JSON.stringify({ accessCode }),
   })
     .then(response => response.text())
     .then(idToken => {

@@ -7,6 +7,7 @@ const useServiceUrl = () => {
     tokenServiceUrl: `${authBaseServiceUrl}/token/v1`,
     userServiceUrl: `${authBaseServiceUrl}/user/v1`,
     authenticationServiceUrl: `${authBaseServiceUrl}/authentication/v1`,
+    stroomAuthenticationServiceUrl: `${stroomBaseServiceUrl}/authentication/v1`,
     authorisationServiceUrl: `${stroomBaseServiceUrl}/authorisation/v1`,
   };
 };
