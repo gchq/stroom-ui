@@ -1,7 +1,7 @@
 {
   "advertisedUrl": "https://IP_ADDRESS",
   "allowPasswordResets": true,
-  "clientId": "stroom-ui",
+  "clientId": "PZnJr8kHRKqnlJRQThSI",
   "stroomBaseServiceUrl": "https://IP_ADDRESS/api",
   "authBaseServiceUrl": "https://IP_ADDRESS/api/auth",
   "stroomUiUrl": "https://IP_ADDRESS/stroom",
