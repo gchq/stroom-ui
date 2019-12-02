@@ -15,7 +15,6 @@
  */
 
 import * as React from "react";
-import ChangePasswordFormData from "../ChangePassword/ChangePasswordFormData";
 import ChangePasswordFields from "../ChangePasswordFields";
 
 const ResetPassword: React.FunctionComponent<{

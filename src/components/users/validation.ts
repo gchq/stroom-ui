@@ -138,7 +138,7 @@ export async function validateAsync(
   if (errors.password !== "") {
     errorMessage += errors.password;
   }
-  if (errors.verifyPassword != "") {
+  if (errors.verifyPassword !== "") {
     errorMessage += errors.verifyPassword;
   }
   return errorMessage;

@@ -1,16 +1,11 @@
 import * as React from "react";
 import useForm from "react-hook-form";
 import Button from "components/Button";
-import { Select, Switch, Input, Tooltip, Icon } from "antd";
+import { Select, Switch, Input, Icon } from "antd";
 import BackConfirmation from "../BackConfirmation";
 import EditUserFormProps from "./EditUserFormProps";
-import useServiceUrl from "startup/config/useServiceUrl";
 import styled from "styled-components";
-import {
-  MandatoryIndicator,
-  RequiredFieldMessage,
-} from "components/FormComponents";
-import { ErrorMessage } from "components/FormComponents/FormComponents";
+import { MandatoryIndicator } from "components/FormComponents";
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -69,14 +64,12 @@ const UserForm: React.FunctionComponent<EditUserFormProps> = ({
   onBack,
   onCancel,
   onValidate,
-  user,
 }) => {
   const {
     register,
     handleSubmit,
     watch,
     errors,
-    getValues,
     formState,
     setValue,
     triggerValidation,
@@ -119,7 +112,7 @@ const UserForm: React.FunctionComponent<EditUserFormProps> = ({
         validate: async value => onValidate(password, value, email),
       },
     );
-  }, [register, verifyPassword, password]);
+  }, [register, verifyPassword, password, email, onValidate]);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>

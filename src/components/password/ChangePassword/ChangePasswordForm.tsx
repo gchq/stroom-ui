@@ -16,7 +16,6 @@
 
 import * as React from "react";
 import ChangePasswordFields from "../ChangePasswordFields";
-import ChangePasswordFormData from "./ChangePasswordFormData";
 
 const ChangePasswordForm: React.FunctionComponent<{
   email: string;

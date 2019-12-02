@@ -68,7 +68,7 @@ const LoginForm: React.FunctionComponent<{
   React.useEffect(() => {
     register({ name: "email", type: "custom" }, { required: true });
     register({ name: "password", type: "custom" }, { required: true });
-  }, []);
+  }, [register]);
 
   const { email, password } = getValues();
 

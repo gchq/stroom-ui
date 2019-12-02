@@ -17,14 +17,12 @@
 import * as React from "react";
 import { useEffect } from "react";
 import useAppNavigation from "lib/useAppNavigation";
-import { PasswordValidationRequest } from "components/authentication/types";
 import Loader from "components/Loader";
 import useIdFromPath from "lib/useIdFromPath";
 import { User } from "../types";
 import { useUsers } from "../api";
 import { validateAsync } from "../validation";
 import UserForm from "./UserForm";
-import UserFormData from "./UserFormData";
 import useServiceUrl from "startup/config/useServiceUrl";
 
 const EditUserContainer = () => {

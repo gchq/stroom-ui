@@ -16,7 +16,6 @@
 
 import * as React from "react";
 import useAppNavigation from "lib/useAppNavigation";
-import { PasswordValidationRequest } from "components/authentication/types";
 import { useUsers } from "../api";
 import { User } from "../types";
 import { validateAsync } from "../validation";
