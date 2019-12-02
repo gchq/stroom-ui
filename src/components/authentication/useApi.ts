@@ -53,21 +53,15 @@ export const useApi = (): Api => {
       const { email, password } = credentials;
       const loginServiceUrl = `${authenticationServiceUrl}/authenticate`;
 
-      // We need to post the sessionId in the credentials, otherwise the
-      // authenticationService will have no way of marking the session as valid.
-      const fullSessionId = Cookies.get("authSessionId");
-      let sessionId = fullSessionId;
-      if (fullSessionId.indexOf(".") > -1) {
-        sessionId = fullSessionId.slice(0, fullSessionId.indexOf("."));
-      }
-
       return httpPostJsonResponse(
         loginServiceUrl,
         {
+          // This option means we send the cookies along with the request,
+          // which means the auth service gets the sessionId.
+          credentials: "include",
           body: JSON.stringify({
             email,
             password,
-            sessionId,
             requestingClientId: clientId,
           }),
         },
