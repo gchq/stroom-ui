@@ -166,8 +166,9 @@ main() {
     npm install
 
     echo -e "${GREEN}Running npm build${NC}"
-  # Set NODE_OPTIONS to try to prevent out of memory errors when 
-    NODE_OPTIONS=–max_old_space_size=4096 npm run build
+    # Set NODE_OPTIONS to try to prevent out of memory errors when 
+    # Both case styles as I am not sure which one is right
+    NODE_OPTIONS="–max_old_space_size=8196 –max-old-space-size=8196" npm run build
 
     do_docker_build_if_required
     exit 0
