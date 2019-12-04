@@ -1,8 +1,8 @@
 language: node_js
 node_js:
   - "10.16.0"
-dist: trusty
-group: edge
+dist: bionic
+# group: edge # Not sure we need this anymore
 sudo: required # To ensure we get a VM rather than a container for more memory and for all the apt-get stuff
 
 env:
