@@ -16,7 +16,4 @@ set -e
 
 echo -e "TRAVIS_EVENT_TYPE:   [${GREEN}${TRAVIS_EVENT_TYPE}${NC}]"
 
-# Set to try to prevent out of memory errors when 
-export NODE_OPTIONS=–max_old_space_size=4096
-
 exit 0
