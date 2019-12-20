@@ -165,6 +165,7 @@ const Sidebar: React.FunctionComponent<Props> = ({ activeMenuItem }) => {
   const { componentProps, showDialog } = useDialog();
   const { enabled, chooseOnStartup } = useActivityConfig();
   const afterSplashAccept = React.useCallback(() => {
+    console.log("afterSplashAccept", enabled, chooseOnStartup);
     if (enabled && chooseOnStartup) {
       showDialog();
     }

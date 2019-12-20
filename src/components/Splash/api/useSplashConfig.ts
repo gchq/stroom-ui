@@ -19,12 +19,7 @@ import { SplashConfig} from "./types";
 import useApi from "./useApi";
 
 const useSplashConfig = (): SplashConfig => {
-  const [config, setConfig] = React.useState<SplashConfig>({
-    enabled: false,
-    title: "TBD",
-    body: "TBD",
-    version: "TBD",
-  });
+  const [config, setConfig] = React.useState<SplashConfig>(undefined);
 
   const { getConfig } = useApi();
 
