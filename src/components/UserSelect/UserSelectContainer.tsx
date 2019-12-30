@@ -38,19 +38,17 @@ const UserSelectContainer: React.FunctionComponent<Props> = ({
     setUsers(initialUsers);
   }, [initialUsers]);
 
-  const options: Fuse.FuseOptions<User> = {
-    keys: [{ name: "email", weight: 1 }],
-  };
-
   const handleSearch = React.useCallback(
     (criteria: string) => {
       // If we don't have any critera we want to show all users in the drop-down.
       if (criteria.length === 0) {
         setUsers(initialUsers);
       } else {
-        let searchResults: User[] = [];
+        let searchResults = [];
         if (fuzzy) {
-          var fuse = new Fuse(initialUsers, options);
+          var fuse = new Fuse(initialUsers, {
+            keys: [{ name: "email", weight: 1 }],
+          });
           searchResults = fuse.search(criteria);
         } else {
           searchResults = initialUsers.filter(user =>
@@ -60,7 +58,7 @@ const UserSelectContainer: React.FunctionComponent<Props> = ({
         setUsers(searchResults);
       }
     },
-    [setUsers, fuzzy, initialUsers, options],
+    [setUsers, fuzzy, initialUsers],
   );
 
   return (

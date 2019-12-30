@@ -74,7 +74,10 @@ const LoginForm: React.FunctionComponent<{
 
   const disableSubmit = email === "" || password === "";
 
-  const handleInputChange = async (name: string, value: string) => {
+  const handleInputChange = async (
+    name: "email" | "password",
+    value: string,
+  ) => {
     setValue(name, value);
     await triggerValidation({ name });
   };

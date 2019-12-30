@@ -100,10 +100,11 @@ const dragCollect: DragSourceCollector<
   };
 };
 
-const enhance = pipe(
-  DropTarget([DragDropTypes.DOC_REF_UUIDS], dropTarget, dropCollect),
-  DragSource(DragDropTypes.DOC_REF_UUIDS, dragSource, dragCollect),
-);
+// dnd_error: temporarily disable dnd-related code to get the build working
+//const enhance = pipe(
+/* DropTarget([DragDropTypes.DOC_REF_UUIDS], dropTarget, dropCollect), */
+/* DragSource(DragDropTypes.DOC_REF_UUIDS, dragSource, dragCollect), */
+/* ); */
 
 let DndDocRefListingEntry = ({
   connectDragSource,
@@ -118,4 +119,6 @@ let DndDocRefListingEntry = ({
     ),
   );
 
-export default enhance(DndDocRefListingEntry);
+// dnd_error: temporarily disable dnd-related code to get the build working
+/* export default enhance(DndDocRefListingEntry); */
+export default DndDocRefListingEntry;

@@ -51,12 +51,11 @@ const TestHarness: React.FunctionComponent = () => {
 
   const [users, setUsers] = React.useState<User[]>(initialUsers);
   const [selectedUser, setSelectedUser] = React.useState<User>();
-  const options: Fuse.FuseOptions<User> = {
-    keys: [{ name: "email", weight: 1 }],
-  };
   const handleFuzzySearch = useCallback(
     (criteria: string) => {
-      var fuse = new Fuse(initialUsers, options);
+      var fuse = new Fuse(initialUsers, {
+        keys: [{ name: "email", weight: 1 }],
+      });
       const searchResults: User[] = fuse.search(criteria);
       setUsers(searchResults);
     },
