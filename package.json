@@ -29,7 +29,7 @@
     "@types/styled-components": "^4.1.18",
     "@types/uuid": "3.4.4",
     "@types/yup": "0.26.12",
-    "antd": "3.18.2",
+    "antd": "^3.26.5",
     "cogo-toast": "1.0.4",
     "cookies-js": "1.2.3",
     "dateformat": "3.0.3",
