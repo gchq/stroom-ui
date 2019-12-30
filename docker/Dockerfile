@@ -21,7 +21,7 @@ WORKDIR /root/app
 ENTRYPOINT ["/sbin/tini", "--"]
 
 EXPOSE 5001
-EXPOSE 9446
+EXPOSE 9443
 
 VOLUME [ "/etc/nginx/certs" ]
 

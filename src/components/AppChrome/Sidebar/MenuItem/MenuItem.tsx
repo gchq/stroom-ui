@@ -225,6 +225,8 @@ const enhance = (d: React.FunctionComponent<EnhancedProps>) =>
     DragSource<Props>(DragDropTypes.DOC_REF_UUIDS, dragSource, dragCollect)(d),
   );
 
-const EnhancedMenuItem: React.FunctionComponent<Props> = enhance(MenuItem);
+// dnd_error: temporarily disable dnd-related code to get the build working
+export default enhance;
+//const EnhancedMenuItem: React.FunctionComponent<Props> = enhance(MenuItem);
 
-export default EnhancedMenuItem;
+//export default EnhancedMenuItem;

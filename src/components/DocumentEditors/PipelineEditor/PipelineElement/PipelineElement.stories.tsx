@@ -21,7 +21,8 @@ const TestHarness: React.FunctionComponent<Props> = ({
 
   return (
     <div>
-      <PipelineElement {...{ pipelineId, elementId, pipelineEditApi }} />
+      {/* dnd_error: temporarily disable dnd-related code to get the build working */}
+      {/* <PipelineElement {...{ pipelineId, elementId, pipelineEditApi }} /> */}
       <JsonDebug value={{ pipelineEditApi }} />
     </div>
   );
