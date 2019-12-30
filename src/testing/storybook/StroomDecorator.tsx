@@ -1,6 +1,5 @@
 import * as React from "react";
 import { pipe } from "ramda";
-import { RenderFunction } from "@storybook/react";
 import { DragDropContext } from "react-dnd";
 import HTML5Backend from "react-dnd-html5-backend";
 import StoryRouter from "storybook-react-router";
@@ -44,7 +43,7 @@ ReactModal.setAppElement("#root");
 
 setupFontAwesome();
 
-export default (storyFn: RenderFunction) =>
+export default (storyFn: any) =>
   StoryRouter()(() => (
     <ErrorReportingContextProvider>
       <ConfigProvider>
