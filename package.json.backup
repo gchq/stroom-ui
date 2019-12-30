@@ -92,13 +92,12 @@
     "build": "npm-run-all build-css build-js",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "storybook-js": "start-storybook -p 9001 -c .storybook --ci",
-    "storybook": "npm-run-all -p storybook-js watch-css"
+    "storybook": "start-storybook -p 9009 -s public",
+    "build-storybook": "build-storybook -s public"
   },
   "devDependencies": {
     "@babel/core": "7.4.3",
     "@storybook/addon-actions": "^5.2.8",
-    "@storybook/addon-info": "^5.2.8",
     "@storybook/addon-links": "^5.2.8",
     "@storybook/addons": "^5.2.8",
     "@storybook/react": "^5.2.8",
@@ -127,7 +126,6 @@
     "react-docgen-typescript": "1.12.4",
     "react-docgen-typescript-loader": "3.1.0",
     "react-docgen-typescript-webpack-plugin": "1.1.0",
-    "storybook-react-router": "^1.0.8",
     "tslint-react-hooks": "2.1.0"
   },
   "browserslist": [
