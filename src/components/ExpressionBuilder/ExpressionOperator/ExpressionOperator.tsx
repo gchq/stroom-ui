@@ -102,14 +102,15 @@ export const dragCollect: DragSourceCollector<
   };
 };
 
-const enhance = pipe(
-  DragSource(DragDropTypes.OPERATOR, dragSource, dragCollect),
-  DropTarget(
-    [DragDropTypes.OPERATOR, DragDropTypes.TERM],
-    dropTarget,
-    dropCollect,
-  ),
-);
+// dnd_error: temporarily disable dnd-related code to get the build working
+/* const enhance = pipe(
+ *   DragSource(DragDropTypes.OPERATOR, dragSource, dragCollect),
+ *   DropTarget(
+ *     [DragDropTypes.OPERATOR, DragDropTypes.TERM],
+ *     dropTarget,
+ *     dropCollect,
+ *   ),
+ * ); */
 
 const ExpressionOperator: React.FunctionComponent<EnhancedProps> = ({
   value,
@@ -305,17 +306,19 @@ const ExpressionOperator: React.FunctionComponent<EnhancedProps> = ({
                 );
                 break;
               case "operator":
-                itemElement = (
-                  <EnhancedExpressionOperator
-                    index={i}
-                    idWithinExpression={itemLineEndpointId}
-                    dataSource={dataSource}
-                    isEnabled={isEnabled && c.enabled}
-                    value={c as ExpressionOperatorType}
-                    onDelete={onChildDeleted}
-                    onChange={onChildUpdated}
-                  />
-                );
+                {
+                  /* itemElement = (
+                        <EnhancedExpressionOperator
+                        index={i}
+                        idWithinExpression={itemLineEndpointId}
+                        dataSource={dataSource}
+                        isEnabled={isEnabled && c.enabled}
+                        value={c as ExpressionOperatorType}
+                        onDelete={onChildDeleted}
+                        onChange={onChildUpdated}
+                        />
+                        ); */
+                }
                 break;
               default:
                 throw new Error(`Invalid operator type: ${c.type}`);
@@ -334,6 +337,7 @@ const ExpressionOperator: React.FunctionComponent<EnhancedProps> = ({
   );
 };
 
-const EnhancedExpressionOperator = enhance(ExpressionOperator);
+/* const EnhancedExpressionOperator = enhance(ExpressionOperator); */
+const EnhancedExpressionOperator = ExpressionOperator;
 
 export default EnhancedExpressionOperator;

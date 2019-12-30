@@ -39,7 +39,8 @@ const getMenuItems = (
 ) =>
   menuItems.map(menuItem => (
     <React.Fragment key={menuItem.key}>
-      <MenuItem
+      {/* dnd_error: temporarily disable dnd-related code to get the build working */}
+      {/*      <MenuItem
         keyIsDown={keyIsDown}
         selectedItems={selectedItems}
         highlightedItem={highlightedItem}
@@ -55,7 +56,7 @@ const getMenuItems = (
         showMoveDialog={showMoveDialog}
         menuItemToggled={menuItemToggled}
         menuItemIsOpenByKey={menuItemIsOpenByKey}
-      />
+      />*/}
       {/* TODO: we only want the 'children' class on the first set of children. We're using it to pad the bottom. Any better ideas? */}
       {menuItem.children && menuItemIsOpenByKey[menuItem.key] ? (
         <div className={`${depth === 0 ? "sidebar__children" : ""}`}>

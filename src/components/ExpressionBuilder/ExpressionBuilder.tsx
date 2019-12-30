@@ -55,11 +55,13 @@ const ExpressionBuilder: React.FunctionComponent<Props> = ({
           />
         </React.Fragment>
       )}
-      {inEditMode && !!dataSource ? (
-        <ExpressionOperator {...{ dataSource, value, onChange }} />
-      ) : (
-        <ReadOnlyExpressionOperator {...{ value }} />
-      )}
+
+      {/* dnd_error: temporarily disable dnd-related code to get the build working */}
+      {/* {inEditMode && !!dataSource ? (
+            <ExpressionOperator {...{ dataSource, value, onChange }} />
+            ) : (
+            <ReadOnlyExpressionOperator {...{ value }} />
+            )} */}
     </LineContainer>
   );
 };

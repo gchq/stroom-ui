@@ -189,27 +189,28 @@ const FolderExplorer: React.FunctionComponent<SwitchedDocRefEditorProps> = ({
       {...folderEditorProps}
       additionalActionBarItems={additionalActionBarItems}
     >
-      <div
-        tabIndex={0}
-        className="DocRefEditor__focusarea"
-        onKeyDown={onKeyDown}
-      >
-        {folder &&
-          folder.node &&
-          folder.node.children &&
-          folder.node.children.map(docRef => (
+      {/* dnd_error: temporarily disable dnd-related code to get the build working */}
+      {/* <div
+            tabIndex={0}
+            className="DocRefEditor__focusarea"
+            onKeyDown={onKeyDown}
+            >
+            {folder &&
+            folder.node &&
+            folder.node.children &&
+            folder.node.children.map(docRef => (
             <DndDocRefListingEntry
-              key={docRef.uuid}
-              docRef={docRef}
-              openDocRef={goToEditDocRef}
-              keyIsDown={keyIsDown}
-              showCopyDialog={showCopyDialog}
-              showMoveDialog={showMoveDialog}
-              selectedDocRefs={selectedDocRefs}
-              toggleSelection={toggleSelection}
+            key={docRef.uuid}
+            docRef={docRef}
+            openDocRef={goToEditDocRef}
+            keyIsDown={keyIsDown}
+            showCopyDialog={showCopyDialog}
+            showMoveDialog={showMoveDialog}
+            selectedDocRefs={selectedDocRefs}
+            toggleSelection={toggleSelection}
             />
-          ))}
-      </div>
+            ))}
+            </div> */}
       <DocRefInfoModal {...docRefInfoDialogComponentProps} />
       <CopyMoveDocRefDialog {...moveDialogComponentProps} />
       <RenameDocRefDialog {...renameDialogComponentProps} />

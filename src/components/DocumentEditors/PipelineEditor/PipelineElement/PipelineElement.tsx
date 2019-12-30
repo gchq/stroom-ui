@@ -160,14 +160,15 @@ const dropCollect: DropTargetCollector<DropCollectedProps, Props> = (
   draggingItemType: monitor.getItemType(),
 });
 
-const enhance = pipe(
-  DragSource(DragDropTypes.ELEMENT, dragSource, dragCollect),
-  DropTarget(
-    [DragDropTypes.ELEMENT, DragDropTypes.PALLETE_ELEMENT],
-    dropTarget,
-    dropCollect,
-  ),
-);
+// dnd_error: temporarily disable dnd-related code to get the build working
+/* const enhance = pipe(
+ *   DragSource(DragDropTypes.ELEMENT, dragSource, dragCollect),
+ *   DropTarget(
+ *     [DragDropTypes.ELEMENT, DragDropTypes.PALLETE_ELEMENT],
+ *     dropTarget,
+ *     dropCollect,
+ *   ),
+ * ); */
 
 const PipelineElement: React.FunctionComponent<EnhancedProps> = ({
   elementId,
@@ -235,4 +236,5 @@ const PipelineElement: React.FunctionComponent<EnhancedProps> = ({
   );
 };
 
-export default enhance(PipelineElement);
+export default PipelineElement;
+/* export default enhance(PipelineElement); */
