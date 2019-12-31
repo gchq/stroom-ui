@@ -1395,40 +1395,40 @@
   resolved "https://registry.yarnpkg.com/@nodelib/fs.stat/-/fs.stat-1.1.3.tgz#2b5a3ab3f918cca48a8c754c08168e3f03eba61b"
   integrity sha512-shAmDyaQC4H92APFoIaVDHCx5bStIocgvbwQyxPRrbUY20V1EYTbSDchWbuwlMG3V17cprZhA6+78JfB+3DTPw==
 
-"@pollyjs/adapter-fetch@2.3.1":
-  version "2.3.1"
-  resolved "https://registry.yarnpkg.com/@pollyjs/adapter-fetch/-/adapter-fetch-2.3.1.tgz#df5e51d93665a008739be5bccef831d7243c6a84"
-  integrity sha512-fdtnfxi2Dr7xX+zyNsksyIB7Xd3mMGzIopK9TvalWKLFFteFy2ViYrP0LYC0qpHFKwjjgYneh0xZV6cnYe4Ing==
+"@pollyjs/adapter-fetch@3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@pollyjs/adapter-fetch/-/adapter-fetch-3.0.1.tgz#ad3d7ed7f7ade44e68408cc64f903081bd90eded"
+  integrity sha512-JE0vfMYtA/7dCLZj8lKT8ppPMvbbIzYjoAA6KupwMjAq+HRBVAxHJy1fwZzcddyLN0P8Pi2tB05TP5v1khH7HQ==
   dependencies:
-    "@pollyjs/adapter" "^2.2.0"
-    "@pollyjs/utils" "^2.1.0"
+    "@pollyjs/adapter" "^3.0.0"
+    "@pollyjs/utils" "^3.0.0"
     detect-node "^2.0.4"
 
-"@pollyjs/adapter@^2.2.0":
-  version "2.6.3"
-  resolved "https://registry.yarnpkg.com/@pollyjs/adapter/-/adapter-2.6.3.tgz#86b09c926c5d155c067a77c4c1e0e0c64ece0668"
-  integrity sha512-7FXIVoNjuubhMx78aqekHpnGFQESGd1eT5zHkP/mdEDS4IZJhae/UVXpIYPATw71gkw9BDKqT48vkrinsp2zhg==
+"@pollyjs/adapter@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@pollyjs/adapter/-/adapter-3.0.0.tgz#b2a087c8be0cd2d755441e7067cff0fa4045ebb7"
+  integrity sha512-uEgr+RrN8vmndgUir7OVHm9gyUcNohkq40tztYs6DiifniWD9mYJlerMA268b9wFDMhtwzzY7U5NzNl4sM0EbA==
   dependencies:
-    "@pollyjs/utils" "^2.6.3"
+    "@pollyjs/utils" "^3.0.0"
 
-"@pollyjs/core@2.3.0":
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/@pollyjs/core/-/core-2.3.0.tgz#7e3ec030b40d3002ddee5ed169108f83f5c8baea"
-  integrity sha512-DSJaBA54HDUeH+SJMhOqA6g7Gl1NlzGnFDa9qy+4TyEYwjKqmuzNyLZuGZIMOWs/QRA5pXtzoPAfz1Rq0IfNPQ==
+"@pollyjs/core@3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@pollyjs/core/-/core-3.0.0.tgz#336c716d378189ce56f1e9bf6f405d57aaa0e505"
+  integrity sha512-zNzqpxu8s4yGKiFJv9Q1IkJlyurYaVxjsO28LZOckn42zAcYbvAvpepyUYZH890pPl4vhNoqOXDrqXtVotkV0A==
   dependencies:
-    "@pollyjs/utils" "^2.1.0"
-    "@sindresorhus/fnv1a" "^1.0.0"
+    "@pollyjs/utils" "^3.0.0"
+    "@sindresorhus/fnv1a" "^1.2.0"
     blueimp-md5 "^2.10.0"
     fast-json-stable-stringify "^2.0.0"
-    is-absolute-url "^2.1.0"
+    is-absolute-url "^3.0.0"
     lodash-es "^4.17.11"
     route-recognizer "^0.3.4"
-    slugify "^1.3.3"
+    slugify "^1.3.4"
 
-"@pollyjs/utils@^2.1.0", "@pollyjs/utils@^2.6.3":
-  version "2.6.3"
-  resolved "https://registry.yarnpkg.com/@pollyjs/utils/-/utils-2.6.3.tgz#087d86f47a487dece303dbac6183c96a5d82a494"
-  integrity sha512-0gUxNb7sUXdsMG9PYq6/aDhlWOmh6xWZ4MedBitQP0Rkob+adKk7LxVj1Mb8ZxzTUzf/HuTm9hAdCXvC/2gbtg==
+"@pollyjs/utils@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@pollyjs/utils/-/utils-3.0.0.tgz#fb6bad752877cc0551f2b09f4713908896d676a8"
+  integrity sha512-Tl91iIISZ7KlCMqYoKvNa6YBrLPb74hR7WpIfECkcLJUikuw/Kunqjy7JF/9ivgwWYLMytKIqwVuMXjK6YxFbA==
   dependencies:
     qs "^6.7.0"
     url-parse "^1.4.7"
@@ -1451,7 +1451,7 @@
   dependencies:
     any-observable "^0.3.0"
 
-"@sindresorhus/fnv1a@^1.0.0":
+"@sindresorhus/fnv1a@^1.2.0":
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/@sindresorhus/fnv1a/-/fnv1a-1.2.0.tgz#d554da64c406f3b62ad06dfce9efd537a4a55de4"
   integrity sha512-5ezb/dBSTWtKQ4sLQwMgOJyREXJcZZkTMbendMwKrXTghUhWjZhstzkkmt4/WkFy/GSTSGzfJOKU7dEXv3C/XQ==
@@ -7679,12 +7679,12 @@ ipaddr.js@^1.9.0:
   resolved "https://registry.yarnpkg.com/ipaddr.js/-/ipaddr.js-1.9.1.tgz#bff38543eeb8984825079ff3a2a8e6cbd46781b3"
   integrity sha512-0KI/607xoxSToH7GjN1FfSbLoU0+btTicjsQSWQlh/hZykN8KpmMf7uYwPW3R+akZ6R/w18ZlXSHBYXiYUPO3g==
 
-is-absolute-url@^2.0.0, is-absolute-url@^2.1.0:
+is-absolute-url@^2.0.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/is-absolute-url/-/is-absolute-url-2.1.0.tgz#50530dfb84fcc9aa7dbe7852e83a37b93b9f2aa6"
   integrity sha1-UFMN+4T8yap9vnhS6Do3uTufKqY=
 
-is-absolute-url@^3.0.3:
+is-absolute-url@^3.0.0, is-absolute-url@^3.0.3:
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/is-absolute-url/-/is-absolute-url-3.0.3.tgz#96c6a22b6a23929b11ea0afb1836c36ad4a5d698"
   integrity sha512-opmNIX7uFnS96NtPmhWQgQx6/NYFgsUXYMllcfzwWKUMwfo8kku1TvE6hkNcH+Q1ts5cMVrsY7j0bxXQDciu9Q==
@@ -13661,7 +13661,7 @@ slice-ansi@^2.1.0:
     astral-regex "^1.0.0"
     is-fullwidth-code-point "^2.0.0"
 
-slugify@^1.3.3:
+slugify@^1.3.4:
   version "1.3.6"
   resolved "https://registry.yarnpkg.com/slugify/-/slugify-1.3.6.tgz#ba5fd6159b570fe4811d02ea9b1f4906677638c3"
   integrity sha512-wA9XS475ZmGNlEnYYLPReSfuz/c3VQsEMoU43mi6OnKMCdbnFXd4/Yg7J0lBv8jkPolacMpOrWEaoYxuE1+hoQ==
