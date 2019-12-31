@@ -1,5 +1,5 @@
 import * as uuidv4 from "uuid/v4";
-import * as loremIpsum from "lorem-ipsum";
+import { loremIpsum } from "lorem-ipsum";
 import { VisualisationDoc } from "components/DocumentEditors/useDocumentApi/types/visualisation";
 
 export const generate = (): VisualisationDoc => ({

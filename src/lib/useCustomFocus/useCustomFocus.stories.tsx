@@ -1,6 +1,6 @@
 import { storiesOf } from "@storybook/react";
 import useListReducer from "lib/useListReducer";
-import * as loremIpsum from "lorem-ipsum";
+import { loremIpsum } from "lorem-ipsum";
 import * as React from "react";
 import JsonDebug from "testing/JsonDebug";
 import useCustomFocus from "./useCustomFocus";

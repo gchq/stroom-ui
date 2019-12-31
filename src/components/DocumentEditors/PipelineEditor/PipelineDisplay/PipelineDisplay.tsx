@@ -17,12 +17,12 @@
 import * as React from "react";
 
 import Loader from "components/Loader";
-import PipelineElement from "../PipelineElement/PipelineElement";
+/* import PipelineElement from "../PipelineElement/PipelineElement"; */
 import { getPipelineLayoutGrid } from "../pipelineUtils";
 import { PipelineLayoutGrid } from "../types";
 import { ShowDialog as ShowAddElementDialog } from "../AddElementModal/types";
 import { PipelineProps } from "../types";
-import useElements from "components/DocumentEditors/PipelineEditor/useElements";
+/* import useElements from "components/DocumentEditors/PipelineEditor/useElements"; */
 import { LineContainer, LineTo, LineEndpoint } from "components/LineTo";
 import { PipelineElementType } from "components/DocumentEditors/useDocumentApi/types/pipelineDoc";
 
@@ -41,7 +41,7 @@ export const Pipeline: React.FunctionComponent<Props> = ({
       editorProps: { docRefContents: pipeline },
     },
   } = pipelineStateProps;
-  const { elementDefinitions, elementProperties } = useElements();
+    /* const { elementDefinitions, elementProperties } = useElements(); */
 
   if (!pipeline) {
     return <Loader message="Loading pipeline..." />;
@@ -77,10 +77,10 @@ export const Pipeline: React.FunctionComponent<Props> = ({
                 pipeline.merged.elements.add
                   .filter((e: PipelineElementType) => e.id === column.uuid)
                   .map((element: PipelineElementType) => {
-                    let elementDefinition = Object.values(
-                      elementDefinitions,
-                    ).find(e => e.type === element.type)!;
-                    let elementPropertiesThis = elementProperties[element.type];
+                      /* let elementDefinition = Object.values(
+                          elementDefinitions,
+                         ).find(e => e.type === element.type)!; */
+                      /* let elementPropertiesThis = elementProperties[element.type]; */
 
                     return (
                       <LineEndpoint

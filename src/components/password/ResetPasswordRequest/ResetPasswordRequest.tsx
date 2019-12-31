@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { ErrorMessage, Field, Form, Formik, FormikActions } from "formik";
+import { ErrorMessage, Field, Form, Formik, FormikHelpers } from "formik";
 import * as React from "react";
 import Button from "components/Button";
 import { hasAnyProps } from "lib/lang";
@@ -26,7 +26,7 @@ const ValidationSchema = Yup.object().shape({
 
 const ResetPasswordRequest: React.FunctionComponent<{
   onBack: () => void;
-  onSubmit: (formData: any, formikActions: FormikActions<any>) => void;
+  onSubmit: (formData: any, formikHelpers: FormikHelpers<any>) => void;
 }> = ({ onBack, onSubmit }) => (
   <Formik
     enableReinitialize={true}

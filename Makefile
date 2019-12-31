@@ -3,7 +3,7 @@
 # Use mmake instead of make: https://github.com/tj/mmake
 
 # I.e. npm or yarn
-BUILD_SYSTEM=npm
+BUILD_SYSTEM=yarn
 
 # Build a local-SNAPSHOT docker image
 snapshot:

@@ -1,5 +1,5 @@
 import * as uuidv4 from "uuid/v4";
-import * as loremIpsum from "lorem-ipsum";
+import { loremIpsum } from "lorem-ipsum";
 
 import bitmapReference from "./bitmap-reference";
 import { XsltDoc } from "components/DocumentEditors/useDocumentApi/types/xsltDoc";

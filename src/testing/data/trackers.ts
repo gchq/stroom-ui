@@ -1,4 +1,4 @@
-import * as loremIpsum from "lorem-ipsum";
+import { loremIpsum } from "lorem-ipsum";
 import { StreamTaskType, QueryDataType } from "components/Processing/types";
 
 const getRandomInt = (min: number, max: number) =>

@@ -1,4 +1,4 @@
-import { FormikActions } from "formik";
+import { FormikHelpers } from "formik";
 import * as queryString from "query-string";
 import { useCallback } from "react";
 import useHttpClient from "lib/useHttpClient";
@@ -25,7 +25,7 @@ interface Api {
   ) => Promise<ChangePasswordResponse>;
   submitPasswordChangeRequest: (
     formData: any,
-    formikBag: FormikActions<any>,
+    formikBag: FormikHelpers<any>,
   ) => Promise<void>;
   isPasswordValid: (
     passwordValidationRequest: PasswordValidationRequest,

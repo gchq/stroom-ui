@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import * as uuidv4 from "uuid/v4";
-import * as loremIpsum from "lorem-ipsum";
+import { loremIpsum } from "lorem-ipsum";
 
 export interface Animal {
   uuid: string;
