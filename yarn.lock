@@ -4324,10 +4324,10 @@ code-point-at@^1.0.0:
   resolved "https://registry.yarnpkg.com/code-point-at/-/code-point-at-1.1.0.tgz#0d070b4d043a5bea33a2f1a40e2edb3d9a4ccf77"
   integrity sha1-DQcLTQQ6W+ozovGkDi7bPZpMz3c=
 
-cogo-toast@1.0.4:
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/cogo-toast/-/cogo-toast-1.0.4.tgz#8988cd93fdd1639bcd76a9c286af4fd48ffb34f3"
-  integrity sha512-nr6QTCr+crM4QhIhL6xNByVe4Y+CHT6HmEDnBM/H5hnWNsXFf0dxeN0rJvnZFWWK2IB9XnRbXnUDrLLbTiin0Q==
+cogo-toast@4.1.3:
+  version "4.1.3"
+  resolved "https://registry.yarnpkg.com/cogo-toast/-/cogo-toast-4.1.3.tgz#b031242ab6bbc84c5dd968e9edee45eca3e3af1b"
+  integrity sha512-zP2GQOyylod78QOq0TzqHV1gHGAcDCpjBGhpGoMtEMmI0g6zBWJbN5kBOumFTz1gxN64ApiAilpQ47410XadUQ==
 
 collection-visit@^1.0.0:
   version "1.0.0"
