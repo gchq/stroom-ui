@@ -15,7 +15,6 @@
  */
 
 import * as React from "react";
-import { Story, RenderFunction } from "@storybook/react";
 
 const styles = {
   fullScreen: {
@@ -35,7 +34,7 @@ const themes = ["theme-light", "theme-dark"];
 
 interface Props {
   theme: string;
-  component: RenderFunction;
+  component: any;
   centerComponent?: React.ReactNode;
 }
 
@@ -56,8 +55,8 @@ const ThemedContainer: React.FunctionComponent<Props> = ({
 );
 
 export const addThemedStories = (
-  stories: Story,
-  component: RenderFunction,
+  stories: any,
+  component: any,
   centerComponent?: React.ReactNode,
 ) => {
   themes.forEach(theme =>
