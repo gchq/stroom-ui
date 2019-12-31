@@ -23,7 +23,7 @@ import "brace/theme/github";
 import "brace/theme/ambiance";
 import "brace/keybinding/vim";
 
-import AceEditor, { AceEditorProps } from "react-ace";
+import AceEditor, { IAceEditorProps } from "react-ace";
 
 import { useTheme } from "lib/useTheme/useTheme";
 
@@ -34,7 +34,7 @@ if (brace) console.log("Brace found");
  * This handles theme switching for the AceEditor. It also applies the vim keyboard handler,
  * because we'll want that everywhere we use the AceEditor.
  */
-const ThemedAceEditor: React.FunctionComponent<AceEditorProps> = props => {
+const ThemedAceEditor: React.FunctionComponent<IAceEditorProps> = props => {
   const { theme } = useTheme();
   const aceTheme = React.useMemo(
     () => (theme === "theme-light" ? "github" : "ambiance"),
