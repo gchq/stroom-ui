@@ -15,7 +15,7 @@
  */
 
 import * as React from "react";
-import * as loremIpsum from "lorem-ipsum";
+import { loremIpsum } from "lorem-ipsum";
 import { storiesOf } from "@storybook/react";
 
 import HorizontalPanel from "./HorizontalPanel";

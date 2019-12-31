@@ -1,7 +1,7 @@
 import { storiesOf } from "@storybook/react";
-import * as loremIpsum from "lorem-ipsum";
 import * as React from "react";
 import useListReducer from "./useListReducer";
+import { loremIpsum } from "lorem-ipsum";
 
 const generateItem = () => loremIpsum({ count: 3, units: "words" });
 
@@ -14,10 +14,7 @@ interface Props {
 }
 
 const TestHarness: React.FunctionComponent<Props> = ({ initialItems }) => {
-  const { items, addItem, removeItem } = useListReducer(
-    c => c,
-    initialItems,
-  );
+  const { items, addItem, removeItem } = useListReducer(c => c, initialItems);
 
   const [newName, setNewName] = React.useState<string>(generateItem());
 

@@ -16,12 +16,12 @@
 
 import * as React from "react";
 import * as uuidv4 from "uuid/v4";
-import * as loremIpsum from "lorem-ipsum";
 import { storiesOf } from "@storybook/react";
 import { Color } from "csstype";
 
 import HorizontalMainDetails from "./HorizontalMainDetails";
 import { addThemedStories } from "testing/storybook/themedStoryGenerator";
+import { loremIpsum } from "lorem-ipsum";
 
 const EnabledCheckbox = () => (
   <label>
