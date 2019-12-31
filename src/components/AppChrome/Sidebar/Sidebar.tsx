@@ -15,7 +15,7 @@ import {
   MenuItemType,
   MenuItemToggled,
 } from "./MenuItem/types";
-import MenuItem from "./MenuItem";
+/* import MenuItem from "./MenuItem"; */
 import { useDocumentTree } from "components/DocumentEditors/api/explorer";
 import { ActiveMenuItem } from "../types";
 import ActivitySummary from "components/Activity/ActivitySummary";

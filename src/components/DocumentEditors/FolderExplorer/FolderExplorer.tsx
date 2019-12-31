@@ -19,7 +19,7 @@ import * as React from "react";
 import DocRefEditor, { useDocRefEditor } from "../DocRefEditor";
 import { SwitchedDocRefEditorProps } from "../DocRefEditor/types";
 import Loader from "../../Loader";
-import DndDocRefListingEntry from "./DndDocRefListingEntry";
+/* import DndDocRefListingEntry from "./DndDocRefListingEntry"; */
 import CreateDocRefDialog, {
   useDialog as useCreateDialog,
 } from "./CreateDocRefDialog/CreateDocRefDialog";
@@ -41,7 +41,7 @@ import { useDocRefInfoDialog } from "../../DocRefInfoModal/DocRefInfoModal";
 import { useDocumentTree } from "components/DocumentEditors/api/explorer";
 import useAppNavigation from "lib/useAppNavigation";
 import { ButtonProps } from "components/Button/types";
-import useKeyIsDown from "lib/useKeyIsDown";
+/* import useKeyIsDown from "lib/useKeyIsDown"; */
 
 const FolderExplorer: React.FunctionComponent<SwitchedDocRefEditorProps> = ({
   docRefUuid,
@@ -110,9 +110,9 @@ const FolderExplorer: React.FunctionComponent<SwitchedDocRefEditorProps> = ({
     componentProps: createDialogComponentProps,
   } = useCreateDialog(onCreateDocument);
   const {
-    onKeyDown,
+      /* onKeyDown, */
     selectedItems: selectedDocRefs,
-    toggleSelection,
+      /* toggleSelection, */
   } = useSelectableItemListing({
     items: folder.node.children || [],
     selectionBehaviour: SelectionBehaviour.MULTIPLE,
@@ -120,7 +120,7 @@ const FolderExplorer: React.FunctionComponent<SwitchedDocRefEditorProps> = ({
     openItem: goToEditDocRef,
     goBack: goBack,
   });
-  const keyIsDown = useKeyIsDown();
+    /* const keyIsDown = useKeyIsDown(); */
 
   const onClickCreate = React.useCallback(() => {
     if (!!folder) {
