@@ -11,7 +11,7 @@ function reducer(state: boolean) {
 
 const useToggle = (defaultValue: boolean = false): UseToggle => {
   const [value, dispatch] = React.useReducer(reducer, defaultValue);
-  const toggle = React.useCallback(() => dispatch(undefined), [dispatch]);
+  const toggle = React.useCallback(() => dispatch(), [dispatch]);
 
   return {
     value,
