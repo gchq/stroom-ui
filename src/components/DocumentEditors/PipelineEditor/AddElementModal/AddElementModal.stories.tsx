@@ -21,10 +21,10 @@ const TestHarness: React.FunctionComponent = () => {
   );
   const [
     selectedElementDefinition,
-    setSeletedElementDefinition,
+    setSelectedElementDefinition,
   ] = React.useState<ElementDefinition>(elementDefinitions[0]);
   React.useEffect(() => {
-    setSeletedElementDefinition(elementDefinitions[0]);
+    setSelectedElementDefinition(elementDefinitions[0]);
   }, [elementDefinitions]);
   const [newElement, setNewElement] = React.useState<NewElement | undefined>();
   const { componentProps, showDialog } = useDialog(setNewElement);
@@ -38,7 +38,7 @@ const TestHarness: React.FunctionComponent = () => {
       <Select
         options={elementDefinitions}
         value={selectedElementDefinition}
-        onChange={x => setSeletedElementDefinition(x as ElementDefinition)}
+        onChange={(x: ElementDefinition) => setSelectedElementDefinition(x)}
         getOptionLabel={d => d.type}
         getOptionValue={d => d.type}
       />

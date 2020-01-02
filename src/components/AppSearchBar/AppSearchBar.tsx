@@ -7,15 +7,13 @@ import {
   DocRefWithLineage,
   copyDocRef,
 } from "components/DocumentEditors/useDocumentApi/types/base";
-import { OptionProps } from "react-select/lib/components/Option";
+import { OptionProps, SingleValueProps } from "react-select";
 import DocRefImage from "../DocRefImage";
-import { SingleValueProps } from "react-select/lib/components/SingleValue";
 import ModeOptionButtons, { SearchMode } from "./ModeOptionButton";
 import { useModeOptionButtons } from "./ModeOptionButton/ModeOptionButtons";
 import { filterTree, findItem } from "lib/treeUtils/treeUtils";
 import useRecentItems from "lib/useRecentItems";
-import { KeyboardEventHandler } from "react-select/lib/types";
-import { MenuProps } from "react-select/lib/components/Menu";
+import { KeyboardEventHandler, MenuProps } from "react-select";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import DocRefBreadcrumb from "components/DocRefBreadcrumb";

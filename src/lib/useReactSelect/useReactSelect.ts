@@ -1,5 +1,5 @@
 import * as React from "react";
-import { ValueType } from "react-select/lib/types";
+import { ValueType } from "react-select";
 import { BasicOption } from "./types";
 
 interface PropsIn {

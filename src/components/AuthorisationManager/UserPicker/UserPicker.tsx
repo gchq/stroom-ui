@@ -1,6 +1,6 @@
 import * as React from "react";
 import Select from "react-select";
-import CreatableSelect from "react-select/lib/Creatable";
+import CreatableSelect from "react-select/creatable";
 import {
   StroomUser,
   useManageUsers,
