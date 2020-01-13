@@ -20,6 +20,7 @@ clean:
 # Clean package locks and node_modules
 hard_clean: clean
 	rm -f package-lock.json
+	rm -f yarn.lock
 .PHONY: hard_clean
 
 # Clean package locks and node_modules and do an install
