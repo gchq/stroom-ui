@@ -33,7 +33,7 @@ interface Api {
 }
 
 export const useApi = (): Api => {
-  const { httpGetJson, httpPostJsonResponse } = useHttpClient();
+  const { httpGetJson, httpGetEmptyResponse, httpPostJsonResponse } = useHttpClient();
   let { clientId } = useConfig();
   const { authenticationServiceUrl } = useServiceUrl();
 
@@ -90,10 +90,10 @@ export const useApi = (): Api => {
 
   const submitPasswordChangeRequest = useCallback(
     (formData: any) =>
-      httpGetJson(
+      httpGetEmptyResponse(
         `${authenticationServiceUrl}/reset/${formData.email}`,
         {},
-        false,
+        false
       ),
     [authenticationServiceUrl, httpGetJson],
   );
