@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
-## [v7.0-beta.4] - 2020-01-13
+## [v7.0-beta.4] - 2020-01-14
 
 * Merged Stroom 6.0 compatibility
 
