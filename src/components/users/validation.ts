@@ -131,7 +131,7 @@ export async function validateAsync(
     }
   }
   errors.verifyPassword = validateVerifyPassword(newPassword, verifyPassword);
-  let errorMessage = "";
+  let errorMessage: string = ""
   if (errors.oldPassword !== "") {
     errorMessage += errors.oldPassword;
   }
@@ -141,5 +141,8 @@ export async function validateAsync(
   if (errors.verifyPassword !== "") {
     errorMessage += errors.verifyPassword;
   }
-  return errorMessage;
+
+  // Why return undefined? If we return anything else react-hook-form decides validation has failed.
+  if (errorMessage === "") return undefined;
+  else return errorMessage;
 }
