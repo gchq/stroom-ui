@@ -33,7 +33,11 @@ interface Api {
 }
 
 export const useApi = (): Api => {
-  const { httpGetJson, httpGetEmptyResponse, httpPostJsonResponse } = useHttpClient();
+  const {
+    httpGetJson,
+    httpGetEmptyResponse,
+    httpPostJsonResponse,
+  } = useHttpClient();
   let { clientId } = useConfig();
   const { authenticationServiceUrl } = useServiceUrl();
 
@@ -64,6 +68,7 @@ export const useApi = (): Api => {
             requestingClientId: clientId,
           }),
         },
+        true,
         false,
       );
     },
@@ -75,6 +80,7 @@ export const useApi = (): Api => {
       httpPostJsonResponse(
         `${authenticationServiceUrl}/changePassword/`,
         { body: JSON.stringify({ newPassword: password, oldPassword, email }) },
+        true,
         false,
       ),
     [authenticationServiceUrl, httpPostJsonResponse],
@@ -93,7 +99,8 @@ export const useApi = (): Api => {
       httpGetEmptyResponse(
         `${authenticationServiceUrl}/reset/${formData.email}`,
         {},
-        false
+        true,
+        false,
       ),
     [authenticationServiceUrl, httpGetJson],
   );

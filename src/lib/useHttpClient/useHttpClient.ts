@@ -33,6 +33,7 @@ type HttpCall = (
   options?: {
     [s: string]: any;
   },
+  forceGet?: boolean,
   addAuthentication?: boolean,
 ) => Promise<any>;
 
