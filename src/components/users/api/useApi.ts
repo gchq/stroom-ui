@@ -97,7 +97,7 @@ export const useApi = (): Api => {
   const search = useCallback(
     (email: string) =>
       httpGetJson(
-        `${userServiceUrl}/?fromEmail=${email}&usersPerPage=100&orderBy=id`,
+        `${userServiceUrl}`,
       ),
     [userServiceUrl, httpGetJson],
   );
