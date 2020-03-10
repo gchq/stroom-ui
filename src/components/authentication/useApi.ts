@@ -33,11 +33,7 @@ interface Api {
 }
 
 export const useApi = (): Api => {
-  const {
-    httpGetJson,
-    httpGetEmptyResponse,
-    httpPostJsonResponse,
-  } = useHttpClient();
+  const { httpGetEmptyResponse, httpPostJsonResponse } = useHttpClient();
   let { clientId } = useConfig();
   const { authenticationServiceUrl } = useServiceUrl();
 
@@ -102,7 +98,7 @@ export const useApi = (): Api => {
         true,
         false,
       ),
-    [authenticationServiceUrl, httpGetJson],
+    [authenticationServiceUrl, httpGetEmptyResponse],
   );
 
   const isPasswordValid = useCallback(
