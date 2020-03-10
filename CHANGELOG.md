@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [v7.0-beta.5] - 2020-03-10
+
+* Fixes to for auth-into-stroom compatibility
+
 ## [v7.0-beta.4] - 2020-01-14
 
 * Merged Stroom 6.0 compatibility
@@ -101,7 +105,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 * Experimental first tag
 
-[unreleased]: https://github.com/gchq/stroom-auth/compare/v7.0-beta.4...master
+[unreleased]: https://github.com/gchq/stroom-auth/compare/v7.0-beta.5...master
+[v7.0-beta.5]: https://github.com/gchq/stroom-auth/compare/v7.0-beta.4...v7.0-beta.5
 [v7.0-beta.4]: https://github.com/gchq/stroom-auth/compare/v7.0-beta.3...v7.0-beta.4
 [v7.0-beta.3]: https://github.com/gchq/stroom-auth/compare/v7.0-beta.2...v7.0-beta.3
 [v7.0-beta.2]: https://github.com/gchq/stroom-auth/compare/v7.0-beta.1...v7.0-beta.2
