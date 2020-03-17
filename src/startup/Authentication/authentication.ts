@@ -40,7 +40,7 @@ export const sendAuthenticationRequest = (
 
   // Compose the new URL
   const authenticationRequestParams = `?scope=openid&response_type=code&client_id=${clientId}&redirect_url=${redirectUrl}&state=${state}&nonce=${nonceHash}`;
-  const authenticationRequestUrl = `${authenticationServiceUrl}/authenticate/${authenticationRequestParams}`;
+  const authenticationRequestUrl = `${authenticationServiceUrl}/noauth/authenticate/${authenticationRequestParams}`;
 
   // We hand off to the authenticationService.
   window.location.href = authenticationRequestUrl;

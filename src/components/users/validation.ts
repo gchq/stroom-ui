@@ -51,15 +51,15 @@ function validateVerifyPassword(
 }
 
 function validatePasswords(failedOn: string[]): PasswordValidationErrors {
-  let errors: PasswordValidationErrors = {
+  const errors: PasswordValidationErrors = {
     password: "",
     oldPassword: "",
     verifyPassword: "",
   };
 
   // First sort out async password checks
-  let passwordErrors: string[] = [];
-  let oldPasswordErrors: string[] = [];
+  const passwordErrors: string[] = [];
+  const oldPasswordErrors: string[] = [];
   if (failedOn.length > 0) {
     failedOn.forEach(failureType => {
       if (failureType === "LENGTH") {
@@ -111,7 +111,7 @@ export async function validateAsync(
     verifyPassword: "",
   };
   if (newPassword !== undefined) {
-    const result = await fetch(`${url}/isPasswordValid`, {
+    const result = await fetch(`${url}/noauth/isPasswordValid`, {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
@@ -131,7 +131,7 @@ export async function validateAsync(
     }
   }
   errors.verifyPassword = validateVerifyPassword(newPassword, verifyPassword);
-  let errorMessage: string = ""
+  let errorMessage = "";
   if (errors.oldPassword !== "") {
     errorMessage += errors.oldPassword;
   }

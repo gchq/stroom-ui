@@ -50,7 +50,7 @@ export const useApi = (): Api => {
   const apiLogin = useCallback(
     (credentials: Credentials) => {
       const { email, password } = credentials;
-      const loginServiceUrl = `${authenticationServiceUrl}/authenticate`;
+      const loginServiceUrl = `${authenticationServiceUrl}/noauth/authenticate`;
 
       return httpPostJsonResponse(
         loginServiceUrl,
@@ -74,7 +74,7 @@ export const useApi = (): Api => {
   const changePassword = useCallback(
     ({ password, oldPassword, email }: ChangePasswordRequest) =>
       httpPostJsonResponse(
-        `${authenticationServiceUrl}/changePassword/`,
+        `${authenticationServiceUrl}/noauth/changePassword/`,
         { body: JSON.stringify({ newPassword: password, oldPassword, email }) },
         true,
         false,
@@ -103,9 +103,12 @@ export const useApi = (): Api => {
 
   const isPasswordValid = useCallback(
     (passwordValidationRequest: PasswordValidationRequest) =>
-      httpPostJsonResponse(`${authenticationServiceUrl}/isPasswordValid`, {
-        body: JSON.stringify(passwordValidationRequest),
-      }),
+      httpPostJsonResponse(
+        `${authenticationServiceUrl}/noauth/isPasswordValid`,
+        {
+          body: JSON.stringify(passwordValidationRequest),
+        },
+      ),
     [authenticationServiceUrl, httpPostJsonResponse],
   );
 
