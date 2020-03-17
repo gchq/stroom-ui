@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [v7.0-beta.6] - 2020-03-17
+
+* Update paths for auth-into-stroom integration
+
 ## [v7.0-beta.5] - 2020-03-10
 
 * Fixes to for auth-into-stroom compatibility
