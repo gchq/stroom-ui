@@ -16,34 +16,29 @@
 
 import * as React from "react";
 
-import { sendAuthenticationRequest } from "./authentication";
+import {sendAuthenticationRequest} from "./authentication";
 
 interface Props {
-  referrer: string;
-  uiUrl: string;
-  clientId: string;
-  authenticationServiceUrl: string;
-  appPermission?: string;
+    referrer: string;
+    uiUrl: string;
+    loginUrl: string;
 }
 
-const AuthenticationRequest: React.FunctionComponent<Props> = ({
-  referrer,
-  uiUrl,
-  clientId,
-  authenticationServiceUrl,
-  appPermission,
-}) => {
-  React.useEffect(() => {
-    sendAuthenticationRequest(
-      referrer,
-      uiUrl,
-      clientId,
-      authenticationServiceUrl,
-      appPermission,
-    );
-  }, [referrer, uiUrl, clientId, authenticationServiceUrl, appPermission]);
+const AuthenticationRequest: React.FunctionComponent<Props> =
+    ({
+         referrer,
+         uiUrl,
+         loginUrl
+     }) => {
+        React.useEffect(() => {
+            sendAuthenticationRequest(
+                referrer,
+                uiUrl,
+                loginUrl,
+            );
+        }, [referrer, uiUrl,loginUrl]);
 
-  return null;
-};
+        return null;
+    };
 
 export default AuthenticationRequest;

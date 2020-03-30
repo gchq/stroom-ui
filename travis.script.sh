@@ -163,10 +163,10 @@ main() {
 
     # Build the project
     echo -e "${GREEN}Running npm install${NC}"
-    npm install
+    yarn install
 
     echo -e "${GREEN}Running npm build${NC}"
-    npm run build
+    yarn build
 
     do_docker_build_if_required
     exit 0

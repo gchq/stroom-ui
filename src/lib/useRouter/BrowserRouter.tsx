@@ -52,9 +52,10 @@ const showChrome = (pathname: string) => {
   let includeSidebar = false;
   // If we're handling an authentication redirect then we need to get the path
   // from local storage.
+  const referrer = localStorage.getItem("preAuthenticationRequestReferrer");
   const actualPath =
-    pathname.indexOf("handleAuthenticationResponse") > -1
-      ? localStorage.getItem("preAuthenticationRequestReferrer")
+    pathname.indexOf("handleAuthenticationResponse") > -1 && referrer
+      ? referrer
       : pathname;
 
   const parts = actualPath.split("/");

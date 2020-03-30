@@ -35,7 +35,7 @@ const ChangePasswordContainer = () => {
     if (!!router.location) {
       const query = queryString.parse(router.location.search);
 
-      const redirectUrl: string = query.redirect_url as string;
+      const redirectUrl: string = query.redirect_uri as string;
       if (!!redirectUrl) {
         const decodedRedirectUrl: string = decodeURIComponent(redirectUrl);
         setRedirectUrl(decodedRedirectUrl);

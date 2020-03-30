@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 Crown Copyright
+ * Copyright 2020 Crown Copyright
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,85 +13,149 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import * as jwtDecode from "jwt-decode";
-import * as uuidv4 from "uuid";
-import * as sjcl from "sjcl";
-import { History } from "history";
+// import * as jwtDecode from "jwt-decode";
+// import * as uuidv4 from "uuid";
+// import * as sjcl from "sjcl";
+import {History, Location} from "history";
+// import * as queryString from "query-string";
 
 export const sendAuthenticationRequest = (
-  referrer: string,
-  uiUrl: string,
-  clientId: string,
-  authenticationServiceUrl: string,
-  appPermission?: string,
+    referrer: string,
+    uiUrl: string,
+    loginUrl: string,
 ) => {
-  const redirectUrl = `${uiUrl}/s/handleAuthenticationResponse`;
-  const state = "";
+    // We need to remember where the user was going
+    // localStorage.setItem("preAuthenticationRequestReferrer", window.location.href);
+    localStorage.setItem("preAuthenticationRequestReferrer", referrer);
 
-  // Create nonce and store, and create nonce hash
-  const nonce = uuidv4();
-  const nonceHashBytes = sjcl.hash.sha256.hash(nonce);
-  const nonceHash = sjcl.codec.hex.fromBits(nonceHashBytes);
-  localStorage.setItem("nonce", nonce);
+    // Perform a login
+    const redirectUri = `${uiUrl}/s/handleAuthenticationResponse`;
+    const authenticationRequestParams = `/login?redirectUri=${redirectUri}`;
+    const loginRequestUrl = `${loginUrl}${authenticationRequestParams}`;
+    window.location.href = loginRequestUrl;
 
-  // We need to remember where the user was going
-  localStorage.setItem("preAuthenticationRequestReferrer", referrer);
-  localStorage.setItem("appPermission", appPermission || ""); // TODO, I have added this default thing...is it right?
 
-  // Compose the new URL
-  const authenticationRequestParams = `?scope=openid&response_type=code&client_id=${clientId}&redirect_url=${redirectUrl}&state=${state}&nonce=${nonceHash}`;
-  const authenticationRequestUrl = `${authenticationServiceUrl}/authenticate/${authenticationRequestParams}`;
 
-  // We hand off to the authenticationService.
-  window.location.href = authenticationRequestUrl;
+
+
+
+
+    // const redirectUri = `${uiUrl}/s/handleAuthenticationResponse`;
+    //
+    // getOpenIdConfiguration(openIdConfigUrl, openIdConfiguration => {
+    //     console.log(openIdConfiguration.issuer);
+    //     console.log(openIdConfiguration.authorization_endpoint);
+    //
+    //     const authorizationEndpoint = openIdConfiguration.authorization_endpoint;
+    //
+    //     // Create state and store
+    //     const state = createUniqueString();
+    //     localStorage.setItem("state", state);
+    //
+    //     // Create nonce and store
+    //     const nonce = createUniqueString();
+    //     localStorage.setItem("nonce", nonce);
+    //
+    //     // We need to remember where the user was going
+    //     // localStorage.setItem("preAuthenticationRequestReferrer", window.location.href);
+    //     localStorage.setItem("preAuthenticationRequestReferrer", referrer);
+    //
+    //     // Compose the new URL
+    //     const authenticationRequestParams = `?scope=openid&response_type=id_token&client_id=${clientId}&redirect_uri=${redirectUri}&state=${state}&nonce=${nonce}`;
+    //     const authenticationRequestUrl = `${authorizationEndpoint}${authenticationRequestParams}`;
+    //
+    //     // We hand off to the authenticationService.
+    //     console.log(authenticationRequestUrl);
+    //     window.location.href = authenticationRequestUrl;
+    // });
 };
 
 export const handleAuthenticationResponse = (
-  tokenIdChange: (idToken: string) => void,
-  history: History,
-  accessCode: string,
-  stroomAuthenticationServiceUrl: string,
+    location: Location,
+    openIdConfigUrl: string,
+    clientId: string,
+    tokenIdChange: (idToken: string) => void,
+    history: History,
 ) => {
-  const idTokenRequestUrl = `${stroomAuthenticationServiceUrl}/noauth/exchange`;
+    redirectToReferrer(history);
 
-  // The cookie including the sessionId will be sent along with this request.
-  // The 'credentials' key makes this happen.
-  fetch(idTokenRequestUrl, {
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-    method: "post",
-    credentials: "include", // Send cookies, i.e. the sessionId
-    mode: "cors",
-    body: JSON.stringify({ accessCode }),
-  })
-    .then(response => response.text())
-    .then(idToken => {
-      const decodedToken = jwtDecode<{ nonce: string }>(idToken);
-      const nonce = localStorage.getItem("nonce");
-      const nonceHashBytes = sjcl.hash.sha256.hash(nonce!);
-      const nonceHash = sjcl.codec.hex.fromBits(nonceHashBytes);
-      const returnedNonce = decodedToken.nonce;
-      const referrer = localStorage.getItem(
-        "preAuthenticationRequestReferrer",
-      ) as string;
-      // const appPermission = localStorage.getItem('appPermission');
+    // // Get the openid configuration.
+    // getOpenIdConfiguration(openIdConfigUrl, openIdConfiguration => {
+    //     let query;
+    //     if (location.search) {
+    //         query = queryString.parse(location.search);
+    //     } else {
+    //         query = queryString.parse(location.hash);
+    //     }
+    //
+    //     const state = query.state;
+    //     // const access_token = query.access_token as string;
+    //     // const token_type = query.token_type;
+    //     // const expires_in = query.expires_in;
+    //     // const scope = query.scope;
+    //     const id_token = query.id_token as string;
+    //     // const authuser = query.authuser;
+    //     // const session_state = query.session_state;
+    //     // const prompt = query.prompt;
+    //
+    //     const localState = localStorage.getItem("state");
+    //     const localNonce = localStorage.getItem("nonce");
+    //     localStorage.removeItem("nonce");
+    //     localStorage.removeItem("state");
+    //
+    //     if (localState !== state) {
+    //         console.error("State does not match");
+    //
+    //     } else {
+    //         const decodedIdToken = jwtDecode<{ iss: string, nonce: string }>(id_token);
+    //         if (localNonce !== decodedIdToken.nonce) {
+    //             console.error("Nonce does not match.");
+    //         } else if (openIdConfiguration.issuer !== decodedIdToken.iss) {
+    //             console.error("Unexpected issuer");
+    //         } else {
+    //             tokenIdChange(id_token);
+    //         }
+    //     }
+    //     redirectToReferrer(history);
+    // });
 
-      if (nonceHash === returnedNonce) {
-        localStorage.removeItem("nonce");
-        localStorage.removeItem("preAuthenticationRequestReferrer");
-        localStorage.removeItem("appPermission");
 
-        // TODO: if the user has the requested appPermission then we change the ID token.
-        tokenIdChange(idToken);
-        // dispatch(hasAppPermission(idToken, authorisationServiceUrl, appPermission));
-      } else {
-        console.error("Nonce does not match.");
-        // We fall through and push to the referrer, which will mean we attempt log in again.
-        // Possibly we could add an error message here, so the user can understand why they
-        // are being asked to log in again.
-      }
-      history.push(referrer);
-    });
 };
+
+// const createUniqueString = () => {
+//     const uuid = uuidv4();
+//     const uuidHashBytes = sjcl.hash.sha256.hash(uuid);
+//     return sjcl.codec.hex.fromBits(uuidHashBytes);
+// };
+
+const redirectToReferrer = (
+    history: History
+) => {
+    const referrer = localStorage.getItem("preAuthenticationRequestReferrer") as string;
+    if (referrer) {
+        localStorage.removeItem("preAuthenticationRequestReferrer");
+        history.push(referrer);
+    } else {
+        console.error("Unable to redirect to referrer as it is undefined.");
+    }
+};
+
+// const getOpenIdConfiguration = (
+//     url: string,
+//     onLoad: (json: { issuer: string, authorization_endpoint: string }) => void
+// ) => {
+//     const openIdConfiguration = localStorage.getItem("openid-configuration");
+//     if (openIdConfiguration) {
+//         const body = JSON.parse(openIdConfiguration);
+//         onLoad(body);
+//     } else {
+//         fetch(url)
+//             .then(response => response.text())
+//             .then(text => {
+//                 // Store the openid configuration.
+//                 localStorage.setItem("openid-configuration", text);
+//                 const body = JSON.parse(openIdConfiguration);
+//                 onLoad(body);
+//             });
+//     }
+// };

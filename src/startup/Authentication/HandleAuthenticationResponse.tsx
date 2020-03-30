@@ -13,49 +13,39 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import * as queryString from "qs";
 import * as React from "react";
 
-import { handleAuthenticationResponse } from "./authentication";
+import {handleAuthenticationResponse} from "./authentication";
 import useRouter from "lib/useRouter";
 import useAuthenticationContext from "./useAuthenticationContext";
-import useServiceUrl from "startup/config/useServiceUrl";
+import useConfig from "../config/useConfig";
 
 export const HandleAuthenticationResponse: React.FunctionComponent = () => {
-  const {
-    stroomAuthenticationServiceUrl,
-    authorisationServiceUrl,
-  } = useServiceUrl();
-  const {
-    router: { location },
-    history,
-  } = useRouter();
-  const { setIdToken } = useAuthenticationContext();
+    const {clientId, openIdConfigUrl} = useConfig();
 
-  const accessCode = React.useMemo(() => {
-    let query = location!.search;
-    if (query[0] === "?") {
-      query = query.substring(1);
-    }
-    return queryString.parse(query).accessCode;
-  }, [location]);
+    const {
+        router: {location},
+        history,
+    } = useRouter();
+    const {setIdToken} = useAuthenticationContext();
 
-  React.useEffect(() => {
-    handleAuthenticationResponse(
-      setIdToken,
-      history,
-      accessCode,
-      stroomAuthenticationServiceUrl!,
-    );
-  }, [
-    accessCode,
-    setIdToken,
-    history,
-    stroomAuthenticationServiceUrl,
-    authorisationServiceUrl,
-  ]);
+    React.useEffect(() => {
+        handleAuthenticationResponse(
+            location,
+            openIdConfigUrl,
+            clientId,
+            setIdToken,
+            history,
+        );
+    }, [
+        location,
+        openIdConfigUrl,
+        clientId,
+        setIdToken,
+        history
+    ]);
 
-  return null;
+    return null;
 };
 
 export default HandleAuthenticationResponse;

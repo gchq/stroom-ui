@@ -14,50 +14,47 @@
  * limitations under the License.
  */
 import * as React from "react";
-import { Route, RouteProps } from "react-router-dom";
+import {Route, RouteProps} from "react-router-dom";
 import useConfig from "../config/useConfig";
 import AuthenticationRequest from "./AuthenticationRequest";
 import useAuthenticationContext from "./useAuthenticationContext";
-import useServiceUrl from "startup/config/useServiceUrl";
+import useServiceUrl from "../config/useServiceUrl";
 
-const PrivateRoute = ({ render, ...rest }: RouteProps) => {
-  const { advertisedUrl, clientId } = useConfig();
-  const { authenticationServiceUrl } = useServiceUrl();
-  const { idToken } = useAuthenticationContext();
+const PrivateRoute = ({render, ...rest}: RouteProps) => {
+    const {advertisedUrl} = useConfig();
+    const {loginServiceUrl} = useServiceUrl();
+    const {idToken} = useAuthenticationContext();
 
-  if (
-    !(
-      advertisedUrl !== undefined &&
-      clientId !== undefined &&
-      authenticationServiceUrl !== undefined
-    )
-  ) {
-    throw new Error(
-      `Config Not Correct for Private Routes ${JSON.stringify({
-        advertisedUrl,
-        clientId,
-        authenticationServiceUrl,
-      })}`,
-    );
-  }
-
-  return (
-    <Route
-      {...rest}
-      render={props =>
-        !!idToken ? (
-          render && render({ ...props })
-        ) : (
-          <AuthenticationRequest
-            referrer={props.location.pathname}
-            uiUrl={advertisedUrl}
-            clientId={clientId}
-            authenticationServiceUrl={authenticationServiceUrl}
-          />
+    if (
+        !(
+            advertisedUrl !== undefined &&
+            loginServiceUrl !== undefined
         )
-      }
-    />
-  );
+    ) {
+        throw new Error(
+            `Config Not Correct for Private Routes ${JSON.stringify({
+                advertisedUrl,
+                loginServiceUrl,
+            })}`,
+        );
+    }
+
+    return (
+        <Route
+            {...rest}
+            render={props =>
+                !!idToken ? (
+                    render && render({...props})
+                ) : (
+                    <AuthenticationRequest
+                        referrer={props.location.pathname}
+                        uiUrl={advertisedUrl}
+                        loginUrl={loginServiceUrl}
+                    />
+                )
+            }
+        />
+    );
 };
 
 export default PrivateRoute;

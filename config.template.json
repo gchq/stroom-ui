@@ -1,10 +1,12 @@
 {
   "advertisedUrl": "https://IP_ADDRESS",
   "allowPasswordResets": true,
-  "clientId": "PZnJr8kHRKqnlJRQThSI",
-  "stroomBaseServiceUrl": "https://IP_ADDRESS/api",
   "authBaseServiceUrl": "https://IP_ADDRESS/api/auth",
-  "stroomUiUrl": "https://IP_ADDRESS/stroom",
+  "clientId": "",
   "dateFormat": "YYYY-MM-DDTHH:mm:ss.SSSZ",
-  "defaultApiKeyExpiryInMinutes": "525600"
+  "defaultApiKeyExpiryInMinutes": "525600",
+  "openIdConfigUrl": "https://accounts.google.com/.well-known/openid-configuration",
+
+  "stroomBaseServiceUrl": "https://IP_ADDRESS/api",
+  "stroomUiUrl": "https://IP_ADDRESS/stroom"
 }
